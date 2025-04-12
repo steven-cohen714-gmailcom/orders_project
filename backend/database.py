@@ -1,5 +1,120 @@
-import sqlite3
 import os
+import sqlite3
+from contextlib import contextmanager
+from typing import Dict, Any, List
+from datetime import datetime
+
+@contextmanager
+def get_db():
+    """
+    Context manager for database connections.
+    Ensures proper handling of connections and automatic closing.
+    """
+    conn = sqlite3.connect('data/orders.db')
+    conn.row_factory = sqlite3.Row
+    try:
+        yield conn
+    finally:
+        conn.close()
+
+def get_setting(key: str) -> Any:
+    """
+    Retrieve a setting value from the settings table.
+    Args:
+        key: The setting key to retrieve
+    Returns:
+        The setting value
+    """
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT value FROM settings WHERE key = ?", (key,))
+        result = cursor.fetchone()
+        return result['value'] if result else None
+
+def update_setting(key: str, value: Any) -> None:
+    """
+    Update a setting value in the settings table.
+    Args:
+        key: The setting key to update
+        value: The new value
+    """
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE settings SET value = ? WHERE key = ?", (value, key))
+        conn.commit()
+
+def create_order(order_data: Dict[str, Any], items: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Create a new order and its items in the database.
+    Args:
+        order_data: Dictionary containing order details
+        items: List of dictionaries containing order item details
+    Returns:
+        Dictionary containing the created order with items
+    """
+    with get_db() as conn:
+        cursor = conn.cursor()
+        try:
+            # Insert order
+            cursor.execute("""
+                INSERT INTO orders (
+                    order_number, status, created_date, total,
+                    requester
+                ) VALUES (?, ?, ?, ?, ?)
+            """, (
+                order_data["order_number"],
+                order_data["status"],
+                datetime.now().isoformat(),
+                order_data["total"],
+                order_data["requester"]
+            ))
+            
+            order_id = cursor.lastrowid
+
+            # Insert order items
+            for item in items:
+                item_total = item["qty_ordered"] * item["price"]
+                cursor.execute("""
+                    INSERT INTO order_items (
+                        order_id, item_code, item_description,
+                        project, qty_ordered, price, total
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    order_id,
+                    item["item_code"],
+                    item["item_description"],
+                    item["project"],
+                    item["qty_ordered"],
+                    item["price"],
+                    item_total
+                ))
+
+            # Fetch the created order with items
+            cursor.execute("""
+                SELECT 
+                    o.*,
+                    json_group_array(
+                        json_object(
+                            'item_code', i.item_code,
+                            'item_description', i.item_description,
+                            'project', i.project,
+                            'qty_ordered', i.qty_ordered,
+                            'price', i.price,
+                            'total', i.total
+                        )
+                    ) as items
+                FROM orders o
+                LEFT JOIN order_items i ON o.id = i.order_id
+                WHERE o.id = ?
+                GROUP BY o.id
+            """, (order_id,))
+            
+            conn.commit()
+            return dict(cursor.fetchone())
+
+        except sqlite3.Error:
+            conn.rollback()
+            raise
 
 def init_db():
     # Ensure data directory exists

@@ -58,13 +58,6 @@ orders_project/
 - **Naming**: `test_<module>.py`
 
 
- ```python 
-def test_validate_date_format():
-assert validate_date("11/04/2025") == "11/04/2025" 
-with pytest.raises(ValueError): 
-validate_date("2025-04-11")
-
-
 Integration Tests (End-to-End)
 Integration tests validate the entire pipeline (e.g., creating an order, updating status, attaching files, sending Twilio notifications). They must:
 
