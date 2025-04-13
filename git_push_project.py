@@ -29,14 +29,14 @@ def main():
         run_git_command(["git", "stash", "push", "-u", "-m", "Auto-stash for push"], "Failed to stash changes")
         stashed = True
 
-        print("Staging all changes...")
-        run_git_command(["git", "add", "."], "Failed to stage changes")
+    print("Staging all changes (including new files)...")
+    run_git_command(["git", "add", "."], "Failed to stage changes")
 
-        diff = run_git_command(["git", "diff", "--staged", "--quiet"], "Failed to check staged changes")
-        if diff is None:
-            print("Committing changes...")
-            run_git_command(["git", "commit", "-m", "Auto-commit for push"], "Failed to commit changes")
-            committed = True
+    status_after_add = run_git_command(["git", "status", "--porcelain"], "Failed to check git status after add")
+    if status_after_add and status_after_add.strip():
+        print("Committing changes...")
+        run_git_command(["git", "commit", "-m", "Auto-commit for push"], "Failed to commit changes")
+        committed = True
 
     print("Pulling latest changes from origin main...")
     result = run_git_command(["git", "pull", "--rebase", "origin", "main"], "Failed to pull changes")
@@ -48,7 +48,7 @@ def main():
             run_git_command(["git", "stash", "pop"], "Failed to restore stashed changes")
         exit(1)
 
-    if committed or status.strip():
+    if committed or (status_after_add and status_after_add.strip()):
         print("Pushing changes to origin main...")
         result = run_git_command(["git", "push", "origin", "main"], "Failed to push changes")
         if result is None:
