@@ -1,7 +1,10 @@
 import subprocess
 import os
+from pathlib import Path
+import sys
 
 def run_git_command(args, error_msg):
+    print(f"Running: {' '.join(args)}")
     try:
         result = subprocess.run(args, capture_output=True, text=True, check=True)
         return result.stdout
@@ -11,62 +14,43 @@ def run_git_command(args, error_msg):
         return None
 
 def main():
-    project_dir = "/Users/stevencohen/Projects/universal_recycling/orders_project"
-    if os.getcwd() != project_dir:
-        try:
-            os.chdir(project_dir)
-        except FileNotFoundError:
-            print(f"Error: Directory {project_dir} not found")
-            exit(1)
+    project_dir = Path("/Users/stevencohen/Projects/universal_recycling/orders_project")
+    branch = "main"
 
-    print("Starting git push for Universal Recycling Purchase Orders...")
+    # Change to project directory
+    try:
+        os.chdir(project_dir)
+    except FileNotFoundError:
+        print(f"Error: Directory {project_dir} not found")
+        sys.exit(1)
 
-    status = run_git_command(["git", "status", "--porcelain"], "Failed to check git status")
-    stashed = False
-    committed = False
-    if status and status.strip():
-        print("Changes detected, stashing them (including untracked files)...")
-        run_git_command(["git", "stash", "push", "-u", "-m", "Auto-stash for push"], "Failed to stash changes")
-        stashed = True
+    print("📦 Starting Git push process...")
 
-    print("Staging all changes (including new files)...")
-    run_git_command(["git", "add", "."], "Failed to stage changes")
+    # Stage everything (including untracked files)
+    run_git_command(["git", "add", "--all"], "Failed to stage changes")
 
-    status_after_add = run_git_command(["git", "status", "--porcelain"], "Failed to check git status after add")
-    if status_after_add and status_after_add.strip():
-        print("Committing changes...")
-        run_git_command(["git", "commit", "-m", "Auto-commit for push"], "Failed to commit changes")
-        committed = True
+    # Check if anything is staged
+    diff = run_git_command(["git", "diff", "--cached", "--name-only"], "Failed to check staged files")
+    if not diff.strip():
+        print("✅ Nothing to commit or push.")
+        return
 
-    print("Pulling latest changes from origin main...")
-    result = run_git_command(["git", "pull", "--rebase", "origin", "main"], "Failed to pull changes")
-    if result is None:
-        print("Error: Pull failed, likely due to conflicts.")
-        print("Run 'git status' to check conflicts, resolve them, then 'git rebase --continue'.")
-        if stashed:
-            print("Restoring stashed changes...")
-            run_git_command(["git", "stash", "pop"], "Failed to restore stashed changes")
-        exit(1)
+    # Commit the changes
+    commit_msg = "Auto-commit for push (script)"
+    run_git_command(["git", "commit", "-m", commit_msg], "Failed to commit changes")
 
-    if committed or (status_after_add and status_after_add.strip()):
-        print("Pushing changes to origin main...")
-        result = run_git_command(["git", "push", "origin", "main"], "Failed to push changes")
-        if result is None:
-            print("Error: Push failed. Check network or run 'git status' for issues.")
-            if stashed:
-                print("Restoring stashed changes...")
-                run_git_command(["git", "stash", "pop"], "Failed to restore stashed changes")
-            exit(1)
-    else:
-        print("No changes to commit or push.")
+    # Pull with rebase to avoid conflicts
+    if run_git_command(["git", "pull", "--rebase", "origin", branch], "Pull failed") is None:
+        print("❌ Pull failed. Resolve manually.")
+        return
 
-    if stashed:
-        print("Restoring stashed changes...")
-        result = run_git_command(["git", "stash", "pop"], "Failed to restore stashed changes")
-        if result is None:
-            print("Warning: Stash pop had conflicts. Run 'git stash show' and resolve manually.")
+    # Push to GitHub
+    if run_git_command(["git", "push", "origin", branch], "Push failed") is None:
+        print("❌ Push failed. Resolve manually.")
+        return
 
-    print("Push completed successfully!")
+    print("🚀 Push completed successfully!")
 
 if __name__ == "__main__":
     main()
+
