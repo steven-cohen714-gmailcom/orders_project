@@ -62,14 +62,14 @@ async def create_new_order(order: OrderCreate):
         status = determine_status(total, auth_threshold)
 
         # Prepare order data
-        order_data = order.dict()
+        order_data = order.model_dump()
         order_data["status"] = status
         order_data["total"] = total
 
         # Create order and items in database
         result = create_order(
             order_data=order_data,
-            items=[item.dict() for item in order.items]
+            items=[item.model_dump() for item in order.items]
         )
 
         # Format the date in response

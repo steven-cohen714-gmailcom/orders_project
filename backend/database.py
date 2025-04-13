@@ -5,54 +5,59 @@ from typing import Dict, Any, List
 from datetime import datetime
 
 @contextmanager
-def get_db():
+def get_db(db_name: str = "data/orders.db"):
     """
     Context manager for database connections.
+    Args:
+        db_name: Database file path (default: data/orders.db)
     Ensures proper handling of connections and automatic closing.
     """
-    conn = sqlite3.connect('data/orders.db')
+    conn = sqlite3.connect(db_name)
     conn.row_factory = sqlite3.Row
     try:
         yield conn
     finally:
         conn.close()
 
-def get_setting(key: str) -> Any:
+def get_setting(key: str, db_name: str = "data/orders.db") -> Any:
     """
     Retrieve a setting value from the settings table.
     Args:
         key: The setting key to retrieve
+        db_name: Database file path
     Returns:
         The setting value
     """
-    with get_db() as conn:
+    with get_db(db_name) as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT value FROM settings WHERE key = ?", (key,))
         result = cursor.fetchone()
         return result['value'] if result else None
 
-def update_setting(key: str, value: Any) -> None:
+def update_setting(key: str, value: Any, db_name: str = "data/orders.db") -> None:
     """
     Update a setting value in the settings table.
     Args:
         key: The setting key to update
         value: The new value
+        db_name: Database file path
     """
-    with get_db() as conn:
+    with get_db(db_name) as conn:
         cursor = conn.cursor()
         cursor.execute("UPDATE settings SET value = ? WHERE key = ?", (value, key))
         conn.commit()
 
-def create_order(order_data: Dict[str, Any], items: List[Dict[str, Any]]) -> Dict[str, Any]:
+def create_order(order_data: Dict[str, Any], items: List[Dict[str, Any]], db_name: str = "data/orders.db") -> Dict[str, Any]:
     """
     Create a new order and its items in the database.
     Args:
         order_data: Dictionary containing order details
         items: List of dictionaries containing order item details
+        db_name: Database file path
     Returns:
         Dictionary containing the created order with items
     """
-    with get_db() as conn:
+    with get_db(db_name) as conn:
         cursor = conn.cursor()
         try:
             # Insert order
@@ -116,12 +121,12 @@ def create_order(order_data: Dict[str, Any], items: List[Dict[str, Any]]) -> Dic
             conn.rollback()
             raise
 
-def init_db():
+def init_db(db_name: str = "data/orders.db"):
     # Ensure data directory exists
     os.makedirs("data", exist_ok=True)
     
     # Connect to SQLite database
-    conn = sqlite3.connect("data/orders.db")
+    conn = sqlite3.connect(db_name)
     cursor = conn.cursor()
     
     # Create orders table
@@ -167,7 +172,7 @@ def init_db():
         )
     """)
     
-    # Create users table (Maintenance: Manage Users)
+    # Create users table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -177,7 +182,7 @@ def init_db():
         )
     """)
     
-    # Create items table (Maintenance: Manage Items)
+    # Create items table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS items (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -186,7 +191,7 @@ def init_db():
         )
     """)
     
-    # Create projects table (Maintenance: Manage Projects)
+    # Create projects table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS projects (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -208,7 +213,7 @@ def init_db():
         )
     """)
     
-    # Create settings table (Maintenance: Order Number Start, Authorization Threshold)
+    # Create settings table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS settings (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
