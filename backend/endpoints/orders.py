@@ -95,3 +95,45 @@ async def create_new_order(order: OrderCreate):
             status_code=500,
             detail=f"An unexpected error occurred: {str(e)}"
         )
+
+@router.get("")
+async def get_orders(status: Optional[str] = None):
+    """
+    Retrieve all orders or filter by status.
+    Args:
+        status: Optional status filter (e.g., Pending, Authorised)
+    Returns:
+        List of orders
+    Raises:
+        HTTPException: For database errors
+    """
+    try:
+        conn = sqlite3.connect("data/orders.db")
+        cursor = conn.cursor()
+        query = "SELECT id, order_number, status, created_date, total, order_note, supplier_note, requester FROM orders"
+        params = []
+        if status:
+            query += " WHERE status = ?"
+            params.append(status)
+        cursor.execute(query, params)
+        orders = cursor.fetchall()
+        conn.close()
+
+        # Format response
+        result = []
+        for order in orders:
+            result.append({
+                "id": order[0],
+                "order_number": order[1],
+                "status": order[2],
+                "created_date": datetime.fromisoformat(order[3]).strftime("%d/%m/%Y"),
+                "total": order[4],
+                "order_note": order[5],
+                "supplier_note": order[6],
+                "requester": order[7]
+            })
+
+        return {"orders": result}
+
+    except sqlite3.Error as e:
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
