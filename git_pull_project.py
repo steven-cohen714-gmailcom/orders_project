@@ -1,7 +1,10 @@
 import subprocess
 import os
+from pathlib import Path
+import sys
 
 def run_git_command(args, error_msg):
+    print(f"Running: {' '.join(args)}")
     try:
         result = subprocess.run(args, capture_output=True, text=True, check=True)
         return result.stdout
@@ -11,46 +14,45 @@ def run_git_command(args, error_msg):
         return None
 
 def main():
-    # Ensure we're in the project directory
-    project_dir = "/Users/stevencohen/Projects/universal_recycling/orders_project"
-    if os.getcwd() != project_dir:
-        try:
-            os.chdir(project_dir)
-        except FileNotFoundError:
-            print(f"Error: Directory {project_dir} not found")
-            exit(1)
+    project_dir = Path("/Users/stevencohen/Projects/universal_recycling/orders_project")
 
-    print("Starting git pull for Universal Recycling Purchase Orders...")
+    # Navigate to the project directory
+    try:
+        os.chdir(project_dir)
+    except FileNotFoundError:
+        print(f"❌ Directory {project_dir} not found.")
+        sys.exit(1)
 
-    # Check for any changes (staged, unstaged, untracked)
+    print("📥 Starting Git pull for Universal Recycling Purchase Orders...")
+
+    # Check for any local changes (modified, staged, or untracked)
     status = run_git_command(["git", "status", "--porcelain"], "Failed to check git status")
     stashed = False
-    if status and status.strip():
-        print("Changes detected, stashing them (including untracked files)...")
+
+    if status.strip():
+        print("📦 Local changes detected. Stashing (incl. untracked)...")
         run_git_command(["git", "stash", "push", "-u", "-m", "Auto-stash for pull"], "Failed to stash changes")
         stashed = True
 
-    # Pull with rebase
-    print("Pulling changes from origin main...")
-    result = run_git_command(["git", "pull", "--rebase", "origin", "main"], "Failed to pull changes")
-    if result is None:
-        print("Error: Pull failed, likely due to conflicts.")
-        print("Run 'git status' to check conflicts, resolve them, then 'git rebase --continue'.")
+    # Pull from origin with rebase
+    print("🔄 Pulling latest from origin/main...")
+    if run_git_command(["git", "pull", "--rebase", "origin", "main"], "Pull failed (conflict?)") is None:
+        print("❗ Pull failed. Resolve conflicts manually.")
         if stashed:
-            print("Restoring stashed changes...")
-            result = run_git_command(["git", "stash", "pop"], "Failed to restore stashed changes")
+            print("🔁 Attempting to restore stashed changes...")
+            result = run_git_command(["git", "stash", "pop"], "Failed to pop stash")
             if result is None:
-                print("Warning: Stash pop had conflicts. Run 'git stash show' and resolve manually.")
-        exit(1)
+                print("⚠️  Stash pop failed. Run 'git stash show' and resolve manually.")
+        sys.exit(1)
 
-    # Restore stashed changes if any
     if stashed:
-        print("Restoring stashed changes...")
+        print("🔁 Restoring stashed changes...")
         result = run_git_command(["git", "stash", "pop"], "Failed to restore stashed changes")
         if result is None:
-            print("Warning: Stash pop had conflicts. Run 'git stash show' and resolve manually.")
+            print("⚠️  Stash pop had conflicts. Run 'git stash show' and resolve manually.")
 
-    print("Pull completed successfully!")
+    print("✅ Pull completed successfully!")
 
 if __name__ == "__main__":
     main()
+
