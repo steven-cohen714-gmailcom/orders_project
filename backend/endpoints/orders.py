@@ -27,7 +27,7 @@ class OrderCreate(BaseModel):
     order_number: Optional[str] = None
     requester_id: int = Field(gt=0)
     order_note: Optional[str] = None
-    supplier_note: Optional[str] = None
+    note_to_supplier: Optional[str] = None
     supplier_id: Optional[int] = None
     items: List[OrderItem] = Field(min_length=1)
 
@@ -57,8 +57,7 @@ async def create_new_order(order: OrderCreate):
         with sqlite3.connect("data/orders.db") as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT name FROM requesters WHERE id = ?", (order.requester_id,))
-            requester_row = cursor.fetchone()
-            if not requester_row:
+            if not cursor.fetchone():
                 raise HTTPException(status_code=400, detail="Invalid requester_id")
 
         order_data = order.model_dump()
@@ -71,8 +70,8 @@ async def create_new_order(order: OrderCreate):
         with sqlite3.connect("data/orders.db") as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT name FROM requesters WHERE id = ?", (order.requester_id,))
-            requester_name = cursor.fetchone()
-            result["requester"] = requester_name[0] if requester_name else "Unknown"
+            name_row = cursor.fetchone()
+            result["requester"] = name_row[0] if name_row else "Unknown"
 
         return {"message": "Order created successfully", "order": result}
     except sqlite3.Error as e:
@@ -90,7 +89,7 @@ def get_all_orders():
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT o.id, o.order_number, o.status, o.created_date, o.total,
-                       o.order_note, o.supplier_note, r.name AS requester
+                       o.order_note, o.note_to_supplier, r.name AS requester
                 FROM orders o
                 LEFT JOIN requesters r ON o.requester_id = r.id
                 ORDER BY o.created_date DESC
@@ -110,7 +109,7 @@ def print_order_to_file(order_id: int):
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT o.order_number, o.status, o.created_date, o.received_date, o.total,
-                       o.order_note, o.supplier_note, r.name AS requester
+                       o.order_note, o.note_to_supplier, r.name AS requester
                 FROM orders o
                 LEFT JOIN requesters r ON o.requester_id = r.id
                 WHERE o.id = ?
@@ -127,7 +126,7 @@ def print_order_to_file(order_id: int):
             items = cursor.fetchall()
 
         with output_path.open("w", encoding="utf-8") as f:
-            fields = ["Order Number", "Status", "Created Date", "Received Date", "Total", "Order Note", "Supplier Note", "Requester"]
+            fields = ["Order Number", "Status", "Created Date", "Received Date", "Total", "Order Note", "Note to Supplier", "Requester"]
             f.write("\n".join([f"{label}: {value}" for label, value in zip(fields, order)]))
             f.write("\n\nLine Items:\n-----------\n")
             for item in items:
@@ -137,3 +136,126 @@ def print_order_to_file(order_id: int):
         return {"status": "✅ Order export triggered"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Print failed: {e}")
+
+@router.get("/pending")
+def get_pending_orders(requester_id: Optional[int] = None, supplier_id: Optional[int] = None):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+
+            base_query = """
+                SELECT o.id, o.order_number, o.status, o.created_date, o.total,
+                       o.order_note, o.note_to_supplier, r.name AS requester
+                FROM orders o
+                LEFT JOIN requesters r ON o.requester_id = r.id
+                WHERE o.status = 'Pending'
+            """
+            params = []
+
+            if requester_id:
+                base_query += " AND o.requester_id = ?"
+                params.append(requester_id)
+
+            if supplier_id:
+                base_query += " AND o.supplier_id = ?"
+                params.append(supplier_id)
+
+            base_query += " ORDER BY o.created_date DESC"
+
+            cursor.execute(base_query, params)
+            orders = [dict(row) for row in cursor.fetchall()]
+        return {"pending_orders": orders}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch pending orders: {e}")
+
+@router.post("/receive")
+def mark_order_received(receive_data: List[dict]):
+    try:
+        now = datetime.now().isoformat()
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+
+            order_ids_updated = set()
+            for item in receive_data:
+                order_id = item["order_id"]
+                item_id = item["item_id"]
+                qty_received = item["qty_received"]
+
+                cursor.execute("""
+                    UPDATE order_items
+                    SET qty_received = ?, received_date = ?
+                    WHERE id = ? AND order_id = ?
+                """, (qty_received, now, item_id, order_id))
+
+                cursor.execute("""
+                    INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
+                    VALUES (?, 'Received', ?, ?, ?)
+                """, (order_id, f"Item ID {item_id} received: {qty_received}", now, 0))
+
+                order_ids_updated.add(order_id)
+
+            for order_id in order_ids_updated:
+                cursor.execute("""
+                    SELECT COUNT(*) FROM order_items
+                    WHERE order_id = ? AND (qty_received IS NULL OR qty_received < qty_ordered)
+                """, (order_id,))
+                if cursor.fetchone()[0] == 0:
+                    cursor.execute("""
+                        UPDATE orders
+                        SET status = 'Received', received_date = ?
+                        WHERE id = ?
+                    """, (now, order_id))
+
+        return {"status": "✅ Order(s) marked as received"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to receive order: {e}")
+
+@router.get("/received")
+def get_received_orders(requester_id: Optional[int] = None, supplier_id: Optional[int] = None):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+
+            base_query = """
+                SELECT o.id, o.order_number, o.status, o.created_date, o.total,
+                       o.order_note, o.note_to_supplier, r.name AS requester
+                FROM orders o
+                LEFT JOIN requesters r ON o.requester_id = r.id
+                WHERE o.status = 'Received'
+            """
+            params = []
+
+            if requester_id:
+                base_query += " AND o.requester_id = ?"
+                params.append(requester_id)
+
+            if supplier_id:
+                base_query += " AND o.supplier_id = ?"
+                params.append(supplier_id)
+
+            base_query += " ORDER BY o.created_date DESC"
+
+            cursor.execute(base_query, params)
+            orders = [dict(row) for row in cursor.fetchall()]
+        return {"received_orders": orders}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch received orders: {e}")
+
+@router.get("/audit/{order_id}")
+def get_audit_trail(order_id: int):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT id, action, details, action_date, user_id
+                FROM audit_trail
+                WHERE order_id = ?
+                ORDER BY action_date ASC
+            """, (order_id,))
+            audit = [dict(row) for row in cursor.fetchall()]
+        return {"audit_trail": audit}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch audit trail: {e}")

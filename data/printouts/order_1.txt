@@ -1,0 +1,18 @@
+Order Number: PO002
+Status: Pending
+Created Date: 2025-04-17T09:53:39.614927
+Received Date: None
+Total: 29.97
+Order Note: Shell test order
+Supplier Note: Test supplier
+Requester: Aaron
+
+Line Items:
+-----------
+Item Code: TEST123
+Description: Integration Widget
+Project: TEST
+Qty: 3.0
+Price: 9.99
+Total: 29.97
+

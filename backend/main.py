@@ -1,6 +1,8 @@
 from fastapi import FastAPI
+from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
-from backend.endpoints import orders
+
+from backend.endpoints import orders, auth
 from backend.database import init_db
 
 # Initialize the database
@@ -20,8 +22,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include the orders router
+# Add session middleware for login
+app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")  # Replace in production
+
+# Routers
 app.include_router(orders.router)
+app.include_router(auth.router)
 
 if __name__ == "__main__":
     import uvicorn

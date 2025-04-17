@@ -1,69 +1,59 @@
+#!/usr/bin/env python3
 from pathlib import Path
 
-TARGET_FILE = Path("backend/endpoints/orders.py")
+orders_py = Path("backend/endpoints/orders.py")
 
-receive_route_code = '''
+route_code = '''
 @router.post("/receive")
-async def receive_order(payload: dict):
-    \"\"\"
-    Mark items in an order as received.
-    Updates qty_received, status, and received_date if fully received.
-    \"\"\"
-    import sqlite3
-    from datetime import datetime
-
-    order_id = payload.get("order_id")
-    received_items = payload.get("items", [])
-
-    if not order_id or not received_items:
-        raise HTTPException(status_code=400, detail="Missing order_id or items.")
-
+def mark_order_received(receive_data: List[dict]):
     try:
-        conn = sqlite3.connect("data/orders.db")
-        cursor = conn.cursor()
+        now = datetime.now().isoformat()
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
 
-        # Update each item's qty_received
-        for item in received_items:
-            cursor.execute(\"\"\"
-                UPDATE order_items
-                SET qty_received = ?
-                WHERE order_id = ? AND item_code = ?
-            \"\"\", (
-                item["qty_received"],
-                order_id,
-                item["item_code"]
-            ))
+            order_ids_updated = set()
+            for item in receive_data:
+                order_id = item["order_id"]
+                item_id = item["item_id"]
+                qty_received = item["qty_received"]
 
-        # Check if order is fully received
-        cursor.execute(\"\"\"
-            SELECT qty_ordered, qty_received
-            FROM order_items
-            WHERE order_id = ?
-        \"\"\", (order_id,))
-        all_items = cursor.fetchall()
+                cursor.execute("""
+                    UPDATE order_items
+                    SET qty_received = ?, received_date = ?
+                    WHERE id = ? AND order_id = ?
+                """, (qty_received, now, item_id, order_id))
 
-        fully_received = all(
-            qty_received is not None and qty_received >= qty_ordered
-            for qty_ordered, qty_received in all_items
-        )
+                cursor.execute("""
+                    INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
+                    VALUES (?, 'Received', ?, ?, ?)
+                """, (order_id, f"Item ID {item_id} received: {qty_received}", now, 0))
 
-        if fully_received:
-            cursor.execute(\"\"\"
-                UPDATE orders
-                SET status = 'Received',
-                    received_date = ?
-                WHERE id = ?
-            \"\"\", (datetime.now().isoformat(), order_id))
-        conn.commit()
-        conn.close()
-        return {\"message\": \"Order updated successfully\", \"fully_received\": fully_received}
+                order_ids_updated.add(order_id)
 
-    except sqlite3.Error as e:
-        raise HTTPException(status_code=500, detail=f\"Database error: {str(e)}\")
+            for order_id in order_ids_updated:
+                cursor.execute("""
+                    SELECT COUNT(*) FROM order_items
+                    WHERE order_id = ? AND (qty_received IS NULL OR qty_received < qty_ordered)
+                """, (order_id,))
+                if cursor.fetchone()[0] == 0:
+                    cursor.execute("""
+                        UPDATE orders
+                        SET status = 'Received', received_date = ?
+                        WHERE id = ?
+                    """, (now, order_id))
+
+        return {"status": "✅ Order(s) marked as received"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to receive order: {e}")
 '''
-if __name__ == "__main__":
-    content = TARGET_FILE.read_text()
-    insert_point = content.rfind('@router.get')
-    updated = content[:insert_point] + receive_route_code.strip() + '\n\n' + content[insert_point:]
-    TARGET_FILE.write_text(updated)
-    print("✅ /receive route injected.")
+
+if orders_py.exists():
+    code = orders_py.read_text()
+    if "/receive" in code:
+        print("⚠️  Route already exists in orders.py — skipping.")
+    else:
+        with open(orders_py, "a") as f:
+            f.write("\n" + route_code.strip() + "\n")
+        print("✅ /receive route injected into orders.py")
+else:
+    print("❌ backend/endpoints/orders.py not found")
