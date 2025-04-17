@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Order - Universal Recycling</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    .actions {
+      margin-top: 1rem;
+    }
+  </style>
+  <script>
+    function addRow() {
+      const tbody = document.getElementById("items-body");
+      const row = tbody.insertRow();
+      row.innerHTML = `
+        <td>
+          <select>
+            <option>ITM001</option>
+            <option>ITM002</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="Description" /></td>
+        <td>
+          <select>
+            <option>PRO001</option>
+            <option>PRO002</option>
+          </select>
+        </td>
+        <td><input type="number" value="1" onchange="updateTotal(this)" /></td>
+        <td><input type="number" value="100" onchange="updateTotal(this)" /></td>
+        <td class="line-total">100</td>
+        <td><button onclick="deleteRow(this)">❌</button></td>
+      `;
+      updateGrandTotal();
+    }
+
+    function deleteRow(btn) {
+      const row = btn.parentNode.parentNode;
+      row.parentNode.removeChild(row);
+      updateGrandTotal();
+    }
+
+    function updateTotal(input) {
+      const row = input.closest("tr");
+      const qty = parseFloat(row.cells[3].querySelector("input").value) || 0;
+      const price = parseFloat(row.cells[4].querySelector("input").value) || 0;
+      const total = qty * price;
+      row.cells[5].textContent = total.toFixed(2);
+      updateGrandTotal();
+    }
+
+    function updateGrandTotal() {
+      let sum = 0;
+      document.querySelectorAll(".line-total").forEach(cell => {
+        sum += parseFloat(cell.textContent) || 0;
+      });
+      document.getElementById("grand-total").textContent = `R${sum.toFixed(2)}`;
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      fetch("/lookups/suppliers")
+        .then(res => res.json())
+        .then(data => {
+          const dropdown = document.getElementById("supplier");
+          data.suppliers.forEach(supplier => {
+            const opt = document.createElement("option");
+            opt.value = supplier.id;
+            opt.textContent = `${supplier.account_number} — ${supplier.name}`;
+            dropdown.appendChild(opt);
+          });
+        })
+        .catch(err => console.error("Failed to load suppliers:", err));
+
+      fetch("/lookups/requesters")
+        .then(res => res.json())
+        .then(data => {
+          const dropdown = document.getElementById("requester");
+          data.requesters.forEach(requester => {
+            const opt = document.createElement("option");
+            opt.value = requester.id;
+            opt.textContent = requester.name;
+            dropdown.appendChild(opt);
+          });
+        })
+        .catch(err => console.error("Failed to load requesters:", err));
+    });
+  </script>
+</head>
+<body>
+  <h2>Submit a New Requisition</h2>
+
+  <label>Order Number:
+    <input type="text" value="Auto-generated" readonly>
+  </label><br><br>
+
+  <label>Requester:
+    <select id="requester" name="requester_id"></select>
+  </label>
+
+  <label>Supplier:
+    <select id="supplier" name="supplier_id"></select>
+  </label><br><br>
+
+  <label>Note to Supplier:</label><br>
+  <textarea rows="3" cols="60" name="note_to_supplier"></textarea><br><br>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Item Code</th>
+        <th>Description</th>
+        <th>Project</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="items-body"></tbody>
+  </table>
+
+  <button onclick="addRow()">Add New Line</button>
+
+  <div class="actions">
+    <h3>Total Order Value: <span id="grand-total">R0.00</span></h3>
+    <button>Submit</button>
+  </div>
+</body>
+</html>

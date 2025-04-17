@@ -259,3 +259,11 @@ def get_audit_trail(order_id: int):
         return {"audit_trail": audit}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch audit trail: {e}")
+    
+from fastapi import Request
+from fastapi.responses import HTMLResponse
+
+@router.get("/new", response_class=HTMLResponse)
+def show_new_order_form(request: Request):
+    return templates.TemplateResponse("new_order.html", {"request": request})
+

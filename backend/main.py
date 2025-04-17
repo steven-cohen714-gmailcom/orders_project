@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.endpoints import orders, auth
+from backend.endpoints import orders, auth, lookups
 from backend.database import init_db
 
 # Initialize the database
@@ -28,6 +28,7 @@ app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")  # Replace
 # Routers
 app.include_router(orders.router)
 app.include_router(auth.router)
+app.include_router(lookups.router)
 
 if __name__ == "__main__":
     import uvicorn
