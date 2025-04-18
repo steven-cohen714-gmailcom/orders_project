@@ -1,127 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>New Order - Universal Recycling</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 2rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 0.5rem;
-      text-align: center;
-    }
-    .actions {
-      margin-top: 1rem;
-    }
+    body { font-family: Arial, sans-serif; margin: 2rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
+    input, select, textarea, button { padding: 0.4rem; font-size: 1rem; }
+    .inline { margin-right: 2rem; }
+    button { cursor: pointer; }
   </style>
-  <script>
-    function addRow() {
-      const tbody = document.getElementById("items-body");
-      const row = tbody.insertRow();
-      row.innerHTML = `
-        <td>
-          <select>
-            <option>ITM001</option>
-            <option>ITM002</option>
-          </select>
-        </td>
-        <td><input type="text" placeholder="Description" /></td>
-        <td>
-          <select>
-            <option>PRO001</option>
-            <option>PRO002</option>
-          </select>
-        </td>
-        <td><input type="number" value="1" onchange="updateTotal(this)" /></td>
-        <td><input type="number" value="100" onchange="updateTotal(this)" /></td>
-        <td class="line-total">100</td>
-        <td><button onclick="deleteRow(this)">❌</button></td>
-      `;
-      updateGrandTotal();
-    }
-
-    function deleteRow(btn) {
-      const row = btn.parentNode.parentNode;
-      row.parentNode.removeChild(row);
-      updateGrandTotal();
-    }
-
-    function updateTotal(input) {
-      const row = input.closest("tr");
-      const qty = parseFloat(row.cells[3].querySelector("input").value) || 0;
-      const price = parseFloat(row.cells[4].querySelector("input").value) || 0;
-      const total = qty * price;
-      row.cells[5].textContent = total.toFixed(2);
-      updateGrandTotal();
-    }
-
-    function updateGrandTotal() {
-      let sum = 0;
-      document.querySelectorAll(".line-total").forEach(cell => {
-        sum += parseFloat(cell.textContent) || 0;
-      });
-      document.getElementById("grand-total").textContent = `R${sum.toFixed(2)}`;
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      fetch("/lookups/suppliers")
-        .then(res => res.json())
-        .then(data => {
-          const dropdown = document.getElementById("supplier");
-          data.suppliers.forEach(supplier => {
-            const opt = document.createElement("option");
-            opt.value = supplier.id;
-            opt.textContent = `${supplier.account_number} — ${supplier.name}`;
-            dropdown.appendChild(opt);
-          });
-        })
-        .catch(err => console.error("Failed to load suppliers:", err));
-
-      fetch("/lookups/requesters")
-        .then(res => res.json())
-        .then(data => {
-          const dropdown = document.getElementById("requester");
-          data.requesters.forEach(requester => {
-            const opt = document.createElement("option");
-            opt.value = requester.id;
-            opt.textContent = requester.name;
-            dropdown.appendChild(opt);
-          });
-        })
-        .catch(err => console.error("Failed to load requesters:", err));
-    });
-  </script>
 </head>
 <body>
-  <h2>Submit a New Requisition</h2>
+  <h2>Submit a New Order</h2>
 
-  <label>Order Number:
-    <input type="text" value="Auto-generated" readonly>
-  </label><br><br>
+  <div>
+    <label class="inline">Request Date:
+      <input type="date" id="request-date">
+    </label>
+    <label class="inline">Order Number:
+      <input type="text" id="order-number" value="ORD-????" readonly>
+    </label>
+  </div><br>
 
-  <label>Requester:
-    <select id="requester" name="requester_id"></select>
-  </label>
+  <div>
+    <label class="inline">Requester:
+      <select id="requester" name="requester_id">
+        <option value="">Select requester</option>
+      </select>
+    </label>
+    <label class="inline">Supplier:
+      <select id="supplier" name="supplier_id">
+        <option value="">Select supplier</option>
+      </select>
+    </label>
+  </div><br>
 
-  <label>Supplier:
-    <select id="supplier" name="supplier_id"></select>
-  </label><br><br>
-
-  <label>Note to Supplier:</label><br>
+  <label>Special Instructions for Supplier:</label><br>
   <textarea rows="3" cols="60" name="note_to_supplier"></textarea><br><br>
 
   <table>
     <thead>
       <tr>
-        <th>Item Code</th>
+        <th>Stock Code</th>
         <th>Description</th>
         <th>Project</th>
         <th>Qty</th>
@@ -133,11 +55,185 @@
     <tbody id="items-body"></tbody>
   </table>
 
-  <button onclick="addRow()">Add New Line</button>
+  <button type="button" id="add-line">➕ Add New Line</button>
 
   <div class="actions">
     <h3>Total Order Value: <span id="grand-total">R0.00</span></h3>
-    <button>Submit</button>
+    <button type="button" id="preview-order">Preview Order</button>
+    <button type="button" id="submit-order">Submit</button>
   </div>
+
+  <script>
+    let itemsList = [];
+    let projectsList = [];
+
+    function updateGrandTotal() {
+      let sum = 0;
+      document.querySelectorAll(".line-total").forEach(cell => {
+        sum += parseFloat(cell.textContent) || 0;
+      });
+      document.getElementById("grand-total").textContent = `R${sum.toFixed(2)}`;
+    }
+
+    function updateTotal(input) {
+      const row = input.closest("tr");
+      const qty = parseFloat(row.cells[3].querySelector("input").value) || 0;
+      const price = parseFloat(row.cells[4].querySelector("input").value) || 0;
+      row.cells[5].textContent = (qty * price).toFixed(2);
+      updateGrandTotal();
+    }
+
+    function autoFillDescription(sel) {
+      const desc = sel.selectedOptions[0]?.dataset.description ?? "";
+      sel.closest("tr").querySelector("td:nth-child(2) input").value = desc;
+    }
+
+    function deleteRow(btn) {
+      btn.closest("tr").remove();
+      updateGrandTotal();
+    }
+
+    function addRow() {
+      const tbody = document.getElementById("items-body");
+      const row = tbody.insertRow();
+
+      const itemOpts = itemsList.map(i =>
+        `<option value="${i.item_code}" data-description="${i.item_description}">${i.item_code} — ${i.item_description}</option>`
+      ).join("");
+
+      const projOpts = projectsList.map(p =>
+        `<option value="${p.project_code}">${p.project_code} — ${p.project_name}</option>`
+      ).join("");
+
+      row.innerHTML = `
+        <td>
+          <select onchange="autoFillDescription(this)">
+            <option value="">Select</option>
+            ${itemOpts}
+          </select>
+        </td>
+        <td><input type="text" placeholder="Description"></td>
+        <td>
+          <select>
+            <option value="">Select</option>
+            ${projOpts}
+          </select>
+        </td>
+        <td><input type="number" value="1" min="1" onchange="updateTotal(this)"></td>
+        <td><input type="number" value="0" min="0" onchange="updateTotal(this)"></td>
+        <td class="line-total">0.00</td>
+        <td><button type="button" onclick="deleteRow(this)">❌</button></td>
+      `;
+      updateGrandTotal();
+    }
+
+    async function loadDropdowns() {
+      try {
+        const [supR, reqR, itmR, prjR, numR] = await Promise.all([
+          fetch("/lookups/suppliers").then(r => r.json()),
+          fetch("/lookups/requesters").then(r => r.json()),
+          fetch("/lookups/items").then(r => r.json()),
+          fetch("/lookups/projects").then(r => r.json()),
+          fetch("/orders/next_order_number").then(r => r.json())
+        ]);
+
+        const supplierDropdown = document.getElementById("supplier");
+        supplierDropdown.innerHTML = '<option value="">Select supplier</option>';
+        supR.suppliers.forEach(s => {
+          const opt = document.createElement("option");
+          opt.value = s.id;
+          opt.textContent = `${s.account_number} — ${s.name}`;
+          supplierDropdown.appendChild(opt);
+        });
+
+        const requesterDropdown = document.getElementById("requester");
+        requesterDropdown.innerHTML = '<option value="">Select requester</option>';
+        reqR.requesters.forEach(r => {
+          const opt = document.createElement("option");
+          opt.value = r.id;
+          opt.textContent = r.name;
+          requesterDropdown.appendChild(opt);
+        });
+
+        itemsList = itmR.items || [];
+        projectsList = prjR.projects || [];
+
+        document.getElementById("order-number").value = numR.next_order_number || "ORD-????";
+        document.getElementById("request-date").valueAsDate = new Date();
+
+        addRow();
+      } catch (err) {
+        console.error("Lookup loading failed", err);
+      }
+    }
+
+    function previewOrder() {
+      const rd = document.getElementById("request-date").value;
+      const rq = document.getElementById("requester").value;
+      const sp = document.getElementById("supplier").value;
+      const nt = document.querySelector("textarea[name='note_to_supplier']").value;
+
+      const items = Array.from(document.querySelectorAll("#items-body tr")).map(tr => {
+        const cells = tr.querySelectorAll("td");
+        return {
+          item_code: cells[0].querySelector("select").value,
+          item_description: cells[1].querySelector("input").value,
+          project: cells[2].querySelector("select").value,
+          qty_ordered: parseFloat(cells[3].querySelector("input").value) || 0,
+          price: parseFloat(cells[4].querySelector("input").value) || 0
+        };
+      });
+
+      alert(JSON.stringify({ request_date: rd, requester_id: rq, supplier_id: sp, note_to_supplier: nt, items }, null, 2));
+    }
+
+    async function submitOrder() {
+      const rd    = document.getElementById("request-date").value;
+      const rqId  = +document.getElementById("requester").value;
+      const spId  = +document.getElementById("supplier").value;
+      const nt    = document.querySelector("textarea[name='note_to_supplier']").value;
+      const rows  = document.querySelectorAll("#items-body tr");
+
+      if (!rd || !rqId || !spId || rows.length === 0) {
+        return alert("⚠️ Fill date, requester, supplier & at least one line.");
+      }
+
+      const items = Array.from(rows).map(row => {
+        const c = row.querySelectorAll("td");
+        return {
+          item_code: c[0].querySelector("select").value,
+          item_description: c[1].querySelector("input").value,
+          project: c[2].querySelector("select").value,
+          qty_ordered: parseFloat(c[3].querySelector("input").value) || 0,
+          price: parseFloat(c[4].querySelector("input").value) || 0
+        };
+      });
+
+      try {
+        const res = await fetch("/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ request_date: rd, requester_id: rqId, supplier_id: spId, note_to_supplier: nt, items })
+        });
+        const data = await res.json();
+        if (data.message === "Order created successfully") {
+          alert(`✅ Order ${data.order.order_number} created.`);
+          location.reload();
+        } else {
+          alert(`❌ ${data.detail || data.message}`);
+        }
+      } catch (err) {
+        console.error("Submit failed", err);
+        alert("❌ Submission failed.");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadDropdowns();
+      document.getElementById("add-line").addEventListener("click", addRow);
+      document.getElementById("preview-order").addEventListener("click", previewOrder);
+      document.getElementById("submit-order").addEventListener("click", submitOrder);
+    });
+  </script>
 </body>
 </html>

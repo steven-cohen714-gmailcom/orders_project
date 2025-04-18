@@ -1525,3 +1525,355 @@ INFO:     127.0.0.1:50549 - "GET /orders/new HTTP/1.1" 200 OK
 INFO:     127.0.0.1:50551 - "GET /lookups/requesters HTTP/1.1" 200 OK
 INFO:     127.0.0.1:50549 - "GET /lookups/suppliers HTTP/1.1" 200 OK
 INFO:     127.0.0.1:50549 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52400 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29735]
+Fatal Python error: init_sys_streams: can't initialize sys standard streams
+Python runtime state: core initialized
+OSError: [Errno 9] Bad file descriptor
+
+Current thread 0x000000020141c840 (most recent call first):
+  <no Python frame>
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+Fatal Python error: init_sys_streams: can't initialize sys standard streams
+Python runtime state: core initialized
+OSError: [Errno 9] Bad file descriptor
+
+Current thread 0x000000020141c840 (most recent call first):
+  <no Python frame>
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [77463] using StatReload
+INFO:     Started server process [77466]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54136 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54141 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54142 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54138 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54136 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54194 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54198 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54200 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54202 - "GET /orders/next_order_number HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54196 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54194 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54194 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [78977] using StatReload
+INFO:     Started server process [78982]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54254 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54254 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54256 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54258 - "GET /orders/next_order_number HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54261 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54262 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54262 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54312 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54316 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54317 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54319 - "GET /orders/next_order_number HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54313 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54312 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54312 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54352 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54354 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54356 - "GET /orders/next_order_number HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54360 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54352 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54358 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54358 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'scripts/dump_project_summary.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [78982]
+INFO:     Started server process [83373]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [83373]
+INFO:     Started server process [84266]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54762 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54762 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54770 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54764 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54767 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54769 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54769 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'scripts/dump_project_summary.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [84266]
+INFO:     Started server process [84693]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/dump_project_summary.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [84693]
+INFO:     Started server process [85459]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55300 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55302 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55304 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55304 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55300 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55307 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55308 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55400 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55402 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55407 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55400 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55404 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55408 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55408 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55658 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55658 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55666 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55660 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55658 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55662 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55664 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55695 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55698 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55701 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55696 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55695 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55702 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55702 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [85459]
+Process SpawnProcess-6:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/lookups.py", line 1, in <module>
+    @router.get("/items")
+     ^^^^^^
+NameError: name 'router' is not defined
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+Process SpawnProcess-7:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/lookups.py", line 1, in <module>
+    @router.get("/items")
+     ^^^^^^
+NameError: name 'router' is not defined
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [97121] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/lookups.py", line 1, in <module>
+    @router.get("/items")
+     ^^^^^^
+NameError: name 'router' is not defined
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [97200] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/lookups.py", line 1, in <module>
+    @router.get("/items")
+     ^^^^^^
+NameError: name 'router' is not defined
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+INFO:     Started server process [97606]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [97664] using StatReload
+INFO:     Started server process [97672]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55804 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55804 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55805 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55811 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55809 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55808 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55808 - "GET /favicon.ico HTTP/1.1" 404 Not Found

@@ -13,16 +13,20 @@ DB_FILE = PROJECT_ROOT / 'data' / 'orders.db'
 
 # --- Helpers ---
 def build_tree(path: Path, prefix='') -> str:
-    """Return an ASCII tree of the project structure."""
-    lines = []
-    entries = sorted(p for p in path.iterdir() if p.name not in EXCLUDE_DIRS)
-    for idx, entry in enumerate(entries):
-        connector = '└── ' if idx == len(entries)-1 else '├── '
-        lines.append(f"{prefix}{connector}{entry.name}")
-        if entry.is_dir():
-            extension = '    ' if idx == len(entries)-1 else '│   '
-            lines.append(build_tree(entry, prefix + extension))
-    return '\n'.join(lines)
+    """Return an ASCII tree of the project structure up to depth 3, skipping excluded directories."""
+    def _build(path, prefix, level):
+        if level > 3:
+            return []
+        lines = []
+        entries = sorted(p for p in path.iterdir() if not p.name.startswith('.') and p.name not in EXCLUDE_DIRS)
+        for idx, entry in enumerate(entries):
+            connector = '└── ' if idx == len(entries) - 1 else '├── '
+            lines.append(f"{prefix}{connector}{entry.name}")
+            if entry.is_dir():
+                extension = '    ' if idx == len(entries) - 1 else '│   '
+                lines.extend(_build(entry, prefix + extension, level + 1))
+        return lines
+    return f"{path}\n" + '\n'.join(_build(path, prefix, level=1))
 
 def extract_desc(src: str) -> str:
     """Pull first triple‑quoted docstring or line‑comment as description."""

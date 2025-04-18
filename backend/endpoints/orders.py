@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, Request
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from datetime import datetime
@@ -34,6 +35,7 @@ class OrderCreate(BaseModel):
     @property
     def total(self) -> float:
         return sum(item.total for item in self.items)
+
 
 @router.post("")
 async def create_new_order(order: OrderCreate):
@@ -81,6 +83,7 @@ async def create_new_order(order: OrderCreate):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
+
 @router.get("/all")
 def get_all_orders():
     try:
@@ -98,6 +101,7 @@ def get_all_orders():
         return {"orders": orders}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch orders: {e}")
+
 
 @router.get("/print_to_file/{order_id}")
 def print_order_to_file(order_id: int):
@@ -137,6 +141,7 @@ def print_order_to_file(order_id: int):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Print failed: {e}")
 
+
 @router.get("/pending")
 def get_pending_orders(requester_id: Optional[int] = None, supplier_id: Optional[int] = None):
     try:
@@ -168,6 +173,7 @@ def get_pending_orders(requester_id: Optional[int] = None, supplier_id: Optional
         return {"pending_orders": orders}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch pending orders: {e}")
+
 
 @router.post("/receive")
 def mark_order_received(receive_data: List[dict]):
@@ -211,6 +217,7 @@ def mark_order_received(receive_data: List[dict]):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to receive order: {e}")
 
+
 @router.get("/received")
 def get_received_orders(requester_id: Optional[int] = None, supplier_id: Optional[int] = None):
     try:
@@ -243,6 +250,7 @@ def get_received_orders(requester_id: Optional[int] = None, supplier_id: Optiona
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch received orders: {e}")
 
+
 @router.get("/audit/{order_id}")
 def get_audit_trail(order_id: int):
     try:
@@ -259,11 +267,17 @@ def get_audit_trail(order_id: int):
         return {"audit_trail": audit}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch audit trail: {e}")
-    
-from fastapi import Request
-from fastapi.responses import HTMLResponse
+
 
 @router.get("/new", response_class=HTMLResponse)
 def show_new_order_form(request: Request):
     return templates.TemplateResponse("new_order.html", {"request": request})
+
+@router.get("/next_order_number")
+def get_next_order_number():
+    try:
+        current = get_setting("order_number_start")
+        return {"next_order_number": current}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch next order number: {e}")
 
