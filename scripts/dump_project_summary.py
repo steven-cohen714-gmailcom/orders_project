@@ -13,7 +13,6 @@ DB_FILE = PROJECT_ROOT / 'data' / 'orders.db'
 
 # --- Helpers ---
 def build_tree(path: Path, prefix='') -> str:
-    """Return an ASCII tree of the project structure up to depth 3, skipping excluded directories."""
     def _build(path, prefix, level):
         if level > 3:
             return []
@@ -29,7 +28,6 @@ def build_tree(path: Path, prefix='') -> str:
     return f"{path}\n" + '\n'.join(_build(path, prefix, level=1))
 
 def extract_desc(src: str) -> str:
-    """Pull first triple‑quoted docstring or line‑comment as description."""
     m = re.search(r'"""(.*?)"""', src, re.DOTALL)
     if not m:
         m = re.search(r"'''(.*?)'''", src, re.DOTALL)
@@ -48,7 +46,6 @@ def read_src(path: Path) -> str:
         return f"<!-- ERROR reading {path.name}: {e} -->"
 
 def dump_db_schema(db_path: Path) -> str:
-    """Return Markdown of the SQLite schema and a brief purpose header."""
     md = "## 🗄️ Database Schema (`data/orders.db`)\n\n"
     if not db_path.exists():
         return md + "_No DB found_\n\n"
@@ -65,28 +62,80 @@ def dump_db_schema(db_path: Path) -> str:
     conn.close()
     return md
 
+def dump_test_summary() -> str:
+    md = "## 🧪 Test Coverage Summary\n\n"
+    md += "| Test Script | Purpose | Status |\n"
+    md += "|-------------|---------|--------|\n"
+    summary = {
+        "test_authorisation_threshold_trigger.py": "High-value order triggers auth flow",
+        "test_invalid_data_handling.py": "Ensures invalid payloads return 422/400",
+        "test_invalid_items_variants.py": "Covers malformed line item edge cases",
+        "test_pipeline_end_to_end.py": "Full pipeline test: creation → receive",
+        "test_receive_partial.py": "Tests partial receiving with audit tracking",
+    }
+    scripts_dir = PROJECT_ROOT / "scripts"
+    for test_file in sorted(scripts_dir.glob("test_*.py")):
+        name = test_file.name
+        status = "✅"
+        purpose = summary.get(name, extract_desc(read_src(test_file)))
+        md += f"| `{name}` | {purpose} | {status} |\n"
+    md += "\n"
+    return md
+
+def extra_sections():
+    return """
+## 🔐 Users & Roles
+
+| Username | Role  |
+|----------|-------|
+| Steven   | Admin |
+| Aaron    | Edit  |
+| Yolandi  | View  |
+
+Passwords are hashed; assumed defaults for local testing: `password`.
+
+## ⚙️ System Settings
+
+| Key                 | Value   |
+|----------------------|---------|
+| auth_threshold       | 10000   |
+| order_number_start   | URC1024 |
+| last_order_number    | URC000  |
+
+## 🚦 FastAPI Endpoint Summary
+
+| Endpoint                     | Method    | Status         |
+|------------------------------|-----------|----------------|
+| `/orders`                   | POST      | ✅ Implemented |
+| `/orders/receive`           | POST      | ✅ Implemented |
+| `/orders/next_order_number` | GET       | ✅ Implemented |
+| `/attachments/upload`       | POST      | ✅ Implemented |
+| `/notes`                    | GET/POST  | ✅ Implemented |
+| `/audit`                    | GET       | ⏳ Pending     |
+| `/orders/print`             | GET       | ⏳ Planned     |
+| `/lookups/suppliers`        | GET       | ✅ Implemented |
+| `/lookups/requesters`       | GET       | ✅ Implemented |
+| `/lookups/projects`         | GET       | ✅ Implemented |
+| `/lookups/items`            | GET       | ✅ Implemented |
+"""
+
 # --- Main dump ---
 def main():
     md = []
-    # Header
     md.append(f"# 📦 Project Snapshot\nGenerated: {datetime.now():%Y-%m-%d %H:%M:%S}\n")
-    # Tree
-    md.append("## 📁 Directory Tree\n```\n" + build_tree(PROJECT_ROOT) + "\n```\n")
-    # Source files
+    md.append("## 📁 Directory Tree\n````\n" + build_tree(PROJECT_ROOT) + "\n````")
     md.append("## 📄 Source Files\n")
     for root, dirs, files in os.walk(PROJECT_ROOT):
         dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
         for f in sorted(files):
             p = Path(root) / f
-            if p == OUTPUT_MD: 
+            if p == OUTPUT_MD:
                 continue
             rel = p.relative_to(PROJECT_ROOT)
             src = read_src(p)
             desc = extract_desc(src)
             md.append(f"### `{rel}`\n**{desc}**\n```python\n{src}\n```\n")
-    # DB schema
     md.append(dump_db_schema(DB_FILE))
-    # Narrative
     md.append("## 📝 Project summary\n"
               "I am busy building a Purchase Order system for Universal Recycling.\n\n"
               "**Testing Methodology:**\n"
@@ -111,11 +160,11 @@ def main():
               "- Code reusability is a must (e.g. date handling, filters)\n\n"
               "**How Steven works with ChatGPT:**\n"
               "- Steven doesn’t know coding; he’s decent with terminal commands\n"
-              "- He uses VS Code, wants brief error messages & clear steps\n")
-    # Write out
+              "- He uses VS Code, wants brief error messages & clear steps\n")
+    md.append(extra_sections())
+    md.append(dump_test_summary())
     OUTPUT_MD.write_text('\n'.join(md), encoding='utf-8')
     print(f"✅ Written {OUTPUT_MD}")
 
 if __name__ == '__main__':
     main()
-

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, UploadFile, Form
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from typing import List, Optional
@@ -6,12 +6,24 @@ from datetime import datetime
 from fastapi.templating import Jinja2Templates
 import sqlite3
 from pathlib import Path
+import json
+import shutil
 
 from ..database import create_order, get_setting, update_setting
 from ..utils.order_utils import generate_order_number, determine_status, validate_order_items
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 templates = Jinja2Templates(directory="frontend/templates")
+
+UPLOAD_DIR = Path("data/uploads")
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+def log_event(filename: str, data: dict):
+    log_path = Path(f"logs/{filename}")
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with log_path.open("a", encoding="utf-8") as f:
+        timestamp = datetime.now().isoformat()
+        f.write(f"[{timestamp}] {json.dumps(data, ensure_ascii=False)}\n")
 
 class OrderItem(BaseModel):
     item_code: str = Field(min_length=1)
@@ -35,7 +47,6 @@ class OrderCreate(BaseModel):
     @property
     def total(self) -> float:
         return sum(item.total for item in self.items)
-
 
 @router.post("")
 async def create_new_order(order: OrderCreate):
@@ -66,6 +77,8 @@ async def create_new_order(order: OrderCreate):
         order_data["status"] = status
         order_data["total"] = total
 
+        log_event("new_orders_log.txt", {"action": "submit_attempt", "order_data": order_data})
+
         result = create_order(order_data=order_data, items=[item.model_dump() for item in order.items])
         result["created_date"] = datetime.fromisoformat(result["created_date"]).strftime("%d/%m/%Y")
 
@@ -75,209 +88,91 @@ async def create_new_order(order: OrderCreate):
             name_row = cursor.fetchone()
             result["requester"] = name_row[0] if name_row else "Unknown"
 
+        log_event("new_orders_log.txt", {"action": "submit_success", "order_number": order.order_number, "status": status})
+
         return {"message": "Order created successfully", "order": result}
     except sqlite3.Error as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite"})
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     except ValueError as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "value"})
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "unexpected"})
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
-
-@router.get("/all")
-def get_all_orders():
-    try:
-        with sqlite3.connect("data/orders.db") as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-            cursor.execute("""
-                SELECT o.id, o.order_number, o.status, o.created_date, o.total,
-                       o.order_note, o.note_to_supplier, r.name AS requester
-                FROM orders o
-                LEFT JOIN requesters r ON o.requester_id = r.id
-                ORDER BY o.created_date DESC
-            """)
-            orders = [dict(row) for row in cursor.fetchall()]
-        return {"orders": orders}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch orders: {e}")
-
-
-@router.get("/print_to_file/{order_id}")
-def print_order_to_file(order_id: int):
-    output_path = Path("data/printouts") / f"order_{order_id}.txt"
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    try:
-        with sqlite3.connect("data/orders.db") as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                SELECT o.order_number, o.status, o.created_date, o.received_date, o.total,
-                       o.order_note, o.note_to_supplier, r.name AS requester
-                FROM orders o
-                LEFT JOIN requesters r ON o.requester_id = r.id
-                WHERE o.id = ?
-            """, (order_id,))
-            order = cursor.fetchone()
-            if not order:
-                raise HTTPException(status_code=404, detail="Order not found")
-
-            cursor.execute("""
-                SELECT item_code, item_description, project, qty_ordered, price, total
-                FROM order_items
-                WHERE order_id = ?
-            """, (order_id,))
-            items = cursor.fetchall()
-
-        with output_path.open("w", encoding="utf-8") as f:
-            fields = ["Order Number", "Status", "Created Date", "Received Date", "Total", "Order Note", "Note to Supplier", "Requester"]
-            f.write("\n".join([f"{label}: {value}" for label, value in zip(fields, order)]))
-            f.write("\n\nLine Items:\n-----------\n")
-            for item in items:
-                f.write("\n".join([f"{k}: {v}" for k, v in zip(["Item Code", "Description", "Project", "Qty", "Price", "Total"], item)]))
-                f.write("\n\n")
-
-        return {"status": "✅ Order export triggered"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Print failed: {e}")
-
-
-@router.get("/pending")
-def get_pending_orders(requester_id: Optional[int] = None, supplier_id: Optional[int] = None):
-    try:
-        with sqlite3.connect("data/orders.db") as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-
-            base_query = """
-                SELECT o.id, o.order_number, o.status, o.created_date, o.total,
-                       o.order_note, o.note_to_supplier, r.name AS requester
-                FROM orders o
-                LEFT JOIN requesters r ON o.requester_id = r.id
-                WHERE o.status = 'Pending'
-            """
-            params = []
-
-            if requester_id:
-                base_query += " AND o.requester_id = ?"
-                params.append(requester_id)
-
-            if supplier_id:
-                base_query += " AND o.supplier_id = ?"
-                params.append(supplier_id)
-
-            base_query += " ORDER BY o.created_date DESC"
-
-            cursor.execute(base_query, params)
-            orders = [dict(row) for row in cursor.fetchall()]
-        return {"pending_orders": orders}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch pending orders: {e}")
-
+class ItemReceive(BaseModel):
+    order_id: int
+    item_id: int
+    qty_received: float = Field(gt=0)
 
 @router.post("/receive")
-def mark_order_received(receive_data: List[dict]):
+def mark_order_received(receive_data: List[ItemReceive]):
     try:
         now = datetime.now().isoformat()
         with sqlite3.connect("data/orders.db") as conn:
             cursor = conn.cursor()
-
             order_ids_updated = set()
-            for item in receive_data:
-                order_id = item["order_id"]
-                item_id = item["item_id"]
-                qty_received = item["qty_received"]
 
+            for item in receive_data:
                 cursor.execute("""
                     UPDATE order_items
                     SET qty_received = ?, received_date = ?
                     WHERE id = ? AND order_id = ?
-                """, (qty_received, now, item_id, order_id))
+                """, (item.qty_received, now, item.item_id, item.order_id))
 
                 cursor.execute("""
                     INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
                     VALUES (?, 'Received', ?, ?, ?)
-                """, (order_id, f"Item ID {item_id} received: {qty_received}", now, 0))
-
-                order_ids_updated.add(order_id)
+                """, (
+                    item.order_id,
+                    f"Item ID {item.item_id} received: {item.qty_received}",
+                    now,
+                    0
+                ))
+                order_ids_updated.add(item.order_id)
 
             for order_id in order_ids_updated:
                 cursor.execute("""
                     SELECT COUNT(*) FROM order_items
                     WHERE order_id = ? AND (qty_received IS NULL OR qty_received < qty_ordered)
                 """, (order_id,))
-                if cursor.fetchone()[0] == 0:
+                incomplete = cursor.fetchone()[0]
+                if incomplete == 0:
                     cursor.execute("""
-                        UPDATE orders
-                        SET status = 'Received', received_date = ?
+                        UPDATE orders SET status = 'Received', received_date = ?
                         WHERE id = ?
                     """, (now, order_id))
 
+        log_event("new_orders_log.txt", {"action": "receive", "orders": list(order_ids_updated)})
         return {"status": "✅ Order(s) marked as received"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to receive order: {e}")
+        log_event("new_orders_log.txt", {"error": str(e), "type": "receive"})
+        raise HTTPException(status_code=500, detail=f"Failed to receive order(s): {e}")
 
-
-@router.get("/received")
-def get_received_orders(requester_id: Optional[int] = None, supplier_id: Optional[int] = None):
+@router.post("/upload_attachment")
+async def upload_attachment(file: UploadFile, order_id: int = Form(...)):
     try:
+        saved_path = UPLOAD_DIR / f"{order_id}_{file.filename}"
+        with saved_path.open("wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
         with sqlite3.connect("data/orders.db") as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-
-            base_query = """
-                SELECT o.id, o.order_number, o.status, o.created_date, o.total,
-                       o.order_note, o.note_to_supplier, r.name AS requester
-                FROM orders o
-                LEFT JOIN requesters r ON o.requester_id = r.id
-                WHERE o.status = 'Received'
-            """
-            params = []
-
-            if requester_id:
-                base_query += " AND o.requester_id = ?"
-                params.append(requester_id)
-
-            if supplier_id:
-                base_query += " AND o.supplier_id = ?"
-                params.append(supplier_id)
-
-            base_query += " ORDER BY o.created_date DESC"
-
-            cursor.execute(base_query, params)
-            orders = [dict(row) for row in cursor.fetchall()]
-        return {"received_orders": orders}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch received orders: {e}")
-
-
-@router.get("/audit/{order_id}")
-def get_audit_trail(order_id: int):
-    try:
-        with sqlite3.connect("data/orders.db") as conn:
-            conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT id, action, details, action_date, user_id
-                FROM audit_trail
-                WHERE order_id = ?
-                ORDER BY action_date ASC
-            """, (order_id,))
-            audit = [dict(row) for row in cursor.fetchall()]
-        return {"audit_trail": audit}
+                INSERT INTO attachments (order_id, filename, file_path, upload_date)
+                VALUES (?, ?, ?, ?)
+            """, (order_id, file.filename, str(saved_path), datetime.now().isoformat()))
+            conn.commit()
+
+        log_event("new_orders_log.txt", {
+            "action": "attachment_uploaded",
+            "order_id": order_id,
+            "filename": file.filename,
+            "path": str(saved_path)
+        })
+
+        return {"status": "✅ Attachment uploaded"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch audit trail: {e}")
-
-
-@router.get("/new", response_class=HTMLResponse)
-def show_new_order_form(request: Request):
-    return templates.TemplateResponse("new_order.html", {"request": request})
-
-@router.get("/next_order_number")
-def get_next_order_number():
-    try:
-        current = get_setting("order_number_start")
-        return {"next_order_number": current}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch next order number: {e}")
-
+        log_event("new_orders_log.txt", {"error": str(e), "type": "upload"})
+        raise HTTPException(status_code=500, detail=f"Failed to upload attachment: {e}")

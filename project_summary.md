@@ -1,8 +1,8 @@
 # 📦 Project Snapshot
-Generated: 2025-04-18 10:21:05
+Generated: 2025-04-19 16:52:54
 
 ## 📁 Directory Tree
-```
+````
 /Users/stevencohen/Projects/universal_recycling/orders_project
 ├── backend
 │   ├── __init__.py
@@ -12,7 +12,8 @@ Generated: 2025-04-18 10:21:05
 │   │   ├── auth.py
 │   │   ├── lookups.py
 │   │   ├── orders.py
-│   │   └── requesters.py
+│   │   ├── requesters.py
+│   │   └── ui_pages.py
 │   ├── main.py
 │   ├── scrapers
 │   └── utils
@@ -26,6 +27,8 @@ Generated: 2025-04-18 10:21:05
 │   │   └── order_7.txt
 │   ├── test_orders.db
 │   └── uploads
+│       ├── 20_test_invoice.pdf
+│       ├── 21_test_invoice.pdf
 │       └── test_invoice.pdf
 ├── frontend
 │   ├── static
@@ -42,7 +45,11 @@ Generated: 2025-04-18 10:21:05
 │       ├── print_template.html
 │       └── received.html
 ├── logs
-│   └── server.log
+│   ├── db_activity_log.txt
+│   ├── new_orders_log.txt
+│   ├── server.log
+│   ├── server_startup.log
+│   └── testing_log.txt
 ├── project_status_snapshot.md
 ├── project_summary.md
 └── scripts
@@ -62,9 +69,13 @@ Generated: 2025-04-18 10:21:05
     ├── repair_orders_routes.py
     ├── reset_and_test.sh
     ├── seed_static_data.py
-    └── start_server.py
-```
-
+    ├── start_server.py
+    ├── test_authorisation_threshold_trigger.py
+    ├── test_invalid_data_handling.py
+    ├── test_invalid_items_variants.py
+    ├── test_pipeline_end_to_end.py
+    └── test_receive_partial.py
+````
 ## 📄 Source Files
 
 ### `.DS_Store`
@@ -158,15 +169,376 @@ Generated: 2025-04-18 10:21:05
 <!-- ERROR reading .DS_Store: 'utf-8' codec can't decode byte 0xff in position 1072: invalid start byte -->
 ```
 
-### `frontend/static/css/styles.css`
+### `frontend/static/css/style.css`
 **(No description)**
 ```python
+mkdir -p frontend/static/js frontend/static/css && \
+cat <<EOF > frontend/static/css/style.css
+body {
+  font-family: Arial, sans-serif;
+  margin: 2rem;
+}
+h2 {
+  margin-bottom: 1rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+th, td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+.actions {
+  margin-top: 1.5rem;
+}
+label.inline {
+  margin-right: 2rem;
+}
+EOF
+
+cat <<EOF > frontend/static/js/date_utils.js
+export function setDateInputFormat(inputId) {
+  const display = document.getElementById(\`\${inputId}-display\`);
+  const hidden = document.getElementById(inputId);
+
+  if (!display || !hidden) return;
+
+  display.addEventListener("click", () => hidden.showPicker());
+  hidden.addEventListener("input", () => {
+    const [year, month, day] = hidden.value.split("-");
+    display.value = \`\${day}/\${month}/\${year}\`;
+  });
+}
+EOF
+
 
 ```
 
-### `frontend/static/js/scripts.js`
+### `frontend/static/js/date_utils.js`
 **(No description)**
 ```python
+export function setDateInputFormat(inputId) {
+  const display = document.getElementById(`${inputId}-display`);
+  const hidden = document.getElementById(inputId);
+
+  if (!display || !hidden) return;
+
+  display.addEventListener("click", () => hidden.showPicker());
+
+  hidden.addEventListener("change", () => {
+    const date = new Date(hidden.value);
+    if (!isNaN(date)) {
+      const formatted = date.toLocaleDateString("en-GB");
+      display.value = formatted;
+    } else {
+      display.value = "";
+    }
+  });
+
+  // Init with current value if present
+  if (hidden.value) {
+    const date = new Date(hidden.value);
+    if (!isNaN(date)) {
+      display.value = date.toLocaleDateString("en-GB");
+    }
+  }
+}
+
+```
+
+### `frontend/static/js/new_order.js`
+**(No description)**
+```python
+let itemsList = [];
+let projectsList = [];
+
+function updateGrandTotal() {
+  let sum = 0;
+  document.querySelectorAll(".line-total").forEach(cell => {
+    sum += parseFloat(cell.textContent) || 0;
+  });
+  document.getElementById("grand-total").textContent = `R${sum.toFixed(2)}`;
+}
+
+function updateTotal(input) {
+  const row = input.closest("tr");
+  const qty = parseFloat(row.cells[3].querySelector("input").value) || 0;
+  const price = parseFloat(row.cells[4].querySelector("input").value) || 0;
+  row.cells[5].textContent = (qty * price).toFixed(2);
+  updateGrandTotal();
+}
+
+function autoFillDescription(sel) {
+  const desc = sel.selectedOptions[0]?.dataset.description ?? "";
+  sel.closest("tr").querySelector("td:nth-child(2) input").value = desc;
+}
+
+function deleteRow(btn) {
+  btn.closest("tr").remove();
+  updateGrandTotal();
+}
+
+function addRow() {
+  const tbody = document.getElementById("items-body");
+  const row = tbody.insertRow();
+
+  const itemOpts = itemsList.map(i =>
+    `<option value="${i.item_code}" data-description="${i.item_description}">${i.item_code} — ${i.item_description}</option>`
+  ).join("");
+
+  const projOpts = projectsList.map(p =>
+    `<option value="${p.project_code}">${p.project_code} — ${p.project_name}</option>`
+  ).join("");
+
+  row.innerHTML = `
+    <td>
+      <select onchange="autoFillDescription(this)">
+        <option value="">Select</option>
+        ${itemOpts}
+      </select>
+    </td>
+    <td><input type="text" placeholder="Description"></td>
+    <td>
+      <select>
+        <option value="">Select</option>
+        ${projOpts}
+      </select>
+    </td>
+    <td><input type="number" value="1" min="1" onchange="updateTotal(this)"></td>
+    <td><input type="number" value="0" min="0" onchange="updateTotal(this)"></td>
+    <td class="line-total">0.00</td>
+    <td><button type="button" onclick="deleteRow(this)">❌</button></td>
+  `;
+  updateGrandTotal();
+}
+
+async function loadDropdowns() {
+  try {
+    const [supR, reqR, itmR, prjR, numR] = await Promise.all([
+      fetch("/lookups/suppliers").then(r => r.json()),
+      fetch("/lookups/requesters").then(r => r.json()),
+      fetch("/lookups/items").then(r => r.json()),
+      fetch("/lookups/projects").then(r => r.json()),
+      fetch("/orders/next_order_number").then(r => r.json())
+    ]);
+
+    const supplierDropdown = document.getElementById("supplier");
+    supplierDropdown.innerHTML = '<option value="">Select supplier</option>';
+    supR.suppliers.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s.id;
+      opt.textContent = `${s.account_number} — ${s.name}`;
+      supplierDropdown.appendChild(opt);
+    });
+
+    const requesterDropdown = document.getElementById("requester");
+    requesterDropdown.innerHTML = '<option value="">Select requester</option>';
+    reqR.requesters.forEach(r => {
+      const opt = document.createElement("option");
+      opt.value = r.id;
+      opt.textContent = r.name;
+      requesterDropdown.appendChild(opt);
+    });
+
+    itemsList = itmR.items || [];
+    projectsList = prjR.projects || [];
+
+    document.getElementById("order-number").value = numR.next_order_number || "ORD-????";
+    document.getElementById("request-date").valueAsDate = new Date();
+
+    addRow();
+  } catch (err) {
+    console.error("Lookup loading failed", err);
+    alert("⚠️ Failed to load dropdowns. Check server or database.");
+  }
+}
+
+function previewOrder() {
+  const rd = document.getElementById("request-date").value;
+  const rq = document.getElementById("requester").value;
+  const sp = document.getElementById("supplier").value;
+  const nt = document.querySelector("textarea[name='note_to_supplier']").value;
+
+  const items = Array.from(document.querySelectorAll("#items-body tr"))
+    .map(row => {
+      const c = row.querySelectorAll("td");
+      return {
+        item_code: c[0].querySelector("select").value,
+        item_description: c[1].querySelector("input").value,
+        project: c[2].querySelector("select").value,
+        qty_ordered: parseFloat(c[3].querySelector("input").value) || 0,
+        price: parseFloat(c[4].querySelector("input").value) || 0
+      };
+    })
+    .filter(i => i.item_code && i.item_description && i.project && i.qty_ordered > 0 && i.price > 0);
+
+  alert("Preview:\n" + JSON.stringify({ request_date: rd, requester_id: rq, supplier_id: sp, note_to_supplier: nt, items }, null, 2));
+}
+
+async function submitOrder() {
+  const rd = document.getElementById("request-date").value;
+  const rqId = document.getElementById("requester").value;
+  const spId = document.getElementById("supplier").value;
+  const nt = document.querySelector("textarea[name='note_to_supplier']").value;
+  const rows = document.querySelectorAll("#items-body tr");
+
+  const items = Array.from(rows)
+    .map(row => {
+      const c = row.querySelectorAll("td");
+      return {
+        item_code: c[0].querySelector("select").value,
+        item_description: c[1].querySelector("input").value,
+        project: c[2].querySelector("select").value,
+        qty_ordered: parseFloat(c[3].querySelector("input").value) || 0,
+        price: parseFloat(c[4].querySelector("input").value) || 0
+      };
+    })
+    .filter(i => i.item_code && i.item_description && i.project && i.qty_ordered > 0 && i.price > 0);
+
+  if (!rd || !rqId || !spId || items.length === 0) {
+    return alert("⚠️ Fill date, requester, supplier & at least one complete line.");
+  }
+
+  try {
+    const res = await fetch("/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        request_date: rd,
+        requester_id: rqId,
+        supplier_id: spId,
+        note_to_supplier: nt,
+        items
+      })
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.message === "Order created successfully") {
+      const orderNumber = data.order?.order_number || document.getElementById("order-number").value;
+      alert(`✅ Order ${orderNumber} created.`);
+      location.reload();
+    } else {
+      const detail = data.detail || data.message || "Unknown error.";
+      alert(`❌ ${detail}`);
+    }
+  } catch (err) {
+    console.error("Submit failed", err);
+    alert("❌ Submission failed.");
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadDropdowns();
+  document.getElementById("add-line").addEventListener("click", addRow);
+  document.getElementById("preview-order").addEventListener("click", previewOrder);
+  document.getElementById("submit-order").addEventListener("click", submitOrder);
+});
+
+```
+
+### `frontend/static/js/pending_orders.js`
+**(No description)**
+```python
+import { setDateInputFormat } from "/static/js/date_utils.js";
+
+function populateDropdown(selectId, items, labelFunc) {
+  const dropdown = document.getElementById(selectId);
+  dropdown.innerHTML = `<option value="">All</option>`;
+  items.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = item.id;
+    opt.textContent = labelFunc(item);
+    dropdown.appendChild(opt);
+  });
+}
+
+function populateTable(data) {
+  const tbody = document.getElementById("pending-body");
+  tbody.innerHTML = "";
+
+  if (!data.orders || data.orders.length === 0) {
+    const row = tbody.insertRow();
+    const cell = row.insertCell(0);
+    cell.colSpan = 7;
+    cell.textContent = "No pending orders found.";
+    return;
+  }
+
+  data.orders.forEach(order => {
+    const row = tbody.insertRow();
+    row.innerHTML = `
+      <td>${order.request_date}</td>
+      <td>${order.order_number}</td>
+      <td>${order.requester}</td>
+      <td>${order.supplier}</td>
+      <td>R${order.total_value.toFixed(2)}</td>
+      <td>${order.status}</td>
+      <td><button onclick="alert('Expand feature coming soon')">⬇️</button></td>
+    `;
+  });
+}
+
+async function loadFiltersAndOrders() {
+  try {
+    const [suppliersRes, requestersRes] = await Promise.all([
+      fetch("/lookups/suppliers").then(res => res.json()),
+      fetch("/lookups/requesters").then(res => res.json())
+    ]);
+
+    populateDropdown("filter-supplier", suppliersRes.suppliers, s => `${s.account_number} — ${s.name}`);
+    populateDropdown("filter-requester", requestersRes.requesters, r => r.name);
+
+    runFilters();
+  } catch (err) {
+    console.error("Failed to load filters", err);
+  }
+}
+
+async function runFilters() {
+  const supplierId = document.getElementById("filter-supplier").value;
+  const requesterId = document.getElementById("filter-requester").value;
+  const status = document.getElementById("filter-status").value;
+  const startDate = document.getElementById("start-date").value;
+  const endDate = document.getElementById("end-date").value;
+
+  const params = new URLSearchParams();
+  if (supplierId) params.append("supplier_id", supplierId);
+  if (requesterId) params.append("requester_id", requesterId);
+  if (status) params.append("status", status);
+  if (startDate) params.append("start_date", startDate);
+  if (endDate) params.append("end_date", endDate);
+
+  try {
+    const res = await fetch(`/orders/pending?${params.toString()}`);
+    const data = await res.json();
+    populateTable(data);
+  } catch (err) {
+    console.error("Failed to fetch filtered orders", err);
+  }
+}
+
+function clearFilters() {
+  document.getElementById("filter-supplier").value = "";
+  document.getElementById("filter-requester").value = "";
+  document.getElementById("filter-status").value = "";
+  document.getElementById("start-date").value = "";
+  document.getElementById("end-date").value = "";
+  runFilters();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setDateInputFormat("start-date");
+  setDateInputFormat("end-date");
+  loadFiltersAndOrders();
+
+  document.getElementById("run-filters").addEventListener("click", runFilters);
+  document.getElementById("clear-filters").addEventListener("click", clearFilters);
+});
+
 
 ```
 
@@ -272,27 +644,26 @@ Generated: 2025-04-18 10:21:05
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>New Order - Universal Recycling</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 2rem; }
     table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
     th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
-    .actions { margin-top: 1rem; }
-    input, select, textarea { padding: 0.4rem; font-size: 1rem; }
+    input, select, textarea, button { padding: 0.4rem; font-size: 1rem; }
     .inline { margin-right: 2rem; }
+    button { cursor: pointer; }
   </style>
 </head>
 <body>
-  <h2>Submit a New Requisition</h2>
+  <h2>Submit a New Order</h2>
 
   <div>
     <label class="inline">Request Date:
       <input type="date" id="request-date">
     </label>
-
     <label class="inline">Order Number:
-      <input type="text" id="order-number" value="Loading..." readonly>
+      <input type="text" id="order-number" value="ORD-????" readonly>
     </label>
   </div><br>
 
@@ -302,7 +673,6 @@ Generated: 2025-04-18 10:21:05
         <option value="">Select requester</option>
       </select>
     </label>
-
     <label class="inline">Supplier:
       <select id="supplier" name="supplier_id">
         <option value="">Select supplier</option>
@@ -328,165 +698,16 @@ Generated: 2025-04-18 10:21:05
     <tbody id="items-body"></tbody>
   </table>
 
-  <button onclick="addRow()">➕ Add New Line</button>
+  <button type="button" id="add-line">➕ Add New Line</button>
 
   <div class="actions">
     <h3>Total Order Value: <span id="grand-total">R0.00</span></h3>
-    <button type="button" onclick="previewOrder()">Preview Order</button>
+    <button type="button" id="preview-order">Preview Order</button>
     <button type="button" id="submit-order">Submit</button>
   </div>
 
-  <script>
-    let itemsList = [];
-    let projectsList = [];
-
-    function updateGrandTotal() {
-      let sum = 0;
-      document.querySelectorAll(".line-total").forEach(cell => {
-        sum += parseFloat(cell.textContent) || 0;
-      });
-      document.getElementById("grand-total").textContent = `R${sum.toFixed(2)}`;
-    }
-
-    function autoFillDescription(select) {
-      const selected = select.options[select.selectedIndex];
-      const description = selected.getAttribute("data-description") || "";
-      const row = select.closest("tr");
-      const descInput = row.cells[1].querySelector("input");
-      descInput.value = description;
-    }
-
-    function addRow() {
-      const tbody = document.getElementById("items-body");
-      const row = tbody.insertRow();
-
-      const itemOptions = itemsList.map(i =>
-        `<option value="${i.item_code}" data-description="${i.item_description}">${i.item_code}</option>`
-      ).join('');
-
-      const projectOptions = projectsList.map(p =>
-        `<option value="${p.project_code}">${p.project_code}</option>`
-      ).join('');
-
-      row.innerHTML = `
-        <td><select onchange="autoFillDescription(this)"><option value="">Select</option>${itemOptions}</select></td>
-        <td><input type="text" placeholder="Description" /></td>
-        <td><select><option value="">Select</option>${projectOptions}</select></td>
-        <td><input type="number" value="1" onchange="updateTotal(this)" /></td>
-        <td><input type="number" value="100" onchange="updateTotal(this)" /></td>
-        <td class="line-total">100</td>
-        <td><button onclick="deleteRow(this)">❌</button></td>
-      `;
-      updateGrandTotal();
-    }
-
-    function deleteRow(btn) {
-      const row = btn.parentNode.parentNode;
-      row.remove();
-      updateGrandTotal();
-    }
-
-    function updateTotal(input) {
-      const row = input.closest("tr");
-      const qty = parseFloat(row.cells[3].querySelector("input").value) || 0;
-      const price = parseFloat(row.cells[4].querySelector("input").value) || 0;
-      row.cells[5].textContent = (qty * price).toFixed(2);
-      updateGrandTotal();
-    }
-
-    async function loadDropdowns() {
-      const [suppliers, requesters, items, projects, orderNumber] = await Promise.all([
-        fetch("/lookups/suppliers").then(r => r.json()),
-        fetch("/lookups/requesters").then(r => r.json()),
-        fetch("/lookups/items").then(r => r.json()),
-        fetch("/lookups/projects").then(r => r.json()),
-        fetch("/orders/next_order_number").then(r => r.json()),
-      ]);
-
-      const supplierDropdown = document.getElementById("supplier");
-      const requesterDropdown = document.getElementById("requester");
-
-      suppliers.suppliers.forEach(s => {
-        const opt = document.createElement("option");
-        opt.value = s.id;
-        opt.textContent = `${s.account_number} — ${s.name}`;
-        supplierDropdown.appendChild(opt);
-      });
-
-      requesters.requesters.forEach(r => {
-        const opt = document.createElement("option");
-        opt.value = r.id;
-        opt.textContent = r.name;
-        requesterDropdown.appendChild(opt);
-      });
-
-      itemsList = items.items;
-      projectsList = projects.projects;
-      document.getElementById("order-number").value = orderNumber.next_order_number || "ORD-????";
-      document.getElementById("request-date").valueAsDate = new Date();
-    }
-
-    function previewOrder() {
-      const rows = document.querySelectorAll("#items-body tr");
-      const items = Array.from(rows).map(row => {
-        const cells = row.querySelectorAll("td");
-        return {
-          item_code: cells[0].querySelector("select").value,
-          item_description: cells[1].querySelector("input").value,
-          project: cells[2].querySelector("select").value,
-          qty_ordered: parseFloat(cells[3].querySelector("input").value) || 0,
-          price: parseFloat(cells[4].querySelector("input").value) || 0
-        };
-      });
-      alert(JSON.stringify(items, null, 2));
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      loadDropdowns();
-
-      document.getElementById("submit-order").addEventListener("click", () => {
-        const requester_id = parseInt(document.getElementById("requester").value);
-        const supplier_id = parseInt(document.getElementById("supplier").value);
-        const note_to_supplier = document.querySelector("textarea[name='note_to_supplier']").value;
-        const rows = document.querySelectorAll("#items-body tr");
-
-        if (!requester_id || !supplier_id || rows.length === 0) {
-          alert("⚠️ Please fill in all required fields and add at least one item.");
-          return;
-        }
-
-        const items = Array.from(rows).map(row => {
-          const cells = row.querySelectorAll("td");
-          return {
-            item_code: cells[0].querySelector("select").value,
-            item_description: cells[1].querySelector("input").value,
-            project: cells[2].querySelector("select").value,
-            qty_ordered: parseFloat(cells[3].querySelector("input").value) || 0,
-            price: parseFloat(cells[4].querySelector("input").value) || 0
-          };
-        });
-
-        fetch("/orders", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ requester_id, supplier_id, note_to_supplier, items })
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (data.message === "Order created successfully") {
-            alert(`✅ Order ${data.order.order_number} created.`);
-            window.location.reload();
-          } else {
-            alert(`❌ Failed to create order: ${data.detail || "Unknown error"}`);
-          }
-        })
-        .catch(err => {
-          console.error("Failed to submit order:", err);
-          alert("❌ Error submitting order.");
-        });
-      });
-    });
-  </script>
+  <!-- ✅ Load external JavaScript for order logic -->
+  <script src="/static/js/new_orders.js"></script>
 </body>
 </html>
 
@@ -566,231 +787,264 @@ Generated: 2025-04-18 10:21:05
 ```
 
 ### `backend/database.py`
-**Create all tables (if they don’t exist) and seed default settings.**
+**Create tables and seed default settings.**
 ```python
 import sqlite3
+import json
 from datetime import datetime
 from typing import Optional, Dict, Any, List
+from pathlib import Path
 
 DB_PATH = "data/orders.db"
+LOG_PATH = Path("logs/db_activity_log.txt")
 
+def log_db_event(action: str, payload: dict):
+    LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with LOG_PATH.open("a", encoding="utf-8") as f:
+        f.write(f"[{datetime.now().isoformat()}] {action}: {json.dumps(payload, ensure_ascii=False)}\n")
 
 def init_db() -> None:
-    """Create all tables (if they don’t exist) and seed default settings."""
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
+    """Create tables and seed default settings."""
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
 
-        # 1. Requesters lookup
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS requesters (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT UNIQUE
-        )
-        """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS requesters (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT UNIQUE
+                )""")
 
-        # 2. Suppliers lookup
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS suppliers (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            account_number TEXT,
-            name TEXT,
-            telephone TEXT,
-            vat_number TEXT,
-            registration_number TEXT,
-            email TEXT,
-            contact_name TEXT,
-            contact_telephone TEXT,
-            address_line1 TEXT,
-            address_line2 TEXT,
-            address_line3 TEXT,
-            postal_code TEXT
-        )
-        """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS suppliers (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_number TEXT,
+                    name TEXT,
+                    telephone TEXT,
+                    vat_number TEXT,
+                    registration_number TEXT,
+                    email TEXT,
+                    contact_name TEXT,
+                    contact_telephone TEXT,
+                    address_line1 TEXT,
+                    address_line2 TEXT,
+                    address_line3 TEXT,
+                    postal_code TEXT
+                )""")
 
-        # 3. Orders table
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS orders (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            order_number TEXT,
-            status TEXT,
-            created_date TEXT DEFAULT CURRENT_TIMESTAMP,
-            received_date TEXT,
-            total REAL,
-            order_note TEXT,
-            note_to_supplier TEXT,
-            supplier_id INTEGER REFERENCES suppliers(id),
-            requester_id INTEGER REFERENCES requesters(id)
-        )
-        """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS orders (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    order_number TEXT,
+                    status TEXT,
+                    created_date TEXT DEFAULT CURRENT_TIMESTAMP,
+                    received_date TEXT,
+                    total REAL,
+                    order_note TEXT,
+                    note_to_supplier TEXT,
+                    supplier_id INTEGER REFERENCES suppliers(id),
+                    requester_id INTEGER REFERENCES requesters(id)
+                )""")
 
-        # 4. Order items
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS order_items (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            order_id INTEGER REFERENCES orders(id),
-            item_code TEXT,
-            item_description TEXT,
-            project TEXT,
-            qty_ordered REAL,
-            price REAL,
-            total REAL
-        )
-        """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS order_items (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    order_id INTEGER REFERENCES orders(id),
+                    item_code TEXT,
+                    item_description TEXT,
+                    project TEXT,
+                    qty_ordered REAL,
+                    price REAL,
+                    total REAL
+                )""")
 
-        # 5. Attachments
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS attachments (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            order_id INTEGER REFERENCES orders(id),
-            filename TEXT NOT NULL,
-            file_path TEXT NOT NULL,
-            upload_date TEXT NOT NULL
-        )
-        """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS attachments (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    order_id INTEGER REFERENCES orders(id),
+                    filename TEXT NOT NULL,
+                    file_path TEXT NOT NULL,
+                    upload_date TEXT NOT NULL
+                )""")
 
-        # 6. Audit trail
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS audit_trail (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            order_id INTEGER REFERENCES orders(id),
-            action TEXT,
-            details TEXT,
-            action_date TEXT DEFAULT CURRENT_TIMESTAMP,
-            user_id INTEGER
-        )
-        """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS audit_trail (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    order_id INTEGER REFERENCES orders(id),
+                    action TEXT,
+                    details TEXT,
+                    action_date TEXT DEFAULT CURRENT_TIMESTAMP,
+                    user_id INTEGER
+                )""")
 
-        # 7. Settings
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS settings (
-            key TEXT PRIMARY KEY,
-            value TEXT
-        )
-        """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS settings (
+                    key TEXT PRIMARY KEY,
+                    value TEXT
+                )""")
 
-        # Seed default settings
-        cursor.execute(
-            "INSERT OR IGNORE INTO settings (key,value) VALUES ('auth_threshold','10000')"
-        )
-        cursor.execute(
-            "INSERT OR IGNORE INTO settings (key,value) VALUES ('order_number_start','PO001')"
-        )
+            cursor.execute(
+                "INSERT OR IGNORE INTO settings (key, value) VALUES ('auth_threshold', '10000')"
+            )
+            cursor.execute(
+                "INSERT OR IGNORE INTO settings (key, value) VALUES ('order_number_start', 'PO001')"
+            )
 
-        conn.commit()
+            conn.commit()
+            log_db_event("init_db", {"status": "success"})
+    except Exception as e:
+        log_db_event("init_db_error", {"error": str(e)})
+        raise
 
 
 def create_order(order_data: Dict[str, Any], items: List[Dict[str, Any]]) -> Dict[str, Any]:
-    """
-    Insert a new order and its items, then return the newly created order row as a dict.
-    Expects order_data to include:
-      - order_number, status, total, order_note (opt), note_to_supplier (opt),
-        supplier_id (opt), requester_id (required)
-    """
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
 
-        cursor.execute("""
-            INSERT INTO orders (
-                order_number, status, created_date, total,
-                order_note, note_to_supplier, supplier_id, requester_id
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """, (
-            order_data["order_number"],
-            order_data["status"],
-            datetime.now().isoformat(),
-            order_data["total"],
-            order_data.get("order_note"),
-            order_data.get("note_to_supplier"),
-            order_data.get("supplier_id"),
-            order_data["requester_id"]
-        ))
-        order_id = cursor.lastrowid
-
-        for item in items:
             cursor.execute("""
-                INSERT INTO order_items (
-                    order_id, item_code, item_description, project,
-                    qty_ordered, price, total
-                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO orders (
+                    order_number, status, created_date, total,
+                    order_note, note_to_supplier, supplier_id, requester_id
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """, (
-                order_id,
-                item["item_code"],
-                item["item_description"],
-                item["project"],
-                item["qty_ordered"],
-                item["price"],
-                item["qty_ordered"] * item["price"]
+                order_data["order_number"],
+                order_data["status"],
+                datetime.now().isoformat(),
+                order_data["total"],
+                order_data.get("order_note"),
+                order_data.get("note_to_supplier"),
+                order_data.get("supplier_id"),
+                order_data["requester_id"]
             ))
+            order_id = cursor.lastrowid
 
-        conn.commit()
+            for item in items:
+                cursor.execute("""
+                    INSERT INTO order_items (
+                        order_id, item_code, item_description, project,
+                        qty_ordered, price, total
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                """, (
+                    order_id,
+                    item["item_code"],
+                    item["item_description"],
+                    item["project"],
+                    item["qty_ordered"],
+                    item["price"],
+                    item["qty_ordered"] * item["price"]
+                ))
 
-        # Fetch and return the created order row
-        cursor.execute("SELECT * FROM orders WHERE id = ?", (order_id,))
-        cols = [col[0] for col in cursor.description]
-        row = cursor.fetchone()
-        return dict(zip(cols, row))
+            conn.commit()
+
+            cursor.execute("SELECT * FROM orders WHERE id = ?", (order_id,))
+            row = cursor.fetchone()
+            columns = [col[0] for col in cursor.description]
+
+            log_db_event("create_order", {
+                "order_number": order_data["order_number"],
+                "requester_id": order_data["requester_id"],
+                "total": order_data["total"],
+                "items_count": len(items)
+            })
+
+            return dict(zip(columns, row))
+    except Exception as e:
+        log_db_event("create_order_error", {"error": str(e)})
+        raise
 
 
 def get_setting(key: str) -> Optional[str]:
-    """Retrieve a setting’s value, or None if missing."""
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT value FROM settings WHERE key = ?", (key,))
-        row = cursor.fetchone()
-        return row[0] if row else None
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT value FROM settings WHERE key = ?", (key,))
+            row = cursor.fetchone()
+            log_db_event("get_setting", {"key": key, "result": row[0] if row else None})
+            return row[0] if row else None
+    except Exception as e:
+        log_db_event("get_setting_error", {"key": key, "error": str(e)})
+        raise
 
 
 def update_setting(key: str, value: str) -> None:
-    """Upsert a setting (insert or update)."""
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO settings (key, value)
-            VALUES (?, ?)
-            ON CONFLICT(key) DO UPDATE SET value = excluded.value
-        """, (key, value))
-        conn.commit()
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                INSERT INTO settings (key, value)
+                VALUES (?, ?)
+                ON CONFLICT(key) DO UPDATE SET value = excluded.value
+            """, (key, value))
+            conn.commit()
+            log_db_event("update_setting", {"key": key, "value": value})
+    except Exception as e:
+        log_db_event("update_setting_error", {"key": key, "error": str(e)})
+        raise
 
 ```
 
 ### `backend/main.py`
-**Initialize the database**
+**Ensure log directory exists**
 ```python
 from fastapi import FastAPI
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
-
-from backend.endpoints import orders, auth, lookups
+from fastapi.staticfiles import StaticFiles
+from backend.endpoints import orders, auth, lookups, ui_pages
 from backend.database import init_db
+from pathlib import Path
+import logging
 
-# Initialize the database
-init_db()
+# Ensure log directory exists
+Path("logs").mkdir(exist_ok=True)
+logging.basicConfig(
+    filename="logs/server_startup.log",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+)
+
+# Initialize DB
+try:
+    init_db()
+    logging.info("✅ Database initialized successfully.")
+except Exception as e:
+    logging.exception("❌ Failed to initialize database")
+    raise
 
 app = FastAPI(
     title="Universal Recycling Purchase Order System",
     description="Purchase Order management system for Universal Recycling"
 )
 
-# Add CORS middleware
+# Static Files
+app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
+
+# Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with specific origins
+    allow_origins=["*"],  # Limit in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Add session middleware for login
-app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")  # Replace in production
+app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")  # Replace in prod
 
 # Routers
 app.include_router(orders.router)
 app.include_router(auth.router)
 app.include_router(lookups.router)
+app.include_router(ui_pages.router)
 
+# Run
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8004)
+    try:
+        logging.info("🚀 Starting Uvicorn server...")
+        uvicorn.run(app, host="0.0.0.0", port=8004)
+    except Exception as e:
+        logging.exception("❌ Server failed to start")
+        raise
 
 ```
 
@@ -871,8 +1125,21 @@ def home(request: Request):
 ```python
 from fastapi import APIRouter, HTTPException
 import sqlite3
+from pathlib import Path
+from datetime import datetime
+import json
 
-router = APIRouter(prefix="/lookups", tags=["lookup"])
+router = APIRouter()
+
+def log_lookup(endpoint: str, outcome: str, detail: str = ""):
+    log_path = Path("logs/lookups_log.txt")
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with log_path.open("a", encoding="utf-8") as f:
+        timestamp = datetime.now().isoformat()
+        entry = {"time": timestamp, "endpoint": endpoint, "status": outcome}
+        if detail:
+            entry["detail"] = detail
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
 @router.get("/suppliers")
 def get_suppliers():
@@ -882,10 +1149,12 @@ def get_suppliers():
             cursor = conn.cursor()
             cursor.execute("SELECT id, account_number, name FROM suppliers ORDER BY name")
             suppliers = [dict(row) for row in cursor.fetchall()]
+        log_lookup("/suppliers", "success")
         return {"suppliers": suppliers}
     except Exception as e:
+        log_lookup("/suppliers", "error", str(e))
         raise HTTPException(status_code=500, detail=f"Failed to load suppliers: {e}")
-    
+
 @router.get("/requesters")
 def get_requesters():
     try:
@@ -894,18 +1163,46 @@ def get_requesters():
             cursor = conn.cursor()
             cursor.execute("SELECT id, name FROM requesters ORDER BY name")
             requesters = [dict(row) for row in cursor.fetchall()]
+        log_lookup("/requesters", "success")
         return {"requesters": requesters}
     except Exception as e:
+        log_lookup("/requesters", "error", str(e))
         raise HTTPException(status_code=500, detail=f"Failed to load requesters: {e}")
 
+@router.get("/items")
+def get_items():
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT item_code, item_description FROM items ORDER BY item_code")
+            items = [dict(row) for row in cursor.fetchall()]
+        log_lookup("/items", "success")
+        return {"items": items}
+    except Exception as e:
+        log_lookup("/items", "error", str(e))
+        raise HTTPException(status_code=500, detail=f"Failed to load items: {e}")
 
+@router.get("/projects")
+def get_projects():
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT project_code, project_name FROM projects ORDER BY project_code")
+            projects = [dict(row) for row in cursor.fetchall()]
+        log_lookup("/projects", "success")
+        return {"projects": projects}
+    except Exception as e:
+        log_lookup("/projects", "error", str(e))
+        raise HTTPException(status_code=500, detail=f"Failed to load projects: {e}")
 
 ```
 
 ### `backend/endpoints/orders.py`
-**SELECT o.id, o.order_number, o.status, o.created_date, o.total,**
+**UPDATE order_items**
 ```python
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, UploadFile, Form
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from typing import List, Optional
@@ -913,12 +1210,24 @@ from datetime import datetime
 from fastapi.templating import Jinja2Templates
 import sqlite3
 from pathlib import Path
+import json
+import shutil
 
 from ..database import create_order, get_setting, update_setting
 from ..utils.order_utils import generate_order_number, determine_status, validate_order_items
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 templates = Jinja2Templates(directory="frontend/templates")
+
+UPLOAD_DIR = Path("data/uploads")
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+def log_event(filename: str, data: dict):
+    log_path = Path(f"logs/{filename}")
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with log_path.open("a", encoding="utf-8") as f:
+        timestamp = datetime.now().isoformat()
+        f.write(f"[{timestamp}] {json.dumps(data, ensure_ascii=False)}\n")
 
 class OrderItem(BaseModel):
     item_code: str = Field(min_length=1)
@@ -942,7 +1251,6 @@ class OrderCreate(BaseModel):
     @property
     def total(self) -> float:
         return sum(item.total for item in self.items)
-
 
 @router.post("")
 async def create_new_order(order: OrderCreate):
@@ -973,6 +1281,8 @@ async def create_new_order(order: OrderCreate):
         order_data["status"] = status
         order_data["total"] = total
 
+        log_event("new_orders_log.txt", {"action": "submit_attempt", "order_data": order_data})
+
         result = create_order(order_data=order_data, items=[item.model_dump() for item in order.items])
         result["created_date"] = datetime.fromisoformat(result["created_date"]).strftime("%d/%m/%Y")
 
@@ -982,212 +1292,94 @@ async def create_new_order(order: OrderCreate):
             name_row = cursor.fetchone()
             result["requester"] = name_row[0] if name_row else "Unknown"
 
+        log_event("new_orders_log.txt", {"action": "submit_success", "order_number": order.order_number, "status": status})
+
         return {"message": "Order created successfully", "order": result}
     except sqlite3.Error as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite"})
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     except ValueError as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "value"})
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "unexpected"})
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
 
-
-@router.get("/all")
-def get_all_orders():
-    try:
-        with sqlite3.connect("data/orders.db") as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-            cursor.execute("""
-                SELECT o.id, o.order_number, o.status, o.created_date, o.total,
-                       o.order_note, o.note_to_supplier, r.name AS requester
-                FROM orders o
-                LEFT JOIN requesters r ON o.requester_id = r.id
-                ORDER BY o.created_date DESC
-            """)
-            orders = [dict(row) for row in cursor.fetchall()]
-        return {"orders": orders}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch orders: {e}")
-
-
-@router.get("/print_to_file/{order_id}")
-def print_order_to_file(order_id: int):
-    output_path = Path("data/printouts") / f"order_{order_id}.txt"
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    try:
-        with sqlite3.connect("data/orders.db") as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                SELECT o.order_number, o.status, o.created_date, o.received_date, o.total,
-                       o.order_note, o.note_to_supplier, r.name AS requester
-                FROM orders o
-                LEFT JOIN requesters r ON o.requester_id = r.id
-                WHERE o.id = ?
-            """, (order_id,))
-            order = cursor.fetchone()
-            if not order:
-                raise HTTPException(status_code=404, detail="Order not found")
-
-            cursor.execute("""
-                SELECT item_code, item_description, project, qty_ordered, price, total
-                FROM order_items
-                WHERE order_id = ?
-            """, (order_id,))
-            items = cursor.fetchall()
-
-        with output_path.open("w", encoding="utf-8") as f:
-            fields = ["Order Number", "Status", "Created Date", "Received Date", "Total", "Order Note", "Note to Supplier", "Requester"]
-            f.write("\n".join([f"{label}: {value}" for label, value in zip(fields, order)]))
-            f.write("\n\nLine Items:\n-----------\n")
-            for item in items:
-                f.write("\n".join([f"{k}: {v}" for k, v in zip(["Item Code", "Description", "Project", "Qty", "Price", "Total"], item)]))
-                f.write("\n\n")
-
-        return {"status": "✅ Order export triggered"}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Print failed: {e}")
-
-
-@router.get("/pending")
-def get_pending_orders(requester_id: Optional[int] = None, supplier_id: Optional[int] = None):
-    try:
-        with sqlite3.connect("data/orders.db") as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-
-            base_query = """
-                SELECT o.id, o.order_number, o.status, o.created_date, o.total,
-                       o.order_note, o.note_to_supplier, r.name AS requester
-                FROM orders o
-                LEFT JOIN requesters r ON o.requester_id = r.id
-                WHERE o.status = 'Pending'
-            """
-            params = []
-
-            if requester_id:
-                base_query += " AND o.requester_id = ?"
-                params.append(requester_id)
-
-            if supplier_id:
-                base_query += " AND o.supplier_id = ?"
-                params.append(supplier_id)
-
-            base_query += " ORDER BY o.created_date DESC"
-
-            cursor.execute(base_query, params)
-            orders = [dict(row) for row in cursor.fetchall()]
-        return {"pending_orders": orders}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch pending orders: {e}")
-
+class ItemReceive(BaseModel):
+    order_id: int
+    item_id: int
+    qty_received: float = Field(gt=0)
 
 @router.post("/receive")
-def mark_order_received(receive_data: List[dict]):
+def mark_order_received(receive_data: List[ItemReceive]):
     try:
         now = datetime.now().isoformat()
         with sqlite3.connect("data/orders.db") as conn:
             cursor = conn.cursor()
-
             order_ids_updated = set()
-            for item in receive_data:
-                order_id = item["order_id"]
-                item_id = item["item_id"]
-                qty_received = item["qty_received"]
 
+            for item in receive_data:
                 cursor.execute("""
                     UPDATE order_items
                     SET qty_received = ?, received_date = ?
                     WHERE id = ? AND order_id = ?
-                """, (qty_received, now, item_id, order_id))
+                """, (item.qty_received, now, item.item_id, item.order_id))
 
                 cursor.execute("""
                     INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
                     VALUES (?, 'Received', ?, ?, ?)
-                """, (order_id, f"Item ID {item_id} received: {qty_received}", now, 0))
-
-                order_ids_updated.add(order_id)
+                """, (
+                    item.order_id,
+                    f"Item ID {item.item_id} received: {item.qty_received}",
+                    now,
+                    0
+                ))
+                order_ids_updated.add(item.order_id)
 
             for order_id in order_ids_updated:
                 cursor.execute("""
                     SELECT COUNT(*) FROM order_items
                     WHERE order_id = ? AND (qty_received IS NULL OR qty_received < qty_ordered)
                 """, (order_id,))
-                if cursor.fetchone()[0] == 0:
+                incomplete = cursor.fetchone()[0]
+                if incomplete == 0:
                     cursor.execute("""
-                        UPDATE orders
-                        SET status = 'Received', received_date = ?
+                        UPDATE orders SET status = 'Received', received_date = ?
                         WHERE id = ?
                     """, (now, order_id))
 
+        log_event("new_orders_log.txt", {"action": "receive", "orders": list(order_ids_updated)})
         return {"status": "✅ Order(s) marked as received"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to receive order: {e}")
+        log_event("new_orders_log.txt", {"error": str(e), "type": "receive"})
+        raise HTTPException(status_code=500, detail=f"Failed to receive order(s): {e}")
 
-
-@router.get("/received")
-def get_received_orders(requester_id: Optional[int] = None, supplier_id: Optional[int] = None):
+@router.post("/upload_attachment")
+async def upload_attachment(file: UploadFile, order_id: int = Form(...)):
     try:
+        saved_path = UPLOAD_DIR / f"{order_id}_{file.filename}"
+        with saved_path.open("wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
         with sqlite3.connect("data/orders.db") as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-
-            base_query = """
-                SELECT o.id, o.order_number, o.status, o.created_date, o.total,
-                       o.order_note, o.note_to_supplier, r.name AS requester
-                FROM orders o
-                LEFT JOIN requesters r ON o.requester_id = r.id
-                WHERE o.status = 'Received'
-            """
-            params = []
-
-            if requester_id:
-                base_query += " AND o.requester_id = ?"
-                params.append(requester_id)
-
-            if supplier_id:
-                base_query += " AND o.supplier_id = ?"
-                params.append(supplier_id)
-
-            base_query += " ORDER BY o.created_date DESC"
-
-            cursor.execute(base_query, params)
-            orders = [dict(row) for row in cursor.fetchall()]
-        return {"received_orders": orders}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch received orders: {e}")
-
-
-@router.get("/audit/{order_id}")
-def get_audit_trail(order_id: int):
-    try:
-        with sqlite3.connect("data/orders.db") as conn:
-            conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT id, action, details, action_date, user_id
-                FROM audit_trail
-                WHERE order_id = ?
-                ORDER BY action_date ASC
-            """, (order_id,))
-            audit = [dict(row) for row in cursor.fetchall()]
-        return {"audit_trail": audit}
+                INSERT INTO attachments (order_id, filename, file_path, upload_date)
+                VALUES (?, ?, ?, ?)
+            """, (order_id, file.filename, str(saved_path), datetime.now().isoformat()))
+            conn.commit()
+
+        log_event("new_orders_log.txt", {
+            "action": "attachment_uploaded",
+            "order_id": order_id,
+            "filename": file.filename,
+            "path": str(saved_path)
+        })
+
+        return {"status": "✅ Attachment uploaded"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch audit trail: {e}")
-
-
-@router.get("/new", response_class=HTMLResponse)
-def show_new_order_form(request: Request):
-    return templates.TemplateResponse("new_order.html", {"request": request})
-
-@router.get("/next_order_number")
-def get_next_order_number():
-    try:
-        current = get_setting("order_number_start")
-        return {"next_order_number": current}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch next order number: {e}")
-
+        log_event("new_orders_log.txt", {"error": str(e), "type": "upload"})
+        raise HTTPException(status_code=500, detail=f"Failed to upload attachment: {e}")
 
 ```
 
@@ -1210,6 +1402,22 @@ def get_requesters():
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+```
+
+### `backend/endpoints/ui_pages.py`
+**(No description)**
+```python
+from fastapi import APIRouter, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+
+router = APIRouter()
+templates = Jinja2Templates(directory="frontend/templates")
+
+@router.get("/orders/new", response_class=HTMLResponse)
+def show_new_order_form(request: Request):
+    return templates.TemplateResponse("new_order.html", {"request": request})
 
 ```
 
@@ -1269,6 +1477,121 @@ def validate_order_items(items: List[Any]) -> bool:
 ### `backend/scrapers/.gitkeep`
 **(No description)**
 ```python
+
+```
+
+### `logs/db_activity_log.txt`
+**(No description)**
+```python
+[2025-04-19T14:20:58.350619] init_db: {"status": "success"}
+[2025-04-19T14:25:09.615221] init_db: {"status": "success"}
+[2025-04-19T14:28:41.921041] init_db: {"status": "success"}
+[2025-04-19T14:37:26.882988] init_db: {"status": "success"}
+[2025-04-19T14:39:27.703044] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T14:39:27.703336] get_setting: {"key": "order_number_start", "result": "URC1008"}
+[2025-04-19T14:39:27.703896] update_setting: {"key": "order_number_start", "value": "URC1010"}
+[2025-04-19T14:39:27.704880] create_order: {"order_number": "URC1009", "requester_id": 1, "total": 1400.0, "items_count": 2}
+[2025-04-19T14:42:04.162332] init_db: {"status": "success"}
+[2025-04-19T14:42:23.912356] init_db: {"status": "success"}
+[2025-04-19T14:42:30.739151] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T14:42:30.739332] get_setting: {"key": "order_number_start", "result": "URC1010"}
+[2025-04-19T14:42:30.739873] update_setting: {"key": "order_number_start", "value": "URC1012"}
+[2025-04-19T14:42:30.740663] create_order: {"order_number": "URC1011", "requester_id": 1, "total": 1400.0, "items_count": 2}
+[2025-04-19T14:54:43.623841] init_db: {"status": "success"}
+[2025-04-19T14:55:28.401573] init_db: {"status": "success"}
+[2025-04-19T14:55:30.629586] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T14:55:30.629769] get_setting: {"key": "order_number_start", "result": "URC1012"}
+[2025-04-19T14:55:30.630238] update_setting: {"key": "order_number_start", "value": "URC1014"}
+[2025-04-19T14:55:30.631129] create_order: {"order_number": "URC1013", "requester_id": 1, "total": 1400.0, "items_count": 2}
+[2025-04-19T15:00:26.202996] init_db: {"status": "success"}
+[2025-04-19T15:04:34.886931] init_db: {"status": "success"}
+[2025-04-19T15:05:36.053785] init_db: {"status": "success"}
+[2025-04-19T15:07:02.165433] init_db: {"status": "success"}
+[2025-04-19T15:07:04.567865] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T15:07:04.568059] get_setting: {"key": "order_number_start", "result": "URC1014"}
+[2025-04-19T15:07:04.568601] update_setting: {"key": "order_number_start", "value": "URC1016"}
+[2025-04-19T15:07:04.569588] create_order: {"order_number": "URC1015", "requester_id": 1, "total": 1400.0, "items_count": 2}
+[2025-04-19T15:28:04.386880] init_db: {"status": "success"}
+[2025-04-19T15:28:08.373448] init_db: {"status": "success"}
+[2025-04-19T15:28:58.954164] init_db: {"status": "success"}
+[2025-04-19T15:29:15.859282] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T15:29:15.859461] get_setting: {"key": "order_number_start", "result": "URC1016"}
+[2025-04-19T15:29:15.859942] update_setting: {"key": "order_number_start", "value": "URC1018"}
+[2025-04-19T15:29:15.860929] create_order: {"order_number": "URC1017", "requester_id": 1, "total": 1100.0, "items_count": 2}
+[2025-04-19T15:35:41.789339] init_db: {"status": "success"}
+[2025-04-19T15:35:57.486083] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T15:35:57.486372] get_setting: {"key": "order_number_start", "result": "URC1018"}
+[2025-04-19T15:35:57.486861] update_setting: {"key": "order_number_start", "value": "URC1020"}
+[2025-04-19T15:35:57.487800] create_order: {"order_number": "URC1019", "requester_id": 1, "total": 2000.0, "items_count": 2}
+[2025-04-19T15:37:44.905947] init_db: {"status": "success"}
+[2025-04-19T15:38:25.368701] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T15:38:25.368904] get_setting: {"key": "order_number_start", "result": "URC1020"}
+[2025-04-19T15:38:25.369383] update_setting: {"key": "order_number_start", "value": "URC1022"}
+[2025-04-19T15:38:25.370002] create_order: {"order_number": "URC1021", "requester_id": 1, "total": 20000.0, "items_count": 1}
+[2025-04-19T15:40:01.587979] init_db: {"status": "success"}
+[2025-04-19T15:42:44.001903] init_db: {"status": "success"}
+[2025-04-19T15:42:51.554259] init_db: {"status": "success"}
+[2025-04-19T15:44:05.108217] init_db: {"status": "success"}
+[2025-04-19T15:44:10.144616] init_db: {"status": "success"}
+[2025-04-19T15:46:09.312993] init_db: {"status": "success"}
+[2025-04-19T15:46:14.381683] init_db: {"status": "success"}
+[2025-04-19T15:50:18.570936] init_db: {"status": "success"}
+[2025-04-19T15:50:22.982459] init_db: {"status": "success"}
+[2025-04-19T15:54:03.223582] init_db: {"status": "success"}
+[2025-04-19T15:55:17.006889] init_db: {"status": "success"}
+[2025-04-19T15:55:55.564797] init_db: {"status": "success"}
+[2025-04-19T16:00:58.097488] init_db: {"status": "success"}
+[2025-04-19T16:02:19.755609] init_db: {"status": "success"}
+[2025-04-19T16:02:23.570154] init_db: {"status": "success"}
+[2025-04-19T16:03:59.691319] init_db: {"status": "success"}
+[2025-04-19T16:04:03.353456] init_db: {"status": "success"}
+[2025-04-19T16:06:46.355759] init_db: {"status": "success"}
+[2025-04-19T16:06:51.707679] init_db: {"status": "success"}
+[2025-04-19T16:08:31.912282] init_db: {"status": "success"}
+[2025-04-19T16:08:36.954745] init_db: {"status": "success"}
+[2025-04-19T16:11:34.711750] init_db: {"status": "success"}
+[2025-04-19T16:11:49.998347] init_db: {"status": "success"}
+[2025-04-19T16:13:43.404112] init_db: {"status": "success"}
+[2025-04-19T16:13:47.199263] init_db: {"status": "success"}
+[2025-04-19T16:14:48.828740] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T16:14:48.828956] get_setting: {"key": "order_number_start", "result": "URC1022"}
+[2025-04-19T16:14:48.829503] update_setting: {"key": "order_number_start", "value": "URC1024"}
+[2025-04-19T16:14:48.830496] create_order: {"order_number": "URC1023", "requester_id": 1, "total": 2000.0, "items_count": 2}
+[2025-04-19T16:34:37.256581] init_db: {"status": "success"}
+[2025-04-19T16:35:48.866331] init_db: {"status": "success"}
+[2025-04-19T16:44:06.294478] init_db: {"status": "success"}
+[2025-04-19T16:45:53.388846] init_db: {"status": "success"}
+[2025-04-19T16:46:11.686194] init_db: {"status": "success"}
+[2025-04-19T16:48:43.639732] init_db: {"status": "success"}
+[2025-04-19T16:52:50.910967] init_db: {"status": "success"}
+
+```
+
+### `logs/new_orders_log.txt`
+**(No description)**
+```python
+[2025-04-19T14:39:27.704140] {"action": "submit_attempt", "order_data": {"order_number": "URC1009", "requester_id": 1, "order_note": "Pipeline test note", "note_to_supplier": "Deliver ASAP", "supplier_id": 1, "items": [{"item_code": "PIPE001", "item_description": "Steel Pipe 2-inch", "project": "TestProject1", "qty_ordered": 4.0, "price": 250.0}, {"item_code": "JOINT002", "item_description": "Pipe Joint 2-inch", "project": "TestProject2", "qty_ordered": 10.0, "price": 40.0}], "status": "Pending", "total": 1400.0}}
+[2025-04-19T14:39:27.705060] {"action": "submit_success", "order_number": "URC1009", "status": "Pending"}
+[2025-04-19T14:42:30.740086] {"action": "submit_attempt", "order_data": {"order_number": "URC1011", "requester_id": 1, "order_note": "Pipeline test note", "note_to_supplier": "Deliver ASAP", "supplier_id": 1, "items": [{"item_code": "TEST001", "item_description": "Steel Pipe 2-inch", "project": "TestProj1", "qty_ordered": 4.0, "price": 250.0}, {"item_code": "TEST002", "item_description": "Pipe Joint 2-inch", "project": "TestProj2", "qty_ordered": 10.0, "price": 40.0}], "status": "Pending", "total": 1400.0}}
+[2025-04-19T14:42:30.740820] {"action": "submit_success", "order_number": "URC1011", "status": "Pending"}
+[2025-04-19T14:55:30.630412] {"action": "submit_attempt", "order_data": {"order_number": "URC1013", "requester_id": 1, "order_note": "Pipeline test note", "note_to_supplier": "Deliver ASAP", "supplier_id": 1, "items": [{"item_code": "TEST001", "item_description": "Steel Pipe 2-inch", "project": "TestProj1", "qty_ordered": 4.0, "price": 250.0}, {"item_code": "TEST002", "item_description": "Pipe Joint 2-inch", "project": "TestProj2", "qty_ordered": 10.0, "price": 40.0}], "status": "Pending", "total": 1400.0}}
+[2025-04-19T14:55:30.631283] {"action": "submit_success", "order_number": "URC1013", "status": "Pending"}
+[2025-04-19T14:55:30.645675] {"action": "receive", "orders": [19]}
+[2025-04-19T15:07:04.568837] {"action": "submit_attempt", "order_data": {"order_number": "URC1015", "requester_id": 1, "order_note": "Pipeline test note", "note_to_supplier": "Deliver ASAP", "supplier_id": 1, "items": [{"item_code": "TEST001", "item_description": "Steel Pipe 2-inch", "project": "TestProj1", "qty_ordered": 4.0, "price": 250.0}, {"item_code": "TEST002", "item_description": "Pipe Joint 2-inch", "project": "TestProj2", "qty_ordered": 10.0, "price": 40.0}], "status": "Pending", "total": 1400.0}}
+[2025-04-19T15:07:04.569746] {"action": "submit_success", "order_number": "URC1015", "status": "Pending"}
+[2025-04-19T15:07:04.584492] {"action": "receive", "orders": [20]}
+[2025-04-19T15:07:04.587243] {"action": "attachment_uploaded", "order_id": 20, "filename": "test_invoice.pdf", "path": "data/uploads/20_test_invoice.pdf"}
+[2025-04-19T15:29:15.860120] {"action": "submit_attempt", "order_data": {"order_number": "URC1017", "requester_id": 1, "order_note": "End-to-end test order", "note_to_supplier": "Please confirm ASAP", "supplier_id": 1, "items": [{"item_code": "TST001", "item_description": "Test Widget", "project": "TEST-01", "qty_ordered": 3.0, "price": 200.0}, {"item_code": "TST002", "item_description": "Test Cable", "project": "TEST-02", "qty_ordered": 5.0, "price": 100.0}], "status": "Pending", "total": 1100.0}}
+[2025-04-19T15:29:15.861078] {"action": "submit_success", "order_number": "URC1017", "status": "Pending"}
+[2025-04-19T15:29:15.875787] {"action": "receive", "orders": [21]}
+[2025-04-19T15:29:15.878624] {"action": "attachment_uploaded", "order_id": 21, "filename": "test_invoice.pdf", "path": "data/uploads/21_test_invoice.pdf"}
+[2025-04-19T15:35:57.487040] {"action": "submit_attempt", "order_data": {"order_number": "URC1019", "requester_id": 1, "order_note": "Partial receive test", "note_to_supplier": "Split delivery test", "supplier_id": 1, "items": [{"item_code": "PART001", "item_description": "Partial Item A", "project": "SplitProjA", "qty_ordered": 10.0, "price": 100.0}, {"item_code": "PART002", "item_description": "Partial Item B", "project": "SplitProjB", "qty_ordered": 5.0, "price": 200.0}], "status": "Pending", "total": 2000.0}}
+[2025-04-19T15:35:57.487956] {"action": "submit_success", "order_number": "URC1019", "status": "Pending"}
+[2025-04-19T15:35:57.503247] {"action": "receive", "orders": [22]}
+[2025-04-19T15:38:25.369555] {"action": "submit_attempt", "order_data": {"order_number": "URC1021", "requester_id": 1, "order_note": "Test high value order", "note_to_supplier": "Handle with care", "supplier_id": 1, "items": [{"item_code": "HIGH001", "item_description": "Premium Machine Part", "project": "TestProjX", "qty_ordered": 1.0, "price": 20000.0}], "status": "Awaiting Authorisation", "total": 20000.0}}
+[2025-04-19T15:38:25.370156] {"action": "submit_success", "order_number": "URC1021", "status": "Awaiting Authorisation"}
+[2025-04-19T16:14:48.829687] {"action": "submit_attempt", "order_data": {"order_number": "URC1023", "requester_id": 1, "order_note": "Partial receive test", "note_to_supplier": "Split delivery test", "supplier_id": 1, "items": [{"item_code": "PART001", "item_description": "Partial Item A", "project": "SplitProjA", "qty_ordered": 10.0, "price": 100.0}, {"item_code": "PART002", "item_description": "Partial Item B", "project": "SplitProjB", "qty_ordered": 5.0, "price": 200.0}], "status": "Pending", "total": 2000.0}}
+[2025-04-19T16:14:48.830733] {"action": "submit_success", "order_number": "URC1023", "status": "Pending"}
 
 ```
 
@@ -2905,6 +3228,1503 @@ INFO:     Finished server process [84693]
 INFO:     Started server process [85459]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+INFO:     127.0.0.1:55300 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55302 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55304 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55304 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55300 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55307 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55308 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55400 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55402 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55407 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55400 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55404 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55408 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55408 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55658 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55658 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55666 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55660 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55658 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55662 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55664 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55695 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55698 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55701 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55696 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55695 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55702 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55702 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [85459]
+Process SpawnProcess-6:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/lookups.py", line 1, in <module>
+    @router.get("/items")
+     ^^^^^^
+NameError: name 'router' is not defined
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+Process SpawnProcess-7:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/lookups.py", line 1, in <module>
+    @router.get("/items")
+     ^^^^^^
+NameError: name 'router' is not defined
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [97121] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/lookups.py", line 1, in <module>
+    @router.get("/items")
+     ^^^^^^
+NameError: name 'router' is not defined
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [97200] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/lookups.py", line 1, in <module>
+    @router.get("/items")
+     ^^^^^^
+NameError: name 'router' is not defined
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+INFO:     Started server process [97606]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [97664] using StatReload
+INFO:     Started server process [97672]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55804 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55804 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55805 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55811 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55809 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55808 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55808 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [94994] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 1, in <module>
+    from fastapi import FastAPI
+ModuleNotFoundError: No module named 'fastapi'
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 1, in <module>
+    from fastapi import FastAPI
+ModuleNotFoundError: No module named 'fastapi'
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [95533] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 1, in <module>
+    from fastapi import FastAPI
+ModuleNotFoundError: No module named 'fastapi'
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [95697] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 2, in <module>
+    from starlette.middleware.sessions import SessionMiddleware
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 7, in <module>
+    import itsdangerous
+ModuleNotFoundError: No module named 'itsdangerous'
+WARNING:  StatReload detected changes in 'scripts/start_server.py'. Reloading...
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 2, in <module>
+    from starlette.middleware.sessions import SessionMiddleware
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 7, in <module>
+    import itsdangerous
+ModuleNotFoundError: No module named 'itsdangerous'
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [96265] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 2, in <module>
+    from starlette.middleware.sessions import SessionMiddleware
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 7, in <module>
+    import itsdangerous
+ModuleNotFoundError: No module named 'itsdangerous'
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [96376] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 6, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 14, in <module>
+    templates = Jinja2Templates(directory="frontend/templates")
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/templating.py", line 96, in __init__
+    assert jinja2 is not None, "jinja2 must be installed to use Jinja2Templates"
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: jinja2 must be installed to use Jinja2Templates
+WARNING:  StatReload detected changes in 'scripts/start_server.py'. Reloading...
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 6, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 14, in <module>
+    templates = Jinja2Templates(directory="frontend/templates")
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/templating.py", line 96, in __init__
+    assert jinja2 is not None, "jinja2 must be installed to use Jinja2Templates"
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: jinja2 must be installed to use Jinja2Templates
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [96545] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 6, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 14, in <module>
+    templates = Jinja2Templates(directory="frontend/templates")
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/templating.py", line 96, in __init__
+    assert jinja2 is not None, "jinja2 must be installed to use Jinja2Templates"
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: jinja2 must be installed to use Jinja2Templates
+WARNING:  StatReload detected changes in 'scripts/start_server.py'. Reloading...
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 6, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 14, in <module>
+    templates = Jinja2Templates(directory="frontend/templates")
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/templating.py", line 96, in __init__
+    assert jinja2 is not None, "jinja2 must be installed to use Jinja2Templates"
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: jinja2 must be installed to use Jinja2Templates
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [97140] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 6, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 14, in <module>
+    templates = Jinja2Templates(directory="frontend/templates")
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/templating.py", line 96, in __init__
+    assert jinja2 is not None, "jinja2 must be installed to use Jinja2Templates"
+           ^^^^^^^^^^^^^^^^^^
+AssertionError: jinja2 must be installed to use Jinja2Templates
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [97515] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 6, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages
+ImportError: cannot import name 'ui_pages' from 'backend.endpoints' (/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__init__.py)
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Started server process [98044]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [98102] using StatReload
+INFO:     Started server process [98108]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56674 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56674 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56676 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56678 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56682 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56681 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56681 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [98955] using StatReload
+INFO:     Started server process [98963]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:58208 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58209 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58208 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58215 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58214 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58211 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58211 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58395 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58395 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58395 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58405 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58411 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58410 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58408 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [99883] using StatReload
+INFO:     Started server process [99889]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59940 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59940 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59941 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59944 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59945 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59947 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59947 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60102 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60184 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60184 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60186 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60192 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60189 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60191 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60334 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:60522 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60522 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60522 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60536 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60539 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60542 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60541 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [1770] using StatReload
+INFO:     Started server process [1777]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:62488 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62489 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62488 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62492 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62494 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62495 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62495 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62495 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62495 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62488 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62489 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62494 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62492 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62615 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62615 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62615 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62640 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62645 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62644 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62646 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62733 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:62864 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [2490] using StatReload
+INFO:     Started server process [2495]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:63885 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:63949 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63950 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63949 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63956 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63954 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63952 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63952 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64089 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2495]
+INFO:     Started server process [4713]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [4759] using StatReload
+INFO:     Started server process [4765]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51645 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51645 - "GET /lookups/requesters HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51646 - "GET /lookups/suppliers HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51648 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51650 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51652 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51652 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4765]
+INFO:     Started server process [4832]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51753 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51753 - "GET /lookups/requesters HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51754 - "GET /lookups/suppliers HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51756 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51759 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51760 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51760 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [4878] using StatReload
+INFO:     Started server process [4880]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51795 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51795 - "GET /lookups/suppliers HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51796 - "GET /lookups/requesters HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51798 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51801 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51802 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51802 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4880]
+INFO:     Started server process [5471]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [5511] using StatReload
+INFO:     Started server process [5516]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53026 - "GET /orders/new HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53026 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [5516]
+INFO:     Started server process [6261]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6261]
+INFO:     Started server process [8239]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/database.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [8239]
+INFO:     Started server process [9042]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/endpoints/ui_pages.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9042]
+INFO:     Started server process [9608]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9608]
+INFO:     Started server process [10080]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [11256] using StatReload
+INFO:     Started server process [11263]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:64312 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64313 - "POST /orders/receive HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'scripts/test_pipeline_end_to_end.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11263]
+INFO:     Started server process [11886]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [11966] using StatReload
+INFO:     Started server process [11973]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:65098 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65099 - "POST /orders/receive HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11973]
+INFO:     Started server process [13571]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [13687] using StatReload
+INFO:     Started server process [13694]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51995 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51996 - "POST /orders/receive HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51997 - "POST /orders/upload_attachment HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [13694]
+INFO:     Started server process [14358]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/git_push_project.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [14358]
+INFO:     Started server process [14916]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/git_pull_project.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [14916]
+INFO:     Started server process [15056]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [15266] using StatReload
+INFO:     Started server process [15273]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54987 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54988 - "POST /orders/receive HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54989 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'scripts/test_pipeline_end_to_end.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [15273]
+INFO:     Started server process [18029]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/test_pipeline_end_to_end.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [18029]
+INFO:     Started server process [18043]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [18170] using StatReload
+INFO:     Started server process [18175]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60584 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60585 - "POST /orders/receive HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60586 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [19088] using StatReload
+INFO:     Started server process [19095]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:62253 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62254 - "POST /orders/receive HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [19389] using StatReload
+INFO:     Started server process [19395]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+[WHATSAPP] Order URC1021 exceeds threshold, notify for auth.
+INFO:     127.0.0.1:62888 - "POST /orders HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [19721] using StatReload
+INFO:     Started server process [19726]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [19726]
+INFO:     Started server process [20086]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [20126] using StatReload
+INFO:     Started server process [20133]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [20133]
+INFO:     Started server process [20306]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [20339] using StatReload
+INFO:     Started server process [20346]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:64369 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [20346]
+INFO:     Started server process [20602]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [20638] using StatReload
+INFO:     Started server process [20644]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:64895 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:64896 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [20644]
+INFO:     Started server process [21170]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [21200] using StatReload
+INFO:     Started server process [21208]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [21208]
+INFO:     Started server process [21701]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [21701]
+INFO:     Started server process [21860]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [21965] using StatReload
+INFO:     Started server process [21970]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51011 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:51012 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:51013 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [22653] using StatReload
+INFO:     Started server process [22658]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [22658]
+INFO:     Started server process [22848]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [22883] using StatReload
+INFO:     Started server process [22888]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [22888]
+INFO:     Started server process [23099]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [23134] using StatReload
+INFO:     Started server process [23137]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23137]
+INFO:     Started server process [23492]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [23530] using StatReload
+INFO:     Started server process [23534]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23534]
+INFO:     Started server process [23768]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [23810] using StatReload
+INFO:     Started server process [23812]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23812]
+INFO:     Started server process [24219]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [24285] using StatReload
+INFO:     Started server process [24287]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24287]
+INFO:     Started server process [24558]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [24593] using StatReload
+INFO:     Started server process [24595]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55874 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57975 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+WARNING:  StatReload detected changes in 'scripts/test_invalid_data_handling.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24595]
+INFO:     Started server process [27298]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [27490] using StatReload
+INFO:     Started server process [27495]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61377 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:61378 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:61379 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+WARNING:  StatReload detected changes in 'scripts/dump_project_summary.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27495]
+INFO:     Started server process [28577]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/dump_project_summary.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28577]
+INFO:     Started server process [28814]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [28880] using StatReload
+INFO:     Started server process [28882]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/dump_project_summary.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28882]
+INFO:     Started server process [29243]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/dump_project_summary.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29243]
+INFO:     Started server process [29781]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+
+```
+
+### `logs/server_startup.log`
+**(No description)**
+```python
+2025-04-19 14:28:41,921 | INFO | ✅ Database initialized successfully.
+2025-04-19 14:37:26,883 | INFO | ✅ Database initialized successfully.
+2025-04-19 14:42:04,162 | INFO | ✅ Database initialized successfully.
+2025-04-19 14:42:23,912 | INFO | ✅ Database initialized successfully.
+2025-04-19 14:54:43,624 | INFO | ✅ Database initialized successfully.
+2025-04-19 14:55:28,401 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:00:26,203 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:04:34,887 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:05:36,053 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:07:02,165 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:28:04,387 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:28:08,373 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:28:58,954 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:35:41,789 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:37:44,906 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:40:01,588 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:42:44,002 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:42:51,554 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:44:05,108 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:44:10,144 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:46:09,313 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:46:14,381 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:50:18,571 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:50:22,982 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:54:03,223 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:55:17,007 | INFO | ✅ Database initialized successfully.
+2025-04-19 15:55:55,564 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:00:58,097 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:02:19,755 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:02:23,570 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:03:59,691 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:04:03,353 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:06:46,355 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:06:51,707 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:08:31,912 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:08:36,954 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:11:34,711 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:11:49,998 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:13:43,404 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:13:47,199 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:34:37,256 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:35:48,866 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:44:06,294 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:45:53,388 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:46:11,686 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:48:43,639 | INFO | ✅ Database initialized successfully.
+2025-04-19 16:52:50,911 | INFO | ✅ Database initialized successfully.
+
+```
+
+### `logs/testing_log.txt`
+**(No description)**
+```python
+🚀 Test started
+2025-04-19T15:29:15.852963 | 🚀 Running full pipeline integration test...
+
+2025-04-19T15:29:15.861563 | ✅ Order creation succeeded
+2025-04-19T15:29:15.861888 | ✅ Line items created in DB
+2025-04-19T15:29:15.876258 | ⚠️ Receive response status: 200
+2025-04-19T15:29:15.876300 | ⚠️ Response content: {"status":"✅ Order(s) marked as received"}
+2025-04-19T15:29:15.876326 | ✅ Order receiving succeeded
+2025-04-19T15:29:15.876542 | ✅ Audit trail entries exist
+2025-04-19T15:29:15.878922 | ✅ Attachment uploaded
+2025-04-19T15:29:15.879134 | ✅ Attachment record exists
+2025-04-19T15:29:15.879169 | 
+🎉 Pipeline test passed for order URC1017 (ID 21)
 
 ```
 
@@ -2948,7 +4768,7 @@ if __name__ == "__main__":
 ```
 
 ### `scripts/dump_project_summary.py`
-**Return an ASCII tree of the project structure up to depth 3, skipping excluded directories.**
+**(.*?)**
 ```python
 #!/usr/bin/env python3
 import os
@@ -2965,7 +4785,6 @@ DB_FILE = PROJECT_ROOT / 'data' / 'orders.db'
 
 # --- Helpers ---
 def build_tree(path: Path, prefix='') -> str:
-    """Return an ASCII tree of the project structure up to depth 3, skipping excluded directories."""
     def _build(path, prefix, level):
         if level > 3:
             return []
@@ -2981,7 +4800,6 @@ def build_tree(path: Path, prefix='') -> str:
     return f"{path}\n" + '\n'.join(_build(path, prefix, level=1))
 
 def extract_desc(src: str) -> str:
-    """Pull first triple‑quoted docstring or line‑comment as description."""
     m = re.search(r'"""(.*?)"""', src, re.DOTALL)
     if not m:
         m = re.search(r"'''(.*?)'''", src, re.DOTALL)
@@ -3000,7 +4818,6 @@ def read_src(path: Path) -> str:
         return f"<!-- ERROR reading {path.name}: {e} -->"
 
 def dump_db_schema(db_path: Path) -> str:
-    """Return Markdown of the SQLite schema and a brief purpose header."""
     md = "## 🗄️ Database Schema (`data/orders.db`)\n\n"
     if not db_path.exists():
         return md + "_No DB found_\n\n"
@@ -3017,28 +4834,80 @@ def dump_db_schema(db_path: Path) -> str:
     conn.close()
     return md
 
+def dump_test_summary() -> str:
+    md = "## 🧪 Test Coverage Summary\n\n"
+    md += "| Test Script | Purpose | Status |\n"
+    md += "|-------------|---------|--------|\n"
+    summary = {
+        "test_authorisation_threshold_trigger.py": "High-value order triggers auth flow",
+        "test_invalid_data_handling.py": "Ensures invalid payloads return 422/400",
+        "test_invalid_items_variants.py": "Covers malformed line item edge cases",
+        "test_pipeline_end_to_end.py": "Full pipeline test: creation → receive",
+        "test_receive_partial.py": "Tests partial receiving with audit tracking",
+    }
+    scripts_dir = PROJECT_ROOT / "scripts"
+    for test_file in sorted(scripts_dir.glob("test_*.py")):
+        name = test_file.name
+        status = "✅"
+        purpose = summary.get(name, extract_desc(read_src(test_file)))
+        md += f"| `{name}` | {purpose} | {status} |\n"
+    md += "\n"
+    return md
+
+def extra_sections():
+    return """
+## 🔐 Users & Roles
+
+| Username | Role  |
+|----------|-------|
+| Steven   | Admin |
+| Aaron    | Edit  |
+| Yolandi  | View  |
+
+Passwords are hashed; assumed defaults for local testing: `password`.
+
+## ⚙️ System Settings
+
+| Key                 | Value   |
+|----------------------|---------|
+| auth_threshold       | 10000   |
+| order_number_start   | URC1024 |
+| last_order_number    | URC000  |
+
+## 🚦 FastAPI Endpoint Summary
+
+| Endpoint                     | Method    | Status         |
+|------------------------------|-----------|----------------|
+| `/orders`                   | POST      | ✅ Implemented |
+| `/orders/receive`           | POST      | ✅ Implemented |
+| `/orders/next_order_number` | GET       | ✅ Implemented |
+| `/attachments/upload`       | POST      | ✅ Implemented |
+| `/notes`                    | GET/POST  | ✅ Implemented |
+| `/audit`                    | GET       | ⏳ Pending     |
+| `/orders/print`             | GET       | ⏳ Planned     |
+| `/lookups/suppliers`        | GET       | ✅ Implemented |
+| `/lookups/requesters`       | GET       | ✅ Implemented |
+| `/lookups/projects`         | GET       | ✅ Implemented |
+| `/lookups/items`            | GET       | ✅ Implemented |
+"""
+
 # --- Main dump ---
 def main():
     md = []
-    # Header
     md.append(f"# 📦 Project Snapshot\nGenerated: {datetime.now():%Y-%m-%d %H:%M:%S}\n")
-    # Tree
-    md.append("## 📁 Directory Tree\n```\n" + build_tree(PROJECT_ROOT) + "\n```\n")
-    # Source files
+    md.append("## 📁 Directory Tree\n````\n" + build_tree(PROJECT_ROOT) + "\n````")
     md.append("## 📄 Source Files\n")
     for root, dirs, files in os.walk(PROJECT_ROOT):
         dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
         for f in sorted(files):
             p = Path(root) / f
-            if p == OUTPUT_MD: 
+            if p == OUTPUT_MD:
                 continue
             rel = p.relative_to(PROJECT_ROOT)
             src = read_src(p)
             desc = extract_desc(src)
             md.append(f"### `{rel}`\n**{desc}**\n```python\n{src}\n```\n")
-    # DB schema
     md.append(dump_db_schema(DB_FILE))
-    # Narrative
     md.append("## 📝 Project summary\n"
               "I am busy building a Purchase Order system for Universal Recycling.\n\n"
               "**Testing Methodology:**\n"
@@ -3063,140 +4932,133 @@ def main():
               "- Code reusability is a must (e.g. date handling, filters)\n\n"
               "**How Steven works with ChatGPT:**\n"
               "- Steven doesn’t know coding; he’s decent with terminal commands\n"
-              "- He uses VS Code, wants brief error messages & clear steps\n")
-    # Write out
+              "- He uses VS Code, wants brief error messages & clear steps\n")
+    md.append(extra_sections())
+    md.append(dump_test_summary())
     OUTPUT_MD.write_text('\n'.join(md), encoding='utf-8')
     print(f"✅ Written {OUTPUT_MD}")
 
 if __name__ == '__main__':
     main()
 
-
 ```
 
 ### `scripts/git_pull_project.py`
-**Navigate to the project directory**
+**Check for local changes**
 ```python
 import subprocess
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
-def run_git_command(args, error_msg):
-    print(f"Running: {' '.join(args)}")
+def run(command, desc):
+    print(f"🔧 {desc}...")
     try:
-        result = subprocess.run(args, capture_output=True, text=True, check=True)
-        return result.stdout
+        result = subprocess.run(command, check=True, capture_output=True, text=True)
+        if result.stdout.strip():
+            print(result.stdout.strip())
+        return result
     except subprocess.CalledProcessError as e:
-        print(f"Error: {error_msg}")
+        print(f"❌ {desc} failed")
         print(e.stderr)
-        return None
+        sys.exit(1)
 
 def main():
-    project_dir = Path("/Users/stevencohen/Projects/universal_recycling/orders_project")
+    repo_path = Path("/Users/stevencohen/Projects/universal_recycling/orders_project")
+    os.chdir(repo_path)
 
-    # Navigate to the project directory
-    try:
-        os.chdir(project_dir)
-    except FileNotFoundError:
-        print(f"❌ Directory {project_dir} not found.")
+    if not (repo_path / ".git").exists():
+        print("❌ Not a Git repository.")
         sys.exit(1)
 
-    print("📥 Starting Git pull for Universal Recycling Purchase Orders...")
+    print("📥 Git pull process starting...")
 
-    # Check for any local changes (modified, staged, or untracked)
-    status = run_git_command(["git", "status", "--porcelain"], "Failed to check git status")
+    # Check for local changes
+    result = run(["git", "status", "--porcelain"], "Check for local changes")
     stashed = False
 
-    if status.strip():
-        print("📦 Local changes detected. Stashing (incl. untracked)...")
-        run_git_command(["git", "stash", "push", "-u", "-m", "Auto-stash for pull"], "Failed to stash changes")
+    if result.stdout.strip():
+        print("📦 Local changes detected — stashing...")
+        run(["git", "stash", "push", "-u", "-m", "Auto-stash before pull"], "Create stash")
         stashed = True
 
-    # Pull from origin with rebase
-    print("🔄 Pulling latest from origin/main...")
-    if run_git_command(["git", "pull", "--rebase", "origin", "main"], "Pull failed (conflict?)") is None:
-        print("❗ Pull failed. Resolve conflicts manually.")
-        if stashed:
-            print("🔁 Attempting to restore stashed changes...")
-            result = run_git_command(["git", "stash", "pop"], "Failed to pop stash")
-            if result is None:
-                print("⚠️  Stash pop failed. Run 'git stash show' and resolve manually.")
-        sys.exit(1)
+    # Pull with rebase
+    run(["git", "pull", "--rebase", "origin", "main"], "Pull latest changes with rebase")
 
+    # Restore stashed changes
     if stashed:
-        print("🔁 Restoring stashed changes...")
-        result = run_git_command(["git", "stash", "pop"], "Failed to restore stashed changes")
-        if result is None:
-            print("⚠️  Stash pop had conflicts. Run 'git stash show' and resolve manually.")
+        print("🔁 Restoring stashed work...")
+        try:
+            run(["git", "stash", "pop"], "Restore stashed changes")
+        except SystemExit:
+            print("⚠️ Stash pop failed — resolve manually with `git stash list && git stash apply`")
+            sys.exit(1)
 
-    print("✅ Pull completed successfully!")
+    print("✅ Git pull completed successfully!")
 
 if __name__ == "__main__":
     main()
-
 
 ```
 
 ### `scripts/git_push_project.py`
-**Change to project directory**
+**Check if this is a Git repo**
 ```python
 import subprocess
 import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
-def run_git_command(args, error_msg):
-    print(f"Running: {' '.join(args)}")
+def run(command, desc):
+    print(f"🔧 {desc}...")
     try:
-        result = subprocess.run(args, capture_output=True, text=True, check=True)
-        return result.stdout
+        result = subprocess.run(command, check=True, capture_output=True, text=True)
+        if result.stdout.strip():
+            print(result.stdout.strip())
+        return result
     except subprocess.CalledProcessError as e:
-        print(f"Error: {error_msg}")
+        print(f"❌ {desc} failed")
         print(e.stderr)
-        return None
-
-def main():
-    project_dir = Path("/Users/stevencohen/Projects/universal_recycling/orders_project")
-    branch = "main"
-
-    # Change to project directory
-    try:
-        os.chdir(project_dir)
-    except FileNotFoundError:
-        print(f"Error: Directory {project_dir} not found")
         sys.exit(1)
 
-    print("📦 Starting Git push process...")
+def main():
+    repo_path = Path("/Users/stevencohen/Projects/universal_recycling/orders_project")
+    os.chdir(repo_path)
 
-    # Stage everything (including untracked files)
-    run_git_command(["git", "add", "--all"], "Failed to stage changes")
+    # Check if this is a Git repo
+    if not (repo_path / ".git").exists():
+        print("❌ Not a Git repository.")
+        sys.exit(1)
 
-    # Check if anything is staged
-    diff = run_git_command(["git", "diff", "--cached", "--name-only"], "Failed to check staged files")
-    if not diff.strip():
-        print("✅ Nothing to commit or push.")
+    print("📦 Starting full Git sync")
+
+    # Check current branch
+    result = run(["git", "rev-parse", "--abbrev-ref", "HEAD"], "Check current branch")
+    current_branch = result.stdout.strip()
+    print(f"🌿 Current branch: {current_branch}")
+
+    # Stage all changes
+    run(["git", "add", "--all"], "Stage all changes")
+
+    # Check for staged files
+    result = run(["git", "diff", "--cached", "--name-only"], "Check staged files")
+    if not result.stdout.strip():
+        print("✅ No changes to commit.")
         return
 
-    # Commit the changes
-    commit_msg = "Auto-commit for push (script)"
-    run_git_command(["git", "commit", "-m", commit_msg], "Failed to commit changes")
+    # Commit
+    run(["git", "commit", "-m", "📝 Auto-commit by script"], "Commit changes")
 
-    # Pull with rebase to avoid conflicts
-    if run_git_command(["git", "pull", "--rebase", "origin", branch], "Pull failed") is None:
-        print("❌ Pull failed. Resolve manually.")
-        return
+    # Pull latest with rebase
+    run(["git", "pull", "--rebase", "origin", current_branch], "Pull latest changes with rebase")
 
-    # Push to GitHub
-    if run_git_command(["git", "push", "origin", branch], "Push failed") is None:
-        print("❌ Push failed. Resolve manually.")
-        return
+    # Push changes
+    run(["git", "push", "origin", current_branch], "Push changes to origin")
 
-    print("🚀 Push completed successfully!")
+    print("🚀 Git sync completed successfully.")
 
 if __name__ == "__main__":
     main()
-
 
 ```
 
@@ -4835,50 +6697,479 @@ print("✅ Static data inserted.")
 ```python
 #!/usr/bin/env python3
 import os
+import sys
 import subprocess
-import time
 import shutil
+from pathlib import Path
 
-# --- Configuration ---
-PORT       = "8004"
-LOG_PATH   = "logs/server.log"
-APP_MODULE = "backend.main:app"   # run as `uvicorn backend.main:app`
-# ----------------------
+# --- CONFIG ---
+PORT = "8004"
+APP_MODULE = "backend.main:app"
+LOG_FILE = "logs/server.log"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+# --------------
 
-print("🟢 Starting FastAPI smart server (full cleanup)…")
+print("🟢 Starting FastAPI server...")
 
-# 1) Kill anything listening on PORT
-print(f"🔪 Killing processes on port {PORT}…")
+# 1. Enforce project root and module importability
+os.chdir(PROJECT_ROOT)
+sys.path.insert(0, str(PROJECT_ROOT))
+
+# 2. Kill any process using the port
+print(f"🔪 Killing processes on port {PORT}...")
 subprocess.run(f"lsof -ti:{PORT} | xargs kill -9", shell=True,
                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-time.sleep(0.5)
-print(f"✅ Port {PORT} cleared.")
+print("✅ Port cleared.")
 
-# 2) Remove all __pycache__ folders
-print("🧹 Clearing Python bytecode caches…")
-for root, dirs, _ in os.walk(".", topdown=True):
-    if "__pycache__" in dirs:
-        full = os.path.join(root, "__pycache__")
-        try:
-            shutil.rmtree(full)
-            print(f"   • Removed {full}")
-        except Exception:
-            pass
+# 3. Remove all __pycache__ folders
+print("🧹 Removing bytecode caches...")
+for path in PROJECT_ROOT.rglob("__pycache__"):
+    try:
+        shutil.rmtree(path)
+        print(f"   • Removed {path}")
+    except Exception:
+        pass
 
-# 3) Ensure logs directory exists
+# 4. Ensure logs directory exists
 os.makedirs("logs", exist_ok=True)
 
-# 4) Launch Uvicorn
-print(f"🚀 Launching Uvicorn ({APP_MODULE}) on port {PORT}…")
-with open(LOG_PATH, "a") as log_file:
+# 5. Start Uvicorn with reload and persistent logging
+print(f"🚀 Launching Uvicorn → {APP_MODULE} on port {PORT}...")
+with open(LOG_FILE, "a") as log_file:
     subprocess.Popen(
-        ["uvicorn", APP_MODULE, "--host", "0.0.0.0", "--port", PORT, "--reload"],
+        ["venv/bin/uvicorn", APP_MODULE, "--host", "0.0.0.0", "--port", PORT, "--reload"],
         stdout=log_file,
-        stderr=log_file,
-        cwd=os.getcwd()  # must be project root so `backend` module is importable
+        stderr=log_file
     )
 
-print(f"✅ Uvicorn launched. Logging → {LOG_PATH}")
+print(f"✅ Server launched. Logs → {LOG_FILE}")
+
+```
+
+### `scripts/test_authorisation_threshold_trigger.py`
+**(No description)**
+```python
+import requests
+import sqlite3
+from datetime import datetime
+
+BASE_URL = "http://localhost:8004"
+DB_PATH = "data/orders.db"
+
+def assert_condition(condition, message):
+    if not condition:
+        raise AssertionError(f"❌ {message}")
+    print(f"✅ {message}")
+
+def fetch_one(query, params=()):
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute(query, params)
+        return cursor.fetchone()
+
+def create_high_value_order():
+    payload = {
+        "requester_id": 1,
+        "supplier_id": 1,
+        "order_note": "Test high value order",
+        "note_to_supplier": "Handle with care",
+        "items": [
+            {
+                "item_code": "HIGH001",
+                "item_description": "Premium Machine Part",
+                "project": "TestProjX",
+                "qty_ordered": 1,
+                "price": 20000.0  # High price to trigger threshold
+            }
+        ]
+    }
+    response = requests.post(f"{BASE_URL}/orders", json=payload)
+    assert_condition(response.status_code == 200, "Order creation succeeded")
+    data = response.json()
+    return data["order"]["id"], data["order"]["order_number"]
+
+def check_authorisation_status(order_id):
+    row = fetch_one("SELECT status, total FROM orders WHERE id = ?", (order_id,))
+    status, total = row
+    assert_condition(status == "Awaiting Authorisation", "Status is Awaiting Authorisation")
+    assert_condition(total > 10000, "Total is above threshold")
+
+def main():
+    print("\n🚨 Running high-value order auth threshold test...\n")
+    order_id, order_number = create_high_value_order()
+    check_authorisation_status(order_id)
+    print(f"\n🎯 Test passed for order {order_number} (ID {order_id})")
+
+if __name__ == "__main__":
+    main()
+
+
+```
+
+### `scripts/test_invalid_data_handling.py`
+**Case 1: Empty item list**
+```python
+import requests
+import sqlite3
+from pathlib import Path
+
+BASE_URL = "http://localhost:8004"
+DB_PATH = "data/orders.db"  # ✅ Matches project root execution context
+
+def assert_condition(condition, message):
+    if not condition:
+        raise AssertionError(f"❌ {message}")
+    print(f"✅ {message}")
+
+def fetch_from_db(query, params=()):
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute(query, params)
+        return cursor.fetchall()
+
+def count_orders():
+    return fetch_from_db("SELECT COUNT(*) FROM orders")[0][0]
+
+def send_invalid_payload(payload, expected_error):
+    response = requests.post(f"{BASE_URL}/orders", json=payload)
+    print(f"⚠️ Full response: {response.status_code} {response.text}")
+    assert_condition(response.status_code in (400, 422), "400 or 422 received for invalid payload")
+    assert_condition(expected_error.lower() in response.text.lower(), f"Error message contains '{expected_error}'")
+
+def main():
+    print("\n🧪 Testing invalid item list edge cases...\n")
+
+    if not Path(DB_PATH).exists():
+        raise FileNotFoundError(f"❌ Cannot find DB at: {DB_PATH}")
+
+    initial_count = count_orders()
+
+    # Case 1: Empty item list
+    payload1 = {
+        "requester_id": 1,
+        "supplier_id": 1,
+        "items": []
+    }
+    send_invalid_payload(payload1, "at least")  # ← fixed here
+
+    # Case 2: Missing item_code
+    payload2 = {
+        "requester_id": 1,
+        "supplier_id": 1,
+        "items": [{
+            "item_description": "Missing code",
+            "project": "X",
+            "qty_ordered": 1,
+            "price": 10
+        }]
+    }
+    send_invalid_payload(payload2, "item_code")
+
+    # Case 3: Missing project
+    payload3 = {
+        "requester_id": 1,
+        "supplier_id": 1,
+        "items": [{
+            "item_code": "X123",
+            "item_description": "Test",
+            "qty_ordered": 1,
+            "price": 10
+        }]
+    }
+    send_invalid_payload(payload3, "project")
+
+    final_count = count_orders()
+    assert_condition(final_count == initial_count, "❄️ No invalid orders inserted")
+
+    print("\n✅ All item validation tests passed\n")
+
+if __name__ == "__main__":
+    main()
+
+```
+
+### `scripts/test_invalid_items_variants.py`
+**Case 1: Empty item list**
+```python
+import requests
+import sqlite3
+import os
+
+BASE_URL = "http://localhost:8004"
+DB_PATH = "data/orders.db"
+
+def assert_condition(condition, message):
+    if not condition:
+        raise AssertionError(f"❌ {message}")
+    print(f"✅ {message}")
+
+def fetch_from_db(query, params=()):
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute(query, params)
+        return cursor.fetchall()
+
+def count_orders():
+    return fetch_from_db("SELECT COUNT(*) FROM orders")[0][0]
+
+def send_invalid_payload(payload, expected_error):
+    response = requests.post(f"{BASE_URL}/orders", json=payload)
+    print(f"⚠️ Full response: {response.status_code} {response.text}")
+    assert_condition(response.status_code in (400, 422), "400 or 422 received for invalid payload")
+    assert_condition(expected_error.lower() in response.text.lower(), f"Error message contains '{expected_error}'")
+
+def main():
+    print("\n🧪 Testing invalid item list edge cases...\n")
+
+    if not os.path.exists(DB_PATH):
+        raise FileNotFoundError(f"❌ Cannot find DB at: {DB_PATH}")
+
+    initial_count = count_orders()
+
+    # Case 1: Empty item list
+    payload1 = {
+        "requester_id": 1,
+        "supplier_id": 1,
+        "items": []
+    }
+    send_invalid_payload(payload1, "at least one item")
+
+    # Case 2: Missing item_code
+    payload2 = {
+        "requester_id": 1,
+        "supplier_id": 1,
+        "items": [{
+            "item_description": "Missing code",
+            "project": "X",
+            "qty_ordered": 1,
+            "price": 10
+        }]
+    }
+    send_invalid_payload(payload2, "item_code")
+
+    # Case 3: Missing project
+    payload3 = {
+        "requester_id": 1,
+        "supplier_id": 1,
+        "items": [{
+            "item_code": "X123",
+            "item_description": "Test",
+            "qty_ordered": 1,
+            "price": 10
+        }]
+    }
+    send_invalid_payload(payload3, "project")
+
+    final_count = count_orders()
+    assert_condition(final_count == initial_count, "❄️ No invalid orders inserted")
+
+    print("\n✅ All item validation tests passed\n")
+
+if __name__ == "__main__":
+    main()
+
+
+```
+
+### `scripts/test_pipeline_end_to_end.py`
+**(No description)**
+```python
+import requests
+import sqlite3
+import os
+from datetime import datetime
+from pathlib import Path
+
+BASE_URL = "http://localhost:8004"
+DB_PATH = "data/orders.db"
+LOG_FILE = Path("logs/testing_log.txt")
+
+def log(msg):
+    print(msg)
+    with open(LOG_FILE, "a") as f:
+        f.write(f"{datetime.now().isoformat()} | {msg}\n")
+
+def assert_condition(condition, message):
+    if not condition:
+        raise AssertionError(f"❌ {message}")
+    log(f"✅ {message}")
+
+def fetch_from_db(query, params=()):
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute(query, params)
+        return cursor.fetchall()
+
+def create_order():
+    payload = {
+        "requester_id": 1,
+        "supplier_id": 1,
+        "order_note": "End-to-end test order",
+        "note_to_supplier": "Please confirm ASAP",
+        "items": [
+            {
+                "item_code": "TST001",
+                "item_description": "Test Widget",
+                "project": "TEST-01",
+                "qty_ordered": 3,
+                "price": 200.0
+            },
+            {
+                "item_code": "TST002",
+                "item_description": "Test Cable",
+                "project": "TEST-02",
+                "qty_ordered": 5,
+                "price": 100.0
+            }
+        ]
+    }
+    res = requests.post(f"{BASE_URL}/orders", json=payload)
+    assert_condition(res.status_code == 200, "Order creation succeeded")
+    data = res.json()["order"]
+    return data["id"], data["order_number"]
+
+def get_item_ids(order_id):
+    rows = fetch_from_db("SELECT id FROM order_items WHERE order_id = ?", (order_id,))
+    assert_condition(len(rows) == 2, "Line items created in DB")
+    return [r[0] for r in rows]
+
+def receive_order(order_id, item_ids):
+    payload = [
+        {"order_id": order_id, "item_id": item_ids[0], "qty_received": 3},
+        {"order_id": order_id, "item_id": item_ids[1], "qty_received": 5}
+    ]
+    res = requests.post(f"{BASE_URL}/orders/receive", json=payload)
+    log(f"⚠️ Receive response status: {res.status_code}")
+    log(f"⚠️ Response content: {res.text}")
+    assert_condition(res.status_code == 200, "Order receiving succeeded")
+
+def check_audit_trail(order_id):
+    trail = fetch_from_db("SELECT action FROM audit_trail WHERE order_id = ?", (order_id,))
+    assert_condition(any("Received" in row[0] for row in trail), "Audit trail entries exist")
+
+def upload_attachment(order_id):
+    dummy_file = Path("/Users/stevencohen/Desktop/test_invoice.pdf")
+    if not dummy_file.exists():
+        dummy_file.write_text("Dummy PDF content")
+
+    with dummy_file.open("rb") as f:
+        res = requests.post(
+            f"{BASE_URL}/orders/upload_attachment",
+            files={"file": f},
+            data={"order_id": str(order_id)}
+        )
+    assert_condition(res.status_code == 200, "Attachment uploaded")
+
+def check_attachment_record(order_id):
+    rec = fetch_from_db("SELECT filename FROM attachments WHERE order_id = ?", (order_id,))
+    assert_condition(len(rec) > 0, "Attachment record exists")
+
+def main():
+    LOG_FILE.write_text("🚀 Test started\n")
+    log("🚀 Running full pipeline integration test...\n")
+    order_id, order_number = create_order()
+    item_ids = get_item_ids(order_id)
+    receive_order(order_id, item_ids)
+    check_audit_trail(order_id)
+    upload_attachment(order_id)
+    check_attachment_record(order_id)
+    log(f"\n🎉 Pipeline test passed for order {order_number} (ID {order_id})")
+
+if __name__ == "__main__":
+    main()
+
+```
+
+### `scripts/test_receive_partial.py`
+**(No description)**
+```python
+import requests
+import sqlite3
+from datetime import datetime
+import os
+
+BASE_URL = "http://localhost:8004"
+DB_PATH = "data/orders.db"
+
+def assert_condition(condition, message):
+    if not condition:
+        raise AssertionError(f"❌ {message}")
+    print(f"✅ {message}")
+
+def fetch_one(query, params=()):
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute(query, params)
+        return cursor.fetchone()
+
+def fetch_all(query, params=()):
+    with sqlite3.connect(DB_PATH) as conn:
+        cursor = conn.cursor()
+        cursor.execute(query, params)
+        return cursor.fetchall()
+
+def create_order():
+    payload = {
+        "requester_id": 1,
+        "supplier_id": 1,
+        "order_note": "Partial receive test",
+        "note_to_supplier": "Split delivery test",
+        "items": [
+            {
+                "item_code": "PART001",
+                "item_description": "Partial Item A",
+                "project": "SplitProjA",
+                "qty_ordered": 10,
+                "price": 100.0
+            },
+            {
+                "item_code": "PART002",
+                "item_description": "Partial Item B",
+                "project": "SplitProjB",
+                "qty_ordered": 5,
+                "price": 200.0
+            }
+        ]
+    }
+    response = requests.post(f"{BASE_URL}/orders", json=payload)
+    assert_condition(response.status_code == 200, "Partial order creation succeeded")
+    data = response.json()["order"]
+    return data["id"], data["order_number"]
+
+def get_item_ids(order_id):
+    rows = fetch_all("SELECT id FROM order_items WHERE order_id = ?", (order_id,))
+    return [r[0] for r in rows]
+
+def receive_partial(order_id, item_ids):
+    payload = [
+        {"order_id": order_id, "item_id": item_ids[0], "qty_received": 10},  # full
+        {"order_id": order_id, "item_id": item_ids[1], "qty_received": 2},   # partial
+    ]
+    response = requests.post(f"{BASE_URL}/orders/receive", json=payload)
+    print("⚠️ Receive response:", response.status_code, response.text)
+    assert_condition(response.status_code == 200, "Partial receipt posted")
+
+def validate_partial(order_id):
+    status, received_date = fetch_one("SELECT status, received_date FROM orders WHERE id = ?", (order_id,))
+    assert_condition(status == "Pending", "Order status remains Pending")
+    assert_condition(received_date is None, "No received_date set for partial receipt")
+
+    row = fetch_one("SELECT qty_received FROM order_items WHERE order_id = ? AND qty_received < qty_ordered", (order_id,))
+    assert_condition(row is not None, "At least one item is partially received")
+
+    audit_entries = fetch_all("SELECT action, details FROM audit_trail WHERE order_id = ?", (order_id,))
+    assert_condition(len(audit_entries) >= 2, "Audit entries exist for both lines")
+
+def main():
+    print("🔍 Running partial receipt test...\n")
+    order_id, order_number = create_order()
+    item_ids = get_item_ids(order_id)
+    receive_partial(order_id, item_ids)
+    validate_partial(order_id)
+    print(f"\n✅ Partial receipt test passed for order {order_number} (ID {order_id})")
+
+if __name__ == "__main__":
+    main()
 
 
 ```
@@ -4893,7 +7184,7 @@ Auto-commit for push (script)
 ### `.git/FETCH_HEAD`
 **(No description)**
 ```python
-19b0d9fa6dbcbe8f9b08a709419372c8f445bc23		branch 'main' of github.com:steven-cohen714-gmailcom/orders_project
+5dd1ab6da18ef67ae45007b5ace3440264dd0d5a		branch 'main' of github.com:steven-cohen714-gmailcom/orders_project
 
 ```
 
@@ -4907,7 +7198,7 @@ ref: refs/heads/main
 ### `.git/ORIG_HEAD`
 **(No description)**
 ```python
-20d2770b6fecabeec22c38c28a289a18498ca7cd
+5dd1ab6da18ef67ae45007b5ace3440264dd0d5a
 
 ```
 
@@ -4944,7 +7235,7 @@ Unnamed repository; edit this file 'description' to name the repository.
 ### `.git/index`
 **(No description)**
 ```python
-<!-- ERROR reading index: 'utf-8' codec can't decode byte 0xeb in position 14: invalid continuation byte -->
+<!-- ERROR reading index: 'utf-8' codec can't decode byte 0xf3 in position 14: invalid continuation byte -->
 ```
 
 ### `.git/objects/61/1cec552867a6d50b7edd700c86c7396d906ea2`
@@ -5427,6 +7718,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading 1be44461b0847c9edb8654c9d528abed0b7800: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
 ```
 
+### `.git/objects/57/8c4107f75ca3879912fcbc318ff47963d730d4`
+**(No description)**
+```python
+<!-- ERROR reading 8c4107f75ca3879912fcbc318ff47963d730d4: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
+```
+
 ### `.git/objects/57/8cda6f32d6d52867336075d95effb947a855b1`
 **(No description)**
 ```python
@@ -5841,6 +8138,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading 9156d6ca47719f49b753a4781a86a924de173b: 'utf-8' codec can't decode byte 0xc5 in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/56/b446ff987693ae3bf09601871a0ddb4c11cf62`
+**(No description)**
+```python
+<!-- ERROR reading b446ff987693ae3bf09601871a0ddb4c11cf62: 'utf-8' codec can't decode byte 0xf5 in position 9: invalid start byte -->
+```
+
 ### `.git/objects/56/cbe169d122fa42167d430b1223d2dcee906db8`
 **(No description)**
 ```python
@@ -6117,6 +8420,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading 1658fa5e5e498bcfa84702ed1a53dfcec071ff: 'utf-8' codec can't decode byte 0xca in position 3: invalid continuation byte -->
 ```
 
+### `.git/objects/0e/2045b2483704453bac25999e141b935d74fd83`
+**(No description)**
+```python
+<!-- ERROR reading 2045b2483704453bac25999e141b935d74fd83: 'utf-8' codec can't decode byte 0xb6 in position 8: invalid start byte -->
+```
+
 ### `.git/objects/0e/2fd1eb05efc526f660bcf10e865d2fe781a239`
 **(No description)**
 ```python
@@ -6213,6 +8522,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading 5a060d0230ada58f769b0f6b55f43a428fc3bd: 'utf-8' codec can't decode byte 0x8d in position 2: invalid start byte -->
 ```
 
+### `.git/objects/34/6a851da87ce5facc2bd72c68fd2d0183aa379a`
+**(No description)**
+```python
+<!-- ERROR reading 6a851da87ce5facc2bd72c68fd2d0183aa379a: 'utf-8' codec can't decode byte 0x8d in position 2: invalid start byte -->
+```
+
 ### `.git/objects/34/78c34c47d167f706a1f54427e3b6dece62b38f`
 **(No description)**
 ```python
@@ -6253,6 +8568,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading d7faef2ec69eaa737a58d3587770a612a510d8: 'utf-8' codec can't decode byte 0xdd in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/5a/ec59827d48ac0244ceb39e85f742ad1348c203`
+**(No description)**
+```python
+<!-- ERROR reading ec59827d48ac0244ceb39e85f742ad1348c203: 'utf-8' codec can't decode byte 0xcb in position 4: invalid continuation byte -->
 ```
 
 ### `.git/objects/5f/00253e2f67b6f438451bb907480d06ec6c094e`
@@ -6297,10 +8618,22 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading b609bd35a1b735128d1105656d36b7b518b7f7: 'utf-8' codec can't decode byte 0xb4 in position 8: invalid start byte -->
 ```
 
+### `.git/objects/5f/cdbf73f9410cb873e9410581b0ef7ac5d9ac3d`
+**(No description)**
+```python
+<!-- ERROR reading cdbf73f9410cb873e9410581b0ef7ac5d9ac3d: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/5f/fad59862ba942a26dc27ce77c66578659918d3`
 **(No description)**
 ```python
 <!-- ERROR reading fad59862ba942a26dc27ce77c66578659918d3: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/33/00fdd367fa03c59347cb120dee668a9ecb2baa`
+**(No description)**
+```python
+<!-- ERROR reading 00fdd367fa03c59347cb120dee668a9ecb2baa: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
 ```
 
 ### `.git/objects/33/0c51a5dde15a0bb610a48cd0ca11770c914dae`
@@ -6423,6 +8756,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading d8eb06277f449599a7b4babe74e1adab33bdc2: 'utf-8' codec can't decode byte 0x85 in position 2: invalid start byte -->
 ```
 
+### `.git/objects/9c/e54ac874ea8cce752e58b9a5c6fe47d76c58cf`
+**(No description)**
+```python
+<!-- ERROR reading e54ac874ea8cce752e58b9a5c6fe47d76c58cf: 'utf-8' codec can't decode byte 0x8d in position 22: invalid start byte -->
+```
+
 ### `.git/objects/9c/e7888ef28598e083e9dad401e20a7c3f2cf145`
 **(No description)**
 ```python
@@ -6453,6 +8792,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading 5a90351e39a0e200c1416ea12f19f006f4e922: 'utf-8' codec can't decode byte 0xc8 in position 17: invalid continuation byte -->
 ```
 
+### `.git/objects/02/77ea3fdd31c956a46d2a74a54c62c114647bd3`
+**(No description)**
+```python
+<!-- ERROR reading 77ea3fdd31c956a46d2a74a54c62c114647bd3: 'utf-8' codec can't decode byte 0xd0 in position 18: invalid continuation byte -->
+```
+
 ### `.git/objects/02/945a947527a9bfb396d0cd35ffee22eda665bb`
 **(No description)**
 ```python
@@ -6475,6 +8820,18 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading 0eeafcc914108ca79c5d83d6e81da1b29c6e80: 'utf-8' codec can't decode byte 0x91 in position 3: invalid start byte -->
+```
+
+### `.git/objects/a4/2428388b1139df995c91eaa6609887a9b9bc8f`
+**(No description)**
+```python
+<!-- ERROR reading 2428388b1139df995c91eaa6609887a9b9bc8f: 'utf-8' codec can't decode byte 0xb0 in position 7: invalid start byte -->
+```
+
+### `.git/objects/a4/57f24f4df680961fffa645a70504837b6abe78`
+**(No description)**
+```python
+<!-- ERROR reading 57f24f4df680961fffa645a70504837b6abe78: 'utf-8' codec can't decode byte 0xd0 in position 17: invalid continuation byte -->
 ```
 
 ### `.git/objects/a4/57ff27ef0f766ed6f9bd19858ac1ecb2f109cf`
@@ -6631,6 +8988,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading 55ca4771bb2cd78a8e9334a6917f9f6cce59b1: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
+```
+
+### `.git/objects/d9/648a3661c36b0b21b1253af9f523e62446284e`
+**(No description)**
+```python
+<!-- ERROR reading 648a3661c36b0b21b1253af9f523e62446284e: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/d9/80cd6f83e9fe3e65850c6c9c818cd70952180d`
@@ -6897,6 +9260,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading 621626cfd0264c3d82f9db02711bd17a23b994: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/b3/626399ad0d88b0706ca87653b7cd225f2410ac`
+**(No description)**
+```python
+<!-- ERROR reading 626399ad0d88b0706ca87653b7cd225f2410ac: 'utf-8' codec can't decode byte 0xd0 in position 18: invalid continuation byte -->
+```
+
 ### `.git/objects/b3/63f55a0b071de6c5f377726be82dc2110e373c`
 **(No description)**
 ```python
@@ -6925,6 +9294,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading 673bf451f8515f9c195ff6982794847914936e: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/df/e07987e74dec26981b6e7d4630a5d8b65ba5e4`
+**(No description)**
+```python
+<!-- ERROR reading e07987e74dec26981b6e7d4630a5d8b65ba5e4: 'utf-8' codec can't decode byte 0xb2 in position 9: invalid start byte -->
 ```
 
 ### `.git/objects/da/052ee6983183374d074f88507b8b806a598e9b`
@@ -7315,6 +9690,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading ce984c074e6f5599319d0b63cf07883422a6aa: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
+```
+
+### `.git/objects/d8/da6181b24dc8745dd39db0e0a1e252ee8d5d26`
+**(No description)**
+```python
+<!-- ERROR reading da6181b24dc8745dd39db0e0a1e252ee8d5d26: 'utf-8' codec can't decode byte 0xb5 in position 8: invalid start byte -->
 ```
 
 ### `.git/objects/d8/e36b2e65d11e7f3b2c540c1b292a39a6cc219d`
@@ -7713,6 +10094,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading face39ae62c3975ff535e6b1f79f2c28fbf888: 'utf-8' codec can't decode byte 0xe5 in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/c9/25ae80f736ab23e07013892e1763d0d8d2b7a6`
+**(No description)**
+```python
+<!-- ERROR reading 25ae80f736ab23e07013892e1763d0d8d2b7a6: 'utf-8' codec can't decode byte 0xd0 in position 18: invalid continuation byte -->
+```
+
 ### `.git/objects/c9/27cc11dc89cb57f69e62f7047140800d7ac5d2`
 **(No description)**
 ```python
@@ -7917,6 +10304,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading 12a82f193d8a69b9bc7aaa134cdbb8aa5bd938: 'utf-8' codec can't decode byte 0xa5 in position 2: invalid start byte -->
 ```
 
+### `.git/objects/cf/5156403803f9d19d484ffc14d0dc7dfd7f7bda`
+**(No description)**
+```python
+<!-- ERROR reading 5156403803f9d19d484ffc14d0dc7dfd7f7bda: 'utf-8' codec can't decode byte 0xc9 in position 21: invalid continuation byte -->
+```
+
 ### `.git/objects/cf/55c8b10eb543872550be863206fe2f760d0d8d`
 **(No description)**
 ```python
@@ -7987,6 +10380,18 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading 8a1d2d4f9e8dd4c09847b94f1d6dfe17865f76: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
+```
+
+### `.git/objects/ca/b8db55d3595053898dd1edd40a1f31cc24761c`
+**(No description)**
+```python
+<!-- ERROR reading b8db55d3595053898dd1edd40a1f31cc24761c: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
+```
+
+### `.git/objects/ca/c7781769d567e3a8882ef7a139854be4363eab`
+**(No description)**
+```python
+<!-- ERROR reading c7781769d567e3a8882ef7a139854be4363eab: 'utf-8' codec can't decode byte 0x91 in position 3: invalid start byte -->
 ```
 
 ### `.git/objects/e4/34c257fefd4eda43f5daf5b8dcf7d4cf9da30b`
@@ -8614,10 +11019,22 @@ x+)JMU0`  
 <!-- ERROR reading 4bf87e7208b0b536d5f4879bbcf4bace79763f: 'utf-8' codec can't decode byte 0xa5 in position 2: invalid start byte -->
 ```
 
+### `.git/objects/7d/62991ff8280315a3a9aae4678c81f3f2c9f6d4`
+**(No description)**
+```python
+<!-- ERROR reading 62991ff8280315a3a9aae4678c81f3f2c9f6d4: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/7d/6ece8001dc61ec804313e549771bf284a99b37`
 **(No description)**
 ```python
 <!-- ERROR reading 6ece8001dc61ec804313e549771bf284a99b37: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/7d/9666844e4e712641a32408a2e2cfdb895455e5`
+**(No description)**
+```python
+<!-- ERROR reading 9666844e4e712641a32408a2e2cfdb895455e5: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/7d/a7eb3184244235f16869ca279b518c5b1ed991`
@@ -9046,6 +11463,12 @@ x+)JMU0`  
 <!-- ERROR reading 3363ca2f34eb9b57702d3f7ed02258fd0c1610: 'utf-8' codec can't decode byte 0xc5 in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/80/6c98da869a203706670056c9cf3df3f1dfe460`
+**(No description)**
+```python
+<!-- ERROR reading 6c98da869a203706670056c9cf3df3f1dfe460: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
+```
+
 ### `.git/objects/80/8646cc27216c3423681041ee9923372a2a9d03`
 **(No description)**
 ```python
@@ -9274,6 +11697,12 @@ x+)JMU0`  
 <!-- ERROR reading 5601dd31e53804bb3c4de6e577d8612b79bcb1: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/8f/6c890635838b1d91a67a5647cb0117fcda96a4`
+**(No description)**
+```python
+<!-- ERROR reading 6c890635838b1d91a67a5647cb0117fcda96a4: 'utf-8' codec can't decode byte 0x90 in position 3: invalid start byte -->
+```
+
 ### `.git/objects/8f/7731af0e62a985dbe4c77771a80525848e793c`
 **(No description)**
 ```python
@@ -9314,6 +11743,18 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 65f13347d6621289a166d08123cbc8e1ad0157: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/8a/7ecb83311156dc276649f8e6701cbdf4d15fdf`
+**(No description)**
+```python
+<!-- ERROR reading 7ecb83311156dc276649f8e6701cbdf4d15fdf: 'utf-8' codec can't decode byte 0xb2 in position 8: invalid start byte -->
+```
+
+### `.git/objects/8a/7f3266c4db7eed088ad84ed8a91684362a41e6`
+**(No description)**
+```python
+<!-- ERROR reading 7f3266c4db7eed088ad84ed8a91684362a41e6: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/8a/acf8120147c457dccd4b955fd898c3f5a90ba9`
@@ -9418,6 +11859,12 @@ x+)JMU0`  
 <!-- ERROR reading 72806e7163f96bfd1e439f0fc53fe85501af7d: 'utf-8' codec can't decode byte 0xb6 in position 8: invalid start byte -->
 ```
 
+### `.git/objects/19/9ba918d17a83e5a2fe8da6eda50ab2a1aace90`
+**(No description)**
+```python
+<!-- ERROR reading 9ba918d17a83e5a2fe8da6eda50ab2a1aace90: 'utf-8' codec can't decode byte 0xc9 in position 21: invalid continuation byte -->
+```
+
 ### `.git/objects/19/a169fc30183db91f931ad6ad04fbc0e16559b3`
 **(No description)**
 ```python
@@ -9452,6 +11899,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 58cdbdbe7ff605a215d3fd69e7d1fb4828264e: 'utf-8' codec can't decode byte 0xbd in position 2: invalid start byte -->
+```
+
+### `.git/objects/4c/692a6e80da7644831e8c897950300d87341bc5`
+**(No description)**
+```python
+<!-- ERROR reading 692a6e80da7644831e8c897950300d87341bc5: 'utf-8' codec can't decode byte 0xb1 in position 9: invalid start byte -->
 ```
 
 ### `.git/objects/4c/7350fea9e5e59091a765ef3d2b979c688b07a8`
@@ -9496,6 +11949,12 @@ x+)JMU0`  
 <!-- ERROR reading c55741926b452344e99ee45b64f8a317806870: 'utf-8' codec can't decode byte 0x95 in position 2: invalid start byte -->
 ```
 
+### `.git/objects/4c/de7a15f4e3739dae80d9b2b33fb89cf7be0be3`
+**(No description)**
+```python
+<!-- ERROR reading de7a15f4e3739dae80d9b2b33fb89cf7be0be3: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
+```
+
 ### `.git/objects/4c/fce8365f2195bd4cec4e867bac6f32a2a16e2c`
 **(No description)**
 ```python
@@ -9524,6 +11983,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading cfb440fa51d37c70c4d3ad9577ce285f69ce25: 'utf-8' codec can't decode byte 0xf0 in position 18: invalid continuation byte -->
+```
+
+### `.git/objects/26/d033b7867ba2b9d953256bdfe550e65c150370`
+**(No description)**
+```python
+<!-- ERROR reading d033b7867ba2b9d953256bdfe550e65c150370: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
 ```
 
 ### `.git/objects/26/d70ecafeb95e9d48c202fa0b33248d7c3c8240`
@@ -9664,6 +12129,12 @@ x+)JMU0`  
 <!-- ERROR reading 5650e81fe23c35523e66ff73e468ada1fd507d: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
 ```
 
+### `.git/objects/81/90f2bc66e66aa57096b8b077f86342d1d61f69`
+**(No description)**
+```python
+<!-- ERROR reading 90f2bc66e66aa57096b8b077f86342d1d61f69: 'utf-8' codec can't decode byte 0xcd in position 19: invalid continuation byte -->
+```
+
 ### `.git/objects/81/9fe1274d301432bf68c1554abe5c88e8624c1a`
 **(No description)**
 ```python
@@ -9722,6 +12193,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading dbdebdf00aa450591e296a8912697b7506ab59: 'utf-8' codec can't decode byte 0xa2 in position 6: invalid start byte -->
+```
+
+### `.git/objects/86/ea8c40da3264422a159353069cf0158a732f39`
+**(No description)**
+```python
+<!-- ERROR reading ea8c40da3264422a159353069cf0158a732f39: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
 ```
 
 ### `.git/objects/72/1f411cfc44f6d24c13112e4246b5ad776a5e0b`
@@ -9800,6 +12277,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 92e62b7b2e8dab77cbe0c2dbb79c810af7f452: 'utf-8' codec can't decode byte 0xe5 in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/2a/bdefedabe1e7a2d0c583211809c9ea7a049470`
+**(No description)**
+```python
+<!-- ERROR reading bdefedabe1e7a2d0c583211809c9ea7a049470: 'utf-8' codec can't decode byte 0xb6 in position 8: invalid start byte -->
 ```
 
 ### `.git/objects/2f/68fc8600038d8de10017b0d02a3fde77a06ba6`
@@ -9980,6 +12463,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 1fea5d038cb0425a962a8b6bea55a9c158dd5d: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
+```
+
+### `.git/objects/07/2d19661ae0a97cbed5a90f690f2e107870c56b`
+**(No description)**
+```python
+<!-- ERROR reading 2d19661ae0a97cbed5a90f690f2e107870c56b: 'utf-8' codec can't decode byte 0xb0 in position 7: invalid start byte -->
 ```
 
 ### `.git/objects/07/5bf8a469d44d2388b08ec3d009fe55d44cb6eb`
@@ -10276,6 +12765,12 @@ x+)JMU0`  
 <!-- ERROR reading 6d1a7e4f2651984c09a4c304afb9c0be06627c: 'utf-8' codec can't decode byte 0xec in position 9: invalid continuation byte -->
 ```
 
+### `.git/objects/36/718e88e5c64e1927dfe5d89afd54edd62fda3c`
+**(No description)**
+```python
+<!-- ERROR reading 718e88e5c64e1927dfe5d89afd54edd62fda3c: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
+```
+
 ### `.git/objects/36/c9252c647e67bc7353c523152568b993c1331f`
 **(No description)**
 ```python
@@ -10292,6 +12787,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading d9b306c992b83a8033c0ee66daa141d23d010c: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/5c/00fc3ff373e42f95c8c44b1ac7e8e85c311bae`
+**(No description)**
+```python
+<!-- ERROR reading 00fc3ff373e42f95c8c44b1ac7e8e85c311bae: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
 ```
 
 ### `.git/objects/5c/0a76b0058d4497b1468c72b78fec088963c9b8`
@@ -10376,6 +12877,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading badfec967021e4865466c119fb638664f81a73: 'utf-8' codec can't decode byte 0x95 in position 2: invalid start byte -->
+```
+
+### `.git/objects/5d/d1ab6da18ef67ae45007b5ace3440264dd0d5a`
+**(No description)**
+```python
+<!-- ERROR reading d1ab6da18ef67ae45007b5ace3440264dd0d5a: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/5d/d6fdaf4182be93ba9891dec8be54ef0e201bcb`
@@ -10744,6 +13251,12 @@ x+)JMU0`  
 <!-- ERROR reading 4d300cef077e698989245562375a9444d983fa: 'utf-8' codec can't decode byte 0xdb in position 6: invalid continuation byte -->
 ```
 
+### `.git/objects/3f/6a3f4183101bfbb198505c3c25806d77680e4b`
+**(No description)**
+```python
+<!-- ERROR reading 6a3f4183101bfbb198505c3c25806d77680e4b: 'utf-8' codec can't decode byte 0xc1 in position 4: invalid start byte -->
+```
+
 ### `.git/objects/3f/7520ee4ad557e4d228a501daa3cae8818b8ae7`
 **(No description)**
 ```python
@@ -10870,6 +13383,12 @@ x+)JMU0`  
 <!-- ERROR reading ad85fdc1cd08553756d0fb2c7be8b5ad6af7fb: 'utf-8' codec can't decode byte 0xca in position 3: invalid continuation byte -->
 ```
 
+### `.git/objects/5b/b6351cb6088d8e8c4f2d602df2963c6ca02cc3`
+**(No description)**
+```python
+<!-- ERROR reading b6351cb6088d8e8c4f2d602df2963c6ca02cc3: 'utf-8' codec can't decode byte 0xb2 in position 9: invalid start byte -->
+```
+
 ### `.git/objects/5b/f0c9723f171f91a5952b57c4aafb8cee3c6acd`
 **(No description)**
 ```python
@@ -10928,6 +13447,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 8831eb5c347e22db419f30380f3c0dd740a08c: 'utf-8' codec can't decode byte 0x85 in position 14: invalid start byte -->
+```
+
+### `.git/objects/08/88a8263b20afb58a9f11d8b81f79d89e624935`
+**(No description)**
+```python
+<!-- ERROR reading 88a8263b20afb58a9f11d8b81f79d89e624935: 'utf-8' codec can't decode byte 0x85 in position 14: invalid start byte -->
 ```
 
 ### `.git/objects/08/8e977b5b1614dda8c8429393f6acd325b11e08`
@@ -11176,6 +13701,12 @@ x+)JMU0`  
 <!-- ERROR reading a2b01cd2f5a925e081683d113baf634263d75b: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
 ```
 
+### `.git/objects/39/d978686d1e836b3fd676c9e29c7f7a58e82432`
+**(No description)**
+```python
+<!-- ERROR reading d978686d1e836b3fd676c9e29c7f7a58e82432: 'utf-8' codec can't decode byte 0xa9 in position 19: invalid start byte -->
+```
+
 ### `.git/objects/99/16c3ab031b139d6a09373fe053a3cecdd56852`
 **(No description)**
 ```python
@@ -11204,6 +13735,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading b8adfad5553e5b69648ea28de613f0f661ab82: 'utf-8' codec can't decode byte 0xb0 in position 7: invalid start byte -->
+```
+
+### `.git/objects/99/dee974a6402f82d6718adb486dc94dd74f4b13`
+**(No description)**
+```python
+<!-- ERROR reading dee974a6402f82d6718adb486dc94dd74f4b13: 'utf-8' codec can't decode byte 0xd0 in position 18: invalid continuation byte -->
 ```
 
 ### `.git/objects/99/ebea30c91443c89e7d61909b6cba6836794a43`
@@ -11330,6 +13867,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading dee4d53c3453cfc195e3149f81f2158f6c6ecb: 'utf-8' codec can't decode byte 0xcd in position 22: invalid continuation byte -->
+```
+
+### `.git/objects/63/ea99016e031b2288460201522c111a4f5f9551`
+**(No description)**
+```python
+<!-- ERROR reading ea99016e031b2288460201522c111a4f5f9551: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/63/f2f19e409c7f4b3c6c064022e8f104227873aa`
@@ -11474,6 +14017,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 4ea5038778289624815e650bc779c04386680b: 'utf-8' codec can't decode byte 0xb1 in position 8: invalid start byte -->
+```
+
+### `.git/objects/bf/85c7e3a488fc669e3840400a4f1f3b58fcbbb1`
+**(No description)**
+```python
+<!-- ERROR reading 85c7e3a488fc669e3840400a4f1f3b58fcbbb1: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
 ```
 
 ### `.git/objects/bf/9b642fab36adcd5987c3687d42f36a9b6b49c1`
@@ -11630,6 +14179,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading bf20d891beeb2b01c48ee9814341171c577696: 'utf-8' codec can't decode byte 0xcc in position 19: invalid continuation byte -->
+```
+
+### `.git/objects/a7/fc697a872a68ce7fad3f62cdc39e3b162c06d7`
+**(No description)**
+```python
+<!-- ERROR reading fc697a872a68ce7fad3f62cdc39e3b162c06d7: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
 ### `.git/objects/b8/0cc04f64cf033812e5fcba992db0e274f821be`
@@ -11842,6 +14397,18 @@ x+)JMU0`  
 <!-- ERROR reading 863d934050634930dae8a634ada52e547c29bf: 'utf-8' codec can't decode byte 0x92 in position 3: invalid start byte -->
 ```
 
+### `.git/objects/b6/9088f2588d2296adbacd80ba77e103e2265db2`
+**(No description)**
+```python
+<!-- ERROR reading 9088f2588d2296adbacd80ba77e103e2265db2: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/b6/94c6bad3ddad4208923dd917713129a8490874`
+**(No description)**
+```python
+<!-- ERROR reading 94c6bad3ddad4208923dd917713129a8490874: 'utf-8' codec can't decode byte 0xb2 in position 8: invalid start byte -->
+```
+
 ### `.git/objects/b6/beddbe6d24d2949dc89ed07abfebd59d8b63b9`
 **(No description)**
 ```python
@@ -12022,6 +14589,12 @@ x+)JMU0`  
 <!-- ERROR reading 6b970b3025ffe7768809d700f3385279c18c02: 'utf-8' codec can't decode byte 0xd0 in position 18: invalid continuation byte -->
 ```
 
+### `.git/objects/af/98e75aa7b67c7da9024e5a49e1833a9729036b`
+**(No description)**
+```python
+<!-- ERROR reading 98e75aa7b67c7da9024e5a49e1833a9729036b: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/af/acf654b977eb9c0525ea8d29a1d1bd1ec42c6c`
 **(No description)**
 ```python
@@ -12110,6 +14683,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading eaab8a441ac9080f76a539e4289b41a1e3a77b: 'utf-8' codec can't decode byte 0xb6 in position 8: invalid start byte -->
+```
+
+### `.git/objects/a8/f0e5e59b9567b623cde4547d904dd0e4ac7c1a`
+**(No description)**
+```python
+<!-- ERROR reading f0e5e59b9567b623cde4547d904dd0e4ac7c1a: 'utf-8' codec can't decode byte 0xb4 in position 9: invalid start byte -->
 ```
 
 ### `.git/objects/de/20dcd38019c2e34c7ef874a28ebbaf3cd59185`
@@ -12242,6 +14821,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 844dd94b120f080724aa1a5c6bc107d1e2ab85: 'utf-8' codec can't decode byte 0xb0 in position 7: invalid start byte -->
+```
+
+### `.git/objects/a6/9165a290f00302c5895e152ff09be07c2ba1ca`
+**(No description)**
+```python
+<!-- ERROR reading 9165a290f00302c5895e152ff09be07c2ba1ca: 'utf-8' codec can't decode byte 0xd5 in position 2: invalid continuation byte -->
 ```
 
 ### `.git/objects/a6/a7be520570a04044497df0da970662962b3c34`
@@ -12502,6 +15087,12 @@ x+)JMU0`  
 <!-- ERROR reading ec7eb1d0c5fa9c186a2f36454b3bf8bd0df266: 'utf-8' codec can't decode byte 0x95 in position 2: invalid start byte -->
 ```
 
+### `.git/objects/ea/1fe42e6d3e0f0044c9b601fa963f9c503ce0ca`
+**(No description)**
+```python
+<!-- ERROR reading 1fe42e6d3e0f0044c9b601fa963f9c503ce0ca: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
+```
+
 ### `.git/objects/ea/92dc301fe3fcf2ec9839c39c7844ae9f5df614`
 **(No description)**
 ```python
@@ -12518,6 +15109,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading c4e5986578636ad414648e6015e8b7e9f10432: 'utf-8' codec can't decode byte 0x95 in position 2: invalid start byte -->
+```
+
+### `.git/objects/ea/e20884c7f9707b525403687c5447a7a353d519`
+**(No description)**
+```python
+<!-- ERROR reading e20884c7f9707b525403687c5447a7a353d519: 'utf-8' codec can't decode byte 0xb3 in position 8: invalid start byte -->
 ```
 
 ### `.git/objects/e1/08827fac874bc6d3cb35ced22fe8beabae2240`
@@ -12958,6 +15555,12 @@ x+)JMU0`  
 <!-- ERROR reading c6562c734782bcf5eb011b74788b8405478d89: 'utf-8' codec can't decode byte 0xb5 in position 2: invalid start byte -->
 ```
 
+### `.git/objects/c2/c988530b4fa52af441381a13888532478e8038`
+**(No description)**
+```python
+<!-- ERROR reading c988530b4fa52af441381a13888532478e8038: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/c2/d836033673993e00a02d5a3802b61cd051cf08`
 **(No description)**
 ```python
@@ -12992,6 +15595,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 04a83d4859eec2405a1b554d6f2bf55d291ca2: 'utf-8' codec can't decode byte 0xb6 in position 8: invalid start byte -->
+```
+
+### `.git/objects/e9/3adec99e73b4cc7eddef6c9befa8866b5013bd`
+**(No description)**
+```python
+<!-- ERROR reading 3adec99e73b4cc7eddef6c9befa8866b5013bd: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
 ### `.git/objects/e9/63a50979a0b3dd56558240e075ca0f889479df`
@@ -13186,6 +15795,12 @@ x+)JMU0`  
 <!-- ERROR reading 96d1d52dd1a608f8ae3c814d877f01dbf5fda8: 'utf-8' codec can't decode byte 0xca in position 3: invalid continuation byte -->
 ```
 
+### `.git/objects/e0/995ea07d2686f6838e06cceede82b26928a656`
+**(No description)**
+```python
+<!-- ERROR reading 995ea07d2686f6838e06cceede82b26928a656: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/e0/9d751eca3ec385ba20b9555a768730eb80174b`
 **(No description)**
 ```python
@@ -13226,6 +15841,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 7a6c90ae269babe3af7963d9d7c78b9f012268: 'utf-8' codec can't decode byte 0xc5 in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/46/8c3cd7340bcfa79e3379981ba56e30da46d695`
+**(No description)**
+```python
+<!-- ERROR reading 8c3cd7340bcfa79e3379981ba56e30da46d695: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
 ### `.git/objects/46/ba835c66c9f4c3b15b0a0671447d33b3b240d1`
@@ -13534,6 +16155,12 @@ x+)JMU0`  
 <!-- ERROR reading 7268c3baa8a64e03cab9cf8a4a62881374ce0d: 'utf-8' codec can't decode byte 0xaa in position 6: invalid start byte -->
 ```
 
+### `.git/objects/77/8805f5a5435bd45ca94f4a60241185e775dc8e`
+**(No description)**
+```python
+<!-- ERROR reading 8805f5a5435bd45ca94f4a60241185e775dc8e: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/77/a025a0e9a53e72a12d9783914fa4180fdd73e6`
 **(No description)**
 ```python
@@ -13568,6 +16195,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading f45a6d3986d15626fc8a5fd459d6a3e0fbe466: 'utf-8' codec can't decode byte 0xcd in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/77/fd77cdf4e5c0fa81db80315e314c91d7b0269a`
+**(No description)**
+```python
+<!-- ERROR reading fd77cdf4e5c0fa81db80315e314c91d7b0269a: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/48/1eea9fd4b5a5ca67e75bc9d3b3effe6ce29194`
@@ -13906,6 +16539,12 @@ x+)JMU0`  
 <!-- ERROR reading 29287401e51dd26768f95048c1f6e57430ad77: 'utf-8' codec can't decode byte 0xb7 in position 9: invalid start byte -->
 ```
 
+### `.git/objects/15/42de02d2b6851f2b901152d8eda0db0cd144f0`
+**(No description)**
+```python
+<!-- ERROR reading 42de02d2b6851f2b901152d8eda0db0cd144f0: 'utf-8' codec can't decode byte 0x95 in position 2: invalid start byte -->
+```
+
 ### `.git/objects/15/77dad7db498d232e9305cb1518da9cec902e30`
 **(No description)**
 ```python
@@ -14018,6 +16657,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 49897fe860a4d081fe6a70434bebb1238b7f52: 'utf-8' codec can't decode byte 0xb0 in position 7: invalid start byte -->
+```
+
+### `.git/objects/1d/5314b706c8b673544d2254831d95748e9b7e3c`
+**(No description)**
+```python
+<!-- ERROR reading 5314b706c8b673544d2254831d95748e9b7e3c: 'utf-8' codec can't decode byte 0xef in position 4: invalid continuation byte -->
 ```
 
 ### `.git/objects/1d/727e9b3461b308dbb627c1b0fbecf8d9538e29`
@@ -14218,6 +16863,12 @@ x+)JMU0`  
 <!-- ERROR reading faa632195560021e6902dea036c9198c0713e9: 'utf-8' codec can't decode byte 0xd0 in position 18: invalid continuation byte -->
 ```
 
+### `.git/objects/49/0e4fb13d24df22eafb9b5164d20a11b017da08`
+**(No description)**
+```python
+<!-- ERROR reading 0e4fb13d24df22eafb9b5164d20a11b017da08: 'utf-8' codec can't decode byte 0xc8 in position 18: invalid continuation byte -->
+```
+
 ### `.git/objects/49/2c2c70584dc3421f81dded94972c236737cefd`
 **(No description)**
 ```python
@@ -14294,6 +16945,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 9d8757a582b1dcdb47a34c35c6cfb3ed23ba90: 'utf-8' codec can't decode byte 0x95 in position 2: invalid start byte -->
+```
+
+### `.git/objects/2e/be3476633e2850f4b09041291864fb14b717d8`
+**(No description)**
+```python
+<!-- ERROR reading be3476633e2850f4b09041291864fb14b717d8: 'utf-8' codec can't decode byte 0xcf in position 4: invalid continuation byte -->
 ```
 
 ### `.git/objects/2e/c79e65bea5df7f379451a50b7cc9fe6ce0832f`
@@ -14506,6 +17163,12 @@ x+)JMU0`  
 <!-- ERROR reading b696c18cdc7c133ebc2d1b22d35c00f1a2ef55: 'utf-8' codec can't decode byte 0xb2 in position 8: invalid start byte -->
 ```
 
+### `.git/objects/7a/e8eeaa798960cd9fc18f0a259ec227fabf0ba7`
+**(No description)**
+```python
+<!-- ERROR reading e8eeaa798960cd9fc18f0a259ec227fabf0ba7: 'utf-8' codec can't decode byte 0xb3 in position 8: invalid start byte -->
+```
+
 ### `.git/objects/7a/f58a0c9e500e268854dbe37795059cba78f52f`
 **(No description)**
 ```python
@@ -14667,6 +17330,10 @@ a9adb8b6c85412eff2a43197f748b6d5dd9a8b6e 20d2770b6fecabeec22c38c28a289a18498ca7c
 20d2770b6fecabeec22c38c28a289a18498ca7cd 20d2770b6fecabeec22c38c28a289a18498ca7cd Steven <steven.cohen714@gmail.com> 1744863623 +0200	reset: moving to HEAD
 20d2770b6fecabeec22c38c28a289a18498ca7cd 19b0d9fa6dbcbe8f9b08a709419372c8f445bc23 Steven <steven.cohen714@gmail.com> 1744899375 +0200	commit: Auto-commit for push (script)
 19b0d9fa6dbcbe8f9b08a709419372c8f445bc23 acf94ac32d9a9d8e79d6ad1154d32675229ce6e0 Steven <steven.cohen714@gmail.com> 1744908994 +0200	commit: Auto-commit for push (script)
+acf94ac32d9a9d8e79d6ad1154d32675229ce6e0 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a Steven <steven.cohen714@gmail.com> 1744970528 +0200	commit: Auto-commit for push (script)
+5dd1ab6da18ef67ae45007b5ace3440264dd0d5a 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a Steven <steven.cohen714@gmail.com> 1745039269 +0200	reset: moving to HEAD
+5dd1ab6da18ef67ae45007b5ace3440264dd0d5a 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a Steven <steven.cohen714@gmail.com> 1745041050 +0200	reset: moving to origin/main
+5dd1ab6da18ef67ae45007b5ace3440264dd0d5a 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a Steven <steven.cohen714@gmail.com> 1745057873 +0200	reset: moving to origin/main
 
 ```
 
@@ -14674,6 +17341,7 @@ a9adb8b6c85412eff2a43197f748b6d5dd9a8b6e 20d2770b6fecabeec22c38c28a289a18498ca7c
 **(No description)**
 ```python
 0000000000000000000000000000000000000000 f9f7b2b2944e045a63aded2db0abc9c69a8aa74b Steven <steven.cohen714@gmail.com> 1744525318 +0200	On main: Auto-stash for pull
+f9f7b2b2944e045a63aded2db0abc9c69a8aa74b cab8db55d3595053898dd1edd40a1f31cc24761c Steven <steven.cohen714@gmail.com> 1745039269 +0200	On main: Auto-stash for pull
 
 ```
 
@@ -14694,6 +17362,7 @@ e28f74abef4ca5048cf1503f9a130554cf5970cf 075eefe5307e9389ac202171d47ec626b84cb35
 a9adb8b6c85412eff2a43197f748b6d5dd9a8b6e 20d2770b6fecabeec22c38c28a289a18498ca7cd Steven <steven.cohen714@gmail.com> 1744861100 +0200	commit: Removed conflict junk in backend/endpoints/.DS_Store
 20d2770b6fecabeec22c38c28a289a18498ca7cd 19b0d9fa6dbcbe8f9b08a709419372c8f445bc23 Steven <steven.cohen714@gmail.com> 1744899375 +0200	commit: Auto-commit for push (script)
 19b0d9fa6dbcbe8f9b08a709419372c8f445bc23 acf94ac32d9a9d8e79d6ad1154d32675229ce6e0 Steven <steven.cohen714@gmail.com> 1744908994 +0200	commit: Auto-commit for push (script)
+acf94ac32d9a9d8e79d6ad1154d32675229ce6e0 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a Steven <steven.cohen714@gmail.com> 1744970528 +0200	commit: Auto-commit for push (script)
 
 ```
 
@@ -14718,6 +17387,7 @@ b82c89c5571c7707f3d426c928ea247e8c2d7172 e28f74abef4ca5048cf1503f9a130554cf5970c
 e28f74abef4ca5048cf1503f9a130554cf5970cf 075eefe5307e9389ac202171d47ec626b84cb35c Steven <steven.cohen714@gmail.com> 1744860719 +0200	pull --rebase origin main: fast-forward
 075eefe5307e9389ac202171d47ec626b84cb35c 19b0d9fa6dbcbe8f9b08a709419372c8f445bc23 Steven <steven.cohen714@gmail.com> 1744899382 +0200	update by push
 19b0d9fa6dbcbe8f9b08a709419372c8f445bc23 acf94ac32d9a9d8e79d6ad1154d32675229ce6e0 Steven <steven.cohen714@gmail.com> 1744909000 +0200	update by push
+acf94ac32d9a9d8e79d6ad1154d32675229ce6e0 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a Steven <steven.cohen714@gmail.com> 1744970535 +0200	update by push
 
 ```
 
@@ -15676,14 +18346,14 @@ exit 0
 ### `.git/refs/stash`
 **(No description)**
 ```python
-f9f7b2b2944e045a63aded2db0abc9c69a8aa74b
+cab8db55d3595053898dd1edd40a1f31cc24761c
 
 ```
 
 ### `.git/refs/heads/main`
 **(No description)**
 ```python
-acf94ac32d9a9d8e79d6ad1154d32675229ce6e0
+5dd1ab6da18ef67ae45007b5ace3440264dd0d5a
 
 ```
 
@@ -15697,20 +18367,32 @@ ref: refs/remotes/origin/main
 ### `.git/refs/remotes/origin/main`
 **(No description)**
 ```python
-acf94ac32d9a9d8e79d6ad1154d32675229ce6e0
+5dd1ab6da18ef67ae45007b5ace3440264dd0d5a
 
 ```
 
 ### `data/orders.db`
 **(No description)**
 ```python
-<!-- ERROR reading orders.db: 'utf-8' codec can't decode byte 0xba in position 99: invalid start byte -->
+<!-- ERROR reading orders.db: 'utf-8' codec can't decode byte 0x86 in position 98: invalid start byte -->
 ```
 
 ### `data/test_orders.db`
 **(No description)**
 ```python
 <!-- ERROR reading test_orders.db: 'utf-8' codec can't decode byte 0x86 in position 98: invalid start byte -->
+```
+
+### `data/uploads/20_test_invoice.pdf`
+**(No description)**
+```python
+Dummy content for pipeline test
+```
+
+### `data/uploads/21_test_invoice.pdf`
+**(No description)**
+```python
+Dummy PDF content
 ```
 
 ### `data/uploads/test_invoice.pdf`
@@ -15920,4 +18602,50 @@ I am busy building a Purchase Order system for Universal Recycling.
 
 **How Steven works with ChatGPT:**
 - Steven doesn’t know coding; he’s decent with terminal commands
-- He uses VS Code, wants brief error messages & clear steps
+- He uses VS Code, wants brief error messages & clear steps
+
+
+## 🔐 Users & Roles
+
+| Username | Role  |
+|----------|-------|
+| Steven   | Admin |
+| Aaron    | Edit  |
+| Yolandi  | View  |
+
+Passwords are hashed; assumed defaults for local testing: `password`.
+
+## ⚙️ System Settings
+
+| Key                 | Value   |
+|----------------------|---------|
+| auth_threshold       | 10000   |
+| order_number_start   | URC1024 |
+| last_order_number    | URC000  |
+
+## 🚦 FastAPI Endpoint Summary
+
+| Endpoint                     | Method    | Status         |
+|------------------------------|-----------|----------------|
+| `/orders`                   | POST      | ✅ Implemented |
+| `/orders/receive`           | POST      | ✅ Implemented |
+| `/orders/next_order_number` | GET       | ✅ Implemented |
+| `/attachments/upload`       | POST      | ✅ Implemented |
+| `/notes`                    | GET/POST  | ✅ Implemented |
+| `/audit`                    | GET       | ⏳ Pending     |
+| `/orders/print`             | GET       | ⏳ Planned     |
+| `/lookups/suppliers`        | GET       | ✅ Implemented |
+| `/lookups/requesters`       | GET       | ✅ Implemented |
+| `/lookups/projects`         | GET       | ✅ Implemented |
+| `/lookups/items`            | GET       | ✅ Implemented |
+
+## 🧪 Test Coverage Summary
+
+| Test Script | Purpose | Status |
+|-------------|---------|--------|
+| `test_authorisation_threshold_trigger.py` | High-value order triggers auth flow | ✅ |
+| `test_invalid_data_handling.py` | Ensures invalid payloads return 422/400 | ✅ |
+| `test_invalid_items_variants.py` | Covers malformed line item edge cases | ✅ |
+| `test_pipeline_end_to_end.py` | Full pipeline test: creation → receive | ✅ |
+| `test_receive_partial.py` | Tests partial receiving with audit tracking | ✅ |
+
