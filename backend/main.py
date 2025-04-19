@@ -7,6 +7,9 @@ from backend.database import init_db
 from pathlib import Path
 import logging
 
+# ✅ Add the enhanced validation handler
+from scripts.add_debug_validation_handler import install_validation_handler
+
 # Ensure log directory exists
 Path("logs").mkdir(exist_ok=True)
 logging.basicConfig(
@@ -27,6 +30,9 @@ app = FastAPI(
     title="Universal Recycling Purchase Order System",
     description="Purchase Order management system for Universal Recycling"
 )
+
+# ✅ Install the validation handler before anything else
+install_validation_handler(app)
 
 # Static Files
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")

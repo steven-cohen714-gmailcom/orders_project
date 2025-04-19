@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException, Request, UploadFile, Form
 from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from datetime import datetime
-from fastapi.templating import Jinja2Templates
 import sqlite3
 from pathlib import Path
 import json
@@ -17,6 +17,16 @@ templates = Jinja2Templates(directory="frontend/templates")
 
 UPLOAD_DIR = Path("data/uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+
+@router.get("/next_order_number")
+def get_next_order_number():
+    try:
+        current_number = get_setting("order_number_start")
+        next_number = generate_order_number(current_number)
+        return {"next_order_number": next_number}
+    except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "next_order_number"})
+        raise HTTPException(status_code=500, detail=f"Failed to get next order number: {e}")
 
 def log_event(filename: str, data: dict):
     log_path = Path(f"logs/{filename}")
@@ -130,6 +140,7 @@ def mark_order_received(receive_data: List[ItemReceive]):
                     now,
                     0
                 ))
+
                 order_ids_updated.add(item.order_id)
 
             for order_id in order_ids_updated:

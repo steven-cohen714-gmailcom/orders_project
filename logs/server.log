@@ -3053,3 +3053,169 @@ INFO:     Finished server process [29243]
 INFO:     Started server process [29781]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/add_debug_validation_handler.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29781]
+INFO:     Started server process [31550]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31550]
+INFO:     Started server process [31806]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/add_debug_validation_handler.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31806]
+INFO:     Started server process [31933]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [32132] using StatReload
+INFO:     Started server process [32134]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53675 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:54033 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54223 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54223 - "GET /static/js/new_orders.js HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54223 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [33062] using StatReload
+INFO:     Started server process [33068]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55419 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55419 - "GET /static/js/new_order.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55419 - "GET /lookups/suppliers HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55420 - "GET /lookups/requesters HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55423 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55425 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55427 - "GET /orders/next_order_number HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55427 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55454 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55454 - "GET /static/js/new_order.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55454 - "GET /lookups/suppliers HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55455 - "GET /lookups/requesters HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55458 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55459 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55461 - "GET /orders/next_order_number HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55461 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33068]
+INFO:     Started server process [33363]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [33462] using StatReload
+INFO:     Started server process [33468]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56130 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56130 - "GET /static/js/new_order.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56137 - "GET /orders/next_order_number HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56131 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56130 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56133 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56136 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56136 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33468]
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 164, in <module>
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    ^^^^^^^^^^
+NameError: name 'UPLOAD_DIR' is not defined
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Started server process [34656]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59337 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59624 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59624 - "GET /static/js/new_order.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59624 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59625 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59629 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59631 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59625 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59627 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60264 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60294 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60294 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60299 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60296 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60301 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60302 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60410 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60410 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60420 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60410 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60422 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60426 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60425 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60585 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60585 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60585 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60599 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60605 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60603 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60606 - "GET /orders/next_order_number HTTP/1.1" 200 OK

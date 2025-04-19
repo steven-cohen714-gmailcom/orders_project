@@ -4,7 +4,7 @@ from pathlib import Path
 from datetime import datetime
 import json
 
-router = APIRouter()
+router = APIRouter(prefix="/lookups")
 
 def log_lookup(endpoint: str, outcome: str, detail: str = ""):
     log_path = Path("logs/lookups_log.txt")

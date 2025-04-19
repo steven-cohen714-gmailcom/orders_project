@@ -79,3 +79,32 @@
 [2025-04-19T16:46:11.686194] init_db: {"status": "success"}
 [2025-04-19T16:48:43.639732] init_db: {"status": "success"}
 [2025-04-19T16:52:50.910967] init_db: {"status": "success"}
+[2025-04-19T17:06:15.843472] init_db: {"status": "success"}
+[2025-04-19T17:08:07.300015] init_db: {"status": "success"}
+[2025-04-19T17:09:03.347514] init_db: {"status": "success"}
+[2025-04-19T17:10:10.564049] init_db: {"status": "success"}
+[2025-04-19T17:11:50.970429] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T17:11:50.970925] get_setting: {"key": "order_number_start", "result": "URC1024"}
+[2025-04-19T17:11:50.972069] update_setting: {"key": "order_number_start", "value": "URC1026"}
+[2025-04-19T17:11:50.973717] create_order: {"order_number": "URC1025", "requester_id": 1, "total": 300.0, "items_count": 1}
+[2025-04-19T17:17:02.985379] init_db: {"status": "success"}
+[2025-04-19T17:19:08.038389] init_db: {"status": "success"}
+[2025-04-19T17:19:39.134789] init_db: {"status": "success"}
+[2025-04-19T17:28:32.561824] init_db: {"status": "success"}
+[2025-04-19T17:32:35.658648] get_setting: {"key": "order_number_start", "result": "URC1026"}
+[2025-04-19T17:33:43.361619] get_setting: {"key": "order_number_start", "result": "URC1026"}
+[2025-04-19T17:36:16.104725] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T17:36:16.106054] get_setting: {"key": "order_number_start", "result": "URC1026"}
+[2025-04-19T17:36:16.108034] update_setting: {"key": "order_number_start", "value": "URC1028"}
+[2025-04-19T17:36:16.111503] create_order: {"order_number": "URC1027", "requester_id": 2, "total": 1200.0, "items_count": 1}
+[2025-04-19T17:36:23.525946] get_setting: {"key": "order_number_start", "result": "URC1028"}
+[2025-04-19T17:36:48.886920] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T17:36:48.887578] get_setting: {"key": "order_number_start", "result": "URC1028"}
+[2025-04-19T17:36:48.888773] update_setting: {"key": "order_number_start", "value": "URC1030"}
+[2025-04-19T17:36:48.890470] create_order: {"order_number": "URC1029", "requester_id": 5, "total": 20.0, "items_count": 1}
+[2025-04-19T17:36:51.738292] get_setting: {"key": "order_number_start", "result": "URC1030"}
+[2025-04-19T17:37:29.797064] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T17:37:29.797797] get_setting: {"key": "order_number_start", "result": "URC1030"}
+[2025-04-19T17:37:29.799082] update_setting: {"key": "order_number_start", "value": "URC1032"}
+[2025-04-19T17:37:29.802360] create_order: {"order_number": "URC1031", "requester_id": 5, "total": 10.0, "items_count": 1}
+[2025-04-19T17:37:32.198748] get_setting: {"key": "order_number_start", "result": "URC1032"}
