@@ -4913,3 +4913,91 @@ INFO:     Started reloader process [81204] using StatReload
 INFO:     Started server process [81207]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [81207]
+INFO:     Started server process [81319]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [81806] using StatReload
+INFO:     Started server process [81812]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:50982 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50983 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50982 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50983 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50982 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50985 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51020 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51020 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51020 - "GET /data/uploads/18_Hydehurst%20RC-%20Proof%20of%20submission.pdf HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [82694] using StatReload
+INFO:     Started server process [82700]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:52713 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52713 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52714 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52714 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52713 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52718 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52716 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52716 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52758 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52785 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52785 - "GET /data/uploads/17_Intimisso.pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52796 - "GET /orders/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52796 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52840 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52840 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52796 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52796 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54973 - "GET /orders/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54974 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54973 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54974 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54973 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54976 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54973 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54973 - "GET /orders/attachments/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54973 - "GET /orders/attachments/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54973 - "GET /orders/attachments/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55022 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55022 - "GET /orders/attachments/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55022 - "GET /data/uploads/19_Fidessa%20Consulting.PDF HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55049 - "GET /orders/attachments/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55107 - "GET /orders/attachments/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55149 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55171 - "GET /orders/attachments/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55171 - "GET /data/uploads/21_Fidessa%20Consulting.PDF HTTP/1.1" 200 OK

@@ -1,15 +1,15 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup, supplier_lookup_takealot
 from backend.database import init_db
 from pathlib import Path
 import logging
 
-# ✅ Enhanced validation
+# ✅ Install debug validator
 from scripts.add_debug_validation_handler import install_validation_handler
 
 # ✅ Logging setup
@@ -20,7 +20,7 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(message)s",
 )
 
-# ✅ Init DB
+# ✅ Initialize DB
 try:
     init_db()
     logging.info("✅ Database initialized successfully.")
@@ -28,12 +28,13 @@ except Exception as e:
     logging.exception("❌ Failed to initialize database")
     raise
 
-# ✅ App setup
+# ✅ FastAPI app
 app = FastAPI(
     title="Universal Recycling Purchase Order System",
     description="Purchase Order management system for Universal Recycling"
 )
 
+# ✅ Enhanced validation
 install_validation_handler(app)
 
 # ✅ Mount folders
@@ -50,6 +51,9 @@ app.add_middleware(
 )
 app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")
 
+# ✅ Templates
+templates = Jinja2Templates(directory="frontend/templates")
+
 # ✅ Routers
 app.include_router(orders.router)
 app.include_router(auth.router)
@@ -58,9 +62,7 @@ app.include_router(ui_pages.router)
 app.include_router(supplier_lookup.router)
 app.include_router(supplier_lookup_takealot.router)
 
-# ✅ Template engine
-templates = Jinja2Templates(directory="frontend/templates")
-
+# ✅ HTML routes using Jinja2 templates
 @app.get("/orders/pending_orders", response_class=HTMLResponse)
 def serve_pending_orders(request: Request):
     return templates.TemplateResponse("pending_orders.html", {"request": request})

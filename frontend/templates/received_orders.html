@@ -89,11 +89,14 @@
             <td>R${(order.total || 0).toFixed(2)}</td>
             <td class="status">${order.status}</td>
             <td>
-              <span class="clip-icon" title="Upload" onclick="showUploadAttachmentsModal(${order.id})">📎</span>
-              <span class="eye-icon ${hasAttachments ? '' : 'disabled'}" title="View Attachments"
-                    onclick="${hasAttachments ? `showViewAttachmentsModal(${order.id})` : ''}">👁️</span>
+              <span class="clip-icon" title="Upload"
+                onclick="uploadAndRefresh(${order.id}, '${order.order_number}', this)">📎</span>
+              <span class="eye-icon ${hasAttachments ? '' : 'disabled'}"
+                title="View Attachments"
+                onclick="${hasAttachments ? `showViewAttachmentsModal(${order.id}, '${order.order_number}')` : ''}">👁️</span>
             </td>
           `;
+
           tbody.appendChild(row);
         }
       } catch (err) {
@@ -101,6 +104,16 @@
         console.error(err);
       }
     }
+
+    function uploadAndRefresh(orderId, orderNumber, clipIconSpan) {
+      showUploadAttachmentsModal(orderId, orderNumber, async () => {
+        const row = clipIconSpan.closest("tr");
+        const eye = row.querySelector(".eye-icon");
+        eye.classList.remove("disabled");
+        eye.onclick = () => showViewAttachmentsModal(orderId, orderNumber);
+      });
+    }
+    window.uploadAndRefresh = uploadAndRefresh;
 
     function applyFilters() {
       const startDate = document.getElementById("start-date").value;
