@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from backend.endpoints import orders, auth, lookups, ui_pages
+from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup, supplier_lookup_takealot
 from backend.database import init_db
 from pathlib import Path
 import logging
@@ -47,11 +47,13 @@ app.add_middleware(
 )
 app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")  # Replace in prod
 
-# Routers
+# ✅ Routers
 app.include_router(orders.router)
 app.include_router(auth.router)
 app.include_router(lookups.router)
 app.include_router(ui_pages.router)
+app.include_router(supplier_lookup.router)
+app.include_router(supplier_lookup_takealot.router)
 
 # Run
 if __name__ == "__main__":

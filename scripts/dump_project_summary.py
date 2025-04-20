@@ -7,7 +7,7 @@ from datetime import datetime
 
 # --- Config ---
 EXCLUDE_DIRS = {'venv', '__pycache__', '.pytest_cache'}
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent
 OUTPUT_MD = PROJECT_ROOT / 'project_summary.md'
 DB_FILE = PROJECT_ROOT / 'data' / 'orders.db'
 
@@ -28,12 +28,9 @@ def build_tree(path: Path, prefix='') -> str:
     return f"{path}\n" + '\n'.join(_build(path, prefix, level=1))
 
 def extract_desc(src: str) -> str:
-    m = re.search(r'"""(.*?)"""', src, re.DOTALL)
-    if not m:
-        m = re.search(r"'''(.*?)'''", src, re.DOTALL)
+    m = re.search(r'"""(.*?)"""', src, re.DOTALL) or re.search(r"'''(.*?)'''", src, re.DOTALL)
     if m:
-        first = m.group(1).strip().splitlines()[0]
-        return first
+        return m.group(1).strip().splitlines()[0]
     for line in src.splitlines():
         if line.strip().startswith('#'):
             return line.strip().lstrip('# ').strip()
@@ -82,7 +79,7 @@ def dump_test_summary() -> str:
     md += "\n"
     return md
 
-def extra_sections():
+def extra_sections() -> str:
     return """
 ## 🔐 Users & Roles
 
@@ -158,13 +155,21 @@ def main():
               "- All tests confirmed via curl + Python\n"
               "- Full end-to-end integration test exists\n"
               "- Code reusability is a must (e.g. date handling, filters)\n\n"
+              "**Date Input Standardization:**\n"
+              "All date inputs (filter, creation, etc.) use `<input type=\"date\">` and transmit in ISO 8601 (YYYY-MM-DD) format. "
+              "The backend expects this format and filters directly using SQLite `DATE()` comparisons. "
+              "No manual formatting or parsing required.\n\n"
               "**How Steven works with ChatGPT:**\n"
               "- Steven doesn’t know coding; he’s decent with terminal commands\n"
               "- He uses VS Code, wants brief error messages & clear steps\n")
     md.append(extra_sections())
     md.append(dump_test_summary())
-    OUTPUT_MD.write_text('\n'.join(md), encoding='utf-8')
-    print(f"✅ Written {OUTPUT_MD}")
+
+    try:
+        OUTPUT_MD.write_text('\n'.join(md), encoding='utf-8')
+        print(f"✅ Written to: {OUTPUT_MD}")
+    except Exception as e:
+        print(f"❌ Failed to write MD file: {e}")
 
 if __name__ == '__main__':
     main()

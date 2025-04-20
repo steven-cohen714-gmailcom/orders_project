@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pending Orders</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
+    .status { font-weight: bold; }
+    .filters { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+    .filters label { font-weight: bold; }
+    input[type="date"], select {
+      padding: 0.4rem;
+      font-size: 1rem;
+      font-family: monospace;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Pending Orders</h2>
+
+  <div class="filters">
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date" />
+
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date" />
+
+    <label for="filter-requester">Requester:</label>
+    <select id="filter-requester"></select>
+
+    <label for="filter-supplier">Supplier:</label>
+    <select id="filter-supplier"></select>
+
+    <button id="run-btn">Run</button>
+    <button id="clear-btn">Clear</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Request Date</th>
+        <th>Order Number</th>
+        <th>Requester</th>
+        <th>Supplier</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Actions (coming soon)</th>
+      </tr>
+    </thead>
+    <tbody id="orders-body">
+      <!-- Rows go here -->
+    </tbody>
+  </table>
+
+  <script type="module">
+    import { loadRequesters, loadSuppliers } from "/static/js/shared_filters.js";
+
+    async function loadPendingOrders(filters = {}) {
+      try {
+        const params = new URLSearchParams(filters).toString();
+        const res = await fetch(`/orders/pending_data${params ? '?' + params : ''}`);
+        const data = await res.json();
+        const tbody = document.getElementById("orders-body");
+        tbody.innerHTML = "";
+
+        (data.orders || []).forEach(order => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${order.created_date ? order.created_date.split("T")[0] : "?"}</td>
+            <td>${order.order_number}</td>
+            <td>${order.requester}</td>
+            <td>${order.supplier || "—"}</td>
+            <td>R${(order.total || 0).toFixed(2)}</td>
+            <td class="status">${order.status}</td>
+            <td>🔧</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        alert("❌ Failed to load pending orders");
+        console.error(err);
+      }
+    }
+
+    function applyFilters() {
+      const startDate = document.getElementById("start-date").value;
+      const endDate = document.getElementById("end-date").value;
+      const requester = document.getElementById("filter-requester").value;
+      const supplier = document.getElementById("filter-supplier").value;
+
+      const filters = {};
+      if (startDate) filters.start_date = startDate;
+      if (endDate) filters.end_date = endDate;
+      if (requester && requester !== "All") filters.requester = requester;
+      if (supplier && supplier !== "All") filters.supplier = supplier;
+
+      loadPendingOrders(filters);
+    }
+
+    function clearFilters() {
+      document.getElementById("start-date").value = "";
+      document.getElementById("end-date").value = "";
+      document.getElementById("filter-requester").value = "All";
+      document.getElementById("filter-supplier").value = "All";
+      loadPendingOrders();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadRequesters("filter-requester");
+      loadSuppliers("filter-supplier");
+
+      document.getElementById("run-btn").addEventListener("click", applyFilters);
+      document.getElementById("clear-btn").addEventListener("click", clearFilters);
+
+      loadPendingOrders();
+    });
+  </script>
+</body>
+</html>

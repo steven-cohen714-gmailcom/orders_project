@@ -1,0 +1,100 @@
+
+[2025-04-20T12:51:22.775935]
+Fetched URL: https://www.takealot.com/search?searchTerm=laminator
+HTTP Status: 404
+
+[2025-04-20T12:51:22.776082]
+Exception: Takealot returned status 404
+
+[2025-04-20T12:53:16.489687]
+Exception: name 'search_url' is not defined
+
+[2025-04-20T13:20:54.092186]
+Fetched URL: https://www.takealot.com/search/?search=laminator
+HTTP Status: 404
+
+[2025-04-20T13:20:54.092546]
+Exception: Takealot returned status 404
+
+[2025-04-20T13:23:42.659646]
+Fetched URL: https://www.takealot.com/all?q=laminator
+HTTP Status: 200
+
+[2025-04-20T13:23:42.662571]
+Exception: No products matched or structure changed
+
+[2025-04-20T13:29:02.915905]
+Fetched URL: https://www.takealot.com/all?q=laminator
+HTTP Status: 200
+HTML Preview:     <!doctype html>
+    <html dir="ltr" lang="en">
+
+    <head>
+          <link rel="preconnect" href="https://shopfront.takealot.com" crossorigin>
+  <link rel="preload" href="https://shopfront.takealot.com/static/js/app-loader.js" as="script">
+  <link rel="preconnect" href="https://media.takealot.com" crossorigin>
+          <title>Takealot</title>
+
+              <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- This saves us some bandwidth by saving a request favicon.ico -->
+    <link rel="icon" sizes="32x32" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAAC\
+gAAAAQAAAAIAAAAAEACAAAAAAAAAEA\
+AAAAAAAAAAAAAAEAAAAAAADWrHgA1a\
+p1AL16JgDmzLcAtnYSAP3//wD+//8A\
+t3YSAP///wDu1ssA+vDuAPXi2wDCgz\
+sAtnYRAP3//gD+//4AuHYRALd1EwD/\
+//4Au3okALl2EQC4dRMAuXUTALp1Ew\
+D///0At3USALh2EAC4dRIA//7/ALl2\
+EAC5dRI... (truncated)
+
+[2025-04-20T13:29:02.917653]
+Exception: No products matched or structure changed
+
+[2025-04-20T13:29:13.204128]
+Fetched URL: https://www.takealot.com/all?q=laminator
+HTTP Status: 200
+HTML Preview:     <!doctype html>
+    <html dir="ltr" lang="en">
+
+    <head>
+          <link rel="preconnect" href="https://shopfront.takealot.com" crossorigin>
+  <link rel="preload" href="https://shopfront.takealot.com/static/js/app-loader.js" as="script">
+  <link rel="preconnect" href="https://media.takealot.com" crossorigin>
+          <title>Takealot</title>
+
+              <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- This saves us some bandwidth by saving a request favicon.ico -->
+    <link rel="icon" sizes="32x32" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAAC\
+gAAAAQAAAAIAAAAAEACAAAAAAAAAEA\
+AAAAAAAAAAAAAAEAAAAAAADWrHgA1a\
+p1AL16JgDmzLcAtnYSAP3//wD+//8A\
+t3YSAP///wDu1ssA+vDuAPXi2wDCgz\
+sAtnYRAP3//gD+//4AuHYRALd1EwD/\
+//4Au3okALl2EQC4dRMAuXUTALp1Ew\
+D///0At3USALh2EAC4dRIA//7/ALl2\
+EAC5dRI... (truncated)
+
+[2025-04-20T13:29:13.205841]
+Exception: No products matched or structure changed
+
+[2025-04-20T14:05:10.827015]
+Target URL: https://www.takealot.com/all?q=laminator
+Scraper URL: http://api.scraperapi.com?api_key=f272c508f0e84b88ac0fa928d4acdda&url=https://www.takealot.com/all?q=laminator
+HTTP Status: 401
+HTML Preview: Unauthorized request, please make sure your API key is valid.
+
+[2025-04-20T14:05:10.828193]
+Exception: ScraperAPI returned 401
+
+[2025-04-20T14:07:09.512596]
+Target URL: https://www.takealot.com/all?q=laminator
+Scraper URL: http://api.scraperapi.com?api_key=f272c508f0e84b88ac0fa928d4acdda&url=https://www.takealot.com/all?q=laminator
+HTTP Status: 401
+HTML Preview: Unauthorized request, please make sure your API key is valid.
+
+[2025-04-20T14:07:09.513530]
+Exception: ScraperAPI returned 401

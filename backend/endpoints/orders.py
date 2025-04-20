@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Request, UploadFile, Form
+from fastapi import APIRouter, HTTPException, Request, UploadFile, Form, Query
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
@@ -18,6 +18,13 @@ templates = Jinja2Templates(directory="frontend/templates")
 UPLOAD_DIR = Path("data/uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
+def log_event(filename: str, data: dict):
+    log_path = Path(f"logs/{filename}")
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with log_path.open("a", encoding="utf-8") as f:
+        timestamp = datetime.now().isoformat()
+        f.write(f"[{timestamp}] {json.dumps(data, ensure_ascii=False)}\n")
+
 @router.get("/next_order_number")
 def get_next_order_number():
     try:
@@ -27,13 +34,6 @@ def get_next_order_number():
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "next_order_number"})
         raise HTTPException(status_code=500, detail=f"Failed to get next order number: {e}")
-
-def log_event(filename: str, data: dict):
-    log_path = Path(f"logs/{filename}")
-    log_path.parent.mkdir(parents=True, exist_ok=True)
-    with log_path.open("a", encoding="utf-8") as f:
-        timestamp = datetime.now().isoformat()
-        f.write(f"[{timestamp}] {json.dumps(data, ensure_ascii=False)}\n")
 
 class OrderItem(BaseModel):
     item_code: str = Field(min_length=1)
@@ -187,3 +187,51 @@ async def upload_attachment(file: UploadFile, order_id: int = Form(...)):
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "upload"})
         raise HTTPException(status_code=500, detail=f"Failed to upload attachment: {e}")
+
+@router.get("/pending_data")
+def get_pending_orders(
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    requester: Optional[str] = Query(None),
+    supplier: Optional[str] = Query(None)
+):
+    try:
+        filters = ["o.status IN ('Pending', 'Waiting for Approval')"]
+        params = []
+
+        if start_date:
+            filters.append("DATE(o.created_date) >= DATE(?)")
+            params.append(start_date)
+
+        if end_date:
+            filters.append("DATE(o.created_date) <= DATE(?)")
+            params.append(end_date)
+
+        if requester:
+            filters.append("r.name LIKE ?")
+            params.append(f"%{requester}%")
+
+        if supplier:
+            filters.append("s.name LIKE ?")
+            params.append(f"%{supplier}%")
+
+        where_clause = " AND ".join(filters)
+
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(f"""
+                SELECT
+                    o.id, o.created_date, o.order_number,
+                    r.name AS requester, s.name AS supplier,
+                    o.total, o.status
+                FROM orders o
+                LEFT JOIN requesters r ON o.requester_id = r.id
+                LEFT JOIN suppliers s ON o.supplier_id = s.id
+                WHERE {where_clause}
+                ORDER BY o.created_date DESC
+            """, params)
+            orders = [dict(row) for row in cursor.fetchall()]
+        return {"orders": orders}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to load pending orders: {e}")

@@ -1,5 +1,5 @@
 # 📦 Project Snapshot
-Generated: 2025-04-19 16:52:54
+Generated: 2025-04-20 16:03:14
 
 ## 📁 Directory Tree
 ````
@@ -13,12 +13,15 @@ Generated: 2025-04-19 16:52:54
 │   │   ├── lookups.py
 │   │   ├── orders.py
 │   │   ├── requesters.py
+│   │   ├── supplier_lookup.py
+│   │   ├── supplier_lookup_takealot.py
 │   │   └── ui_pages.py
 │   ├── main.py
 │   ├── scrapers
 │   └── utils
 │       ├── __init__.py
 │       └── order_utils.py
+├── builder_dump.html
 ├── data
 │   ├── orders.db
 │   ├── printouts
@@ -41,18 +44,22 @@ Generated: 2025-04-19 16:52:54
 │       ├── login.html
 │       ├── maintenance.html
 │       ├── new_order.html
-│       ├── pending.html
+│       ├── pending_orders.html
 │       ├── print_template.html
 │       └── received.html
 ├── logs
 │   ├── db_activity_log.txt
+│   ├── lookups_log.txt
 │   ├── new_orders_log.txt
 │   ├── server.log
 │   ├── server_startup.log
+│   ├── supplier_lookup_debug.log
+│   ├── takealot_lookup.log
 │   └── testing_log.txt
 ├── project_status_snapshot.md
 ├── project_summary.md
 └── scripts
+    ├── add_debug_validation_handler.py
     ├── clear_live_data.py
     ├── dump_project_summary.py
     ├── git_pull_project.py
@@ -82,6 +89,13 @@ Generated: 2025-04-19 16:52:54
 **(No description)**
 ```python
 <!-- ERROR reading .DS_Store: 'utf-8' codec can't decode byte 0x80 in position 3131: invalid start byte -->
+```
+
+### `builder_dump.html`
+**(No description)**
+```python
+<!DOCTYPE html>
+<html lang=en data-appversion=v0.0.1578><head><link href="//accounts.google.com" rel=dns-prefetch /><title>Builders | Shop DIY, Paint and Building Materials Online</title><meta charset=utf-8 /><meta content="initial-scale=1,width=device-width,interactive-widget=resizes-content" name=viewport /><script>var __ZBE__={"uh":"aHR0cHM6Ly93d3cuYnVpbGRlcnMuY28uemE","sc":"R2g2dHVjNkw","ic":"YnVpbGRlcnM","mg":"QUl6YVN5QlI5SzVyZUFNTl9CcFFmbzBBczBfb1UwUWVEWWZpYXdv","icf":"MjU5MjU2MTgyMDIwODM2","ica":"Y28uemEuYnVpbGRlcnMubG9naW4","icg":"MzkzNDAxOTkwODY2LTFrOTBwcWIwamVlM2h1dmhpZWIybnJudjgwdTFiYjJjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t",};window.__ZBE__=__ZBE__;</script><link rel=dns-prefetch href="https://www.googletagmanager.com"/><link rel=dns-prefetch href="https://apps.bazaarvoice.com"/><link rel=dns-prefetch href="https://www.google-analytics.com"/><link rel=dns-prefetch href="https://www.googleoptimize.com"/><link rel=dns-prefetch href="https://maps.googleapis.com"/><script>var userType="",loginStatus="",dataLayer=[{user_type:userType,logged_in_status:loginStatus}];!function(e,t,a,s,n){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var r=t.getElementsByTagName(a)[0],g=t.createElement(a);g.async=!0,g.src="https://www.googletagmanager.com/gtm.js?id=GTM-PCPNHSJ",r.parentNode.insertBefore(g,r)}(window,document,"script","dataLayer")</script><script>window._pxAppId='PXBIA59zcf'</script><script async=async defer=defer src="/px/PXBIA59zcf/init.js"></script><style>body,html{height:100%}body{background-color:#fff;font-family:sans-serif}@font-face {src:url(/Roboto-Regular.woff2);font-family:Roboto;font-weight:400;font-display:swap}@font-face {src:url(/Roboto-Medium.ttf);font-family:Roboto;font-weight:500;font-display:swap}@font-face {src:url(/Roboto-Bold.woff2);font-family:Roboto;font-weight:700;font-display:swap}#react-app{display:flex;height:100%;overflow:hidden}.pac-container{z-index:99999999999;position:fixed!important;margin-bottom:8px}.pac-container:after{content:none!important}.pac-item{padding:5px 4px 5px}.FSs{font-size:14px;font-weight:400;font-family:Roboto;line-height:20px;letter-spacing:.2px;color:#222223}.nav-links-container{display:flex}.mobile-header{display:none}.header,.mobile-header{position:sticky;top:0;background-color:#ffd600;z-index:2}.mobile-header{padding-top:12px}.header .header-container{display:flex;flex-direction:column;flex:1;margin:auto}.header .search-max-container{max-width:1440px;margin-left:auto;margin-right:auto;padding-left:24px;padding-right:24px}.header .menu-inner-container,.header .search-inner-container,.header .search-max-container{box-sizing:border-box;display:flex;justify-content:space-between;align-items:center}.header .logo{display:inline-flex;padding-bottom:5px}.header .action-container{display:flex;justify-content:space-between}.menu-toggler{background-color:transparent;color:#222223;border:none;font-size:16px;font-family:Roboto;line-height:24px;letter-spacing:.2px;padding:0;display:flex;align-items:center;cursor:pointer;font-weight:500}.header .deals-menu-toggler{background-color:transparent;border:none;cursor:pointer;padding:0}.header .action-container{box-sizing:border-box}.header .nav-link{text-decoration:none}.header .menu-container{background-color:#ffeb80;padding-top:6px;padding-bottom:6px}.header .menu-inner-container{max-width:1440px;margin-left:auto;margin-right:auto;padding-left:24px;padding-right:24px}.header .search-bar-container,.mobile-header .search-bar-container{display:flex;margin-left:24px;flex:1 1 0%;min-width:220px;position:relative;border-radius:32px;overflow:hidden;width:100%;border:1px solid #ffd600;padding:0;height:44px;box-sizing:border-box}.search-input-bar{font-family:Roboto;letter-spacing:.2px}.search-input-bar::-ms-input-placeholder,.search-input-bar::placeholder{font-family:Roboto;color:#74767c}.header .search-bar-container>input,.mobile-header .search-bar-container>input{outline-style:none;color:#333;font-size:16px;background-color:#fff;border-bottom-left-radius:32px;border-top-left-radius:32px;padding:16px 16px 15px 24px;border:none;width:100%}.header .search-btn-container,.mobile-header .search-btn-container{display:flex;align-items:center;background-color:#fff;align-items:center;justify-content:center;border-bottom-right-radius:34px;border-top-right-radius:34px}.header .search-btn-container>div,.mobile-header .search-btn-container>div{width:34px;height:34px;align-items:center;justify-content:center;border-radius:16px;margin:4px;background-color:#0d5dfe;display:flex}.desktop-location-container{display:flex;align-items:center}.btn-container{display:flex;padding-left:8px;padding-right:12px;margin-left:24px;border-radius:8px;height:40px;text-decoration:none}.btn-container__text{margin-left:6px}.btn-container:active,.btn-container:hover{background-color:#febc00}.cart__icon-wrapper{margin-left:24px;padding-left:12px}.header .search-bar-container{margin-left:24px}.header .sign-in-text{max-width:95px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.location-link-text{padding-left:4px;padding-right:71px}.desktop-link-text{text-decoration:none;margin-left:24px}#mobile-default-header,#web-default-header{position:absolute;top:0;left:0;right:0}.header .nav-links-container .buy-again-toggler{opacity:0;font-weight:400;font-size:14px;line-height:20px}@media only screen and (max-width:1024px){.header{display:none!important}.mobile-header{display:block;padding-top:0}.mobile-header .header-container{padding-top:0}.mobile-header .left,.mobile-header .right{display:flex;align-items:center}.mobile-header .right{justify-content:right}.mobile-header .search-bar-container{margin-left:0;max-width:100%;height:48px;padding:0 16px 8px 16px}.mobile-header .search-bar-container>input{padding:16px 16px 15px 16px}.mobile-header .search-btn-container{width:48px}.mobile-header .mobile-location-container{display:flex;flex-direction:row;justify-content:space-between;background-color:#ffeb80;align-items:center;padding:6px 16px}.mobile-header .mobile-deliver-text{flex:1 1 0%;margin:0;padding-right:12px;padding-left:4px}.mobile-header .search-btn-container>div{margin:2px}.mobile-header .logo-container{padding-left:16px;padding-right:16px;display:flex;justify-content:space-between;align-items:center}.hamburger-mobile-icon{display:flex;margin-top:4px;margin-right:16px}.mobile-header .logo{display:inline-flex;margin-bottom:10px}.mobile-header .cart__icon-wrapper:active{background-color:transparent}}</style><style>body{margin:0}#loader-wrapper{width:100%;display:flex;justify-content:center;align-items:center;background-color:#fff;margin-top:104px}#ctn{display:flex;flex-direction:column;justify-content:center;align-items:center}#loader{width:20px;height:20px;animation:rotate 1s infinite ease}#loader-text{text-align:center;color:#222223;font-family:Roboto;font-size:16px;line-height:24px;letter-spacing:.2px;margin-top:10px}@keyframes rotate{0%{transform:none}100%{transform:rotate(1turn)}}</style></head><body><header id=web-default-header style="display:flex;flex:1 1 0%;overflow:hidden" class=header><div class=header-container><div class=search-container><div class=search-max-container><div class=search-inner-container><a href="/" class=logo data-testid=headerLogo><svg width=70 height=67 viewBox="0 0 70 67" fill=none xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)"><path d=M3-2H1v68h68V-2H3z fill="#FFD600" stroke="#fff" stroke-width=4></path><path d="M37.425 27.207h3.536v4.425l10.063 6.686h-5.24l-13.5-8.6-13.513 8.6h-5.24l18.753-12.48 5.14 3.43v-2.061z" fill="#fff"></path><path d="M12.605 42.035a.514.514 0 0 1 .12-.379.487.487 0 0 1 .358-.12c.323 0 .486.174.486.52v7.015a.59.59 0 0 1-.122.397.605.605 0 0 1-.723 0 .59.59 0 0 1-.12-.397v-7.035zm0-4.831H9.83l-.02.011v13.971h2.108l.244-.386.504.339c.357.15.742.218 1.128.2.818 0 1.468-.205 1.951-.618a1.612 1.612 0 0 0 .623-1.24v-8.127a1.383 1.383 0 0 0-.582-1.13 2.212 2.212 0 0 0-1.447-.45 4.837 4.837 0 0 0-1.046.1 1.61 1.61 0 0 0-.677.321l-.011-2.991zm44.144 9.426h-2.793v2.418c0 .85.329 1.463.985 1.838.535.307 1.287.452 2.258.452.97 0 1.77-.174 2.332-.522.655-.397.982-1.024.982-1.878v-1.696a2.032 2.032 0 0 0-.58-1.538c-.187-.188-.676-.489-1.468-.903l-1.086-.578a1.207 1.207 0 0 1-.6-1.079v-1.059a.564.564 0 0 1 .14-.42.47.47 0 0 1 .34-.14.418.418 0 0 1 .321.163.529.529 0 0 1 .142.397v2.217h2.732v-2.237c0-.851-.316-1.463-.941-1.836-.526-.307-1.271-.451-2.235-.451s-1.761.174-2.31.519c-.628.402-.942 1.028-.942 1.878v1.52c-.027.44.093.876.341 1.24.383.395.832.72 1.328.957.452.24.917.494 1.427.76.361.227.54.725.54 1.498v.878a.722.722 0 0 1-.118.44.37.37 0 0 1-.323.142.418.418 0 0 1-.34-.142.709.709 0 0 1-.123-.44l-.009-2.398zm-6.773-6.773h-2.8v11.327h2.786v-9.108a.502.502 0 0 1 .122-.377.487.487 0 0 1 .364-.122c.318 0 .48.174.48.52v2.458h2.794v-3.16a1.392 1.392 0 0 0-.583-1.13 2.159 2.159 0 0 0-1.445-.48 3.641 3.641 0 0 0-1.047.14c-.246.059-.477.169-.678.322l.007-.39zm-7.478 2.237a.567.567 0 0 1 .14-.42.506.506 0 0 1 .705 0 .64.64 0 0 1 .117.42v2.61h-.962v-2.61zm-2.793.08v6.773c0 .867.32 1.5.962 1.898.537.335 1.302.502 2.294.502.989 0 1.754-.154 2.287-.452a1.97 1.97 0 0 0 1.007-1.838V46.75h-2.802v2.28a.72.72 0 0 1-.117.438.451.451 0 0 1-.366.142.45.45 0 0 1-.361-.142.72.72 0 0 1-.118-.438v-2.637h3.757v-4.317c0-.851-.338-1.463-1.007-1.836-.55-.3-1.312-.451-2.287-.451-.975 0-1.746.173-2.312.52-.63.401-.944 1.027-.944 1.878l.007-.014zm-4.694-.107c0-.345.158-.52.481-.52a.432.432 0 0 1 .341.14.452.452 0 0 1 .142.36v7.035a.6.6 0 0 1-.122.398.498.498 0 0 1-.361.12.488.488 0 0 1-.361-.12.59.59 0 0 1-.12-.398v-7.015zm-2.795-.698v8.129a1.663 1.663 0 0 0 .661 1.298c.452.375 1.095.56 1.91.56a2.71 2.71 0 0 0 1.145-.201c.168-.11.33-.227.483-.355l.24.38h2.113V37.204h-2.793V40.2a2.062 2.062 0 0 0-.706-.3 4.1 4.1 0 0 0-1.023-.122 2.258 2.258 0 0 0-1.468.451 1.396 1.396 0 0 0-.562 1.13v.01zm-.928-4.167h-2.795v13.984h2.795V37.202zm-3.723 2.655H24.77v11.33h2.795v-11.33zm0-2.653H24.77v2.032h2.795v-2.032zm-7.48 2.655H17.29v9.907a1.4 1.4 0 0 0 .562 1.13c.423.312.941.472 1.467.45.355.008.709-.047 1.046-.16a1.83 1.83 0 0 0 .677-.379v.38h2.8V39.858h-2.793v9.23a.556.556 0 0 1-.122.38.498.498 0 0 1-.361.119c-.323 0-.481-.174-.481-.517v-9.212zm42.973 12.747H6.944v-13.48l2.87-1.918v-.011h.02l22.504-15.026 2.935 1.951h8.58v5.726l9.708 6.482h9.497v16.276zm.677-16.933h-9.97l-9.258-6.168v-6.047h-9.053l-3.13-2.09-26.06 17.405v14.51h57.471v-17.61z" fill="#231F20"></path></g><path stroke="#fff" stroke-width=3 d=M1.5-1.5h67v67h-67z></path><defs><clipPath id=a><path fill="#fff" d="M3 0h64v64H3z"></path></clipPath></defs></svg> </a><button type=button class="btn-container menu-toggler"><svg width=16 height=16 viewBox="0 0 14 15" fill=none><path fill-rule=evenodd clip-rule=evenodd d="M5.95039 7.80582C6.16813 7.80582 6.34698 7.97282 6.36618 8.1856L6.36789 8.2236V13.7005C6.36789 13.9183 6.20114 14.0971 5.98838 14.1163L5.95039 14.118H0.473442C0.255695 14.118 0.0766004 13.9513 0.057373 13.7385L0.0556641 13.7005V8.2236C0.0556641 8.00585 0.222662 7.82676 0.435442 7.80753L0.473442 7.80582H5.95039ZM13.5432 7.80582C13.7609 7.80582 13.9398 7.97282 13.959 8.1856L13.9607 8.2236V13.7005C13.9607 13.9183 13.7939 14.0971 13.5812 14.1163L13.5432 14.118H8.069C7.85099 14.118 7.67213 13.9513 7.65293 13.7385L7.65122 13.7005V8.2236C7.65122 8.00585 7.81797 7.82676 8.03096 7.80753L8.069 7.80582H13.5432ZM5.53261 8.64138H0.89122V13.2828H5.53261V8.64138ZM13.1254 8.64138H8.48678V13.2828H13.1254V8.64138ZM5.95039 0.055542C6.16813 0.055542 6.34698 0.22254 6.36618 0.43532L6.36789 0.47332V5.95027C6.36789 6.16801 6.20114 6.34711 5.98838 6.36633L5.95039 6.36804H0.473442C0.255695 6.36804 0.0766004 6.20105 0.057373 5.98827L0.0556641 5.95027V0.47332C0.0556641 0.255573 0.222662 0.0764783 0.435442 0.0572509L0.473442 0.055542H5.95039ZM13.5432 0.055542C13.7609 0.055542 13.9398 0.22254 13.959 0.43532L13.9607 0.47332V5.95027C13.9607 6.16801 13.7939 6.34711 13.5812 6.36633L13.5432 6.36804H8.069C7.85099 6.36804 7.67213 6.20105 7.65293 5.98827L7.65122 5.95027V0.47332C7.65122 0.255573 7.81797 0.0764783 8.03096 0.0572509L8.069 0.055542H13.5432ZM5.53261 0.891098H0.89122V5.53249H5.53261V0.891098ZM13.1254 0.891098H8.48678V5.53249H13.1254V0.891098Z" fill=black></path></svg><div dir=auto class=btn-container__text>Shop by Department</div></button></div><div class=search-bar-container><input placeholder="What can we help you find?" maxlength=100 autocapitalize=sentences autocomplete=on autocorrect=on dir=auto enterkeyhint=search spellcheck=true class=search-input-bar data-testid=searchInputField value=""/><div class=search-btn-container><div aria-disabled=true aria-label=Search role=button tabindex=-1 class=""><svg width=24 height=24 viewBox="0 0 32 32" fill=none><path fill-rule=evenodd clip-rule=evenodd d="M14 5a9 9 0 017.032 14.617l5.1 5.1a.5.5 0 010 .708l-.707.707a.5.5 0 01-.707 0l-5.1-5.1A9 9 0 1114 5zm0 2a7 7 0 100 14 7 7 0 000-14z" fill="#FFFFFF"></path></svg></div></div></div><div class=action-container><button type=button class="btn-container menu-toggler"><svg width=16 height=16 viewBox="0 0 32 32" color=black><path fill-rule=evenodd clip-rule=evenodd d="M16.599 4.474a7.728 7.728 0 00-1.796 7.278l.05.175-12.56 12.556a1 1 0 000 1.415l3.812 3.81.094.083a1 1 0 001.32-.083l12.565-12.562.177.052A7.733 7.733 0 0029.529 7.07l-.05-.116a1 1 0 00-1.595-.248l-3.007 3-2.113-.465-.465-2.112 3.008-3.005a1 1 0 00-.36-1.646A7.734 7.734 0 0016.8 4.265l-.201.209zM22.357 4l.234.008-2.093 2.093a1 1 0 00-.27.922l.72 3.272a1 1 0 00.762.761l3.273.72.125.02a1 1 0 00.796-.289l2.087-2.085.004.053a5.735 5.735 0 01-7.816 5.593l-.124-.04a1 1 0 00-.946.265L6.811 27.586 4.413 25.19l12.295-12.288a1 1 0 00.224-1.073 5.73 5.73 0 011.282-6.15 5.728 5.728 0 014.143-1.678z" fill=currentColor></path></svg><div dir=auto class=btn-container__text>Services</div></button> <button type=button class="wishlist-btn-container btn-container menu-toggler"><svg width=16 height=16 viewBox="0 0 14 12" fill=none><path fill-rule=evenodd clip-rule=evenodd d="M9.75 0C12.0972 0 14 1.90279 14 4.25C14 7.08333 11.6667 9.66667 6.99998 12C2.33333 9.66667 0 7.08333 0 4.25C0 1.90279 1.90279 0 4.25 0C5.29899 0 6.25922 0.380043 7.00052 1.00995C7.74121 0.379873 8.70124 0 9.75 0ZM9.75 1C9.04599 1 8.3789 1.22356 7.82777 1.6296L7.64846 1.77164L7.00086 2.32253L6.35298 1.77199C5.7694 1.27609 5.03234 1 4.25 1C2.45507 1 1 2.45507 1 4.25C1 6.48587 2.85783 8.66697 6.74089 10.7407L7 10.876L7.25908 10.7407C11.028 8.72796 12.889 6.61408 12.9952 4.44714L13 4.25C13 2.45507 11.5449 1 9.75 1Z" fill=black></path></svg><div class=btn-container__text dir=auto>Wishlist</div></button><div class="btn-container menu-toggler"><svg width=16 height=16 viewBox="0 0 24 24" fill=none><path fill-rule=evenodd clip-rule=evenodd d="M12 1.5C14.8995 1.5 17.25 3.85051 17.25 6.75C17.25 8.23641 16.6323 9.57854 15.6395 10.5337C18.6526 10.8529 21 13.4023 21 16.5V22.5H3V16.5C3 13.4023 5.34744 10.8529 8.36045 10.5337C7.36772 9.57854 6.75 8.23641 6.75 6.75C6.75 3.85051 9.1005 1.5 12 1.5ZM12 12H9C6.58573 12 4.61551 13.9012 4.5049 16.2882L4.5 16.5V21H19.5V16.5C19.5 14.0857 17.5988 12.1155 15.2118 12.0049L15 12H12ZM12 10.5C14.0711 10.5 15.75 8.82107 15.75 6.75C15.75 4.67893 14.0711 3 12 3C9.92893 3 8.25 4.67893 8.25 6.75C8.25 8.82107 9.92893 10.5 12 10.5Z" fill=black></path></svg><div class="btn-container__text sign-in-text" dir=auto>Sign in</div></div><a aria-label=Cart role=button href="/cart" class="btn-container menu-toggler cart__icon-wrapper"><svg width=24 height=24 viewBox="0 0 32 32" fill=none xmlns="http://www.w3.org/2000/svg"><path fill-rule=evenodd clip-rule=evenodd d="M7.99327 4.38338C7.93551 3.88604 7.51284 3.5 7 3.5H3L2.88338 3.50673C2.38604 3.56449 2 3.98716 2 4.5L2.00673 4.61662C2.06449 5.11396 2.48716 5.5 3 5.5H6V20.5L6.00673 20.6166C6.06449 21.114 6.48716 21.5 7 21.5H29L29.1166 21.4933C29.614 21.4355 30 21.0128 30 20.5V8.5L29.9933 8.38338C29.9355 7.88604 29.5128 7.5 29 7.5H8V4.5L7.99327 4.38338ZM8 9.5H28V19.5H8V9.5ZM25.818 25C25.818 26.3807 24.6987 27.5 23.318 27.5C21.9373 27.5 20.818 26.3807 20.818 25C20.818 23.6193 21.9373 22.5 23.318 22.5C24.6987 22.5 25.818 23.6193 25.818 25ZM11.318 27.5C12.6987 27.5 13.818 26.3807 13.818 25C13.818 23.6193 12.6987 22.5 11.318 22.5C9.93728 22.5 8.81799 23.6193 8.81799 25C8.81799 26.3807 9.93728 27.5 11.318 27.5Z" fill=black></path></svg></a></div></div></div><div class=menu-container><div class=menu-inner-container><div class=desktop-location-container><svg width=16 height=16 viewBox="0 0 32 32" fill=none><path fill-rule=evenodd clip-rule=evenodd d="M16 2.03125C21.5228 2.03125 26 6.08268 26 12.0312C26 16.6949 22.6667 22.6758 16 29.9741C9.33333 22.6724 6 16.6915 6 12.0312C6 6.07829 10.4772 2.03125 16 2.03125ZM16 4.03125C11.4154 4.03125 8 7.34513 8 12.0312C8 15.6712 10.5359 20.5782 15.6998 26.6166L16 26.9653L16.3004 26.6171C21.352 20.7125 23.8885 15.8882 23.9964 12.2706L24 12.0312C24 7.34786 20.5829 4.03125 16 4.03125ZM16 14.9741C17.3807 14.9741 18.5 13.8548 18.5 12.4741C18.5 11.0934 17.3807 9.97406 16 9.97406C14.6193 9.97406 13.5 11.0934 13.5 12.4741C13.5 13.8548 14.6193 14.9741 16 14.9741Z" fill="#000000"></path></svg> <a class="FSs location-link-text">Detecting...</a> <svg width=16 height=16 viewBox="0 0 32 32" fill=none><path fill-rule=evenodd clip-rule=evenodd d="M6.29289 11.2929C6.65338 10.9324 7.22061 10.9047 7.6129 11.2097L7.70711 11.2929L16 19.585L24.2929 11.2929C24.6534 10.9324 25.2206 10.9047 25.6129 11.2097L25.7071 11.2929C26.0676 11.6534 26.0953 12.2206 25.7903 12.6129L25.7071 12.7071L16.7071 21.7071C16.3466 22.0676 15.7794 22.0953 15.3871 21.7903L15.2929 21.7071L6.29289 12.7071C5.90237 12.3166 5.90237 11.6834 6.29289 11.2929Z" fill="#000000"></path></svg></div><div class=nav-links-container><a href="/my-account/my-quick-buy-again" class="menu-toggler buy-again-toggler nav-link FSs"><svg width=38 height=16 viewBox="0 0 38 16" fill=none xmlns="http://www.w3.org/2000/svg"><rect width=38 height=16 rx=4 fill="#AA0006"></rect><path d="M14.2939 3.89062V11H13.3467L9.76758 5.5166V11H8.8252V3.89062H9.76758L13.3613 9.38867V3.89062H14.2939ZM20.4805 10.2334V11H16.7158V10.2334H20.4805ZM16.9062 3.89062V11H15.9639V3.89062H16.9062ZM19.9824 6.94727V7.71387H16.7158V6.94727H19.9824ZM20.4316 3.89062V4.66211H16.7158V3.89062H20.4316ZM23.5176 8.85156L24.9287 3.89062H25.6123L25.2168 5.81934L23.6982 11H23.0195L23.5176 8.85156ZM22.0576 3.89062L23.1807 8.75391L23.5176 11H22.8438L21.1201 3.89062H22.0576ZM27.4385 8.74902L28.5371 3.89062H29.4795L27.7607 11H27.0869L27.4385 8.74902ZM25.7148 3.89062L27.0869 8.85156L27.585 11H26.9062L25.4414 5.81934L25.041 3.89062H25.7148Z" fill=white></path></svg><div class="btn-container__text nav-link" dir=auto>Buy Again</div></a><button class="FSs desktop-link-text deals-menu-toggler" type=button>Deals</button> <a href="/shop-by-room" class="FSs nav-link desktop-link-text">Shop By Room</a> <a href="/Interactive-Catalogue" class="FSs nav-link desktop-link-text">Catalogue</a> <a href="https://blog.builders.co.za" target=_blank class="FSs nav-link desktop-link-text">Blog</a> <a href="/builders-plus" class="FSs nav-link desktop-link-text">Builders+</a> <a href="/store-finder" class="FSs nav-link desktop-link-text">Store Locator</a> <a href="/contact-us" class="FSs nav-link desktop-link-text">Contact Us</a></div></div></div></div></header><header id=mobile-default-header class=mobile-header><div class=header-container><div class=logo-container><div class=left><div class=hamburger-mobile-icon><svg width=24 height=24 viewBox="0 0 24 24" fill=none><path fill-rule=evenodd clip-rule=evenodd d="M21.75 3.75C22.1642 3.75 22.5 4.08579 22.5 4.5C22.5 4.8797 22.2178 5.19349 21.8518 5.24315L21.75 5.25H2.25C1.83579 5.25 1.5 4.91421 1.5 4.5C1.5 4.1203 1.78215 3.80651 2.14823 3.75685L2.25 3.75H21.75ZM21.75 18.75C22.1642 18.75 22.5 19.0858 22.5 19.5C22.5 19.8797 22.2178 20.1935 21.8518 20.2432L21.75 20.25H2.25C1.83579 20.25 1.5 19.9142 1.5 19.5C1.5 19.1203 1.78215 18.8065 2.14823 18.7568L2.25 18.75H21.75ZM22.5 12C22.5 11.5858 22.1642 11.25 21.75 11.25H2.25L2.14823 11.2568C1.78215 11.3065 1.5 11.6203 1.5 12C1.5 12.4142 1.83579 12.75 2.25 12.75H21.75L21.8518 12.7432C22.2178 12.6935 22.5 12.3797 22.5 12Z" fill="#222223"></path></svg></div><a href="/" class=logo data-testid=headerLogo><svg width=48 height=46 viewBox="0 0 70 67" fill=none xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_13095_21081)"><path d="M3 -2H1V0V64V66H3H67H69V64V0V-2H67H3Z" fill="#FFD600" stroke=white stroke-width=4></path><path d="M37.4247 27.207H40.9605V31.6323L51.0235 38.3177H45.7831L32.2837 29.7177L18.7707 38.3177H13.5303L32.2837 25.8387L37.4247 29.2684V27.207Z" fill=white></path><path d="M12.6046 42.0355C12.5983 41.9674 12.6056 41.8989 12.6261 41.8337C12.6467 41.7686 12.68 41.7082 12.7243 41.6561C12.7731 41.6133 12.83 41.5806 12.8917 41.5601C12.9533 41.5395 13.0185 41.5315 13.0832 41.5365C13.4061 41.5365 13.5687 41.7103 13.5687 42.0558V49.0708C13.5777 49.2137 13.5343 49.3549 13.4468 49.4682C13.3423 49.5459 13.2157 49.5878 13.0855 49.5878C12.9554 49.5878 12.8287 49.5459 12.7243 49.4682C12.6375 49.3546 12.595 49.2134 12.6046 49.0708V42.0355ZM12.6046 37.2037H9.82974L9.80942 37.215V51.1864H11.9182L12.1621 50.8003L12.6656 51.139C13.0225 51.2881 13.408 51.3567 13.7945 51.3399C14.6118 51.3399 15.262 51.1337 15.7452 50.7213C15.9349 50.5742 16.0893 50.3865 16.1972 50.1721C16.305 49.9576 16.3635 49.7217 16.3684 49.4817V41.3536C16.3686 41.1326 16.3159 40.9147 16.2145 40.7182C16.1132 40.5218 15.9662 40.3525 15.7858 40.2247C15.3717 39.9084 14.8591 39.7485 14.3386 39.7731C13.9875 39.7689 13.637 39.803 13.2932 39.8747C13.0454 39.9268 12.8133 40.0367 12.6159 40.1953L12.6046 37.2037ZM56.7494 46.6301H53.9564V49.0482C53.9564 49.8987 54.2846 50.5113 54.9409 50.8861C55.476 51.1931 56.2278 51.3376 57.1987 51.3376C58.1695 51.3376 58.9688 51.1638 59.531 50.8161C60.1858 50.4187 60.5131 49.7925 60.5131 48.9376V47.242C60.5288 46.9594 60.4853 46.6767 60.3854 46.4119C60.2855 46.1471 60.1313 45.9062 59.9329 45.7044C59.7462 45.5162 59.257 45.2152 58.4653 44.8013L57.3793 44.2233C57.1913 44.1141 57.0363 43.9562 56.9306 43.7662C56.8249 43.5763 56.7724 43.3613 56.7787 43.144V42.0851C56.7725 42.0093 56.7818 41.933 56.8058 41.8609C56.8299 41.7887 56.8683 41.7221 56.9187 41.6652C56.9631 41.6201 57.0163 41.5844 57.0749 41.5603C57.1334 41.5363 57.1963 41.5243 57.2596 41.5252C57.3218 41.5267 57.3828 41.5421 57.4383 41.5702C57.4938 41.5983 57.5423 41.6385 57.5802 41.6877C57.63 41.7407 57.6683 41.8032 57.6928 41.8716C57.7172 41.94 57.7274 42.0127 57.7225 42.0851V44.3023H60.4544V42.0648C60.4544 41.2136 60.1383 40.6017 59.5129 40.2292C58.9869 39.9221 58.2418 39.7776 57.2777 39.7776C56.3136 39.7776 55.5166 39.9515 54.9679 40.2969C54.3403 40.6988 54.0264 41.325 54.0264 42.1754V43.6949C53.9994 44.1345 54.1193 44.5706 54.3674 44.9345C54.7495 45.3299 55.1991 45.6541 55.695 45.8918C56.1465 46.1311 56.6116 46.3863 57.1219 46.6527C57.4832 46.8785 57.6615 47.3774 57.6615 48.1496V49.0279C57.6709 49.1835 57.6297 49.3379 57.5441 49.4682C57.5064 49.5169 57.4571 49.5554 57.4007 49.5802C57.3443 49.6051 57.2826 49.6154 57.2212 49.6104C57.1573 49.6143 57.0934 49.6035 57.0343 49.5788C56.9752 49.5541 56.9225 49.5163 56.8803 49.4682C56.7922 49.3389 56.7493 49.1841 56.7584 49.0279L56.7494 46.6301ZM49.9759 39.8567H47.1762V51.1841H49.9624V42.0761C49.9561 42.0083 49.9637 41.9399 49.9847 41.8751C50.0056 41.8103 50.0395 41.7504 50.0843 41.699C50.1335 41.6552 50.1911 41.6218 50.2536 41.6009C50.316 41.5799 50.3821 41.5718 50.4478 41.5771C50.7662 41.5771 50.9287 41.751 50.9287 42.0964V44.5552H53.7216V41.3942C53.721 41.1734 53.6678 40.9558 53.5665 40.7595C53.4653 40.5632 53.3188 40.3938 53.1391 40.2653C52.7319 39.9348 52.2182 39.7638 51.6941 39.7844C51.34 39.7799 50.987 39.827 50.6465 39.9244C50.4008 39.9839 50.1701 40.0938 49.9691 40.2473L49.9759 39.8567ZM42.498 42.0942C42.4919 42.0183 42.5011 41.9421 42.5251 41.8699C42.5492 41.7977 42.5876 41.7312 42.638 41.6742C42.7324 41.5826 42.8587 41.5314 42.9902 41.5314C43.1217 41.5314 43.2481 41.5826 43.3425 41.6742C43.4296 41.7961 43.4712 41.9447 43.4599 42.0942V44.7042H42.498V42.0942ZM39.7051 42.1732V48.9466C39.7051 49.8136 40.0257 50.4466 40.667 50.8454C41.2043 51.1796 41.969 51.3467 42.9609 51.3467C43.9498 51.3467 44.7152 51.1931 45.2481 50.8951C45.5717 50.7145 45.8379 50.4462 46.016 50.1211C46.1942 49.796 46.277 49.4273 46.255 49.0573V46.7498H43.4531V49.0302C43.4621 49.185 43.421 49.3386 43.3357 49.4682C43.2894 49.5179 43.2324 49.5565 43.1691 49.5811C43.1057 49.6057 43.0377 49.6158 42.9699 49.6104C42.9029 49.6151 42.8357 49.6047 42.7732 49.5801C42.7107 49.5555 42.6545 49.5173 42.6087 49.4682C42.5234 49.3386 42.4822 49.185 42.4913 49.0302V46.393H46.2483V42.0761C46.2483 41.2249 45.9096 40.613 45.2413 40.2405C44.6919 39.9394 43.9295 39.7889 42.9541 39.7889C41.9787 39.7889 41.2081 39.962 40.6421 40.3082C40.0129 40.7101 39.6983 41.3363 39.6983 42.1867L39.7051 42.1732ZM35.0111 42.0671C35.0111 41.7216 35.1692 41.5478 35.492 41.5478C35.5557 41.5446 35.6192 41.5555 35.6781 41.5797C35.7371 41.6039 35.7899 41.6408 35.833 41.6877C35.8818 41.7334 35.9198 41.7892 35.9444 41.8513C35.969 41.9134 35.9795 41.9801 35.9752 42.0467V49.0821C35.9832 49.2248 35.9399 49.3657 35.8533 49.4795C35.8039 49.5222 35.7466 49.5547 35.6846 49.5753C35.6226 49.5958 35.5572 49.6039 35.492 49.5991C35.4269 49.6043 35.3614 49.5964 35.2993 49.5758C35.2373 49.5553 35.18 49.5225 35.1308 49.4795C35.044 49.3659 35.0015 49.2247 35.0111 49.0821V42.0671ZM32.216 41.3694V49.4975C32.2205 49.7499 32.2825 49.998 32.3971 50.2229C32.5117 50.4478 32.676 50.6437 32.8775 50.7958C33.3291 51.1706 33.9725 51.3557 34.7876 51.3557C35.1792 51.3723 35.5698 51.3038 35.9323 51.1548C36.0999 51.0458 36.2613 50.9275 36.4155 50.8003L36.6548 51.1796H38.7681V37.2037H35.9752V40.1999C35.7605 40.0564 35.5208 39.9546 35.2685 39.8996C34.9341 39.8161 34.5904 39.7751 34.2457 39.7776C33.7188 39.7521 33.1996 39.9119 32.7782 40.2292C32.6025 40.3601 32.4601 40.5305 32.3625 40.7266C32.2648 40.9227 32.2146 41.139 32.216 41.3581V41.3694ZM31.288 37.2015H28.4928V51.1864H31.288V37.2015ZM27.5649 39.8567H24.7697V51.1864H27.5649V39.8567ZM27.5649 37.2037H24.7697V39.2358H27.5649V37.2037ZM20.0847 39.8589H17.2896V49.7662C17.2886 49.9852 17.3389 50.2014 17.4366 50.3974C17.5342 50.5935 17.6764 50.7639 17.8517 50.8951C18.2752 51.2084 18.793 51.3677 19.3193 51.3467C19.6744 51.3536 20.028 51.2994 20.3647 51.1864C20.615 51.1099 20.846 50.9805 21.042 50.8071V51.1864H23.8417V39.8589H21.0488V49.0889C21.0565 49.226 21.013 49.3612 20.9269 49.4682C20.8775 49.5109 20.8202 49.5434 20.7582 49.564C20.6962 49.5845 20.6308 49.5926 20.5656 49.5878C20.2428 49.5878 20.0847 49.414 20.0847 49.0708V39.8589ZM63.0577 52.6065H6.94425V39.1251L9.81393 37.2083V37.197H9.83425L32.3379 22.1712L35.273 24.122H43.8527V29.8478L53.5613 36.33H63.0577V52.6065ZM63.735 35.6729H53.7645L44.5075 29.5046V23.4582H35.4537L32.3243 21.3674L6.26465 38.7729V53.2839H63.735V35.6729Z" fill="#231F20"></path></g><rect x=1.5 y=-1.5 width=67 height=67 stroke=white stroke-width=3></rect><defs><clipPath id=clip0_13095_21081><rect x=3 width=64 height=64 fill=white></rect></clipPath></defs></svg></a></div><div class=right><a aria-label=Cart role=button href="/cart" class="btn-container menu-toggler cart__icon-wrapper"><svg width=24 height=24 viewBox="0 0 32 32" fill=none xmlns="http://www.w3.org/2000/svg"><path fill-rule=evenodd clip-rule=evenodd d="M7.99327 4.38338C7.93551 3.88604 7.51284 3.5 7 3.5H3L2.88338 3.50673C2.38604 3.56449 2 3.98716 2 4.5L2.00673 4.61662C2.06449 5.11396 2.48716 5.5 3 5.5H6V20.5L6.00673 20.6166C6.06449 21.114 6.48716 21.5 7 21.5H29L29.1166 21.4933C29.614 21.4355 30 21.0128 30 20.5V8.5L29.9933 8.38338C29.9355 7.88604 29.5128 7.5 29 7.5H8V4.5L7.99327 4.38338ZM8 9.5H28V19.5H8V9.5ZM25.818 25C25.818 26.3807 24.6987 27.5 23.318 27.5C21.9373 27.5 20.818 26.3807 20.818 25C20.818 23.6193 21.9373 22.5 23.318 22.5C24.6987 22.5 25.818 23.6193 25.818 25ZM11.318 27.5C12.6987 27.5 13.818 26.3807 13.818 25C13.818 23.6193 12.6987 22.5 11.318 22.5C9.93728 22.5 8.81799 23.6193 8.81799 25C8.81799 26.3807 9.93728 27.5 11.318 27.5Z" fill=black></path></svg></a></div></div><div class=search-bar-container><input placeholder="What can we help you find?" maxlength=100 autocapitalize=sentences autocomplete=on autocorrect=on dir=auto enterkeyhint=search spellcheck=true class=search-input-bar data-testid=searchInputField value=""/><div class=search-btn-container><div aria-disabled=true aria-label=Search role=button tabindex=-1 class=""><svg width=24 height=24 viewBox="0 0 32 32" fill=none><path fill-rule=evenodd clip-rule=evenodd d="M14 5a9 9 0 017.032 14.617l5.1 5.1a.5.5 0 010 .708l-.707.707a.5.5 0 01-.707 0l-5.1-5.1A9 9 0 1114 5zm0 2a7 7 0 100 14 7 7 0 000-14z" fill="#FFFFFF"></path></svg></div></div></div><div class=mobile-location-container><svg width=16 height=16 viewBox="0 0 32 32" fill=none><path fill-rule=evenodd clip-rule=evenodd d="M16 2.03125C21.5228 2.03125 26 6.08268 26 12.0312C26 16.6949 22.6667 22.6758 16 29.9741C9.33333 22.6724 6 16.6915 6 12.0312C6 6.07829 10.4772 2.03125 16 2.03125ZM16 4.03125C11.4154 4.03125 8 7.34513 8 12.0312C8 15.6712 10.5359 20.5782 15.6998 26.6166L16 26.9653L16.3004 26.6171C21.352 20.7125 23.8885 15.8882 23.9964 12.2706L24 12.0312C24 7.34786 20.5829 4.03125 16 4.03125ZM16 14.9741C17.3807 14.9741 18.5 13.8548 18.5 12.4741C18.5 11.0934 17.3807 9.97406 16 9.97406C14.6193 9.97406 13.5 11.0934 13.5 12.4741C13.5 13.8548 14.6193 14.9741 16 14.9741Z" fill="#000000"></path></svg><p class="FSs mobile-deliver-text">Detecting...</p><svg width=16 height=16 viewBox="0 0 32 32" fill=none><path fill-rule=evenodd clip-rule=evenodd d="M6.29289 11.2929C6.65338 10.9324 7.22061 10.9047 7.6129 11.2097L7.70711 11.2929L16 19.585L24.2929 11.2929C24.6534 10.9324 25.2206 10.9047 25.6129 11.2097L25.7071 11.2929C26.0676 11.6534 26.0953 12.2206 25.7903 12.6129L25.7071 12.7071L16.7071 21.7071C16.3466 22.0676 15.7794 22.0953 15.3871 21.7903L15.2929 21.7071L6.29289 12.7071C5.90237 12.3166 5.90237 11.6834 6.29289 11.2929Z" fill="#000000"></path></svg></div></div></header><div id=react-app><div id=loader-wrapper style="width:100%;display:flex;flex:1 1 0"><div id=ctn><div id=loader><svg height="100%" viewBox="0 0 32 32" width="100%"><circle cx=16 cy=16 fill=none r=14 stroke-width=4 style="stroke:rgb(34,34,35);opacity:.2"></circle><circle cx=16 cy=16 fill=none r=14 stroke-width=4 style="stroke:rgb(34,34,35);stroke-dasharray:80;stroke-dashoffset:60"></circle></svg></div><span id=loader-text>Loading...</span></div></div></div><script defer=defer src="/runtimechunk~main.dec3ab75e20e1b2d649e.js"></script><script defer=defer src="/vendor_react.921720b8e3a8f4641099.js"></script><script defer=defer src="/vendor-cdd60c62.555d2f6410cd18396b4c.js"></script><script defer=defer src="/vendor-229eafb5.0ae129734648e15b698b.js"></script><script defer=defer src="/main.3264e916f7e578c5463a.js"></script><script defer=defer>function onStartup(){try{var e="true"===(u=new RegExp(`${"BL_PPD"}=([^;]+)`).exec(document.cookie),(u?.length?decodeURI(u[1]):"").toLowerCase()),t=JSON.parse(localStorage.getItem("BL_HEADER_INFO")),o=t&&t.isLoggedIn;if(o&&(document.querySelector(".sign-in-text").textContent="Hi, "+t.name,document.querySelector(".buy-again-toggler").style.opacity=1),!e&&"/"===document.location.pathname&&!o){var a=atob(window.__ZBE__.uh)||"",n=window.innerWidth>1024,r=JSON.parse(localStorage.getItem("BL_ZONE_CODE"))||"B14",c=n?"web":"msite",i=document.createElement("link");i.setAttribute("rel","preload"),i.setAttribute("href",a+"/web/v2/builders/channel/"+c+"/zone/"+r+"/users/anonymous/cms/pages?pageLabelOrId=homepageocc&disableProductData=true"),i.setAttribute("as","fetch"),i.setAttribute("crossorigin","anonymous"),document.head.appendChild(i)}}catch(e){}var u}onStartup()</script><script defer=defer src="https://accounts.google.com/gsi/client"></script><script defer=defer src="https://apps.bazaarvoice.com/deployments/builders/main_site/production/en_ZA/bv.js"></script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PCPNHSJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript></body></html>
 ```
 
 ### `project_status_snapshot.md`
@@ -214,38 +228,6 @@ export function setDateInputFormat(inputId) {
 }
 EOF
 
-
-```
-
-### `frontend/static/js/date_utils.js`
-**(No description)**
-```python
-export function setDateInputFormat(inputId) {
-  const display = document.getElementById(`${inputId}-display`);
-  const hidden = document.getElementById(inputId);
-
-  if (!display || !hidden) return;
-
-  display.addEventListener("click", () => hidden.showPicker());
-
-  hidden.addEventListener("change", () => {
-    const date = new Date(hidden.value);
-    if (!isNaN(date)) {
-      const formatted = date.toLocaleDateString("en-GB");
-      display.value = formatted;
-    } else {
-      display.value = "";
-    }
-  });
-
-  // Init with current value if present
-  if (hidden.value) {
-    const date = new Date(hidden.value);
-    if (!isNaN(date)) {
-      display.value = date.toLocaleDateString("en-GB");
-    }
-  }
-}
 
 ```
 
@@ -542,6 +524,122 @@ document.addEventListener("DOMContentLoaded", () => {
 
 ```
 
+### `frontend/static/js/shared_filters.js`
+**(No description)**
+```python
+// Load requesters into a given select element
+export async function loadRequesters(selectId) {
+    try {
+      const res = await fetch("/lookups/requesters");
+      const data = await res.json();
+      const select = document.getElementById(selectId);
+      if (!select) return;
+  
+      select.innerHTML = '<option value="All">All</option>';
+      data.requesters.forEach(r => {
+        const opt = document.createElement("option");
+        opt.value = r.name;
+        opt.textContent = r.name;
+        select.appendChild(opt);
+      });
+    } catch (err) {
+      console.error(`❌ Failed to load requesters for ${selectId}:`, err);
+    }
+  }
+  
+  // Load suppliers into a given select element
+  export async function loadSuppliers(selectId) {
+    try {
+      const res = await fetch("/lookups/suppliers");
+      const data = await res.json();
+      const select = document.getElementById(selectId);
+      if (!select) return;
+  
+      select.innerHTML = '<option value="All">All</option>';
+      data.suppliers.forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s.name;
+        opt.textContent = s.name;
+        select.appendChild(opt);
+      });
+    } catch (err) {
+      console.error(`❌ Failed to load suppliers for ${selectId}:`, err);
+    }
+  }
+  
+```
+
+### `frontend/static/js/components/date_input.js`
+**(No description)**
+```python
+export function attachSmartDateInput(id) {
+  const input = document.getElementById(id);
+  if (!input) return;
+
+  input.setAttribute("type", "text");
+  input.setAttribute("placeholder", "dd/mm/yyyy");
+  input.setAttribute("maxlength", "10");
+  input.setAttribute("inputmode", "numeric");
+  input.style.fontFamily = "monospace";
+
+  input.addEventListener("input", () => {
+    const cursorPos = input.selectionStart;
+    let value = input.value.replace(/\D/g, "").slice(0, 8);
+    let formatted = "";
+
+    if (value.length > 2) {
+      formatted += value.substr(0, 2) + "/";
+      if (value.length > 4) {
+        formatted += value.substr(2, 2) + "/";
+        formatted += value.substr(4, 4);
+      } else {
+        formatted += value.substr(2);
+      }
+    } else {
+      formatted = value;
+    }
+
+    input.value = formatted;
+
+    // Adjust and restore cursor position
+    const slashesBefore = (formatted.slice(0, cursorPos).match(/\//g) || []).length;
+    const rawCursorPos = cursorPos - slashesBefore;
+    let newCursorPos = rawCursorPos;
+
+    if (rawCursorPos > 1) newCursorPos += 1;
+    if (rawCursorPos > 3) newCursorPos += 1;
+    input.setSelectionRange(newCursorPos, newCursorPos);
+  });
+
+  input.addEventListener("keydown", (e) => {
+    const pos = input.selectionStart;
+    const val = input.value;
+
+    if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+      e.preventDefault();
+      let newPos = pos;
+
+      if (e.key === "ArrowRight") {
+        newPos = pos === 2 || pos === 5 ? pos + 2 : pos + 1;
+      } else {
+        newPos = pos === 3 || pos === 6 ? pos - 2 : pos - 1;
+      }
+
+      newPos = Math.max(0, Math.min(newPos, val.length));
+      input.setSelectionRange(newPos, newPos);
+    }
+
+    const allowed = [
+      "Backspace", "Tab", "ArrowLeft", "ArrowRight", "Delete", "Home", "End", "Enter"
+    ];
+    if (!/^\d$/.test(e.key) && !allowed.includes(e.key)) {
+      e.preventDefault();
+    }
+  });
+}
+
+```
+
 ### `frontend/templates/audit.html`
 **(No description)**
 ```python
@@ -707,15 +805,144 @@ document.addEventListener("DOMContentLoaded", () => {
   </div>
 
   <!-- ✅ Load external JavaScript for order logic -->
-  <script src="/static/js/new_orders.js"></script>
+  <script src="/static/js/new_order.js"></script>
 </body>
 </html>
 
 ```
 
-### `frontend/templates/pending.html`
+### `frontend/templates/pending_orders.html`
 **(No description)**
 ```python
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pending Orders</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
+    .status { font-weight: bold; }
+    .filters { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+    .filters label { font-weight: bold; }
+    input[type="text"], select {
+      padding: 0.4rem;
+      font-size: 1rem;
+      font-family: monospace;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Pending Orders</h2>
+
+  <div class="filters">
+    <label for="start-date">Start Date:</label>
+    <input type="text" id="start-date" placeholder="dd/mm/yyyy" maxlength="10" />
+
+    <label for="end-date">End Date:</label>
+    <input type="text" id="end-date" placeholder="dd/mm/yyyy" maxlength="10" />
+
+    <label for="filter-requester">Requester:</label>
+    <select id="filter-requester"></select>
+
+    <label for="filter-supplier">Supplier:</label>
+    <select id="filter-supplier"></select>
+
+    <button id="run-btn">Run</button>
+    <button id="clear-btn">Clear</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Request Date</th>
+        <th>Order Number</th>
+        <th>Requester</th>
+        <th>Supplier</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Actions (coming soon)</th>
+      </tr>
+    </thead>
+    <tbody id="orders-body">
+      <!-- Rows go here -->
+    </tbody>
+  </table>
+
+  <script type="module">
+    import { loadRequesters, loadSuppliers } from "/static/js/shared_filters.js";
+    import { attachSmartDateInput } from "/static/js/components/date_input.js";
+
+    async function loadPendingOrders(filters = {}) {
+      try {
+        const params = new URLSearchParams(filters).toString();
+        const res = await fetch(`/orders/pending_data${params ? '?' + params : ''}`);
+        const data = await res.json();
+        const tbody = document.getElementById("orders-body");
+        tbody.innerHTML = "";
+
+        (data.orders || []).forEach(order => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${order.created_date || "?"}</td>
+            <td>${order.order_number}</td>
+            <td>${order.requester}</td>
+            <td>${order.supplier || "—"}</td>
+            <td>R${(order.total || 0).toFixed(2)}</td>
+            <td class="status">${order.status}</td>
+            <td>🔧</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        alert("❌ Failed to load pending orders");
+        console.error(err);
+      }
+    }
+
+    function applyFilters() {
+      const startDate = document.getElementById("start-date").value.trim();
+      const endDate = document.getElementById("end-date").value.trim();
+      const requester = document.getElementById("filter-requester").value;
+      const supplier = document.getElementById("filter-supplier").value;
+
+      const filters = {};
+      if (startDate) filters.start_date = startDate;
+      if (endDate) filters.end_date = endDate;
+      if (requester && requester !== "All") filters.requester = requester;
+      if (supplier && supplier !== "All") filters.supplier = supplier;
+
+      loadPendingOrders(filters);
+    }
+
+    function clearFilters() {
+      document.getElementById("start-date").value = "";
+      document.getElementById("end-date").value = "";
+      document.getElementById("filter-requester").value = "All";
+      document.getElementById("filter-supplier").value = "All";
+      loadPendingOrders();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      attachSmartDateInput("start-date");
+      attachSmartDateInput("end-date");
+
+      loadRequesters("filter-requester");
+      loadSuppliers("filter-supplier");
+
+      document.getElementById("run-btn").addEventListener("click", applyFilters);
+      document.getElementById("clear-btn").addEventListener("click", clearFilters);
+
+      loadPendingOrders();
+    });
+  </script>
+</body>
+</html>
 
 ```
 
@@ -985,16 +1212,19 @@ def update_setting(key: str, value: str) -> None:
 ```
 
 ### `backend/main.py`
-**Ensure log directory exists**
+**✅ Add the enhanced validation handler**
 ```python
 from fastapi import FastAPI
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from backend.endpoints import orders, auth, lookups, ui_pages
+from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup, supplier_lookup_takealot
 from backend.database import init_db
 from pathlib import Path
 import logging
+
+# ✅ Add the enhanced validation handler
+from scripts.add_debug_validation_handler import install_validation_handler
 
 # Ensure log directory exists
 Path("logs").mkdir(exist_ok=True)
@@ -1017,6 +1247,9 @@ app = FastAPI(
     description="Purchase Order management system for Universal Recycling"
 )
 
+# ✅ Install the validation handler before anything else
+install_validation_handler(app)
+
 # Static Files
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
 
@@ -1030,11 +1263,13 @@ app.add_middleware(
 )
 app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")  # Replace in prod
 
-# Routers
+# ✅ Routers
 app.include_router(orders.router)
 app.include_router(auth.router)
 app.include_router(lookups.router)
 app.include_router(ui_pages.router)
+app.include_router(supplier_lookup.router)
+app.include_router(supplier_lookup_takealot.router)
 
 # Run
 if __name__ == "__main__":
@@ -1129,7 +1364,7 @@ from pathlib import Path
 from datetime import datetime
 import json
 
-router = APIRouter()
+router = APIRouter(prefix="/lookups")
 
 def log_lookup(endpoint: str, outcome: str, detail: str = ""):
     log_path = Path("logs/lookups_log.txt")
@@ -1202,12 +1437,12 @@ def get_projects():
 ### `backend/endpoints/orders.py`
 **UPDATE order_items**
 ```python
-from fastapi import APIRouter, HTTPException, Request, UploadFile, Form
+from fastapi import APIRouter, HTTPException, Request, UploadFile, Form, Query
 from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 from typing import List, Optional
 from datetime import datetime
-from fastapi.templating import Jinja2Templates
 import sqlite3
 from pathlib import Path
 import json
@@ -1228,6 +1463,16 @@ def log_event(filename: str, data: dict):
     with log_path.open("a", encoding="utf-8") as f:
         timestamp = datetime.now().isoformat()
         f.write(f"[{timestamp}] {json.dumps(data, ensure_ascii=False)}\n")
+
+@router.get("/next_order_number")
+def get_next_order_number():
+    try:
+        current_number = get_setting("order_number_start")
+        next_number = generate_order_number(current_number)
+        return {"next_order_number": next_number}
+    except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "next_order_number"})
+        raise HTTPException(status_code=500, detail=f"Failed to get next order number: {e}")
 
 class OrderItem(BaseModel):
     item_code: str = Field(min_length=1)
@@ -1334,6 +1579,7 @@ def mark_order_received(receive_data: List[ItemReceive]):
                     now,
                     0
                 ))
+
                 order_ids_updated.add(item.order_id)
 
             for order_id in order_ids_updated:
@@ -1381,6 +1627,70 @@ async def upload_attachment(file: UploadFile, order_id: int = Form(...)):
         log_event("new_orders_log.txt", {"error": str(e), "type": "upload"})
         raise HTTPException(status_code=500, detail=f"Failed to upload attachment: {e}")
 
+@router.get("/pending_data")
+def get_pending_orders(
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    requester: Optional[str] = Query(None),
+    supplier: Optional[str] = Query(None)
+):
+    try:
+        filters = ["o.status IN ('Pending', 'Waiting for Approval')"]
+        params = []
+
+        if start_date:
+            try:
+                start = datetime.strptime(start_date, "%d/%m/%Y").strftime("%Y-%m-%d")
+                filters.append("DATE(o.created_date) >= DATE(?)")
+                params.append(start)
+            except ValueError:
+                raise HTTPException(status_code=400, detail="Invalid start date format")
+
+        if end_date:
+            try:
+                end = datetime.strptime(end_date, "%d/%m/%Y").strftime("%Y-%m-%d")
+                filters.append("DATE(o.created_date) <= DATE(?)")
+                params.append(end)
+            except ValueError:
+                raise HTTPException(status_code=400, detail="Invalid end date format")
+
+        if requester:
+            filters.append("r.name LIKE ?")
+            params.append(f"%{requester}%")
+
+        if supplier:
+            filters.append("s.name LIKE ?")
+            params.append(f"%{supplier}%")
+
+        where_clause = " AND ".join(filters)
+
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(f"""
+                SELECT
+                    o.id, o.created_date, o.order_number,
+                    r.name AS requester, s.name AS supplier,
+                    o.total, o.status
+                FROM orders o
+                LEFT JOIN requesters r ON o.requester_id = r.id
+                LEFT JOIN suppliers s ON o.supplier_id = s.id
+                WHERE {where_clause}
+                ORDER BY o.created_date DESC
+            """, params)
+
+            orders = []
+            for row in cursor.fetchall():
+                order = dict(row)
+                if order["created_date"]:
+                    dt = datetime.fromisoformat(order["created_date"])
+                    order["created_date"] = dt.strftime("%d/%m/%Y")
+                orders.append(order)
+
+        return {"orders": orders}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to load pending orders: {e}")
+
 ```
 
 ### `backend/endpoints/requesters.py`
@@ -1405,6 +1715,150 @@ def get_requesters():
 
 ```
 
+### `backend/endpoints/supplier_lookup.py`
+**Log file path**
+```python
+from fastapi import APIRouter, HTTPException, Query
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime
+from pathlib import Path
+
+router = APIRouter(prefix="/supplier_lookup", tags=["supplier_lookup"])
+
+# Log file path
+LOG_FILE = Path(__file__).resolve().parent.parent.parent / "logs" / "supplier_lookup_debug.log"
+LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+def log_debug(entry: dict):
+    with LOG_FILE.open("a", encoding="utf-8") as f:
+        timestamp = datetime.now().isoformat()
+        f.write(f"\n[{timestamp}]\n")
+        for k, v in entry.items():
+            if isinstance(v, str) and len(v) > 1000:
+                v = v[:1000] + "... (truncated)"
+            f.write(f"{k}: {v}\n")
+
+@router.get("")
+def lookup_alternatives(query: str = Query(..., min_length=2)):
+    log_debug({"💥 ROUTE HIT": f"query = {query}"})
+
+    try:
+        search_url = f"https://www.builders.co.za/search/?text={query.replace(' ', '+')}"
+        headers = {"User-Agent": "Mozilla/5.0"}
+
+        resp = requests.get(search_url, headers=headers)
+        log_debug({
+            "Fetched URL": search_url,
+            "HTTP Status": resp.status_code,
+            "First 1000 characters of response": resp.text
+        })
+
+        if resp.status_code != 200:
+            raise Exception(f"Builders returned status {resp.status_code}")
+
+        soup = BeautifulSoup(resp.text, "html.parser")
+        results = []
+
+        for product in soup.select(".product-grid .product-tile")[:5]:
+            title_el = product.select_one(".product-title")
+            price_el = product.select_one(".price")
+            link_el = product.select_one("a")
+
+            if not (title_el and price_el and link_el):
+                continue
+
+            results.append({
+                "title": title_el.text.strip(),
+                "price": price_el.text.strip(),
+                "link": "https://www.builders.co.za" + link_el.get("href")
+            })
+
+        if not results:
+            raise Exception("No products matched or structure changed")
+
+        return {"results": results}
+
+    except Exception as e:
+        log_debug({"Exception": str(e)})
+        raise HTTPException(status_code=500, detail=f"Lookup failed: {str(e)}")
+
+```
+
+### `backend/endpoints/supplier_lookup_takealot.py`
+**(No description)**
+```python
+from fastapi import APIRouter, HTTPException, Query
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime
+from pathlib import Path
+
+router = APIRouter(prefix="/supplier_lookup_takealot", tags=["supplier_lookup"])
+
+LOG_FILE = Path(__file__).resolve().parent.parent.parent / "logs" / "takealot_lookup.log"
+LOG_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+SCRAPER_API_KEY = "f272c508f0e84b88ac0fa928d4acdda"
+
+def log_debug(entry: dict):
+    with LOG_FILE.open("a", encoding="utf-8") as f:
+        timestamp = datetime.now().isoformat()
+        f.write(f"\n[{timestamp}]\n")
+        for k, v in entry.items():
+            if isinstance(v, str) and len(v) > 1000:
+                v = v[:1000] + "... (truncated)"
+            f.write(f"{k}: {v}\n")
+
+@router.get("")
+def lookup_takealot(query: str = Query(..., min_length=2)):
+    try:
+        target_url = f"https://www.takealot.com/all?q={query.replace(' ', '+')}"
+        scraper_url = (
+            f"http://api.scraperapi.com?api_key={SCRAPER_API_KEY}"
+            f"&url={target_url}"
+        )
+
+        resp = requests.get(scraper_url)
+        log_debug({
+            "Target URL": target_url,
+            "Scraper URL": scraper_url,
+            "HTTP Status": resp.status_code,
+            "HTML Preview": resp.text
+        })
+
+        if resp.status_code != 200:
+            raise Exception(f"ScraperAPI returned {resp.status_code}")
+
+        soup = BeautifulSoup(resp.text, "html.parser")
+        product_cards = soup.select("div[data-product-id]")
+
+        results = []
+        for card in product_cards[:5]:
+            title_el = card.select_one("div[data-testid='product-title']")
+            price_el = card.select_one("span.currency")
+            link_el = card.select_one("a[href]")
+
+            if not (title_el and link_el):
+                continue
+
+            results.append({
+                "title": title_el.text.strip(),
+                "price": price_el.text.strip() if price_el else "N/A",
+                "link": "https://www.takealot.com" + link_el["href"]
+            })
+
+        if not results:
+            raise Exception("No products matched or structure changed")
+
+        return {"results": results}
+
+    except Exception as e:
+        log_debug({"Exception": str(e)})
+        raise HTTPException(status_code=500, detail=f"Lookup failed: {str(e)}")
+
+```
+
 ### `backend/endpoints/ui_pages.py`
 **(No description)**
 ```python
@@ -1418,6 +1872,10 @@ templates = Jinja2Templates(directory="frontend/templates")
 @router.get("/orders/new", response_class=HTMLResponse)
 def show_new_order_form(request: Request):
     return templates.TemplateResponse("new_order.html", {"request": request})
+
+@router.get("/orders/pending", response_class=HTMLResponse)
+def show_pending_orders(request: Request):
+    return templates.TemplateResponse("pending_orders.html", {"request": request})
 
 ```
 
@@ -1564,6 +2022,121 @@ def validate_order_items(items: List[Any]) -> bool:
 [2025-04-19T16:46:11.686194] init_db: {"status": "success"}
 [2025-04-19T16:48:43.639732] init_db: {"status": "success"}
 [2025-04-19T16:52:50.910967] init_db: {"status": "success"}
+[2025-04-19T17:06:15.843472] init_db: {"status": "success"}
+[2025-04-19T17:08:07.300015] init_db: {"status": "success"}
+[2025-04-19T17:09:03.347514] init_db: {"status": "success"}
+[2025-04-19T17:10:10.564049] init_db: {"status": "success"}
+[2025-04-19T17:11:50.970429] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T17:11:50.970925] get_setting: {"key": "order_number_start", "result": "URC1024"}
+[2025-04-19T17:11:50.972069] update_setting: {"key": "order_number_start", "value": "URC1026"}
+[2025-04-19T17:11:50.973717] create_order: {"order_number": "URC1025", "requester_id": 1, "total": 300.0, "items_count": 1}
+[2025-04-19T17:17:02.985379] init_db: {"status": "success"}
+[2025-04-19T17:19:08.038389] init_db: {"status": "success"}
+[2025-04-19T17:19:39.134789] init_db: {"status": "success"}
+[2025-04-19T17:28:32.561824] init_db: {"status": "success"}
+[2025-04-19T17:32:35.658648] get_setting: {"key": "order_number_start", "result": "URC1026"}
+[2025-04-19T17:33:43.361619] get_setting: {"key": "order_number_start", "result": "URC1026"}
+[2025-04-19T17:36:16.104725] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T17:36:16.106054] get_setting: {"key": "order_number_start", "result": "URC1026"}
+[2025-04-19T17:36:16.108034] update_setting: {"key": "order_number_start", "value": "URC1028"}
+[2025-04-19T17:36:16.111503] create_order: {"order_number": "URC1027", "requester_id": 2, "total": 1200.0, "items_count": 1}
+[2025-04-19T17:36:23.525946] get_setting: {"key": "order_number_start", "result": "URC1028"}
+[2025-04-19T17:36:48.886920] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T17:36:48.887578] get_setting: {"key": "order_number_start", "result": "URC1028"}
+[2025-04-19T17:36:48.888773] update_setting: {"key": "order_number_start", "value": "URC1030"}
+[2025-04-19T17:36:48.890470] create_order: {"order_number": "URC1029", "requester_id": 5, "total": 20.0, "items_count": 1}
+[2025-04-19T17:36:51.738292] get_setting: {"key": "order_number_start", "result": "URC1030"}
+[2025-04-19T17:37:29.797064] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-19T17:37:29.797797] get_setting: {"key": "order_number_start", "result": "URC1030"}
+[2025-04-19T17:37:29.799082] update_setting: {"key": "order_number_start", "value": "URC1032"}
+[2025-04-19T17:37:29.802360] create_order: {"order_number": "URC1031", "requester_id": 5, "total": 10.0, "items_count": 1}
+[2025-04-19T17:37:32.198748] get_setting: {"key": "order_number_start", "result": "URC1032"}
+[2025-04-20T08:08:46.970569] init_db: {"status": "success"}
+[2025-04-20T08:19:21.170597] init_db: {"status": "success"}
+[2025-04-20T08:20:41.901545] init_db: {"status": "success"}
+[2025-04-20T08:21:34.083466] init_db: {"status": "success"}
+[2025-04-20T09:26:53.402052] init_db: {"status": "success"}
+[2025-04-20T09:33:01.662193] init_db: {"status": "success"}
+[2025-04-20T09:44:32.506045] init_db: {"status": "success"}
+[2025-04-20T09:46:01.350579] init_db: {"status": "success"}
+[2025-04-20T10:18:04.761606] init_db: {"status": "success"}
+[2025-04-20T12:16:57.048627] init_db: {"status": "success"}
+[2025-04-20T12:40:33.765990] init_db: {"status": "success"}
+[2025-04-20T12:44:07.716400] init_db: {"status": "success"}
+[2025-04-20T12:44:19.033963] init_db: {"status": "success"}
+[2025-04-20T12:48:24.517413] init_db: {"status": "success"}
+[2025-04-20T12:51:09.261367] init_db: {"status": "success"}
+[2025-04-20T12:51:20.306521] init_db: {"status": "success"}
+[2025-04-20T12:52:56.362280] init_db: {"status": "success"}
+[2025-04-20T12:53:01.174117] init_db: {"status": "success"}
+[2025-04-20T13:20:25.126335] init_db: {"status": "success"}
+[2025-04-20T13:20:37.025820] init_db: {"status": "success"}
+[2025-04-20T13:20:47.744818] init_db: {"status": "success"}
+[2025-04-20T13:23:27.489704] init_db: {"status": "success"}
+[2025-04-20T13:23:36.851050] init_db: {"status": "success"}
+[2025-04-20T13:28:48.666421] init_db: {"status": "success"}
+[2025-04-20T13:28:58.496229] init_db: {"status": "success"}
+[2025-04-20T13:31:34.708675] init_db: {"status": "success"}
+[2025-04-20T13:31:49.776694] init_db: {"status": "success"}
+[2025-04-20T13:37:56.876075] init_db: {"status": "success"}
+[2025-04-20T14:04:44.716827] init_db: {"status": "success"}
+[2025-04-20T14:05:07.454298] init_db: {"status": "success"}
+[2025-04-20T14:06:59.593541] init_db: {"status": "success"}
+[2025-04-20T14:07:05.099770] init_db: {"status": "success"}
+[2025-04-20T14:35:28.443725] init_db: {"status": "success"}
+[2025-04-20T14:36:27.596679] init_db: {"status": "success"}
+[2025-04-20T14:45:42.267863] init_db: {"status": "success"}
+[2025-04-20T14:52:55.082305] init_db: {"status": "success"}
+[2025-04-20T14:58:24.173578] init_db: {"status": "success"}
+[2025-04-20T15:09:22.669052] init_db: {"status": "success"}
+[2025-04-20T15:12:30.951858] init_db: {"status": "success"}
+[2025-04-20T15:26:00.221878] init_db: {"status": "success"}
+[2025-04-20T15:45:54.288998] init_db: {"status": "success"}
+[2025-04-20T15:52:23.491845] init_db: {"status": "success"}
+[2025-04-20T15:57:32.410478] init_db: {"status": "success"}
+[2025-04-20T16:02:19.801311] init_db: {"status": "success"}
+
+```
+
+### `logs/lookups_log.txt`
+**(No description)**
+```python
+{"time": "2025-04-19T17:19:50.525099", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-19T17:19:50.525452", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-19T17:19:50.526951", "endpoint": "/items", "status": "success"}
+{"time": "2025-04-19T17:19:50.526987", "endpoint": "/projects", "status": "success"}
+{"time": "2025-04-19T17:33:43.359209", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-19T17:33:43.359981", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-19T17:33:43.361321", "endpoint": "/projects", "status": "success"}
+{"time": "2025-04-19T17:33:43.362429", "endpoint": "/items", "status": "success"}
+{"time": "2025-04-19T17:36:23.523549", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-19T17:36:23.524026", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-19T17:36:23.524193", "endpoint": "/items", "status": "success"}
+{"time": "2025-04-19T17:36:23.525769", "endpoint": "/projects", "status": "success"}
+{"time": "2025-04-19T17:36:51.736563", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-19T17:36:51.737191", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-19T17:36:51.737252", "endpoint": "/items", "status": "success"}
+{"time": "2025-04-19T17:36:51.739078", "endpoint": "/projects", "status": "success"}
+{"time": "2025-04-19T17:37:32.194547", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-19T17:37:32.194923", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-19T17:37:32.197866", "endpoint": "/projects", "status": "success"}
+{"time": "2025-04-19T17:37:32.198621", "endpoint": "/items", "status": "success"}
+{"time": "2025-04-20T14:45:45.495435", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-20T14:45:45.495972", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-20T14:52:58.436165", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-20T14:52:58.437142", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-20T14:58:27.136610", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-20T14:58:27.137286", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-20T15:09:25.067788", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-20T15:09:25.068794", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-20T15:12:34.020488", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-20T15:12:34.021118", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-20T15:45:58.077272", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-20T15:45:58.077585", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-20T15:57:37.305332", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-20T15:57:37.306011", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-20T16:02:24.832425", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-20T16:02:24.832726", "endpoint": "/suppliers", "status": "success"}
 
 ```
 
@@ -1592,6 +2165,14 @@ def validate_order_items(items: List[Any]) -> bool:
 [2025-04-19T15:38:25.370156] {"action": "submit_success", "order_number": "URC1021", "status": "Awaiting Authorisation"}
 [2025-04-19T16:14:48.829687] {"action": "submit_attempt", "order_data": {"order_number": "URC1023", "requester_id": 1, "order_note": "Partial receive test", "note_to_supplier": "Split delivery test", "supplier_id": 1, "items": [{"item_code": "PART001", "item_description": "Partial Item A", "project": "SplitProjA", "qty_ordered": 10.0, "price": 100.0}, {"item_code": "PART002", "item_description": "Partial Item B", "project": "SplitProjB", "qty_ordered": 5.0, "price": 200.0}], "status": "Pending", "total": 2000.0}}
 [2025-04-19T16:14:48.830733] {"action": "submit_success", "order_number": "URC1023", "status": "Pending"}
+[2025-04-19T17:11:50.972474] {"action": "submit_attempt", "order_data": {"order_number": "URC1025", "requester_id": 1, "order_note": "Browser Sim Test", "note_to_supplier": "Please rush this one", "supplier_id": 1, "items": [{"item_code": "SIM001", "item_description": "Simulated Item", "project": "PR10M", "qty_ordered": 3.0, "price": 100.0}], "status": "Pending", "total": 300.0}}
+[2025-04-19T17:11:50.974002] {"action": "submit_success", "order_number": "URC1025", "status": "Pending"}
+[2025-04-19T17:36:16.109144] {"action": "submit_attempt", "order_data": {"order_number": "URC1027", "requester_id": 2, "order_note": null, "note_to_supplier": "", "supplier_id": 5, "items": [{"item_code": "BEAR059", "item_description": "Bearing 51144", "project": "KA04M", "qty_ordered": 1.0, "price": 1200.0}], "status": "Pending", "total": 1200.0}}
+[2025-04-19T17:36:16.112468] {"action": "submit_success", "order_number": "URC1027", "status": "Pending"}
+[2025-04-19T17:36:48.889243] {"action": "submit_attempt", "order_data": {"order_number": "URC1029", "requester_id": 5, "order_note": null, "note_to_supplier": "", "supplier_id": 9, "items": [{"item_code": "BEAR180", "item_description": "Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage", "project": "PR10M", "qty_ordered": 1.0, "price": 20.0}], "status": "Pending", "total": 20.0}}
+[2025-04-19T17:36:48.890998] {"action": "submit_success", "order_number": "URC1029", "status": "Pending"}
+[2025-04-19T17:37:29.799798] {"action": "submit_attempt", "order_data": {"order_number": "URC1031", "requester_id": 5, "order_note": null, "note_to_supplier": "", "supplier_id": 8, "items": [{"item_code": "BEAR180", "item_description": "Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage", "project": "PR10M", "qty_ordered": 1.0, "price": 10.0}], "status": "Pending", "total": 10.0}}
+[2025-04-19T17:37:29.803039] {"action": "submit_success", "order_number": "URC1031", "status": "Pending"}
 
 ```
 
@@ -4653,6 +5234,1182 @@ INFO:     Finished server process [29243]
 INFO:     Started server process [29781]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/add_debug_validation_handler.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29781]
+INFO:     Started server process [31550]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31550]
+INFO:     Started server process [31806]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'scripts/add_debug_validation_handler.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31806]
+INFO:     Started server process [31933]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [32132] using StatReload
+INFO:     Started server process [32134]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53675 - "POST /orders HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:54033 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54223 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54223 - "GET /static/js/new_orders.js HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54223 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [33062] using StatReload
+INFO:     Started server process [33068]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55419 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55419 - "GET /static/js/new_order.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55419 - "GET /lookups/suppliers HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55420 - "GET /lookups/requesters HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55423 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55425 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55427 - "GET /orders/next_order_number HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55427 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55454 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55454 - "GET /static/js/new_order.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55454 - "GET /lookups/suppliers HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55455 - "GET /lookups/requesters HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55458 - "GET /lookups/items HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55459 - "GET /lookups/projects HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55461 - "GET /orders/next_order_number HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55461 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33068]
+INFO:     Started server process [33363]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [33462] using StatReload
+INFO:     Started server process [33468]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56130 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56130 - "GET /static/js/new_order.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56137 - "GET /orders/next_order_number HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56131 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56130 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56133 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56136 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56136 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33468]
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 164, in <module>
+    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    ^^^^^^^^^^
+NameError: name 'UPLOAD_DIR' is not defined
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Started server process [34656]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59337 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59624 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59624 - "GET /static/js/new_order.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59624 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59625 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59629 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59631 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59625 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59627 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60264 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60294 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60294 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60299 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60296 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60301 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60302 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60410 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60410 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60420 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60410 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60422 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60426 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60425 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60585 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60585 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60585 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60599 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60605 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60603 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60606 - "GET /orders/next_order_number HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/ui_pages.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [34656]
+INFO:     Started server process [51498]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54231 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54261 - "GET /orders/pending_data HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54272 - "GET /orders/pending_data HTTP/1.1" 404 Not Found
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [52910] using StatReload
+INFO:     Started server process [52918]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54339 - "GET /orders/pending_data HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [52918]
+INFO:     Started server process [53101]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54350 - "GET /orders/pending_data HTTP/1.1" 500 Internal Server Error
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [53239] using StatReload
+INFO:     Started server process [53243]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54352 - "GET /orders/pending_data HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [53243]
+INFO:     Started server process [61674]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [62499] using StatReload
+INFO:     Started server process [62503]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54606 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54613 - "GET /orders/pending_data HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [62503]
+INFO:     Started server process [64008]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54658 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [64224] using StatReload
+INFO:     Started server process [64228]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54672 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54672 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [68427] using StatReload
+INFO:     Started server process [68433]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55947 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55947 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55948 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [68433]
+INFO:     Started server process [83764]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [83764]
+Process SpawnProcess-3:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [84123] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup.py'. Reloading...
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [84362] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup.py'. Reloading...
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [84525] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup.py'. Reloading...
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [85069] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup.py'. Reloading...
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [85693] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup.py'. Reloading...
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [86488] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 22, in import_from_string
+    raise exc from None
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/supplier_lookup.py", line 3, in <module>
+    from bs4 import BeautifulSoup
+ModuleNotFoundError: No module named 'bs4'
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [87125] using StatReload
+INFO:     Started server process [87127]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+✅ supplier_lookup router loaded
+INFO:     127.0.0.1:59283 - "GET /supplier_lookup?query=makita HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87127]
+INFO:     Started server process [87636]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [87685] using StatReload
+INFO:     Started server process [87689]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60228 - "GET /supplier_lookup?query=makita HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup_takealot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87689]
+INFO:     Started server process [88241]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [88241]
+INFO:     Started server process [88603]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [88653] using StatReload
+INFO:     Started server process [88655]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61960 - "GET /supplier_lookup_takealot?query=laminator HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup_takealot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [88655]
+INFO:     Started server process [88875]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [88906] using StatReload
+INFO:     Started server process [88910]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:62437 - "GET /supplier_lookup_takealot?query=laminator HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup_takealot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [88910]
+INFO:     Started server process [92468]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup_takealot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [92468]
+INFO:     Started server process [92501]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [92548] using StatReload
+INFO:     Started server process [92551]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53077 - "GET /supplier_lookup_takealot?query=laminator HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup_takealot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [92551]
+INFO:     Started server process [92914]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [92957] using StatReload
+INFO:     Started server process [92963]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:53847 - "GET /supplier_lookup_takealot?query=laminator HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup_takealot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [92963]
+INFO:     Started server process [93650]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [93695] using StatReload
+INFO:     Started server process [93701]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55244 - "GET /supplier_lookup_takealot?query=laminator HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:55296 - "GET /supplier_lookup_takealot?query=laminator HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup_takealot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [93701]
+INFO:     Started server process [94045]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [94101] using StatReload
+INFO:     Started server process [94107]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56000 - "GET /supplier_lookup_takealot/debug_html?query=laminator HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56000 - "GET /service-worker.js HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56000 - "GET /service-worker.js HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup_takealot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [94107]
+INFO:     Started server process [94926]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup_takealot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [94926]
+INFO:     Started server process [98376]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [98446] using StatReload
+INFO:     Started server process [98453]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:64417 - "GET /supplier_lookup_takealot?query=laminator HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/supplier_lookup_takealot.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [98453]
+INFO:     Started server process [98702]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [98737] using StatReload
+INFO:     Started server process [98743]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:64925 - "GET /supplier_lookup_takealot?query=laminator HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [98743]
+INFO:     Started server process [2989]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [3149] using StatReload
+INFO:     Started server process [3157]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56156 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56156 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56156 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [4442] using StatReload
+INFO:     Started server process [4449]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:58493 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58493 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58502 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58500 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58493 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58494 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [5423] using StatReload
+INFO:     Started server process [5429]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60323 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60323 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60328 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60323 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60326 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60324 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60391 - "GET /orders/pending_data?requester=Aaron HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60391 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [6179] using StatReload
+INFO:     Started server process [6185]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61713 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61713 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61718 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61713 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61714 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61716 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61764 - "GET /orders/pending_data?supplier=2+Rv+Pump+Cc HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61764 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61764 - "GET /orders/pending_data?requester=Aaron HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [7637] using StatReload
+INFO:     Started server process [7639]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:64546 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64546 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64548 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64552 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64546 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64550 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64631 - "GET /orders/pending_data?requester=Aaron HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [8131] using StatReload
+INFO:     Started server process [8134]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:65353 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65353 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65358 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65353 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65356 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65354 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [9917] using StatReload
+INFO:     Started server process [9923]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:52427 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52427 - "GET /static/js/components/date_input.js HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52428 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52428 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [12551] using StatReload
+INFO:     Started server process [12557]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57589 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57591 - "GET /static/js/components/date_input.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57589 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57595 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57591 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57589 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57593 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [12557]
+INFO:     Started server process [13430]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [14131] using StatReload
+INFO:     Started server process [14137]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60538 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60538 - "GET /static/js/components/date_input.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60539 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60543 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60539 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60541 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60538 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [14805] using StatReload
+INFO:     Started server process [14811]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60660 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60660 - "GET /static/js/components/date_input.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60665 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60663 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60661 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60660 - "GET /lookups/suppliers HTTP/1.1" 200 OK
 
 ```
 
@@ -4706,6 +6463,198 @@ INFO:     Application startup complete.
 2025-04-19 16:46:11,686 | INFO | ✅ Database initialized successfully.
 2025-04-19 16:48:43,639 | INFO | ✅ Database initialized successfully.
 2025-04-19 16:52:50,911 | INFO | ✅ Database initialized successfully.
+2025-04-19 17:06:15,843 | INFO | ✅ Database initialized successfully.
+2025-04-19 17:08:07,300 | INFO | ✅ Database initialized successfully.
+2025-04-19 17:09:03,347 | INFO | ✅ Database initialized successfully.
+2025-04-19 17:10:10,564 | INFO | ✅ Database initialized successfully.
+2025-04-19 17:17:02,985 | INFO | ✅ Database initialized successfully.
+2025-04-19 17:19:08,038 | INFO | ✅ Database initialized successfully.
+2025-04-19 17:19:39,134 | INFO | ✅ Database initialized successfully.
+2025-04-19 17:28:32,561 | INFO | ✅ Database initialized successfully.
+2025-04-20 08:08:46,970 | INFO | ✅ Database initialized successfully.
+2025-04-20 08:19:21,170 | INFO | ✅ Database initialized successfully.
+2025-04-20 08:20:41,901 | INFO | ✅ Database initialized successfully.
+2025-04-20 08:21:34,083 | INFO | ✅ Database initialized successfully.
+2025-04-20 09:26:53,402 | INFO | ✅ Database initialized successfully.
+2025-04-20 09:33:01,662 | INFO | ✅ Database initialized successfully.
+2025-04-20 09:44:32,506 | INFO | ✅ Database initialized successfully.
+2025-04-20 09:46:01,350 | INFO | ✅ Database initialized successfully.
+2025-04-20 10:18:04,761 | INFO | ✅ Database initialized successfully.
+2025-04-20 12:16:57,048 | INFO | ✅ Database initialized successfully.
+2025-04-20 12:40:33,766 | INFO | ✅ Database initialized successfully.
+2025-04-20 12:44:07,716 | INFO | ✅ Database initialized successfully.
+2025-04-20 12:44:19,034 | INFO | ✅ Database initialized successfully.
+2025-04-20 12:48:24,517 | INFO | ✅ Database initialized successfully.
+2025-04-20 12:51:09,261 | INFO | ✅ Database initialized successfully.
+2025-04-20 12:51:20,306 | INFO | ✅ Database initialized successfully.
+2025-04-20 12:52:56,362 | INFO | ✅ Database initialized successfully.
+2025-04-20 12:53:01,174 | INFO | ✅ Database initialized successfully.
+2025-04-20 13:20:25,126 | INFO | ✅ Database initialized successfully.
+2025-04-20 13:20:37,025 | INFO | ✅ Database initialized successfully.
+2025-04-20 13:20:47,744 | INFO | ✅ Database initialized successfully.
+2025-04-20 13:23:27,489 | INFO | ✅ Database initialized successfully.
+2025-04-20 13:23:36,851 | INFO | ✅ Database initialized successfully.
+2025-04-20 13:28:48,666 | INFO | ✅ Database initialized successfully.
+2025-04-20 13:28:58,496 | INFO | ✅ Database initialized successfully.
+2025-04-20 13:31:34,708 | INFO | ✅ Database initialized successfully.
+2025-04-20 13:31:49,776 | INFO | ✅ Database initialized successfully.
+2025-04-20 13:37:56,876 | INFO | ✅ Database initialized successfully.
+2025-04-20 14:04:44,717 | INFO | ✅ Database initialized successfully.
+2025-04-20 14:05:07,454 | INFO | ✅ Database initialized successfully.
+2025-04-20 14:06:59,593 | INFO | ✅ Database initialized successfully.
+2025-04-20 14:07:05,099 | INFO | ✅ Database initialized successfully.
+2025-04-20 14:35:28,443 | INFO | ✅ Database initialized successfully.
+2025-04-20 14:36:27,596 | INFO | ✅ Database initialized successfully.
+2025-04-20 14:45:42,268 | INFO | ✅ Database initialized successfully.
+2025-04-20 14:52:55,082 | INFO | ✅ Database initialized successfully.
+2025-04-20 14:58:24,173 | INFO | ✅ Database initialized successfully.
+2025-04-20 15:09:22,669 | INFO | ✅ Database initialized successfully.
+2025-04-20 15:12:30,952 | INFO | ✅ Database initialized successfully.
+2025-04-20 15:26:00,222 | INFO | ✅ Database initialized successfully.
+2025-04-20 15:45:54,289 | INFO | ✅ Database initialized successfully.
+2025-04-20 15:52:23,492 | INFO | ✅ Database initialized successfully.
+2025-04-20 15:57:32,410 | INFO | ✅ Database initialized successfully.
+2025-04-20 16:02:19,801 | INFO | ✅ Database initialized successfully.
+
+```
+
+### `logs/supplier_lookup_debug.log`
+**(No description)**
+```python
+
+[]
+Manual test: supplier lookup log is working
+
+
+[2025-04-20T12:40:41.596788]
+💥 ROUTE HIT: query = makita
+
+[2025-04-20T12:40:44.693288]
+Fetched URL: https://za.rs-online.com/web/c/?searchTerm=makita
+HTTP Status: 200
+First 1000 characters of response: <!DOCTYPE html><html lang="en-ZA"><head><meta charSet="utf-8" data-next-head=""/><script data-next-head="">LUX = window.LUX || {};LUX.label = "Search Results Page";</script><title data-next-head="">392 for &#x27;makita&#x27; | RS</title><meta content="width=device-width, initial-scale=1.0" name="viewport" data-next-head=""/><script id="adobe-analytics-script" type="application/javascript" data-next-head="">
+    window.rs = window.rs || {"web":{"digitalData":{"customer_contact_id":null,"customer_ship_to":null,"customer_sold_to":null,"customer_type":null,"ecSystemId":"responsive","encryptedUsername":null,"isCreditAccount":null,"jobRole":null,"page_name":"search results page","page_type":"new sr","registrationDate":null,"search_browse":"SEARCH","search_cascade_order":1,"search_categories":0,"search_config":0,"search_interface_name":"","search_keyword":"makita","search_keyword_app":"makita","search_keyword_spell_corrected":"","search_language_used":"en","search_match_mode":"","search_patte... (truncated)
+
+[2025-04-20T12:40:44.724733]
+Exception: No matching results found or DOM structure changed
+
+[2025-04-20T12:44:27.434337]
+💥 ROUTE HIT: query = makita
+
+[2025-04-20T12:44:27.968844]
+Fetched URL: https://www.builders.co.za/search/?text=makita
+HTTP Status: 200
+First 1000 characters of response: <!DOCTYPE html>
+<html lang=en data-appversion=v0.0.1578><head><link href="//accounts.google.com" rel=dns-prefetch /><title>Builders | Shop DIY, Paint and Building Materials Online</title><meta charset=utf-8 /><meta content="initial-scale=1,width=device-width,interactive-widget=resizes-content" name=viewport /><script>var __ZBE__={"uh":"aHR0cHM6Ly93d3cuYnVpbGRlcnMuY28uemE","sc":"R2g2dHVjNkw","ic":"YnVpbGRlcnM","mg":"QUl6YVN5QlI5SzVyZUFNTl9CcFFmbzBBczBfb1UwUWVEWWZpYXdv","icf":"MjU5MjU2MTgyMDIwODM2","ica":"Y28uemEuYnVpbGRlcnMubG9naW4","icg":"MzkzNDAxOTkwODY2LTFrOTBwcWIwamVlM2h1dmhpZWIybnJudjgwdTFiYjJjLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t",};window.__ZBE__=__ZBE__;</script><link rel=dns-prefetch href="https://www.googletagmanager.com"/><link rel=dns-prefetch href="https://apps.bazaarvoice.com"/><link rel=dns-prefetch href="https://www.google-analytics.com"/><link rel=dns-prefetch href="https://www.googleoptimize.com"/><link rel=dns-prefetch href="https://maps.googleapis.com"/><script>var us... (truncated)
+
+[2025-04-20T12:44:27.971460]
+Exception: No products matched or structure changed
+
+```
+
+### `logs/takealot_lookup.log`
+**(No description)**
+```python
+
+[2025-04-20T12:51:22.775935]
+Fetched URL: https://www.takealot.com/search?searchTerm=laminator
+HTTP Status: 404
+
+[2025-04-20T12:51:22.776082]
+Exception: Takealot returned status 404
+
+[2025-04-20T12:53:16.489687]
+Exception: name 'search_url' is not defined
+
+[2025-04-20T13:20:54.092186]
+Fetched URL: https://www.takealot.com/search/?search=laminator
+HTTP Status: 404
+
+[2025-04-20T13:20:54.092546]
+Exception: Takealot returned status 404
+
+[2025-04-20T13:23:42.659646]
+Fetched URL: https://www.takealot.com/all?q=laminator
+HTTP Status: 200
+
+[2025-04-20T13:23:42.662571]
+Exception: No products matched or structure changed
+
+[2025-04-20T13:29:02.915905]
+Fetched URL: https://www.takealot.com/all?q=laminator
+HTTP Status: 200
+HTML Preview:     <!doctype html>
+    <html dir="ltr" lang="en">
+
+    <head>
+          <link rel="preconnect" href="https://shopfront.takealot.com" crossorigin>
+  <link rel="preload" href="https://shopfront.takealot.com/static/js/app-loader.js" as="script">
+  <link rel="preconnect" href="https://media.takealot.com" crossorigin>
+          <title>Takealot</title>
+
+              <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- This saves us some bandwidth by saving a request favicon.ico -->
+    <link rel="icon" sizes="32x32" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAAC\
+gAAAAQAAAAIAAAAAEACAAAAAAAAAEA\
+AAAAAAAAAAAAAAEAAAAAAADWrHgA1a\
+p1AL16JgDmzLcAtnYSAP3//wD+//8A\
+t3YSAP///wDu1ssA+vDuAPXi2wDCgz\
+sAtnYRAP3//gD+//4AuHYRALd1EwD/\
+//4Au3okALl2EQC4dRMAuXUTALp1Ew\
+D///0At3USALh2EAC4dRIA//7/ALl2\
+EAC5dRI... (truncated)
+
+[2025-04-20T13:29:02.917653]
+Exception: No products matched or structure changed
+
+[2025-04-20T13:29:13.204128]
+Fetched URL: https://www.takealot.com/all?q=laminator
+HTTP Status: 200
+HTML Preview:     <!doctype html>
+    <html dir="ltr" lang="en">
+
+    <head>
+          <link rel="preconnect" href="https://shopfront.takealot.com" crossorigin>
+  <link rel="preload" href="https://shopfront.takealot.com/static/js/app-loader.js" as="script">
+  <link rel="preconnect" href="https://media.takealot.com" crossorigin>
+          <title>Takealot</title>
+
+              <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- This saves us some bandwidth by saving a request favicon.ico -->
+    <link rel="icon" sizes="32x32" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAAC\
+gAAAAQAAAAIAAAAAEACAAAAAAAAAEA\
+AAAAAAAAAAAAAAEAAAAAAADWrHgA1a\
+p1AL16JgDmzLcAtnYSAP3//wD+//8A\
+t3YSAP///wDu1ssA+vDuAPXi2wDCgz\
+sAtnYRAP3//gD+//4AuHYRALd1EwD/\
+//4Au3okALl2EQC4dRMAuXUTALp1Ew\
+D///0At3USALh2EAC4dRIA//7/ALl2\
+EAC5dRI... (truncated)
+
+[2025-04-20T13:29:13.205841]
+Exception: No products matched or structure changed
+
+[2025-04-20T14:05:10.827015]
+Target URL: https://www.takealot.com/all?q=laminator
+Scraper URL: http://api.scraperapi.com?api_key=f272c508f0e84b88ac0fa928d4acdda&url=https://www.takealot.com/all?q=laminator
+HTTP Status: 401
+HTML Preview: Unauthorized request, please make sure your API key is valid.
+
+[2025-04-20T14:05:10.828193]
+Exception: ScraperAPI returned 401
+
+[2025-04-20T14:07:09.512596]
+Target URL: https://www.takealot.com/all?q=laminator
+Scraper URL: http://api.scraperapi.com?api_key=f272c508f0e84b88ac0fa928d4acdda&url=https://www.takealot.com/all?q=laminator
+HTTP Status: 401
+HTML Preview: Unauthorized request, please make sure your API key is valid.
+
+[2025-04-20T14:07:09.513530]
+Exception: ScraperAPI returned 401
 
 ```
 
@@ -4732,6 +6681,48 @@ INFO:     Application startup complete.
 **(No description)**
 ```python
 <!-- ERROR reading .DS_Store: 'utf-8' codec can't decode byte 0x80 in position 3131: invalid start byte -->
+```
+
+### `scripts/add_debug_validation_handler.py`
+**Enhances FastAPI's default validation error responses.**
+```python
+#!/usr/bin/env python3
+# Adds a dev-time global exception handler for clearer validation error visibility
+
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+from fastapi import Request
+from fastapi.encoders import jsonable_encoder
+import traceback
+
+def install_validation_handler(app):
+    """
+    Enhances FastAPI's default validation error responses.
+    Shows raw request body and structured validation errors.
+    """
+    @app.exception_handler(RequestValidationError)
+    async def validation_exception_handler(request: Request, exc: RequestValidationError):
+        try:
+            body = await request.body()
+            return JSONResponse(
+                status_code=422,
+                content={
+                    "error": "Validation failed",
+                    "path": str(request.url),
+                    "detail": jsonable_encoder(exc.errors()),
+                    "raw_body": body.decode("utf-8", errors="replace")
+                },
+            )
+        except Exception as inner:
+            return JSONResponse(
+                status_code=500,
+                content={
+                    "error": "Validation failed, and logging body failed",
+                    "original_error": str(exc),
+                    "logging_error": traceback.format_exc()
+                },
+            )
+
 ```
 
 ### `scripts/clear_live_data.py`
@@ -7177,14 +9168,14 @@ if __name__ == "__main__":
 ### `.git/COMMIT_EDITMSG`
 **(No description)**
 ```python
-Auto-commit for push (script)
+📝 Auto-commit by script
 
 ```
 
 ### `.git/FETCH_HEAD`
 **(No description)**
 ```python
-5dd1ab6da18ef67ae45007b5ace3440264dd0d5a		branch 'main' of github.com:steven-cohen714-gmailcom/orders_project
+733ef8d6650df9b401c93a63914a204045d8d2ba		branch 'main' of github.com:steven-cohen714-gmailcom/orders_project
 
 ```
 
@@ -7544,6 +9535,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading d789a44561ec6885a67b5cc975bdb0cf2f55c1: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/0c/e744ce80b0d943396dd460538ee3a888c6328e`
+**(No description)**
+```python
+<!-- ERROR reading e744ce80b0d943396dd460538ee3a888c6328e: 'utf-8' codec can't decode byte 0xa9 in position 19: invalid start byte -->
+```
+
 ### `.git/objects/66/33348612fa8ab9c30fb3017d5f83f336a8e1c3`
 **(No description)**
 ```python
@@ -7760,6 +9757,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading 0e48445a8711f5c898811db9d62a34686ef18e: 'utf-8' codec can't decode byte 0x85 in position 2: invalid start byte -->
 ```
 
+### `.git/objects/3b/2da0cc33e27260a3de4ba84658b82b0e105065`
+**(No description)**
+```python
+<!-- ERROR reading 2da0cc33e27260a3de4ba84658b82b0e105065: 'utf-8' codec can't decode byte 0xd0 in position 18: invalid continuation byte -->
+```
+
 ### `.git/objects/3b/4d0ae4ccab143e8bde80d60967e071901c35a5`
 **(No description)**
 ```python
@@ -7790,6 +9793,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading bffb5d22be544df880d72db86978e84e59678c: 'utf-8' codec can't decode byte 0xf1 in position 21: invalid continuation byte -->
 ```
 
+### `.git/objects/3b/c77a4e23776bf3916ea2e2e138a36cd5ad73cf`
+**(No description)**
+```python
+<!-- ERROR reading c77a4e23776bf3916ea2e2e138a36cd5ad73cf: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/3b/cd6dedd9b6e2117c2d63286ba1d1dc6cfdf510`
 **(No description)**
 ```python
@@ -7812,6 +9821,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading 62d44e4ef733c0e713afcd2371fed7f2b3de67: 'utf-8' codec can't decode byte 0x8e in position 3: invalid start byte -->
+```
+
+### `.git/objects/6f/d8bb6355970026602b601acd97ea520a42ea34`
+**(No description)**
+```python
+<!-- ERROR reading d8bb6355970026602b601acd97ea520a42ea34: 'utf-8' codec can't decode byte 0xb5 in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/6f/ebad9ff7ff41755ed0adb048db83e598f6b56f`
@@ -8270,6 +10285,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading 18445290770e028ea2f1f662026c9a0b0991db: 'utf-8' codec can't decode byte 0xbc in position 9: invalid start byte -->
 ```
 
+### `.git/objects/67/486cdf427e023049eed02ed1cf85b04b1963c7`
+**(No description)**
+```python
+<!-- ERROR reading 486cdf427e023049eed02ed1cf85b04b1963c7: 'utf-8' codec can't decode byte 0xd5 in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/67/561419747de2e24f9560cb4d6a53d8ad7bda5e`
 **(No description)**
 ```python
@@ -8592,6 +10613,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading 40996a67efe9e38a6b68242efc2f10fc89e471: 'utf-8' codec can't decode byte 0xa5 in position 2: invalid start byte -->
+```
+
+### `.git/objects/5f/568f439c5868142fbc5443e509ce6ebe84f8c2`
+**(No description)**
+```python
+<!-- ERROR reading 568f439c5868142fbc5443e509ce6ebe84f8c2: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
 ```
 
 ### `.git/objects/5f/6f217500d8ca1e7717f59ae372ee9a27660fe3`
@@ -8960,6 +10987,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading 913a4d84a0215facc3e132759ccbaef2c69588: 'utf-8' codec can't decode byte 0xb1 in position 8: invalid start byte -->
 ```
 
+### `.git/objects/b2/b20ffcce51ff24a31083087e6a68c6b8fcc9e4`
+**(No description)**
+```python
+<!-- ERROR reading b20ffcce51ff24a31083087e6a68c6b8fcc9e4: 'utf-8' codec can't decode byte 0x92 in position 3: invalid start byte -->
+```
+
 ### `.git/objects/b2/d3aac3137f5d374ec35dd4bbfdb5e732fc51f0`
 **(No description)**
 ```python
@@ -9032,6 +11065,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading b9c017bc291f6f1840b0fe8f2982f41e31e8ea: 'utf-8' codec can't decode byte 0x8d in position 2: invalid start byte -->
 ```
 
+### `.git/objects/d9/dcc2d7df8563dca3da82a069f80bebc64fbbda`
+**(No description)**
+```python
+<!-- ERROR reading dcc2d7df8563dca3da82a069f80bebc64fbbda: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
+```
+
 ### `.git/objects/d9/eaaafd5b6b2617baf3b3c889659c5bac807ff2`
 **(No description)**
 ```python
@@ -9066,6 +11105,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading f94ac32d9a9d8e79d6ad1154d32675229ce6e0: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
+```
+
+### `.git/objects/ad/3361ad46a29a982c4d6b9a19679f88cce082d3`
+**(No description)**
+```python
+<!-- ERROR reading 3361ad46a29a982c4d6b9a19679f88cce082d3: 'utf-8' codec can't decode byte 0x95 in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/ad/386e4f16bbe0a4ef36489e2cc61f26fb6ee73e`
@@ -9212,6 +11257,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading cb5d3d4616f938aea2aae42985b4c166b500cc: 'utf-8' codec can't decode byte 0xd5 in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/d0/f51bfa7dd15870a2b2442b491b91fefadfe29d`
+**(No description)**
+```python
+<!-- ERROR reading f51bfa7dd15870a2b2442b491b91fefadfe29d: 'utf-8' codec can't decode byte 0xc9 in position 21: invalid continuation byte -->
+```
+
 ### `.git/objects/d0/f5b424890c2e6f2eb8d02cbdf9b54c6ecd8d9d`
 **(No description)**
 ```python
@@ -9224,10 +11275,22 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading 41eca25e1ac3a8875be1856ec4bf1911c170f5: 'utf-8' codec can't decode byte 0x89 in position 21: invalid start byte -->
 ```
 
+### `.git/objects/be/662089e2ab467a161f8188d37eeb4a4fc615bf`
+**(No description)**
+```python
+<!-- ERROR reading 662089e2ab467a161f8188d37eeb4a4fc615bf: 'utf-8' codec can't decode byte 0x95 in position 2: invalid start byte -->
+```
+
 ### `.git/objects/be/9595c4ffc0112f2a50f264e104609ac56d5816`
 **(No description)**
 ```python
 <!-- ERROR reading 9595c4ffc0112f2a50f264e104609ac56d5816: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/be/ef4f57245b772b940e302ac480ba1039d83831`
+**(No description)**
+```python
+<!-- ERROR reading ef4f57245b772b940e302ac480ba1039d83831: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
 ### `.git/objects/b3/0926af8bf4f47efe98eea44d5ded4cb6f7e07d`
@@ -9614,6 +11677,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading aff9f57958b8c0938255fd8f937293c5850cbd: 'utf-8' codec can't decode byte 0x8b in position 3: invalid start byte -->
 ```
 
+### `.git/objects/bc/be05d7efb02b3178c2a3c1cc53df401e42e063`
+**(No description)**
+```python
+<!-- ERROR reading be05d7efb02b3178c2a3c1cc53df401e42e063: 'utf-8' codec can't decode byte 0xb5 in position 2: invalid start byte -->
+```
+
 ### `.git/objects/bc/f8906e7098a3cf82bdd87855c410e86f4f4279`
 **(No description)**
 ```python
@@ -9984,6 +12053,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading dc42f1d60220a4fc35aa19c76ef3c558cff9fe: 'utf-8' codec can't decode byte 0xdd in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/c7/efa801a5fce5a59e876da841c19fcdbd384bb4`
+**(No description)**
+```python
+<!-- ERROR reading efa801a5fce5a59e876da841c19fcdbd384bb4: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
 ### `.git/objects/c7/f5f0577f88816469237a48df3f7ef9734e673f`
@@ -10424,6 +12499,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 <!-- ERROR reading b79b5357df88276d991231d209afb28a30b808: 'utf-8' codec can't decode byte 0x95 in position 3: invalid start byte -->
 ```
 
+### `.git/objects/e4/b7fa3f04965a3926594d7856a71e5b76d04456`
+**(No description)**
+```python
+<!-- ERROR reading b7fa3f04965a3926594d7856a71e5b76d04456: 'utf-8' codec can't decode byte 0x89 in position 20: invalid start byte -->
+```
+
 ### `.git/objects/e4/fb27034c3df6a164bc556bf6c06055386cadd9`
 **(No description)**
 ```python
@@ -10500,6 +12581,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading f52aa103ea369c96567b9af2a5a0ba14db5cb9: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
+```
+
+### `.git/objects/c8/354ff4801101747ced1629e80c7de4a91ca07b`
+**(No description)**
+```python
+<!-- ERROR reading 354ff4801101747ced1629e80c7de4a91ca07b: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/c8/4f1dd9e89407c3ba7dee18d045bc008fa8b905`
@@ -10704,6 +12791,12 @@ Unnamed repository; edit this file 'description' to name the repository.
 **(No description)**
 ```python
 <!-- ERROR reading b85bd71568cdb52e558c4ce103fd2cbc5a4df3: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
+```
+
+### `.git/objects/c1/d424fe084647acec00c7a0753c658f3e86ddba`
+**(No description)**
+```python
+<!-- ERROR reading d424fe084647acec00c7a0753c658f3e86ddba: 'utf-8' codec can't decode byte 0xb2 in position 8: invalid start byte -->
 ```
 
 ### `.git/objects/c1/ed80387aa4304b73c86b6635f5439151264fc3`
@@ -11061,6 +13154,12 @@ x+)JMU0`  
 <!-- ERROR reading c04a746064897e5448a6625ae3cfe71ef425e3: 'utf-8' codec can't decode byte 0xcd in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/29/2f2d7b01dd6e8e41e8fad4b12a90479d022897`
+**(No description)**
+```python
+<!-- ERROR reading 2f2d7b01dd6e8e41e8fad4b12a90479d022897: 'utf-8' codec can't decode byte 0xb1 in position 9: invalid start byte -->
+```
+
 ### `.git/objects/29/5dc928ba71fc00caa52708ac70097abe6dc3e4`
 **(No description)**
 ```python
@@ -11079,10 +13178,22 @@ x+)JMU0`  
 <!-- ERROR reading 9015d4fef268cde91273790251f35192e1c8a6: 'utf-8' codec can't decode byte 0xca in position 3: invalid continuation byte -->
 ```
 
+### `.git/objects/29/9f4c7d02e7763fc563560f3452b048d89f075d`
+**(No description)**
+```python
+<!-- ERROR reading 9f4c7d02e7763fc563560f3452b048d89f075d: 'utf-8' codec can't decode byte 0xdd in position 4: invalid continuation byte -->
+```
+
 ### `.git/objects/29/cbf91ef79b89971e51db9ddfc3720d8b4db82a`
 **(No description)**
 ```python
 <!-- ERROR reading cbf91ef79b89971e51db9ddfc3720d8b4db82a: 'utf-8' codec can't decode byte 0x8d in position 2: invalid start byte -->
+```
+
+### `.git/objects/29/f0662f88d495cdf87c1f3e94d1e17fedcf772f`
+**(No description)**
+```python
+<!-- ERROR reading f0662f88d495cdf87c1f3e94d1e17fedcf772f: 'utf-8' codec can't decode byte 0x8d in position 22: invalid start byte -->
 ```
 
 ### `.git/objects/7c/0edd1b722cd755a16b3bf1ab543c739bc16688`
@@ -11137,6 +13248,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 424e7050f73705bf2d08b50c466f70c514ca8d: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
+```
+
+### `.git/objects/16/b5bfc49b9846701c2cb7328fac03f85a280727`
+**(No description)**
+```python
+<!-- ERROR reading b5bfc49b9846701c2cb7328fac03f85a280727: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
 ```
 
 ### `.git/objects/16/b94482c061f69e3ad415f1908ad2da715d1304`
@@ -11283,6 +13400,12 @@ x+)JMU0`  
 <!-- ERROR reading 2a9244ea6766d8cf94425fb583583ef740baee: 'utf-8' codec can't decode byte 0xb5 in position 2: invalid start byte -->
 ```
 
+### `.git/objects/45/399766797f553288b831007d5cbc917780dc89`
+**(No description)**
+```python
+<!-- ERROR reading 399766797f553288b831007d5cbc917780dc89: 'utf-8' codec can't decode byte 0xca in position 3: invalid continuation byte -->
+```
+
 ### `.git/objects/45/47fc522b690ba2697843edd044f2039a4123a9`
 **(No description)**
 ```python
@@ -11331,6 +13454,18 @@ x+)JMU0`  
 <!-- ERROR reading 11935c70e9a7ce3f453143895e9c48e19b38ed: 'utf-8' codec can't decode byte 0xdd in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/1f/516e2a41972f5496a2c8486ad67890a27820c2`
+**(No description)**
+```python
+<!-- ERROR reading 516e2a41972f5496a2c8486ad67890a27820c2: 'utf-8' codec can't decode byte 0xa5 in position 2: invalid start byte -->
+```
+
+### `.git/objects/1f/89992eed8b6995bb00b9763840a3ac5e5c87e0`
+**(No description)**
+```python
+<!-- ERROR reading 89992eed8b6995bb00b9763840a3ac5e5c87e0: 'utf-8' codec can't decode byte 0x9e in position 9: invalid start byte -->
+```
+
 ### `.git/objects/1f/bf55bdfbb882d6defcda103111e0363ec41ab8`
 **(No description)**
 ```python
@@ -11353,6 +13488,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 0bbf2aecc31e97a3646def2eb91c510bdec840: 'utf-8' codec can't decode byte 0xd0 in position 18: invalid continuation byte -->
+```
+
+### `.git/objects/73/3ef8d6650df9b401c93a63914a204045d8d2ba`
+**(No description)**
+```python
+<!-- ERROR reading 3ef8d6650df9b401c93a63914a204045d8d2ba: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/73/9568d74d0f6d07573eea36d79beca155afbe25`
@@ -11769,6 +13910,12 @@ x+)JMU0`  
 <!-- ERROR reading e96007f7d725813fd02dc1d06d3834ee1939e4: 'utf-8' codec can't decode byte 0xca in position 3: invalid continuation byte -->
 ```
 
+### `.git/objects/8a/e9c408482aefeffad0b6620ca69166f4b13e76`
+**(No description)**
+```python
+<!-- ERROR reading e9c408482aefeffad0b6620ca69166f4b13e76: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
+```
+
 ### `.git/objects/7e/535454bbeae5491438ef504b5517a08997f6a2`
 **(No description)**
 ```python
@@ -12063,6 +14210,12 @@ x+)JMU0`  
 <!-- ERROR reading c1af4af03f52131610c7c6313a93aef39b4748: 'utf-8' codec can't decode byte 0xcd in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/4d/d407c145fc359a49cc17ed3d6b7496411f6f36`
+**(No description)**
+```python
+<!-- ERROR reading d407c145fc359a49cc17ed3d6b7496411f6f36: 'utf-8' codec can't decode byte 0xb1 in position 9: invalid start byte -->
+```
+
 ### `.git/objects/4d/f50af33f804651539767cc9f041aa21331908e`
 **(No description)**
 ```python
@@ -12145,6 +14298,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading e89faefed9050e59177af5d91872355410e97a: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/81/f74be52dc1b1b1870c3d7b3047f336afa50b42`
+**(No description)**
+```python
+<!-- ERROR reading f74be52dc1b1b1870c3d7b3047f336afa50b42: 'utf-8' codec can't decode byte 0x95 in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/86/0f259bd7e315c5b69f1ada19739b87eed0ecce`
@@ -12231,10 +14390,22 @@ x+)JMU0`  
 <!-- ERROR reading bc89d91a4e7c2400511e280c26dd1cb2fc6502: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
 ```
 
+### `.git/objects/44/1b543f4ea46735ff8b75f211970739c81974ea`
+**(No description)**
+```python
+<!-- ERROR reading 1b543f4ea46735ff8b75f211970739c81974ea: 'utf-8' codec can't decode byte 0xd0 in position 18: invalid continuation byte -->
+```
+
 ### `.git/objects/44/35a02f3e1be52b7505fbde16e147a6c21cd72e`
 **(No description)**
 ```python
 <!-- ERROR reading 35a02f3e1be52b7505fbde16e147a6c21cd72e: 'utf-8' codec can't decode byte 0xb4 in position 9: invalid start byte -->
+```
+
+### `.git/objects/44/5bd260380b6c727806cfc288dfc77567c148f4`
+**(No description)**
+```python
+<!-- ERROR reading 5bd260380b6c727806cfc288dfc77567c148f4: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
 ### `.git/objects/44/939e1c6d40539eb8173bf1527db926c5a54658`
@@ -12273,6 +14444,12 @@ x+)JMU0`  
 <!-- ERROR reading 59337e524c7eee2b4e92e2499fb3d2d7979bef: 'utf-8' codec can't decode byte 0xc5 in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/2a/62db8818d2db308341d10384078321bf3b6eb3`
+**(No description)**
+```python
+<!-- ERROR reading 62db8818d2db308341d10384078321bf3b6eb3: 'utf-8' codec can't decode byte 0xcd in position 4: invalid continuation byte -->
+```
+
 ### `.git/objects/2a/92e62b7b2e8dab77cbe0c2dbb79c810af7f452`
 **(No description)**
 ```python
@@ -12283,6 +14460,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading bdefedabe1e7a2d0c583211809c9ea7a049470: 'utf-8' codec can't decode byte 0xb6 in position 8: invalid start byte -->
+```
+
+### `.git/objects/2f/251df6036953e1fb211744c75ac463ca2e893c`
+**(No description)**
+```python
+<!-- ERROR reading 251df6036953e1fb211744c75ac463ca2e893c: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
 ```
 
 ### `.git/objects/2f/68fc8600038d8de10017b0d02a3fde77a06ba6`
@@ -12403,6 +14586,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 01aac9209fdcc893f4b24fd09d8a3f14149ec9: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/6b/1f8b6db1ee001e80415c8abdb7007ba028dfe3`
+**(No description)**
+```python
+<!-- ERROR reading 1f8b6db1ee001e80415c8abdb7007ba028dfe3: 'utf-8' codec can't decode byte 0x8a in position 20: invalid start byte -->
 ```
 
 ### `.git/objects/6b/20df315b23ecd1e3d0ec32c11c0b5ced577efe`
@@ -12987,6 +15176,12 @@ x+)JMU0`  
 <!-- ERROR reading 0296d5ad6ca2cc49eb5d0dc140bcbc3204e9b4: 'utf-8' codec can't decode byte 0xca in position 3: invalid continuation byte -->
 ```
 
+### `.git/objects/62/2481e39f47ed19aaecf68fe71e34915d962a7b`
+**(No description)**
+```python
+<!-- ERROR reading 2481e39f47ed19aaecf68fe71e34915d962a7b: 'utf-8' codec can't decode byte 0x8a in position 20: invalid start byte -->
+```
+
 ### `.git/objects/62/56ecfd1e2c9ac4cfa3fac359cd12dce85b759c`
 **(No description)**
 ```python
@@ -13149,6 +15344,12 @@ x+)JMU0`  
 <!-- ERROR reading 0dfd23eedec7aaa03f5d98e4ee9ae82ad80baf: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
 ```
 
+### `.git/objects/98/1810ca1412ac2bac2e840dbff120002b56fba0`
+**(No description)**
+```python
+<!-- ERROR reading 1810ca1412ac2bac2e840dbff120002b56fba0: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
+```
+
 ### `.git/objects/98/18a8d1a9815eb3b847331d18c9c920e86e9188`
 **(No description)**
 ```python
@@ -13305,16 +15506,40 @@ x+)JMU0`  
 <!-- ERROR reading 12cfed16b123f175b0935cd3bc4f662bd806bc: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/30/305b1f529374c2d8ee6cdfa97bd9dbdd0a87df`
+**(No description)**
+```python
+<!-- ERROR reading 305b1f529374c2d8ee6cdfa97bd9dbdd0a87df: 'utf-8' codec can't decode byte 0xcd in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/30/38ccda4c8de6ebaf1b8164a30ef7323ac07e65`
 **(No description)**
 ```python
 <!-- ERROR reading 38ccda4c8de6ebaf1b8164a30ef7323ac07e65: 'utf-8' codec can't decode byte 0xb5 in position 2: invalid start byte -->
 ```
 
+### `.git/objects/30/6c09d36ba9a43b5ded035361c4e69a924b4214`
+**(No description)**
+```python
+<!-- ERROR reading 6c09d36ba9a43b5ded035361c4e69a924b4214: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
+```
+
 ### `.git/objects/30/84ae51ecc94b5979ae9075ebb0e08fbda8bdbd`
 **(No description)**
 ```python
 <!-- ERROR reading 84ae51ecc94b5979ae9075ebb0e08fbda8bdbd: 'utf-8' codec can't decode byte 0xca in position 3: invalid continuation byte -->
+```
+
+### `.git/objects/30/86427034f2177328784e2abd4b8ee1a02e73c5`
+**(No description)**
+```python
+<!-- ERROR reading 86427034f2177328784e2abd4b8ee1a02e73c5: 'utf-8' codec can't decode byte 0xdc in position 6: invalid continuation byte -->
+```
+
+### `.git/objects/30/b856a09478eb5959cbb6be8f04fd5efcb2a5b4`
+**(No description)**
+```python
+<!-- ERROR reading b856a09478eb5959cbb6be8f04fd5efcb2a5b4: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/30/ed4c5a62a99906ab662a8acfba2ab75e82af2e`
@@ -13351,6 +15576,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading e55ecd0221aeb7469dcfe0ffbc1c6a42abecc7: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
+```
+
+### `.git/objects/5e/f8b36287ede5bc55704b267c20f61f47bdf0d7`
+**(No description)**
+```python
+<!-- ERROR reading f8b36287ede5bc55704b267c20f61f47bdf0d7: 'utf-8' codec can't decode byte 0xd0 in position 18: invalid continuation byte -->
 ```
 
 ### `.git/objects/5b/20803e586b5660fde18fe87056bbcd0dc61c1a`
@@ -13665,6 +15896,12 @@ x+)JMU0`  
 <!-- ERROR reading f6c60bda53422d58fd2d278dbfee95657f3a8d: 'utf-8' codec can't decode byte 0xb4 in position 2: invalid start byte -->
 ```
 
+### `.git/objects/39/060604e7524f1b88df372c5d20aa6d5a57f2a7`
+**(No description)**
+```python
+<!-- ERROR reading 060604e7524f1b88df372c5d20aa6d5a57f2a7: 'utf-8' codec can't decode byte 0x95 in position 2: invalid start byte -->
+```
+
 ### `.git/objects/39/134557d6e60685fe34e2bc06769282ee68b600`
 **(No description)**
 ```python
@@ -13773,6 +16010,12 @@ x+)JMU0`  
 <!-- ERROR reading 62c8323eae2d5bf41164a30f6a539a467ddb00: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/52/d5bead2487c821915794433a913703978819d0`
+**(No description)**
+```python
+<!-- ERROR reading d5bead2487c821915794433a913703978819d0: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
+```
+
 ### `.git/objects/52/da22e82574362866535edac8388616cd5c91a4`
 **(No description)**
 ```python
@@ -13819,6 +16062,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 7e5d2934016630108499c24c1f6fd5bf30179a: 'utf-8' codec can't decode byte 0xcd in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/97/fc82103181396d739f5d940b1b9f79d881f9ed`
+**(No description)**
+```python
+<!-- ERROR reading fc82103181396d739f5d940b1b9f79d881f9ed: 'utf-8' codec can't decode byte 0xcd in position 4: invalid continuation byte -->
 ```
 
 ### `.git/objects/63/2854d3bc59aa10c0bb6ec49ccc9712babfda6c`
@@ -13989,6 +16238,12 @@ x+)JMU0`  
 <!-- ERROR reading 64910b8bafe2d60ce5fca8897226f5e0fb8f8f: 'utf-8' codec can't decode byte 0xe5 in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/90/9ead571be07431ea978bf432aada2e4e8d259b`
+**(No description)**
+```python
+<!-- ERROR reading 9ead571be07431ea978bf432aada2e4e8d259b: 'utf-8' codec can't decode byte 0xd5 in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/90/a6465f9682c886363eea5327dac64bf623a6ff`
 **(No description)**
 ```python
@@ -14127,6 +16382,12 @@ x+)JMU0`  
 <!-- ERROR reading 19bc77bdda90d3af6f4cbe1294ede2ff5dd18f: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
+### `.git/objects/a0/86215f978ca6095f3b4210d097a6035d01f04e`
+**(No description)**
+```python
+<!-- ERROR reading 86215f978ca6095f3b4210d097a6035d01f04e: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/a0/cf67df5245be16a020ca048832e180f7ce8661`
 **(No description)**
 ```python
@@ -14167,6 +16428,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 9a86106edd7d255d1fde0c73feafe853d7a164: 'utf-8' codec can't decode byte 0xc5 in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/a7/a5711dbf1f401692cca41f67f8cb78fc70af8a`
+**(No description)**
+```python
+<!-- ERROR reading a5711dbf1f401692cca41f67f8cb78fc70af8a: 'utf-8' codec can't decode byte 0xdc in position 6: invalid continuation byte -->
 ```
 
 ### `.git/objects/a7/bd483429520dee0c989e516477c51ca12f4638`
@@ -14289,6 +16556,12 @@ x+)JMU0`  
 <!-- ERROR reading c5158c0fe2b4d11a90a9c632fb8f640cdb6f9d: 'utf-8' codec can't decode byte 0xb7 in position 8: invalid start byte -->
 ```
 
+### `.git/objects/b1/e77fa06fe0d7b2ecbda61147b48803991afe37`
+**(No description)**
+```python
+<!-- ERROR reading e77fa06fe0d7b2ecbda61147b48803991afe37: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
+```
+
 ### `.git/objects/b1/fbbf8e8d2a47d0a7d2fe0b4568fd11f8be4c36`
 **(No description)**
 ```python
@@ -14379,6 +16652,12 @@ x+)JMU0`  
 <!-- ERROR reading 2234d50750cbcf6d3ebba02d2ee54afb8c7347: 'utf-8' codec can't decode byte 0xc5 in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/b6/24e7de664ae6f61eef5843d120708851f6f8e3`
+**(No description)**
+```python
+<!-- ERROR reading 24e7de664ae6f61eef5843d120708851f6f8e3: 'utf-8' codec can't decode byte 0xd0 in position 18: invalid continuation byte -->
+```
+
 ### `.git/objects/b6/7f02ccaf821ac212e89fe322f829bc2d518665`
 **(No description)**
 ```python
@@ -14407,6 +16686,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 94c6bad3ddad4208923dd917713129a8490874: 'utf-8' codec can't decode byte 0xb2 in position 8: invalid start byte -->
+```
+
+### `.git/objects/b6/aaa0d13ed4441bb5a4adeebdd0a404c2efc285`
+**(No description)**
+```python
+<!-- ERROR reading aaa0d13ed4441bb5a4adeebdd0a404c2efc285: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
 ```
 
 ### `.git/objects/b6/beddbe6d24d2949dc89ed07abfebd59d8b63b9`
@@ -14649,6 +16934,12 @@ x+)JMU0`  
 <!-- ERROR reading 554d942f79e2d5ae108e853a6a4a4e6d79c702: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
 ```
 
+### `.git/objects/db/5a00042e30ade21991a124a9191e30a80f2ffd`
+**(No description)**
+```python
+<!-- ERROR reading 5a00042e30ade21991a124a9191e30a80f2ffd: 'utf-8' codec can't decode byte 0x85 in position 2: invalid start byte -->
+```
+
 ### `.git/objects/db/a3191e58474c95a66e86ed67b266198f3e7aac`
 **(No description)**
 ```python
@@ -14689,6 +16980,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading f0e5e59b9567b623cde4547d904dd0e4ac7c1a: 'utf-8' codec can't decode byte 0xb4 in position 9: invalid start byte -->
+```
+
+### `.git/objects/de/1e273ccb43f240da307b39900c12f1834a23fa`
+**(No description)**
+```python
+<!-- ERROR reading 1e273ccb43f240da307b39900c12f1834a23fa: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
 ```
 
 ### `.git/objects/de/20dcd38019c2e34c7ef874a28ebbaf3cd59185`
@@ -14761,6 +17058,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading b06f22f179e91f2d4375ec7239100a4489666e: 'utf-8' codec can't decode byte 0xb4 in position 8: invalid start byte -->
+```
+
+### `.git/objects/b0/b75d39bf395c036fb0eb5ad032c6d6704853b3`
+**(No description)**
+```python
+<!-- ERROR reading b75d39bf395c036fb0eb5ad032c6d6704853b3: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
 ### `.git/objects/b0/bbf78f4367c3e13a5aac0df09b5824d8f7e6ea`
@@ -14845,6 +17148,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading cdaba84b0c4312da26a4202757cf7f307827bc: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/b9/2ade52b0dc3867e5c0255c47c64dfd373c854d`
+**(No description)**
+```python
+<!-- ERROR reading 2ade52b0dc3867e5c0255c47c64dfd373c854d: 'utf-8' codec can't decode byte 0x85 in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/b9/66dcea57a2072f98b96dbba75ceb26bd26d2dd`
@@ -15025,6 +17334,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading f1657fce94589bd1ec7cead810639047f3d359: 'utf-8' codec can't decode byte 0xdb in position 6: invalid continuation byte -->
+```
+
+### `.git/objects/c4/026724cf8d8f1f23eef9a3567e883d2bdd45b8`
+**(No description)**
+```python
+<!-- ERROR reading 026724cf8d8f1f23eef9a3567e883d2bdd45b8: 'utf-8' codec can't decode byte 0xb2 in position 8: invalid start byte -->
 ```
 
 ### `.git/objects/c4/2623e9423c23b555d9d352bc5dab518ede02c2`
@@ -15231,6 +17546,12 @@ x+)JMU0`  
 <!-- ERROR reading 439e9e45897365d5ac6a85a46864c158a225fd: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
 ```
 
+### `.git/objects/e6/4592ab4f610abb2dc9f017465032bcb2c250a0`
+**(No description)**
+```python
+<!-- ERROR reading 4592ab4f610abb2dc9f017465032bcb2c250a0: 'utf-8' codec can't decode byte 0xb0 in position 7: invalid start byte -->
+```
+
 ### `.git/objects/e6/577ddf805bd3ce654b15154ec8474959cc1e99`
 **(No description)**
 ```python
@@ -15345,6 +17666,12 @@ x+)JMU0`  
 <!-- ERROR reading e6712d3172f4dc3e26d4e080cc9a643dc18a9d: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/f7/56f9dd4a7393db54db796ac18118d65fc18a3b`
+**(No description)**
+```python
+<!-- ERROR reading 56f9dd4a7393db54db796ac18118d65fc18a3b: 'utf-8' codec can't decode byte 0xb6 in position 9: invalid start byte -->
+```
+
 ### `.git/objects/f7/7520ee106deeedee30a48005479806ff9a19e2`
 **(No description)**
 ```python
@@ -15385,6 +17712,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 795ed35c598d9635961bac628c4129b83844b7: 'utf-8' codec can't decode byte 0xd5 in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/e8/97029c34c2692e24c62eab90b732864d997b63`
+**(No description)**
+```python
+<!-- ERROR reading 97029c34c2692e24c62eab90b732864d997b63: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/e8/ae5e4beaa287c8bcb31c77d8f3f2e4565bba60`
@@ -15457,6 +17790,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 69593b05b5eb5fcd336b4bd16193c44dc48ef5: 'utf-8' codec can't decode byte 0xcd in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/ff/d6233c2432da169ecd4a4b9a00f4d7f05d9e98`
+**(No description)**
+```python
+<!-- ERROR reading d6233c2432da169ecd4a4b9a00f4d7f05d9e98: 'utf-8' codec can't decode byte 0xd5 in position 2: invalid continuation byte -->
 ```
 
 ### `.git/objects/c5/05464f6355424f9109147423730130595077a5`
@@ -15579,6 +17918,12 @@ x+)JMU0`  
 <!-- ERROR reading 1ed7873dde7db1979fe10fe54218a81f710360: 'utf-8' codec can't decode byte 0xb0 in position 7: invalid start byte -->
 ```
 
+### `.git/objects/f6/955b0dccdca0bec9827c0a76d7246c155fce3a`
+**(No description)**
+```python
+<!-- ERROR reading 955b0dccdca0bec9827c0a76d7246c155fce3a: 'utf-8' codec can't decode byte 0xb5 in position 2: invalid start byte -->
+```
+
 ### `.git/objects/f6/99839e82d21316fc7b2fc805b6c71a16f99760`
 **(No description)**
 ```python
@@ -15607,6 +17952,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 63a50979a0b3dd56558240e075ca0f889479df: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
+```
+
+### `.git/objects/e9/8902dfadb02648eacf57fbdafa297abeed1177`
+**(No description)**
+```python
+<!-- ERROR reading 8902dfadb02648eacf57fbdafa297abeed1177: 'utf-8' codec can't decode byte 0x8d in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/e9/a7995c112c33eb07cfafeea46dba15bc847631`
@@ -15679,6 +18030,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 65af2c2dd5aedd711aae5e3420d19634ce9eca: 'utf-8' codec can't decode byte 0xb4 in position 9: invalid start byte -->
+```
+
+### `.git/objects/e7/f30f491b897e66597cf403a8959e3e7bb955a8`
+**(No description)**
+```python
+<!-- ERROR reading f30f491b897e66597cf403a8959e3e7bb955a8: 'utf-8' codec can't decode byte 0x95 in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/e7/fd344aad3fc4d9be528c12ea10b20cf6e768bb`
@@ -15787,6 +18144,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 624ba9b5ab13592c557b549bb3f5c5a45762d6: 'utf-8' codec can't decode byte 0xb5 in position 10: invalid start byte -->
+```
+
+### `.git/objects/e0/70f6815396e3183b85007aff34c6f628418ead`
+**(No description)**
+```python
+<!-- ERROR reading 70f6815396e3183b85007aff34c6f628418ead: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
 ### `.git/objects/e0/96d1d52dd1a608f8ae3c814d877f01dbf5fda8`
@@ -16101,6 +18464,12 @@ x+)JMU0`  
 <!-- ERROR reading 931295c8db72ef9856976f57fd7be2e5549b7d: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
+### `.git/objects/1b/b3922b7127f95b9a1f365991bb6af5bb873706`
+**(No description)**
+```python
+<!-- ERROR reading b3922b7127f95b9a1f365991bb6af5bb873706: 'utf-8' codec can't decode byte 0xb5 in position 2: invalid start byte -->
+```
+
 ### `.git/objects/1b/ddc2fd4e05d24b196ddd722786108d5183d8e1`
 **(No description)**
 ```python
@@ -16261,6 +18630,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 4dfdffc8ba61eb913fa918072381e410b23c00: 'utf-8' codec can't decode byte 0xbd in position 2: invalid start byte -->
+```
+
+### `.git/objects/70/88934c9bbb5f8591cf67424974345737be4c3d`
+**(No description)**
+```python
+<!-- ERROR reading 88934c9bbb5f8591cf67424974345737be4c3d: 'utf-8' codec can't decode byte 0xcd in position 4: invalid continuation byte -->
 ```
 
 ### `.git/objects/70/a41cc7b490b084b5f84056df2b950fc02f3407`
@@ -16569,6 +18944,12 @@ x+)JMU0`  
 <!-- ERROR reading 650804ae0331efea9f053b956c47cca3946e08: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
+### `.git/objects/12/c79b49a2a52bdff96ef7849f6b7aed59f6ed23`
+**(No description)**
+```python
+<!-- ERROR reading c79b49a2a52bdff96ef7849f6b7aed59f6ed23: 'utf-8' codec can't decode byte 0x90 in position 3: invalid start byte -->
+```
+
 ### `.git/objects/12/fef106e53a8e7147b18cb2bb2545de7f646a00`
 **(No description)**
 ```python
@@ -16579,6 +18960,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 167ffcb4497f1cee666f3797804e08278b5c2a: 'utf-8' codec can't decode byte 0xd5 in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/8c/1d9e5f605a4b8dd3809b556f876087bd63d242`
+**(No description)**
+```python
+<!-- ERROR reading 1d9e5f605a4b8dd3809b556f876087bd63d242: 'utf-8' codec can't decode byte 0x9d in position 2: invalid start byte -->
 ```
 
 ### `.git/objects/8c/418f59e06cae43abdbb626ec21cafc7e8c6277`
@@ -16651,6 +19038,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 16ab769c88f28febd7b65f93693663a492e264: 'utf-8' codec can't decode byte 0xb5 in position 9: invalid start byte -->
+```
+
+### `.git/objects/1d/23ee5fe24a217ffea0d0e424d20d7732618fd4`
+**(No description)**
+```python
+<!-- ERROR reading 23ee5fe24a217ffea0d0e424d20d7732618fd4: 'utf-8' codec can't decode byte 0xd0 in position 19: invalid continuation byte -->
 ```
 
 ### `.git/objects/1d/49897fe860a4d081fe6a70434bebb1238b7f52`
@@ -16827,6 +19220,12 @@ x+)JMU0`  
 <!-- ERROR reading 13f062051981459b641a65f2eef0568efd9b56: 'utf-8' codec can't decode byte 0x88 in position 18: invalid start byte -->
 ```
 
+### `.git/objects/82/24f089d6e0afd45dc0893125e92d25483d09d5`
+**(No description)**
+```python
+<!-- ERROR reading 24f089d6e0afd45dc0893125e92d25483d09d5: 'utf-8' codec can't decode byte 0xad in position 2: invalid start byte -->
+```
+
 ### `.git/objects/82/42644b8e39d498d92c217e96a6370910efacd0`
 **(No description)**
 ```python
@@ -16905,6 +19304,12 @@ x+)JMU0`  
 <!-- ERROR reading c671a7fab852ccac97cda28084066e3bc5f97e: 'utf-8' codec can't decode byte 0xcd in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/49/dd6a0bbbb60af5cdd2c8e48dc08ed3ac5d8784`
+**(No description)**
+```python
+<!-- ERROR reading dd6a0bbbb60af5cdd2c8e48dc08ed3ac5d8784: 'utf-8' codec can't decode bytes in position 2-3: invalid continuation byte -->
+```
+
 ### `.git/objects/49/f0e698c97ad5623f376d8182675352e21c2c3c`
 **(No description)**
 ```python
@@ -16927,6 +19332,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading 18a09c6fb1e0ef1b03ab8d84b13ebef4031f7c: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
+```
+
+### `.git/objects/40/4986db114e718488e9ec4a619f2dad0909cfb3`
+**(No description)**
+```python
+<!-- ERROR reading 4986db114e718488e9ec4a619f2dad0909cfb3: 'utf-8' codec can't decode byte 0xed in position 2: invalid continuation byte -->
 ```
 
 ### `.git/objects/40/5de593f237c4f8114406bc73618233d7bbabb9`
@@ -17055,6 +19466,12 @@ x+)JMU0`  
 <!-- ERROR reading 1dfa2d7c489d3a5ec207a63522e771d3cef22a: 'utf-8' codec can't decode byte 0xa5 in position 2: invalid start byte -->
 ```
 
+### `.git/objects/78/24d326e71f14c931dab083b56e942fef5ad963`
+**(No description)**
+```python
+<!-- ERROR reading 24d326e71f14c931dab083b56e942fef5ad963: 'utf-8' codec can't decode byte 0xdb in position 6: invalid continuation byte -->
+```
+
 ### `.git/objects/78/55226e4b500142deef8fb247cd33a9a991d122`
 **(No description)**
 ```python
@@ -17109,6 +19526,12 @@ x+)JMU0`  
 <!-- ERROR reading 258c57481df7b36988f8bb790b79ea402a71de: 'utf-8' codec can't decode byte 0xd5 in position 2: invalid continuation byte -->
 ```
 
+### `.git/objects/7f/5613e88e554b514ca09aa6b81cd8d164bfecb7`
+**(No description)**
+```python
+<!-- ERROR reading 5613e88e554b514ca09aa6b81cd8d164bfecb7: 'utf-8' codec can't decode byte 0xcd in position 2: invalid continuation byte -->
+```
+
 ### `.git/objects/7f/62d5da3c7a3b2259f44a6f8ca752b0830e76ad`
 **(No description)**
 ```python
@@ -17125,6 +19548,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading ff2ac3355cb6bdaf39919518c3c481e6724336: 'utf-8' codec can't decode byte 0xca in position 3: invalid continuation byte -->
+```
+
+### `.git/objects/7a/073cf69291e99faef1f9a7152f569487a89e52`
+**(No description)**
+```python
+<!-- ERROR reading 073cf69291e99faef1f9a7152f569487a89e52: 'utf-8' codec can't decode byte 0xc9 in position 21: invalid continuation byte -->
 ```
 
 ### `.git/objects/7a/17b7b3b6ad49157ee41f3da304fec3d32342d3`
@@ -17187,6 +19616,12 @@ x+)JMU0`  
 <!-- ERROR reading 213b307b96d6bbe0b39042f8feb2ac9a6e0b06: 'utf-8' codec can't decode byte 0xb0 in position 7: invalid start byte -->
 ```
 
+### `.git/objects/14/440a10dde4c302a4e75f831a376554dfd15177`
+**(No description)**
+```python
+<!-- ERROR reading 440a10dde4c302a4e75f831a376554dfd15177: 'utf-8' codec can't decode byte 0xcd in position 4: invalid continuation byte -->
+```
+
 ### `.git/objects/14/77117e26e4004ad800880ccee4bd052736b8c1`
 **(No description)**
 ```python
@@ -17245,6 +19680,12 @@ x+)JMU0`  
 **(No description)**
 ```python
 <!-- ERROR reading b8ec9605c73aeba33b5a2031d59a84d6841225: 'utf-8' codec can't decode byte 0x85 in position 2: invalid start byte -->
+```
+
+### `.git/objects/8e/badae4f823189158dce696aded16c5072c14e2`
+**(No description)**
+```python
+<!-- ERROR reading badae4f823189158dce696aded16c5072c14e2: 'utf-8' codec can't decode byte 0xd5 in position 2: invalid continuation byte -->
 ```
 
 ### `.git/objects/8e/e0ba7a082a04bfb91a6e1c7d80c5d51c0a2573`
@@ -17334,6 +19775,8 @@ acf94ac32d9a9d8e79d6ad1154d32675229ce6e0 5dd1ab6da18ef67ae45007b5ace3440264dd0d5
 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a Steven <steven.cohen714@gmail.com> 1745039269 +0200	reset: moving to HEAD
 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a Steven <steven.cohen714@gmail.com> 1745041050 +0200	reset: moving to origin/main
 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a Steven <steven.cohen714@gmail.com> 1745057873 +0200	reset: moving to origin/main
+5dd1ab6da18ef67ae45007b5ace3440264dd0d5a 733ef8d6650df9b401c93a63914a204045d8d2ba Steven <steven.cohen714@gmail.com> 1745074823 +0200	commit: 📝 Auto-commit by script
+733ef8d6650df9b401c93a63914a204045d8d2ba 30b856a09478eb5959cbb6be8f04fd5efcb2a5b4 Steven <steven.cohen714@gmail.com> 1745077079 +0200	commit: 📝 Auto-commit by script
 
 ```
 
@@ -17363,6 +19806,8 @@ a9adb8b6c85412eff2a43197f748b6d5dd9a8b6e 20d2770b6fecabeec22c38c28a289a18498ca7c
 20d2770b6fecabeec22c38c28a289a18498ca7cd 19b0d9fa6dbcbe8f9b08a709419372c8f445bc23 Steven <steven.cohen714@gmail.com> 1744899375 +0200	commit: Auto-commit for push (script)
 19b0d9fa6dbcbe8f9b08a709419372c8f445bc23 acf94ac32d9a9d8e79d6ad1154d32675229ce6e0 Steven <steven.cohen714@gmail.com> 1744908994 +0200	commit: Auto-commit for push (script)
 acf94ac32d9a9d8e79d6ad1154d32675229ce6e0 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a Steven <steven.cohen714@gmail.com> 1744970528 +0200	commit: Auto-commit for push (script)
+5dd1ab6da18ef67ae45007b5ace3440264dd0d5a 733ef8d6650df9b401c93a63914a204045d8d2ba Steven <steven.cohen714@gmail.com> 1745074823 +0200	commit: 📝 Auto-commit by script
+733ef8d6650df9b401c93a63914a204045d8d2ba 30b856a09478eb5959cbb6be8f04fd5efcb2a5b4 Steven <steven.cohen714@gmail.com> 1745077079 +0200	commit: 📝 Auto-commit by script
 
 ```
 
@@ -17388,6 +19833,8 @@ e28f74abef4ca5048cf1503f9a130554cf5970cf 075eefe5307e9389ac202171d47ec626b84cb35
 075eefe5307e9389ac202171d47ec626b84cb35c 19b0d9fa6dbcbe8f9b08a709419372c8f445bc23 Steven <steven.cohen714@gmail.com> 1744899382 +0200	update by push
 19b0d9fa6dbcbe8f9b08a709419372c8f445bc23 acf94ac32d9a9d8e79d6ad1154d32675229ce6e0 Steven <steven.cohen714@gmail.com> 1744909000 +0200	update by push
 acf94ac32d9a9d8e79d6ad1154d32675229ce6e0 5dd1ab6da18ef67ae45007b5ace3440264dd0d5a Steven <steven.cohen714@gmail.com> 1744970535 +0200	update by push
+5dd1ab6da18ef67ae45007b5ace3440264dd0d5a 733ef8d6650df9b401c93a63914a204045d8d2ba Steven <steven.cohen714@gmail.com> 1745074829 +0200	update by push
+733ef8d6650df9b401c93a63914a204045d8d2ba 30b856a09478eb5959cbb6be8f04fd5efcb2a5b4 Steven <steven.cohen714@gmail.com> 1745077086 +0200	update by push
 
 ```
 
@@ -18353,7 +20800,7 @@ cab8db55d3595053898dd1edd40a1f31cc24761c
 ### `.git/refs/heads/main`
 **(No description)**
 ```python
-5dd1ab6da18ef67ae45007b5ace3440264dd0d5a
+30b856a09478eb5959cbb6be8f04fd5efcb2a5b4
 
 ```
 
@@ -18367,7 +20814,7 @@ ref: refs/remotes/origin/main
 ### `.git/refs/remotes/origin/main`
 **(No description)**
 ```python
-5dd1ab6da18ef67ae45007b5ace3440264dd0d5a
+30b856a09478eb5959cbb6be8f04fd5efcb2a5b4
 
 ```
 
