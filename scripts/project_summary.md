@@ -1,5 +1,5 @@
 # 📦 Project Snapshot
-Generated: 2025-04-20 21:19:22
+Generated: 2025-04-21 00:53:06
 
 ## 📁 Directory Tree
 ````
@@ -18,6 +18,7 @@ Generated: 2025-04-20 21:19:22
 ├── insert_receive_route.py
 ├── integration_tests.py
 ├── prepare_lookup_tables.py
+├── project_summary.md
 ├── repair_orders_routes.py
 ├── reset_and_test.sh
 ├── seed_static_data.py
