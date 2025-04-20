@@ -168,6 +168,11 @@ async def upload_attachment(file: UploadFile, order_id: int = Form(...)):
         with saved_path.open("wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
+        # ✅ Validate file size
+        if saved_path.stat().st_size < 500:  # 500 bytes is a safe cutoff
+            saved_path.unlink(missing_ok=True)
+            raise HTTPException(status_code=400, detail="Uploaded file is too small or corrupt.")
+
         with sqlite3.connect("data/orders.db") as conn:
             cursor = conn.cursor()
             cursor.execute("""
@@ -180,21 +185,41 @@ async def upload_attachment(file: UploadFile, order_id: int = Form(...)):
             "action": "attachment_uploaded",
             "order_id": order_id,
             "filename": file.filename,
-            "path": str(saved_path)
+            "path": str(saved_path),
+            "size_bytes": saved_path.stat().st_size
         })
 
         return {"status": "✅ Attachment uploaded"}
+
+
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "upload"})
         raise HTTPException(status_code=500, detail=f"Failed to upload attachment: {e}")
+    
+@router.get("/attachments/{order_id}")
+def get_order_attachments(order_id: int):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT id, filename, file_path, upload_date
+                FROM attachments
+                WHERE order_id = ?
+            """, (order_id,))
+            files = [dict(row) for row in cursor.fetchall()]
+        return {"attachments": files}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to retrieve attachments: {e}")
 
-@router.get("/pending_data")
+@router.get("/api/orders/pending_orders")
 def get_pending_orders(
     start_date: Optional[str] = Query(None),
     end_date: Optional[str] = Query(None),
     requester: Optional[str] = Query(None),
     supplier: Optional[str] = Query(None)
 ):
+
     try:
         filters = ["o.status IN ('Pending', 'Waiting for Approval')"]
         params = []
@@ -235,3 +260,51 @@ def get_pending_orders(
         return {"orders": orders}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to load pending orders: {e}")
+
+@router.get("/api/received_orders")
+def get_received_orders(
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    requester: Optional[str] = Query(None),
+    supplier: Optional[str] = Query(None)
+):
+    try:
+        filters = ["o.status = 'Received'"]
+        params = []
+
+        if start_date:
+            filters.append("DATE(o.created_date) >= DATE(?)")
+            params.append(start_date)
+
+        if end_date:
+            filters.append("DATE(o.created_date) <= DATE(?)")
+            params.append(end_date)
+
+        if requester:
+            filters.append("r.name LIKE ?")
+            params.append(f"%{requester}%")
+
+        if supplier:
+            filters.append("s.name LIKE ?")
+            params.append(f"%{supplier}%")
+
+        where_clause = " AND ".join(filters)
+
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(f"""
+                SELECT
+                    o.id, o.created_date, o.order_number,
+                    r.name AS requester, s.name AS supplier,
+                    o.total, o.status
+                FROM orders o
+                LEFT JOIN requesters r ON o.requester_id = r.id
+                LEFT JOIN suppliers s ON o.supplier_id = s.id
+                WHERE {where_clause}
+                ORDER BY o.created_date DESC
+            """, params)
+            orders = [dict(row) for row in cursor.fetchall()]
+        return {"orders": orders}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to load received orders: {e}")

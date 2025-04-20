@@ -4321,3 +4321,595 @@ INFO:     127.0.0.1:63147 - "GET /lookups/requesters HTTP/1.1" 200 OK
 INFO:     127.0.0.1:63149 - "GET /lookups/suppliers HTTP/1.1" 200 OK
 INFO:     127.0.0.1:63149 - "GET /favicon.ico HTTP/1.1" 404 Not Found
 INFO:     127.0.0.1:63151 - "GET /orders/pending_data?requester=Aaron HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [57604]
+INFO:     Started server process [62608]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [62670] using StatReload
+INFO:     Started server process [62675]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:63891 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63891 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63897 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63895 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63893 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63891 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63899 - "GET /orders/received HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63902 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63968 - "GET /orders/received_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64203 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [66715] using StatReload
+INFO:     Started server process [66720]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:64413 - "GET /orders/received_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64415 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64415 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64417 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64421 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64415 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64417 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64419 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/pending_data?requester=Aaron HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64423 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64437 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64437 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:64437 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64440 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/pending_data HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64441 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64444 - "GET /orders/received HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64446 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64451 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [66720]
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup, supplier_lookup_takealot
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 208
+    def get_pending_orders(...):
+                           ^^^
+SyntaxError: invalid syntax
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+Process SpawnProcess-3:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 5, in <module>
+    from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup, supplier_lookup_takealot
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 208
+    def get_pending_orders(...):
+                           ^^^
+SyntaxError: invalid syntax
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Started server process [69357]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [70287] using StatReload
+INFO:     Started server process [70293]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:64963 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64963 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64965 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64967 - "GET /orders/api/pending_orders HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64965 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64963 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64963 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64971 - "GET /orders/pending_orders HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64973 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64973 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64976 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64978 - "GET /orders/api/pending_orders HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64976 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64973 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64976 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [70293]
+INFO:     Started server process [71619]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [71688] using StatReload
+INFO:     Started server process [71694]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:65201 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65203 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65207 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65205 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65203 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65201 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65212 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65212 - "GET /data/uploads/28_test_invoice.pdf HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65214 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65214 - "GET /data/uploads/28_test_invoice.pdf HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49317 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49317 - "GET /data/uploads/28_test_invoice.pdf HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [71694]
+INFO:     Started server process [72689]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [73379] using StatReload
+INFO:     Started server process [73383]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51742 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51742 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51743 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51742 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51743 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51745 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51747 - "GET /data/uploads/28_test_invoice.pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51773 - "GET /data/uploads/28_test_invoice.pdf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51896 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51934 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52523 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52523 - "GET /data/uploads/27_test_invoice.pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52523 - "GET /data/uploads/27_test_invoice.pdf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52533 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52680 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52935 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53300 - "HEAD /data/uploads/28_test_invoice.pdf HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [73383]
+INFO:     Started server process [76149]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [76192] using StatReload
+INFO:     Started server process [76195]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57380 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57380 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57385 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57380 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57383 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57381 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57416 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57416 - "GET /data/uploads/25_Screenshot%202025-04-20%20at%2017.12.14.png HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57428 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57524 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57594 - "GET /orders/received HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59212 - "GET /orders/received_orders HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 343, in __call__
+    stat_result = await anyio.to_thread.run_sync(os.stat, self.path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/anyio/to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+FileNotFoundError: [Errno 2] No such file or directory: 'frontend/static/received_orders.html'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 346, in __call__
+    raise RuntimeError(f"File at path {self.path} does not exist.")
+RuntimeError: File at path frontend/static/received_orders.html does not exist.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [77375] using StatReload
+INFO:     Started server process [77382]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59666 - "GET /orders/pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59667 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59671 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59669 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59667 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59708 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59708 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59708 - "GET /data/uploads/24_Fidessa%20Consulting.PDF HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59739 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59739 - "GET /data/uploads/28_Deposit%20-%202.pdf HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [77382]
+INFO:     Started server process [77785]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [77822] using StatReload
+INFO:     Started server process [77824]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60031 - "GET /orders/pending_orders HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 343, in __call__
+    stat_result = await anyio.to_thread.run_sync(os.stat, self.path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/anyio/to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+FileNotFoundError: [Errno 2] No such file or directory: 'frontend/static/pending_orders.html'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 74, in app
+    await response(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 346, in __call__
+    raise RuntimeError(f"File at path {self.path} does not exist.")
+RuntimeError: File at path frontend/static/pending_orders.html does not exist.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [78778] using StatReload
+INFO:     Started server process [78780]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61441 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61442 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61448 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61442 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61446 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61441 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61564 - "GET /orders/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61564 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61565 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61567 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61567 - "GET /orders/attachments/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61567 - "GET /orders/attachments/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61567 - "GET /orders/attachments/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61634 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61634 - "GET /orders/attachments/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61634 - "GET /data/uploads/20_test_invoice.pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61668 - "GET /orders/attachments/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61668 - "GET /orders/attachments/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61889 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62025 - "GET /orders/attachments/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62025 - "GET /orders/attachments/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62025 - "GET /orders/attachments/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62026 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:62026 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62078 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62080 - "GET /data/uploads/24_Fidessa%20Consulting.PDF HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:62444 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62715 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62831 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62831 - "GET /data/uploads/22_Hydehurst%20RC-%20Proof%20of%20submission.pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63182 - "GET /orders/attachments/20 HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [78780]
+INFO:     Started server process [80656]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [81204] using StatReload
+INFO:     Started server process [81207]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.

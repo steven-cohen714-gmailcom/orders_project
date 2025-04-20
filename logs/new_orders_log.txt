@@ -28,3 +28,15 @@
 [2025-04-19T17:36:48.890998] {"action": "submit_success", "order_number": "URC1029", "status": "Pending"}
 [2025-04-19T17:37:29.799798] {"action": "submit_attempt", "order_data": {"order_number": "URC1031", "requester_id": 5, "order_note": null, "note_to_supplier": "", "supplier_id": 8, "items": [{"item_code": "BEAR180", "item_description": "Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage", "project": "PR10M", "qty_ordered": 1.0, "price": 10.0}], "status": "Pending", "total": 10.0}}
 [2025-04-19T17:37:29.803039] {"action": "submit_success", "order_number": "URC1031", "status": "Pending"}
+[2025-04-20T22:41:19.119714] {"action": "attachment_uploaded", "order_id": 28, "filename": "test_invoice.pdf", "path": "data/uploads/28_test_invoice.pdf"}
+[2025-04-20T22:41:47.580754] {"action": "attachment_uploaded", "order_id": 28, "filename": "test_invoice.pdf", "path": "data/uploads/28_test_invoice.pdf"}
+[2025-04-20T23:30:44.970739] {"action": "attachment_uploaded", "order_id": 28, "filename": "Deposit - 2.pdf", "path": "data/uploads/28_Deposit - 2.pdf"}
+[2025-04-20T23:30:55.339708] {"action": "attachment_uploaded", "order_id": 27, "filename": "test_invoice.pdf", "path": "data/uploads/27_test_invoice.pdf"}
+[2025-04-20T23:33:02.605233] {"action": "attachment_uploaded", "order_id": 26, "filename": "Intimisso.pdf", "path": "data/uploads/26_Intimisso.pdf"}
+[2025-04-20T23:34:06.662692] {"action": "attachment_uploaded", "order_id": 25, "filename": "Screenshot 2025-04-20 at 17.12.14.png", "path": "data/uploads/25_Screenshot 2025-04-20 at 17.12.14.png"}
+[2025-04-20T23:51:08.383602] {"action": "attachment_uploaded", "order_id": 28, "filename": "Deposit - 2.pdf", "path": "data/uploads/28_Deposit - 2.pdf", "size_bytes": 257514}
+[2025-04-20T23:59:40.748862] {"action": "attachment_uploaded", "order_id": 24, "filename": "Fidessa Consulting.PDF", "path": "data/uploads/24_Fidessa Consulting.PDF", "size_bytes": 5382}
+[2025-04-21T00:10:01.409456] {"action": "attachment_uploaded", "order_id": 19, "filename": "Fidessa Consulting.PDF", "path": "data/uploads/19_Fidessa Consulting.PDF", "size_bytes": 5382}
+[2025-04-21T00:10:55.312735] {"action": "attachment_uploaded", "order_id": 19, "filename": "Fidessa Consulting.PDF", "path": "data/uploads/19_Fidessa Consulting.PDF", "size_bytes": 5382}
+[2025-04-21T00:12:57.461549] {"action": "attachment_uploaded", "order_id": 19, "filename": "Fidessa Consulting.PDF", "path": "data/uploads/19_Fidessa Consulting.PDF", "size_bytes": 5382}
+[2025-04-21T00:13:58.025883] {"action": "attachment_uploaded", "order_id": 22, "filename": "Hydehurst RC- Proof of submission.pdf", "path": "data/uploads/22_Hydehurst RC- Proof of submission.pdf", "size_bytes": 165820}

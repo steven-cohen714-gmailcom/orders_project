@@ -1,16 +1,18 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup, supplier_lookup_takealot
 from backend.database import init_db
 from pathlib import Path
 import logging
 
-# ✅ Add the enhanced validation handler
+# ✅ Enhanced validation
 from scripts.add_debug_validation_handler import install_validation_handler
 
-# Ensure log directory exists
+# ✅ Logging setup
 Path("logs").mkdir(exist_ok=True)
 logging.basicConfig(
     filename="logs/server_startup.log",
@@ -18,7 +20,7 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(message)s",
 )
 
-# Initialize DB
+# ✅ Init DB
 try:
     init_db()
     logging.info("✅ Database initialized successfully.")
@@ -26,26 +28,27 @@ except Exception as e:
     logging.exception("❌ Failed to initialize database")
     raise
 
+# ✅ App setup
 app = FastAPI(
     title="Universal Recycling Purchase Order System",
     description="Purchase Order management system for Universal Recycling"
 )
 
-# ✅ Install the validation handler before anything else
 install_validation_handler(app)
 
-# Static Files
+# ✅ Mount folders
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
+app.mount("/data/uploads", StaticFiles(directory="data/uploads"), name="uploads")
 
-# Middleware
+# ✅ Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Limit in production
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")  # Replace in prod
+app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")
 
 # ✅ Routers
 app.include_router(orders.router)
@@ -55,7 +58,18 @@ app.include_router(ui_pages.router)
 app.include_router(supplier_lookup.router)
 app.include_router(supplier_lookup_takealot.router)
 
-# Run
+# ✅ Template engine
+templates = Jinja2Templates(directory="frontend/templates")
+
+@app.get("/orders/pending_orders", response_class=HTMLResponse)
+def serve_pending_orders(request: Request):
+    return templates.TemplateResponse("pending_orders.html", {"request": request})
+
+@app.get("/orders/received_orders", response_class=HTMLResponse)
+def serve_received_orders(request: Request):
+    return templates.TemplateResponse("received_orders.html", {"request": request})
+
+# ✅ Run server
 if __name__ == "__main__":
     import uvicorn
     try:

@@ -19,6 +19,15 @@
       padding: 0.5rem 1rem;
       cursor: pointer;
     }
+    .clip-icon, .eye-icon {
+      cursor: pointer;
+      font-size: 1.2rem;
+      margin: 0 0.3rem;
+    }
+    .eye-icon.disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
   </style>
 </head>
 <body>
@@ -27,16 +36,12 @@
   <div class="filters">
     <label for="start-date">Start Date:</label>
     <input type="date" id="start-date" />
-
     <label for="end-date">End Date:</label>
     <input type="date" id="end-date" />
-
     <label for="filter-requester">Requester:</label>
     <select id="filter-requester"></select>
-
     <label for="filter-supplier">Supplier:</label>
     <select id="filter-supplier"></select>
-
     <button id="run-btn">Run</button>
     <button id="clear-btn">Clear</button>
   </div>
@@ -50,27 +55,32 @@
         <th>Supplier</th>
         <th>Total</th>
         <th>Status</th>
-        <th>Actions (coming soon)</th>
+        <th>Attachments</th>
       </tr>
     </thead>
-    <tbody id="orders-body">
-      <!-- Rows go here -->
-    </tbody>
+    <tbody id="orders-body"></tbody>
   </table>
 
   <script type="module">
     import { loadRequesters, loadSuppliers } from "/static/js/shared_filters.js";
+    import {
+      showViewAttachmentsModal,
+      showUploadAttachmentsModal,
+      checkAttachments
+    } from "/static/js/components/attachment_modal.js";
 
     async function loadPendingOrders(filters = {}) {
       try {
         const params = new URLSearchParams(filters).toString();
-        const res = await fetch(`/orders/pending_data${params ? '?' + params : ''}`);
+        const res = await fetch(`/orders/api/orders/pending_orders${params ? '?' + params : ''}`);
         const data = await res.json();
         const tbody = document.getElementById("orders-body");
         tbody.innerHTML = "";
 
-        (data.orders || []).forEach(order => {
+        for (const order of data.orders || []) {
           const row = document.createElement("tr");
+          const hasAttachments = await checkAttachments(order.id);
+
           row.innerHTML = `
             <td>${order.created_date ? order.created_date.split("T")[0] : "?"}</td>
             <td>${order.order_number}</td>
@@ -78,15 +88,33 @@
             <td>${order.supplier || "—"}</td>
             <td>R${(order.total || 0).toFixed(2)}</td>
             <td class="status">${order.status}</td>
-            <td>🔧</td>
+            <td>
+              <span class="clip-icon" title="Upload"
+                onclick="uploadAndRefresh(${order.id}, '${order.order_number}', this)">📎</span>
+              <span class="eye-icon ${hasAttachments ? '' : 'disabled'}"
+                title="View Attachments"
+                onclick="${hasAttachments ? `showViewAttachmentsModal(${order.id}, '${order.order_number}')` : ''}">👁️</span>
+            </td>
           `;
+
           tbody.appendChild(row);
-        });
+        }
       } catch (err) {
         alert("❌ Failed to load pending orders");
         console.error(err);
       }
     }
+
+    function uploadAndRefresh(orderId, orderNumber, clipIconSpan) {
+      showUploadAttachmentsModal(orderId, orderNumber, async () => {
+        const row = clipIconSpan.closest("tr");
+        const eye = row.querySelector(".eye-icon");
+        eye.classList.remove("disabled");
+        eye.onclick = () => showViewAttachmentsModal(orderId, orderNumber);
+      });
+    }
+    // Expose function for inline onclick handlers in the DOM
+    window.uploadAndRefresh = uploadAndRefresh;
 
     function applyFilters() {
       const startDate = document.getElementById("start-date").value;
@@ -119,6 +147,9 @@
       document.getElementById("clear-btn").addEventListener("click", clearFilters);
 
       loadPendingOrders();
+
+      window.showViewAttachmentsModal = showViewAttachmentsModal;
+      window.showUploadAttachmentsModal = showUploadAttachmentsModal;
     });
   </script>
 </body>
