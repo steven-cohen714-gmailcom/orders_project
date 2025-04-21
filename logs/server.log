@@ -5241,3 +5241,232 @@ INFO:     127.0.0.1:54675 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:54675 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:54675 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:54675 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55122 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55124 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55126 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55122 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55124 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55120 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55128 - "GET /orders/api/items_for_order/29 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55142 - "GET /orders/api/items_for_order/29 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55253 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55253 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55254 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55258 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55253 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55254 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /orders/api/items_for_order/29 HTTP/1.1" 404 Not Found
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [51803] using StatReload
+INFO:     Started server process [51810]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [51810]
+INFO:     Started server process [51876]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [51901] using StatReload
+INFO:     Started server process [51906]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:58457 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58457 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58460 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58462 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58460 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58457 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58458 - "GET /orders/items_for_order/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59282 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59282 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59285 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59287 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59282 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59285 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59283 - "GET /orders/items_for_order/29 HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [52129] using StatReload
+INFO:     Started server process [52132]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59429 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59429 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59434 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59436 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59429 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59434 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59432 - "GET /orders/items_for_order/29 HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [52132]
+INFO:     Started server process [52168]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [52193] using StatReload
+INFO:     Started server process [52199]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59969 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59969 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59973 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59975 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59973 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59969 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59971 - "GET /orders/items_for_order/29 HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [52199]
+INFO:     Started server process [52304]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [52333] using StatReload
+INFO:     Started server process [52339]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [52339]
+INFO:     Started server process [52371]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [52414] using StatReload
+INFO:     Started server process [52421]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [52624] using StatReload
+INFO:     Started server process [52630]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:50580 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50580 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50583 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50585 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50583 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50580 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50581 - "GET /orders/api/items_for_order/29 HTTP/1.1" 200 OK

@@ -168,8 +168,7 @@ async def upload_attachment(file: UploadFile, order_id: int = Form(...)):
         with saved_path.open("wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
-        # ✅ Validate file size
-        if saved_path.stat().st_size < 500:  # 500 bytes is a safe cutoff
+        if saved_path.stat().st_size < 500:
             saved_path.unlink(missing_ok=True)
             raise HTTPException(status_code=400, detail="Uploaded file is too small or corrupt.")
 
@@ -190,12 +189,10 @@ async def upload_attachment(file: UploadFile, order_id: int = Form(...)):
         })
 
         return {"status": "✅ Attachment uploaded"}
-
-
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "upload"})
         raise HTTPException(status_code=500, detail=f"Failed to upload attachment: {e}")
-    
+
 @router.get("/attachments/{order_id}")
 def get_order_attachments(order_id: int):
     try:
@@ -219,7 +216,6 @@ def get_pending_orders(
     requester: Optional[str] = Query(None),
     supplier: Optional[str] = Query(None)
 ):
-
     try:
         filters = ["o.status IN ('Pending', 'Waiting for Approval')"]
         params = []
@@ -308,3 +304,20 @@ def get_received_orders(
         return {"orders": orders}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to load received orders: {e}")
+
+@router.get("/api/items_for_order/{order_id}")
+def get_items_for_order(order_id: int):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT item_code, item_description, project, qty_ordered, price,
+                       (qty_ordered * price) AS total
+                FROM order_items
+                WHERE order_id = ?
+            """, (order_id,))
+            items = [dict(row) for row in cursor.fetchall()]
+        return {"items": items}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch items: {e}")

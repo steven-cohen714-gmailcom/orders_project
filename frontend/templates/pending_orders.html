@@ -24,13 +24,14 @@
       cursor: pointer;
       font-size: 1.2rem;
       margin-right: 0.5rem;
-}
+    }
 
     .clip-icon, .eye-icon {
       cursor: pointer;
       font-size: 1.2rem;
       margin: 0 0.3rem;
     }
+
     .eye-icon.disabled {
       opacity: 0.3;
       cursor: default;
@@ -75,6 +76,7 @@
       showUploadAttachmentsModal,
       checkAttachments
     } from "/static/js/components/attachment_modal.js";
+    import { expandLineItems } from "/static/js/components/expand_line_items.js";
 
     async function loadPendingOrders(filters = {}) {
       try {
@@ -89,27 +91,28 @@
           const hasAttachments = await checkAttachments(order.id);
 
           row.innerHTML = `
-            <td>
-              <span class="expand-icon" title="Show items"
-                onclick="expandLineItems(${order.id}, this)">⬇️</span>
-              ${order.created_date ? order.created_date.split("T")[0] : "?"}
-            </td>
-
-            <td>${order.order_number}</td>
-            <td>${order.requester}</td>
-            <td>${order.supplier || "—"}</td>
-            <td>R${(order.total || 0).toFixed(2)}</td>
-            <td class="status">${order.status}</td>
-            <td>
-              <span class="clip-icon" title="Upload"
-                onclick="uploadAndRefresh(${order.id}, '${order.order_number}', this)">📎</span>
-              <span class="eye-icon ${hasAttachments ? '' : 'disabled'}"
-                title="View Attachments"
-                onclick="${hasAttachments ? `showViewAttachmentsModal(${order.id}, '${order.order_number}')` : ''}">👁️</span>
-            </td>
-          `;
+      <td>${order.created_date ? order.created_date.split("T")[0] : "?"}</td>           
+      <td>${order.order_number}</td>
+      <td>${order.requester}</td>
+      <td>${order.supplier || "—"}</td>
+      <td>R${(order.total || 0).toFixed(2)}</td>
+      <td class="status">${order.status}</td>
+      <td>
+        <span class="expand-icon" title="Show items" data-order-id="${order.id}">⬇️</span>
+        <span class="clip-icon" title="Upload"
+          onclick="uploadAndRefresh(${order.id}, '${order.order_number}', this)">📎</span>
+        <span class="eye-icon ${hasAttachments ? '' : 'disabled'}"
+          title="View Attachments"
+          onclick="${hasAttachments ? `showViewAttachmentsModal(${order.id}, '${order.order_number}')` : ''}">👁️</span>
+      </td>
+`;
 
           tbody.appendChild(row);
+
+          const expandIcon = row.querySelector(".expand-icon");
+          expandIcon.addEventListener("click", function () {
+            expandLineItems(order.id, this);
+          });
         }
       } catch (err) {
         alert("❌ Failed to load pending orders");
@@ -125,8 +128,6 @@
         eye.onclick = () => showViewAttachmentsModal(orderId, orderNumber);
       });
     }
-    // Expose function for inline onclick handlers in the DOM
-    window.uploadAndRefresh = uploadAndRefresh;
 
     function applyFilters() {
       const startDate = document.getElementById("start-date").value;
@@ -162,6 +163,7 @@
 
       window.showViewAttachmentsModal = showViewAttachmentsModal;
       window.showUploadAttachmentsModal = showUploadAttachmentsModal;
+      window.expandLineItems = expandLineItems;
     });
   </script>
 </body>
