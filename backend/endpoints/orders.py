@@ -312,7 +312,7 @@ def get_items_for_order(order_id: int):
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT item_code, item_description, project, qty_ordered, price,
+                SELECT id, item_code, item_description, project, qty_ordered, price,
                        (qty_ordered * price) AS total
                 FROM order_items
                 WHERE order_id = ?
@@ -321,3 +321,4 @@ def get_items_for_order(order_id: int):
         return {"items": items}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch items: {e}")
+

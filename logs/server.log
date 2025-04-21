@@ -5660,3 +5660,147 @@ INFO:     127.0.0.1:63702 - "GET /orders/api/items_for_order/29 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:63740 - "GET /orders/api/items_for_order/29 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:63740 - "POST /orders/receive HTTP/1.1" 422 Unprocessable Content
 INFO:     127.0.0.1:64118 - "POST /orders/receive HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [53974]
+INFO:     Started server process [54412]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [54444] using StatReload
+INFO:     Started server process [54450]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:50048 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50048 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50050 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50052 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50048 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50052 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50050 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50054 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50081 - "GET /orders/api/items_for_order/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50081 - "POST /orders/receive HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50130 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50130 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50132 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50138 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50194 - "GET /orders/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50196 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50194 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50196 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50198 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50194 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50194 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50194 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50194 - "GET /orders/attachments/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50194 - "GET /orders/attachments/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50194 - "GET /orders/attachments/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50194 - "GET /orders/attachments/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50194 - "GET /data/uploads/21_Fidessa%20Consulting.PDF HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50226 - "GET /orders/attachments/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50343 - "GET /orders/attachments/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51776 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51776 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51777 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51781 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51777 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51776 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51781 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51780 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51850 - "GET /orders/api/items_for_order/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51850 - "POST /orders/receive HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51850 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51850 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51868 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51870 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51946 - "GET /orders/attachments/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52146 - "GET /orders/api/received_orders?requester=Omar HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52146 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52146 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52178 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52178 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52178 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52178 - "GET /orders/attachments/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52178 - "GET /orders/attachments/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52178 - "GET /orders/attachments/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52210 - "GET /orders/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52210 - "GET /static/js/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52212 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52210 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52212 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52214 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52214 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52214 - "GET /orders/attachments/29 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52214 - "GET /orders/attachments/28 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52214 - "GET /orders/attachments/21 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52214 - "GET /orders/attachments/20 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52214 - "GET /orders/attachments/19 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/api/orders/pending_orders?requester=Omar HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/25 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/24 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/22 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/18 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/17 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/16 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/15 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/14 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52351 - "GET /orders/attachments/13 HTTP/1.1" 200 OK
