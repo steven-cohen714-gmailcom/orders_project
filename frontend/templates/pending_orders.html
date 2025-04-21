@@ -77,6 +77,7 @@
       checkAttachments
     } from "/static/js/components/attachment_modal.js";
     import { expandLineItems } from "/static/js/components/expand_line_items.js";
+    import { showReceiveModal } from "/static/js/components/receive_modal.js";
 
     async function loadPendingOrders(filters = {}) {
       try {
@@ -97,14 +98,17 @@
       <td>${order.supplier || "—"}</td>
       <td>R${(order.total || 0).toFixed(2)}</td>
       <td class="status">${order.status}</td>
-      <td>
+     <td>
         <span class="expand-icon" title="Show items" data-order-id="${order.id}">⬇️</span>
         <span class="clip-icon" title="Upload"
           onclick="uploadAndRefresh(${order.id}, '${order.order_number}', this)">📎</span>
         <span class="eye-icon ${hasAttachments ? '' : 'disabled'}"
           title="View Attachments"
           onclick="${hasAttachments ? `showViewAttachmentsModal(${order.id}, '${order.order_number}')` : ''}">👁️</span>
-      </td>
+        <span class="receive-icon" title="Mark as Received"
+          onclick="showReceiveModal(${order.id}, '${order.order_number}')">📦</span>
+</td>
+
 `;
 
           tbody.appendChild(row);
@@ -163,7 +167,7 @@
 
       window.showViewAttachmentsModal = showViewAttachmentsModal;
       window.showUploadAttachmentsModal = showUploadAttachmentsModal;
-      window.expandLineItems = expandLineItems;
+      window.showReceiveModal = showReceiveModal;
     });
   </script>
 </body>

@@ -46,3 +46,6 @@
 [2025-04-21T00:46:58.695065] {"action": "attachment_uploaded", "order_id": 21, "filename": "Fidessa Consulting.PDF", "path": "data/uploads/21_Fidessa Consulting.PDF", "size_bytes": 5382}
 [2025-04-21T09:14:24.762072] {"action": "submit_attempt", "order_data": {"order_number": "URC1033", "requester_id": 5, "order_note": null, "note_to_supplier": "Multiple line order", "supplier_id": 7, "items": [{"item_code": "BEAR059", "item_description": "Bearing 51144", "project": "KA04M", "qty_ordered": 1.0, "price": 200.0}, {"item_code": "BULB004", "item_description": "Bulb 12 V Dcdf  G1034", "project": "PR30M", "qty_ordered": 1.0, "price": 300.0}], "status": "Pending", "total": 500.0}}
 [2025-04-21T09:14:24.764510] {"action": "submit_success", "order_number": "URC1033", "status": "Pending"}
+[2025-04-21T12:10:34.297975] {"action": "receive", "orders": [29]}
+[2025-04-21T12:18:37.007009] {"action": "receive", "orders": [33]}
+[2025-04-21T12:30:25.856894] {"action": "receive", "orders": [33]}
