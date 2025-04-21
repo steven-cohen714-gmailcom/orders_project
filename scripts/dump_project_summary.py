@@ -7,9 +7,10 @@ from datetime import datetime
 
 # --- Config ---
 EXCLUDE_DIRS = {'venv', '__pycache__', '.pytest_cache'}
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_MD = PROJECT_ROOT / 'project_summary.md'
 DB_FILE = PROJECT_ROOT / 'data' / 'orders.db'
+TODO_REGEX = re.compile(r"#\s*TODO[:\s]+(.+)", re.IGNORECASE)
 
 # --- Helpers ---
 def build_tree(path: Path, prefix='') -> str:
@@ -25,7 +26,7 @@ def build_tree(path: Path, prefix='') -> str:
                 extension = '    ' if idx == len(entries) - 1 else '│   '
                 lines.extend(_build(entry, prefix + extension, level + 1))
         return lines
-    return f"{path}\n" + '\n'.join(_build(path, prefix, level=1))
+    return f"📂 Root: {path}\n" + '\n'.join(_build(path, prefix, level=1))
 
 def extract_desc(src: str) -> str:
     m = re.search(r'"""(.*?)"""', src, re.DOTALL) or re.search(r"'''(.*?)'''", src, re.DOTALL)
@@ -38,9 +39,45 @@ def extract_desc(src: str) -> str:
 
 def read_src(path: Path) -> str:
     try:
-        return path.read_text(encoding='utf-8')
+        if path.suffix in {'.py', '.html', '.js', '.sh', '.md', '.txt'}:
+            return path.read_text(encoding='utf-8')
+        return ''
     except Exception as e:
         return f"<!-- ERROR reading {path.name}: {e} -->"
+
+def group_files_by_type(files: list[Path]) -> dict:
+    grouped = {'Python Files': [], 'HTML Templates': [], 'JS Scripts': [], 'Shell/Other': []}
+    for f in files:
+        if f.suffix == '.py':
+            grouped['Python Files'].append(f)
+        elif f.suffix == '.html':
+            grouped['HTML Templates'].append(f)
+        elif f.suffix == '.js':
+            grouped['JS Scripts'].append(f)
+        else:
+            grouped['Shell/Other'].append(f)
+    return grouped
+
+def dump_source_files() -> str:
+    all_files = []
+    for root, dirs, files in os.walk(PROJECT_ROOT):
+        dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
+        for f in sorted(files):
+            p = Path(root) / f
+            if p == OUTPUT_MD or p.name.startswith('.') or p.name == '.DS_Store':
+                continue
+            all_files.append(p)
+    grouped = group_files_by_type(all_files)
+    md = ""
+    for group, files in grouped.items():
+        md += f"## 📂 {group}\n\n"
+        for p in sorted(files):
+            rel = p.relative_to(PROJECT_ROOT)
+            src = read_src(p)
+            desc = extract_desc(src)
+            if src.strip():
+                md += f"### `{rel}`\n**{desc}**\n```python\n{src}\n```\n\n"
+    return md
 
 def dump_db_schema(db_path: Path) -> str:
     md = "## 🗄️ Database Schema (`data/orders.db`)\n\n"
@@ -73,11 +110,43 @@ def dump_test_summary() -> str:
     scripts_dir = PROJECT_ROOT / "scripts"
     for test_file in sorted(scripts_dir.glob("test_*.py")):
         name = test_file.name
-        status = "✅"
         purpose = summary.get(name, extract_desc(read_src(test_file)))
+        status = "✅" if name in summary else "⏳"
         md += f"| `{name}` | {purpose} | {status} |\n"
     md += "\n"
     return md
+
+def dump_static_todos() -> str:
+    return """
+## ✅ TODOs (Static Manual Items)
+
+- [ ] Modularize long `.js` files into reusable components
+- [ ] Finalize `/audit` route with filters + trail UI
+- [ ] Finalize `/orders/print` layout + backend
+- [ ] Add RBAC (role-based access control)
+- [ ] Pagination on long tables (Pending/Received)
+- [ ] Security audit on file uploads
+- [ ] Normalize filenames and harden upload paths
+- [ ] Add upload success/failure status to frontend
+"""
+
+def scan_for_code_todos() -> str:
+    todos = []
+    for root, _, files in os.walk(PROJECT_ROOT):
+        for f in files:
+            if f.endswith(('.py', '.js', '.html')):
+                path = Path(root) / f
+                try:
+                    lines = path.read_text(encoding='utf-8').splitlines()
+                    for i, line in enumerate(lines):
+                        m = TODO_REGEX.search(line)
+                        if m:
+                            todos.append(f"- `{path.relative_to(PROJECT_ROOT)}`: {m.group(1).strip()}")
+                except Exception:
+                    continue
+    if not todos:
+        return "## ⛳ Auto-detected TODOs\n\n_None found._\n"
+    return "## ⛳ Auto-detected TODOs\n\n" + '\n'.join(todos) + "\n"
 
 def extra_sections() -> str:
     return """
@@ -116,55 +185,24 @@ Passwords are hashed; assumed defaults for local testing: `password`.
 | `/lookups/items`            | GET       | ✅ Implemented |
 """
 
-# --- Main dump ---
+# --- Main ---
 def main():
     md = []
     md.append(f"# 📦 Project Snapshot\nGenerated: {datetime.now():%Y-%m-%d %H:%M:%S}\n")
     md.append("## 📁 Directory Tree\n````\n" + build_tree(PROJECT_ROOT) + "\n````")
-    md.append("## 📄 Source Files\n")
-    for root, dirs, files in os.walk(PROJECT_ROOT):
-        dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
-        for f in sorted(files):
-            p = Path(root) / f
-            if p == OUTPUT_MD:
-                continue
-            rel = p.relative_to(PROJECT_ROOT)
-            src = read_src(p)
-            desc = extract_desc(src)
-            md.append(f"### `{rel}`\n**{desc}**\n```python\n{src}\n```\n")
+    md.append(dump_source_files())
     md.append(dump_db_schema(DB_FILE))
+    md.append(dump_static_todos())
+    md.append(scan_for_code_todos())
     md.append("## 📝 Project summary\n"
-              "I am busy building a Purchase Order system for Universal Recycling.\n\n"
-              "**Testing Methodology:**\n"
-              "- Each feature is tested in isolation (Python scripts, curl, direct sqlite3 queries)\n"
-              "- No feature gets built on top of another until the one before it passes\n"
-              "- Audit trails, status transitions, and data integrity are tested at every step\n"
-              "- Test records are inserted programmatically, not by hand\n"
-              "- UI will only be added when backend is rock solid\n\n"
-              "**File Structure Summary:**\n"
-              "- `backend/endpoints/orders.py` → Handles all `/orders` routes\n"
-              "- `backend/database.py` → DB operations: init, insert, queries\n"
-              "- `backend/utils/order_utils.py` → Helpers: status logic, validation\n"
-              "- `scripts/` → Injection scripts, test runners & setup tools\n"
-              "- `frontend/templates/` → Screen layouts (planned)\n"
-              "- `data/orders.db` → Active SQLite file\n\n"
-              "**Build Methodology:**\n"
-              "- Build backend first → fully tested\n"
-              "- One feature at a time → injected via `.py` scripts\n"
-              "- No UI work until backend is rock solid\n"
-              "- All tests confirmed via curl + Python\n"
-              "- Full end-to-end integration test exists\n"
-              "- Code reusability is a must (e.g. date handling, filters)\n\n"
-              "**Date Input Standardization:**\n"
-              "All date inputs (filter, creation, etc.) use `<input type=\"date\">` and transmit in ISO 8601 (YYYY-MM-DD) format. "
-              "The backend expects this format and filters directly using SQLite `DATE()` comparisons. "
-              "No manual formatting or parsing required.\n\n"
-              "**How Steven works with ChatGPT:**\n"
-              "- Steven doesn’t know coding; he’s decent with terminal commands\n"
-              "- He uses VS Code, wants brief error messages & clear steps\n")
+              "This is a custom-built Purchase Order system for Universal Recycling.\n\n"
+              "**Build & Testing Approach:**\n"
+              "- Features are isolated and tested before being chained\n"
+              "- Scripts inject DB rows or hit live endpoints for testing\n"
+              "- Full `curl`, Python, and sqlite3 test coverage\n"
+              "- UI is layered only on top of a tested backend\n")
     md.append(extra_sections())
     md.append(dump_test_summary())
-
     try:
         OUTPUT_MD.write_text('\n'.join(md), encoding='utf-8')
         print(f"✅ Written to: {OUTPUT_MD}")

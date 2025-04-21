@@ -19,6 +19,13 @@
       padding: 0.5rem 1rem;
       cursor: pointer;
     }
+
+    .expand-icon {
+      cursor: pointer;
+      font-size: 1.2rem;
+      margin-right: 0.5rem;
+}
+
     .clip-icon, .eye-icon {
       cursor: pointer;
       font-size: 1.2rem;
@@ -82,7 +89,12 @@
           const hasAttachments = await checkAttachments(order.id);
 
           row.innerHTML = `
-            <td>${order.created_date ? order.created_date.split("T")[0] : "?"}</td>
+            <td>
+              <span class="expand-icon" title="Show items"
+                onclick="expandLineItems(${order.id}, this)">⬇️</span>
+              ${order.created_date ? order.created_date.split("T")[0] : "?"}
+            </td>
+
             <td>${order.order_number}</td>
             <td>${order.requester}</td>
             <td>${order.supplier || "—"}</td>
