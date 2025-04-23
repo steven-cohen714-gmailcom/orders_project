@@ -1,20 +1,8 @@
 from fastapi import APIRouter, HTTPException
+from typing import Optional
 import sqlite3
-from pathlib import Path
-from datetime import datetime
-import json
 
-router = APIRouter(prefix="/lookups")
-
-def log_lookup(endpoint: str, outcome: str, detail: str = ""):
-    log_path = Path("logs/lookups_log.txt")
-    log_path.parent.mkdir(parents=True, exist_ok=True)
-    with log_path.open("a", encoding="utf-8") as f:
-        timestamp = datetime.now().isoformat()
-        entry = {"time": timestamp, "endpoint": endpoint, "status": outcome}
-        if detail:
-            entry["detail"] = detail
-        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+router = APIRouter(prefix="/lookups", tags=["lookups"])
 
 @router.get("/suppliers")
 def get_suppliers():
@@ -22,13 +10,11 @@ def get_suppliers():
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT id, account_number, name FROM suppliers ORDER BY name")
+            cursor.execute("SELECT * FROM suppliers ORDER BY name")
             suppliers = [dict(row) for row in cursor.fetchall()]
-        log_lookup("/suppliers", "success")
         return {"suppliers": suppliers}
     except Exception as e:
-        log_lookup("/suppliers", "error", str(e))
-        raise HTTPException(status_code=500, detail=f"Failed to load suppliers: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch suppliers: {e}")
 
 @router.get("/requesters")
 def get_requesters():
@@ -36,13 +22,39 @@ def get_requesters():
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT id, name FROM requesters ORDER BY name")
+            cursor.execute("SELECT * FROM requesters ORDER BY name")
             requesters = [dict(row) for row in cursor.fetchall()]
-        log_lookup("/requesters", "success")
         return {"requesters": requesters}
     except Exception as e:
-        log_lookup("/requesters", "error", str(e))
-        raise HTTPException(status_code=500, detail=f"Failed to load requesters: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch requesters: {e}")
+
+@router.post("/requesters")
+def add_requester(name: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO requesters (name) VALUES (?)", (name,))
+            conn.commit()
+        return {"status": "Requester added"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Requester name already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to add requester: {e}")
+
+@router.put("/requesters/{id}")
+def update_requester(id: int, name: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE requesters SET name = ? WHERE id = ?", (name, id))
+            conn.commit()
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="Requester not found")
+        return {"status": "Requester updated"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Requester name already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update requester: {e}")
 
 @router.get("/items")
 def get_items():
@@ -50,13 +62,39 @@ def get_items():
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT item_code, item_description FROM items ORDER BY item_code")
+            cursor.execute("SELECT * FROM items ORDER BY item_code")
             items = [dict(row) for row in cursor.fetchall()]
-        log_lookup("/items", "success")
         return {"items": items}
     except Exception as e:
-        log_lookup("/items", "error", str(e))
-        raise HTTPException(status_code=500, detail=f"Failed to load items: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch items: {e}")
+
+@router.post("/items")
+def add_item(item_code: str, item_description: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO items (item_code, item_description) VALUES (?, ?)", (item_code, item_description))
+            conn.commit()
+        return {"status": "Item added"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Item code already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to add item: {e}")
+
+@router.put("/items/{id}")
+def update_item(id: int, item_code: str, item_description: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE items SET item_code = ?, item_description = ? WHERE id = ?", (item_code, item_description, id))
+            conn.commit()
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="Item not found")
+        return {"status": "Item updated"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Item code already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update item: {e}")
 
 @router.get("/projects")
 def get_projects():
@@ -64,10 +102,105 @@ def get_projects():
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT project_code, project_name FROM projects ORDER BY project_code")
+            cursor.execute("SELECT * FROM projects ORDER BY project_code")
             projects = [dict(row) for row in cursor.fetchall()]
-        log_lookup("/projects", "success")
         return {"projects": projects}
     except Exception as e:
-        log_lookup("/projects", "error", str(e))
-        raise HTTPException(status_code=500, detail=f"Failed to load projects: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch projects: {e}")
+
+@router.post("/projects")
+def add_project(project_code: str, project_name: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO projects (project_code, project_name) VALUES (?, ?)", (project_code, project_name))
+            conn.commit()
+        return {"status": "Project added"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Project code already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to add project: {e}")
+
+@router.put("/projects/{id}")
+def update_project(id: int, project_code: str, project_name: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE projects SET project_code = ?, project_name = ? WHERE id = ?", (project_code, project_name, id))
+            conn.commit()
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="Project not found")
+        return {"status": "Project updated"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Project code already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update project: {e}")
+
+@router.get("/users")
+def get_users():
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, username, rights FROM users ORDER BY username")
+            users = [dict(row) for row in cursor.fetchall()]
+        return {"users": users}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch users: {e}")
+
+@router.post("/users")
+def add_user(username: str, password: str, rights: str):
+    if rights not in ["edit", "view", "admin"]:
+        raise HTTPException(status_code=400, detail="Invalid rights value")
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO users (username, password_hash, rights) VALUES (?, ?, ?)", (username, password, rights))
+            conn.commit()
+        return {"status": "User added"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Username already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to add user: {e}")
+
+@router.put("/users/{id}")
+def update_user(id: int, username: str, rights: str):
+    if rights not in ["edit", "view", "admin"]:
+        raise HTTPException(status_code=400, detail="Invalid rights value")
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE users SET username = ?, rights = ? WHERE id = ?", (username, rights, id))
+            conn.commit()
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="User not found")
+        return {"status": "User updated"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Username already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update user: {e}")
+
+@router.get("/settings")
+def get_settings():
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT key, value FROM settings WHERE key = 'order_number_start'")
+            row = cursor.fetchone()
+            if row:
+                return {"order_number_start": row["value"]}
+            return {"order_number_start": "URC0001"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch settings: {e}")
+
+@router.put("/settings")
+def update_setting(key: str, value: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)", (key, value))
+            conn.commit()
+        return {"status": "Setting updated"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update setting: {e}")

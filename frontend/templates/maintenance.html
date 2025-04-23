@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Maintenance - Universal Recycling</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    .tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
+    .tab { padding: 0.5rem 1rem; cursor: pointer; background: #ddd; border-radius: 4px 4px 0 0; }
+    .tab.active { background: #007BFF; color: white; }
+    .tab-content { display: none; padding: 1rem; border: 1px solid #ccc; border-radius: 0 4px 4px 4px; }
+    .tab-content.active { display: block; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+    input, select, button { padding: 0.4rem; margin: 0.2rem 0; }
+    button { cursor: pointer; background: #007BFF; color: white; border: none; border-radius: 4px; }
+    button:hover { background: #0056b3; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>Maintenance</h2>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="users">Users</div>
+    <div class="tab" data-tab="requesters">Requesters</div>
+    <div class="tab" data-tab="items">Items</div>
+    <div class="tab" data-tab="projects">Projects</div>
+    <div class="tab" data-tab="settings">Settings</div>
+  </div>
+
+  <div id="users" class="tab-content active">
+    <div class="form-group">
+      <label for="user-username">Username:</label>
+      <input type="text" id="user-username" />
+      <label for="user-password">Password:</label>
+      <input type="password" id="user-password" />
+      <label for="user-rights">Rights:</label>
+      <select id="user-rights">
+        <option value="edit">Edit</option>
+        <option value="view">View Only</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button onclick="addUser()">Add User</button>
+    </div>
+    <table id="users-table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Rights</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="requesters" class="tab-content">
+    <div class="form-group">
+      <label for="requester-name">Name:</label>
+      <input type="text" id="requester-name" />
+      <button onclick="addRequester()">Add Requester</button>
+    </div>
+    <table id="requesters-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="items" class="tab-content">
+    <div class="form-group">
+      <label for="item-code">Item Code:</label>
+      <input type="text" id="item-code" />
+      <label for="item-description">Description:</label>
+      <input type="text" id="item-description" />
+      <button onclick="addItem()">Add Item</button>
+    </div>
+    <table id="items-table">
+      <thead>
+        <tr>
+          <th>Item Code</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="projects" class="tab-content">
+    <div class="form-group">
+      <label for="project-code">Project Code:</label>
+      <input type="text" id="project-code" />
+      <label for="project-name">Project Name:</label>
+      <input type="text" id="project-name" />
+      <button onclick="addProject()">Add Project</button>
+    </div>
+    <table id="projects-table">
+      <thead>
+        <tr>
+          <th>Project Code</th>
+          <th>Project Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="settings" class="tab-content">
+    <div class="form-group">
+      <label for="order-number-start">Start Order Number:</label>
+      <input type="text" id="order-number-start" />
+      <button onclick="updateOrderNumber()">Update</button>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.tab).classList.add("active");
+      });
+    });
+
+    // Load data on page load
+    async function loadData(endpoint, tableId, renderRow) {
+      try {
+        const res = await fetch(endpoint);
+        const data = await res.json();
+        const tbody = document.querySelector(`#${tableId} tbody`);
+        tbody.innerHTML = "";
+        Object.values(data)[0].forEach(item => {
+          const row = document.createElement("tr");
+          row.innerHTML = renderRow(item);
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error(`Failed to load ${tableId}:`, err);
+      }
+    }
+
+    // Users
+    async function loadUsers() {
+      loadData("/lookups/users", "users-table", user => `
+        <td>${user.username}</td>
+        <td>${user.rights}</td>
+        <td><button onclick="editUser(${user.id}, '${user.username}', '${user.rights}')">Edit</button></td>
+      `);
+    }
+
+    async function addUser() {
+      const username = document.getElementById("user-username").value;
+      const password = document.getElementById("user-password").value;
+      const rights = document.getElementById("user-rights").value;
+      try {
+        await fetch("/lookups/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password, rights }),
+        });
+        loadUsers();
+      } catch (err) {
+        console.error("Failed to add user:", err);
+      }
+    }
+
+    async function editUser(id, username, rights) {
+      const newUsername = prompt("New Username:", username);
+      const newRights = prompt("New Rights (edit/view/admin):", rights);
+      if (newUsername && newRights) {
+        try {
+          await fetch(`/lookups/users/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username: newUsername, rights: newRights }),
+          });
+          loadUsers();
+        } catch (err) {
+          console.error("Failed to edit user:", err);
+        }
+      }
+    }
+
+    // Requesters
+    async function loadRequesters() {
+      loadData("/lookups/requesters", "requesters-table", requester => `
+        <td>${requester.name}</td>
+        <td><button onclick="editRequester(${requester.id}, '${requester.name}')">Edit</button></td>
+      `);
+    }
+
+    async function addRequester() {
+      const name = document.getElementById("requester-name").value;
+      try {
+        await fetch("/lookups/requesters", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name }),
+        });
+        loadRequesters();
+      } catch (err) {
+        console.error("Failed to add requester:", err);
+      }
+    }
+
+    async function editRequester(id, name) {
+      const newName = prompt("New Name:", name);
+      if (newName) {
+        try {
+          await fetch(`/lookups/requesters/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: newName }),
+          });
+          loadRequesters();
+        } catch (err) {
+          console.error("Failed to edit requester:", err);
+        }
+      }
+    }
+
+    // Items
+    async function loadItems() {
+      loadData("/lookups/items", "items-table", item => `
+        <td>${item.item_code}</td>
+        <td>${item.item_description}</td>
+        <td><button onclick="editItem(${item.id}, '${item.item_code}', '${item.item_description}')">Edit</button></td>
+      `);
+    }
+
+    async function addItem() {
+      const itemCode = document.getElementById("item-code").value;
+      const itemDescription = document.getElementById("item-description").value;
+      try {
+        await fetch("/lookups/items", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ item_code: itemCode, item_description: itemDescription }),
+        });
+        loadItems();
+      } catch (err) {
+        console.error("Failed to add item:", err);
+      }
+    }
+
+    async function editItem(id, itemCode, itemDescription) {
+      const newItemCode = prompt("New Item Code:", itemCode);
+      const newItemDescription = prompt("New Description:", itemDescription);
+      if (newItemCode && newItemDescription) {
+        try {
+          await fetch(`/lookups/items/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ item_code: newItemCode, item_description: newItemDescription }),
+          });
+          loadItems();
+        } catch (err) {
+          console.error("Failed to edit item:", err);
+        }
+      }
+    }
+
+    // Projects
+    async function loadProjects() {
+      loadData("/lookups/projects", "projects-table", project => `
+        <td>${project.project_code}</td>
+        <td>${project.project_name}</td>
+        <td><button onclick="editProject(${project.id}, '${project.project_code}', '${project.project_name}')">Edit</button></td>
+      `);
+    }
+
+    async function addProject() {
+      const projectCode = document.getElementById("project-code").value;
+      const projectName = document.getElementById("project-name").value;
+      try {
+        await fetch("/lookups/projects", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ project_code: projectCode, project_name: projectName }),
+        });
+        loadProjects();
+      } catch (err) {
+        console.error("Failed to add project:", err);
+      }
+    }
+
+    async function editProject(id, projectCode, projectName) {
+      const newProjectCode = prompt("New Project Code:", projectCode);
+      const newProjectName = prompt("New Project Name:", projectName);
+      if (newProjectCode && newProjectName) {
+        try {
+          await fetch(`/lookups/projects/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ project_code: newProjectCode, project_name: newProjectName }),
+          });
+          loadProjects();
+        } catch (err) {
+          console.error("Failed to edit project:", err);
+        }
+      }
+    }
+
+    // Settings
+    async function loadSettings() {
+      try {
+        const res = await fetch("/lookups/settings");
+        const data = await res.json();
+        document.getElementById("order-number-start").value = data.order_number_start || "";
+      } catch (err) {
+        console.error("Failed to load settings:", err);
+      }
+    }
+
+    async function updateOrderNumber() {
+      const orderNumberStart = document.getElementById("order-number-start").value;
+      try {
+        await fetch("/lookups/settings", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key: "order_number_start", value: orderNumberStart }),
+        });
+        alert("Order number updated successfully");
+      } catch (err) {
+        console.error("Failed to update order number:", err);
+      }
+    }
+
+    // Load all data on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      loadUsers();
+      loadRequesters();
+      loadItems();
+      loadProjects();
+      loadSettings();
+    });
+  </script>
+</body>
+</html>

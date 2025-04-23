@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Received Orders</title>
+  <title>Audit Trail</title>
   <style>
     body { font-family: Arial, sans-serif; padding: 2rem; }
     table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
@@ -29,10 +29,11 @@
       opacity: 0.3;
       cursor: default;
     }
+    .audit-details { margin-top: 0.5rem; padding-left: 2rem; }
   </style>
 </head>
 <body>
-  <h2>Received Orders</h2>
+  <h2>Audit Trail</h2>
 
   <div class="filters">
     <label for="start-date">Start Date:</label>
@@ -46,6 +47,9 @@
     <label for="filter-status">Status:</label>
     <select id="filter-status">
       <option value="All">All</option>
+      <option value="Pending">Pending</option>
+      <option value="Waiting for Approval">Waiting for Approval</option>
+      <option value="Awaiting Authorisation">Awaiting Authorisation</option>
       <option value="Received">Received</option>
     </select>
     <button id="run-btn">Run</button>
@@ -64,9 +68,9 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody id="received-body"></tbody>
+    <tbody id="audit-body"></tbody>
   </table>
 
-  <script type="module" src="/static/js/received_orders.js"></script>
+  <script type="module" src="/static/js/audit_trail.js"></script>
 </body>
 </html>

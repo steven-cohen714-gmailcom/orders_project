@@ -40,6 +40,24 @@ def main():
     # Restore stashed changes
     if stashed:
         print("🔁 Restoring stashed work...")
+
+        # 🧹 Delete known log conflicts BEFORE popping stash
+        conflict_logs = [
+            "logs/db_activity_log.txt",
+            "logs/server_startup.log"
+        ]
+        for log_file in conflict_logs:
+            path = Path(log_file)
+            if path.exists():
+                print(f"🧹 Removing log file: {log_file}")
+                path.unlink()
+
+        # 🧹 Delete known .pyc cache file
+        pycache_file = Path("backend/endpoints/__pycache__/orders.cpython-313.pyc")
+        if pycache_file.exists():
+            print(f"🧹 Removing pycache: {pycache_file}")
+            pycache_file.unlink()
+
         try:
             run(["git", "stash", "pop"], "Restore stashed changes")
         except SystemExit:

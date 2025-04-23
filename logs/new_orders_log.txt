@@ -52,3 +52,23 @@
 [2025-04-21T12:39:14.035880] {"action": "receive", "orders": [29]}
 [2025-04-21T12:45:49.834298] {"action": "receive", "orders": [28]}
 [2025-04-21T12:55:27.119339] {"action": "receive", "orders": [22]}
+[2025-04-22T05:13:33.480467] {"action": "receive", "orders": [27]}
+[2025-04-22T05:16:17.305742] {"action": "submit_attempt", "order_data": {"order_number": "URC1035", "requester_id": 5, "order_note": null, "note_to_supplier": "Note to order URC1035", "supplier_id": 5, "items": [{"item_code": "BEAR059", "item_description": "Bearing 51144", "project": "DR09M", "qty_ordered": 1.0, "price": 1035.0}], "status": "Pending", "total": 1035.0}}
+[2025-04-22T05:16:17.307190] {"action": "submit_success", "order_number": "URC1035", "status": "Pending"}
+[2025-04-22T14:37:29.975123] {"action": "attachment_uploaded", "order_id": 30, "filename": "Intimisso.pdf", "path": "data/uploads/30_Intimisso.pdf", "size_bytes": 527661}
+[2025-04-22T15:05:06.494383] {"error": "400: Uploaded file is too small or corrupt.", "type": "upload"}
+[2025-04-22T15:06:32.111866] {"error": "400: Uploaded file is too small or corrupt.", "type": "upload"}
+[2025-04-22T15:26:14.689225] {"action": "note_updated", "order_id": 17, "order_note": "Pipeline test note"}
+[2025-04-22T15:53:10.024213] {"action": "note_updated", "order_id": 26, "order_note": "(No note)"}
+[2025-04-23T04:58:19.922536] {"error": "400: Uploaded file is too small or corrupt.", "type": "upload"}
+[2025-04-23T05:01:18.754659] {"error": "400: Uploaded file is too small or corrupt.", "type": "upload"}
+[2025-04-23T05:10:21.922001] {"error": "400: Uploaded file is too small or corrupt.", "type": "upload"}
+[2025-04-23T05:12:32.709870] {"action": "attachment_uploaded", "order_id": 30, "filename": "2025-04-22_18-44.pdf", "path": "data/uploads/30_2025-04-22_18-44.pdf", "size_bytes": 497451}
+[2025-04-23T05:12:44.191101] {"action": "attachment_uploaded", "order_id": 30, "filename": "2025-04-22_18-44_1.pdf", "path": "data/uploads/30_2025-04-22_18-44_1.pdf", "size_bytes": 497451}
+[2025-04-23T05:26:58.042745] {"action": "attachment_uploaded", "order_id": 30, "filename": "2025-04-22_18-29.pdf", "path": "data/uploads/30_2025-04-22_18-29.pdf", "size_bytes": 359355}
+[2025-04-23T05:27:25.980213] {"action": "attachment_uploaded", "order_id": 13, "filename": "Screenshot_2025-04-23_at_05.19.18.png", "path": "data/uploads/13_Screenshot_2025-04-23_at_05.19.18.png", "size_bytes": 36991}
+[2025-04-23T05:27:53.524437] {"action": "attachment_uploaded", "order_id": 14, "filename": "Screenshot_2025-04-23_at_05.19.18.png", "path": "data/uploads/14_Screenshot_2025-04-23_at_05.19.18.png", "size_bytes": 36991}
+[2025-04-23T06:00:58.593124] {"action": "submit_attempt", "order_data": {"order_number": "URC1037", "requester_id": 3, "order_note": null, "note_to_supplier": "This is a note for order URC1037\nThis order has 2 lines :\n1 item of ABRA025 - R15,000\n1 item of BEAR059 for R3,000", "supplier_id": 6, "items": [{"item_code": "ABRA025", "item_description": "Flap Wheel  50 X 20  X  6  Mm  P80", "project": "KA04M", "qty_ordered": 1.0, "price": 15000.0}, {"item_code": "BEAR059", "item_description": "Bearing 51144", "project": "TR30M", "qty_ordered": 1.0, "price": 3000.0}], "status": "Awaiting Authorisation", "total": 18000.0}}
+[2025-04-23T06:00:58.594209] {"action": "submit_success", "order_number": "URC1037", "status": "Awaiting Authorisation"}
+[2025-04-23T06:18:24.718007] {"action": "attachment_uploaded", "order_id": 31, "filename": "Screenshot_2025-04-23_at_05.19.18.png", "path": "data/uploads/31_Screenshot_2025-04-23_at_05.19.18.png", "size_bytes": 36991}
+[2025-04-23T06:58:56.012341] {"action": "receive", "orders": [31]}

@@ -1,5 +1,4 @@
 import { expandLineItems } from "/static/js/components/expand_line_items.js";
-import { showReceiveModal } from "/static/js/components/receive_modal.js";
 import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from "/static/js/components/attachment_modal.js";
 import { showOrderNoteModal, showSupplierNoteModal } from "/static/js/components/order_note_modal.js";
 import { loadRequesters, loadSuppliers } from "/static/js/components/shared_filters.js";
@@ -17,18 +16,18 @@ function populateDropdown(selectId, items, labelFunc, valueFunc) {
 
 function escapeHTML(str) {
   if (!str) return "";
-  return str.replace(/'/g, "\\'").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, " ").replace(/\r/g, "");
+  return str.replace(/'/g, "\\'").replace(/"/g, "\\\"").replace(/</g, "<").replace(/>/g, ">").replace(/\n/g, " ").replace(/\r/g, "");
 }
 
 function populateTable(data) {
-  const tbody = document.getElementById("pending-body");
+  const tbody = document.getElementById("received-body");
   tbody.innerHTML = "";
 
   if (!data.orders || data.orders.length === 0) {
     const row = tbody.insertRow();
     const cell = row.insertCell(0);
     cell.colSpan = 7;
-    cell.textContent = "No pending orders found.";
+    cell.textContent = "No received orders found.";
     return;
   }
 
@@ -51,7 +50,6 @@ function populateTable(data) {
       <td>${order.status}</td>
       <td>
         <span class="expand-icon" onclick="window.expandLineItems(${order.id}, this)">⬇️</span>
-        <span class="receive-icon" title="Mark as Received" onclick="window.showReceiveModal(${order.id}, '${sanitizedOrderNumber}')">✅</span>
         <span class="clip-icon" title="View/Upload Attachments" onclick="window.checkAttachments(${order.id}).then(has => has ? window.showViewAttachmentsModal(${order.id}, '${sanitizedOrderNumber}') : window.showUploadAttachmentsModal(${order.id}, '${sanitizedOrderNumber}', () => window.checkAttachments(${order.id}).then(has => this.classList.toggle('eye-icon', has))))">📎</span>
         <span class="note-icon" title="Edit Continuous Order Note" onclick="window.showOrderNoteModal('${sanitizedOrderNote}', ${order.id})">📝</span>
         <span class="supplier-note-icon" title="View Note to Supplier" onclick="try { window.showSupplierNoteModal('${sanitizedSupplierNote}'); } catch (e) { console.error('Failed to show supplier note for order ${order.order_number}:', e); alert('Error displaying supplier note: ' + e.message); }">📦</span>
@@ -79,7 +77,6 @@ async function loadFiltersAndOrders() {
 async function runFilters() {
   const supplierName = document.getElementById("filter-supplier").value;
   const requesterName = document.getElementById("filter-requester").value;
-  const status = document.getElementById("filter-status").value;
   let startDate = document.getElementById("start-date").value;
   let endDate = document.getElementById("end-date").value;
 
@@ -101,17 +98,16 @@ async function runFilters() {
   const params = new URLSearchParams();
   if (supplierName) params.append("supplier", supplierName);
   if (requesterName) params.append("requester", requesterName);
-  if (status && status !== "All") params.append("status", status);
   if (startDate) params.append("start_date", startDate);
   if (endDate) params.append("end_date", endDate);
 
   try {
-    const res = await fetch(`/orders/api/orders/pending_orders?${params.toString()}`);
+    const res = await fetch(`/orders/api/received_orders?${params.toString()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
     const data = await res.json();
     populateTable(data);
   } catch (err) {
-    console.error("Failed to fetch filtered orders", err);
+    console.error("Failed to fetch received orders", err);
     alert("Failed to load orders: " + err.message);
   }
 }
@@ -131,12 +127,11 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("run-btn").addEventListener("click", runFilters);
   document.getElementById("clear-btn").addEventListener("click", clearFilters);
 
-  // Periodically refresh the pending orders table every 30 seconds
+  // Periodically refresh the received orders table every 30 seconds
   setInterval(runFilters, 30000);
 });
 
 window.expandLineItems = expandLineItems;
-window.showReceiveModal = showReceiveModal;
 window.showUploadAttachmentsModal = showUploadAttachmentsModal;
 window.checkAttachments = checkAttachments;
 window.showViewAttachmentsModal = showViewAttachmentsModal;

@@ -9,10 +9,10 @@ from backend.database import init_db
 from pathlib import Path
 import logging
 
-# ✅ Install debug validator
+# Install debug validator
 from scripts.add_debug_validation_handler import install_validation_handler
 
-# ✅ Logging setup
+# Logging setup
 Path("logs").mkdir(exist_ok=True)
 logging.basicConfig(
     filename="logs/server_startup.log",
@@ -20,7 +20,7 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(message)s",
 )
 
-# ✅ Initialize DB
+# Initialize DB
 try:
     init_db()
     logging.info("✅ Database initialized successfully.")
@@ -28,20 +28,20 @@ except Exception as e:
     logging.exception("❌ Failed to initialize database")
     raise
 
-# ✅ FastAPI app
+# FastAPI app
 app = FastAPI(
     title="Universal Recycling Purchase Order System",
     description="Purchase Order management system for Universal Recycling"
 )
 
-# ✅ Enhanced validation
+# Enhanced validation
 install_validation_handler(app)
 
-# ✅ Mount folders
+# Mount folders
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
 app.mount("/data/uploads", StaticFiles(directory="data/uploads"), name="uploads")
 
-# ✅ Middleware
+# Middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -51,10 +51,10 @@ app.add_middleware(
 )
 app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")
 
-# ✅ Templates
+# Templates
 templates = Jinja2Templates(directory="frontend/templates")
 
-# ✅ Routers
+# Routers
 app.include_router(orders.router)
 app.include_router(auth.router)
 app.include_router(lookups.router)
@@ -62,16 +62,32 @@ app.include_router(ui_pages.router)
 app.include_router(supplier_lookup.router)
 app.include_router(supplier_lookup_takealot.router)
 
-# ✅ HTML routes using Jinja2 templates
-@app.get("/orders/pending_orders", response_class=HTMLResponse)
-def serve_pending_orders(request: Request):
+# HTML routes using Jinja2 templates
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+@app.get("/orders/new", response_class=HTMLResponse)
+async def new_order_page(request: Request):
+    return templates.TemplateResponse("new_order.html", {"request": request})
+
+@app.get("/orders/pending", response_class=HTMLResponse)
+async def pending_orders_page(request: Request):
     return templates.TemplateResponse("pending_orders.html", {"request": request})
 
 @app.get("/orders/received_orders", response_class=HTMLResponse)
-def serve_received_orders(request: Request):
+async def received_orders_page(request: Request):
     return templates.TemplateResponse("received_orders.html", {"request": request})
 
-# ✅ Run server
+@app.get("/orders/audit_trail", response_class=HTMLResponse)
+async def audit_trail_page(request: Request):
+    return templates.TemplateResponse("audit_trail.html", {"request": request})
+
+@app.get("/maintenance", response_class=HTMLResponse)
+async def maintenance_page(request: Request):
+    return templates.TemplateResponse("maintenance.html", {"request": request})
+
+# Run server
 if __name__ == "__main__":
     import uvicorn
     try:
