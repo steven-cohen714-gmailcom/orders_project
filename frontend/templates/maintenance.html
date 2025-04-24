@@ -31,19 +31,19 @@
   </div>
 
   <div id="users" class="tab-content active">
-    <div class="form-group">
+    <form class="form-group" onsubmit="event.preventDefault(); addUser();">
       <label for="user-username">Username:</label>
-      <input type="text" id="user-username" />
+      <input type="text" id="user-username" autocomplete="username" />
       <label for="user-password">Password:</label>
-      <input type="password" id="user-password" />
+      <input type="password" id="user-password" autocomplete="current-password" />
       <label for="user-rights">Rights:</label>
       <select id="user-rights">
         <option value="edit">Edit</option>
         <option value="view">View Only</option>
         <option value="admin">Admin</option>
       </select>
-      <button onclick="addUser()">Add User</button>
-    </div>
+      <button type="submit">Add User</button>
+    </form>
     <table id="users-table">
       <thead>
         <tr>
@@ -117,7 +117,9 @@
     <div class="form-group">
       <label for="order-number-start">Start Order Number:</label>
       <input type="text" id="order-number-start" />
-      <button onclick="updateOrderNumber()">Update</button>
+      <label for="auth-threshold">Authorization Threshold (R):</label>
+      <input type="number" id="auth-threshold" step="0.01" />
+      <button onclick="updateSettings()">Update</button>
     </div>
   </div>
 
@@ -317,22 +319,29 @@
         const res = await fetch("/lookups/settings");
         const data = await res.json();
         document.getElementById("order-number-start").value = data.order_number_start || "";
+        document.getElementById("auth-threshold").value = data.auth_threshold || "";
       } catch (err) {
         console.error("Failed to load settings:", err);
       }
     }
 
-    async function updateOrderNumber() {
+    async function updateSettings() {
       const orderNumberStart = document.getElementById("order-number-start").value;
+      const authThreshold = document.getElementById("auth-threshold").value;
       try {
         await fetch("/lookups/settings", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ key: "order_number_start", value: orderNumberStart }),
         });
-        alert("Order number updated successfully");
+        await fetch("/lookups/settings", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key: "auth_threshold", value: authThreshold }),
+        });
+        alert("Settings updated successfully");
       } catch (err) {
-        console.error("Failed to update order number:", err);
+        console.error("Failed to update settings:", err);
       }
     }
 

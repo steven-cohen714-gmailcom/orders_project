@@ -89,3 +89,72 @@
 [2025-04-23T07:44:46.674066] init_db: {"status": "success"}
 [2025-04-23T07:55:24.411945] init_db: {"status": "success"}
 [2025-04-23T07:56:52.336046] init_db: {"status": "success"}
+[2025-04-23T13:56:38.386674] init_db: {"status": "success"}
+[2025-04-23T14:02:37.549032] init_db: {"status": "success"}
+[2025-04-23T14:05:33.955929] init_db: {"status": "success"}
+[2025-04-23T14:13:54.751757] init_db: {"status": "success"}
+[2025-04-23T14:13:59.660982] init_db: {"status": "success"}
+[2025-04-23T14:41:23.168650] init_db: {"status": "success"}
+[2025-04-23T15:13:48.814030] init_db: {"status": "success"}
+[2025-04-23T15:15:04.571855] init_db: {"status": "success"}
+[2025-04-23T15:15:20.038428] init_db: {"status": "success"}
+[2025-04-23T15:15:30.330051] init_db: {"status": "success"}
+[2025-04-23T15:15:44.570512] init_db: {"status": "success"}
+[2025-04-23T15:18:10.586883] get_setting: {"key": "order_number_start", "result": "URC1038"}
+[2025-04-23T15:19:01.994980] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-23T15:19:01.995456] get_setting: {"key": "order_number_start", "result": "URC1038"}
+[2025-04-23T15:19:01.996565] update_setting: {"key": "order_number_start", "value": "URC1040"}
+[2025-04-23T15:19:02.577163] create_order: {"order_number": "URC1039", "requester_id": 4, "total": 11000.0, "items_count": 1}
+[2025-04-23T15:19:05.525768] get_setting: {"key": "order_number_start", "result": "URC1040"}
+[2025-04-23T15:23:10.636705] init_db: {"status": "success"}
+[2025-04-23T15:23:36.269599] init_db: {"status": "success"}
+[2025-04-23T15:24:34.528330] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-23T15:24:34.528760] get_setting: {"key": "order_number_start", "result": "URC1040"}
+[2025-04-23T15:24:34.529889] update_setting: {"key": "order_number_start", "value": "URC1042"}
+[2025-04-23T15:24:35.160064] create_order: {"order_number": "URC1041", "requester_id": 4, "total": 12000.0, "items_count": 1}
+[2025-04-23T15:24:36.882766] get_setting: {"key": "order_number_start", "result": "URC1042"}
+[2025-04-24T05:20:45.488015] init_db: {"status": "success"}
+[2025-04-24T05:21:28.046944] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T05:21:28.047295] get_setting: {"key": "order_number_start", "result": "URC1042"}
+[2025-04-24T05:21:28.048285] update_setting: {"key": "order_number_start", "value": "URC1044"}
+[2025-04-24T05:21:28.596075] create_order: {"order_number": "URC1043", "requester_id": 4, "total": 15000.0, "items_count": 1}
+[2025-04-24T05:21:30.685680] get_setting: {"key": "order_number_start", "result": "URC1044"}
+[2025-04-24T05:40:10.599757] init_db: {"status": "success"}
+[2025-04-24T05:46:27.225232] init_db: {"status": "success"}
+[2025-04-24T06:44:37.658009] init_db: {"status": "success"}
+[2025-04-24T06:45:31.880986] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T06:45:31.881730] get_setting: {"key": "order_number_start", "result": "URC1044"}
+[2025-04-24T06:45:31.883570] update_setting: {"key": "order_number_start", "value": "URC1046"}
+[2025-04-24T06:45:34.824827] create_order: {"order_number": "URC1045", "requester_id": 3, "total": 30000.0, "items_count": 1}
+[2025-04-24T06:45:37.178306] get_setting: {"key": "order_number_start", "result": "URC1046"}
+[2025-04-24T06:53:46.056050] init_db: {"status": "success"}
+[2025-04-24T06:53:53.215251] init_db: {"status": "success"}
+[2025-04-24T06:54:38.166716] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T06:54:38.167082] get_setting: {"key": "order_number_start", "result": "URC1046"}
+[2025-04-24T06:54:38.168146] update_setting: {"key": "order_number_start", "value": "URC1048"}
+[2025-04-24T06:54:40.993453] create_order: {"order_number": "URC1047", "requester_id": 1, "total": 15000.0, "items_count": 1}
+[2025-04-24T06:54:43.681605] get_setting: {"key": "order_number_start", "result": "URC1048"}
+[2025-04-24T06:57:33.128173] init_db: {"status": "success"}
+[2025-04-24T06:57:38.434633] init_db: {"status": "success"}
+[2025-04-24T06:58:34.398670] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T06:58:34.399210] get_setting: {"key": "order_number_start", "result": "URC1048"}
+[2025-04-24T06:58:34.400648] update_setting: {"key": "order_number_start", "value": "URC1050"}
+[2025-04-24T06:58:37.199851] create_order: {"order_number": "URC1049", "requester_id": 1, "total": 120000.0, "items_count": 1}
+[2025-04-24T06:58:39.521483] get_setting: {"key": "order_number_start", "result": "URC1050"}
+[2025-04-24T07:08:25.034026] init_db: {"status": "success"}
+[2025-04-24T07:08:29.799695] init_db: {"status": "success"}
+[2025-04-24T07:11:06.732101] init_db: {"status": "success"}
+[2025-04-24T07:11:11.199421] init_db: {"status": "success"}
+[2025-04-24T07:11:23.978006] get_setting: {"key": "order_number_start", "result": "URC1050"}
+[2025-04-24T07:11:59.309152] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T07:11:59.309647] get_setting: {"key": "order_number_start", "result": "URC1050"}
+[2025-04-24T07:11:59.310927] update_setting: {"key": "order_number_start", "value": "URC1052"}
+[2025-04-24T07:12:02.207599] create_order: {"order_number": "URC1051", "requester_id": 1, "total": 12000.0, "items_count": 1}
+[2025-04-24T07:12:05.438605] get_setting: {"key": "order_number_start", "result": "URC1052"}
+[2025-04-24T07:25:41.707399] init_db: {"status": "success"}
+[2025-04-24T07:25:56.550152] init_db: {"status": "success"}
+[2025-04-24T07:27:10.839444] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T07:27:10.840089] get_setting: {"key": "order_number_start", "result": "URC1052"}
+[2025-04-24T07:27:10.841658] update_setting: {"key": "order_number_start", "value": "URC1054"}
+[2025-04-24T07:27:13.838272] create_order: {"order_number": "URC1053", "requester_id": 2, "total": 18000.0, "items_count": 1}
+[2025-04-24T07:27:16.010656] get_setting: {"key": "order_number_start", "result": "URC1054"}

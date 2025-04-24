@@ -11,6 +11,7 @@ import shutil
 
 from ..database import create_order, get_setting, update_setting
 from ..utils.order_utils import generate_order_number, determine_status, validate_order_items
+from backend.twilio.twilio_utils import send_whatsapp_notification, get_order_number_from_phone
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 templates = Jinja2Templates(directory="frontend/templates")
@@ -75,7 +76,7 @@ async def create_new_order(order: OrderCreate):
         status = determine_status(total, auth_threshold)
 
         if total > auth_threshold:
-            print(f"[WHATSAPP] Order {order.order_number} exceeds threshold, notify for auth.")
+            send_whatsapp_notification(order.order_number, total)
 
         with sqlite3.connect("data/orders.db") as conn:
             cursor = conn.cursor()
@@ -110,6 +111,66 @@ async def create_new_order(order: OrderCreate):
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "unexpected"})
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+
+@router.post("/whatsapp/webhook")
+async def whatsapp_webhook(request: Request):
+    try:
+        # Parse the incoming WhatsApp message
+        form_data = await request.form()
+        message_body = form_data.get("Body", "").strip().lower()
+        from_number = form_data.get("From", "")
+
+        # Log the incoming message
+        log_event("whatsapp_log.txt", {
+            "action": "received_message",
+            "from": from_number,
+            "message": message_body
+        })
+
+        # Check if the response is "authorised"
+        if message_body != "authorised":
+            return {"status": "ignored", "message": "Response must be 'Authorised'"}
+
+        # Get the order number from the phone number
+        order_number = get_order_number_from_phone(from_number)
+        if not order_number:
+            log_event("whatsapp_log.txt", {"error": f"No order found for phone number {from_number}"})
+            return {"status": "error", "message": "Order not found for this phone number"}
+
+        # Find the order in the database
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, status FROM orders WHERE order_number = ?", (order_number,))
+            order = cursor.fetchone()
+            if not order:
+                log_event("whatsapp_log.txt", {"error": f"Order {order_number} not found"})
+                return {"status": "error", "message": "Order not found"}
+
+            order_id, current_status = order
+            if current_status != "Awaiting Authorisation":
+                log_event("whatsapp_log.txt", {"error": f"Order {order_number} status is {current_status}, cannot authorise"})
+                return {"status": "error", "message": "Order not awaiting authorisation"}
+
+            # Update the order status to "Authorised"
+            cursor.execute("""
+                UPDATE orders
+                SET status = 'Authorised'
+                WHERE id = ?
+            """, (order_id,))
+            conn.commit()
+
+            # Log the authorisation in the audit trail
+            cursor.execute("""
+                INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
+                VALUES (?, 'Authorised', ?, ?, ?)
+            """, (order_id, f"Order authorised via WhatsApp by {from_number}", datetime.now().isoformat(), 0))
+            conn.commit()
+
+        log_event("whatsapp_log.txt", {"action": "order_authorised", "order_number": order_number, "from": from_number})
+        return {"status": "success", "message": "Order authorised"}
+    except Exception as e:
+        log_event("whatsapp_log.txt", {"error": str(e), "type": "webhook"})
+        return {"status": "error", "message": str(e)}
 
 class ItemReceive(BaseModel):
     order_id: int
@@ -279,8 +340,8 @@ def get_pending_orders(
             except ValueError:
                 raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use yyyy-mm-dd.")
 
-        # Always include orders that are either Pending or Awaiting Authorisation
-        filters.append("o.status IN ('Pending', 'Waiting for Approval', 'Awaiting Authorisation')")
+        # Include orders that are Pending, Waiting for Approval, Awaiting Authorisation, or Authorised
+        filters.append("o.status IN ('Pending', 'Waiting for Approval', 'Awaiting Authorisation', 'Authorised')")
 
         if start_date:
             start_date = validate_date(start_date)

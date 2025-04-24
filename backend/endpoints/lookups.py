@@ -149,7 +149,12 @@ def get_users():
         raise HTTPException(status_code=500, detail=f"Failed to fetch users: {e}")
 
 @router.post("/users")
-def add_user(username: str, password: str, rights: str):
+def add_user(user: dict):
+    username = user.get("username")
+    password = user.get("password")
+    rights = user.get("rights")
+    if not username or not password or not rights:
+        raise HTTPException(status_code=400, detail="Missing required fields: username, password, rights")
     if rights not in ["edit", "view", "admin"]:
         raise HTTPException(status_code=400, detail="Invalid rights value")
     try:
@@ -164,7 +169,11 @@ def add_user(username: str, password: str, rights: str):
         raise HTTPException(status_code=500, detail=f"Failed to add user: {e}")
 
 @router.put("/users/{id}")
-def update_user(id: int, username: str, rights: str):
+def update_user(id: int, user: dict):
+    username = user.get("username")
+    rights = user.get("rights")
+    if not username or not rights:
+        raise HTTPException(status_code=400, detail="Missing required fields: username, rights")
     if rights not in ["edit", "view", "admin"]:
         raise HTTPException(status_code=400, detail="Invalid rights value")
     try:
@@ -186,16 +195,23 @@ def get_settings():
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT key, value FROM settings WHERE key = 'order_number_start'")
-            row = cursor.fetchone()
-            if row:
-                return {"order_number_start": row["value"]}
-            return {"order_number_start": "URC0001"}
+            cursor.execute("SELECT key, value FROM settings WHERE key IN ('order_number_start', 'auth_threshold')")
+            settings = {row["key"]: row["value"] for row in cursor.fetchall()}
+            # Provide defaults if settings are not found
+            if "order_number_start" not in settings:
+                settings["order_number_start"] = "URC0001"
+            if "auth_threshold" not in settings:
+                settings["auth_threshold"] = "10000"
+        return settings
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch settings: {e}")
 
 @router.put("/settings")
-def update_setting(key: str, value: str):
+def update_setting(setting: dict):
+    key = setting.get("key")
+    value = setting.get("value")
+    if not key or not value:
+        raise HTTPException(status_code=400, detail="Missing required fields: key, value")
     try:
         with sqlite3.connect("data/orders.db") as conn:
             cursor = conn.cursor()
