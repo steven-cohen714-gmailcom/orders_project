@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f5f5f5;
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+}
+.header-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.header-section div {
+    width: 45%;
+}
+.header-section label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+.header-section select, .header-section textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.address-box {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+th {
+    background-color: #007bff;
+    color: white;
+}
+td input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.total-section {
+    text-align: right;
+    margin-bottom: 20px;
+}
+.total-section label {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.vat-note {
+    color: #666;
+    font-style: italic;
+}
+.notes-section {
+    margin-bottom: 20px;
+}
+.notes-section label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+.notes-section textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.button-section {
+    text-align: right;
+}
+button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button[type="button"] {
+    background-color: #6c757d;
+    color: white;
+}
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+button#email-po {
+    background-color: #28a745;
+    color: white;
+}
+button#view-po {
+    background-color: #f1c40f;
+    color: black;
+}
