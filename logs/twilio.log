@@ -458,3 +458,10 @@
 2025-04-24 07:27:13,833 | INFO | Response Status Code: 201
 2025-04-24 07:27:13,833 | INFO | Response Headers: {'Content-Type': 'application/json;charset=utf-8', 'Content-Length': '860', 'Connection': 'keep-alive', 'Date': 'Thu, 24 Apr 2025 05:27:13 GMT', 'X-Powered-By': 'AT-5000', 'Twilio-Concurrent-Requests': '1', 'Twilio-Request-Id': 'RQ4568e7bfa8238f8c119390c3e4d5f3fe', 'Twilio-Request-Duration': '0.095', 'X-Home-Region': 'us1', 'X-Api-Domain': 'api.twilio.com', 'Strict-Transport-Security': 'max-age=31536000', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Accept, Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, Idempotency-Key, X-Pre-Auth-Context, X-Target-Region', 'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS', 'Access-Control-Expose-Headers': 'ETag, Twilio-Request-Id', 'Access-Control-Allow-Credentials': 'true', 'X-Shenanigans': 'none', 'X-Cache': 'Miss from cloudfront', 'Via': '1.1 c4809662226af2602188548ec60364e4.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'JNB51-P2', 'X-Amz-Cf-Id': 'HejXp23H3eOluT6dP-dN6SYIPMK2J2GVjx8MZAYoeOytsZXPske9pw=='}
 2025-04-24 07:27:13,833 | INFO | Sent WhatsApp message to whatsapp:+27828249479 for order URC1053: SM4568e7bfa8238f8c119390c3e4d5f3fe
+2025-04-24 08:43:21,672 | INFO | ✅ Database initialized successfully.
+2025-04-24 09:04:49,201 | INFO | ✅ Database initialized successfully.
+2025-04-24 09:10:30,155 | INFO | ✅ Database initialized successfully.
+2025-04-24 09:16:08,063 | INFO | ✅ Database initialized successfully.
+2025-04-24 09:16:53,554 | INFO | ✅ Database initialized successfully.
+2025-04-24 09:20:31,205 | INFO | ✅ Database initialized successfully.
+2025-04-24 09:25:07,712 | INFO | ✅ Database initialized successfully.
