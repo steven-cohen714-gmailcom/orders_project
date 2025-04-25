@@ -12811,3 +12811,11 @@ INFO:     127.0.0.1:54114 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
 INFO:     127.0.0.1:54116 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
 INFO:     127.0.0.1:54117 - "GET /orders/api/orders/pending_orders?requester=Leon HTTP/1.1" 200 OK
 INFO:     127.0.0.1:54112 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54379 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54382 - "GET /orders/api/orders/pending_orders?requester=Leon HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54383 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54380 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54658 - "GET /orders/api/orders/pending_orders?requester=Leon HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54655 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54659 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54656 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK

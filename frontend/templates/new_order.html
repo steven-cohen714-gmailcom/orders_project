@@ -95,7 +95,15 @@
     </div>
 
     <script>
+        console.log("Requesters data:", {{ requesters | tojson }});
+        console.log("Suppliers data:", {{ suppliers | tojson }});
+
         let rowCount = 1;
+
+        window.addEventListener('load', function() {
+            console.log("Requester dropdown options:", document.getElementById('requester_id').options.length);
+            console.log("Supplier dropdown options:", document.getElementById('supplier_id').options.length);
+        });
 
         function addRow() {
             const tbody = document.querySelector("#items-table tbody");
