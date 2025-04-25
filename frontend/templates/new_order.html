@@ -31,7 +31,7 @@
     </style>
 </head>
 <body>
-    
+
     <div>
         <h2>Create Purchase Order</h2>
         <div>
@@ -112,9 +112,9 @@
         </div>
 
         <div>
+            <button type="button" id="view-po" onclick="viewPurchaseOrder()">View Purchase Order</button>
             <button type="button" id="email-po" onclick="emailPurchaseOrder()">Email Purchase Order</button>
             <button type="submit" onclick="submitForm()">Submit Order</button>
-            <button type="button" id="view-po" onclick="viewPurchaseOrder()">View Purchase Order</button>
             <button type="button" onclick="cancelForm()">Cancel</button>
         </div>
     </div>
@@ -255,7 +255,7 @@
                 alert(`Order created successfully: ${result.order.order_number}`);
                 window.location.href = "/orders/pending";
             } else {
-                alert(`Failed to create order: ${result.detail}`);
+                alert("Failed to create order: " + (typeof result.detail === 'string' ? result.detail : JSON.stringify(result.detail)));
             }
         }
 
