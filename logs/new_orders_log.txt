@@ -88,3 +88,6 @@
 [2025-04-24T07:12:02.208284] {"action": "submit_success", "order_number": "URC1051", "status": "Awaiting Authorisation"}
 [2025-04-24T07:27:13.836175] {"action": "submit_attempt", "order_data": {"order_number": "URC1053", "requester_id": 2, "order_note": null, "note_to_supplier": "Note to supplier - order number URC1053", "supplier_id": 7, "items": [{"item_code": "ABRA025", "item_description": "Flap Wheel  50 X 20  X  6  Mm  P80", "project": "DR09M", "qty_ordered": 1.0, "price": 18000.0}], "status": "Awaiting Authorisation", "total": 18000.0}}
 [2025-04-24T07:27:13.838910] {"action": "submit_success", "order_number": "URC1053", "status": "Awaiting Authorisation"}
+[2025-04-25T18:10:25.341235] {"action": "submit_attempt", "order_data": {"order_number": "URC1055", "requester_id": 1, "order_note": null, "note_to_supplier": "", "supplier_id": 5, "items": [{"item_code": "ABRA025", "item_description": "Flap Wheel  50 X 20  X  6  Mm  P80", "project": "KA04M", "qty_ordered": 1.0, "price": 200.0}], "status": "Pending", "total": 200.0}}
+[2025-04-25T18:10:25.342317] {"action": "submit_success", "order_number": "URC1055", "status": "Pending"}
+[2025-04-25T18:11:57.847302] {"action": "receive", "orders": [40]}

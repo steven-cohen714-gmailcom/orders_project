@@ -126,11 +126,13 @@
         let rowCount = 1;
 
         window.addEventListener('load', function() {
+            console.log("Page loaded");
             console.log("Requester dropdown options:", document.getElementById('requester_id').options.length);
             console.log("Supplier dropdown options:", document.getElementById('supplier_id').options.length);
         });
 
         function addRow() {
+            console.log("Adding new row, rowCount:", rowCount);
             const tbody = document.querySelector("#items-table tbody");
             const row = document.createElement("tr");
             row.innerHTML = `
@@ -163,13 +165,16 @@
 
         function removeRow(button) {
             if (rowCount > 1) {
+                console.log("Removing row, rowCount before:", rowCount);
                 button.parentElement.parentElement.remove();
                 rowCount--;
+                console.log("Row removed, rowCount after:", rowCount);
                 updateGrandTotal();
             }
         }
 
         function updateItemDescription(index) {
+            console.log("Updating item description for index:", index);
             const select = document.getElementById(`item_code_${index}`);
             const descriptionInput = document.getElementById(`item_description_${index}`);
             const selectedOption = select.options[select.selectedIndex];
@@ -178,6 +183,7 @@
         }
 
         function updateTotal(index) {
+            console.log("Updating total for index:", index);
             const qty = parseFloat(document.getElementById(`qty_ordered_${index}`).value) || 0;
             const price = parseFloat(document.getElementById(`price_${index}`).value) || 0;
             const total = qty * price;
@@ -186,6 +192,7 @@
         }
 
         function updateGrandTotal() {
+            console.log("Updating grand total");
             let grandTotal = 0;
             for (let i = 0; i < rowCount; i++) {
                 const totalField = document.getElementById(`total_${i}`);
@@ -197,13 +204,14 @@
         }
 
         async function submitForm() {
-            const formData = new FormData();
+            console.log("submitForm started");
+
             const supplierId = document.getElementById("supplier_id").value;
+            console.log("Supplier ID:", supplierId);
             const requesterId = document.getElementById("requester_id").value;
+            console.log("Requester ID:", requesterId);
             const noteToSupplier = document.getElementById("note_to_supplier").value;
-            formData.append("supplier_id", supplierId);
-            formData.append("requester_id", requesterId);
-            formData.append("note_to_supplier", noteToSupplier);
+            console.log("Note to Supplier:", noteToSupplier);
 
             const items = [];
             for (let i = 0; i < rowCount; i++) {
@@ -223,52 +231,75 @@
                     items.push(item);
                 }
             }
+            console.log("Items collected:", items);
 
-            console.log("Submitting order with full data:", {
-                supplier_id: supplierId,
-                requester_id: requesterId,
-                note_to_supplier: noteToSupplier,
-                items: items
-            });
-
+            // Validation
             if (!supplierId) {
+                console.log("Validation failed: No supplier selected");
                 alert("Please select a supplier.");
                 return;
             }
             if (!requesterId) {
+                console.log("Validation failed: No requester selected");
                 alert("Please select a requester.");
                 return;
             }
             if (items.length === 0) {
+                console.log("Validation failed: No items added");
                 alert("Please add at least one item with all required fields.");
                 return;
             }
 
-            formData.append("items", JSON.stringify(items));
+            // Create JSON payload
+            const payload = {
+                supplier_id: parseInt(supplierId),
+                requester_id: parseInt(requesterId),
+                note_to_supplier: noteToSupplier,
+                items: items
+            };
+            console.log("Submitting order with JSON data:", payload);
 
-            const response = await fetch("/orders", {
-                method: "POST",
-                body: formData
-            });
-            const result = await response.json();
-            if (response.ok) {
-                alert(`Order created successfully: ${result.order.order_number}`);
-                window.location.href = "/orders/pending";
-            } else {
-                alert("Failed to create order: " + (typeof result.detail === 'string' ? result.detail : JSON.stringify(result.detail)));
+            // Send JSON request
+            try {
+                const response = await fetch("/orders", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+                console.log("Response received, status:", response.status);
+
+                const result = await response.json();
+                console.log("Response JSON:", result);
+
+                if (response.ok) {
+                    console.log("Order created successfully");
+                    alert(`Order created successfully: ${result.order.order_number}`);
+                    window.location.href = "/orders/pending";
+                } else {
+                    console.log("Failed to create order, details:", result.detail);
+                    alert("Failed to create order: " + (typeof result.detail === 'string' ? result.detail : JSON.stringify(result.detail)));
+                }
+            } catch (error) {
+                console.error("Error during fetch:", error);
+                alert("An error occurred while submitting the order: " + error.message);
             }
         }
 
         function emailPurchaseOrder() {
+            console.log("Email Purchase Order clicked");
             alert("Email Purchase Order functionality will be implemented after fixing PDF generation.");
         }
 
         function viewPurchaseOrder() {
+            console.log("View Purchase Order clicked");
             alert("View Purchase Order functionality will be implemented after fixing PDF generation.");
             window.location.href = "/orders/pending";
         }
 
         function cancelForm() {
+            console.log("Cancel button clicked");
             window.location.href = "/orders/pending";
         }
 

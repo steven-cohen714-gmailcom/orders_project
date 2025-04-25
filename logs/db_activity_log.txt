@@ -204,3 +204,7 @@
 [2025-04-25T16:07:26.635609] init_db: {"status": "success"}
 [2025-04-25T16:16:26.016314] init_db: {"status": "success"}
 [2025-04-25T17:20:42.293335] init_db: {"status": "success"}
+[2025-04-25T18:10:25.339194] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-25T18:10:25.340105] get_setting: {"key": "order_number_start", "result": "URC1054"}
+[2025-04-25T18:10:25.340991] update_setting: {"key": "order_number_start", "value": "URC1056"}
+[2025-04-25T18:10:25.342095] create_order: {"order_number": "URC1055", "requester_id": 1, "total": 200.0, "items_count": 1}
