@@ -1,5 +1,5 @@
 # 📦 Project Snapshot
-Generated: 2025-04-23 04:15:52
+Generated: 2025-04-25 04:43:11
 
 ## 📁 Directory Tree
 ````
@@ -12,12 +12,16 @@ Generated: 2025-04-23 04:15:52
 │   │   ├── auth.py
 │   │   ├── lookups.py
 │   │   ├── orders.py
+│   │   ├── orders_project
 │   │   ├── requesters.py
 │   │   ├── supplier_lookup.py
 │   │   ├── supplier_lookup_takealot.py
 │   │   └── ui_pages.py
 │   ├── main.py
 │   ├── scrapers
+│   ├── twilio
+│   │   ├── __init__.py
+│   │   └── twilio_utils.py
 │   └── utils
 │       ├── __init__.py
 │       └── order_utils.py
@@ -30,6 +34,8 @@ Generated: 2025-04-23 04:15:52
 │   │   └── order_7.txt
 │   ├── test_orders.db
 │   └── uploads
+│       ├── 13_Screenshot_2025-04-23_at_05.19.18.png
+│       ├── 14_Screenshot_2025-04-23_at_05.19.18.png
 │       ├── 17_Intimisso.pdf
 │       ├── 18_Hydehurst RC- Proof of submission.pdf
 │       ├── 19_Fidessa Consulting.PDF
@@ -43,7 +49,11 @@ Generated: 2025-04-23 04:15:52
 │       ├── 27_test_invoice.pdf
 │       ├── 28_Deposit - 2.pdf
 │       ├── 28_test_invoice.pdf
+│       ├── 30_2025-04-22_18-29.pdf
+│       ├── 30_2025-04-22_18-44.pdf
+│       ├── 30_2025-04-22_18-44_1.pdf
 │       ├── 30_Intimisso.pdf
+│       ├── 31_Screenshot_2025-04-23_at_05.19.18.png
 │       └── test_invoice.pdf
 ├── files_for_current_features.md
 ├── frontend
@@ -51,7 +61,7 @@ Generated: 2025-04-23 04:15:52
 │   │   ├── css
 │   │   └── js
 │   └── templates
-│       ├── audit.html
+│       ├── audit_trail.html
 │       ├── home.html
 │       ├── index.html
 │       ├── login.html
@@ -63,17 +73,22 @@ Generated: 2025-04-23 04:15:52
 ├── logs
 │   ├── db_activity_log.txt
 │   ├── lookups_log.txt
+│   ├── message_sid_mapping.json
 │   ├── new_orders_log.txt
+│   ├── phone_order_mapping.json
 │   ├── server.log
 │   ├── server_startup.log
 │   ├── supplier_lookup_debug.log
 │   ├── takealot_lookup.log
-│   └── testing_log.txt
+│   ├── testing_log.txt
+│   ├── twilio.log
+│   └── whatsapp_log.txt
 ├── project_status_snapshot.md
 ├── project_summary.md
+├── requirements.txt
 └── scripts
     ├── add_debug_validation_handler.py
-    ├── clear_live_data.py
+    ├── clear_transactional_data.py
     ├── dump_project_summary.py
     ├── files_for_current_features.py
     ├── git_pull_project.py
@@ -370,25 +385,13 @@ def home(request: Request):
 ```
 
 ### `backend/endpoints/lookups.py`
-**(No description)**
+**Provide defaults if settings are not found**
 ```python
 from fastapi import APIRouter, HTTPException
+from typing import Optional
 import sqlite3
-from pathlib import Path
-from datetime import datetime
-import json
 
-router = APIRouter(prefix="/lookups")
-
-def log_lookup(endpoint: str, outcome: str, detail: str = ""):
-    log_path = Path("logs/lookups_log.txt")
-    log_path.parent.mkdir(parents=True, exist_ok=True)
-    with log_path.open("a", encoding="utf-8") as f:
-        timestamp = datetime.now().isoformat()
-        entry = {"time": timestamp, "endpoint": endpoint, "status": outcome}
-        if detail:
-            entry["detail"] = detail
-        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+router = APIRouter(prefix="/lookups", tags=["lookups"])
 
 @router.get("/suppliers")
 def get_suppliers():
@@ -396,13 +399,11 @@ def get_suppliers():
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT id, account_number, name FROM suppliers ORDER BY name")
+            cursor.execute("SELECT * FROM suppliers ORDER BY name")
             suppliers = [dict(row) for row in cursor.fetchall()]
-        log_lookup("/suppliers", "success")
         return {"suppliers": suppliers}
     except Exception as e:
-        log_lookup("/suppliers", "error", str(e))
-        raise HTTPException(status_code=500, detail=f"Failed to load suppliers: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch suppliers: {e}")
 
 @router.get("/requesters")
 def get_requesters():
@@ -410,13 +411,39 @@ def get_requesters():
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT id, name FROM requesters ORDER BY name")
+            cursor.execute("SELECT * FROM requesters ORDER BY name")
             requesters = [dict(row) for row in cursor.fetchall()]
-        log_lookup("/requesters", "success")
         return {"requesters": requesters}
     except Exception as e:
-        log_lookup("/requesters", "error", str(e))
-        raise HTTPException(status_code=500, detail=f"Failed to load requesters: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch requesters: {e}")
+
+@router.post("/requesters")
+def add_requester(name: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO requesters (name) VALUES (?)", (name,))
+            conn.commit()
+        return {"status": "Requester added"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Requester name already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to add requester: {e}")
+
+@router.put("/requesters/{id}")
+def update_requester(id: int, name: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE requesters SET name = ? WHERE id = ?", (name, id))
+            conn.commit()
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="Requester not found")
+        return {"status": "Requester updated"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Requester name already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update requester: {e}")
 
 @router.get("/items")
 def get_items():
@@ -424,13 +451,39 @@ def get_items():
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT item_code, item_description FROM items ORDER BY item_code")
+            cursor.execute("SELECT * FROM items ORDER BY item_code")
             items = [dict(row) for row in cursor.fetchall()]
-        log_lookup("/items", "success")
         return {"items": items}
     except Exception as e:
-        log_lookup("/items", "error", str(e))
-        raise HTTPException(status_code=500, detail=f"Failed to load items: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch items: {e}")
+
+@router.post("/items")
+def add_item(item_code: str, item_description: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO items (item_code, item_description) VALUES (?, ?)", (item_code, item_description))
+            conn.commit()
+        return {"status": "Item added"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Item code already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to add item: {e}")
+
+@router.put("/items/{id}")
+def update_item(id: int, item_code: str, item_description: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE items SET item_code = ?, item_description = ? WHERE id = ?", (item_code, item_description, id))
+            conn.commit()
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="Item not found")
+        return {"status": "Item updated"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Item code already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update item: {e}")
 
 @router.get("/projects")
 def get_projects():
@@ -438,18 +491,128 @@ def get_projects():
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT project_code, project_name FROM projects ORDER BY project_code")
+            cursor.execute("SELECT * FROM projects ORDER BY project_code")
             projects = [dict(row) for row in cursor.fetchall()]
-        log_lookup("/projects", "success")
         return {"projects": projects}
     except Exception as e:
-        log_lookup("/projects", "error", str(e))
-        raise HTTPException(status_code=500, detail=f"Failed to load projects: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to fetch projects: {e}")
 
+@router.post("/projects")
+def add_project(project_code: str, project_name: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO projects (project_code, project_name) VALUES (?, ?)", (project_code, project_name))
+            conn.commit()
+        return {"status": "Project added"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Project code already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to add project: {e}")
+
+@router.put("/projects/{id}")
+def update_project(id: int, project_code: str, project_name: str):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE projects SET project_code = ?, project_name = ? WHERE id = ?", (project_code, project_name, id))
+            conn.commit()
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="Project not found")
+        return {"status": "Project updated"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Project code already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update project: {e}")
+
+@router.get("/users")
+def get_users():
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, username, rights FROM users ORDER BY username")
+            users = [dict(row) for row in cursor.fetchall()]
+        return {"users": users}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch users: {e}")
+
+@router.post("/users")
+def add_user(user: dict):
+    username = user.get("username")
+    password = user.get("password")
+    rights = user.get("rights")
+    if not username or not password or not rights:
+        raise HTTPException(status_code=400, detail="Missing required fields: username, password, rights")
+    if rights not in ["edit", "view", "admin"]:
+        raise HTTPException(status_code=400, detail="Invalid rights value")
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO users (username, password_hash, rights) VALUES (?, ?, ?)", (username, password, rights))
+            conn.commit()
+        return {"status": "User added"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Username already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to add user: {e}")
+
+@router.put("/users/{id}")
+def update_user(id: int, user: dict):
+    username = user.get("username")
+    rights = user.get("rights")
+    if not username or not rights:
+        raise HTTPException(status_code=400, detail="Missing required fields: username, rights")
+    if rights not in ["edit", "view", "admin"]:
+        raise HTTPException(status_code=400, detail="Invalid rights value")
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE users SET username = ?, rights = ? WHERE id = ?", (username, rights, id))
+            conn.commit()
+            if cursor.rowcount == 0:
+                raise HTTPException(status_code=404, detail="User not found")
+        return {"status": "User updated"}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Username already exists")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update user: {e}")
+
+@router.get("/settings")
+def get_settings():
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT key, value FROM settings WHERE key IN ('order_number_start', 'auth_threshold')")
+            settings = {row["key"]: row["value"] for row in cursor.fetchall()}
+            # Provide defaults if settings are not found
+            if "order_number_start" not in settings:
+                settings["order_number_start"] = "URC0001"
+            if "auth_threshold" not in settings:
+                settings["auth_threshold"] = "10000"
+        return settings
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch settings: {e}")
+
+@router.put("/settings")
+def update_setting(setting: dict):
+    key = setting.get("key")
+    value = setting.get("value")
+    if not key or not value:
+        raise HTTPException(status_code=400, detail="Missing required fields: key, value")
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)", (key, value))
+            conn.commit()
+        return {"status": "Setting updated"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to update setting: {e}")
 ```
 
 ### `backend/endpoints/orders.py`
-**UPDATE order_items**
+**UPDATE orders**
 ```python
 from fastapi import APIRouter, HTTPException, Request, UploadFile, Form, Query
 from fastapi.responses import HTMLResponse
@@ -464,6 +627,7 @@ import shutil
 
 from ..database import create_order, get_setting, update_setting
 from ..utils.order_utils import generate_order_number, determine_status, validate_order_items
+from backend.twilio.twilio_utils import send_whatsapp_notification, get_order_number_from_phone
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 templates = Jinja2Templates(directory="frontend/templates")
@@ -503,7 +667,7 @@ class OrderCreate(BaseModel):
     order_number: Optional[str] = None
     requester_id: int = Field(gt=0)
     order_note: Optional[str] = None
-    note_to_supplier: Optional[str] = None
+    note_to_supplier: Optional[str] = Field(None, max_length=1000)
     supplier_id: Optional[int] = None
     items: List[OrderItem] = Field(min_length=1)
 
@@ -528,7 +692,7 @@ async def create_new_order(order: OrderCreate):
         status = determine_status(total, auth_threshold)
 
         if total > auth_threshold:
-            print(f"[WHATSAPP] Order {order.order_number} exceeds threshold, notify for auth.")
+            send_whatsapp_notification(order.order_number, total)
 
         with sqlite3.connect("data/orders.db") as conn:
             cursor = conn.cursor()
@@ -563,6 +727,66 @@ async def create_new_order(order: OrderCreate):
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "unexpected"})
         raise HTTPException(status_code=500, detail=f"Unexpected error: {str(e)}")
+
+@router.post("/whatsapp/webhook")
+async def whatsapp_webhook(request: Request):
+    try:
+        # Parse the incoming WhatsApp message
+        form_data = await request.form()
+        message_body = form_data.get("Body", "").strip().lower()
+        from_number = form_data.get("From", "")
+
+        # Log the incoming message
+        log_event("whatsapp_log.txt", {
+            "action": "received_message",
+            "from": from_number,
+            "message": message_body
+        })
+
+        # Check if the response is "authorised"
+        if message_body != "authorised":
+            return {"status": "ignored", "message": "Response must be 'Authorised'"}
+
+        # Get the order number from the phone number
+        order_number = get_order_number_from_phone(from_number)
+        if not order_number:
+            log_event("whatsapp_log.txt", {"error": f"No order found for phone number {from_number}"})
+            return {"status": "error", "message": "Order not found for this phone number"}
+
+        # Find the order in the database
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, status FROM orders WHERE order_number = ?", (order_number,))
+            order = cursor.fetchone()
+            if not order:
+                log_event("whatsapp_log.txt", {"error": f"Order {order_number} not found"})
+                return {"status": "error", "message": "Order not found"}
+
+            order_id, current_status = order
+            if current_status != "Awaiting Authorisation":
+                log_event("whatsapp_log.txt", {"error": f"Order {order_number} status is {current_status}, cannot authorise"})
+                return {"status": "error", "message": "Order not awaiting authorisation"}
+
+            # Update the order status to "Authorised"
+            cursor.execute("""
+                UPDATE orders
+                SET status = 'Authorised'
+                WHERE id = ?
+            """, (order_id,))
+            conn.commit()
+
+            # Log the authorisation in the audit trail
+            cursor.execute("""
+                INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
+                VALUES (?, 'Authorised', ?, ?, ?)
+            """, (order_id, f"Order authorised via WhatsApp by {from_number}", datetime.now().isoformat(), 0))
+            conn.commit()
+
+        log_event("whatsapp_log.txt", {"action": "order_authorised", "order_number": order_number, "from": from_number})
+        return {"status": "success", "message": "Order authorised"}
+    except Exception as e:
+        log_event("whatsapp_log.txt", {"error": str(e), "type": "webhook"})
+        return {"status": "error", "message": str(e)}
 
 class ItemReceive(BaseModel):
     order_id: int
@@ -617,39 +841,59 @@ def mark_order_received(receive_data: List[ItemReceive]):
 @router.post("/upload_attachment")
 async def upload_attachment(file: UploadFile, order_id: int = Form(...)):
     try:
-        saved_path = UPLOAD_DIR / f"{order_id}_{file.filename}"
-        with saved_path.open("wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
+        # Validate order_id exists
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id FROM orders WHERE id = ?", (order_id,))
+            if not cursor.fetchone():
+                raise HTTPException(status_code=400, detail="Invalid order_id")
 
-        # Check file size
-        file_size = saved_path.stat().st_size
+        # Sanitize filename and handle duplicates
+        filename = file.filename.replace(" ", "_").replace("/", "_").replace("\\", "_")
+        base_filename = filename
+        saved_path = UPLOAD_DIR / f"{order_id}_{filename}"
+        counter = 1
+        while saved_path.exists():
+            name, ext = base_filename.rsplit(".", 1) if "." in base_filename else (base_filename, "")
+            filename = f"{name}_{counter}.{ext}" if ext else f"{name}_{counter}"
+            saved_path = UPLOAD_DIR / f"{order_id}_{filename}"
+            counter += 1
+
+        # Check file size before saving
+        content = await file.read()
+        file_size = len(content)
         if file_size < 500:
-            try:
-                saved_path.unlink()  # Remove the file if it's too small
-            except FileNotFoundError:
-                pass
             raise HTTPException(status_code=400, detail="Uploaded file is too small or corrupt.")
+
+        # Save the file
+        with saved_path.open("wb") as buffer:
+            buffer.write(content)
 
         with sqlite3.connect("data/orders.db") as conn:
             cursor = conn.cursor()
             cursor.execute("""
                 INSERT INTO attachments (order_id, filename, file_path, upload_date)
                 VALUES (?, ?, ?, ?)
-            """, (order_id, file.filename, str(saved_path), datetime.now().isoformat()))
+            """, (order_id, filename, str(saved_path), datetime.now().isoformat()))
             conn.commit()
 
         log_event("new_orders_log.txt", {
             "action": "attachment_uploaded",
             "order_id": order_id,
-            "filename": file.filename,
+            "filename": filename,
             "path": str(saved_path),
             "size_bytes": file_size
         })
 
         return {"status": "✅ Attachment uploaded"}
+    except sqlite3.Error as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_upload"})
+        raise HTTPException(status_code=500, detail=f"Database error during upload: {str(e)}")
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "upload"})
-        raise HTTPException(status_code=500, detail=f"Failed to upload attachment: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to upload attachment: {str(e)}")
+    finally:
+        await file.close()
 
 @router.get("/attachments/{order_id}")
 def get_order_attachments(order_id: int):
@@ -700,14 +944,28 @@ def get_pending_orders(
     status: Optional[str] = Query(None)
 ):
     try:
-        filters = ["o.status IN ('Pending', 'Waiting for Approval')"]
+        filters = []
         params = []
 
+        def validate_date(date_str):
+            if not date_str:
+                return None
+            try:
+                datetime.strptime(date_str, "%Y-%m-%d")
+                return date_str
+            except ValueError:
+                raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use yyyy-mm-dd.")
+
+        # Include orders that are Pending, Waiting for Approval, Awaiting Authorisation, or Authorised
+        filters.append("o.status IN ('Pending', 'Waiting for Approval', 'Awaiting Authorisation', 'Authorised')")
+
         if start_date:
+            start_date = validate_date(start_date)
             filters.append("DATE(o.created_date) >= DATE(?)")
             params.append(start_date)
 
         if end_date:
+            end_date = validate_date(end_date)
             filters.append("DATE(o.created_date) <= DATE(?)")
             params.append(end_date)
 
@@ -745,7 +1003,11 @@ def get_pending_orders(
                 order["created_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
                 orders.append(order)
         return {"orders": orders}
+    except sqlite3.OperationalError as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_query", "query": where_clause, "params": params})
+        raise HTTPException(status_code=500, detail=f"Database query error: {e}")
     except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "pending_orders"})
         raise HTTPException(status_code=500, detail=f"Failed to load pending orders: {e}")
 
 @router.get("/api/received_orders")
@@ -759,11 +1021,22 @@ def get_received_orders(
         filters = ["o.status = 'Received'"]
         params = []
 
+        def validate_date(date_str):
+            if not date_str:
+                return None
+            try:
+                datetime.strptime(date_str, "%Y-%m-%d")
+                return date_str
+            except ValueError:
+                raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use yyyy-mm-dd.")
+
         if start_date:
+            start_date = validate_date(start_date)
             filters.append("DATE(o.created_date) >= DATE(?)")
             params.append(start_date)
 
         if end_date:
+            end_date = validate_date(end_date)
             filters.append("DATE(o.created_date) <= DATE(?)")
             params.append(end_date)
 
@@ -797,7 +1070,11 @@ def get_received_orders(
                 order["created_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
                 orders.append(order)
         return {"orders": orders}
+    except sqlite3.OperationalError as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_query", "query": where_clause, "params": params})
+        raise HTTPException(status_code=500, detail=f"Database query error: {e}")
     except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "received_orders"})
         raise HTTPException(status_code=500, detail=f"Failed to load received orders: {e}")
 
 @router.get("/api/items_for_order/{order_id}")
@@ -807,7 +1084,7 @@ def get_items_for_order(order_id: int):
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute("""
-                SELECT id, item_code, item_description, project, qty_ordered, price,
+                SELECT id, item_code, item_description, project, qty_ordered, qty_received, received_date, price,
                        (qty_ordered * price) AS total
                 FROM order_items
                 WHERE order_id = ?
@@ -816,6 +1093,91 @@ def get_items_for_order(order_id: int):
         return {"items": items}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch items: {e}")
+
+@router.get("/api/audit_trail")
+def get_audit_trail(
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    requester: Optional[str] = Query(None),
+    supplier: Optional[str] = Query(None),
+    status: Optional[str] = Query(None)
+):
+    try:
+        filters = []
+        params = []
+
+        def validate_date(date_str):
+            if not date_str:
+                return None
+            try:
+                datetime.strptime(date_str, "%Y-%m-%d")
+                return date_str
+            except ValueError:
+                raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use yyyy-mm-dd.")
+
+        if start_date:
+            start_date = validate_date(start_date)
+            filters.append("DATE(o.created_date) >= DATE(?)")
+            params.append(start_date)
+
+        if end_date:
+            end_date = validate_date(end_date)
+            filters.append("DATE(o.created_date) <= DATE(?)")
+            params.append(end_date)
+
+        if requester:
+            filters.append("r.name LIKE ?")
+            params.append(f"%{requester}%")
+
+        if supplier:
+            filters.append("s.name LIKE ?")
+            params.append(f"%{supplier}%")
+
+        if status and status != "All":
+            filters.append("o.status = ?")
+            params.append(status)
+
+        where_clause = " AND ".join(filters) if filters else "1=1"
+
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(f"""
+                SELECT
+                    o.id, o.created_date, o.received_date, o.order_number,
+                    r.name AS requester, s.name AS supplier,
+                    o.order_note, o.note_to_supplier, o.total, o.status
+                FROM orders o
+                LEFT JOIN requesters r ON o.requester_id = r.id
+                LEFT JOIN suppliers s ON o.supplier_id = s.id
+                WHERE {where_clause}
+                ORDER BY o.created_date DESC
+            """, params)
+            orders = []
+            for row in cursor.fetchall():
+                order = dict(row)
+                order["created_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
+                if order["received_date"]:
+                    order["received_date"] = datetime.fromisoformat(order["received_date"]).strftime("%d/%m/%Y")
+                # Fetch items for this order
+                cursor.execute("""
+                    SELECT id, item_code, item_description, project, qty_ordered, qty_received, received_date
+                    FROM order_items
+                    WHERE order_id = ?
+                """, (order["id"],))
+                items = [dict(item_row) for item_row in cursor.fetchall()]
+                for item in items:
+                    if item["received_date"]:
+                        item["received_date"] = datetime.fromisoformat(item["received_date"]).strftime("%d/%m/%Y")
+                order["items"] = items
+                orders.append(order)
+        return {"orders": orders}
+    except sqlite3.OperationalError as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_query", "query": where_clause, "params": params})
+        raise HTTPException(status_code=500, detail=f"Database query error: {e}")
+    except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "audit_trail"})
+        raise HTTPException(status_code=500, detail=f"Failed to load audit trail: {e}")
 ```
 
 ### `backend/endpoints/requesters.py`
@@ -1005,7 +1367,7 @@ def show_pending_orders(request: Request):
 ```
 
 ### `backend/main.py`
-**✅ Install debug validator**
+**Install debug validator**
 ```python
 from fastapi import FastAPI, Request
 from starlette.middleware.sessions import SessionMiddleware
@@ -1018,10 +1380,10 @@ from backend.database import init_db
 from pathlib import Path
 import logging
 
-# ✅ Install debug validator
+# Install debug validator
 from scripts.add_debug_validation_handler import install_validation_handler
 
-# ✅ Logging setup
+# Logging setup
 Path("logs").mkdir(exist_ok=True)
 logging.basicConfig(
     filename="logs/server_startup.log",
@@ -1029,7 +1391,7 @@ logging.basicConfig(
     format="%(asctime)s | %(levelname)s | %(message)s",
 )
 
-# ✅ Initialize DB
+# Initialize DB
 try:
     init_db()
     logging.info("✅ Database initialized successfully.")
@@ -1037,20 +1399,20 @@ except Exception as e:
     logging.exception("❌ Failed to initialize database")
     raise
 
-# ✅ FastAPI app
+# FastAPI app
 app = FastAPI(
     title="Universal Recycling Purchase Order System",
     description="Purchase Order management system for Universal Recycling"
 )
 
-# ✅ Enhanced validation
+# Enhanced validation
 install_validation_handler(app)
 
-# ✅ Mount folders
+# Mount folders
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
 app.mount("/data/uploads", StaticFiles(directory="data/uploads"), name="uploads")
 
-# ✅ Middleware
+# Middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -1060,10 +1422,10 @@ app.add_middleware(
 )
 app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")
 
-# ✅ Templates
+# Templates
 templates = Jinja2Templates(directory="frontend/templates")
 
-# ✅ Routers
+# Routers
 app.include_router(orders.router)
 app.include_router(auth.router)
 app.include_router(lookups.router)
@@ -1071,16 +1433,32 @@ app.include_router(ui_pages.router)
 app.include_router(supplier_lookup.router)
 app.include_router(supplier_lookup_takealot.router)
 
-# ✅ HTML routes using Jinja2 templates
-@app.get("/orders/pending_orders", response_class=HTMLResponse)
-def serve_pending_orders(request: Request):
+# HTML routes using Jinja2 templates
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+@app.get("/orders/new", response_class=HTMLResponse)
+async def new_order_page(request: Request):
+    return templates.TemplateResponse("new_order.html", {"request": request})
+
+@app.get("/orders/pending", response_class=HTMLResponse)
+async def pending_orders_page(request: Request):
     return templates.TemplateResponse("pending_orders.html", {"request": request})
 
 @app.get("/orders/received_orders", response_class=HTMLResponse)
-def serve_received_orders(request: Request):
+async def received_orders_page(request: Request):
     return templates.TemplateResponse("received_orders.html", {"request": request})
 
-# ✅ Run server
+@app.get("/orders/audit_trail", response_class=HTMLResponse)
+async def audit_trail_page(request: Request):
+    return templates.TemplateResponse("audit_trail.html", {"request": request})
+
+@app.get("/maintenance", response_class=HTMLResponse)
+async def maintenance_page(request: Request):
+    return templates.TemplateResponse("maintenance.html", {"request": request})
+
+# Run server
 if __name__ == "__main__":
     import uvicorn
     try:
@@ -1089,7 +1467,81 @@ if __name__ == "__main__":
     except Exception as e:
         logging.exception("❌ Server failed to start")
         raise
+```
 
+### `backend/twilio/twilio_utils.py`
+**Set up logging**
+```python
+import os
+from twilio.rest import Client
+from dotenv import load_dotenv
+from pathlib import Path
+import logging
+import json
+
+# Set up logging
+logging.basicConfig(
+    filename="logs/twilio.log",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+)
+
+# Load environment variables
+load_dotenv()
+
+# Twilio credentials
+account_sid = os.getenv("TWILIO_ACCOUNT_SID")
+auth_token = os.getenv("TWILIO_AUTH_TOKEN")
+twilio_number = os.getenv("TWILIO_WHATSAPP_NUMBER")
+group_members = [
+    os.getenv("GROUP_MEMBER_1"),
+    os.getenv("GROUP_MEMBER_2"),
+    os.getenv("GROUP_MEMBER_3"),
+    os.getenv("GROUP_MEMBER_4"),
+    os.getenv("GROUP_MEMBER_5"),
+    os.getenv("GROUP_MEMBER_6"),
+    os.getenv("GROUP_MEMBER_7"),
+]
+
+# Initialize Twilio client
+client = Client(account_sid, auth_token)
+
+# File to store phone number to most recent order number mapping
+PHONE_ORDER_MAPPING_FILE = Path("logs/phone_order_mapping.json")
+
+def save_phone_order_mapping(phone_number: str, order_number: str):
+    mapping = {}
+    if PHONE_ORDER_MAPPING_FILE.exists():
+        with PHONE_ORDER_MAPPING_FILE.open("r", encoding="utf-8") as f:
+            mapping = json.load(f)
+    mapping[phone_number] = order_number
+    with PHONE_ORDER_MAPPING_FILE.open("w", encoding="utf-8") as f:
+        json.dump(mapping, f, indent=2)
+
+def get_order_number_from_phone(phone_number: str) -> str:
+    if not PHONE_ORDER_MAPPING_FILE.exists():
+        return None
+    with PHONE_ORDER_MAPPING_FILE.open("r", encoding="utf-8") as f:
+        mapping = json.load(f)
+    return mapping.get(phone_number)
+
+def send_whatsapp_notification(order_number: str, total: float):
+    message_body = f"New order {order_number} exceeds threshold (R{total:.2f}). Reply 'Authorised' to approve."
+    try:
+        for member in group_members:
+            if member:  # Skip if member is None (not set in .env)
+                message = client.messages.create(
+                    body=message_body,
+                    from_=twilio_number,
+                    to=member
+                )
+                logging.info(f"Sent WhatsApp message to {member} for order {order_number}: {message.sid}")
+                # Save the phone number to order number mapping
+                save_phone_order_mapping(member, order_number)
+        return True
+    except Exception as e:
+        logging.error(f"Failed to send WhatsApp notification for order {order_number}: {str(e)}")
+        return False
 ```
 
 ### `backend/utils/__init__.py`
@@ -1187,14 +1639,16 @@ def install_validation_handler(app):
 
 ```
 
-### `scripts/clear_live_data.py`
+### `scripts/clear_transactional_data.py`
 **!/usr/bin/env python3**
 ```python
 #!/usr/bin/env python3
 import sqlite3
+from pathlib import Path
 
 DB_PATH = "data/orders.db"
 
+# Transactional tables to clear (excluding static tables: requesters, suppliers, settings, users, projects, items)
 TABLES_TO_CLEAR = [
     "orders",
     "order_items",
@@ -1202,22 +1656,34 @@ TABLES_TO_CLEAR = [
     "audit_trail"
 ]
 
-def clear_live_data():
+def clear_transactional_data():
     try:
         with sqlite3.connect(DB_PATH) as conn:
             cursor = conn.cursor()
             for table in TABLES_TO_CLEAR:
                 print(f"Clearing table: {table}")
                 cursor.execute(f"DELETE FROM {table}")
+            # Reset the sqlite_sequence for the cleared tables
+            for table in TABLES_TO_CLEAR:
+                cursor.execute("DELETE FROM sqlite_sequence WHERE name = ?", (table,))
+            # Reset the order_number_start to URC0001
+            cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES ('order_number_start', 'URC0001')")
             conn.commit()
-            print("✅ Live transactional data cleared successfully.")
+            print("✅ Transactional data cleared successfully. Order number reset to URC0001.")
     except Exception as e:
-        print(f"❌ Failed to clear data: {e}")
+        print(f"❌ Failed to clear transactional data: {e}")
 
 if __name__ == "__main__":
-    clear_live_data()
-
-
+    # Ensure the uploads directory is cleared as well
+    UPLOAD_DIR = Path("data/uploads")
+    if UPLOAD_DIR.exists():
+        for file in UPLOAD_DIR.glob("*"):
+            try:
+                file.unlink()
+                print(f"Deleted upload: {file}")
+            except Exception as e:
+                print(f"Failed to delete {file}: {e}")
+    clear_transactional_data()
 ```
 
 ### `scripts/dump_project_summary.py`
@@ -3633,6 +4099,87 @@ if __name__ == "__main__":
 
 ## 📂 HTML Templates
 
+### `frontend/templates/audit_trail.html`
+**(No description)**
+```python
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Audit Trail</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
+    .status { font-weight: bold; }
+    .filters { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+    .filters label { font-weight: bold; }
+    input[type="date"], select {
+      padding: 0.4rem;
+      font-size: 1rem;
+      font-family: monospace;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+    .expand-icon, .clip-icon, .eye-icon, .note-icon, .supplier-note-icon {
+      cursor: pointer;
+      font-size: 1.2rem;
+      margin: 0 0.3rem;
+      display: inline-block;
+    }
+    .eye-icon.disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+    .audit-details { margin-top: 0.5rem; padding-left: 2rem; }
+  </style>
+</head>
+<body>
+  <h2>Audit Trail</h2>
+
+  <div class="filters">
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date" />
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date" />
+    <label for="filter-requester">Requester:</label>
+    <select id="filter-requester"></select>
+    <label for="filter-supplier">Supplier:</label>
+    <select id="filter-supplier"></select>
+    <label for="filter-status">Status:</label>
+    <select id="filter-status">
+      <option value="All">All</option>
+      <option value="Pending">Pending</option>
+      <option value="Waiting for Approval">Waiting for Approval</option>
+      <option value="Awaiting Authorisation">Awaiting Authorisation</option>
+      <option value="Received">Received</option>
+    </select>
+    <button id="run-btn">Run</button>
+    <button id="clear-btn">Clear</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Request Date</th>
+        <th>Order Number</th>
+        <th>Requester</th>
+        <th>Supplier</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="audit-body"></tbody>
+  </table>
+
+  <script type="module" src="/static/js/audit_trail.js"></script>
+</body>
+</html>
+```
+
 ### `frontend/templates/home.html`
 **(No description)**
 ```python
@@ -3711,79 +4258,562 @@ if __name__ == "__main__":
 
 ```
 
-### `frontend/templates/new_order.html`
+### `frontend/templates/maintenance.html`
 **(No description)**
 ```python
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>New Order - Universal Recycling</title>
+  <title>Maintenance - Universal Recycling</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; }
+    body { font-family: Arial, sans-serif; padding: 2rem; }
+    .tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
+    .tab { padding: 0.5rem 1rem; cursor: pointer; background: #ddd; border-radius: 4px 4px 0 0; }
+    .tab.active { background: #007BFF; color: white; }
+    .tab-content { display: none; padding: 1rem; border: 1px solid #ccc; border-radius: 0 4px 4px 4px; }
+    .tab-content.active { display: block; }
     table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
-    input, select, textarea, button { padding: 0.4rem; font-size: 1rem; }
-    .inline { margin-right: 2rem; }
-    button { cursor: pointer; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
+    input, select, button { padding: 0.4rem; margin: 0.2rem 0; }
+    button { cursor: pointer; background: #007BFF; color: white; border: none; border-radius: 4px; }
+    button:hover { background: #0056b3; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-weight: bold; }
   </style>
 </head>
 <body>
-  <h2>Submit a New Order</h2>
+  <h2>Maintenance</h2>
 
-  <div>
-    <label class="inline">Request Date:
-      <input type="date" id="request-date">
-    </label>
-    <label class="inline">Order Number:
-      <input type="text" id="order-number" value="ORD-????" readonly>
-    </label>
-  </div><br>
-
-  <div>
-    <label class="inline">Requester:
-      <select id="requester" name="requester_id">
-        <option value="">Select requester</option>
-      </select>
-    </label>
-    <label class="inline">Supplier:
-      <select id="supplier" name="supplier_id">
-        <option value="">Select supplier</option>
-      </select>
-    </label>
-  </div><br>
-
-  <label>Special Instructions for Supplier:</label><br>
-  <textarea rows="3" cols="60" name="note_to_supplier"></textarea><br><br>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Stock Code</th>
-        <th>Description</th>
-        <th>Project</th>
-        <th>Qty</th>
-        <th>Price</th>
-        <th>Total</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="items-body"></tbody>
-  </table>
-
-  <button type="button" id="add-line">➕ Add New Line</button>
-
-  <div class="actions">
-    <h3>Total Order Value: <span id="grand-total">R0.00</span></h3>
-    <button type="button" id="preview-order">Preview Order</button>
-    <button type="button" id="submit-order">Submit</button>
+  <div class="tabs">
+    <div class="tab active" data-tab="users">Users</div>
+    <div class="tab" data-tab="requesters">Requesters</div>
+    <div class="tab" data-tab="items">Items</div>
+    <div class="tab" data-tab="projects">Projects</div>
+    <div class="tab" data-tab="settings">Settings</div>
   </div>
 
-  <!-- ✅ Load external JavaScript for order logic -->
-  <script src="/static/js/new_order.js"></script>
+  <div id="users" class="tab-content active">
+    <form class="form-group" onsubmit="event.preventDefault(); addUser();">
+      <label for="user-username">Username:</label>
+      <input type="text" id="user-username" autocomplete="username" />
+      <label for="user-password">Password:</label>
+      <input type="password" id="user-password" autocomplete="current-password" />
+      <label for="user-rights">Rights:</label>
+      <select id="user-rights">
+        <option value="edit">Edit</option>
+        <option value="view">View Only</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button type="submit">Add User</button>
+    </form>
+    <table id="users-table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Rights</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="requesters" class="tab-content">
+    <div class="form-group">
+      <label for="requester-name">Name:</label>
+      <input type="text" id="requester-name" />
+      <button onclick="addRequester()">Add Requester</button>
+    </div>
+    <table id="requesters-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="items" class="tab-content">
+    <div class="form-group">
+      <label for="item-code">Item Code:</label>
+      <input type="text" id="item-code" />
+      <label for="item-description">Description:</label>
+      <input type="text" id="item-description" />
+      <button onclick="addItem()">Add Item</button>
+    </div>
+    <table id="items-table">
+      <thead>
+        <tr>
+          <th>Item Code</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="projects" class="tab-content">
+    <div class="form-group">
+      <label for="project-code">Project Code:</label>
+      <input type="text" id="project-code" />
+      <label for="project-name">Project Name:</label>
+      <input type="text" id="project-name" />
+      <button onclick="addProject()">Add Project</button>
+    </div>
+    <table id="projects-table">
+      <thead>
+        <tr>
+          <th>Project Code</th>
+          <th>Project Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div id="settings" class="tab-content">
+    <div class="form-group">
+      <label for="order-number-start">Start Order Number:</label>
+      <input type="text" id="order-number-start" />
+      <label for="auth-threshold">Authorization Threshold (R):</label>
+      <input type="number" id="auth-threshold" step="0.01" />
+      <button onclick="updateSettings()">Update</button>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.tab).classList.add("active");
+      });
+    });
+
+    // Load data on page load
+    async function loadData(endpoint, tableId, renderRow) {
+      try {
+        const res = await fetch(endpoint);
+        const data = await res.json();
+        const tbody = document.querySelector(`#${tableId} tbody`);
+        tbody.innerHTML = "";
+        Object.values(data)[0].forEach(item => {
+          const row = document.createElement("tr");
+          row.innerHTML = renderRow(item);
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error(`Failed to load ${tableId}:`, err);
+      }
+    }
+
+    // Users
+    async function loadUsers() {
+      loadData("/lookups/users", "users-table", user => `
+        <td>${user.username}</td>
+        <td>${user.rights}</td>
+        <td><button onclick="editUser(${user.id}, '${user.username}', '${user.rights}')">Edit</button></td>
+      `);
+    }
+
+    async function addUser() {
+      const username = document.getElementById("user-username").value;
+      const password = document.getElementById("user-password").value;
+      const rights = document.getElementById("user-rights").value;
+      try {
+        await fetch("/lookups/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password, rights }),
+        });
+        loadUsers();
+      } catch (err) {
+        console.error("Failed to add user:", err);
+      }
+    }
+
+    async function editUser(id, username, rights) {
+      const newUsername = prompt("New Username:", username);
+      const newRights = prompt("New Rights (edit/view/admin):", rights);
+      if (newUsername && newRights) {
+        try {
+          await fetch(`/lookups/users/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username: newUsername, rights: newRights }),
+          });
+          loadUsers();
+        } catch (err) {
+          console.error("Failed to edit user:", err);
+        }
+      }
+    }
+
+    // Requesters
+    async function loadRequesters() {
+      loadData("/lookups/requesters", "requesters-table", requester => `
+        <td>${requester.name}</td>
+        <td><button onclick="editRequester(${requester.id}, '${requester.name}')">Edit</button></td>
+      `);
+    }
+
+    async function addRequester() {
+      const name = document.getElementById("requester-name").value;
+      try {
+        await fetch("/lookups/requesters", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name }),
+        });
+        loadRequesters();
+      } catch (err) {
+        console.error("Failed to add requester:", err);
+      }
+    }
+
+    async function editRequester(id, name) {
+      const newName = prompt("New Name:", name);
+      if (newName) {
+        try {
+          await fetch(`/lookups/requesters/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name: newName }),
+          });
+          loadRequesters();
+        } catch (err) {
+          console.error("Failed to edit requester:", err);
+        }
+      }
+    }
+
+    // Items
+    async function loadItems() {
+      loadData("/lookups/items", "items-table", item => `
+        <td>${item.item_code}</td>
+        <td>${item.item_description}</td>
+        <td><button onclick="editItem(${item.id}, '${item.item_code}', '${item.item_description}')">Edit</button></td>
+      `);
+    }
+
+    async function addItem() {
+      const itemCode = document.getElementById("item-code").value;
+      const itemDescription = document.getElementById("item-description").value;
+      try {
+        await fetch("/lookups/items", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ item_code: itemCode, item_description: itemDescription }),
+        });
+        loadItems();
+      } catch (err) {
+        console.error("Failed to add item:", err);
+      }
+    }
+
+    async function editItem(id, itemCode, itemDescription) {
+      const newItemCode = prompt("New Item Code:", itemCode);
+      const newItemDescription = prompt("New Description:", itemDescription);
+      if (newItemCode && newItemDescription) {
+        try {
+          await fetch(`/lookups/items/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ item_code: newItemCode, item_description: newItemDescription }),
+          });
+          loadItems();
+        } catch (err) {
+          console.error("Failed to edit item:", err);
+        }
+      }
+    }
+
+    // Projects
+    async function loadProjects() {
+      loadData("/lookups/projects", "projects-table", project => `
+        <td>${project.project_code}</td>
+        <td>${project.project_name}</td>
+        <td><button onclick="editProject(${project.id}, '${project.project_code}', '${project.project_name}')">Edit</button></td>
+      `);
+    }
+
+    async function addProject() {
+      const projectCode = document.getElementById("project-code").value;
+      const projectName = document.getElementById("project-name").value;
+      try {
+        await fetch("/lookups/projects", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ project_code: projectCode, project_name: projectName }),
+        });
+        loadProjects();
+      } catch (err) {
+        console.error("Failed to add project:", err);
+      }
+    }
+
+    async function editProject(id, projectCode, projectName) {
+      const newProjectCode = prompt("New Project Code:", projectCode);
+      const newProjectName = prompt("New Project Name:", projectName);
+      if (newProjectCode && newProjectName) {
+        try {
+          await fetch(`/lookups/projects/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ project_code: newProjectCode, project_name: newProjectName }),
+          });
+          loadProjects();
+        } catch (err) {
+          console.error("Failed to edit project:", err);
+        }
+      }
+    }
+
+    // Settings
+    async function loadSettings() {
+      try {
+        const res = await fetch("/lookups/settings");
+        const data = await res.json();
+        document.getElementById("order-number-start").value = data.order_number_start || "";
+        document.getElementById("auth-threshold").value = data.auth_threshold || "";
+      } catch (err) {
+        console.error("Failed to load settings:", err);
+      }
+    }
+
+    async function updateSettings() {
+      const orderNumberStart = document.getElementById("order-number-start").value;
+      const authThreshold = document.getElementById("auth-threshold").value;
+      try {
+        await fetch("/lookups/settings", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key: "order_number_start", value: orderNumberStart }),
+        });
+        await fetch("/lookups/settings", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key: "auth_threshold", value: authThreshold }),
+        });
+        alert("Settings updated successfully");
+      } catch (err) {
+        console.error("Failed to update settings:", err);
+      }
+    }
+
+    // Load all data on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      loadUsers();
+      loadRequesters();
+      loadItems();
+      loadProjects();
+      loadSettings();
+    });
+  </script>
 </body>
 </html>
+```
 
+### `frontend/templates/new_order.html`
+**(No description)**
+```python
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Order</title>
+    <link rel="stylesheet" href="/static/css/new_order.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Create Purchase Order</h2>
+        <div class="header-section">
+            <div>
+                <label for="supplier_id">Supplier *</label>
+                <select id="supplier_id" name="supplier_id">
+                    <option value="">Select Supplier</option>
+                    {% for supplier in suppliers %}
+                    <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+                    {% endfor %}
+                </select>
+                <label for="note_to_supplier">Note to Supplier</label>
+                <textarea id="note_to_supplier" name="note_to_supplier" rows="3"></textarea>
+            </div>
+            <div>
+                <label>Delivery Address</label>
+                <div class="address-box">
+                    Universal Recycling Company Pty Ltd<br>
+                    [Address Line 1 from DB]<br>
+                    [Address Line 2 from DB]<br>
+                    [City, Province, Area Code from DB]<br>
+                    Telephone: [Telephone from DB]<br>
+                    VAT Number: [VAT Number from DB]
+                </div>
+            </div>
+        </div>
+
+        <table id="items-table">
+            <thead>
+                <tr>
+                    <th>Item Code</th>
+                    <th>Description</th>
+                    <th>Project</th>
+                    <th>Qty Ordered</th>
+                    <th>Price (R)</th>
+                    <th>Total (R)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="items[0][item_code]"></td>
+                    <td><input type="text" name="items[0][item_description]"></td>
+                    <td><input type="text" name="items[0][project]"></td>
+                    <td><input type="number" name="items[0][qty_ordered]" step="1" min="1" value="1" onchange="updateTotal(0)"></td>
+                    <td><input type="number" name="items[0][price]" step="0.01" min="0" value="0" onchange="updateTotal(0)"></td>
+                    <td><input type="text" name="items[0][total]" readonly></td>
+                    <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" onclick="addRow()">Add Item</button>
+
+        <div class="total-section">
+            <label>Total: R <span id="grand-total">0.00</span></label>
+            <div class="vat-note">Excluding VAT</div>
+        </div>
+
+        <div class="button-section">
+            <button type="button" id="email-po" onclick="emailPurchaseOrder()">Email Purchase Order</button>
+            <button type="submit" onclick="submitForm()">Submit Order</button>
+            <button type="button" id="view-po" onclick="viewPurchaseOrder()">View Purchase Order</button>
+            <button type="button" onclick="cancelForm()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            let rowCount = 1;
+
+            function addRow() {
+                const tbody = document.querySelector("#items-table tbody");
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td><input type="text" name="items[${rowCount}][item_code]"></td>
+                    <td><input type="text" name="items[${rowCount}][item_description]"></td>
+                    <td><input type="text" name="items[${rowCount}][project]"></td>
+                    <td><input type="number" name="items[${rowCount}][qty_ordered]" step="1" min="1" value="1" onchange="updateTotal(${rowCount})"></td>
+                    <td><input type="number" name="items[${rowCount}][price]" step="0.01" min="0" value="0" onchange="updateTotal(${rowCount})"></td>
+                    <td><input type="text" name="items[${rowCount}][total]" readonly></td>
+                    <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+                `;
+                tbody.appendChild(row);
+                rowCount++;
+                updateGrandTotal();
+            }
+
+            function removeRow(button) {
+                if (rowCount > 1) {
+                    button.parentElement.parentElement.remove();
+                    rowCount--;
+                    updateGrandTotal();
+                }
+            }
+
+            function updateTotal(index) {
+                const qty = parseFloat(document.querySelector(`input[name='items[${index}][qty_ordered]']`).value) || 0;
+                const price = parseFloat(document.querySelector(`input[name='items[${index}][price]']`).value) || 0;
+                const total = qty * price;
+                document.querySelector(`input[name='items[${index}][total]']`).value = total.toFixed(2);
+                updateGrandTotal();
+            }
+
+            function updateGrandTotal() {
+                let grandTotal = 0;
+                for (let i = 0; i < rowCount; i++) {
+                    const totalField = document.querySelector(`input[name='items[${i}][total]']`);
+                    if (totalField) {
+                        grandTotal += parseFloat(totalField.value) || 0;
+                    }
+                }
+                document.getElementById("grand-total").textContent = grandTotal.toFixed(2);
+            }
+
+            async function submitForm() {
+                const formData = new FormData();
+                const supplierId = document.getElementById("supplier_id").value;
+                const noteToSupplier = document.getElementById("note_to_supplier").value;
+                formData.append("supplier_id", supplierId);
+                formData.append("note_to_supplier", noteToSupplier);
+                formData.append("requester_id", "1"); // Hardcoded for demo; adjust as needed
+
+                const items = [];
+                for (let i = 0; i < rowCount; i++) {
+                    const itemCode = document.querySelector(`input[name='items[${i}][item_code]']`)?.value;
+                    const itemDescription = document.querySelector(`input[name='items[${i}][item_description]']`)?.value;
+                    const project = document.querySelector(`input[name='items[${i}][project]']`)?.value;
+                    const qtyOrdered = document.querySelector(`input[name='items[${i}][qty_ordered]']`)?.value;
+                    const price = document.querySelector(`input[name='items[${i}][price]']`)?.value;
+                    if (itemCode && itemDescription && project && qtyOrdered && price) {
+                        items.push({
+                            item_code: itemCode,
+                            item_description: itemDescription,
+                            project: project,
+                            qty_ordered: parseFloat(qtyOrdered),
+                            price: parseFloat(price)
+                        });
+                    }
+                }
+                formData.append("items", JSON.stringify(items));
+
+                const response = await fetch("/orders", {
+                    method: "POST",
+                    body: formData
+                });
+                const result = await response.json();
+                if (response.ok) {
+                    alert(`Order created successfully: ${result.order.order_number}`);
+                    window.location.href = "/orders/pending";
+                } else {
+                    alert(`Failed to create order: ${result.detail}`);
+                }
+            }
+
+            function emailPurchaseOrder() {
+                alert("Email Purchase Order functionality will be implemented after fixing PDF generation.");
+                // Placeholder for emailing the PDF; to be implemented later
+            }
+
+            function viewPurchaseOrder() {
+                alert("View Purchase Order functionality will be implemented after fixing PDF generation.");
+                // Placeholder; to be linked to the view order screen after fixing PDF
+                window.location.href = "/orders/pending"; // Temporary redirect
+            }
+
+            function cancelForm() {
+                window.location.href = "/orders/pending";
+            }
+
+            // Expose functions to the global scope for onclick handlers
+            window.addRow = addRow;
+            window.removeRow = removeRow;
+            window.updateTotal = updateTotal;
+            window.submitForm = submitForm;
+            window.emailPurchaseOrder = emailPurchaseOrder;
+            window.viewPurchaseOrder = viewPurchaseOrder;
+            window.cancelForm = cancelForm;
+        })();
+    </script>
+</body>
+</html>
 ```
 
 ### `frontend/templates/pending_orders.html`
@@ -3801,7 +4831,7 @@ if __name__ == "__main__":
     .status { font-weight: bold; }
     .filters { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
     .filters label { font-weight: bold; }
-    input[type="text"], select {
+    input[type="date"], select {
       padding: 0.4rem;
       font-size: 1rem;
       font-family: monospace;
@@ -3814,13 +4844,7 @@ if __name__ == "__main__":
       cursor: pointer;
       font-size: 1.2rem;
       margin: 0 0.3rem;
-      display: inline-block; /* Ensure icons display properly */
-    }
-    .note-icon::before {
-      content: "📝"; /* Fallback in case emoji fails to render */
-    }
-    .supplier-note-icon::before {
-      content: "📦"; /* Fallback in case emoji fails to render */
+      display: inline-block;
     }
     .eye-icon.disabled {
       opacity: 0.3;
@@ -3833,9 +4857,9 @@ if __name__ == "__main__":
 
   <div class="filters">
     <label for="start-date">Start Date:</label>
-    <input type="text" id="start-date" placeholder="dd/mm/yyyy" />
+    <input type="date" id="start-date" />
     <label for="end-date">End Date:</label>
-    <input type="text" id="end-date" placeholder="dd/mm/yyyy" />
+    <input type="date" id="end-date" />
     <label for="filter-requester">Requester:</label>
     <select id="filter-requester"></select>
     <label for="filter-supplier">Supplier:</label>
@@ -3845,6 +4869,7 @@ if __name__ == "__main__":
       <option value="All">All</option>
       <option value="Pending">Pending</option>
       <option value="Waiting for Approval">Waiting for Approval</option>
+      <option value="Awaiting Authorisation">Awaiting Authorisation</option>
     </select>
     <button id="run-btn">Run</button>
     <button id="clear-btn">Clear</button>
@@ -3943,10 +4968,11 @@ if __name__ == "__main__":
       padding: 0.5rem 1rem;
       cursor: pointer;
     }
-    .clip-icon, .eye-icon {
+    .expand-icon, .clip-icon, .eye-icon, .note-icon, .supplier-note-icon {
       cursor: pointer;
       font-size: 1.2rem;
       margin: 0 0.3rem;
+      display: inline-block;
     }
     .eye-icon.disabled {
       opacity: 0.3;
@@ -3966,6 +4992,11 @@ if __name__ == "__main__":
     <select id="filter-requester"></select>
     <label for="filter-supplier">Supplier:</label>
     <select id="filter-supplier"></select>
+    <label for="filter-status">Status:</label>
+    <select id="filter-status">
+      <option value="All">All</option>
+      <option value="Received">Received</option>
+    </select>
     <button id="run-btn">Run</button>
     <button id="clear-btn">Clear</button>
   </div>
@@ -3979,331 +5010,361 @@ if __name__ == "__main__":
         <th>Supplier</th>
         <th>Total</th>
         <th>Status</th>
-        <th>Attachments</th>
+        <th>Actions</th>
       </tr>
     </thead>
-    <tbody id="orders-body"></tbody>
+    <tbody id="received-body"></tbody>
   </table>
 
-  <script type="module">
-    import { loadRequesters, loadSuppliers } from "/static/js/shared_filters.js";
-    import {
-      showViewAttachmentsModal,
-      showUploadAttachmentsModal,
-      checkAttachments
-    } from "/static/js/components/attachment_modal.js";
-
-    async function loadReceivedOrders(filters = {}) {
-      try {
-        const params = new URLSearchParams(filters).toString();
-        const res = await fetch(`/orders/api/received_orders${params ? '?' + params : ''}`);
-        const data = await res.json();
-        const tbody = document.getElementById("orders-body");
-        tbody.innerHTML = "";
-
-        for (const order of data.orders || []) {
-          const hasAttachments = await checkAttachments(order.id);
-
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td>${order.created_date ? order.created_date.split("T")[0] : "?"}</td>
-            <td>${order.order_number}</td>
-            <td>${order.requester}</td>
-            <td>${order.supplier || "—"}</td>
-            <td>R${(order.total || 0).toFixed(2)}</td>
-            <td class="status">${order.status}</td>
-            <td>
-              <span class="clip-icon" title="Upload"
-                onclick="uploadAndRefresh(${order.id}, '${order.order_number}', this)">📎</span>
-              <span class="eye-icon ${hasAttachments ? '' : 'disabled'}"
-                title="View Attachments"
-                onclick="${hasAttachments ? `showViewAttachmentsModal(${order.id}, '${order.order_number}')` : ''}">👁️</span>
-            </td>
-          `;
-
-          tbody.appendChild(row);
-        }
-      } catch (err) {
-        alert("❌ Failed to load received orders");
-        console.error(err);
-      }
-    }
-
-    function uploadAndRefresh(orderId, orderNumber, clipIconSpan) {
-      showUploadAttachmentsModal(orderId, orderNumber, async () => {
-        const row = clipIconSpan.closest("tr");
-        const eye = row.querySelector(".eye-icon");
-        eye.classList.remove("disabled");
-        eye.onclick = () => showViewAttachmentsModal(orderId, orderNumber);
-      });
-    }
-    window.uploadAndRefresh = uploadAndRefresh;
-
-    function applyFilters() {
-      const startDate = document.getElementById("start-date").value;
-      const endDate = document.getElementById("end-date").value;
-      const requester = document.getElementById("filter-requester").value;
-      const supplier = document.getElementById("filter-supplier").value;
-
-      const filters = {};
-      if (startDate) filters.start_date = startDate;
-      if (endDate) filters.end_date = endDate;
-      if (requester && requester !== "All") filters.requester = requester;
-      if (supplier && supplier !== "All") filters.supplier = supplier;
-
-      loadReceivedOrders(filters);
-    }
-
-    function clearFilters() {
-      document.getElementById("start-date").value = "";
-      document.getElementById("end-date").value = "";
-      document.getElementById("filter-requester").value = "All";
-      document.getElementById("filter-supplier").value = "All";
-      loadReceivedOrders();
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      loadRequesters("filter-requester");
-      loadSuppliers("filter-supplier");
-
-      document.getElementById("run-btn").addEventListener("click", applyFilters);
-      document.getElementById("clear-btn").addEventListener("click", clearFilters);
-
-      loadReceivedOrders();
-
-      window.showViewAttachmentsModal = showViewAttachmentsModal;
-      window.showUploadAttachmentsModal = showUploadAttachmentsModal;
-    });
-  </script>
+  <script type="module" src="/static/js/received_orders.js"></script>
 </body>
 </html>
-
 ```
 
 ## 📂 JS Scripts
 
+### `frontend/static/js/audit_trail.js`
+**(No description)**
+```python
+import { expandLineItems } from "/static/js/components/expand_line_items.js";
+import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from "/static/js/components/attachment_modal.js";
+import { showOrderNoteModal, showSupplierNoteModal } from "/static/js/components/order_note_modal.js";
+import { loadRequesters, loadSuppliers } from "/static/js/components/shared_filters.js";
+
+function populateDropdown(selectId, items, labelFunc, valueFunc) {
+  const dropdown = document.getElementById(selectId);
+  dropdown.innerHTML = `<option value="">All</option>`;
+  items.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = valueFunc(item);
+    opt.textContent = labelFunc(item);
+    dropdown.appendChild(opt);
+  });
+}
+
+function escapeHTML(str) {
+  if (!str) return "";
+  return str.replace(/'/g, "\\'").replace(/"/g, "\\\"").replace(/</g, "<").replace(/>/g, ">").replace(/\n/g, " ").replace(/\r/g, "");
+}
+
+function populateTable(data) {
+  const tbody = document.getElementById("audit-body");
+  tbody.innerHTML = "";
+
+  if (!data.orders || data.orders.length === 0) {
+    const row = tbody.insertRow();
+    const cell = row.insertCell(0);
+    cell.colSpan = 7;
+    cell.textContent = "No orders found.";
+    return;
+  }
+
+  data.orders.forEach(order => {
+    const row = tbody.insertRow();
+    row.setAttribute("data-order-id", order.id);
+
+    const sanitizedOrderNote = escapeHTML(order.order_note || "");
+    const sanitizedSupplierNote = escapeHTML(order.note_to_supplier || "");
+    const sanitizedOrderNumber = escapeHTML(order.order_number);
+    const sanitizedSupplier = escapeHTML(order.supplier || "N/A");
+    const sanitizedRequester = escapeHTML(order.requester);
+
+    row.innerHTML = `
+      <td>${order.created_date}</td>
+      <td>${sanitizedOrderNumber}</td>
+      <td>${sanitizedRequester}</td>
+      <td>${sanitizedSupplier}</td>
+      <td>R${order.total.toFixed(2)}</td>
+      <td>${order.status}</td>
+      <td>
+        <span class="expand-icon" onclick="window.expandLineItems(${order.id}, this)">⬇️</span>
+        <span class="clip-icon" title="View/Upload Attachments" onclick="window.checkAttachments(${order.id}).then(has => has ? window.showViewAttachmentsModal(${order.id}, '${sanitizedOrderNumber}') : window.showUploadAttachmentsModal(${order.id}, '${sanitizedOrderNumber}', () => window.checkAttachments(${order.id}).then(has => this.classList.toggle('eye-icon', has))))">📎</span>
+        <span class="note-icon" title="Edit Continuous Order Note" onclick="window.showOrderNoteModal('${sanitizedOrderNote}', ${order.id})">📝</span>
+        <span class="supplier-note-icon" title="View Note to Supplier" onclick="try { window.showSupplierNoteModal('${sanitizedSupplierNote}'); } catch (e) { console.error('Failed to show supplier note for order ${order.order_number}:', e); alert('Error displaying supplier note: ' + e.message); }">📦</span>
+      </td>
+    `;
+
+    // Add audit trail details row
+    const auditRow = tbody.insertRow();
+    auditRow.style.display = "none";
+    auditRow.classList.add(`audit-row-${order.id}`);
+    const auditCell = auditRow.insertCell(0);
+    auditCell.colSpan = 7;
+    auditCell.classList.add("audit-details");
+
+    // Populate audit trail details
+    let auditDetails = `
+      <strong>Original Order Date:</strong> ${order.created_date}<br>
+      <strong>Received Date:</strong> ${order.received_date || 'Not received yet'}<br>
+    `;
+    if (order.items && order.items.length > 0) {
+      auditDetails += "<strong>Items Received:</strong><ul>";
+      order.items.forEach(item => {
+        auditDetails += `
+          <li>
+            ${item.item_description} (Code: ${item.item_code})<br>
+            Ordered: ${item.qty_ordered}, Received: ${item.qty_received || 0}<br>
+            Received Date: ${item.received_date || 'Not received yet'}
+          </li>
+        `;
+      });
+      auditDetails += "</ul>";
+    }
+    auditCell.innerHTML = auditDetails;
+  });
+}
+
+async function loadFiltersAndOrders() {
+  try {
+    const [suppliersRes, requestersRes] = await Promise.all([
+      fetch("/lookups/suppliers").then(res => res.json()),
+      fetch("/lookups/requesters").then(res => res.json())
+    ]);
+
+    populateDropdown("filter-supplier", suppliersRes.suppliers, s => `${s.account_number} — ${s.name}`, s => s.name);
+    populateDropdown("filter-requester", requestersRes.requesters, r => r.name, r => r.name);
+
+    await runFilters();
+  } catch (err) {
+    console.error("Failed to load filters", err);
+  }
+}
+
+async function runFilters() {
+  const supplierName = document.getElementById("filter-supplier").value;
+  const requesterName = document.getElementById("filter-requester").value;
+  const status = document.getElementById("filter-status").value;
+  let startDate = document.getElementById("start-date").value;
+  let endDate = document.getElementById("end-date").value;
+
+  const isValidDate = (dateStr) => {
+    if (!dateStr) return true;
+    const date = new Date(dateStr);
+    return !isNaN(date.getTime()) && dateStr === date.toISOString().split("T")[0];
+  };
+
+  if (startDate && !isValidDate(startDate)) {
+    alert("Invalid start date. Please select a valid date.");
+    return;
+  }
+  if (endDate && !isValidDate(endDate)) {
+    alert("Invalid end date. Please select a valid date.");
+    return;
+  }
+
+  const params = new URLSearchParams();
+  if (supplierName) params.append("supplier", supplierName);
+  if (requesterName) params.append("requester", requesterName);
+  if (status && status !== "All") params.append("status", status);
+  if (startDate) params.append("start_date", startDate);
+  if (endDate) params.append("end_date", endDate);
+
+  try {
+    const res = await fetch(`/orders/api/audit_trail?${params.toString()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+    const data = await res.json();
+    populateTable(data);
+  } catch (err) {
+    console.error("Failed to fetch audit trail", err);
+    alert("Failed to load audit trail: " + err.message);
+  }
+}
+
+function clearFilters() {
+  document.getElementById("filter-supplier").value = "";
+  document.getElementById("filter-requester").value = "";
+  document.getElementById("filter-status").value = "";
+  document.getElementById("start-date").value = "";
+  document.getElementById("end-date").value = "";
+  runFilters();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadFiltersAndOrders();
+
+  document.getElementById("run-btn").addEventListener("click", runFilters);
+  document.getElementById("clear-btn").addEventListener("click", clearFilters);
+
+  // Periodically refresh the audit trail table every 30 seconds
+  setInterval(runFilters, 30000);
+});
+
+window.expandLineItems = expandLineItems;
+window.showUploadAttachmentsModal = showUploadAttachmentsModal;
+window.checkAttachments = checkAttachments;
+window.showViewAttachmentsModal = showViewAttachmentsModal;
+window.showOrderNoteModal = showOrderNoteModal;
+window.showSupplierNoteModal = showSupplierNoteModal;
+```
+
 ### `frontend/static/js/components/attachment_modal.js`
 **(No description)**
 ```python
-export function showViewAttachmentsModal(orderId, orderNumber) {
-    fetch(`/orders/attachments/${orderId}`)
+export function showViewAttachmentsModal(orderId, orderNumber, onUploadComplete = null) {
+  fetch(`/orders/attachments/${orderId}`)
+    .then(res => res.json())
+    .then(data => {
+      const files = data.attachments || [];
+      const modal = createBaseModal();
+      const title = document.createElement("h3");
+      title.textContent = `Attachments for ${orderNumber}`;
+      modal.inner.appendChild(title);
+
+      if (files.length > 0) {
+        const list = document.createElement("ul");
+        list.style.listStyle = "none";
+        list.style.padding = "0";
+
+        files.forEach(f => {
+          const li = document.createElement("li");
+          const link = document.createElement("a");
+          link.href = `/${f.file_path}`;
+          link.textContent = f.filename;
+          link.target = "_blank";
+          link.style.display = "block";
+          link.style.marginBottom = "0.5rem";
+          link.style.color = "green";
+          link.style.textDecoration = "underline";
+          li.appendChild(link);
+          list.appendChild(li);
+        });
+
+        modal.inner.appendChild(list);
+      }
+
+      const dropzone = document.createElement("div");
+      dropzone.textContent = "Drag and drop files here or click to select";
+      dropzone.style.border = "2px dashed #aaa";
+      dropzone.style.padding = "2rem";
+      dropzone.style.textAlign = "center";
+      dropzone.style.cursor = "pointer";
+      dropzone.style.marginTop = "1rem";
+      dropzone.style.background = "#fafafa";
+
+      dropzone.onclick = () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.multiple = true;
+        input.onchange = () => handleFiles(input.files, orderId, modal.inner, onUploadComplete);
+        input.click();
+      };
+
+      dropzone.ondragover = e => {
+        e.preventDefault();
+        dropzone.style.background = "#eee";
+      };
+      dropzone.ondragleave = () => {
+        dropzone.style.background = "#fafafa";
+      };
+      dropzone.ondrop = e => {
+        e.preventDefault();
+        dropzone.style.background = "#fafafa";
+        handleFiles(e.dataTransfer.files, orderId, modal.inner, onUploadComplete);
+      };
+
+      modal.inner.appendChild(dropzone);
+
+      const closeBtn = document.createElement("button");
+      closeBtn.textContent = "Close";
+      closeBtn.style.marginTop = "1.5rem";
+      closeBtn.style.padding = "0.5rem 1rem";
+      closeBtn.style.border = "none";
+      closeBtn.style.cursor = "pointer";
+      closeBtn.style.background = "#ccc";
+      closeBtn.onclick = () => document.body.removeChild(modal.container);
+
+      modal.inner.appendChild(closeBtn);
+
+      document.body.appendChild(modal.container);
+    })
+    .catch(err => {
+      alert("❌ Failed to load attachments");
+      console.error(err);
+    });
+}
+
+export function showUploadAttachmentsModal(orderId, orderNumber, onUploadComplete = null) {
+  showViewAttachmentsModal(orderId, orderNumber, onUploadComplete);
+}
+
+export async function checkAttachments(orderId) {
+  try {
+    const res = await fetch(`/orders/attachments/${orderId}`);
+    const data = await res.json();
+    return data.attachments && data.attachments.length > 0;
+  } catch (err) {
+    console.error("Failed to check attachments:", err);
+    return false;
+  }
+}
+
+function handleFiles(fileList, orderId, modalInner, onUploadComplete = null) {
+  Array.from(fileList).forEach(file => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("order_id", orderId);
+
+    fetch("/orders/upload_attachment", {
+      method: "POST",
+      body: formData,
+    })
       .then(res => res.json())
       .then(data => {
-        const files = data.attachments || [];
-        const modal = createBaseModal();
-        const title = document.createElement("h3");
-        title.textContent = `Attachments for ${orderNumber}`;
-        modal.inner.appendChild(title);
-  
-        if (files.length === 0) {
-          const noFiles = document.createElement("p");
-          noFiles.textContent = "No attachments found.";
-          modal.inner.appendChild(noFiles);
-        } else {
-          const list = document.createElement("ul");
-          list.style.listStyle = "none";
-          list.style.padding = "0";
-  
-          files.forEach(f => {
-            const li = document.createElement("li");
-            const link = document.createElement("a");
-            link.href = `/${f.file_path}`;
-            link.textContent = f.filename;
-            link.target = "_blank";
-            link.style.display = "block";
-            link.style.marginBottom = "0.5rem";
-            link.style.color = "green";
-            link.style.textDecoration = "underline";
-            li.appendChild(link);
-            list.appendChild(li);
-          });
-  
-          modal.inner.appendChild(list);
-        }
-  
-        document.body.appendChild(modal.container);
+        const msg = document.createElement("p");
+        msg.textContent = data.status;
+        msg.style.color = "green";
+        modalInner.appendChild(msg);
+        if (onUploadComplete) onUploadComplete();
       })
       .catch(err => {
-        alert("❌ Failed to load attachments");
+        const msg = document.createElement("p");
+        msg.textContent = `❌ Failed to upload: ${file.name}`;
+        msg.style.color = "red";
+        modalInner.appendChild(msg);
         console.error(err);
       });
-  }
-  
-  export function showUploadAttachmentsModal(orderId, orderNumber, onUploadComplete = null) {
-    const modal = createBaseModal();
-  
-    const title = document.createElement("h3");
-    title.textContent = `Upload Attachments for ${orderNumber}`;
-    modal.inner.appendChild(title);
-  
-    const dropzone = document.createElement("div");
-    dropzone.textContent = "Drag and drop files here or click to select";
-    dropzone.style.border = "2px dashed #aaa";
-    dropzone.style.padding = "2rem";
-    dropzone.style.textAlign = "center";
-    dropzone.style.cursor = "pointer";
-    dropzone.style.marginTop = "1rem";
-    dropzone.style.background = "#fafafa";
-  
-    dropzone.onclick = () => {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.multiple = true;
-      input.onchange = () => handleFiles(input.files, orderId, modal.inner, onUploadComplete);
-      input.click();
-    };
-  
-    dropzone.ondragover = e => {
-      e.preventDefault();
-      dropzone.style.background = "#eee";
-    };
-    dropzone.ondragleave = () => {
-      dropzone.style.background = "#fafafa";
-    };
-    dropzone.ondrop = e => {
-      e.preventDefault();
-      dropzone.style.background = "#fafafa";
-      handleFiles(e.dataTransfer.files, orderId, modal.inner, onUploadComplete);
-    };
-  
-    modal.inner.appendChild(dropzone);
-  
-    const closeBtn = document.createElement("button");
-    closeBtn.textContent = "Close";
-    closeBtn.style.marginTop = "1.5rem";
-    closeBtn.style.padding = "0.5rem 1rem";
-    closeBtn.style.border = "none";
-    closeBtn.style.cursor = "pointer";
-    closeBtn.style.background = "#ccc";
-    closeBtn.onclick = () => document.body.removeChild(modal.container);
-  
-    modal.inner.appendChild(closeBtn);
-  
-    document.body.appendChild(modal.container);
-  }
-  
-  export async function checkAttachments(orderId) {
-    try {
-      const res = await fetch(`/orders/attachments/${orderId}`);
-      const data = await res.json();
-      return data.attachments && data.attachments.length > 0;
-    } catch (err) {
-      console.error("Failed to check attachments:", err);
-      return false;
-    }
-  }
-  
-  function handleFiles(fileList, orderId, modalInner, onUploadComplete = null) {
-    Array.from(fileList).forEach(file => {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("order_id", orderId);
-  
-      fetch("/orders/upload_attachment", {
-        method: "POST",
-        body: formData,
-      })
-        .then(res => {
-          if (!res.ok) throw new Error("Upload failed");
-          return res.json();
-        })
-        .then(() => {
-          const msg = document.createElement("p");
-          msg.textContent = `✅ Uploaded: ${file.name}`;
-          msg.style.color = "green";
-          modalInner.appendChild(msg);
-          if (onUploadComplete) onUploadComplete();
-        })
-        .catch(err => {
-          const msg = document.createElement("p");
-          msg.textContent = `❌ Failed to upload: ${file.name}`;
-          msg.style.color = "red";
-          modalInner.appendChild(msg);
-          console.error(err);
-        });
-    });
-  }
-  
-  function createBaseModal() {
-    const container = document.createElement("div");
-    container.style.position = "fixed";
-    container.style.top = "0";
-    container.style.left = "0";
-    container.style.width = "100vw";
-    container.style.height = "100vh";
-    container.style.backgroundColor = "rgba(0,0,0,0.5)";
-    container.style.display = "flex";
-    container.style.alignItems = "center";
-    container.style.justifyContent = "center";
-    container.style.zIndex = "9999";
-  
-    const inner = document.createElement("div");
-    inner.style.backgroundColor = "white";
-    inner.style.padding = "1.5rem";
-    inner.style.borderRadius = "8px";
-    inner.style.width = "90%";
-    inner.style.maxWidth = "500px";
-    inner.style.maxHeight = "80vh";
-    inner.style.overflowY = "auto";
-    inner.style.fontFamily = "Arial, sans-serif";
-    inner.style.position = "relative";
-  
-    const close = document.createElement("button");
-    close.textContent = "✖";
-    close.style.position = "absolute";
-    close.style.top = "10px";
-    close.style.right = "10px";
-    close.style.background = "none";
-    close.style.border = "none";
-    close.style.fontSize = "1.2rem";
-    close.style.cursor = "pointer";
-    close.onclick = () => document.body.removeChild(container);
-  
-    inner.appendChild(close);
-    container.appendChild(inner);
-  
-    return { container, inner };
-  }
-  
-```
-
-### `frontend/static/js/components/date_input.js`
-**(No description)**
-```python
-export function attachDateInput(id) {
-  const input = document.getElementById(id);
-  if (!input) return;
-
-  input.setAttribute("type", "text");
-  input.setAttribute("placeholder", "dd/mm/yyyy");
-  input.setAttribute("maxlength", "10");
-  input.style.fontFamily = "monospace";
-
-  input.addEventListener("input", (e) => {
-    let value = input.value.replace(/[^0-9]/g, "");
-    if (value.length > 8) value = value.slice(0, 8);
-
-    const cursorPosBefore = input.selectionStart;
-    let formatted = "";
-    if (value.length > 4) {
-      formatted = value.slice(0, 2) + "/" + value.slice(2, 4) + "/" + value.slice(4, 8);
-    } else if (value.length > 2) {
-      formatted = value.slice(0, 2) + "/" + value.slice(2, 4);
-    } else {
-      formatted = value;
-    }
-
-    input.value = formatted;
-
-    // Adjust cursor position after formatting
-    let cursorPosAfter = cursorPosBefore;
-    if (cursorPosBefore === 2 && value.length >= 2) {
-      cursorPosAfter = 3; // After "dd/"
-    } else if (cursorPosBefore === 5 && value.length >= 4) {
-      cursorPosAfter = 6; // After "mm/"
-    }
-    input.setSelectionRange(cursorPosAfter, cursorPosAfter);
   });
+}
+
+function createBaseModal() {
+  const container = document.createElement("div");
+  container.style.position = "fixed";
+  container.style.top = "0";
+  container.style.left = "0";
+  container.style.width = "100vw";
+  container.style.height = "100vh";
+  container.style.backgroundColor = "rgba(0,0,0,0.5)";
+  container.style.display = "flex";
+  container.style.alignItems = "center";
+  container.style.justifyContent = "center";
+  container.style.zIndex = "9999";
+
+  const inner = document.createElement("div");
+  inner.style.backgroundColor = "white";
+  inner.style.padding = "1.5rem";
+  inner.style.borderRadius = "8px";
+  inner.style.width = "90%";
+  inner.style.maxWidth = "500px";
+  inner.style.maxHeight = "80vh";
+  inner.style.overflowY = "auto";
+  inner.style.fontFamily = "Arial, sans-serif";
+  inner.style.position = "relative";
+
+  const close = document.createElement("button");
+  close.textContent = "✖";
+  close.style.position = "absolute";
+  close.style.top = "10px";
+  close.style.right = "10px";
+  close.style.background = "none";
+  close.style.border = "none";
+  close.style.fontSize = "1.2rem";
+  close.style.cursor = "pointer";
+  close.onclick = () => document.body.removeChild(container);
+
+  inner.appendChild(close);
+  container.appendChild(inner);
+
+  return { container, inner };
 }
 ```
 
@@ -4871,10 +5932,9 @@ document.addEventListener("DOMContentLoaded", () => {
 ```python
 import { expandLineItems } from "/static/js/components/expand_line_items.js";
 import { showReceiveModal } from "/static/js/components/receive_modal.js";
-import { showUploadAttachmentsModal, checkAttachments } from "/static/js/components/attachment_modal.js";
+import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from "/static/js/components/attachment_modal.js";
 import { showOrderNoteModal, showSupplierNoteModal } from "/static/js/components/order_note_modal.js";
 import { loadRequesters, loadSuppliers } from "/static/js/components/shared_filters.js";
-import { attachDateInput } from "/static/js/components/date_input.js"; // Reintroduce the import
 
 function populateDropdown(selectId, items, labelFunc, valueFunc) {
   const dropdown = document.getElementById(selectId);
@@ -4885,6 +5945,11 @@ function populateDropdown(selectId, items, labelFunc, valueFunc) {
     opt.textContent = labelFunc(item);
     dropdown.appendChild(opt);
   });
+}
+
+function escapeHTML(str) {
+  if (!str) return "";
+  return str.replace(/'/g, "\\'").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, " ").replace(/\r/g, "");
 }
 
 function populateTable(data) {
@@ -4902,19 +5967,26 @@ function populateTable(data) {
   data.orders.forEach(order => {
     const row = tbody.insertRow();
     row.setAttribute("data-order-id", order.id);
+
+    const sanitizedOrderNote = escapeHTML(order.order_note || "");
+    const sanitizedSupplierNote = escapeHTML(order.note_to_supplier || "");
+    const sanitizedOrderNumber = escapeHTML(order.order_number);
+    const sanitizedSupplier = escapeHTML(order.supplier || "N/A");
+    const sanitizedRequester = escapeHTML(order.requester);
+
     row.innerHTML = `
       <td>${order.created_date}</td>
-      <td>${order.order_number}</td>
-      <td>${order.requester}</td>
-      <td>${order.supplier || 'N/A'}</td>
+      <td>${sanitizedOrderNumber}</td>
+      <td>${sanitizedRequester}</td>
+      <td>${sanitizedSupplier}</td>
       <td>R${order.total.toFixed(2)}</td>
       <td>${order.status}</td>
       <td>
         <span class="expand-icon" onclick="window.expandLineItems(${order.id}, this)">⬇️</span>
-        <span class="receive-icon" title="Mark as Received" onclick="window.showReceiveModal(${order.id}, '${order.order_number}')">✅</span>
-        <span class="clip-icon" title="View/Upload Attachments" onclick="window.showUploadAttachmentsModal(${order.id}, '${order.order_number}', () => window.checkAttachments(${order.id}).then(has => this.classList.toggle('eye-icon', has)))">📎</span>
-        <span class="note-icon" title="Edit Continuous Order Note" onclick="window.showOrderNoteModal('${order.order_note ? order.order_note.replace(/'/g, "\\'") : ''}', ${order.id})"></span>
-        <span class="supplier-note-icon" title="View Note to Supplier" onclick="window.showSupplierNoteModal('${order.note_to_supplier ? order.note_to_supplier.replace(/'/g, "\\'") : ''}')"></span>
+        <span class="receive-icon" title="Mark as Received" onclick="window.showReceiveModal(${order.id}, '${sanitizedOrderNumber}')">✅</span>
+        <span class="clip-icon" title="View/Upload Attachments" onclick="window.checkAttachments(${order.id}).then(has => has ? window.showViewAttachmentsModal(${order.id}, '${sanitizedOrderNumber}') : window.showUploadAttachmentsModal(${order.id}, '${sanitizedOrderNumber}', () => window.checkAttachments(${order.id}).then(has => this.classList.toggle('eye-icon', has))))">📎</span>
+        <span class="note-icon" title="Edit Continuous Order Note" onclick="window.showOrderNoteModal('${sanitizedOrderNote}', ${order.id})">📝</span>
+        <span class="supplier-note-icon" title="View Note to Supplier" onclick="try { window.showSupplierNoteModal('${sanitizedSupplierNote}'); } catch (e) { console.error('Failed to show supplier note for order ${order.order_number}:', e); alert('Error displaying supplier note: ' + e.message); }">📦</span>
       </td>
     `;
   });
@@ -4940,8 +6012,23 @@ async function runFilters() {
   const supplierName = document.getElementById("filter-supplier").value;
   const requesterName = document.getElementById("filter-requester").value;
   const status = document.getElementById("filter-status").value;
-  const startDate = document.getElementById("start-date").value;
-  const endDate = document.getElementById("end-date").value;
+  let startDate = document.getElementById("start-date").value;
+  let endDate = document.getElementById("end-date").value;
+
+  const isValidDate = (dateStr) => {
+    if (!dateStr) return true;
+    const date = new Date(dateStr);
+    return !isNaN(date.getTime()) && dateStr === date.toISOString().split("T")[0];
+  };
+
+  if (startDate && !isValidDate(startDate)) {
+    alert("Invalid start date. Please select a valid date.");
+    return;
+  }
+  if (endDate && !isValidDate(endDate)) {
+    alert("Invalid end date. Please select a valid date.");
+    return;
+  }
 
   const params = new URLSearchParams();
   if (supplierName) params.append("supplier", supplierName);
@@ -4952,10 +6039,12 @@ async function runFilters() {
 
   try {
     const res = await fetch(`/orders/api/orders/pending_orders?${params.toString()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
     const data = await res.json();
     populateTable(data);
   } catch (err) {
     console.error("Failed to fetch filtered orders", err);
+    alert("Failed to load orders: " + err.message);
   }
 }
 
@@ -4969,19 +6058,164 @@ function clearFilters() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  attachDateInput("start-date"); // Attach to Start Date
-  attachDateInput("end-date");   // Attach to End Date
   loadFiltersAndOrders();
 
   document.getElementById("run-btn").addEventListener("click", runFilters);
   document.getElementById("clear-btn").addEventListener("click", clearFilters);
+
+  // Periodically refresh the pending orders table every 30 seconds
+  setInterval(runFilters, 30000);
 });
 
-// Expose functions to the global scope for onclick handlers
 window.expandLineItems = expandLineItems;
 window.showReceiveModal = showReceiveModal;
 window.showUploadAttachmentsModal = showUploadAttachmentsModal;
 window.checkAttachments = checkAttachments;
+window.showViewAttachmentsModal = showViewAttachmentsModal;
+window.showOrderNoteModal = showOrderNoteModal;
+window.showSupplierNoteModal = showSupplierNoteModal;
+```
+
+### `frontend/static/js/received_orders.js`
+**(No description)**
+```python
+import { expandLineItems } from "/static/js/components/expand_line_items.js";
+import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from "/static/js/components/attachment_modal.js";
+import { showOrderNoteModal, showSupplierNoteModal } from "/static/js/components/order_note_modal.js";
+import { loadRequesters, loadSuppliers } from "/static/js/components/shared_filters.js";
+
+function populateDropdown(selectId, items, labelFunc, valueFunc) {
+  const dropdown = document.getElementById(selectId);
+  dropdown.innerHTML = `<option value="">All</option>`;
+  items.forEach(item => {
+    const opt = document.createElement("option");
+    opt.value = valueFunc(item);
+    opt.textContent = labelFunc(item);
+    dropdown.appendChild(opt);
+  });
+}
+
+function escapeHTML(str) {
+  if (!str) return "";
+  return str.replace(/'/g, "\\'").replace(/"/g, "\\\"").replace(/</g, "<").replace(/>/g, ">").replace(/\n/g, " ").replace(/\r/g, "");
+}
+
+function populateTable(data) {
+  const tbody = document.getElementById("received-body");
+  tbody.innerHTML = "";
+
+  if (!data.orders || data.orders.length === 0) {
+    const row = tbody.insertRow();
+    const cell = row.insertCell(0);
+    cell.colSpan = 7;
+    cell.textContent = "No received orders found.";
+    return;
+  }
+
+  data.orders.forEach(order => {
+    const row = tbody.insertRow();
+    row.setAttribute("data-order-id", order.id);
+
+    const sanitizedOrderNote = escapeHTML(order.order_note || "");
+    const sanitizedSupplierNote = escapeHTML(order.note_to_supplier || "");
+    const sanitizedOrderNumber = escapeHTML(order.order_number);
+    const sanitizedSupplier = escapeHTML(order.supplier || "N/A");
+    const sanitizedRequester = escapeHTML(order.requester);
+
+    row.innerHTML = `
+      <td>${order.created_date}</td>
+      <td>${sanitizedOrderNumber}</td>
+      <td>${sanitizedRequester}</td>
+      <td>${sanitizedSupplier}</td>
+      <td>R${order.total.toFixed(2)}</td>
+      <td>${order.status}</td>
+      <td>
+        <span class="expand-icon" onclick="window.expandLineItems(${order.id}, this)">⬇️</span>
+        <span class="clip-icon" title="View/Upload Attachments" onclick="window.checkAttachments(${order.id}).then(has => has ? window.showViewAttachmentsModal(${order.id}, '${sanitizedOrderNumber}') : window.showUploadAttachmentsModal(${order.id}, '${sanitizedOrderNumber}', () => window.checkAttachments(${order.id}).then(has => this.classList.toggle('eye-icon', has))))">📎</span>
+        <span class="note-icon" title="Edit Continuous Order Note" onclick="window.showOrderNoteModal('${sanitizedOrderNote}', ${order.id})">📝</span>
+        <span class="supplier-note-icon" title="View Note to Supplier" onclick="try { window.showSupplierNoteModal('${sanitizedSupplierNote}'); } catch (e) { console.error('Failed to show supplier note for order ${order.order_number}:', e); alert('Error displaying supplier note: ' + e.message); }">📦</span>
+      </td>
+    `;
+  });
+}
+
+async function loadFiltersAndOrders() {
+  try {
+    const [suppliersRes, requestersRes] = await Promise.all([
+      fetch("/lookups/suppliers").then(res => res.json()),
+      fetch("/lookups/requesters").then(res => res.json())
+    ]);
+
+    populateDropdown("filter-supplier", suppliersRes.suppliers, s => `${s.account_number} — ${s.name}`, s => s.name);
+    populateDropdown("filter-requester", requestersRes.requesters, r => r.name, r => r.name);
+
+    await runFilters();
+  } catch (err) {
+    console.error("Failed to load filters", err);
+  }
+}
+
+async function runFilters() {
+  const supplierName = document.getElementById("filter-supplier").value;
+  const requesterName = document.getElementById("filter-requester").value;
+  let startDate = document.getElementById("start-date").value;
+  let endDate = document.getElementById("end-date").value;
+
+  const isValidDate = (dateStr) => {
+    if (!dateStr) return true;
+    const date = new Date(dateStr);
+    return !isNaN(date.getTime()) && dateStr === date.toISOString().split("T")[0];
+  };
+
+  if (startDate && !isValidDate(startDate)) {
+    alert("Invalid start date. Please select a valid date.");
+    return;
+  }
+  if (endDate && !isValidDate(endDate)) {
+    alert("Invalid end date. Please select a valid date.");
+    return;
+  }
+
+  const params = new URLSearchParams();
+  if (supplierName) params.append("supplier", supplierName);
+  if (requesterName) params.append("requester", requesterName);
+  if (startDate) params.append("start_date", startDate);
+  if (endDate) params.append("end_date", endDate);
+
+  try {
+    const res = await fetch(`/orders/api/received_orders?${params.toString()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+    const data = await res.json();
+    populateTable(data);
+  } catch (err) {
+    console.error("Failed to fetch received orders", err);
+    alert("Failed to load orders: " + err.message);
+  }
+}
+
+function clearFilters() {
+  document.getElementById("filter-supplier").value = "";
+  document.getElementById("filter-requester").value = "";
+  document.getElementById("filter-status").value = "";
+  document.getElementById("start-date").value = "";
+  document.getElementById("end-date").value = "";
+  runFilters();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadFiltersAndOrders();
+
+  document.getElementById("run-btn").addEventListener("click", runFilters);
+  document.getElementById("clear-btn").addEventListener("click", clearFilters);
+
+  // Periodically refresh the received orders table every 30 seconds
+  setInterval(runFilters, 30000);
+});
+
+window.expandLineItems = expandLineItems;
+window.showUploadAttachmentsModal = showUploadAttachmentsModal;
+window.checkAttachments = checkAttachments;
+window.showViewAttachmentsModal = showViewAttachmentsModal;
 window.showOrderNoteModal = showOrderNoteModal;
 window.showSupplierNoteModal = showSupplierNoteModal;
 ```
@@ -5706,7 +6940,7 @@ window.showSupplierNoteModal = showSupplierNoteModal;
 
   <div class="filters">
     <label for="start-date">Start Date:</label>
-    <input type="text" id="start-date" placeholder="dd/mm/yyyy" />
+    <input type="date" id="start-date" />
     <label for="end-date">End Date:</label>
     <input type="text" id="end-date" placeholder="dd/mm/yyyy" />
     <label for="filter-requester">Requester:</label>
@@ -6390,6 +7624,131 @@ export async function loadRequesters(selectId) {
 [2025-04-22T16:31:16.302074] get_setting: {"key": "order_number_start", "result": "URC1036"}
 [2025-04-22T16:34:03.121823] init_db: {"status": "success"}
 [2025-04-23T03:56:57.246260] init_db: {"status": "success"}
+[2025-04-23T04:18:31.286236] init_db: {"status": "success"}
+[2025-04-23T04:37:15.218323] init_db: {"status": "success"}
+[2025-04-23T04:37:24.768092] get_setting: {"key": "order_number_start", "result": "URC1036"}
+[2025-04-23T04:49:26.882395] init_db: {"status": "success"}
+[2025-04-23T04:49:34.359157] init_db: {"status": "success"}
+[2025-04-23T04:53:14.399040] init_db: {"status": "success"}
+[2025-04-23T04:53:21.157808] init_db: {"status": "success"}
+[2025-04-23T04:54:58.874954] init_db: {"status": "success"}
+[2025-04-23T04:55:05.813144] init_db: {"status": "success"}
+[2025-04-23T04:55:13.359618] init_db: {"status": "success"}
+[2025-04-23T04:55:56.968533] get_setting: {"key": "order_number_start", "result": "URC1036"}
+[2025-04-23T05:00:25.667245] init_db: {"status": "success"}
+[2025-04-23T05:00:57.632423] init_db: {"status": "success"}
+[2025-04-23T05:08:58.606213] init_db: {"status": "success"}
+[2025-04-23T05:09:52.968840] init_db: {"status": "success"}
+[2025-04-23T05:17:54.543918] init_db: {"status": "success"}
+[2025-04-23T05:18:33.857535] init_db: {"status": "success"}
+[2025-04-23T05:18:36.799757] init_db: {"status": "success"}
+[2025-04-23T05:26:24.157305] init_db: {"status": "success"}
+[2025-04-23T05:48:36.635612] init_db: {"status": "success"}
+[2025-04-23T05:51:52.577240] init_db: {"status": "success"}
+[2025-04-23T06:00:58.591493] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-23T06:00:58.591857] get_setting: {"key": "order_number_start", "result": "URC1036"}
+[2025-04-23T06:00:58.592794] update_setting: {"key": "order_number_start", "value": "URC1038"}
+[2025-04-23T06:00:58.593927] create_order: {"order_number": "URC1037", "requester_id": 3, "total": 18000.0, "items_count": 2}
+[2025-04-23T06:01:02.255685] get_setting: {"key": "order_number_start", "result": "URC1038"}
+[2025-04-23T06:14:00.585358] init_db: {"status": "success"}
+[2025-04-23T06:17:46.996605] init_db: {"status": "success"}
+[2025-04-23T06:17:55.367528] init_db: {"status": "success"}
+[2025-04-23T06:23:17.507297] init_db: {"status": "success"}
+[2025-04-23T06:24:58.033117] init_db: {"status": "success"}
+[2025-04-23T06:26:36.702869] init_db: {"status": "success"}
+[2025-04-23T06:30:21.351730] init_db: {"status": "success"}
+[2025-04-23T06:34:59.295404] init_db: {"status": "success"}
+[2025-04-23T06:43:17.623561] init_db: {"status": "success"}
+[2025-04-23T06:48:31.296416] init_db: {"status": "success"}
+[2025-04-23T06:48:42.428557] init_db: {"status": "success"}
+[2025-04-23T06:57:28.793876] init_db: {"status": "success"}
+[2025-04-23T07:08:08.750888] init_db: {"status": "success"}
+[2025-04-23T07:20:03.060488] init_db: {"status": "success"}
+[2025-04-23T07:20:11.455331] init_db: {"status": "success"}
+[2025-04-23T07:32:01.823062] init_db: {"status": "success"}
+[2025-04-23T07:32:10.383851] init_db: {"status": "success"}
+[2025-04-23T07:42:47.755342] init_db: {"status": "success"}
+[2025-04-23T07:44:40.867850] init_db: {"status": "success"}
+[2025-04-23T07:44:46.674066] init_db: {"status": "success"}
+[2025-04-23T07:55:24.411945] init_db: {"status": "success"}
+[2025-04-23T07:56:52.336046] init_db: {"status": "success"}
+[2025-04-23T13:56:38.386674] init_db: {"status": "success"}
+[2025-04-23T14:02:37.549032] init_db: {"status": "success"}
+[2025-04-23T14:05:33.955929] init_db: {"status": "success"}
+[2025-04-23T14:13:54.751757] init_db: {"status": "success"}
+[2025-04-23T14:13:59.660982] init_db: {"status": "success"}
+[2025-04-23T14:41:23.168650] init_db: {"status": "success"}
+[2025-04-23T15:13:48.814030] init_db: {"status": "success"}
+[2025-04-23T15:15:04.571855] init_db: {"status": "success"}
+[2025-04-23T15:15:20.038428] init_db: {"status": "success"}
+[2025-04-23T15:15:30.330051] init_db: {"status": "success"}
+[2025-04-23T15:15:44.570512] init_db: {"status": "success"}
+[2025-04-23T15:18:10.586883] get_setting: {"key": "order_number_start", "result": "URC1038"}
+[2025-04-23T15:19:01.994980] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-23T15:19:01.995456] get_setting: {"key": "order_number_start", "result": "URC1038"}
+[2025-04-23T15:19:01.996565] update_setting: {"key": "order_number_start", "value": "URC1040"}
+[2025-04-23T15:19:02.577163] create_order: {"order_number": "URC1039", "requester_id": 4, "total": 11000.0, "items_count": 1}
+[2025-04-23T15:19:05.525768] get_setting: {"key": "order_number_start", "result": "URC1040"}
+[2025-04-23T15:23:10.636705] init_db: {"status": "success"}
+[2025-04-23T15:23:36.269599] init_db: {"status": "success"}
+[2025-04-23T15:24:34.528330] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-23T15:24:34.528760] get_setting: {"key": "order_number_start", "result": "URC1040"}
+[2025-04-23T15:24:34.529889] update_setting: {"key": "order_number_start", "value": "URC1042"}
+[2025-04-23T15:24:35.160064] create_order: {"order_number": "URC1041", "requester_id": 4, "total": 12000.0, "items_count": 1}
+[2025-04-23T15:24:36.882766] get_setting: {"key": "order_number_start", "result": "URC1042"}
+[2025-04-24T05:20:45.488015] init_db: {"status": "success"}
+[2025-04-24T05:21:28.046944] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T05:21:28.047295] get_setting: {"key": "order_number_start", "result": "URC1042"}
+[2025-04-24T05:21:28.048285] update_setting: {"key": "order_number_start", "value": "URC1044"}
+[2025-04-24T05:21:28.596075] create_order: {"order_number": "URC1043", "requester_id": 4, "total": 15000.0, "items_count": 1}
+[2025-04-24T05:21:30.685680] get_setting: {"key": "order_number_start", "result": "URC1044"}
+[2025-04-24T05:40:10.599757] init_db: {"status": "success"}
+[2025-04-24T05:46:27.225232] init_db: {"status": "success"}
+[2025-04-24T06:44:37.658009] init_db: {"status": "success"}
+[2025-04-24T06:45:31.880986] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T06:45:31.881730] get_setting: {"key": "order_number_start", "result": "URC1044"}
+[2025-04-24T06:45:31.883570] update_setting: {"key": "order_number_start", "value": "URC1046"}
+[2025-04-24T06:45:34.824827] create_order: {"order_number": "URC1045", "requester_id": 3, "total": 30000.0, "items_count": 1}
+[2025-04-24T06:45:37.178306] get_setting: {"key": "order_number_start", "result": "URC1046"}
+[2025-04-24T06:53:46.056050] init_db: {"status": "success"}
+[2025-04-24T06:53:53.215251] init_db: {"status": "success"}
+[2025-04-24T06:54:38.166716] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T06:54:38.167082] get_setting: {"key": "order_number_start", "result": "URC1046"}
+[2025-04-24T06:54:38.168146] update_setting: {"key": "order_number_start", "value": "URC1048"}
+[2025-04-24T06:54:40.993453] create_order: {"order_number": "URC1047", "requester_id": 1, "total": 15000.0, "items_count": 1}
+[2025-04-24T06:54:43.681605] get_setting: {"key": "order_number_start", "result": "URC1048"}
+[2025-04-24T06:57:33.128173] init_db: {"status": "success"}
+[2025-04-24T06:57:38.434633] init_db: {"status": "success"}
+[2025-04-24T06:58:34.398670] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T06:58:34.399210] get_setting: {"key": "order_number_start", "result": "URC1048"}
+[2025-04-24T06:58:34.400648] update_setting: {"key": "order_number_start", "value": "URC1050"}
+[2025-04-24T06:58:37.199851] create_order: {"order_number": "URC1049", "requester_id": 1, "total": 120000.0, "items_count": 1}
+[2025-04-24T06:58:39.521483] get_setting: {"key": "order_number_start", "result": "URC1050"}
+[2025-04-24T07:08:25.034026] init_db: {"status": "success"}
+[2025-04-24T07:08:29.799695] init_db: {"status": "success"}
+[2025-04-24T07:11:06.732101] init_db: {"status": "success"}
+[2025-04-24T07:11:11.199421] init_db: {"status": "success"}
+[2025-04-24T07:11:23.978006] get_setting: {"key": "order_number_start", "result": "URC1050"}
+[2025-04-24T07:11:59.309152] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T07:11:59.309647] get_setting: {"key": "order_number_start", "result": "URC1050"}
+[2025-04-24T07:11:59.310927] update_setting: {"key": "order_number_start", "value": "URC1052"}
+[2025-04-24T07:12:02.207599] create_order: {"order_number": "URC1051", "requester_id": 1, "total": 12000.0, "items_count": 1}
+[2025-04-24T07:12:05.438605] get_setting: {"key": "order_number_start", "result": "URC1052"}
+[2025-04-24T07:25:41.707399] init_db: {"status": "success"}
+[2025-04-24T07:25:56.550152] init_db: {"status": "success"}
+[2025-04-24T07:27:10.839444] get_setting: {"key": "auth_threshold", "result": "10000"}
+[2025-04-24T07:27:10.840089] get_setting: {"key": "order_number_start", "result": "URC1052"}
+[2025-04-24T07:27:10.841658] update_setting: {"key": "order_number_start", "value": "URC1054"}
+[2025-04-24T07:27:13.838272] create_order: {"order_number": "URC1053", "requester_id": 2, "total": 18000.0, "items_count": 1}
+[2025-04-24T07:27:16.010656] get_setting: {"key": "order_number_start", "result": "URC1054"}
+[2025-04-24T08:43:21.672310] init_db: {"status": "success"}
+[2025-04-24T09:04:49.201336] init_db: {"status": "success"}
+[2025-04-24T09:10:30.154961] init_db: {"status": "success"}
+[2025-04-24T09:16:08.063077] init_db: {"status": "success"}
+[2025-04-24T09:16:53.554107] init_db: {"status": "success"}
+[2025-04-24T09:20:31.205175] init_db: {"status": "success"}
+[2025-04-24T09:25:07.712313] init_db: {"status": "success"}
+[2025-04-24T09:30:36.111142] init_db: {"status": "success"}
 
 ```
 
@@ -6620,6 +7979,63 @@ export async function loadRequesters(selectId) {
 {"time": "2025-04-22T16:34:06.287720", "endpoint": "/suppliers", "status": "success"}
 {"time": "2025-04-23T03:57:02.850427", "endpoint": "/requesters", "status": "success"}
 {"time": "2025-04-23T03:57:02.850632", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T04:18:39.104103", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T04:18:39.104173", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T04:30:46.790733", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T04:30:46.790804", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T04:37:24.766512", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T04:37:24.766862", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T04:37:24.768443", "endpoint": "/items", "status": "success"}
+{"time": "2025-04-23T04:37:24.768660", "endpoint": "/projects", "status": "success"}
+{"time": "2025-04-23T04:50:02.900260", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T04:50:02.900663", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T04:55:46.888419", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T04:55:46.888528", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T04:55:56.966605", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T04:55:56.966775", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T04:55:56.967464", "endpoint": "/items", "status": "success"}
+{"time": "2025-04-23T04:55:56.968574", "endpoint": "/projects", "status": "success"}
+{"time": "2025-04-23T05:01:10.160136", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T05:01:10.160293", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T05:10:09.162033", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T05:10:09.162106", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T05:18:43.572574", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T05:18:43.572677", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T05:26:31.615911", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T05:26:31.616602", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:01:02.254686", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:01:02.254922", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:01:02.256342", "endpoint": "/projects", "status": "success"}
+{"time": "2025-04-23T06:01:02.256561", "endpoint": "/items", "status": "success"}
+{"time": "2025-04-23T06:01:16.709446", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:01:16.709509", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:14:06.320147", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:14:06.320278", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:18:00.428608", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:18:00.428922", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:19:02.516311", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:19:02.516808", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:25:03.098227", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:25:03.098344", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:26:41.592770", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:26:41.593144", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:30:25.787430", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:30:25.787877", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:35:04.784484", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:35:04.784533", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:43:22.431042", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:43:22.431087", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:48:55.141891", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:48:55.141938", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:58:08.411660", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:58:08.411718", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:58:15.727629", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T06:58:15.727866", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:58:58.279319", "endpoint": "/suppliers", "status": "success"}
+{"time": "2025-04-23T06:58:58.279975", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T07:20:21.474724", "endpoint": "/requesters", "status": "success"}
+{"time": "2025-04-23T07:20:21.475702", "endpoint": "/projects", "status": "success"}
+{"time": "2025-04-23T07:20:21.475731", "endpoint": "/items", "status": "success"}
 
 ```
 
@@ -6688,6 +8104,34 @@ export async function loadRequesters(selectId) {
 [2025-04-22T15:06:32.111866] {"error": "400: Uploaded file is too small or corrupt.", "type": "upload"}
 [2025-04-22T15:26:14.689225] {"action": "note_updated", "order_id": 17, "order_note": "Pipeline test note"}
 [2025-04-22T15:53:10.024213] {"action": "note_updated", "order_id": 26, "order_note": "(No note)"}
+[2025-04-23T04:58:19.922536] {"error": "400: Uploaded file is too small or corrupt.", "type": "upload"}
+[2025-04-23T05:01:18.754659] {"error": "400: Uploaded file is too small or corrupt.", "type": "upload"}
+[2025-04-23T05:10:21.922001] {"error": "400: Uploaded file is too small or corrupt.", "type": "upload"}
+[2025-04-23T05:12:32.709870] {"action": "attachment_uploaded", "order_id": 30, "filename": "2025-04-22_18-44.pdf", "path": "data/uploads/30_2025-04-22_18-44.pdf", "size_bytes": 497451}
+[2025-04-23T05:12:44.191101] {"action": "attachment_uploaded", "order_id": 30, "filename": "2025-04-22_18-44_1.pdf", "path": "data/uploads/30_2025-04-22_18-44_1.pdf", "size_bytes": 497451}
+[2025-04-23T05:26:58.042745] {"action": "attachment_uploaded", "order_id": 30, "filename": "2025-04-22_18-29.pdf", "path": "data/uploads/30_2025-04-22_18-29.pdf", "size_bytes": 359355}
+[2025-04-23T05:27:25.980213] {"action": "attachment_uploaded", "order_id": 13, "filename": "Screenshot_2025-04-23_at_05.19.18.png", "path": "data/uploads/13_Screenshot_2025-04-23_at_05.19.18.png", "size_bytes": 36991}
+[2025-04-23T05:27:53.524437] {"action": "attachment_uploaded", "order_id": 14, "filename": "Screenshot_2025-04-23_at_05.19.18.png", "path": "data/uploads/14_Screenshot_2025-04-23_at_05.19.18.png", "size_bytes": 36991}
+[2025-04-23T06:00:58.593124] {"action": "submit_attempt", "order_data": {"order_number": "URC1037", "requester_id": 3, "order_note": null, "note_to_supplier": "This is a note for order URC1037\nThis order has 2 lines :\n1 item of ABRA025 - R15,000\n1 item of BEAR059 for R3,000", "supplier_id": 6, "items": [{"item_code": "ABRA025", "item_description": "Flap Wheel  50 X 20  X  6  Mm  P80", "project": "KA04M", "qty_ordered": 1.0, "price": 15000.0}, {"item_code": "BEAR059", "item_description": "Bearing 51144", "project": "TR30M", "qty_ordered": 1.0, "price": 3000.0}], "status": "Awaiting Authorisation", "total": 18000.0}}
+[2025-04-23T06:00:58.594209] {"action": "submit_success", "order_number": "URC1037", "status": "Awaiting Authorisation"}
+[2025-04-23T06:18:24.718007] {"action": "attachment_uploaded", "order_id": 31, "filename": "Screenshot_2025-04-23_at_05.19.18.png", "path": "data/uploads/31_Screenshot_2025-04-23_at_05.19.18.png", "size_bytes": 36991}
+[2025-04-23T06:58:56.012341] {"action": "receive", "orders": [31]}
+[2025-04-23T15:19:02.575755] {"action": "submit_attempt", "order_data": {"order_number": "URC1039", "requester_id": 4, "order_note": null, "note_to_supplier": "Note to order number URC1039 for R11,000", "supplier_id": 7, "items": [{"item_code": "BEAR059", "item_description": "Bearing 51144", "project": "PR10M", "qty_ordered": 1.0, "price": 11000.0}], "status": "Awaiting Authorisation", "total": 11000.0}}
+[2025-04-23T15:19:02.577530] {"action": "submit_success", "order_number": "URC1039", "status": "Awaiting Authorisation"}
+[2025-04-23T15:24:35.159262] {"action": "submit_attempt", "order_data": {"order_number": "URC1041", "requester_id": 4, "order_note": null, "note_to_supplier": "Supplier note for order number URC1041", "supplier_id": 11, "items": [{"item_code": "BECK054", "item_description": "Becker  Machine Spout Liner For  M48", "project": "PR67M", "qty_ordered": 1.0, "price": 12000.0}], "status": "Awaiting Authorisation", "total": 12000.0}}
+[2025-04-23T15:24:35.160367] {"action": "submit_success", "order_number": "URC1041", "status": "Awaiting Authorisation"}
+[2025-04-24T05:21:28.593868] {"action": "submit_attempt", "order_data": {"order_number": "URC1043", "requester_id": 4, "order_note": null, "note_to_supplier": "Message for URC1043", "supplier_id": 4, "items": [{"item_code": "BEAR059", "item_description": "Bearing 51144", "project": "IN10M", "qty_ordered": 1.0, "price": 15000.0}], "status": "Awaiting Authorisation", "total": 15000.0}}
+[2025-04-24T05:21:28.596491] {"action": "submit_success", "order_number": "URC1043", "status": "Awaiting Authorisation"}
+[2025-04-24T06:45:34.823350] {"action": "submit_attempt", "order_data": {"order_number": "URC1045", "requester_id": 3, "order_note": null, "note_to_supplier": "Supplier note for order number URC1045", "supplier_id": 6, "items": [{"item_code": "BEAR059", "item_description": "Bearing 51144", "project": "DR09M", "qty_ordered": 1.0, "price": 30000.0}], "status": "Awaiting Authorisation", "total": 30000.0}}
+[2025-04-24T06:45:34.825221] {"action": "submit_success", "order_number": "URC1045", "status": "Awaiting Authorisation"}
+[2025-04-24T06:54:40.992442] {"action": "submit_attempt", "order_data": {"order_number": "URC1047", "requester_id": 1, "order_note": null, "note_to_supplier": "Suppler note for order number URC1047", "supplier_id": 9, "items": [{"item_code": "BEAR180", "item_description": "Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage", "project": "PR30M", "qty_ordered": 1.0, "price": 15000.0}], "status": "Awaiting Authorisation", "total": 15000.0}}
+[2025-04-24T06:54:40.993693] {"action": "submit_success", "order_number": "URC1047", "status": "Awaiting Authorisation"}
+[2025-04-24T06:58:37.199121] {"action": "submit_attempt", "order_data": {"order_number": "URC1049", "requester_id": 1, "order_note": null, "note_to_supplier": "Supplier note for order URC1049", "supplier_id": 12, "items": [{"item_code": "BECK054", "item_description": "Becker  Machine Spout Liner For  M48", "project": "TR59M", "qty_ordered": 1.0, "price": 120000.0}], "status": "Awaiting Authorisation", "total": 120000.0}}
+[2025-04-24T06:58:37.200070] {"action": "submit_success", "order_number": "URC1049", "status": "Awaiting Authorisation"}
+[2025-04-24T07:12:02.205546] {"action": "submit_attempt", "order_data": {"order_number": "URC1051", "requester_id": 1, "order_note": null, "note_to_supplier": "Supplier note to order number URC1051", "supplier_id": 7, "items": [{"item_code": "BEAR180", "item_description": "Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage", "project": "TR71M", "qty_ordered": 1.0, "price": 12000.0}], "status": "Awaiting Authorisation", "total": 12000.0}}
+[2025-04-24T07:12:02.208284] {"action": "submit_success", "order_number": "URC1051", "status": "Awaiting Authorisation"}
+[2025-04-24T07:27:13.836175] {"action": "submit_attempt", "order_data": {"order_number": "URC1053", "requester_id": 2, "order_note": null, "note_to_supplier": "Note to supplier - order number URC1053", "supplier_id": 7, "items": [{"item_code": "ABRA025", "item_description": "Flap Wheel  50 X 20  X  6  Mm  P80", "project": "DR09M", "qty_ordered": 1.0, "price": 18000.0}], "status": "Awaiting Authorisation", "total": 18000.0}}
+[2025-04-24T07:27:13.838910] {"action": "submit_success", "order_number": "URC1053", "status": "Awaiting Authorisation"}
 
 ```
 
@@ -6707,6 +8151,21 @@ export async function loadRequesters(selectId) {
 2025-04-19T15:29:15.879134 | ✅ Attachment record exists
 2025-04-19T15:29:15.879169 | 
 🎉 Pipeline test passed for order URC1017 (ID 21)
+
+```
+
+### `logs/whatsapp_log.txt`
+**(No description)**
+```python
+[2025-04-24T06:46:36.722448] {"error": "list index out of range", "type": "webhook"}
+[2025-04-24T06:55:12.275257] {"error": "list index out of range", "type": "webhook"}
+[2025-04-24T06:58:59.135614] {"action": "received_message", "from": "whatsapp:+27645139217", "message": "authorised", "message_sid": ""}
+[2025-04-24T06:58:59.136826] {"error": "No order found for message SID "}
+[2025-04-24T07:12:35.280517] {"action": "received_message", "from": "whatsapp:+27645139217", "message": "authorised"}
+[2025-04-24T07:12:35.284567] {"action": "order_authorised", "order_number": "URC1051", "from": "whatsapp:+27645139217"}
+[2025-04-24T07:19:37.300981] {"action": "received_message", "from": "whatsapp:+27645139217", "message": "like this :"}
+[2025-04-24T07:27:59.084904] {"action": "received_message", "from": "whatsapp:+27645139217", "message": "authorised"}
+[2025-04-24T07:27:59.088790] {"action": "order_authorised", "order_number": "URC1053", "from": "whatsapp:+27645139217"}
 
 ```
 
@@ -6780,6 +8239,18 @@ export async function loadRequesters(selectId) {
 
 - You can upload this file to a new ChatGPT session to instantly re-brief Cathy.
 - File generated automatically. No need to manually track dev state.
+
+```
+
+### `requirements.txt`
+**(No description)**
+```python
+fastapi
+uvicorn
+jinja2
+python-multipart
+twilio
+python-dotenv
 
 ```
 
@@ -6982,6 +8453,17 @@ _Tracks all purchase orders through Pending→Received states, plus lookup table
 - `venv/lib/python3.13/site-packages/selenium/webdriver/common/utils.py`: Does this even work?
 - `venv/lib/python3.13/site-packages/selenium/webdriver/remote/shadowroot.py`: We should look and see  how we can create a search context like Java/.NET
 - `venv/lib/python3.13/site-packages/selenium/webdriver/remote/webelement.py`: When moving to supporting python 3.9 as the minimum version we can
+- `venv/lib/python3.13/site-packages/aiohttp/web_response.py`: do we need domain/path here?
+- `venv/lib/python3.13/site-packages/aiohttp/streams.py`: size is ignored, remove the param later
+- `venv/lib/python3.13/site-packages/aiohttp/streams.py`: should be `if` instead of `while`
+- `venv/lib/python3.13/site-packages/aiohttp/streams.py`: should be `if` instead of `while`
+- `venv/lib/python3.13/site-packages/aiohttp/streams.py`: add async def readuntil
+- `venv/lib/python3.13/site-packages/aiohttp/web_urldispatcher.py`: implement all abstract methods
+- `venv/lib/python3.13/site-packages/aiohttp/web_urldispatcher.py`: impl missing abstract methods
+- `venv/lib/python3.13/site-packages/aiohttp/web_urldispatcher.py`: cache file content
+- `venv/lib/python3.13/site-packages/aiohttp/web_urldispatcher.py`: sha256 can be configurable param
+- `venv/lib/python3.13/site-packages/aiohttp/client_proto.py`: actual types are:
+- `venv/lib/python3.13/site-packages/aiohttp/client_reqrep.py`: Fix session=None in tests (see ClientRequest.__init__).
 - `venv/lib/python3.13/site-packages/websocket/_http.py`: Use python-socks for http protocol also, to standardize flow
 - `venv/lib/python3.13/site-packages/websocket/_http.py`: support digest auth.
 - `venv/lib/python3.13/site-packages/websocket/tests/test_websocket.py`: add longer frame data
@@ -7215,6 +8697,7 @@ _Tracks all purchase orders through Pending→Received states, plus lookup table
 - `venv/lib/python3.13/site-packages/typing_inspection/introspection.py`: at some point, we could switch to an enum flag, so that multiple sources
 - `venv/lib/python3.13/site-packages/typing_inspection/introspection.py`: if/when https://peps.python.org/pep-0767/ is accepted, add 'read_only'
 - `venv/lib/python3.13/site-packages/typing_inspection/introspection.py`: use a match statement when Python 3.9 support is dropped.
+- `venv/lib/python3.13/site-packages/yarl/_url.py`: add a keyword-only option for keeping user/pass maybe?
 
 ## 📝 Project summary
 This is a custom-built Purchase Order system for Universal Recycling.
