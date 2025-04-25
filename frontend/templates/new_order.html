@@ -56,25 +56,25 @@
             <tbody>
                 <tr>
                     <td>
-                        <select name="items[0][item_code]" onchange="updateItemDescription(0)">
+                        <select name="items[0][item_code]" id="item_code_0" onchange="updateItemDescription(0)">
                             <option value="">Select Item</option>
                             {% for item in items %}
                             <option value="{{ item.item_code }}" data-description="{{ item.item_description }}">{{ item.item_code }}</option>
                             {% endfor %}
                         </select>
                     </td>
-                    <td><input type="text" name="items[0][item_description]" readonly></td>
+                    <td><input type="text" name="items[0][item_description]" id="item_description_0" readonly></td>
                     <td>
-                        <select name="items[0][project]">
+                        <select name="items[0][project]" id="project_0">
                             <option value="">Select Project</option>
                             {% for project in projects %}
                             <option value="{{ project.project_code }}">{{ project.project_code }}</option>
                             {% endfor %}
                         </select>
                     </td>
-                    <td><input type="number" name="items[0][qty_ordered]" step="1" min="1" value="1" onchange="updateTotal(0)"></td>
-                    <td><input type="number" name="items[0][price]" step="0.01" min="0" value="0" onchange="updateTotal(0)"></td>
-                    <td><input type="text" name="items[0][total]" readonly></td>
+                    <td><input type="number" name="items[0][qty_ordered]" id="qty_ordered_0" step="1" min="1" value="1" onchange="updateTotal(0)"></td>
+                    <td><input type="number" name="items[0][price]" id="price_0" step="0.01" min="0" value="0" onchange="updateTotal(0)"></td>
+                    <td><input type="text" name="items[0][total]" id="total_0" readonly></td>
                     <td><button type="button" onclick="removeRow(this)">Remove</button></td>
                 </tr>
             </tbody>
@@ -110,25 +110,25 @@
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td>
-                    <select name="items[${rowCount}][item_code]" onchange="updateItemDescription(${rowCount})">
+                    <select name="items[${rowCount}][item_code]" id="item_code_${rowCount}" onchange="updateItemDescription(${rowCount})">
                         <option value="">Select Item</option>
                         {% for item in items %}
                         <option value="{{ item.item_code }}" data-description="{{ item.item_description }}">{{ item.item_code }}</option>
                         {% endfor %}
                     </select>
                 </td>
-                <td><input type="text" name="items[${rowCount}][item_description]" readonly></td>
+                <td><input type="text" name="items[${rowCount}][item_description]" id="item_description_${rowCount}" readonly></td>
                 <td>
-                    <select name="items[${rowCount}][project]">
+                    <select name="items[${rowCount}][project]" id="project_${rowCount}">
                         <option value="">Select Project</option>
                         {% for project in projects %}
                         <option value="{{ project.project_code }}">{{ project.project_code }}</option>
                         {% endfor %}
                     </select>
                 </td>
-                <td><input type="number" name="items[${rowCount}][qty_ordered]" step="1" min="1" value="1" onchange="updateTotal(${rowCount})"></td>
-                <td><input type="number" name="items[${rowCount}][price]" step="0.01" min="0" value="0" onchange="updateTotal(${rowCount})"></td>
-                <td><input type="text" name="items[${rowCount}][total]" readonly></td>
+                <td><input type="number" name="items[${rowCount}][qty_ordered]" id="qty_ordered_${rowCount}" step="1" min="1" value="1" onchange="updateTotal(${rowCount})"></td>
+                <td><input type="number" name="items[${rowCount}][price]" id="price_${rowCount}" step="0.01" min="0" value="0" onchange="updateTotal(${rowCount})"></td>
+                <td><input type="text" name="items[${rowCount}][total]" id="total_${rowCount}" readonly></td>
                 <td><button type="button" onclick="removeRow(this)">Remove</button></td>
             `;
             tbody.appendChild(row);
@@ -145,25 +145,25 @@
         }
 
         function updateItemDescription(index) {
-            const select = document.querySelector(`select[name='items[${index}][item_code]']`);
-            const descriptionInput = document.querySelector(`input[name='items[${index}][item_description]']`);
+            const select = document.getElementById(`item_code_${index}`);
+            const descriptionInput = document.getElementById(`item_description_${index}`);
             const selectedOption = select.options[select.selectedIndex];
             descriptionInput.value = selectedOption.getAttribute("data-description") || "";
             updateTotal(index);
         }
 
         function updateTotal(index) {
-            const qty = parseFloat(document.querySelector(`input[name='items[${index}][qty_ordered]']`).value) || 0;
-            const price = parseFloat(document.querySelector(`input[name='items[${index}][price]']`).value) || 0;
+            const qty = parseFloat(document.getElementById(`qty_ordered_${index}`).value) || 0;
+            const price = parseFloat(document.getElementById(`price_${index}`).value) || 0;
             const total = qty * price;
-            document.querySelector(`input[name='items[${index}][total]']`).value = total.toFixed(2);
+            document.getElementById(`total_${index}`).value = total.toFixed(2);
             updateGrandTotal();
         }
 
         function updateGrandTotal() {
             let grandTotal = 0;
             for (let i = 0; i < rowCount; i++) {
-                const totalField = document.querySelector(`input[name='items[${i}][total]']`);
+                const totalField = document.getElementById(`total_${i}`);
                 if (totalField) {
                     grandTotal += parseFloat(totalField.value) || 0;
                 }
@@ -182,11 +182,11 @@
 
             const items = [];
             for (let i = 0; i < rowCount; i++) {
-                const itemCode = document.querySelector(`select[name='items[${i}][item_code]']`)?.value;
-                const itemDescription = document.querySelector(`input[name='items[${i}][item_description]']`)?.value;
-                const project = document.querySelector(`select[name='items[${i}][project]']`)?.value;
-                const qtyOrdered = document.querySelector(`input[name='items[${i}][qty_ordered]']`)?.value;
-                const price = document.querySelector(`input[name='items[${i}][price]']`)?.value;
+                const itemCode = document.getElementById(`item_code_${i}`)?.value;
+                const itemDescription = document.getElementById(`item_description_${i}`)?.value;
+                const project = document.getElementById(`project_${i}`)?.value;
+                const qtyOrdered = document.getElementById(`qty_ordered_${i}`)?.value;
+                const price = document.getElementById(`price_${i}`)?.value;
                 if (itemCode && itemDescription && project && qtyOrdered && price) {
                     const item = {
                         item_code: itemCode,
@@ -199,7 +199,7 @@
                 }
             }
 
-            console.log("Submitting order with data:", {
+            console.log("Submitting order with full data:", {
                 supplier_id: supplierId,
                 requester_id: requesterId,
                 note_to_supplier: noteToSupplier,

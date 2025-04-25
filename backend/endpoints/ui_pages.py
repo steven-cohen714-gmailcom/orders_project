@@ -18,15 +18,23 @@ def show_new_order_form(request: Request):
             items = [dict(row) for row in cursor.fetchall()]
             cursor.execute("SELECT id, project_code FROM projects ORDER BY project_code")
             projects = [dict(row) for row in cursor.fetchall()]
+            cursor.execute("SELECT id, name FROM requesters ORDER BY name")
+            requesters = [dict(row) for row in cursor.fetchall()]
         return templates.TemplateResponse(
             "new_order.html",
-            {"request": request, "suppliers": suppliers, "items": items, "projects": projects}
+            {"request": request, "suppliers": suppliers, "items": items, "projects": projects, "requesters": requesters}
+        )
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return templates.TemplateResponse(
+            "new_order.html",
+            {"request": request, "suppliers": [], "items": [], "projects": [], "requesters": []}
         )
     except Exception as e:
-        print(f"Error fetching data: {e}")
+        print(f"Unexpected error: {e}")
         return templates.TemplateResponse(
             "new_order.html",
-            {"request": request, "suppliers": [], "items": [], "projects": []}
+            {"request": request, "suppliers": [], "items": [], "projects": [], "requesters": []}
         )
 
 @router.get("/orders/pending", response_class=HTMLResponse)

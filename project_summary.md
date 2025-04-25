@@ -1,5 +1,5 @@
 # 📦 Project Snapshot
-Generated: 2025-04-25 04:43:11
+Generated: 2025-04-25 07:19:04
 
 ## 📁 Directory Tree
 ````
@@ -1352,18 +1352,45 @@ def lookup_takealot(query: str = Query(..., min_length=2)):
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+import sqlite3
 
 router = APIRouter()
 templates = Jinja2Templates(directory="frontend/templates")
 
 @router.get("/orders/new", response_class=HTMLResponse)
 def show_new_order_form(request: Request):
-    return templates.TemplateResponse("new_order.html", {"request": request})
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, name FROM suppliers ORDER BY name")
+            suppliers = [dict(row) for row in cursor.fetchall()]
+            cursor.execute("SELECT id, item_code, item_description FROM items ORDER BY item_code")
+            items = [dict(row) for row in cursor.fetchall()]
+            cursor.execute("SELECT id, project_code FROM projects ORDER BY project_code")
+            projects = [dict(row) for row in cursor.fetchall()]
+            cursor.execute("SELECT id, name FROM requesters ORDER BY name")
+            requesters = [dict(row) for row in cursor.fetchall()]
+        return templates.TemplateResponse(
+            "new_order.html",
+            {"request": request, "suppliers": suppliers, "items": items, "projects": projects, "requesters": requesters}
+        )
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        return templates.TemplateResponse(
+            "new_order.html",
+            {"request": request, "suppliers": [], "items": [], "projects": [], "requesters": []}
+        )
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+        return templates.TemplateResponse(
+            "new_order.html",
+            {"request": request, "suppliers": [], "items": [], "projects": [], "requesters": []}
+        )
 
 @router.get("/orders/pending", response_class=HTMLResponse)
 def show_pending_orders(request: Request):
     return templates.TemplateResponse("pending_orders.html", {"request": request})
-
 ```
 
 ### `backend/main.py`
@@ -4630,13 +4657,20 @@ if __name__ == "__main__":
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Order</title>
-    <link rel="stylesheet" href="/static/css/new_order.css">
+    <link rel="icon" href="data:,">
 </head>
 <body>
-    <div class="container">
+    <div>
         <h2>Create Purchase Order</h2>
-        <div class="header-section">
+        <div>
             <div>
+                <label for="requester_id">Requester *</label>
+                <select id="requester_id" name="requester_id">
+                    <option value="">Select Requester</option>
+                    {% for requester in requesters %}
+                    <option value="{{ requester.id }}">{{ requester.name }}</option>
+                    {% endfor %}
+                </select>
                 <label for="supplier_id">Supplier *</label>
                 <select id="supplier_id" name="supplier_id">
                     <option value="">Select Supplier</option>
@@ -4649,7 +4683,7 @@ if __name__ == "__main__":
             </div>
             <div>
                 <label>Delivery Address</label>
-                <div class="address-box">
+                <div>
                     Universal Recycling Company Pty Ltd<br>
                     [Address Line 1 from DB]<br>
                     [Address Line 2 from DB]<br>
@@ -4674,24 +4708,38 @@ if __name__ == "__main__":
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="text" name="items[0][item_code]"></td>
-                    <td><input type="text" name="items[0][item_description]"></td>
-                    <td><input type="text" name="items[0][project]"></td>
-                    <td><input type="number" name="items[0][qty_ordered]" step="1" min="1" value="1" onchange="updateTotal(0)"></td>
-                    <td><input type="number" name="items[0][price]" step="0.01" min="0" value="0" onchange="updateTotal(0)"></td>
-                    <td><input type="text" name="items[0][total]" readonly></td>
+                    <td>
+                        <select name="items[0][item_code]" id="item_code_0" onchange="updateItemDescription(0)">
+                            <option value="">Select Item</option>
+                            {% for item in items %}
+                            <option value="{{ item.item_code }}" data-description="{{ item.item_description }}">{{ item.item_code }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td><input type="text" name="items[0][item_description]" id="item_description_0" readonly></td>
+                    <td>
+                        <select name="items[0][project]" id="project_0">
+                            <option value="">Select Project</option>
+                            {% for project in projects %}
+                            <option value="{{ project.project_code }}">{{ project.project_code }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td><input type="number" name="items[0][qty_ordered]" id="qty_ordered_0" step="1" min="1" value="1" onchange="updateTotal(0)"></td>
+                    <td><input type="number" name="items[0][price]" id="price_0" step="0.01" min="0" value="0" onchange="updateTotal(0)"></td>
+                    <td><input type="text" name="items[0][total]" id="total_0" readonly></td>
                     <td><button type="button" onclick="removeRow(this)">Remove</button></td>
                 </tr>
             </tbody>
         </table>
         <button type="button" onclick="addRow()">Add Item</button>
 
-        <div class="total-section">
+        <div>
             <label>Total: R <span id="grand-total">0.00</span></label>
-            <div class="vat-note">Excluding VAT</div>
+            <div>Excluding VAT</div>
         </div>
 
-        <div class="button-section">
+        <div>
             <button type="button" id="email-po" onclick="emailPurchaseOrder()">Email Purchase Order</button>
             <button type="submit" onclick="submitForm()">Submit Order</button>
             <button type="button" id="view-po" onclick="viewPurchaseOrder()">View Purchase Order</button>
@@ -4700,117 +4748,166 @@ if __name__ == "__main__":
     </div>
 
     <script>
-        (function () {
-            let rowCount = 1;
+        console.log("Requesters data:", {{ requesters | tojson }});
+        console.log("Suppliers data:", {{ suppliers | tojson }});
 
-            function addRow() {
-                const tbody = document.querySelector("#items-table tbody");
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td><input type="text" name="items[${rowCount}][item_code]"></td>
-                    <td><input type="text" name="items[${rowCount}][item_description]"></td>
-                    <td><input type="text" name="items[${rowCount}][project]"></td>
-                    <td><input type="number" name="items[${rowCount}][qty_ordered]" step="1" min="1" value="1" onchange="updateTotal(${rowCount})"></td>
-                    <td><input type="number" name="items[${rowCount}][price]" step="0.01" min="0" value="0" onchange="updateTotal(${rowCount})"></td>
-                    <td><input type="text" name="items[${rowCount}][total]" readonly></td>
-                    <td><button type="button" onclick="removeRow(this)">Remove</button></td>
-                `;
-                tbody.appendChild(row);
-                rowCount++;
+        let rowCount = 1;
+
+        window.addEventListener('load', function() {
+            console.log("Requester dropdown options:", document.getElementById('requester_id').options.length);
+            console.log("Supplier dropdown options:", document.getElementById('supplier_id').options.length);
+        });
+
+        function addRow() {
+            const tbody = document.querySelector("#items-table tbody");
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>
+                    <select name="items[${rowCount}][item_code]" id="item_code_${rowCount}" onchange="updateItemDescription(${rowCount})">
+                        <option value="">Select Item</option>
+                        {% for item in items %}
+                        <option value="{{ item.item_code }}" data-description="{{ item.item_description }}">{{ item.item_code }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td><input type="text" name="items[${rowCount}][item_description]" id="item_description_${rowCount}" readonly></td>
+                <td>
+                    <select name="items[${rowCount}][project]" id="project_${rowCount}">
+                        <option value="">Select Project</option>
+                        {% for project in projects %}
+                        <option value="{{ project.project_code }}">{{ project.project_code }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td><input type="number" name="items[${rowCount}][qty_ordered]" id="qty_ordered_${rowCount}" step="1" min="1" value="1" onchange="updateTotal(${rowCount})"></td>
+                <td><input type="number" name="items[${rowCount}][price]" id="price_${rowCount}" step="0.01" min="0" value="0" onchange="updateTotal(${rowCount})"></td>
+                <td><input type="text" name="items[${rowCount}][total]" id="total_${rowCount}" readonly></td>
+                <td><button type="button" onclick="removeRow(this)">Remove</button></td>
+            `;
+            tbody.appendChild(row);
+            rowCount++;
+            updateGrandTotal();
+        }
+
+        function removeRow(button) {
+            if (rowCount > 1) {
+                button.parentElement.parentElement.remove();
+                rowCount--;
                 updateGrandTotal();
             }
+        }
 
-            function removeRow(button) {
-                if (rowCount > 1) {
-                    button.parentElement.parentElement.remove();
-                    rowCount--;
-                    updateGrandTotal();
+        function updateItemDescription(index) {
+            const select = document.getElementById(`item_code_${index}`);
+            const descriptionInput = document.getElementById(`item_description_${index}`);
+            const selectedOption = select.options[select.selectedIndex];
+            descriptionInput.value = selectedOption.getAttribute("data-description") || "";
+            updateTotal(index);
+        }
+
+        function updateTotal(index) {
+            const qty = parseFloat(document.getElementById(`qty_ordered_${index}`).value) || 0;
+            const price = parseFloat(document.getElementById(`price_${index}`).value) || 0;
+            const total = qty * price;
+            document.getElementById(`total_${index}`).value = total.toFixed(2);
+            updateGrandTotal();
+        }
+
+        function updateGrandTotal() {
+            let grandTotal = 0;
+            for (let i = 0; i < rowCount; i++) {
+                const totalField = document.getElementById(`total_${i}`);
+                if (totalField) {
+                    grandTotal += parseFloat(totalField.value) || 0;
+                }
+            }
+            document.getElementById("grand-total").textContent = grandTotal.toFixed(2);
+        }
+
+        async function submitForm() {
+            const formData = new FormData();
+            const supplierId = document.getElementById("supplier_id").value;
+            const requesterId = document.getElementById("requester_id").value;
+            const noteToSupplier = document.getElementById("note_to_supplier").value;
+            formData.append("supplier_id", supplierId);
+            formData.append("requester_id", requesterId);
+            formData.append("note_to_supplier", noteToSupplier);
+
+            const items = [];
+            for (let i = 0; i < rowCount; i++) {
+                const itemCode = document.getElementById(`item_code_${i}`)?.value;
+                const itemDescription = document.getElementById(`item_description_${i}`)?.value;
+                const project = document.getElementById(`project_${i}`)?.value;
+                const qtyOrdered = document.getElementById(`qty_ordered_${i}`)?.value;
+                const price = document.getElementById(`price_${i}`)?.value;
+                if (itemCode && itemDescription && project && qtyOrdered && price) {
+                    const item = {
+                        item_code: itemCode,
+                        item_description: itemDescription,
+                        project: project,
+                        qty_ordered: parseFloat(qtyOrdered),
+                        price: parseFloat(price)
+                    };
+                    items.push(item);
                 }
             }
 
-            function updateTotal(index) {
-                const qty = parseFloat(document.querySelector(`input[name='items[${index}][qty_ordered]']`).value) || 0;
-                const price = parseFloat(document.querySelector(`input[name='items[${index}][price]']`).value) || 0;
-                const total = qty * price;
-                document.querySelector(`input[name='items[${index}][total]']`).value = total.toFixed(2);
-                updateGrandTotal();
+            console.log("Submitting order with full data:", {
+                supplier_id: supplierId,
+                requester_id: requesterId,
+                note_to_supplier: noteToSupplier,
+                items: items
+            });
+
+            if (!supplierId) {
+                alert("Please select a supplier.");
+                return;
+            }
+            if (!requesterId) {
+                alert("Please select a requester.");
+                return;
+            }
+            if (items.length === 0) {
+                alert("Please add at least one item with all required fields.");
+                return;
             }
 
-            function updateGrandTotal() {
-                let grandTotal = 0;
-                for (let i = 0; i < rowCount; i++) {
-                    const totalField = document.querySelector(`input[name='items[${i}][total]']`);
-                    if (totalField) {
-                        grandTotal += parseFloat(totalField.value) || 0;
-                    }
-                }
-                document.getElementById("grand-total").textContent = grandTotal.toFixed(2);
-            }
+            formData.append("items", JSON.stringify(items));
 
-            async function submitForm() {
-                const formData = new FormData();
-                const supplierId = document.getElementById("supplier_id").value;
-                const noteToSupplier = document.getElementById("note_to_supplier").value;
-                formData.append("supplier_id", supplierId);
-                formData.append("note_to_supplier", noteToSupplier);
-                formData.append("requester_id", "1"); // Hardcoded for demo; adjust as needed
-
-                const items = [];
-                for (let i = 0; i < rowCount; i++) {
-                    const itemCode = document.querySelector(`input[name='items[${i}][item_code]']`)?.value;
-                    const itemDescription = document.querySelector(`input[name='items[${i}][item_description]']`)?.value;
-                    const project = document.querySelector(`input[name='items[${i}][project]']`)?.value;
-                    const qtyOrdered = document.querySelector(`input[name='items[${i}][qty_ordered]']`)?.value;
-                    const price = document.querySelector(`input[name='items[${i}][price]']`)?.value;
-                    if (itemCode && itemDescription && project && qtyOrdered && price) {
-                        items.push({
-                            item_code: itemCode,
-                            item_description: itemDescription,
-                            project: project,
-                            qty_ordered: parseFloat(qtyOrdered),
-                            price: parseFloat(price)
-                        });
-                    }
-                }
-                formData.append("items", JSON.stringify(items));
-
-                const response = await fetch("/orders", {
-                    method: "POST",
-                    body: formData
-                });
-                const result = await response.json();
-                if (response.ok) {
-                    alert(`Order created successfully: ${result.order.order_number}`);
-                    window.location.href = "/orders/pending";
-                } else {
-                    alert(`Failed to create order: ${result.detail}`);
-                }
-            }
-
-            function emailPurchaseOrder() {
-                alert("Email Purchase Order functionality will be implemented after fixing PDF generation.");
-                // Placeholder for emailing the PDF; to be implemented later
-            }
-
-            function viewPurchaseOrder() {
-                alert("View Purchase Order functionality will be implemented after fixing PDF generation.");
-                // Placeholder; to be linked to the view order screen after fixing PDF
-                window.location.href = "/orders/pending"; // Temporary redirect
-            }
-
-            function cancelForm() {
+            const response = await fetch("/orders", {
+                method: "POST",
+                body: formData
+            });
+            const result = await response.json();
+            if (response.ok) {
+                alert(`Order created successfully: ${result.order.order_number}`);
                 window.location.href = "/orders/pending";
+            } else {
+                alert(`Failed to create order: ${result.detail}`);
             }
+        }
 
-            // Expose functions to the global scope for onclick handlers
-            window.addRow = addRow;
-            window.removeRow = removeRow;
-            window.updateTotal = updateTotal;
-            window.submitForm = submitForm;
-            window.emailPurchaseOrder = emailPurchaseOrder;
-            window.viewPurchaseOrder = viewPurchaseOrder;
-            window.cancelForm = cancelForm;
-        })();
+        function emailPurchaseOrder() {
+            alert("Email Purchase Order functionality will be implemented after fixing PDF generation.");
+        }
+
+        function viewPurchaseOrder() {
+            alert("View Purchase Order functionality will be implemented after fixing PDF generation.");
+            window.location.href = "/orders/pending";
+        }
+
+        function cancelForm() {
+            window.location.href = "/orders/pending";
+        }
+
+        window.addRow = addRow;
+        window.removeRow = removeRow;
+        window.updateItemDescription = updateItemDescription;
+        window.updateTotal = updateTotal;
+        window.submitForm = submitForm;
+        window.emailPurchaseOrder = emailPurchaseOrder;
+        window.viewPurchaseOrder = viewPurchaseOrder;
+        window.cancelForm = cancelForm;
     </script>
 </body>
 </html>
@@ -7749,6 +7846,31 @@ export async function loadRequesters(selectId) {
 [2025-04-24T09:20:31.205175] init_db: {"status": "success"}
 [2025-04-24T09:25:07.712313] init_db: {"status": "success"}
 [2025-04-24T09:30:36.111142] init_db: {"status": "success"}
+[2025-04-25T05:10:13.153832] init_db: {"status": "success"}
+[2025-04-25T05:15:00.198214] init_db: {"status": "success"}
+[2025-04-25T05:24:19.515228] init_db: {"status": "success"}
+[2025-04-25T05:27:21.458021] init_db: {"status": "success"}
+[2025-04-25T05:33:30.753532] init_db: {"status": "success"}
+[2025-04-25T05:41:28.654462] init_db: {"status": "success"}
+[2025-04-25T05:50:48.853938] init_db: {"status": "success"}
+[2025-04-25T05:54:50.266008] init_db: {"status": "success"}
+[2025-04-25T05:59:35.773257] init_db: {"status": "success"}
+[2025-04-25T05:59:52.230546] init_db: {"status": "success"}
+[2025-04-25T06:01:33.885406] init_db: {"status": "success"}
+[2025-04-25T06:03:00.515025] init_db: {"status": "success"}
+[2025-04-25T06:11:54.361397] init_db: {"status": "success"}
+[2025-04-25T06:26:41.818395] init_db: {"status": "success"}
+[2025-04-25T06:27:47.474234] init_db: {"status": "success"}
+[2025-04-25T06:35:14.426738] init_db: {"status": "success"}
+[2025-04-25T06:36:09.738711] init_db: {"status": "success"}
+[2025-04-25T06:42:50.141377] init_db: {"status": "success"}
+[2025-04-25T06:44:46.781919] init_db: {"status": "success"}
+[2025-04-25T06:50:49.006259] init_db: {"status": "success"}
+[2025-04-25T06:59:42.936243] init_db: {"status": "success"}
+[2025-04-25T07:07:14.423015] init_db: {"status": "success"}
+[2025-04-25T07:08:31.193301] init_db: {"status": "success"}
+[2025-04-25T07:12:07.866857] init_db: {"status": "success"}
+[2025-04-25T07:16:58.775463] init_db: {"status": "success"}
 
 ```
 
