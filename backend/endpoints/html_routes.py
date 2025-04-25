@@ -37,6 +37,6 @@ def show_new_order_form(request: Request):
             {"request": request, "suppliers": [], "items": [], "projects": [], "requesters": []}
         )
 
-@router.get("/orders/pending", response_class=HTMLResponse)
+@router.get("/orders/pending_orders", response_class=HTMLResponse)
 def show_pending_orders(request: Request):
     return templates.TemplateResponse("pending_orders.html", {"request": request})

@@ -208,3 +208,5 @@
 [2025-04-25T18:10:25.340105] get_setting: {"key": "order_number_start", "result": "URC1054"}
 [2025-04-25T18:10:25.340991] update_setting: {"key": "order_number_start", "value": "URC1056"}
 [2025-04-25T18:10:25.342095] create_order: {"order_number": "URC1055", "requester_id": 1, "total": 200.0, "items_count": 1}
+[2025-04-25T18:23:46.953296] init_db: {"status": "success"}
+[2025-04-25T18:24:26.962765] init_db: {"status": "success"}

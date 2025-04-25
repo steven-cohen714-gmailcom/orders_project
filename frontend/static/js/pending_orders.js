@@ -17,7 +17,7 @@ function populateDropdown(selectId, items, labelFunc, valueFunc) {
 
 function escapeHTML(str) {
   if (!str) return "";
-  return str.replace(/'/g, "\\'").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, " ").replace(/\r/g, "");
+  return str.replace(/'/g, "\\'").replace(/"/g, "\"").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, " ").replace(/\r/g, "");
 }
 
 function populateTable(data) {
@@ -106,6 +106,7 @@ async function runFilters() {
   if (endDate) params.append("end_date", endDate);
 
   try {
+    // URL already matches the new naming convention (/orders/pending_orders)
     const res = await fetch(`/orders/api/orders/pending_orders?${params.toString()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
     const data = await res.json();

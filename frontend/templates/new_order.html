@@ -276,7 +276,7 @@
                 if (response.ok) {
                     console.log("Order created successfully");
                     alert(`Order created successfully: ${result.order.order_number}`);
-                    window.location.href = "/orders/pending";
+                    window.location.href = "/orders/pending_orders"; // Updated URL
                 } else {
                     console.log("Failed to create order, details:", result.detail);
                     alert("Failed to create order: " + (typeof result.detail === 'string' ? result.detail : JSON.stringify(result.detail)));
@@ -295,12 +295,12 @@
         function viewPurchaseOrder() {
             console.log("View Purchase Order clicked");
             alert("View Purchase Order functionality will be implemented after fixing PDF generation.");
-            window.location.href = "/orders/pending";
+            window.location.href = "/orders/pending_orders"; // Updated URL
         }
 
         function cancelForm() {
             console.log("Cancel button clicked");
-            window.location.href = "/orders/pending";
+            window.location.href = "/orders/pending_orders"; // Updated URL
         }
 
         window.addRow = addRow;
