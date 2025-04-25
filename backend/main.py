@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from backend.endpoints import orders, auth, lookups, ui_pages, supplier_lookup, supplier_lookup_takealot
+from backend.endpoints import orders, auth, lookups, html_routes, supplier_lookup, supplier_lookup_takealot
 from backend.database import init_db
 from pathlib import Path
 import logging
@@ -58,7 +58,7 @@ templates = Jinja2Templates(directory="frontend/templates")
 app.include_router(orders.router)
 app.include_router(auth.router)
 app.include_router(lookups.router)
-app.include_router(ui_pages.router)
+app.include_router(html_routes.router)
 app.include_router(supplier_lookup.router)
 app.include_router(supplier_lookup_takealot.router)
 
@@ -66,14 +66,6 @@ app.include_router(supplier_lookup_takealot.router)
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
-
-@app.get("/orders/new", response_class=HTMLResponse)
-async def new_order_page(request: Request):
-    return templates.TemplateResponse("new_order.html", {"request": request})
-
-@app.get("/orders/pending", response_class=HTMLResponse)
-async def pending_orders_page(request: Request):
-    return templates.TemplateResponse("pending_orders.html", {"request": request})
 
 @app.get("/orders/received_orders", response_class=HTMLResponse)
 async def received_orders_page(request: Request):

@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create New Order</title>
     <link rel="icon" href="data:,">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 2rem; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
+        .status { font-weight: bold; }
+        .filters { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+        .filters label { font-weight: bold; }
+        input[type="date"], select, textarea, input[type="number"], input[type="text"] {
+            padding: 0.4rem;
+            font-size: 1rem;
+            font-family: monospace;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            margin-right: 1rem;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+    </style>
 </head>
 <body>
+    
     <div>
         <h2>Create Purchase Order</h2>
         <div>
