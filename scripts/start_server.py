@@ -38,11 +38,9 @@ os.makedirs("logs", exist_ok=True)
 
 # 5. Start Uvicorn with reload and persistent logging
 print(f"🚀 Launching Uvicorn → {APP_MODULE} on port {PORT}...")
-with open(LOG_FILE, "a") as log_file:
-    subprocess.Popen(
-        ["venv/bin/uvicorn", APP_MODULE, "--host", "0.0.0.0", "--port", PORT, "--reload"],
-        stdout=log_file,
-        stderr=log_file
-    )
+subprocess.Popen(
+    f"venv/bin/uvicorn {APP_MODULE} --host 0.0.0.0 --port {PORT} --reload --reload-dir backend >> {LOG_FILE} 2>&1",
+    shell=True
+)
 
 print(f"✅ Server launched. Logs → {LOG_FILE}")

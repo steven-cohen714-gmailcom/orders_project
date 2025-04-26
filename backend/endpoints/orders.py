@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Request, UploadFile, Form, Query
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 from typing import List, Optional
@@ -8,8 +8,11 @@ import sqlite3
 from pathlib import Path
 import json
 import shutil
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from reportlab.lib import colors
 
-from ..database import create_order, get_setting, update_setting
+from ..database import create_order, get_setting, update_setting, get_business_details
 from ..utils.order_utils import generate_order_number, determine_status, validate_order_items
 from backend.twilio.twilio_utils import send_whatsapp_notification, get_order_number_from_phone
 
@@ -18,6 +21,8 @@ templates = Jinja2Templates(directory="frontend/templates")
 
 UPLOAD_DIR = Path("data/uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+PDF_DIR = Path("data/pdfs")
+PDF_DIR.mkdir(parents=True, exist_ok=True)
 
 def log_event(filename: str, data: dict):
     log_path = Path(f"logs/{filename}")
@@ -30,6 +35,9 @@ def log_event(filename: str, data: dict):
 def get_next_order_number():
     try:
         current_number = get_setting("order_number_start")
+        if not current_number:
+            current_number = "URC1000"  # Fallback if not set
+            update_setting("order_number_start", current_number)
         next_number = generate_order_number(current_number)
         return {"next_order_number": next_number}
     except Exception as e:
@@ -69,8 +77,9 @@ async def create_new_order(order: OrderCreate):
         current_order_number = get_setting("order_number_start")
 
         if not order.order_number:
-            order.order_number = generate_order_number(current_order_number)
-            next_number = generate_order_number(order.order_number)
+            order.order_number = current_order_number
+            # Increment the order number for the next order
+            next_number = generate_order_number(current_order_number)
             update_setting("order_number_start", next_number)
 
         status = determine_status(total, auth_threshold)
@@ -365,7 +374,7 @@ def get_pending_orders(
             filters.append("o.status = ?")
             params.append(status)
 
-        where_clause = " AND ".join(filters)
+        where_clause = " AND ".join(filters) if filters else "1=1"
 
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
@@ -381,14 +390,13 @@ def get_pending_orders(
                 WHERE {where_clause}
                 ORDER BY o.created_date DESC
             """, params)
-            orders = []
-            for row in cursor.fetchall():
-                order = dict(row)
+            orders = [dict(row) for row in cursor.fetchall()]
+            for order in orders:
                 order["created_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
-                orders.append(order)
+        log_event("new_orders_log.txt", {"action": "fetch_pending_orders", "count": len(orders)})
         return {"orders": orders}
     except sqlite3.OperationalError as e:
-        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_query", "query": where_clause, "params": params})
+        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_query", "query": "pending_orders"})
         raise HTTPException(status_code=500, detail=f"Database query error: {e}")
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "pending_orders"})
@@ -432,7 +440,7 @@ def get_received_orders(
             filters.append("s.name LIKE ?")
             params.append(f"%{supplier}%")
 
-        where_clause = " AND ".join(filters)
+        where_clause = " AND ".join(filters) if filters else "1=1"
 
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
@@ -448,14 +456,13 @@ def get_received_orders(
                 WHERE {where_clause}
                 ORDER BY o.created_date DESC
             """, params)
-            orders = []
-            for row in cursor.fetchall():
-                order = dict(row)
+            orders = [dict(row) for row in cursor.fetchall()]
+            for order in orders:
                 order["created_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
-                orders.append(order)
+        log_event("new_orders_log.txt", {"action": "fetch_received_orders", "count": len(orders)})
         return {"orders": orders}
     except sqlite3.OperationalError as e:
-        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_query", "query": where_clause, "params": params})
+        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_query", "query": "received_orders"})
         raise HTTPException(status_code=500, detail=f"Database query error: {e}")
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "received_orders"})
@@ -474,8 +481,10 @@ def get_items_for_order(order_id: int):
                 WHERE order_id = ?
             """, (order_id,))
             items = [dict(row) for row in cursor.fetchall()]
+        log_event("new_orders_log.txt", {"action": "fetch_items_for_order", "order_id": order_id, "count": len(items)})
         return {"items": items}
     except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "items_for_order"})
         raise HTTPException(status_code=500, detail=f"Failed to fetch items: {e}")
 
 @router.get("/api/audit_trail")
@@ -537,9 +546,8 @@ def get_audit_trail(
                 WHERE {where_clause}
                 ORDER BY o.created_date DESC
             """, params)
-            orders = []
-            for row in cursor.fetchall():
-                order = dict(row)
+            orders = [dict(row) for row in cursor.fetchall()]
+            for order in orders:
                 order["created_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
                 if order["received_date"]:
                     order["received_date"] = datetime.fromisoformat(order["received_date"]).strftime("%d/%m/%Y")
@@ -554,11 +562,130 @@ def get_audit_trail(
                     if item["received_date"]:
                         item["received_date"] = datetime.fromisoformat(item["received_date"]).strftime("%d/%m/%Y")
                 order["items"] = items
-                orders.append(order)
+        log_event("new_orders_log.txt", {"action": "fetch_audit_trail", "count": len(orders)})
         return {"orders": orders}
     except sqlite3.OperationalError as e:
-        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_query", "query": where_clause, "params": params})
+        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_query", "query": "audit_trail"})
         raise HTTPException(status_code=500, detail=f"Database query error: {e}")
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "audit_trail"})
         raise HTTPException(status_code=500, detail=f"Failed to load audit trail: {e}")
+
+class OrderPDF(BaseModel):
+    order_number: str
+    date: str
+    supplier_id: int
+    note_to_supplier: Optional[str]
+    items: List[dict]
+    total: float
+    business_details: dict
+
+@router.post("/generate_pdf")
+def generate_pdf(order: OrderPDF):
+    try:
+        # Fetch supplier details
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT name, address_line1, address_line2, address_line3, postal_code
+                FROM suppliers
+                WHERE id = ?
+            """, (order.supplier_id,))
+            supplier = cursor.fetchone()
+            if not supplier:
+                raise HTTPException(status_code=404, detail="Supplier not found")
+            supplier_dict = dict(supplier)
+
+        # Generate PDF
+        pdf_path = PDF_DIR / f"order_{order.order_number}.pdf"
+        c = canvas.Canvas(str(pdf_path), pagesize=A4)
+        width, height = A4
+
+        # Header: Business Details
+        c.setFont("Helvetica-Bold", 12)
+        c.drawString(50, height - 50, order.business_details.get("company_name", "Universal Recycling Company Pty Ltd"))
+        c.setFont("Helvetica", 10)
+        y = height - 65
+        c.drawString(50, y, order.business_details.get("address_line1", ""))
+        if order.business_details.get("address_line2"):
+            y -= 15
+            c.drawString(50, y, order.business_details.get("address_line2", ""))
+        y -= 15
+        c.drawString(50, y, f"{order.business_details.get('city', '')}, {order.business_details.get('province', '')} {order.business_details.get('postal_code', '')}")
+        y -= 15
+        c.drawString(50, y, f"Telephone: {order.business_details.get('telephone', '')}")
+        y -= 15
+        c.drawString(50, y, f"VAT Number: {order.business_details.get('vat_number', '')}")
+
+        # Title
+        c.setFont("Helvetica-Bold", 16)
+        c.drawCentredString(width / 2, height - 150, f"Purchase Order {order.order_number}")
+
+        # Order Details
+        c.setFont("Helvetica", 10)
+        y = height - 180
+        c.drawString(50, y, f"Order Date: {order.date}")
+        y -= 15
+        c.drawString(50, y, f"Supplier: {supplier_dict['name']}")
+        y -= 15
+        supplier_address = ", ".join(filter(None, [
+            supplier_dict.get("address_line1", ""),
+            supplier_dict.get("address_line2", ""),
+            supplier_dict.get("address_line3", ""),
+            supplier_dict.get("postal_code", "")
+        ]))
+        c.drawString(50, y, f"Supplier Address: {supplier_address}")
+
+        # Items Table
+        y -= 40
+        c.setFont("Helvetica-Bold", 10)
+        headers = ["Stock Code", "Description", "Qty", "Unit Price", "Total"]
+        x_positions = [50, 100, 250, 350, 400]
+        for i, header in enumerate(headers):
+            c.drawString(x_positions[i], y, header)
+        y -= 5
+        c.line(50, y, width - 50, y)
+
+        c.setFont("Helvetica", 10)
+        y -= 15
+        for item in order.items:
+            c.drawString(x_positions[0], y, item["item_code"])
+            c.drawString(x_positions[1], y, item["item_description"][:40])  # Truncate for space
+            c.drawString(x_positions[2], y, str(item["qty_ordered"]))
+            c.drawString(x_positions[3], y, f"R{item['price']:.2f}")
+            c.drawString(x_positions[4], y, f"R{(item['qty_ordered'] * item['price']):.2f}")
+            y -= 15
+            if y < 50:
+                c.showPage()
+                y = height - 50
+
+        # Total and Notes
+        y -= 20
+        c.setFont("Helvetica-Bold", 10)
+        c.drawString(50, y, f"Total (Excluding Tax): R{order.total:.2f}")
+        if order.note_to_supplier:
+            y -= 20
+            c.setFont("Helvetica", 10)
+            c.drawString(50, y, f"Note to Supplier: {order.note_to_supplier}")
+
+        # Footer: Date (repeated as per request)
+        y -= 20
+        c.drawString(50, y, f"Date: {order.date}")
+
+        c.showPage()
+        c.save()
+
+        return FileResponse(
+            pdf_path,
+            media_type="application/pdf",
+            filename=f"order_{order.order_number}.pdf"
+        )
+    except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "generate_pdf"})
+        raise HTTPException(status_code=500, detail=f"Failed to generate PDF: {str(e)}")
+
+# Remove the old GET endpoint since we're using POST now
+# @router.get("/generate_pdf/{order_id}")
+# def generate_pdf(order_id: int):
+#     ... (removed)

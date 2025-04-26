@@ -28,6 +28,7 @@
     <div class="tab" data-tab="items">Items</div>
     <div class="tab" data-tab="projects">Projects</div>
     <div class="tab" data-tab="settings">Settings</div>
+    <div class="tab" data-tab="business_details">Business Details</div>
   </div>
 
   <div id="users" class="tab-content active">
@@ -120,6 +121,28 @@
       <label for="auth-threshold">Authorization Threshold (R):</label>
       <input type="number" id="auth-threshold" step="0.01" />
       <button onclick="updateSettings()">Update</button>
+    </div>
+  </div>
+
+  <div id="business_details" class="tab-content">
+    <div class="form-group">
+      <label for="company-name">Company Name:</label>
+      <input type="text" id="company-name" />
+      <label for="address-line1">Address Line 1:</label>
+      <input type="text" id="address-line1" />
+      <label for="address-line2">Address Line 2:</label>
+      <input type="text" id="address-line2" />
+      <label for="city">City:</label>
+      <input type="text" id="city" />
+      <label for="province">Province:</label>
+      <input type="text" id="province" />
+      <label for="postal-code">Postal Code:</label>
+      <input type="text" id="postal-code" />
+      <label for="telephone">Telephone:</label>
+      <input type="text" id="telephone" />
+      <label for="vat-number">VAT Number:</label>
+      <input type="text" id="vat-number" />
+      <button onclick="updateBusinessDetails()">Update</button>
     </div>
   </div>
 
@@ -345,6 +368,49 @@
       }
     }
 
+    // Business Details
+    async function loadBusinessDetails() {
+      try {
+        const res = await fetch("/lookups/business_details");
+        const data = await res.json();
+        document.getElementById("company-name").value = data.company_name || "";
+        document.getElementById("address-line1").value = data.address_line1 || "";
+        document.getElementById("address-line2").value = data.address_line2 || "";
+        document.getElementById("city").value = data.city || "";
+        document.getElementById("province").value = data.province || "";
+        document.getElementById("postal-code").value = data.postal_code || "";
+        document.getElementById("telephone").value = data.telephone || "";
+        document.getElementById("vat-number").value = data.vat_number || "";
+      } catch (err) {
+        console.error("Failed to load business details:", err);
+      }
+    }
+
+    async function updateBusinessDetails() {
+      const details = {
+        company_name: document.getElementById("company-name").value,
+        address_line1: document.getElementById("address-line1").value,
+        address_line2: document.getElementById("address-line2").value,
+        city: document.getElementById("city").value,
+        province: document.getElementById("province").value,
+        postal_code: document.getElementById("postal-code").value,
+        telephone: document.getElementById("telephone").value,
+        vat_number: document.getElementById("vat-number").value
+      };
+      try {
+        await fetch("/lookups/business_details", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(details)
+        });
+        alert("Business details updated successfully");
+        loadBusinessDetails();
+      } catch (err) {
+        console.error("Failed to update business details:", err);
+        alert("Failed to update business details: " + err.message);
+      }
+    }
+
     // Load all data on page load
     document.addEventListener("DOMContentLoaded", () => {
       loadUsers();
@@ -352,6 +418,7 @@
       loadItems();
       loadProjects();
       loadSettings();
+      loadBusinessDetails();
     });
   </script>
 </body>
