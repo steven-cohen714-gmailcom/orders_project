@@ -1,6 +1,6 @@
 # 📦 Orders Project Summary
 
-**Generated:** 2025-04-26 05:16:03
+**Generated:** 2025-04-26 05:19:19
 
 ## Overview
 The Orders Project is a custom-built Purchase Order system for Universal Recycling Company Pty Ltd, a metals recycling business in South Africa. It allows the company to create, manage, and track purchase orders through various stages: **Pending** → **Awaiting Authorisation** (for orders exceeding the threshold stored in the `settings` table under `auth_threshold`, adjustable in the Maintenance section) → **Authorised** → **Received**. The system includes features like order number generation, Twilio integration for notifications, PDF generation for purchase orders, and a maintenance section for managing company details.
@@ -33,20 +33,10 @@ Today’s tasks include:
 ├── backend
 │   ├── __init__.py
 │   ├── __pycache__
-│   │   ├── __init__.cpython-313.pyc
-│   │   ├── database.cpython-313.pyc
-│   │   └── main.cpython-313.pyc
 │   ├── database.py
 │   ├── endpoints
 │   │   ├── __init__.py
 │   │   ├── __pycache__
-│   │   │   ├── __init__.cpython-313.pyc
-│   │   │   ├── auth.cpython-313.pyc
-│   │   │   ├── html_routes.cpython-313.pyc
-│   │   │   ├── lookups.cpython-313.pyc
-│   │   │   ├── orders.cpython-313.pyc
-│   │   │   ├── supplier_lookup.cpython-313.pyc
-│   │   │   └── supplier_lookup_takealot.cpython-313.pyc
 │   │   ├── auth.py
 │   │   ├── html_routes.py
 │   │   ├── lookups.py
@@ -59,14 +49,10 @@ Today’s tasks include:
 │   ├── twilio
 │   │   ├── __init__.py
 │   │   ├── __pycache__
-│   │   │   ├── __init__.cpython-313.pyc
-│   │   │   └── twilio_utils.cpython-313.pyc
 │   │   └── twilio_utils.py
 │   └── utils
 │       ├── __init__.py
 │       ├── __pycache__
-│       │   ├── __init__.cpython-313.pyc
-│       │   └── order_utils.cpython-313.pyc
 │       └── order_utils.py
 ├── data
 │   ├── orders.db
@@ -133,7 +119,6 @@ Today’s tasks include:
 ├── requirements.txt
 ├── scripts
 │   ├── __pycache__
-│   │   └── add_debug_validation_handler.cpython-313.pyc
 │   ├── add_debug_validation_handler.py
 │   ├── clear_transactional_data.py
 │   ├── dump_project_summary.py
@@ -183,7 +168,7 @@ Today’s tasks include:
     │       └── site-packages
     └── pyvenv.cfg
 
-29 directories, 124 files
+29 directories, 109 files
 ```
 
 ## 🗄️ Database Schema (`data/orders.db`)
@@ -275,10 +260,17 @@ Note: Sensitive values like Twilio SSID, auth token, and ngrok token should be s
 ```plaintext
 TWILIO_ACCOUNT_SID=AC78528274fa496d1971ff628cadc23a
 TWILIO_AUTH_TOKEN=a30638234faac92dd326e749c67d5070
-TWILIO_PHONE_NUMBER=whatsapp:+14155238886
+TWILIO_PHONE_NUMBER=whatsapp:+19472224054
+GROUP_MEMBER_1=whatsapp:+27648475358
+GROUP_MEMBER_2=
+GROUP_MEMBER_3=
+GROUP_MEMBER_4=
+GROUP_MEMBER_5=
+GROUP_MEMBER_6=
+GROUP_MEMBER_7=
+NGROK_TOKEN=2wFRynZ4XvFxSsrrAMWDWeUQbd2_5NuF5uaXUD5DyLgVjW32M
 FLASK_APP=main.py
-FLASK_ENV=development
-```
+FLASK_ENV=development```
 
 ## 📋 General Requirements
 
