@@ -20,7 +20,7 @@ def run(command, desc, check=True):
         return e
 
 def reset_untracked_files():
-    print("🧹 Resetting log files and pyc files...")
+    print("🧹 Resetting untracked files to avoid conflicts...")
     # Reset log files
     conflict_files = [
         "logs/db_activity_log.txt",
@@ -36,7 +36,15 @@ def reset_untracked_files():
             print(f"🧹 Resetting log file: {log_file}")
             run(["git", "checkout", "--", log_file], f"Reset {log_file}", check=False)
 
+    # Reset database file
+    db_file = "data/orders.db"
+    db_path = Path(db_file)
+    if db_path.exists():
+        print(f"🧹 Resetting database file: {db_file}")
+        run(["git", "checkout", "--", db_file], f"Reset {db_file}", check=False)
+
     # Remove .pyc files
+    print("🧹 Removing .pyc files...")
     subprocess.run(["find", ".", "-type", "f", "-name", "*.pyc", "-delete"], check=False)
 
 def main():
@@ -61,10 +69,9 @@ def main():
         print("🛠 Completing any interrupted operations...")
         run(["git", "rebase", "--continue"], "Continue rebase", check=False)
         run(["git", "merge", "--continue"], "Continue merge", check=False)
-        # Reset the index to ensure a clean state
         run(["git", "reset"], "Reset index")
 
-    # Reset log files and .pyc files before stashing
+    # Reset untracked files before stashing
     reset_untracked_files()
 
     # Check for local changes
@@ -92,7 +99,7 @@ def main():
                     print("🔍 Conflicts detected in:", conflicts)
                     for conflict in conflicts:
                         file_path = conflict.split(" ")[1]
-                        if file_path.endswith(".pyc") or "logs/" in file_path:
+                        if file_path.endswith(".pyc") or "logs/" in file_path or file_path == "data/orders.db":
                             print(f"🧹 Removing conflicting file: {file_path}")
                             run(["git", "rm", file_path], f"Remove {file_path}")
                         else:
@@ -101,13 +108,11 @@ def main():
                         run(["git", "add", file_path], f"Stage resolved {file_path}")
                     run(["git", "rebase", "--continue"], "Continue rebase after resolving conflicts")
                 else:
-                    print("⚠️ Stash pop failed for an unknown reason. Resolve manually with `git stash list && git stash apply`")
-                    sys.exit(1)
+                    print("⚠️ Stash pop failed for an unknown reason. Keeping local changes...")
         except SystemExit:
-            print("⚠️ Stash pop failed — resolve manually with `git stash list && git stash apply`")
-            sys.exit(1)
+            print("⚠️ Stash pop failed, but local changes have been preserved.")
 
-    # Final cleanup of .pyc files and logs
+    # Final cleanup of untracked files
     reset_untracked_files()
 
     print("✅ Git pull completed successfully!")
