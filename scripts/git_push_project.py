@@ -60,11 +60,18 @@ def main():
     # Update .gitignore to exclude venv/ and .pyc files
     update_gitignore()
 
-    # Stage specific files and directories
+    # Stage data/orders.db separately
+    db_file = "data/orders.db"
+    if Path(db_file).exists():
+        run(["git", "add", "--force", db_file], f"Stage {db_file}")
+        result = run(["git", "commit", "-m", "Update orders.db"], "Commit database", check=False)
+        if "nothing to commit" in result.stderr.lower():
+            print("✅ No changes to data/orders.db.")
+
+    # Stage other files and directories
     paths_to_stage = [
         "backend/",
         "frontend/",
-        "data/orders.db",
         "scripts/",
         "logs/",
     ]
@@ -72,7 +79,7 @@ def main():
         if Path(path).exists():
             run(["git", "add", "--force", path], f"Stage {path}")
 
-    # Commit changes
+    # Commit remaining changes
     result = run(["git", "commit", "-m", "Auto-commit by git_push_project.py"], "Commit changes", check=False)
     if "nothing to commit" in result.stderr.lower():
         print("✅ No changes to commit.")
