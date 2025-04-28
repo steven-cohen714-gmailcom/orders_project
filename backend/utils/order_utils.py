@@ -1,39 +1,38 @@
-import re
-from typing import Any, List
-from datetime import datetime
+"""
+Utility functions for Universal Recycling Purchase Order System
+"""
 
-def generate_order_number(current_number: str) -> str:
+def normalize_order_number(order_number: str) -> str:
     """
-    Generate the next order number by splitting off any non‑digit
-    prefix (which can now be empty) and incrementing the numeric suffix,
-    preserving zero‑padding.
-    e.g. URC0001 → URC0002, PO009 → PO010, 0001 → 0002
+    Normalize order numbers to a consistent format (e.g., URC0001).
     """
-    m = re.match(r"^(\D*)(\d+)$", current_number)
-    if not m:
-        # if it doesn't end with digits, just append "1"
-        return current_number + "1"
-    prefix, digits = m.groups()
-    width = len(digits)
-    num = int(digits) + 1
-    return f"{prefix}{str(num).zfill(width)}"
+    prefix = "URC"
+    if not order_number.startswith(prefix):
+        order_number = f"{prefix}{order_number}"
+    
+    num_part = order_number[len(prefix):]
+    try:
+        num = int(num_part)
+        return f"{prefix}{num:04d}"  # Ensures 4 digits, e.g., URC0001
+    except ValueError:
+        raise ValueError(f"Order number must end with a number, got: {order_number}")
 
-
-def determine_status(total: float, auth_threshold: float) -> str:
-    """Return 'Awaiting Authorisation' if total > threshold, else 'Pending'."""
-    return "Awaiting Authorisation" if total > auth_threshold else "Pending"
-
-
-def validate_order_items(items: List[Any]) -> bool:
+def calculate_order_total(items: list) -> float:
     """
-    Ensure at least one item; qty > 0; price >= 0.
-    Raises ValueError on violation.
+    Calculate the total cost of an order based on its items.
+    
+    Args:
+        items (list): List of order items, where each item is a dict with 'qty_ordered' and 'price' keys.
+    
+    Returns:
+        float: The total cost of the order.
+    
+    Raises:
+        KeyError: If an item is missing 'qty_ordered' or 'price'.
     """
-    if not items:
-        raise ValueError("Order must contain at least one item")
+    total = 0.0
     for item in items:
-        if item.qty_ordered <= 0:
-            raise ValueError("Quantity ordered must be greater than 0")
-        if item.price < 0:
-            raise ValueError("Price cannot be negative")
-    return True
+        qty = item["qty_ordered"]
+        price = item["price"]
+        total += qty * price
+    return total

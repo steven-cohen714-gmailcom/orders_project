@@ -1,70 +1,51 @@
-import os
 from twilio.rest import Client
-from dotenv import load_dotenv
+import os
 from pathlib import Path
-import logging
 import json
 
-# Set up logging
-logging.basicConfig(
-    filename="logs/twilio.log",
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s",
-)
-
-# Load environment variables
-load_dotenv()
-
-# Twilio credentials
+# Twilio credentials from environment variables
 account_sid = os.getenv("TWILIO_ACCOUNT_SID")
 auth_token = os.getenv("TWILIO_AUTH_TOKEN")
-twilio_number = os.getenv("TWILIO_WHATSAPP_NUMBER")
-group_members = [
-    os.getenv("GROUP_MEMBER_1"),
-    os.getenv("GROUP_MEMBER_2"),
-    os.getenv("GROUP_MEMBER_3"),
-    os.getenv("GROUP_MEMBER_4"),
-    os.getenv("GROUP_MEMBER_5"),
-    os.getenv("GROUP_MEMBER_6"),
-    os.getenv("GROUP_MEMBER_7"),
-]
+twilio_phone = os.getenv("TWILIO_PHONE_NUMBER")
 
 # Initialize Twilio client
 client = Client(account_sid, auth_token)
 
-# File to store phone number to most recent order number mapping
-PHONE_ORDER_MAPPING_FILE = Path("logs/phone_order_mapping.json")
+# Load group members from environment variables
+group_members = [
+    os.getenv(f"GROUP_MEMBER_{i}") for i in range(1, 8)
+    if os.getenv(f"GROUP_MEMBER_{i}")
+]
 
-def save_phone_order_mapping(phone_number: str, order_number: str):
-    mapping = {}
-    if PHONE_ORDER_MAPPING_FILE.exists():
-        with PHONE_ORDER_MAPPING_FILE.open("r", encoding="utf-8") as f:
-            mapping = json.load(f)
-    mapping[phone_number] = order_number
-    with PHONE_ORDER_MAPPING_FILE.open("w", encoding="utf-8") as f:
-        json.dump(mapping, f, indent=2)
+async def send_whatsapp_message(order_number: str, message_body: str):
+    """
+    Send a WhatsApp message to group members for order authorization.
+    
+    Args:
+        order_number (str): The order number associated with the message.
+        message_body (str): The message to send.
+    """
+    # Log the message SID mapping
+    mapping_path = Path("logs/message_sid_mapping.json")
+    mapping_path.parent.mkdir(parents=True, exist_ok=True)
+    if mapping_path.exists():
+        with mapping_path.open("r", encoding="utf-8") as f:
+            message_mapping = json.load(f)
+    else:
+        message_mapping = {}
 
-def get_order_number_from_phone(phone_number: str) -> str:
-    if not PHONE_ORDER_MAPPING_FILE.exists():
-        return None
-    with PHONE_ORDER_MAPPING_FILE.open("r", encoding="utf-8") as f:
-        mapping = json.load(f)
-    return mapping.get(phone_number)
+    for member in group_members:
+        try:
+            message = client.messages.create(
+                body=message_body,
+                from_=twilio_phone,
+                to=member
+            )
+            message_mapping[message.sid] = order_number
+        except Exception as e:
+            with open("logs/twilio.log", "a", encoding="utf-8") as f:
+                f.write(f"[{datetime.now().isoformat()}] Failed to send WhatsApp message to {member}: {str(e)}\n")
 
-def send_whatsapp_notification(order_number: str, total: float):
-    message_body = f"New order {order_number} exceeds threshold (R{total:.2f}). Reply 'Authorised' to approve."
-    try:
-        for member in group_members:
-            if member:  # Skip if member is None (not set in .env)
-                message = client.messages.create(
-                    body=message_body,
-                    from_=twilio_number,
-                    to=member
-                )
-                logging.info(f"Sent WhatsApp message to {member} for order {order_number}: {message.sid}")
-                # Save the phone number to order number mapping
-                save_phone_order_mapping(member, order_number)
-        return True
-    except Exception as e:
-        logging.error(f"Failed to send WhatsApp notification for order {order_number}: {str(e)}")
-        return False
+    # Save the updated message SID mapping
+    with mapping_path.open("w", encoding="utf-8") as f:
+        json.dump(message_mapping, f, indent=2)

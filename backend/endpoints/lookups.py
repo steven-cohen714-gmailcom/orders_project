@@ -1,306 +1,162 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
 from backend.database import get_db_connection
-import sqlite3
 import logging
+import sqlite3
 
-# Logging setup
-logging.basicConfig(
-    filename="logs/lookups_log.txt",
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s",
-)
+router = APIRouter()
 
-router = APIRouter(prefix="/lookups", tags=["lookups"])
-
-@router.get("/users")
-def get_users():
-    with get_db_connection() as conn:
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, username, rights FROM users")
-        users = [dict(row) for row in cursor.fetchall()]
-    return {"users": users}
-
-class UserCreate(BaseModel):
-    username: str
-    password: str
-    rights: str
-
-@router.post("/users")
-def create_user(user: UserCreate):
-    try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute(
-                "INSERT INTO users (username, password_hash, rights) VALUES (?, ?, ?)",
-                (user.username, user.password, user.rights)
-            )
-            conn.commit()
-        return {"status": "User created"}
-    except sqlite3.Error as e:
-        logging.error(f"Failed to create user: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-
-@router.put("/users/{user_id}")
-def update_user(user_id: int, user: UserCreate):
-    try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute(
-                "UPDATE users SET username = ?, rights = ? WHERE id = ?",
-                (user.username, user.rights, user_id)
-            )
-            conn.commit()
-        return {"status": "User updated"}
-    except sqlite3.Error as e:
-        logging.error(f"Failed to update user: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-
-@router.get("/requesters")
-def get_requesters():
-    with get_db_connection() as conn:
-        conn.row_factory = sqlite3.Row
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, name FROM requesters")
-        requesters = [dict(row) for row in cursor.fetchall()]
-    return {"requesters": requesters}
-
-class RequesterCreate(BaseModel):
-    name: str
-
-@router.post("/requesters")
-def create_requester(requester: RequesterCreate):
-    try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("INSERT INTO requesters (name) VALUES (?)", (requester.name,))
-            conn.commit()
-        return {"status": "Requester created"}
-    except sqlite3.Error as e:
-        logging.error(f"Failed to create requester: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-
-@router.put("/requesters/{requester_id}")
-def update_requester(requester_id: int, requester: RequesterCreate):
-    try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("UPDATE requesters SET name = ? WHERE id = ?", (requester.name, requester_id))
-            conn.commit()
-        return {"status": "Requester updated"}
-    except sqlite3.Error as e:
-        logging.error(f"Failed to update requester: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+# Configure logging
+logging.basicConfig(filename="logs/server.log", level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
 
 @router.get("/suppliers")
-def get_suppliers():
+async def get_suppliers():
     try:
-        with get_db_connection() as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-            cursor.execute("SELECT id, name FROM suppliers")
-            suppliers = [dict(row) for row in cursor.fetchall()]
-        return {"suppliers": suppliers}
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name FROM suppliers")
+        suppliers = cursor.fetchall()
+        result = [{"id": s[0], "name": s[1]} for s in suppliers]
+        logging.info(f"Suppliers fetched: {len(result)} items")
+        return {"suppliers": result}
     except sqlite3.Error as e:
-        logging.error(f"Failed to fetch suppliers: {str(e)}")
+        logging.error(f"Database error fetching suppliers: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        logging.error(f"Error fetching suppliers: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error fetching suppliers: {str(e)}")
+    finally:
+        conn.close()
 
-class SupplierCreate(BaseModel):
-    name: str
-
-@router.post("/suppliers")
-def create_supplier(supplier: SupplierCreate):
+@router.get("/requesters")
+async def get_requesters():
     try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("INSERT INTO suppliers (name) VALUES (?)", (supplier.name,))
-            conn.commit()
-        return {"status": "Supplier created"}
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name FROM requesters")
+        requesters = cursor.fetchall()
+        result = [{"id": r[0], "name": r[1]} for r in requesters]
+        logging.info(f"Requesters fetched: {len(result)} items")
+        return {"requesters": result}
     except sqlite3.Error as e:
-        logging.error(f"Failed to create supplier: {str(e)}")
+        logging.error(f"Database error fetching requesters: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-
-@router.put("/suppliers/{supplier_id}")
-def update_supplier(supplier_id: int, supplier: SupplierCreate):
-    try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("UPDATE suppliers SET name = ? WHERE id = ?", (supplier.name, supplier_id))
-            conn.commit()
-        return {"status": "Supplier updated"}
-    except sqlite3.Error as e:
-        logging.error(f"Failed to update supplier: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        logging.error(f"Error fetching requesters: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error fetching requesters: {str(e)}")
+    finally:
+        conn.close()
 
 @router.get("/items")
-def get_items():
-    with get_db_connection() as conn:
-        conn.row_factory = sqlite3.Row
+async def get_items():
+    try:
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT id, item_code, item_description FROM items")
-        items = [dict(row) for row in cursor.fetchall()]
-    return {"items": items}
-
-class ItemCreate(BaseModel):
-    item_code: str
-    item_description: str
-
-@router.post("/items")
-def create_item(item: ItemCreate):
-    try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute(
-                "INSERT INTO items (item_code, item_description) VALUES (?, ?)",
-                (item.item_code, item.item_description)
-            )
-            conn.commit()
-        return {"status": "Item created"}
+        cursor.execute("SELECT item_code, item_description FROM items")
+        items = cursor.fetchall()
+        result = [{"item_code": i[0], "item_description": i[1]} for i in items]
+        logging.info(f"Items fetched: {len(result)} items, response: {result}")
+        return {"items": result}
     except sqlite3.Error as e:
-        logging.error(f"Failed to create item: {str(e)}")
+        logging.error(f"Database error fetching items: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-
-@router.put("/items/{item_id}")
-def update_item(item_id: int, item: ItemCreate):
-    try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute(
-                "UPDATE items SET item_code = ?, item_description = ? WHERE id = ?",
-                (item.item_code, item.item_description, item_id)
-            )
-            conn.commit()
-        return {"status": "Item updated"}
-    except sqlite3.Error as e:
-        logging.error(f"Failed to update item: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        logging.error(f"Error fetching items: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error fetching items: {str(e)}")
+    finally:
+        conn.close()
 
 @router.get("/projects")
-def get_projects():
-    with get_db_connection() as conn:
-        conn.row_factory = sqlite3.Row
+async def get_projects():
+    try:
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT id, project_code, project_name FROM projects")
-        projects = [dict(row) for row in cursor.fetchall()]
-    return {"projects": projects}
-
-class ProjectCreate(BaseModel):
-    project_code: str
-    project_name: str
-
-@router.post("/projects")
-def create_project(project: ProjectCreate):
-    try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute(
-                "INSERT INTO projects (project_code, project_name) VALUES (?, ?)",
-                (project.project_code, project.project_name)
-            )
-            conn.commit()
-        return {"status": "Project created"}
+        cursor.execute("SELECT project_code, project_name FROM projects")
+        projects = cursor.fetchall()
+        result = [{"project_code": p[0], "project_name": p[1]} for p in projects]
+        logging.info(f"Projects fetched: {len(result)} items")
+        return {"projects": result}
     except sqlite3.Error as e:
-        logging.error(f"Failed to create project: {str(e)}")
+        logging.error(f"Database error fetching projects: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-
-@router.put("/projects/{project_id}")
-def update_project(project_id: int, project: ProjectCreate):
-    try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute(
-                "UPDATE projects SET project_code = ?, project_name = ? WHERE id = ?",
-                (project.project_code, project.project_name, project_id)
-            )
-            conn.commit()
-        return {"status": "Project updated"}
-    except sqlite3.Error as e:
-        logging.error(f"Failed to update project: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        logging.error(f"Error fetching projects: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error fetching projects: {str(e)}")
+    finally:
+        conn.close()
 
 @router.get("/settings")
-def get_settings():
-    with get_db_connection() as conn:
+async def get_settings():
+    try:
+        conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT key, value FROM settings")
-        settings = dict(cursor.fetchall())
-    return settings
-
-class SettingUpdate(BaseModel):
-    key: str
-    value: str
+        cursor.execute("SELECT key, value FROM settings WHERE key = 'order_number_start'")
+        setting = cursor.fetchone()
+        if setting:
+            result = {"order_number_start": setting[1]}
+        else:
+            result = {"order_number_start": "URC1000"}
+        logging.info(f"Settings fetched: {result}")
+        return result
+    except sqlite3.Error as e:
+        logging.error(f"Database error fetching settings: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        logging.error(f"Error fetching settings: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error fetching settings: {str(e)}")
+    finally:
+        conn.close()
 
 @router.put("/settings")
-def update_setting(setting: SettingUpdate):
+async def update_settings(request: dict):
+    key = request.get("key")
+    value = request.get("value")
+    if not key or not value:
+        logging.error("Missing key or value in update settings request")
+        raise HTTPException(status_code=400, detail="Missing key or value")
+
     try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)", (setting.key, setting.value))
-            conn.commit()
-        return {"status": "Setting updated"}
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)", (key, value))
+        conn.commit()
+        logging.info(f"Settings updated: {key} = {value}")
+        return {"message": "Settings updated successfully"}
     except sqlite3.Error as e:
-        logging.error(f"Failed to update setting: {str(e)}")
+        logging.error(f"Database error updating settings: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        logging.error(f"Error updating settings: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error updating settings: {str(e)}")
+    finally:
+        conn.close()
 
 @router.get("/business_details")
-def get_business_details():
+async def get_business_details():
     try:
-        with get_db_connection() as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-            cursor.execute("""
-                SELECT company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number
-                FROM business_details WHERE id = 1
-            """)
-            row = cursor.fetchone()
-            if not row:
-                return {
-                    "company_name": "",
-                    "address_line1": "",
-                    "address_line2": "",
-                    "city": "",
-                    "province": "",
-                    "postal_code": "",
-                    "telephone": "",
-                    "vat_number": ""
-                }
-            return dict(row)
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number FROM business_details LIMIT 1")
+        details = cursor.fetchone()
+        if not details:
+            logging.warning("No business details found in database")
+            raise HTTPException(status_code=404, detail="Business details not found")
+        result = {
+            "company_name": details[0],
+            "address_line1": details[1],
+            "address_line2": details[2],
+            "city": details[3],
+            "province": details[4],
+            "postal_code": details[5],
+            "telephone": details[6],
+            "vat_number": details[7]
+        }
+        logging.info(f"Business details fetched: {result}")
+        return result
     except sqlite3.Error as e:
-        logging.error(f"Failed to fetch business details: {str(e)}")
+        logging.error(f"Database error fetching business details: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-
-class BusinessDetailsUpdate(BaseModel):
-    company_name: str
-    address_line1: str
-    address_line2: str
-    city: str
-    province: str
-    postal_code: str
-    telephone: str
-    vat_number: str
-
-@router.put("/business_details")
-def update_business_details(details: BusinessDetailsUpdate):
-    try:
-        with get_db_connection() as conn:
-            cursor = conn.cursor()
-            cursor.execute("""
-                INSERT OR REPLACE INTO business_details (
-                    id, company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number
-                ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (
-                details.company_name,
-                details.address_line1,
-                details.address_line2,
-                details.city,
-                details.province,
-                details.postal_code,
-                details.telephone,
-                details.vat_number
-            ))
-            conn.commit()
-        return {"status": "Business details updated"}
-    except sqlite3.Error as e:
-        logging.error(f"Failed to update business details: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        logging.error(f"Error fetching business details: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error fetching business details: {str(e)}")
+    finally:
+        conn.close()

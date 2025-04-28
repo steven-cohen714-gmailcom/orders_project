@@ -210,3 +210,1132 @@
 [2025-04-25T18:10:25.342095] create_order: {"order_number": "URC1055", "requester_id": 1, "total": 200.0, "items_count": 1}
 [2025-04-25T18:23:46.953296] init_db: {"status": "success"}
 [2025-04-25T18:24:26.962765] init_db: {"status": "success"}
+2025-04-26 14:05:11,329 | INFO | Database tables created successfully.
+2025-04-26 14:05:11,329 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:06:33,643 | INFO | Database tables created successfully.
+2025-04-26 14:06:33,643 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:07:10,281 | INFO | Database tables created successfully.
+2025-04-26 14:07:10,281 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:08:09,561 | INFO | Database tables created successfully.
+2025-04-26 14:08:09,561 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:09:32,062 | INFO | Database tables created successfully.
+2025-04-26 14:09:32,062 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:10:16,358 | INFO | Database tables created successfully.
+2025-04-26 14:10:16,358 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:10:38,098 | INFO | Database tables created successfully.
+2025-04-26 14:10:38,098 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:22:05,432 | INFO | Database tables created successfully.
+2025-04-26 14:22:05,433 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:22:11,953 | INFO | Database tables created successfully.
+2025-04-26 14:22:11,953 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:23:02,713 | INFO | Database tables created successfully.
+2025-04-26 14:23:02,713 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:25:39,450 | INFO | Database tables created successfully.
+2025-04-26 14:25:39,450 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:25:43,736 | INFO | Database tables created successfully.
+2025-04-26 14:25:43,736 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:31:13,359 | INFO | Database tables created successfully.
+2025-04-26 14:31:13,359 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:33:40,926 | INFO | Database tables created successfully.
+2025-04-26 14:33:40,926 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:34:23,709 | INFO | Database tables created successfully.
+2025-04-26 14:34:23,709 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:34:46,525 | INFO | Database tables created successfully.
+2025-04-26 14:34:46,525 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:36:28,877 | INFO | Database tables created successfully.
+2025-04-26 14:36:28,877 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:37:22,289 | INFO | Database tables created successfully.
+2025-04-26 14:37:22,289 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:37:41,021 | INFO | Database tables created successfully.
+2025-04-26 14:37:41,021 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:38:01,273 | INFO | Database tables created successfully.
+2025-04-26 14:38:01,273 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:38:19,209 | INFO | Database tables created successfully.
+2025-04-26 14:38:19,209 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:38:36,334 | INFO | Database tables created successfully.
+2025-04-26 14:38:36,334 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:38:47,741 | INFO | Database tables created successfully.
+2025-04-26 14:38:47,742 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:39:19,708 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-26 14:43:06,649 | INFO | Database tables created successfully.
+2025-04-26 14:43:06,649 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:43:19,597 | INFO | Database tables created successfully.
+2025-04-26 14:43:19,597 | INFO | ✅ Database initialized successfully.
+2025-04-26 14:44:28,746 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-26 15:30:24,061 | INFO | Database tables created successfully.
+2025-04-26 15:30:24,061 | INFO | ✅ Database initialized successfully.
+2025-04-26 15:32:49,495 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-26 15:40:44,617 | INFO | Database tables created successfully.
+2025-04-26 15:40:44,617 | INFO | ✅ Database initialized successfully.
+2025-04-26 15:42:59,060 | INFO | Database tables created successfully.
+2025-04-26 15:42:59,060 | INFO | ✅ Database initialized successfully.
+2025-04-26 15:43:32,474 | INFO | Database tables created successfully.
+2025-04-26 15:43:32,474 | INFO | ✅ Database initialized successfully.
+2025-04-26 15:43:54,462 | INFO | Database tables created successfully.
+2025-04-26 15:43:54,462 | INFO | ✅ Database initialized successfully.
+2025-04-26 15:44:24,229 | INFO | Database tables created successfully.
+2025-04-26 15:44:24,229 | INFO | ✅ Database initialized successfully.
+2025-04-26 15:59:52,527 | INFO | Database tables created successfully.
+2025-04-26 15:59:52,527 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:01:15,240 | INFO | Database tables created successfully.
+2025-04-26 16:01:15,240 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:01:19,800 | INFO | Database tables created successfully.
+2025-04-26 16:01:19,800 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:01:21,528 | INFO | Database tables created successfully.
+2025-04-26 16:01:21,528 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:01:22,966 | INFO | Database tables created successfully.
+2025-04-26 16:01:22,966 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:01:24,230 | INFO | Database tables created successfully.
+2025-04-26 16:01:24,230 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:04:35,865 | INFO | Database tables created successfully.
+2025-04-26 16:04:35,865 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:06:51,567 | INFO | Database tables created successfully.
+2025-04-26 16:06:51,567 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:11:39,933 | INFO | Database tables created successfully.
+2025-04-26 16:11:39,933 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:13:22,332 | INFO | Database tables created successfully.
+2025-04-26 16:13:22,333 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:14:01,874 | INFO | Database tables created successfully.
+2025-04-26 16:14:01,874 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:14:09,325 | INFO | Database tables created successfully.
+2025-04-26 16:14:09,325 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:14:12,251 | INFO | Database tables created successfully.
+2025-04-26 16:14:12,251 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:15:17,072 | INFO | Database tables created successfully.
+2025-04-26 16:15:17,072 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:15:21,910 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-26 16:33:51,997 | INFO | Database tables created successfully.
+2025-04-26 16:33:51,997 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:37:00,172 | INFO | Database tables created successfully.
+2025-04-26 16:37:00,172 | INFO | ✅ Database initialized successfully.
+2025-04-26 16:37:05,641 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 05:29:08,091 | INFO | Database tables created successfully.
+2025-04-27 05:29:08,091 | INFO | ✅ Database initialized successfully.
+2025-04-27 05:39:06,942 | INFO | Database tables created successfully.
+2025-04-27 05:39:06,942 | INFO | ✅ Database initialized successfully.
+2025-04-27 06:43:19,894 | INFO | Database tables created successfully.
+2025-04-27 06:43:19,894 | INFO | ✅ Database initialized successfully.
+2025-04-27 06:43:26,414 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 06:51:32,943 | INFO | Database tables created successfully.
+2025-04-27 06:51:32,943 | INFO | ✅ Database initialized successfully.
+2025-04-27 06:51:38,294 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 07:01:48,425 | INFO | Database tables created successfully.
+2025-04-27 07:01:48,425 | INFO | ✅ Database initialized successfully.
+2025-04-27 07:08:44,489 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 07:20:35,309 | INFO | Database tables created successfully.
+2025-04-27 07:20:35,310 | INFO | ✅ Database initialized successfully.
+2025-04-27 07:20:42,928 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 07:22:26,330 | INFO | Database tables created successfully.
+2025-04-27 07:22:26,330 | INFO | ✅ Database initialized successfully.
+2025-04-27 07:22:30,447 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 07:27:51,822 | INFO | Database tables created successfully.
+2025-04-27 07:27:51,822 | INFO | ✅ Database initialized successfully.
+2025-04-27 07:27:59,105 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 07:32:25,767 | INFO | Database tables created successfully.
+2025-04-27 07:32:25,767 | INFO | ✅ Database initialized successfully.
+2025-04-27 07:32:30,242 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 07:38:10,116 | INFO | Database tables created successfully.
+2025-04-27 07:38:10,116 | INFO | ✅ Database initialized successfully.
+2025-04-27 07:38:15,277 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 07:57:37,159 | INFO | Database tables created successfully.
+2025-04-27 07:57:37,159 | INFO | ✅ Database initialized successfully.
+2025-04-27 07:57:42,585 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 08:04:37,121 | INFO | Database tables created successfully.
+2025-04-27 08:04:37,121 | INFO | ✅ Database initialized successfully.
+2025-04-27 08:04:44,596 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 08:10:04,694 | INFO | Database tables created successfully.
+2025-04-27 08:10:04,694 | INFO | ✅ Database initialized successfully.
+2025-04-27 08:10:09,838 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 08:14:40,550 | INFO | Database tables created successfully.
+2025-04-27 08:14:40,550 | INFO | ✅ Database initialized successfully.
+2025-04-27 08:24:13,783 | INFO | Database tables created successfully.
+2025-04-27 08:24:13,783 | INFO | ✅ Database initialized successfully.
+2025-04-27 09:07:27,645 | INFO | Database tables created successfully.
+2025-04-27 09:07:27,645 | INFO | ✅ Database initialized successfully.
+2025-04-27 09:07:29,945 | INFO | Database tables created successfully.
+2025-04-27 09:07:29,945 | INFO | ✅ Database initialized successfully.
+2025-04-27 09:15:55,165 | INFO | Database tables created successfully.
+2025-04-27 09:15:55,165 | INFO | ✅ Database initialized successfully.
+2025-04-27 09:16:04,498 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 09:16:15,953 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 09:18:10,984 | INFO | Database tables created successfully.
+2025-04-27 09:18:10,984 | INFO | ✅ Database initialized successfully.
+2025-04-27 09:18:16,468 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 09:23:07,544 | INFO | Database tables created successfully.
+2025-04-27 09:23:07,544 | INFO | ✅ Database initialized successfully.
+2025-04-27 09:27:57,141 | INFO | Database tables created successfully.
+2025-04-27 09:27:57,141 | INFO | ✅ Database initialized successfully.
+2025-04-27 09:52:22,203 | INFO | Database tables created successfully.
+2025-04-27 09:52:22,203 | INFO | ✅ Database initialized successfully.
+2025-04-27 10:04:09,389 | INFO | Database tables created successfully.
+2025-04-27 10:04:09,389 | INFO | ✅ Database initialized successfully.
+2025-04-27 10:04:11,973 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:05:11,956 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:06:11,960 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:07:11,961 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:08:11,963 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:09:11,962 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:10:11,968 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:11:11,967 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:12:11,962 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:13:11,964 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:14:11,967 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:15:12,011 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:16:12,008 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:17:12,013 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:18:12,011 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:19:12,009 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:20:12,003 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:21:12,010 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:22:10,975 | INFO | Database tables created successfully.
+2025-04-27 10:22:10,975 | INFO | ✅ Database initialized successfully.
+2025-04-27 10:22:12,013 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:22:29,815 | INFO | Suppliers fetched: 10 items
+2025-04-27 10:22:29,816 | INFO | Requesters fetched: 5 items
+2025-04-27 10:22:29,817 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-27 10:22:29,818 | INFO | Projects fetched: 10 items
+2025-04-27 10:22:29,850 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 10:23:12,009 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:23:35,034 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 10:23:35,141 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 101.215}
+2025-04-27 10:24:12,010 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:25:12,005 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:26:12,014 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:27:12,013 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:28:12,014 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:29:12,015 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:30:12,049 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:30:55,797 | INFO | Database tables created successfully.
+2025-04-27 10:30:55,797 | INFO | ✅ Database initialized successfully.
+2025-04-27 10:31:12,049 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:32:12,052 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:33:12,052 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:34:12,055 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:35:12,057 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:36:12,056 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:36:14,969 | INFO | Database tables created successfully.
+2025-04-27 10:36:14,969 | INFO | ✅ Database initialized successfully.
+2025-04-27 10:36:34,006 | INFO | Suppliers fetched: 10 items
+2025-04-27 10:36:34,008 | INFO | Requesters fetched: 5 items
+2025-04-27 10:36:34,009 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-27 10:36:34,010 | INFO | Projects fetched: 10 items
+2025-04-27 10:36:34,019 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 10:36:58,565 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 10:36:58,677 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 108.59}
+2025-04-27 10:37:12,057 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:37:21,300 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 10:37:21,379 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 74.57600000000001}
+2025-04-27 10:38:04,830 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 10:38:04,917 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 81.70700000000001}
+2025-04-27 10:38:12,059 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:39:12,053 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:40:12,055 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:41:12,054 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:42:12,061 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:42:58,610 | INFO | Database tables created successfully.
+2025-04-27 10:42:58,610 | INFO | ✅ Database initialized successfully.
+2025-04-27 10:43:11,750 | INFO | Suppliers fetched: 10 items
+2025-04-27 10:43:11,752 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-27 10:43:11,753 | INFO | Projects fetched: 10 items
+2025-04-27 10:43:11,754 | INFO | Requesters fetched: 5 items
+2025-04-27 10:43:11,762 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 10:43:12,062 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:43:49,247 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 10:43:49,252 | ERROR | Failed to generate PDF for order URC1204: no such column: address
+2025-04-27 10:44:12,056 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:45:12,087 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:46:12,086 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:47:12,082 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:48:12,088 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:49:12,083 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:50:12,091 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:51:12,096 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:52:12,090 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:53:12,097 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:54:12,098 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:55:12,094 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:56:12,095 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:57:05,633 | INFO | Database tables created successfully.
+2025-04-27 10:57:05,633 | INFO | ✅ Database initialized successfully.
+2025-04-27 10:57:12,099 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:58:12,098 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:59:11,639 | INFO | Database tables created successfully.
+2025-04-27 10:59:11,639 | INFO | ✅ Database initialized successfully.
+2025-04-27 10:59:12,106 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 10:59:18,999 | INFO | Suppliers fetched: 10 items
+2025-04-27 10:59:19,000 | INFO | Requesters fetched: 5 items
+2025-04-27 10:59:19,001 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-27 10:59:19,001 | INFO | Projects fetched: 10 items
+2025-04-27 10:59:19,009 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 10:59:43,428 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 10:59:43,554 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 121.409}
+2025-04-27 11:00:12,115 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:01:12,115 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:02:12,117 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:03:12,114 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:04:12,117 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:05:12,123 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:06:12,120 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:07:12,117 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:08:12,118 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:09:12,125 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:10:12,119 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:11:12,131 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:12:12,129 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:13:12,122 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:14:12,131 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:15:12,131 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:16:12,139 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:17:12,137 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:18:12,136 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:19:12,142 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:20:12,139 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:21:12,140 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:22:12,141 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:23:12,144 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:24:12,148 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:25:12,145 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:26:12,148 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:27:12,147 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:28:12,149 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:29:12,155 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:30:12,151 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:31:12,152 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:32:12,152 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:33:12,156 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:34:12,155 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:35:12,162 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:36:12,155 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:37:12,157 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:38:12,155 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:50:56,519 | INFO | Database tables created successfully.
+2025-04-27 11:50:56,519 | INFO | ✅ Database initialized successfully.
+2025-04-27 11:51:03,152 | INFO | Database tables created successfully.
+2025-04-27 11:51:03,152 | INFO | ✅ Database initialized successfully.
+2025-04-27 11:51:05,639 | INFO | Suppliers fetched: 10 items
+2025-04-27 11:51:05,640 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-27 11:51:05,641 | INFO | Projects fetched: 10 items
+2025-04-27 11:51:05,641 | INFO | Requesters fetched: 5 items
+2025-04-27 11:51:05,675 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 11:51:12,168 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:51:27,762 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 11:51:27,877 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 110.024}
+2025-04-27 11:52:04,519 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 11:52:04,525 | ERROR | Database error during order creation: table orders has no column named request_date
+2025-04-27 11:52:12,163 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:53:12,169 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:54:12,168 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:55:12,168 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:56:12,171 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:57:12,174 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:58:12,171 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 11:59:12,174 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:00:12,171 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:01:12,165 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:02:12,165 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:03:12,171 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:04:12,163 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:05:12,171 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:06:03,244 | INFO | Database tables created successfully.
+2025-04-27 12:06:03,244 | INFO | ✅ Database initialized successfully.
+2025-04-27 12:06:12,169 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:06:32,945 | INFO | Database tables created successfully.
+2025-04-27 12:06:32,945 | INFO | ✅ Database initialized successfully.
+2025-04-27 12:06:37,008 | INFO | Suppliers fetched: 10 items
+2025-04-27 12:06:37,009 | INFO | Requesters fetched: 5 items
+2025-04-27 12:06:37,010 | INFO | Projects fetched: 10 items
+2025-04-27 12:06:37,011 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-27 12:06:37,033 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 12:06:59,741 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 12:06:59,854 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 108.543}
+2025-04-27 12:07:09,441 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 12:07:09,449 | ERROR | Error creating order: Invalid format specifier ' "submit_success", "order_number": "URC1204", "status": "Pending"' for object of type 'str'
+2025-04-27 12:07:12,173 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:08:12,169 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:09:12,174 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:10:12,175 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:11:12,179 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:12:12,172 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:13:12,179 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:14:12,174 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:15:12,177 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:16:12,170 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:17:12,172 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:18:12,169 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:19:10,538 | INFO | Database tables created successfully.
+2025-04-27 12:19:10,538 | INFO | ✅ Database initialized successfully.
+2025-04-27 12:19:12,164 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:20:12,175 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:21:12,182 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:21:26,465 | INFO | Database tables created successfully.
+2025-04-27 12:21:26,465 | INFO | ✅ Database initialized successfully.
+2025-04-27 12:22:12,174 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:23:12,174 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:24:12,181 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:24:51,889 | INFO | Database tables created successfully.
+2025-04-27 12:24:51,890 | INFO | ✅ Database initialized successfully.
+2025-04-27 12:25:12,179 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:26:12,176 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:27:12,178 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:27:20,971 | INFO | Database tables created successfully.
+2025-04-27 12:27:20,971 | INFO | ✅ Database initialized successfully.
+2025-04-27 12:28:12,175 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:29:12,178 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:30:12,182 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:31:12,178 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:32:12,167 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:33:12,176 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:34:12,162 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:35:12,175 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:36:12,172 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:37:12,171 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:38:12,172 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:39:12,173 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:40:12,179 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:41:12,180 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:42:12,178 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:43:12,178 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:44:12,176 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:45:12,178 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:46:12,180 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:47:12,182 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:48:12,183 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:49:12,183 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:50:12,182 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:51:12,186 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:52:12,186 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:53:12,188 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:54:12,184 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:55:12,184 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:56:12,185 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:57:12,186 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:58:12,189 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 12:59:12,189 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:00:12,191 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:01:12,190 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:02:12,180 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:03:12,178 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:04:12,167 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:05:12,178 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:06:12,175 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:07:12,177 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:08:12,176 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:09:12,180 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:10:12,178 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:11:12,181 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:12:12,184 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:13:12,181 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:14:12,182 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:15:12,182 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:16:12,183 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:17:12,187 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:18:12,184 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:19:12,186 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:20:12,184 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:21:12,189 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:22:12,186 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:23:12,189 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:24:12,192 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:25:12,187 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:26:12,189 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:27:12,192 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:28:12,193 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:29:12,191 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:30:12,192 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:31:12,195 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:32:11,987 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:33:11,984 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:34:11,979 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:35:11,982 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:36:11,983 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:37:11,982 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:38:11,981 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:39:11,974 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:40:11,974 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:41:11,976 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:42:11,973 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:43:11,972 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:44:11,963 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:45:11,967 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:46:11,965 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:47:11,968 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:48:12,028 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:49:12,029 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:50:12,027 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:51:12,023 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:52:12,026 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:53:12,026 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:54:12,017 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:55:12,021 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:56:12,019 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:57:12,021 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:58:12,029 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 13:59:12,019 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:00:12,019 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:01:12,018 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:02:12,018 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:03:12,032 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:04:12,054 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:05:12,055 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:06:12,052 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:07:12,051 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:08:12,061 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:09:12,047 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:10:12,054 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:11:12,049 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:12:12,050 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:13:12,053 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:14:12,047 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:15:12,046 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:16:12,053 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:17:12,049 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:18:12,058 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:19:12,063 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:20:12,066 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:21:12,069 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:22:12,069 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:23:12,068 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:24:12,066 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:25:12,064 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:26:12,068 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:27:12,066 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:28:12,071 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:29:12,059 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:30:12,065 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:31:12,066 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:32:12,065 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:33:12,065 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:34:12,088 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:35:12,087 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:36:12,089 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:37:12,089 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:38:12,089 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:39:12,085 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:40:12,087 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:41:12,086 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:42:12,088 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:43:12,088 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:44:12,090 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:45:12,088 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:46:12,089 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:47:12,089 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:48:12,093 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:49:12,089 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:50:12,100 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:51:12,103 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:52:12,103 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:53:12,102 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:54:12,102 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:55:12,102 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:56:12,102 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:57:12,101 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:58:12,103 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 14:59:12,104 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:00:12,102 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:01:12,102 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:02:12,101 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:02:33,325 | INFO | Database tables created successfully.
+2025-04-27 15:02:33,325 | INFO | ✅ Database initialized successfully.
+2025-04-27 15:03:12,097 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:03:44,991 | INFO | Database tables created successfully.
+2025-04-27 15:03:44,991 | INFO | ✅ Database initialized successfully.
+2025-04-27 15:04:05,916 | INFO | Database tables created successfully.
+2025-04-27 15:04:05,916 | INFO | ✅ Database initialized successfully.
+2025-04-27 15:04:12,097 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:05:12,100 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:06:12,098 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:07:12,105 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:08:12,114 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:09:12,101 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:10:12,106 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:11:12,100 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:12:12,110 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:13:12,106 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:14:12,102 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:15:12,101 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:16:12,110 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:17:12,110 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:18:12,111 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:19:12,107 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:20:12,110 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:21:12,115 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:22:12,108 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:23:12,110 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:24:12,112 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:25:12,113 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:26:12,120 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:27:12,117 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:28:12,120 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:28:16,557 | INFO | Database tables created successfully.
+2025-04-27 15:28:16,557 | INFO | ✅ Database initialized successfully.
+2025-04-27 15:28:31,855 | INFO | Database tables created successfully.
+2025-04-27 15:28:31,855 | INFO | ✅ Database initialized successfully.
+2025-04-27 15:29:12,121 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:30:12,114 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:31:12,116 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:32:12,119 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:33:12,117 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:34:12,120 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:35:12,122 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:36:12,121 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:37:12,118 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:38:12,123 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:39:12,124 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:40:12,127 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:41:12,124 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:42:12,124 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:43:12,126 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:44:12,121 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:45:12,127 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:46:12,130 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:47:12,128 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:48:12,124 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:49:39,848 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:52:31,442 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:53:31,444 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:54:31,441 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:55:31,444 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:56:31,444 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:57:31,446 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:58:31,445 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 15:59:31,443 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:00:31,446 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:01:31,447 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:02:31,446 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:03:31,445 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:04:31,451 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:05:31,447 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:06:31,449 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:07:19,285 | INFO | Database tables created successfully.
+2025-04-27 16:07:19,285 | INFO | ✅ Database initialized successfully.
+2025-04-27 16:07:31,450 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:08:06,187 | INFO | Requesters fetched: 5 items
+2025-04-27 16:08:06,190 | INFO | Projects fetched: 10 items
+2025-04-27 16:08:06,192 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 16:08:06,193 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-27 16:08:06,195 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-27 16:08:31,448 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:09:31,449 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:10:31,448 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:11:31,452 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:12:31,452 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:13:31,446 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:14:31,453 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:15:31,454 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:16:31,457 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:17:31,446 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:18:31,456 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:19:31,329 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:20:31,329 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:21:31,329 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:22:31,330 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:23:31,324 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:24:31,331 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:25:31,326 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:26:31,321 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:27:31,323 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:28:31,326 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:29:31,326 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:30:31,322 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:31:31,322 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:32:31,315 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:33:31,315 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:34:31,349 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:35:31,350 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:36:31,356 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:37:31,354 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:38:31,351 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:39:31,350 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:40:31,345 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:41:31,347 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:42:31,351 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:43:31,350 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:44:31,348 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:45:31,343 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:46:31,351 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:47:31,348 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:48:31,348 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:49:31,368 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:50:31,364 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:51:31,365 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:52:31,371 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:53:31,371 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:54:31,372 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:55:23,923 | INFO | Database tables created successfully.
+2025-04-27 16:55:23,923 | INFO | ✅ Database initialized successfully.
+2025-04-27 16:55:29,697 | INFO | Suppliers fetched: 10 items
+2025-04-27 16:55:29,698 | INFO | Requesters fetched: 5 items
+2025-04-27 16:55:29,699 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-27 16:55:29,699 | INFO | Projects fetched: 10 items
+2025-04-27 16:55:29,721 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 16:55:31,368 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:56:16,341 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 106.259}
+2025-04-27 16:56:31,369 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:56:45,031 | ERROR | Error creating order: Invalid format specifier ' "submit_success", "order_number": "URC1204", "status": "Pending"' for object of type 'str'
+2025-04-27 16:57:31,367 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:58:31,369 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 16:59:31,371 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:00:31,370 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:01:31,362 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:02:31,362 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:03:31,366 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:04:31,275 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:05:31,268 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:06:31,276 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:07:31,275 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:08:31,272 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:09:31,268 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:10:31,262 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:11:31,260 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:22:52,150 | INFO | Database tables created successfully.
+2025-04-27 17:22:52,150 | INFO | ✅ Database initialized successfully.
+2025-04-27 17:22:52,151 | INFO | Database tables created successfully.
+2025-04-27 17:22:52,151 | INFO | ✅ Database initialized successfully.
+2025-04-27 17:23:22,053 | INFO | Suppliers fetched: 10 items
+2025-04-27 17:23:22,054 | INFO | Requesters fetched: 5 items
+2025-04-27 17:23:22,056 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-27 17:23:22,057 | INFO | Projects fetched: 10 items
+2025-04-27 17:23:22,088 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 17:23:31,306 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:24:31,306 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:25:31,310 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:26:02,618 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 101.794}
+2025-04-27 17:26:08,999 | INFO | {"action": "submit_success", "order_number": "URC1204", "status": "Pending"}
+2025-04-27 17:26:26,344 | INFO | Requesters fetched: 5 items
+2025-04-27 17:26:26,346 | INFO | Suppliers fetched: 10 items
+2025-04-27 17:26:26,369 | ERROR | Error fetching pending orders: Invalid format specifier ' "fetch_pending_orders", "count": 26' for object of type 'str'
+2025-04-27 17:26:31,307 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:27:26,634 | INFO | Requesters fetched: 5 items
+2025-04-27 17:27:26,635 | INFO | Suppliers fetched: 10 items
+2025-04-27 17:27:26,659 | ERROR | Error fetching pending orders: Invalid format specifier ' "fetch_pending_orders", "count": 26' for object of type 'str'
+2025-04-27 17:27:31,304 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:28:31,306 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:29:31,302 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:30:31,304 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:31:31,307 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:31:33,834 | INFO | Database tables created successfully.
+2025-04-27 17:31:33,834 | INFO | ✅ Database initialized successfully.
+2025-04-27 17:31:42,333 | INFO | Requesters fetched: 5 items
+2025-04-27 17:31:42,334 | INFO | Suppliers fetched: 10 items
+2025-04-27 17:31:42,356 | ERROR | Error fetching pending orders: Invalid format specifier ' "fetch_pending_orders", "count": 26' for object of type 'str'
+2025-04-27 17:31:46,743 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 17:31:50,216 | INFO | Suppliers fetched: 10 items
+2025-04-27 17:31:50,218 | INFO | Requesters fetched: 5 items
+2025-04-27 17:31:50,219 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-27 17:31:50,220 | INFO | Projects fetched: 10 items
+2025-04-27 17:31:50,242 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-27 17:32:17,844 | INFO | {"action": "submit_success", "order_number": "URC1204", "status": "Pending"}
+2025-04-27 17:32:20,369 | INFO | Requesters fetched: 5 items
+2025-04-27 17:32:20,370 | INFO | Suppliers fetched: 10 items
+2025-04-27 17:32:20,397 | ERROR | Error fetching pending orders: Invalid format specifier ' "fetch_pending_orders", "count": 27' for object of type 'str'
+2025-04-27 17:32:31,303 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:33:31,302 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:34:31,335 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:35:31,345 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:36:31,343 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:37:31,347 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:38:31,344 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:39:31,344 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:40:31,341 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:41:31,345 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:42:31,341 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:43:31,346 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:44:31,340 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:45:31,345 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:46:31,337 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:48:39,685 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:50:57,879 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 17:56:34,447 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:00:40,921 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:02:53,799 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:05:06,588 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:07:19,606 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:11:40,722 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:13:11,780 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:25:31,557 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:26:31,555 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:27:31,558 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:28:31,557 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:29:31,560 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:30:31,560 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:31:31,559 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:32:31,561 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:33:31,561 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:34:31,558 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:35:31,568 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:36:31,560 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:37:31,562 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:38:31,561 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:39:31,564 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:40:31,567 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:41:31,568 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:42:31,570 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:43:31,568 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:44:31,570 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:45:31,575 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:46:31,570 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:47:31,569 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:48:31,573 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:49:31,577 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:50:31,572 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:51:31,575 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:52:31,573 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:53:31,575 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:54:31,576 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:55:31,582 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:56:31,578 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:57:31,584 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:58:31,579 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 18:59:31,580 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:00:31,582 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:01:31,583 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:02:31,584 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:03:31,585 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:04:31,585 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:05:31,585 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:06:31,585 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:07:31,585 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:08:31,591 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:09:31,587 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:10:31,586 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:11:31,583 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:12:31,587 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:13:31,588 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:14:31,584 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:15:31,592 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:16:31,586 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:17:31,590 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:18:31,589 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:19:31,590 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:20:31,586 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:21:31,593 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:22:31,589 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:23:31,592 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:24:31,594 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:25:31,594 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:30:37,776 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:31:37,710 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 19:59:09,438 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 20:16:07,406 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 20:17:14,855 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 20:33:56,175 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 20:43:59,670 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 21:01:23,916 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 21:10:41,045 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 21:28:03,710 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 21:44:57,931 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 21:45:57,935 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 22:20:55,717 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 22:37:51,193 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 22:46:28,329 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 22:56:41,403 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 23:24:01,955 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 23:42:00,820 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-27 23:47:11,801 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 00:04:55,612 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 00:21:39,565 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 00:30:29,120 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 00:45:56,688 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 00:48:45,751 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 01:20:45,465 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 01:37:03,558 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 01:49:17,842 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 01:54:22,956 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 02:11:57,738 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 02:29:49,967 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 02:50:07,689 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 03:07:03,711 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 03:13:01,349 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 03:30:56,121 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 03:48:07,056 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 03:53:09,967 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 03:54:09,967 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 03:55:09,974 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 03:56:09,968 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 03:57:09,970 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 03:58:09,972 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 03:59:09,975 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 04:00:09,972 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 04:01:09,980 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 04:02:09,975 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 04:03:09,977 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 04:04:09,976 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 04:05:09,982 | ERROR | Database error fetching audit trail: no such column: timestamp
+2025-04-28 04:05:55,854 | INFO | Database tables created successfully.
+2025-04-28 04:05:55,854 | INFO | ✅ Database initialized successfully.
+2025-04-28 04:06:09,971 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:06:38,849 | INFO | Database tables created successfully.
+2025-04-28 04:06:38,849 | INFO | ✅ Database initialized successfully.
+2025-04-28 04:06:47,474 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 04:06:50,395 | INFO | Suppliers fetched: 10 items
+2025-04-28 04:06:50,396 | INFO | Requesters fetched: 5 items
+2025-04-28 04:06:50,397 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-28 04:06:50,398 | INFO | Projects fetched: 10 items
+2025-04-28 04:06:50,421 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 04:07:09,980 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:07:11,269 | ERROR | Failed to generate PDF for order URC1204: no such column: postal
+2025-04-28 04:07:21,871 | INFO | {"action": "submit_success", "order_number": "URC1204", "status": "Pending", "order_id": 49}
+2025-04-28 04:08:09,969 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:09:09,975 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:10:09,977 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:11:09,977 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:12:09,981 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:13:09,975 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:14:09,980 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:15:09,985 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:16:09,984 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:17:09,982 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:18:09,987 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:18:46,693 | INFO | Database tables created successfully.
+2025-04-28 04:18:46,693 | INFO | ✅ Database initialized successfully.
+2025-04-28 04:19:09,865 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:20:09,858 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:21:09,860 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:22:09,856 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:23:09,863 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:24:09,855 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:25:09,852 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:26:09,857 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:27:09,853 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:28:09,851 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:29:09,863 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:30:09,854 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:31:09,863 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:32:09,857 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:33:09,858 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:34:09,875 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:35:09,889 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:36:09,877 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:37:09,875 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:38:09,882 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:39:09,884 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:40:09,881 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:40:49,212 | INFO | Database tables created successfully.
+2025-04-28 04:40:49,212 | INFO | ✅ Database initialized successfully.
+2025-04-28 04:40:54,812 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 04:40:58,960 | INFO | Suppliers fetched: 10 items
+2025-04-28 04:40:58,961 | INFO | Requesters fetched: 5 items
+2025-04-28 04:40:58,962 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-28 04:40:58,963 | INFO | Projects fetched: 10 items
+2025-04-28 04:40:58,984 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 04:41:09,882 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:41:17,289 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 108.404}
+2025-04-28 04:41:26,040 | INFO | {"action": "submit_success", "order_number": "URC1204", "status": "Pending", "order_id": 50}
+2025-04-28 04:42:09,883 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:43:09,883 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:44:09,880 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:45:09,880 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:46:09,882 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:47:09,878 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:48:09,880 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:49:09,900 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:49:51,407 | INFO | Database tables created successfully.
+2025-04-28 04:49:51,407 | INFO | ✅ Database initialized successfully.
+2025-04-28 04:49:57,852 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 04:50:01,182 | INFO | Suppliers fetched: 10 items
+2025-04-28 04:50:01,183 | INFO | Requesters fetched: 5 items
+2025-04-28 04:50:01,184 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-28 04:50:01,185 | INFO | Projects fetched: 10 items
+2025-04-28 04:50:01,209 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 04:50:09,900 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:50:17,990 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 106.649}
+2025-04-28 04:50:25,140 | INFO | {"action": "submit_success", "order_number": "URC1204", "status": "Pending", "order_id": 51}
+2025-04-28 04:50:28,446 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 04:51:09,894 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:52:09,903 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:53:09,902 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:54:09,902 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:54:55,676 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:55:00,944 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:55:31,895 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:55:36,695 | INFO | Requesters fetched: 5 items
+2025-04-28 04:55:36,715 | INFO | Suppliers fetched: 10 items
+2025-04-28 04:56:01,894 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:57:09,903 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:58:09,901 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 04:59:09,909 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:00:09,902 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:01:09,904 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:02:09,902 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:03:09,905 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:04:09,916 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:05:09,915 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:06:09,924 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:07:09,920 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:08:09,916 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:09:09,920 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:10:09,926 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:11:09,935 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:12:09,923 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:13:09,922 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:14:09,922 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:14:37,274 | INFO | Database tables created successfully.
+2025-04-28 05:14:37,274 | INFO | ✅ Database initialized successfully.
+2025-04-28 05:14:48,420 | INFO | Database tables created successfully.
+2025-04-28 05:14:48,420 | INFO | ✅ Database initialized successfully.
+2025-04-28 05:14:59,946 | INFO | Suppliers fetched: 10 items
+2025-04-28 05:14:59,947 | INFO | Requesters fetched: 5 items
+2025-04-28 05:14:59,949 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-28 05:14:59,950 | INFO | Projects fetched: 10 items
+2025-04-28 05:14:59,974 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 05:15:09,920 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:15:17,821 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 108.14699999999999}
+2025-04-28 05:15:26,031 | INFO | {"action": "submit_success", "order_number": "URC1204", "status": "Pending", "order_id": 52}
+2025-04-28 05:15:28,710 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 05:16:09,924 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:17:09,923 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:18:09,924 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:19:09,925 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:20:09,925 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:21:09,929 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:22:09,928 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:23:09,929 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:24:09,923 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:25:09,924 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:26:09,926 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:27:09,929 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:27:44,599 | INFO | Database tables created successfully.
+2025-04-28 05:27:44,599 | INFO | ✅ Database initialized successfully.
+2025-04-28 05:28:09,932 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:28:24,863 | INFO | Database tables created successfully.
+2025-04-28 05:28:24,863 | INFO | ✅ Database initialized successfully.
+2025-04-28 05:28:45,811 | INFO | Suppliers fetched: 10 items
+2025-04-28 05:28:45,812 | INFO | Requesters fetched: 5 items
+2025-04-28 05:28:45,813 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-28 05:28:45,814 | INFO | Projects fetched: 10 items
+2025-04-28 05:28:45,838 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 05:29:09,927 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:29:11,165 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 93.066}
+2025-04-28 05:29:18,784 | INFO | {"action": "submit_success", "order_number": "URC1204", "status": "Pending", "order_id": 53}
+2025-04-28 05:29:21,517 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 05:30:09,929 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:31:09,935 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:32:09,930 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:33:09,928 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:34:09,977 | INFO | Database tables created successfully.
+2025-04-28 05:34:09,978 | INFO | ✅ Database initialized successfully.
+2025-04-28 05:34:10,011 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:35:09,933 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:36:09,938 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:37:09,937 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:38:09,941 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:39:09,945 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:40:09,941 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:41:09,943 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:42:09,940 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:43:09,942 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:43:17,473 | INFO | Database tables created successfully.
+2025-04-28 05:43:17,473 | INFO | ✅ Database initialized successfully.
+2025-04-28 05:43:49,099 | INFO | Database tables created successfully.
+2025-04-28 05:43:49,099 | INFO | ✅ Database initialized successfully.
+2025-04-28 05:43:55,690 | INFO | Suppliers fetched: 10 items
+2025-04-28 05:43:55,691 | INFO | Requesters fetched: 5 items
+2025-04-28 05:43:55,692 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-28 05:43:55,693 | INFO | Projects fetched: 10 items
+2025-04-28 05:43:55,716 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 05:44:09,938 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:44:12,005 | INFO | {"action": "pdf_generated", "order_number": "URC1204", "time_taken_ms": 106.517}
+2025-04-28 05:44:16,321 | INFO | {"action": "submit_success", "order_number": "URC1204", "status": "Pending", "order_id": 54}
+2025-04-28 05:44:18,695 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 05:45:09,940 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:46:09,940 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:47:09,942 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:48:09,939 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:49:09,938 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:49:23,021 | INFO | {"action": "fetch_pending_orders", "count": 32, "params": []}
+2025-04-28 05:50:09,943 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:51:09,939 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:52:09,948 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:53:09,943 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:54:09,951 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:55:09,947 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:56:09,957 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:57:09,951 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:58:09,951 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 05:59:09,955 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:00:09,954 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:01:09,953 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:02:09,951 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:03:09,947 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:04:09,957 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:05:09,955 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:06:09,955 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:07:09,958 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:07:15,238 | INFO | Database tables created successfully.
+2025-04-28 06:07:15,238 | INFO | ✅ Database initialized successfully.
+2025-04-28 06:08:09,955 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:09:09,953 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:10:09,954 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:10:27,576 | INFO | Database tables created successfully.
+2025-04-28 06:10:27,576 | INFO | ✅ Database initialized successfully.
+2025-04-28 06:10:42,292 | INFO | Requesters fetched: 5 items
+2025-04-28 06:10:42,293 | INFO | Suppliers fetched: 10 items
+2025-04-28 06:10:42,318 | INFO | {"action": "fetch_pending_orders", "count": 32, "params": []}
+2025-04-28 06:10:54,150 | INFO | {"action": "fetch_pending_orders", "count": 11, "params": ["Aaron"]}
+2025-04-28 06:11:09,954 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:12:09,957 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:13:09,954 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:14:09,958 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:15:09,956 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:16:09,959 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:17:09,960 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:18:09,958 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:19:09,956 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:20:00,543 | INFO | Requesters fetched: 5 items
+2025-04-28 06:20:00,547 | INFO | Items fetched: 10 items, response: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}]
+2025-04-28 06:20:00,548 | INFO | Projects fetched: 10 items
+2025-04-28 06:20:00,549 | INFO | Settings fetched: {'order_number_start': 'URC1204'}
+2025-04-28 06:20:00,550 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': '123 Industrial Road', 'address_line2': 'Unit 4', 'city': 'Cape Town', 'province': 'Western Cape', 'postal_code': '8001', 'telephone': '+27 21 555 1234', 'vat_number': 'VAT123456789'}
+2025-04-28 06:20:09,960 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:21:09,959 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:22:09,857 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:23:09,852 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:24:09,861 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:25:09,847 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:26:09,851 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:27:09,850 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:28:09,851 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:29:09,853 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:30:09,843 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:31:09,845 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:32:09,844 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:33:09,848 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:34:09,848 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:35:09,842 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:36:09,843 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:37:09,863 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:38:09,871 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:39:09,872 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:40:09,871 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:41:09,870 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:42:09,874 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:43:09,870 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:44:09,876 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:45:09,868 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:46:09,870 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:47:09,875 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:48:09,867 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:49:09,867 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:50:09,868 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:51:09,866 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:52:09,866 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:53:09,889 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:54:09,887 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:55:09,887 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:56:09,885 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:57:09,889 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:58:09,882 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 06:59:09,891 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:00:09,891 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:01:09,889 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:02:09,885 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:03:09,887 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:04:09,892 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:05:09,880 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:06:09,887 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:07:09,899 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:08:09,901 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:09:09,906 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:10:09,909 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:11:09,901 | INFO | {"action": "fetch_audit_trail", "count": 35}
+2025-04-28 07:12:09,900 | INFO | {"action": "fetch_audit_trail", "count": 35}

@@ -37,6 +37,19 @@ def get_database_schema(db_path):
         schema += f"Error fetching schema: {e}\n"
     return schema
 
+def get_system_settings(db_path):
+    print(f"Fetching system settings from {db_path}")
+    settings = {}
+    try:
+        with sqlite3.connect(db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT key, value FROM settings")
+            settings = dict(cursor.fetchall())
+    except sqlite3.Error as e:
+        print(f"Error fetching settings: {e}")
+        settings = {"error": str(e)}
+    return settings
+
 def get_file_snippet(file_path, snippet_marker=None, max_lines=100):
     print(f"Reading file: {file_path}")
     try:
@@ -88,11 +101,22 @@ def get_log_snippet(log_file, max_lines=20):
     except Exception as e:
         return f"Error reading {log_file}: {e}\n"
 
+def ensure_log_file_exists(log_path):
+    """Ensure the log file exists, creating it if necessary."""
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    if not log_path.exists():
+        with open(log_path, 'w', encoding='utf-8') as f:
+            f.write("")
+
 def main():
     repo_path = Path("/Users/stevencohen/Projects/universal_recycling/orders_project")
     output_file = repo_path / "project_summary.md"
     db_path = repo_path / "data/orders.db"
     env_path = repo_path / ".env"
+
+    # Ensure pdf_generation_log.txt exists
+    pdf_log_path = repo_path / "logs" / "pdf_generation_log.txt"
+    ensure_log_file_exists(pdf_log_path)
 
     # Header
     intro = f"""# 📦 Project Snapshot
@@ -149,6 +173,31 @@ def main():
     python_files += get_full_file_content(repo_path / "backend/endpoints/lookups.py")
     python_files += "\n```\n"
 
+    # backend/endpoints/order_attachments.py (full content)
+    python_files += "### `backend/endpoints/order_attachments.py`\n**Attachment Management Endpoints (Full Content)**\n```python\n"
+    python_files += get_full_file_content(repo_path / "backend/endpoints/order_attachments.py")
+    python_files += "\n```\n"
+
+    # backend/endpoints/order_notes.py (full content)
+    python_files += "### `backend/endpoints/order_notes.py`\n**Order Note Endpoints (Full Content)**\n```python\n"
+    python_files += get_full_file_content(repo_path / "backend/endpoints/order_notes.py")
+    python_files += "\n```\n"
+
+    # backend/endpoints/order_pdf.py (full content)
+    python_files += "### `backend/endpoints/order_pdf.py`\n**PDF Generation Endpoints (Full Content)**\n```python\n"
+    python_files += get_full_file_content(repo_path / "backend/endpoints/order_pdf.py")
+    python_files += "\n```\n"
+
+    # backend/endpoints/order_queries.py (full content)
+    python_files += "### `backend/endpoints/order_queries.py`\n**Order Query Endpoints (Full Content)**\n```python\n"
+    python_files += get_full_file_content(repo_path / "backend/endpoints/order_queries.py")
+    python_files += "\n```\n"
+
+    # backend/endpoints/order_receiving.py (full content)
+    python_files += "### `backend/endpoints/order_receiving.py`\n**Order Receiving Endpoints (Full Content)**\n```python\n"
+    python_files += get_full_file_content(repo_path / "backend/endpoints/order_receiving.py")
+    python_files += "\n```\n"
+
     # backend/endpoints/orders.py (full content)
     python_files += "### `backend/endpoints/orders.py`\n**Order Management Endpoints (Full Content)**\n```python\n"
     python_files += get_full_file_content(repo_path / "backend/endpoints/orders.py")
@@ -169,6 +218,11 @@ def main():
     python_files += get_file_snippet(repo_path / "backend/endpoints/supplier_lookup_takealot.py", "@router", max_lines=100)
     python_files += "\n```\n"
 
+    # backend/endpoints/whatsapp.py (full content)
+    python_files += "### `backend/endpoints/whatsapp.py`\n**WhatsApp Webhook Endpoints (Full Content)**\n```python\n"
+    python_files += get_full_file_content(repo_path / "backend/endpoints/whatsapp.py")
+    python_files += "\n```\n"
+
     # backend/twilio/twilio_utils.py (full content)
     python_files += "### `backend/twilio/twilio_utils.py`\n**WhatsApp Notifications (Full Content)**\n```python\n"
     python_files += get_full_file_content(repo_path / "backend/twilio/twilio_utils.py")
@@ -179,9 +233,9 @@ def main():
     python_files += get_file_snippet(repo_path / "backend/utils/order_utils.py", "def", max_lines=100)
     python_files += "\n```\n"
 
-    # backend/main.py
-    python_files += "### `backend/main.py`\n**FastAPI Application Setup**\n```python\n"
-    python_files += get_file_snippet(repo_path / "backend/main.py", max_lines=100)
+    # backend/main.py (full content)
+    python_files += "### `backend/main.py`\n**FastAPI Application Setup (Full Content)**\n```python\n"
+    python_files += get_full_file_content(repo_path / "backend/main.py")
     python_files += "\n```\n"
 
     # data/orders.py
@@ -243,7 +297,8 @@ def main():
         "takealot_lookup.log",
         "testing_log.txt",
         "twilio.log",
-        "whatsapp_log.txt"
+        "whatsapp_log.txt",
+        "pdf_generation_log.txt"  # Add the new log file
     ]
     for log_file in log_files:
         log_path = repo_path / "logs" / log_file
@@ -265,15 +320,11 @@ Passwords are hashed; assumed defaults for local testing: `password`.
 """
 
     # System Settings
-    settings = """## ⚙️ System Settings
-
-| Key                 | Value   |
-|---------------------|---------|
-| auth_threshold      | 10000   |
-| order_number_start  | URC1024 |
-| last_order_number   | URC000  |
-
-"""
+    settings_dict = get_system_settings(db_path)
+    settings = "## ⚙️ System Settings\n\n| Key                 | Value   |\n|---------------------|---------|\n"
+    for key, value in settings_dict.items():
+        settings += f"| {key:<19} | {value:<7} |\n"
+    settings += "\n"
 
     # FastAPI Endpoint Summary
     endpoints = """## 🚦 FastAPI Endpoint Summary
@@ -283,9 +334,15 @@ Passwords are hashed; assumed defaults for local testing: `password`.
 | `/orders`                   | POST      | ✅ Implemented |
 | `/orders/receive`           | POST      | ✅ Implemented |
 | `/orders/next_order_number` | GET       | ✅ Implemented |
-| `/attachments/upload`       | POST      | ✅ Implemented |
-| `/notes`                    | GET/POST  | ✅ Implemented |
-| `/audit`                    | GET       | ⏳ Pending     |
+| `/orders/upload_attachment` | POST      | ✅ Implemented |
+| `/orders/attachments/{order_id}` | GET  | ✅ Implemented |
+| `/orders/save_note/{order_id}` | POST | ✅ Implemented |
+| `/orders/generate_pdf`      | POST      | ✅ Implemented |
+| `/orders/api/orders/pending_orders` | GET | ✅ Implemented |
+| `/orders/api/received_orders` | GET   | ✅ Implemented |
+| `/orders/api/items_for_order/{order_id}` | GET | ✅ Implemented |
+| `/orders/api/audit_trail`   | GET       | ✅ Implemented |
+| `/orders/whatsapp/webhook`  | POST      | ✅ Implemented |
 | `/orders/print`             | GET       | ⏳ Planned     |
 | `/lookups/suppliers`        | GET       | ✅ Implemented |
 | `/lookups/requesters`       | GET       | ✅ Implemented |
@@ -311,7 +368,6 @@ Passwords are hashed; assumed defaults for local testing: `password`.
     todos = """## ✅ TODOs (Static Manual Items)
 
 - [ ] Modularize long `.js` files into reusable components
-- [ ] Finalize `/audit` route with filters + trail UI
 - [ ] Finalize `/orders/print` layout + backend
 - [ ] Add RBAC (role-based access control)
 - [ ] Pagination on long tables (Pending/Received)

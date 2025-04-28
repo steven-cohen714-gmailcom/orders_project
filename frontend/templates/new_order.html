@@ -12,7 +12,7 @@
         .status { font-weight: bold; }
         .filters { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
         .filters label { font-weight: bold; }
-        input[type="date"], select, textarea, input[type="number"], input[type="text"] {
+        select, textarea, input[type="number"], input[type="text"] {
             padding: 0.4rem;
             font-size: 1rem;
             font-family: monospace;
@@ -41,10 +41,6 @@
         <h2>Create Purchase Order</h2>
         <div>
             <label>Order Number: <span id="order-number">Loading...</span></label>
-        </div>
-        <div>
-            <label for="request_date">Request Date *</label>
-            <input type="date" id="request_date" name="request_date" required>
         </div>
         <div>
             <div>
@@ -84,7 +80,6 @@
             <thead>
                 <tr>
                     <th>Item Code</th>
-                    <th>Description</th>
                     <th>Project</th>
                     <th>Qty Ordered</th>
                     <th>Price (R)</th>
@@ -110,6 +105,6 @@
         </div>
     </div>
 
-    <script src="/static/js/new_order.js"></script>
+    <script type="module" src="/static/js/new_order_main.js"></script>
 </body>
 </html>

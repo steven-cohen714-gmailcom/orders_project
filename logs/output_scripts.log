@@ -1,0 +1,746 @@
+2025-04-27 06:29:38,686 | INFO | Starting script generation
+2025-04-27 06:29:38,689 | INFO | Directory tree generated successfully
+2025-04-27 06:29:38,690 | INFO | Database schema extracted successfully
+2025-04-27 06:29:38,690 | INFO | Processing file: backend/__init__.py
+2025-04-27 06:29:38,690 | INFO | Added file: backend/__init__.py, Lines: 1, Hash: 36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068
+2025-04-27 06:29:38,690 | INFO | Processing file: backend/database.py
+2025-04-27 06:29:38,690 | INFO | Added file: backend/database.py, Lines: 248, Hash: 82377db634c0a2cff4f1b1cb62851697091677c73b5077b80e9b3f50ab2d2991
+2025-04-27 06:29:38,690 | INFO | Processing file: backend/main.py
+2025-04-27 06:29:38,691 | INFO | Added file: backend/main.py, Lines: 86, Hash: 2119f98bb37c04e73dca18d4290ba3570108fa6d35c19e56377c172742784c8b
+2025-04-27 06:29:38,691 | INFO | Processing file: backend/endpoints/__init__.py
+2025-04-27 06:29:38,691 | INFO | Added file: backend/endpoints/__init__.py, Lines: 33, Hash: 67ce0bfdddd4f28cf8deb00d99fc5eb9b73cc629785f88da0297b57165996707
+2025-04-27 06:29:38,691 | INFO | Processing file: backend/endpoints/auth.py
+2025-04-27 06:29:38,691 | INFO | Added file: backend/endpoints/auth.py, Lines: 58, Hash: 29786b3e14c7e5b8920a9652217fb313cc0f152b4da15d3fec5f895a96cc37bc
+2025-04-27 06:29:38,691 | INFO | Processing file: backend/endpoints/html_routes.py
+2025-04-27 06:29:38,691 | INFO | Added file: backend/endpoints/html_routes.py, Lines: 76, Hash: e03729084c7e77857f0fddcef0e6852d8737ba95001274c3e16a9517d8f2ff39
+2025-04-27 06:29:38,691 | INFO | Processing file: backend/endpoints/lookups.py
+2025-04-27 06:29:38,691 | INFO | Added file: backend/endpoints/lookups.py, Lines: 306, Hash: 94984aedcaa476d0a4527c55e086743753992b9f974c516183efc2e73744aaa1
+2025-04-27 06:29:38,691 | INFO | Processing file: backend/endpoints/order_attachments.py
+2025-04-27 06:29:38,691 | INFO | Added file: backend/endpoints/order_attachments.py, Lines: 91, Hash: 4724d33164b1f3febbb321c2bbd4f59b3294c5a63cbdb3d9deab190b157ac5fa
+2025-04-27 06:29:38,691 | INFO | Processing file: backend/endpoints/order_notes.py
+2025-04-27 06:29:38,691 | INFO | Added file: backend/endpoints/order_notes.py, Lines: 38, Hash: 4e1569828a57fb391f167b170d81c624dbbbc18c2ad661bf9bfe8dc752b6347c
+2025-04-27 06:29:38,691 | INFO | Processing file: backend/endpoints/order_pdf.py
+2025-04-27 06:29:38,691 | INFO | Added file: backend/endpoints/order_pdf.py, Lines: 145, Hash: 27c863c6ce98ba9db0cf6fbf9842d92e72a197460aaef3af9cb5345c029f72eb
+2025-04-27 06:29:38,691 | INFO | Processing file: backend/endpoints/order_queries.py
+2025-04-27 06:29:38,691 | INFO | Added file: backend/endpoints/order_queries.py, Lines: 258, Hash: e14f1889fd1960fd2564f47a56b0f4927cc87e7d1de2652c8119deebc9ba126f
+2025-04-27 06:29:38,691 | INFO | Processing file: backend/endpoints/order_receiving.py
+2025-04-27 06:29:38,691 | INFO | Added file: backend/endpoints/order_receiving.py, Lines: 66, Hash: cc03655f46a3fbcba8f126d2060fe4273d7d88cdf5bdb71f800c8e278e3d3d47
+2025-04-27 06:29:38,691 | INFO | Processing file: backend/endpoints/orders.py
+2025-04-27 06:29:38,691 | INFO | Added file: backend/endpoints/orders.py, Lines: 137, Hash: f02fe39d277688ba4b639f92639bcfdf1e56c84e8ea7eabedd0eca557bab801e
+2025-04-27 06:29:38,692 | INFO | Processing file: backend/endpoints/requesters.py
+2025-04-27 06:29:38,692 | INFO | Added file: backend/endpoints/requesters.py, Lines: 16, Hash: cb6bfb4a14622f60078abfc0cc4e2b28146221f88c2a1696fd3644f1c415437b
+2025-04-27 06:29:38,692 | INFO | Processing file: backend/endpoints/supplier_lookup.py
+2025-04-27 06:29:38,692 | INFO | Added file: backend/endpoints/supplier_lookup.py, Lines: 64, Hash: 6cefc875a8eb0bc09fc4b8b62932ebd561efa721a53b669bb7d69c95668916bf
+2025-04-27 06:29:38,692 | INFO | Processing file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-27 06:29:38,692 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py, Lines: 68, Hash: 1b9b5e967ee05351f612323ed6b1c0c0a559213c7c6cc51a333d02dc3a42a28c
+2025-04-27 06:29:38,692 | INFO | Processing file: backend/endpoints/whatsapp.py
+2025-04-27 06:29:38,692 | INFO | Added file: backend/endpoints/whatsapp.py, Lines: 119, Hash: 7b7abae252160667e841895373097b3f69008675661e594ee5c0089e497e4b31
+2025-04-27 06:29:38,692 | INFO | Processing file: backend/utils/__init__.py
+2025-04-27 06:29:38,692 | INFO | Added file: backend/utils/__init__.py, Lines: 3, Hash: f436efcd1385945a651b97824b3569fe97aa2510d28fc295f0612806b1389737
+2025-04-27 06:29:38,692 | INFO | Processing file: backend/utils/order_utils.py
+2025-04-27 06:29:38,692 | INFO | Added file: backend/utils/order_utils.py, Lines: 38, Hash: 5dbe1c10837f86d4f28f3ccd1bc5226c4e13a8f402bff30001c0b47db6e90aca
+2025-04-27 06:29:38,692 | INFO | Processing file: backend/twilio/__init__.py
+2025-04-27 06:29:38,692 | INFO | Added file: backend/twilio/__init__.py, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2025-04-27 06:29:38,692 | INFO | Processing file: backend/twilio/twilio_utils.py
+2025-04-27 06:29:38,692 | INFO | Added file: backend/twilio/twilio_utils.py, Lines: 51, Hash: c9d4d2ff350f64d5b61f81891766fa2197032b4be44fc92cf833b93291c76012
+2025-04-27 06:29:38,693 | INFO | Processing file: frontend/static/js/audit_trail.js
+2025-04-27 06:29:38,693 | INFO | Added file: frontend/static/js/audit_trail.js, Lines: 169, Hash: a0f94ccded539927958fc3760164369c45a063cf48399aac070444cc2ceb4cd2
+2025-04-27 06:29:38,693 | INFO | Processing file: frontend/static/js/new_order.js
+2025-04-27 06:29:38,693 | INFO | Added file: frontend/static/js/new_order.js, Lines: 433, Hash: 332a47711c2fc64c3b34705653209c9d035c23b3a37555a8e3ea350b9fb84444
+2025-04-27 06:29:38,693 | INFO | Processing file: frontend/static/js/pending_orders.js
+2025-04-27 06:29:38,693 | INFO | Added file: frontend/static/js/pending_orders.js, Lines: 185, Hash: de30854939cf6f49eaa2227ff3a2eb24e900bd236ff41e25cae16eaccb4b8e8b
+2025-04-27 06:29:38,693 | INFO | Processing file: frontend/static/js/received_orders.js
+2025-04-27 06:29:38,693 | INFO | Added file: frontend/static/js/received_orders.js, Lines: 135, Hash: 69235ae3f1e1b4aeebb4b20fe1fa47631966e2ca93e4e65cf90f0ddf6a3dcbbf
+2025-04-27 06:29:38,693 | INFO | Processing file: frontend/static/js/components/attachment_modal.js
+2025-04-27 06:29:38,693 | INFO | Added file: frontend/static/js/components/attachment_modal.js, Lines: 166, Hash: 04f98b8f0c9cb85345b8bb44f0c069bf7cd85da1138d90beb207d02b7be55c49
+2025-04-27 06:29:38,693 | INFO | Processing file: frontend/static/js/components/expand_line_items.js
+2025-04-27 06:29:38,693 | INFO | Added file: frontend/static/js/components/expand_line_items.js, Lines: 74, Hash: 46a15875db4b64e900effb95ccefbef756b90ba7f9002e0dd01690e7e27889cb
+2025-04-27 06:29:38,693 | INFO | Processing file: frontend/static/js/components/order_note_modal.js
+2025-04-27 06:29:38,693 | INFO | Added file: frontend/static/js/components/order_note_modal.js, Lines: 105, Hash: 1b88e87bfb81dd43441cd2f806942545f102991f18495fe37a47460e95442436
+2025-04-27 06:29:38,693 | INFO | Processing file: frontend/static/js/components/receive_modal.js
+2025-04-27 06:29:38,693 | INFO | Added file: frontend/static/js/components/receive_modal.js, Lines: 127, Hash: 2cd0f5c8a318d0be90757413ad366334b92b05e94715e0bc87d9f6b39a3f7ace
+2025-04-27 06:29:38,694 | INFO | Processing file: frontend/static/js/components/shared_filters.js
+2025-04-27 06:29:38,694 | INFO | Added file: frontend/static/js/components/shared_filters.js, Lines: 40, Hash: c2bcb059a440b2a141800eb89c7b5ef08ebfb237a15a5f029ab1d54d99728013
+2025-04-27 06:29:38,694 | INFO | Processing file: frontend/templates/audit_trail.html
+2025-04-27 06:29:38,694 | INFO | Added file: frontend/templates/audit_trail.html, Lines: 76, Hash: 15202e0430974f002903364295dc8963a8ce438e9fdc5e4052c4c8d13776c8b7
+2025-04-27 06:29:38,694 | INFO | Processing file: frontend/templates/home.html
+2025-04-27 06:29:38,694 | INFO | Added file: frontend/templates/home.html, Lines: 8, Hash: ac4d404264cf64dfb116e962a04b55652e74c04cddd42629831e37f32ae18b8c
+2025-04-27 06:29:38,694 | INFO | Processing file: frontend/templates/index.html
+2025-04-27 06:29:38,694 | INFO | Added file: frontend/templates/index.html, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2025-04-27 06:29:38,694 | INFO | Processing file: frontend/templates/login.html
+2025-04-27 06:29:38,694 | INFO | Added file: frontend/templates/login.html, Lines: 58, Hash: 70f4f0f58af0f08bb9ee5f0c49a66ca0bb0be3350e4bd22f31ba77d9ddaced78
+2025-04-27 06:29:38,694 | INFO | Processing file: frontend/templates/maintenance.html
+2025-04-27 06:29:38,694 | INFO | Added file: frontend/templates/maintenance.html, Lines: 425, Hash: d9b2684779fac0c6f289347f94415f80463dff50c9a6447324e8c90063a78618
+2025-04-27 06:29:38,694 | INFO | Processing file: frontend/templates/new_order.html
+2025-04-27 06:29:38,694 | INFO | Added file: frontend/templates/new_order.html, Lines: 115, Hash: 358ae0a5999abc1a148af4a0226b4ab6d09f92d9217c1b47273943567547d6e1
+2025-04-27 06:29:38,694 | INFO | Processing file: frontend/templates/pending_orders.html
+2025-04-27 06:29:38,694 | INFO | Added file: frontend/templates/pending_orders.html, Lines: 81, Hash: d4adac055a3881b30b56e798c7b41029710f0fd5d95cabf0b8c7b5bf15c9fb2f
+2025-04-27 06:29:38,694 | INFO | Processing file: frontend/templates/print_template.html
+2025-04-27 06:29:38,694 | INFO | Added file: frontend/templates/print_template.html, Lines: 43, Hash: 13e2caadbdb4784dedc84b2e3541178a2ea3ab73e9ddb5fe72cafb78e0607777
+2025-04-27 06:29:38,694 | INFO | Processing file: frontend/templates/received_orders.html
+2025-04-27 06:29:38,694 | INFO | Added file: frontend/templates/received_orders.html, Lines: 73, Hash: eefb9d5bfdb1db7bfcdcb94e9e967203207abaae975e32d48691f013b5211039
+2025-04-27 06:29:38,694 | INFO | Output written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-27 06:32:49,354 | INFO | Starting script generation
+2025-04-27 06:32:49,359 | INFO | Directory tree generated successfully
+2025-04-27 06:32:49,359 | INFO | Database schema extracted successfully
+2025-04-27 06:32:49,359 | INFO | Processing file: backend/__init__.py
+2025-04-27 06:32:49,359 | INFO | Added file: backend/__init__.py, Lines: 1, Hash: 36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068
+2025-04-27 06:32:49,359 | INFO | Processing file: backend/database.py
+2025-04-27 06:32:49,359 | INFO | Added file: backend/database.py, Lines: 248, Hash: 82377db634c0a2cff4f1b1cb62851697091677c73b5077b80e9b3f50ab2d2991
+2025-04-27 06:32:49,360 | INFO | Processing file: backend/main.py
+2025-04-27 06:32:49,360 | INFO | Added file: backend/main.py, Lines: 86, Hash: 2119f98bb37c04e73dca18d4290ba3570108fa6d35c19e56377c172742784c8b
+2025-04-27 06:32:49,360 | INFO | Processing file: backend/endpoints/__init__.py
+2025-04-27 06:32:49,360 | INFO | Added file: backend/endpoints/__init__.py, Lines: 33, Hash: 67ce0bfdddd4f28cf8deb00d99fc5eb9b73cc629785f88da0297b57165996707
+2025-04-27 06:32:49,360 | INFO | Processing file: backend/endpoints/auth.py
+2025-04-27 06:32:49,360 | INFO | Added file: backend/endpoints/auth.py, Lines: 58, Hash: 29786b3e14c7e5b8920a9652217fb313cc0f152b4da15d3fec5f895a96cc37bc
+2025-04-27 06:32:49,360 | INFO | Processing file: backend/endpoints/html_routes.py
+2025-04-27 06:32:49,360 | INFO | Added file: backend/endpoints/html_routes.py, Lines: 76, Hash: e03729084c7e77857f0fddcef0e6852d8737ba95001274c3e16a9517d8f2ff39
+2025-04-27 06:32:49,360 | INFO | Processing file: backend/endpoints/lookups.py
+2025-04-27 06:32:49,360 | INFO | Added file: backend/endpoints/lookups.py, Lines: 306, Hash: 94984aedcaa476d0a4527c55e086743753992b9f974c516183efc2e73744aaa1
+2025-04-27 06:32:49,360 | INFO | Processing file: backend/endpoints/order_attachments.py
+2025-04-27 06:32:49,360 | INFO | Added file: backend/endpoints/order_attachments.py, Lines: 91, Hash: 4724d33164b1f3febbb321c2bbd4f59b3294c5a63cbdb3d9deab190b157ac5fa
+2025-04-27 06:32:49,360 | INFO | Processing file: backend/endpoints/order_notes.py
+2025-04-27 06:32:49,360 | INFO | Added file: backend/endpoints/order_notes.py, Lines: 38, Hash: 4e1569828a57fb391f167b170d81c624dbbbc18c2ad661bf9bfe8dc752b6347c
+2025-04-27 06:32:49,360 | INFO | Processing file: backend/endpoints/order_pdf.py
+2025-04-27 06:32:49,360 | INFO | Added file: backend/endpoints/order_pdf.py, Lines: 145, Hash: 27c863c6ce98ba9db0cf6fbf9842d92e72a197460aaef3af9cb5345c029f72eb
+2025-04-27 06:32:49,360 | INFO | Processing file: backend/endpoints/order_queries.py
+2025-04-27 06:32:49,360 | INFO | Added file: backend/endpoints/order_queries.py, Lines: 258, Hash: e14f1889fd1960fd2564f47a56b0f4927cc87e7d1de2652c8119deebc9ba126f
+2025-04-27 06:32:49,360 | INFO | Processing file: backend/endpoints/order_receiving.py
+2025-04-27 06:32:49,361 | INFO | Added file: backend/endpoints/order_receiving.py, Lines: 66, Hash: cc03655f46a3fbcba8f126d2060fe4273d7d88cdf5bdb71f800c8e278e3d3d47
+2025-04-27 06:32:49,361 | INFO | Processing file: backend/endpoints/orders.py
+2025-04-27 06:32:49,361 | INFO | Added file: backend/endpoints/orders.py, Lines: 137, Hash: f02fe39d277688ba4b639f92639bcfdf1e56c84e8ea7eabedd0eca557bab801e
+2025-04-27 06:32:49,361 | INFO | Processing file: backend/endpoints/requesters.py
+2025-04-27 06:32:49,361 | INFO | Added file: backend/endpoints/requesters.py, Lines: 16, Hash: cb6bfb4a14622f60078abfc0cc4e2b28146221f88c2a1696fd3644f1c415437b
+2025-04-27 06:32:49,361 | INFO | Processing file: backend/endpoints/supplier_lookup.py
+2025-04-27 06:32:49,361 | INFO | Added file: backend/endpoints/supplier_lookup.py, Lines: 64, Hash: 6cefc875a8eb0bc09fc4b8b62932ebd561efa721a53b669bb7d69c95668916bf
+2025-04-27 06:32:49,361 | INFO | Processing file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-27 06:32:49,361 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py, Lines: 68, Hash: 1b9b5e967ee05351f612323ed6b1c0c0a559213c7c6cc51a333d02dc3a42a28c
+2025-04-27 06:32:49,361 | INFO | Processing file: backend/endpoints/whatsapp.py
+2025-04-27 06:32:49,361 | INFO | Added file: backend/endpoints/whatsapp.py, Lines: 119, Hash: 7b7abae252160667e841895373097b3f69008675661e594ee5c0089e497e4b31
+2025-04-27 06:32:49,361 | INFO | Processing file: backend/utils/__init__.py
+2025-04-27 06:32:49,361 | INFO | Added file: backend/utils/__init__.py, Lines: 3, Hash: f436efcd1385945a651b97824b3569fe97aa2510d28fc295f0612806b1389737
+2025-04-27 06:32:49,361 | INFO | Processing file: backend/utils/order_utils.py
+2025-04-27 06:32:49,361 | INFO | Added file: backend/utils/order_utils.py, Lines: 38, Hash: 5dbe1c10837f86d4f28f3ccd1bc5226c4e13a8f402bff30001c0b47db6e90aca
+2025-04-27 06:32:49,361 | INFO | Processing file: backend/twilio/__init__.py
+2025-04-27 06:32:49,362 | INFO | Added file: backend/twilio/__init__.py, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2025-04-27 06:32:49,362 | INFO | Processing file: backend/twilio/twilio_utils.py
+2025-04-27 06:32:49,362 | INFO | Added file: backend/twilio/twilio_utils.py, Lines: 51, Hash: c9d4d2ff350f64d5b61f81891766fa2197032b4be44fc92cf833b93291c76012
+2025-04-27 06:32:49,362 | INFO | Processing file: frontend/static/js/audit_trail.js
+2025-04-27 06:32:49,362 | INFO | Added file: frontend/static/js/audit_trail.js, Lines: 169, Hash: a0f94ccded539927958fc3760164369c45a063cf48399aac070444cc2ceb4cd2
+2025-04-27 06:32:49,362 | INFO | Processing file: frontend/static/js/new_order.js
+2025-04-27 06:32:49,362 | INFO | Added file: frontend/static/js/new_order.js, Lines: 433, Hash: 332a47711c2fc64c3b34705653209c9d035c23b3a37555a8e3ea350b9fb84444
+2025-04-27 06:32:49,362 | INFO | Processing file: frontend/static/js/pending_orders.js
+2025-04-27 06:32:49,362 | INFO | Added file: frontend/static/js/pending_orders.js, Lines: 185, Hash: de30854939cf6f49eaa2227ff3a2eb24e900bd236ff41e25cae16eaccb4b8e8b
+2025-04-27 06:32:49,362 | INFO | Processing file: frontend/static/js/received_orders.js
+2025-04-27 06:32:49,362 | INFO | Added file: frontend/static/js/received_orders.js, Lines: 135, Hash: 69235ae3f1e1b4aeebb4b20fe1fa47631966e2ca93e4e65cf90f0ddf6a3dcbbf
+2025-04-27 06:32:49,362 | INFO | Processing file: frontend/static/js/components/attachment_modal.js
+2025-04-27 06:32:49,362 | INFO | Added file: frontend/static/js/components/attachment_modal.js, Lines: 166, Hash: 04f98b8f0c9cb85345b8bb44f0c069bf7cd85da1138d90beb207d02b7be55c49
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/static/js/components/expand_line_items.js
+2025-04-27 06:32:49,363 | INFO | Added file: frontend/static/js/components/expand_line_items.js, Lines: 74, Hash: 46a15875db4b64e900effb95ccefbef756b90ba7f9002e0dd01690e7e27889cb
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/static/js/components/order_note_modal.js
+2025-04-27 06:32:49,363 | INFO | Added file: frontend/static/js/components/order_note_modal.js, Lines: 105, Hash: 1b88e87bfb81dd43441cd2f806942545f102991f18495fe37a47460e95442436
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/static/js/components/receive_modal.js
+2025-04-27 06:32:49,363 | INFO | Added file: frontend/static/js/components/receive_modal.js, Lines: 127, Hash: 2cd0f5c8a318d0be90757413ad366334b92b05e94715e0bc87d9f6b39a3f7ace
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/static/js/components/shared_filters.js
+2025-04-27 06:32:49,363 | INFO | Added file: frontend/static/js/components/shared_filters.js, Lines: 40, Hash: c2bcb059a440b2a141800eb89c7b5ef08ebfb237a15a5f029ab1d54d99728013
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/templates/audit_trail.html
+2025-04-27 06:32:49,363 | INFO | Added file: frontend/templates/audit_trail.html, Lines: 76, Hash: 15202e0430974f002903364295dc8963a8ce438e9fdc5e4052c4c8d13776c8b7
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/templates/home.html
+2025-04-27 06:32:49,363 | INFO | Added file: frontend/templates/home.html, Lines: 8, Hash: ac4d404264cf64dfb116e962a04b55652e74c04cddd42629831e37f32ae18b8c
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/templates/index.html
+2025-04-27 06:32:49,363 | INFO | Added file: frontend/templates/index.html, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/templates/login.html
+2025-04-27 06:32:49,363 | INFO | Added file: frontend/templates/login.html, Lines: 58, Hash: 70f4f0f58af0f08bb9ee5f0c49a66ca0bb0be3350e4bd22f31ba77d9ddaced78
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/templates/maintenance.html
+2025-04-27 06:32:49,363 | INFO | Added file: frontend/templates/maintenance.html, Lines: 425, Hash: d9b2684779fac0c6f289347f94415f80463dff50c9a6447324e8c90063a78618
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/templates/new_order.html
+2025-04-27 06:32:49,363 | INFO | Added file: frontend/templates/new_order.html, Lines: 115, Hash: 358ae0a5999abc1a148af4a0226b4ab6d09f92d9217c1b47273943567547d6e1
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/templates/pending_orders.html
+2025-04-27 06:32:49,363 | INFO | Added file: frontend/templates/pending_orders.html, Lines: 81, Hash: d4adac055a3881b30b56e798c7b41029710f0fd5d95cabf0b8c7b5bf15c9fb2f
+2025-04-27 06:32:49,363 | INFO | Processing file: frontend/templates/print_template.html
+2025-04-27 06:32:49,364 | INFO | Added file: frontend/templates/print_template.html, Lines: 43, Hash: 13e2caadbdb4784dedc84b2e3541178a2ea3ab73e9ddb5fe72cafb78e0607777
+2025-04-27 06:32:49,364 | INFO | Processing file: frontend/templates/received_orders.html
+2025-04-27 06:32:49,364 | INFO | Added file: frontend/templates/received_orders.html, Lines: 73, Hash: eefb9d5bfdb1db7bfcdcb94e9e967203207abaae975e32d48691f013b5211039
+2025-04-27 06:32:49,364 | INFO | Output written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-27 06:34:32,277 | INFO | Starting script generation
+2025-04-27 06:34:32,281 | INFO | Directory tree generated successfully
+2025-04-27 06:34:32,282 | INFO | Database schema extracted successfully
+2025-04-27 06:34:32,282 | INFO | Processing file: backend/__init__.py
+2025-04-27 06:34:32,282 | INFO | Added file: backend/__init__.py, Lines: 1, Hash: 36a9e7f1c95b82ffb99743e0c5c4ce95d83c9a430aac59f84ef3cbfab6145068, MTime: 2025-04-13 05:50:15
+2025-04-27 06:34:32,282 | INFO | Processing file: backend/database.py
+2025-04-27 06:34:32,282 | INFO | Added file: backend/database.py, Lines: 248, Hash: 82377db634c0a2cff4f1b1cb62851697091677c73b5077b80e9b3f50ab2d2991, MTime: 2025-04-26 08:57:20
+2025-04-27 06:34:32,282 | INFO | Processing file: backend/main.py
+2025-04-27 06:34:32,282 | INFO | Added file: backend/main.py, Lines: 86, Hash: 2119f98bb37c04e73dca18d4290ba3570108fa6d35c19e56377c172742784c8b, MTime: 2025-04-26 14:33:40
+2025-04-27 06:34:32,282 | INFO | Processing file: backend/endpoints/__init__.py
+2025-04-27 06:34:32,282 | INFO | Added file: backend/endpoints/__init__.py, Lines: 33, Hash: 67ce0bfdddd4f28cf8deb00d99fc5eb9b73cc629785f88da0297b57165996707, MTime: 2025-04-26 14:11:14
+2025-04-27 06:34:32,282 | INFO | Processing file: backend/endpoints/auth.py
+2025-04-27 06:34:32,282 | INFO | Added file: backend/endpoints/auth.py, Lines: 58, Hash: 29786b3e14c7e5b8920a9652217fb313cc0f152b4da15d3fec5f895a96cc37bc, MTime: 2025-04-19 12:17:53
+2025-04-27 06:34:32,282 | INFO | Processing file: backend/endpoints/html_routes.py
+2025-04-27 06:34:32,282 | INFO | Added file: backend/endpoints/html_routes.py, Lines: 76, Hash: e03729084c7e77857f0fddcef0e6852d8737ba95001274c3e16a9517d8f2ff39, MTime: 2025-04-26 08:57:20
+2025-04-27 06:34:32,282 | INFO | Processing file: backend/endpoints/lookups.py
+2025-04-27 06:34:32,283 | INFO | Added file: backend/endpoints/lookups.py, Lines: 306, Hash: 94984aedcaa476d0a4527c55e086743753992b9f974c516183efc2e73744aaa1, MTime: 2025-04-26 09:06:55
+2025-04-27 06:34:32,283 | INFO | Processing file: backend/endpoints/order_attachments.py
+2025-04-27 06:34:32,283 | INFO | Added file: backend/endpoints/order_attachments.py, Lines: 91, Hash: 4724d33164b1f3febbb321c2bbd4f59b3294c5a63cbdb3d9deab190b157ac5fa, MTime: 2025-04-26 15:42:58
+2025-04-27 06:34:32,283 | INFO | Processing file: backend/endpoints/order_notes.py
+2025-04-27 06:34:32,283 | INFO | Added file: backend/endpoints/order_notes.py, Lines: 38, Hash: 4e1569828a57fb391f167b170d81c624dbbbc18c2ad661bf9bfe8dc752b6347c, MTime: 2025-04-26 16:04:35
+2025-04-27 06:34:32,283 | INFO | Processing file: backend/endpoints/order_pdf.py
+2025-04-27 06:34:32,283 | INFO | Added file: backend/endpoints/order_pdf.py, Lines: 145, Hash: 27c863c6ce98ba9db0cf6fbf9842d92e72a197460aaef3af9cb5345c029f72eb, MTime: 2025-04-26 15:43:31
+2025-04-27 06:34:32,283 | INFO | Processing file: backend/endpoints/order_queries.py
+2025-04-27 06:34:32,283 | INFO | Added file: backend/endpoints/order_queries.py, Lines: 258, Hash: e14f1889fd1960fd2564f47a56b0f4927cc87e7d1de2652c8119deebc9ba126f, MTime: 2025-04-26 15:43:53
+2025-04-27 06:34:32,283 | INFO | Processing file: backend/endpoints/order_receiving.py
+2025-04-27 06:34:32,283 | INFO | Added file: backend/endpoints/order_receiving.py, Lines: 66, Hash: cc03655f46a3fbcba8f126d2060fe4273d7d88cdf5bdb71f800c8e278e3d3d47, MTime: 2025-04-26 15:44:23
+2025-04-27 06:34:32,283 | INFO | Processing file: backend/endpoints/orders.py
+2025-04-27 06:34:32,283 | INFO | Added file: backend/endpoints/orders.py, Lines: 137, Hash: f02fe39d277688ba4b639f92639bcfdf1e56c84e8ea7eabedd0eca557bab801e, MTime: 2025-04-26 16:13:21
+2025-04-27 06:34:32,283 | INFO | Processing file: backend/endpoints/requesters.py
+2025-04-27 06:34:32,283 | INFO | Added file: backend/endpoints/requesters.py, Lines: 16, Hash: cb6bfb4a14622f60078abfc0cc4e2b28146221f88c2a1696fd3644f1c415437b, MTime: 2025-04-17 05:31:59
+2025-04-27 06:34:32,283 | INFO | Processing file: backend/endpoints/supplier_lookup.py
+2025-04-27 06:34:32,283 | INFO | Added file: backend/endpoints/supplier_lookup.py, Lines: 64, Hash: 6cefc875a8eb0bc09fc4b8b62932ebd561efa721a53b669bb7d69c95668916bf, MTime: 2025-04-20 12:44:07
+2025-04-27 06:34:32,283 | INFO | Processing file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-27 06:34:32,283 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py, Lines: 68, Hash: 1b9b5e967ee05351f612323ed6b1c0c0a559213c7c6cc51a333d02dc3a42a28c, MTime: 2025-04-20 14:06:58
+2025-04-27 06:34:32,283 | INFO | Processing file: backend/endpoints/whatsapp.py
+2025-04-27 06:34:32,283 | INFO | Added file: backend/endpoints/whatsapp.py, Lines: 119, Hash: 7b7abae252160667e841895373097b3f69008675661e594ee5c0089e497e4b31, MTime: 2025-04-27 05:39:06
+2025-04-27 06:34:32,284 | INFO | Processing file: backend/utils/__init__.py
+2025-04-27 06:34:32,284 | INFO | Added file: backend/utils/__init__.py, Lines: 3, Hash: f436efcd1385945a651b97824b3569fe97aa2510d28fc295f0612806b1389737, MTime: 2025-04-13 05:50:15
+2025-04-27 06:34:32,284 | INFO | Processing file: backend/utils/order_utils.py
+2025-04-27 06:34:32,284 | INFO | Added file: backend/utils/order_utils.py, Lines: 38, Hash: 5dbe1c10837f86d4f28f3ccd1bc5226c4e13a8f402bff30001c0b47db6e90aca, MTime: 2025-04-26 16:11:39
+2025-04-27 06:34:32,284 | INFO | Processing file: backend/twilio/__init__.py
+2025-04-27 06:34:32,284 | INFO | Added file: backend/twilio/__init__.py, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, MTime: 2025-04-23 14:57:53
+2025-04-27 06:34:32,284 | INFO | Processing file: backend/twilio/twilio_utils.py
+2025-04-27 06:34:32,284 | INFO | Added file: backend/twilio/twilio_utils.py, Lines: 51, Hash: c9d4d2ff350f64d5b61f81891766fa2197032b4be44fc92cf833b93291c76012, MTime: 2025-04-26 15:59:51
+2025-04-27 06:34:32,284 | INFO | Processing file: frontend/static/js/audit_trail.js
+2025-04-27 06:34:32,285 | INFO | Added file: frontend/static/js/audit_trail.js, Lines: 169, Hash: a0f94ccded539927958fc3760164369c45a063cf48399aac070444cc2ceb4cd2, MTime: 2025-04-23 07:54:46
+2025-04-27 06:34:32,285 | INFO | Processing file: frontend/static/js/new_order.js
+2025-04-27 06:34:32,285 | INFO | new_order.js details: Lines=433, Hash=332a47711c2fc64c3b34705653209c9d035c23b3a37555a8e3ea350b9fb84444, MTime=2025-04-26 16:36:53
+2025-04-27 06:34:32,285 | INFO | new_order.js first 10 lines:
+let itemsList = [];
+let projectsList = [];
+let rowCount = 0;
+let latestOrderId = null;
+let latestOrderDetails = null;
+
+// Debounce utility function
+function debounce(func, wait) {
+    let timeout;
+   ...
+2025-04-27 06:34:32,285 | INFO | Added file: frontend/static/js/new_order.js, Lines: 433, Hash: 332a47711c2fc64c3b34705653209c9d035c23b3a37555a8e3ea350b9fb84444, MTime: 2025-04-26 16:36:53
+2025-04-27 06:34:32,285 | INFO | Processing file: frontend/static/js/pending_orders.js
+2025-04-27 06:34:32,285 | INFO | Added file: frontend/static/js/pending_orders.js, Lines: 185, Hash: de30854939cf6f49eaa2227ff3a2eb24e900bd236ff41e25cae16eaccb4b8e8b, MTime: 2025-04-26 09:22:42
+2025-04-27 06:34:32,285 | INFO | Processing file: frontend/static/js/received_orders.js
+2025-04-27 06:34:32,285 | INFO | Added file: frontend/static/js/received_orders.js, Lines: 135, Hash: 69235ae3f1e1b4aeebb4b20fe1fa47631966e2ca93e4e65cf90f0ddf6a3dcbbf, MTime: 2025-04-26 14:30:42
+2025-04-27 06:34:32,285 | INFO | Processing file: frontend/static/js/components/attachment_modal.js
+2025-04-27 06:34:32,285 | INFO | Added file: frontend/static/js/components/attachment_modal.js, Lines: 166, Hash: 04f98b8f0c9cb85345b8bb44f0c069bf7cd85da1138d90beb207d02b7be55c49, MTime: 2025-04-23 05:26:12
+2025-04-27 06:34:32,285 | INFO | Processing file: frontend/static/js/components/expand_line_items.js
+2025-04-27 06:34:32,285 | INFO | Added file: frontend/static/js/components/expand_line_items.js, Lines: 74, Hash: 46a15875db4b64e900effb95ccefbef756b90ba7f9002e0dd01690e7e27889cb, MTime: 2025-04-21 12:11:27
+2025-04-27 06:34:32,285 | INFO | Processing file: frontend/static/js/components/order_note_modal.js
+2025-04-27 06:34:32,285 | INFO | Added file: frontend/static/js/components/order_note_modal.js, Lines: 105, Hash: 1b88e87bfb81dd43441cd2f806942545f102991f18495fe37a47460e95442436, MTime: 2025-04-22 13:34:35
+2025-04-27 06:34:32,285 | INFO | Processing file: frontend/static/js/components/receive_modal.js
+2025-04-27 06:34:32,285 | INFO | Added file: frontend/static/js/components/receive_modal.js, Lines: 127, Hash: 2cd0f5c8a318d0be90757413ad366334b92b05e94715e0bc87d9f6b39a3f7ace, MTime: 2025-04-21 12:28:47
+2025-04-27 06:34:32,285 | INFO | Processing file: frontend/static/js/components/shared_filters.js
+2025-04-27 06:34:32,285 | INFO | Added file: frontend/static/js/components/shared_filters.js, Lines: 40, Hash: c2bcb059a440b2a141800eb89c7b5ef08ebfb237a15a5f029ab1d54d99728013, MTime: 2025-04-20 20:59:28
+2025-04-27 06:34:32,285 | INFO | Processing file: frontend/templates/audit_trail.html
+2025-04-27 06:34:32,286 | INFO | Added file: frontend/templates/audit_trail.html, Lines: 76, Hash: 15202e0430974f002903364295dc8963a8ce438e9fdc5e4052c4c8d13776c8b7, MTime: 2025-04-23 07:53:30
+2025-04-27 06:34:32,286 | INFO | Processing file: frontend/templates/home.html
+2025-04-27 06:34:32,286 | INFO | Added file: frontend/templates/home.html, Lines: 8, Hash: ac4d404264cf64dfb116e962a04b55652e74c04cddd42629831e37f32ae18b8c, MTime: 2025-04-17 16:06:02
+2025-04-27 06:34:32,286 | INFO | Processing file: frontend/templates/index.html
+2025-04-27 06:34:32,286 | INFO | Added file: frontend/templates/index.html, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, MTime: 2025-04-13 05:50:15
+2025-04-27 06:34:32,286 | INFO | Processing file: frontend/templates/login.html
+2025-04-27 06:34:32,286 | INFO | Added file: frontend/templates/login.html, Lines: 58, Hash: 70f4f0f58af0f08bb9ee5f0c49a66ca0bb0be3350e4bd22f31ba77d9ddaced78, MTime: 2025-04-18 10:12:24
+2025-04-27 06:34:32,286 | INFO | Processing file: frontend/templates/maintenance.html
+2025-04-27 06:34:32,286 | INFO | Added file: frontend/templates/maintenance.html, Lines: 425, Hash: d9b2684779fac0c6f289347f94415f80463dff50c9a6447324e8c90063a78618, MTime: 2025-04-26 08:57:20
+2025-04-27 06:34:32,286 | INFO | Processing file: frontend/templates/new_order.html
+2025-04-27 06:34:32,286 | INFO | Added file: frontend/templates/new_order.html, Lines: 115, Hash: 358ae0a5999abc1a148af4a0226b4ab6d09f92d9217c1b47273943567547d6e1, MTime: 2025-04-26 13:03:05
+2025-04-27 06:34:32,286 | INFO | Processing file: frontend/templates/pending_orders.html
+2025-04-27 06:34:32,286 | INFO | Added file: frontend/templates/pending_orders.html, Lines: 81, Hash: d4adac055a3881b30b56e798c7b41029710f0fd5d95cabf0b8c7b5bf15c9fb2f, MTime: 2025-04-26 09:22:05
+2025-04-27 06:34:32,286 | INFO | Processing file: frontend/templates/print_template.html
+2025-04-27 06:34:32,286 | INFO | Added file: frontend/templates/print_template.html, Lines: 43, Hash: 13e2caadbdb4784dedc84b2e3541178a2ea3ab73e9ddb5fe72cafb78e0607777, MTime: 2025-04-17 05:31:59
+2025-04-27 06:34:32,286 | INFO | Processing file: frontend/templates/received_orders.html
+2025-04-27 06:34:32,286 | INFO | Added file: frontend/templates/received_orders.html, Lines: 73, Hash: eefb9d5bfdb1db7bfcdcb94e9e967203207abaae975e32d48691f013b5211039, MTime: 2025-04-26 14:27:45
+2025-04-27 06:34:32,286 | INFO | Output written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-27 10:21:23,846 | INFO | Starting script generation
+2025-04-27 10:21:23,851 | INFO | Directory tree generated successfully
+2025-04-27 10:21:23,851 | INFO | Database schema extracted successfully
+2025-04-27 10:21:23,852 | INFO | Processing file: backend/__init__.py
+2025-04-27 10:21:23,852 | INFO | Added file: backend/__init__.py, Lines: 8, Hash: 65ffe28a2aebdd73aa0be46543d4b3c378f9027d3d1c5cb0a33164cf94acd354, MTime: 2025-04-27 09:51:39
+2025-04-27 10:21:23,852 | INFO | Processing file: backend/database.py
+2025-04-27 10:21:23,852 | INFO | Added file: backend/database.py, Lines: 248, Hash: 82377db634c0a2cff4f1b1cb62851697091677c73b5077b80e9b3f50ab2d2991, MTime: 2025-04-26 08:57:20
+2025-04-27 10:21:23,852 | INFO | Processing file: backend/main.py
+2025-04-27 10:21:23,852 | INFO | Added file: backend/main.py, Lines: 94, Hash: 1038940a36f792fabcb8ce8b5dc512d8d0763c0fe446d85c772ac07f072f46c2, MTime: 2025-04-27 09:51:52
+2025-04-27 10:21:23,852 | INFO | Processing file: backend/endpoints/__init__.py
+2025-04-27 10:21:23,853 | INFO | Added file: backend/endpoints/__init__.py, Lines: 33, Hash: 67ce0bfdddd4f28cf8deb00d99fc5eb9b73cc629785f88da0297b57165996707, MTime: 2025-04-26 14:11:14
+2025-04-27 10:21:23,853 | INFO | Processing file: backend/endpoints/auth.py
+2025-04-27 10:21:23,853 | INFO | Added file: backend/endpoints/auth.py, Lines: 58, Hash: 29786b3e14c7e5b8920a9652217fb313cc0f152b4da15d3fec5f895a96cc37bc, MTime: 2025-04-19 12:17:53
+2025-04-27 10:21:23,853 | INFO | Processing file: backend/endpoints/html_routes.py
+2025-04-27 10:21:23,853 | INFO | Added file: backend/endpoints/html_routes.py, Lines: 76, Hash: e03729084c7e77857f0fddcef0e6852d8737ba95001274c3e16a9517d8f2ff39, MTime: 2025-04-26 08:57:20
+2025-04-27 10:21:23,853 | INFO | Processing file: backend/endpoints/lookups.py
+2025-04-27 10:21:23,853 | INFO | Added file: backend/endpoints/lookups.py, Lines: 162, Hash: 764890e607c6b3649e60f67e16fb1d839d74d632cfdce0237b4570690d87988e, MTime: 2025-04-27 09:23:06
+2025-04-27 10:21:23,853 | INFO | Processing file: backend/endpoints/order_attachments.py
+2025-04-27 10:21:23,853 | INFO | Added file: backend/endpoints/order_attachments.py, Lines: 91, Hash: 4724d33164b1f3febbb321c2bbd4f59b3294c5a63cbdb3d9deab190b157ac5fa, MTime: 2025-04-26 15:42:58
+2025-04-27 10:21:23,853 | INFO | Processing file: backend/endpoints/order_notes.py
+2025-04-27 10:21:23,854 | INFO | Added file: backend/endpoints/order_notes.py, Lines: 38, Hash: 4e1569828a57fb391f167b170d81c624dbbbc18c2ad661bf9bfe8dc752b6347c, MTime: 2025-04-26 16:04:35
+2025-04-27 10:21:23,854 | INFO | Processing file: backend/endpoints/order_pdf.py
+2025-04-27 10:21:23,854 | INFO | Added file: backend/endpoints/order_pdf.py, Lines: 145, Hash: 27c863c6ce98ba9db0cf6fbf9842d92e72a197460aaef3af9cb5345c029f72eb, MTime: 2025-04-26 15:43:31
+2025-04-27 10:21:23,854 | INFO | Processing file: backend/endpoints/order_queries.py
+2025-04-27 10:21:23,854 | INFO | Added file: backend/endpoints/order_queries.py, Lines: 258, Hash: e14f1889fd1960fd2564f47a56b0f4927cc87e7d1de2652c8119deebc9ba126f, MTime: 2025-04-26 15:43:53
+2025-04-27 10:21:23,854 | INFO | Processing file: backend/endpoints/order_receiving.py
+2025-04-27 10:21:23,855 | INFO | Added file: backend/endpoints/order_receiving.py, Lines: 66, Hash: cc03655f46a3fbcba8f126d2060fe4273d7d88cdf5bdb71f800c8e278e3d3d47, MTime: 2025-04-26 15:44:23
+2025-04-27 10:21:23,855 | INFO | Processing file: backend/endpoints/orders.py
+2025-04-27 10:21:23,855 | INFO | Added file: backend/endpoints/orders.py, Lines: 260, Hash: bce4e29a622f1c5b68f619995061e430f2d2740619aa117e3a3640570f97c1f7, MTime: 2025-04-27 10:03:33
+2025-04-27 10:21:23,855 | INFO | Processing file: backend/endpoints/requesters.py
+2025-04-27 10:21:23,855 | INFO | Added file: backend/endpoints/requesters.py, Lines: 16, Hash: cb6bfb4a14622f60078abfc0cc4e2b28146221f88c2a1696fd3644f1c415437b, MTime: 2025-04-17 05:31:59
+2025-04-27 10:21:23,855 | INFO | Processing file: backend/endpoints/supplier_lookup.py
+2025-04-27 10:21:23,855 | INFO | Added file: backend/endpoints/supplier_lookup.py, Lines: 64, Hash: 6cefc875a8eb0bc09fc4b8b62932ebd561efa721a53b669bb7d69c95668916bf, MTime: 2025-04-20 12:44:07
+2025-04-27 10:21:23,855 | INFO | Processing file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-27 10:21:23,856 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py, Lines: 68, Hash: 1b9b5e967ee05351f612323ed6b1c0c0a559213c7c6cc51a333d02dc3a42a28c, MTime: 2025-04-20 14:06:58
+2025-04-27 10:21:23,856 | INFO | Processing file: backend/endpoints/whatsapp.py
+2025-04-27 10:21:23,856 | INFO | Added file: backend/endpoints/whatsapp.py, Lines: 119, Hash: 7b7abae252160667e841895373097b3f69008675661e594ee5c0089e497e4b31, MTime: 2025-04-27 05:39:06
+2025-04-27 10:21:23,856 | INFO | Processing file: backend/utils/__init__.py
+2025-04-27 10:21:23,856 | INFO | Added file: backend/utils/__init__.py, Lines: 3, Hash: f436efcd1385945a651b97824b3569fe97aa2510d28fc295f0612806b1389737, MTime: 2025-04-13 05:50:15
+2025-04-27 10:21:23,856 | INFO | Processing file: backend/utils/order_utils.py
+2025-04-27 10:21:23,856 | INFO | Added file: backend/utils/order_utils.py, Lines: 38, Hash: 5dbe1c10837f86d4f28f3ccd1bc5226c4e13a8f402bff30001c0b47db6e90aca, MTime: 2025-04-26 16:11:39
+2025-04-27 10:21:23,857 | INFO | Processing file: backend/twilio/__init__.py
+2025-04-27 10:21:23,857 | INFO | Added file: backend/twilio/__init__.py, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, MTime: 2025-04-23 14:57:53
+2025-04-27 10:21:23,857 | INFO | Processing file: backend/twilio/twilio_utils.py
+2025-04-27 10:21:23,857 | INFO | Added file: backend/twilio/twilio_utils.py, Lines: 51, Hash: c9d4d2ff350f64d5b61f81891766fa2197032b4be44fc92cf833b93291c76012, MTime: 2025-04-26 15:59:51
+2025-04-27 10:21:23,857 | INFO | Processing file: frontend/static/js/audit_trail.js
+2025-04-27 10:21:23,858 | INFO | Added file: frontend/static/js/audit_trail.js, Lines: 169, Hash: a0f94ccded539927958fc3760164369c45a063cf48399aac070444cc2ceb4cd2, MTime: 2025-04-23 07:54:46
+2025-04-27 10:21:23,858 | INFO | Processing file: frontend/static/js/new_order.js
+2025-04-27 10:21:23,858 | INFO | new_order.js details: Lines=623, Hash=67aaa49526bce382f2c0772444d939265710338f1db957b1aa0f59a235f53e00, MTime=2025-04-27 07:53:12
+2025-04-27 10:21:23,858 | INFO | new_order.js first 10 lines:
+let itemsList = [];
+let projectsList = [];
+let rowCount = 0;
+let latestOrderId = null;
+let latestOrderDetails = null;
+let currentOrderNumber = null;
+
+// Debounce utility function
+function debounce(fun...
+2025-04-27 10:21:23,858 | INFO | Added file: frontend/static/js/new_order.js, Lines: 623, Hash: 67aaa49526bce382f2c0772444d939265710338f1db957b1aa0f59a235f53e00, MTime: 2025-04-27 07:53:12
+2025-04-27 10:21:23,858 | INFO | Processing file: frontend/static/js/new_order_main.js
+2025-04-27 10:21:23,858 | INFO | Added file: frontend/static/js/new_order_main.js, Lines: 309, Hash: 1cd10ef0fb403136b617ec5e99117a6d03b29598c743daa7e766123ed0a270c6, MTime: 2025-04-27 07:54:41
+2025-04-27 10:21:23,859 | INFO | Processing file: frontend/static/js/new_order_modals.js
+2025-04-27 10:21:23,859 | INFO | Added file: frontend/static/js/new_order_modals.js, Lines: 153, Hash: 3e67e495be974b07aa29a7a2404e43a640758118d5c0bcba01375cd4ab87a568, MTime: 2025-04-27 07:56:32
+2025-04-27 10:21:23,859 | INFO | Processing file: frontend/static/js/new_order_utils.js
+2025-04-27 10:21:23,859 | INFO | Added file: frontend/static/js/new_order_utils.js, Lines: 174, Hash: c342bc476d6e4e10223fd8fe7eaa8bae2cf5b917538b378993a81d20f1371acf, MTime: 2025-04-27 09:17:53
+2025-04-27 10:21:23,859 | INFO | Processing file: frontend/static/js/pending_orders.js
+2025-04-27 10:21:23,859 | INFO | Added file: frontend/static/js/pending_orders.js, Lines: 136, Hash: 587586d8cdeafe4154d1156cb6386c0e0ea3d78d966518d34cbb13cb2db045e2, MTime: 2025-04-27 08:45:57
+2025-04-27 10:21:23,859 | INFO | Processing file: frontend/static/js/received_orders.js
+2025-04-27 10:21:23,860 | INFO | Added file: frontend/static/js/received_orders.js, Lines: 135, Hash: 69235ae3f1e1b4aeebb4b20fe1fa47631966e2ca93e4e65cf90f0ddf6a3dcbbf, MTime: 2025-04-26 14:30:42
+2025-04-27 10:21:23,860 | INFO | Processing file: frontend/static/js/components/attachment_modal.js
+2025-04-27 10:21:23,860 | INFO | Added file: frontend/static/js/components/attachment_modal.js, Lines: 166, Hash: 04f98b8f0c9cb85345b8bb44f0c069bf7cd85da1138d90beb207d02b7be55c49, MTime: 2025-04-23 05:26:12
+2025-04-27 10:21:23,860 | INFO | Processing file: frontend/static/js/components/expand_line_items.js
+2025-04-27 10:21:23,860 | INFO | Added file: frontend/static/js/components/expand_line_items.js, Lines: 74, Hash: 46a15875db4b64e900effb95ccefbef756b90ba7f9002e0dd01690e7e27889cb, MTime: 2025-04-21 12:11:27
+2025-04-27 10:21:23,860 | INFO | Processing file: frontend/static/js/components/order_note_modal.js
+2025-04-27 10:21:23,861 | INFO | Added file: frontend/static/js/components/order_note_modal.js, Lines: 134, Hash: 5d5d6d5f3162a07f82be723c52b77a9473384194d922d5c627e01e5bf8a5ef18, MTime: 2025-04-27 08:45:32
+2025-04-27 10:21:23,861 | INFO | Processing file: frontend/static/js/components/receive_modal.js
+2025-04-27 10:21:23,861 | INFO | Added file: frontend/static/js/components/receive_modal.js, Lines: 127, Hash: 2cd0f5c8a318d0be90757413ad366334b92b05e94715e0bc87d9f6b39a3f7ace, MTime: 2025-04-21 12:28:47
+2025-04-27 10:21:23,861 | INFO | Processing file: frontend/static/js/components/shared_filters.js
+2025-04-27 10:21:23,861 | INFO | Added file: frontend/static/js/components/shared_filters.js, Lines: 40, Hash: c2bcb059a440b2a141800eb89c7b5ef08ebfb237a15a5f029ab1d54d99728013, MTime: 2025-04-20 20:59:28
+2025-04-27 10:21:23,861 | INFO | Processing file: frontend/templates/audit_trail.html
+2025-04-27 10:21:23,861 | INFO | Added file: frontend/templates/audit_trail.html, Lines: 76, Hash: 15202e0430974f002903364295dc8963a8ce438e9fdc5e4052c4c8d13776c8b7, MTime: 2025-04-23 07:53:30
+2025-04-27 10:21:23,861 | INFO | Processing file: frontend/templates/home.html
+2025-04-27 10:21:23,862 | INFO | Added file: frontend/templates/home.html, Lines: 8, Hash: ac4d404264cf64dfb116e962a04b55652e74c04cddd42629831e37f32ae18b8c, MTime: 2025-04-17 16:06:02
+2025-04-27 10:21:23,862 | INFO | Processing file: frontend/templates/index.html
+2025-04-27 10:21:23,862 | INFO | Added file: frontend/templates/index.html, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, MTime: 2025-04-13 05:50:15
+2025-04-27 10:21:23,862 | INFO | Processing file: frontend/templates/login.html
+2025-04-27 10:21:23,862 | INFO | Added file: frontend/templates/login.html, Lines: 58, Hash: 70f4f0f58af0f08bb9ee5f0c49a66ca0bb0be3350e4bd22f31ba77d9ddaced78, MTime: 2025-04-18 10:12:24
+2025-04-27 10:21:23,862 | INFO | Processing file: frontend/templates/maintenance.html
+2025-04-27 10:21:23,862 | INFO | Added file: frontend/templates/maintenance.html, Lines: 425, Hash: d9b2684779fac0c6f289347f94415f80463dff50c9a6447324e8c90063a78618, MTime: 2025-04-26 08:57:20
+2025-04-27 10:21:23,862 | INFO | Processing file: frontend/templates/new_order.html
+2025-04-27 10:21:23,862 | INFO | Added file: frontend/templates/new_order.html, Lines: 114, Hash: e10b51d680259a724ad845d9a9050e341acd0e9f3bdf7151b87572012930b38a, MTime: 2025-04-27 07:56:58
+2025-04-27 10:21:23,862 | INFO | Processing file: frontend/templates/pending_orders.html
+2025-04-27 10:21:23,863 | INFO | Added file: frontend/templates/pending_orders.html, Lines: 81, Hash: d4adac055a3881b30b56e798c7b41029710f0fd5d95cabf0b8c7b5bf15c9fb2f, MTime: 2025-04-26 09:22:05
+2025-04-27 10:21:23,863 | INFO | Processing file: frontend/templates/print_template.html
+2025-04-27 10:21:23,863 | INFO | Added file: frontend/templates/print_template.html, Lines: 43, Hash: 13e2caadbdb4784dedc84b2e3541178a2ea3ab73e9ddb5fe72cafb78e0607777, MTime: 2025-04-17 05:31:59
+2025-04-27 10:21:23,863 | INFO | Processing file: frontend/templates/received_orders.html
+2025-04-27 10:21:23,863 | INFO | Added file: frontend/templates/received_orders.html, Lines: 73, Hash: eefb9d5bfdb1db7bfcdcb94e9e967203207abaae975e32d48691f013b5211039, MTime: 2025-04-26 14:27:45
+2025-04-27 10:21:23,863 | INFO | Output written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-27 10:47:28,548 | INFO | Starting script generation
+2025-04-27 10:47:28,553 | INFO | Directory tree generated successfully
+2025-04-27 10:47:28,553 | INFO | Database schema extracted successfully
+2025-04-27 10:47:28,554 | INFO | Processing file: backend/__init__.py
+2025-04-27 10:47:28,554 | INFO | Added file: backend/__init__.py, Lines: 8, Hash: 65ffe28a2aebdd73aa0be46543d4b3c378f9027d3d1c5cb0a33164cf94acd354, MTime: 2025-04-27 09:51:39
+2025-04-27 10:47:28,554 | INFO | Processing file: backend/database.py
+2025-04-27 10:47:28,554 | INFO | Added file: backend/database.py, Lines: 248, Hash: 82377db634c0a2cff4f1b1cb62851697091677c73b5077b80e9b3f50ab2d2991, MTime: 2025-04-26 08:57:20
+2025-04-27 10:47:28,554 | INFO | Processing file: backend/main.py
+2025-04-27 10:47:28,554 | INFO | Added file: backend/main.py, Lines: 121, Hash: 9c188a7cd09d77425cea1876a8c0940e400f3eb3c71cd5efe871ec6e7c3cbb61, MTime: 2025-04-27 10:22:10
+2025-04-27 10:47:28,554 | INFO | Processing file: backend/endpoints/__init__.py
+2025-04-27 10:47:28,555 | INFO | Added file: backend/endpoints/__init__.py, Lines: 33, Hash: 67ce0bfdddd4f28cf8deb00d99fc5eb9b73cc629785f88da0297b57165996707, MTime: 2025-04-26 14:11:14
+2025-04-27 10:47:28,555 | INFO | Processing file: backend/endpoints/auth.py
+2025-04-27 10:47:28,555 | INFO | Added file: backend/endpoints/auth.py, Lines: 58, Hash: 29786b3e14c7e5b8920a9652217fb313cc0f152b4da15d3fec5f895a96cc37bc, MTime: 2025-04-19 12:17:53
+2025-04-27 10:47:28,555 | INFO | Processing file: backend/endpoints/html_routes.py
+2025-04-27 10:47:28,555 | INFO | Added file: backend/endpoints/html_routes.py, Lines: 76, Hash: e03729084c7e77857f0fddcef0e6852d8737ba95001274c3e16a9517d8f2ff39, MTime: 2025-04-26 08:57:20
+2025-04-27 10:47:28,555 | INFO | Processing file: backend/endpoints/lookups.py
+2025-04-27 10:47:28,555 | INFO | Added file: backend/endpoints/lookups.py, Lines: 162, Hash: 764890e607c6b3649e60f67e16fb1d839d74d632cfdce0237b4570690d87988e, MTime: 2025-04-27 09:23:06
+2025-04-27 10:47:28,555 | INFO | Processing file: backend/endpoints/order_attachments.py
+2025-04-27 10:47:28,556 | INFO | Added file: backend/endpoints/order_attachments.py, Lines: 91, Hash: 4724d33164b1f3febbb321c2bbd4f59b3294c5a63cbdb3d9deab190b157ac5fa, MTime: 2025-04-26 15:42:58
+2025-04-27 10:47:28,556 | INFO | Processing file: backend/endpoints/order_notes.py
+2025-04-27 10:47:28,556 | INFO | Added file: backend/endpoints/order_notes.py, Lines: 38, Hash: 4e1569828a57fb391f167b170d81c624dbbbc18c2ad661bf9bfe8dc752b6347c, MTime: 2025-04-26 16:04:35
+2025-04-27 10:47:28,556 | INFO | Processing file: backend/endpoints/order_pdf.py
+2025-04-27 10:47:28,556 | INFO | Added file: backend/endpoints/order_pdf.py, Lines: 145, Hash: 27c863c6ce98ba9db0cf6fbf9842d92e72a197460aaef3af9cb5345c029f72eb, MTime: 2025-04-26 15:43:31
+2025-04-27 10:47:28,556 | INFO | Processing file: backend/endpoints/order_queries.py
+2025-04-27 10:47:28,556 | INFO | Added file: backend/endpoints/order_queries.py, Lines: 258, Hash: e14f1889fd1960fd2564f47a56b0f4927cc87e7d1de2652c8119deebc9ba126f, MTime: 2025-04-26 15:43:53
+2025-04-27 10:47:28,556 | INFO | Processing file: backend/endpoints/order_receiving.py
+2025-04-27 10:47:28,557 | INFO | Added file: backend/endpoints/order_receiving.py, Lines: 66, Hash: cc03655f46a3fbcba8f126d2060fe4273d7d88cdf5bdb71f800c8e278e3d3d47, MTime: 2025-04-26 15:44:23
+2025-04-27 10:47:28,557 | INFO | Processing file: backend/endpoints/orders.py
+2025-04-27 10:47:28,557 | INFO | Added file: backend/endpoints/orders.py, Lines: 348, Hash: bbfaca09b0f1f692d6ef6bb594fb9a7361cf215cad2b60b40dc0da05f3c864be, MTime: 2025-04-27 10:42:57
+2025-04-27 10:47:28,557 | INFO | Processing file: backend/endpoints/requesters.py
+2025-04-27 10:47:28,557 | INFO | Added file: backend/endpoints/requesters.py, Lines: 16, Hash: cb6bfb4a14622f60078abfc0cc4e2b28146221f88c2a1696fd3644f1c415437b, MTime: 2025-04-17 05:31:59
+2025-04-27 10:47:28,557 | INFO | Processing file: backend/endpoints/supplier_lookup.py
+2025-04-27 10:47:28,557 | INFO | Added file: backend/endpoints/supplier_lookup.py, Lines: 64, Hash: 6cefc875a8eb0bc09fc4b8b62932ebd561efa721a53b669bb7d69c95668916bf, MTime: 2025-04-20 12:44:07
+2025-04-27 10:47:28,557 | INFO | Processing file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-27 10:47:28,558 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py, Lines: 68, Hash: 1b9b5e967ee05351f612323ed6b1c0c0a559213c7c6cc51a333d02dc3a42a28c, MTime: 2025-04-20 14:06:58
+2025-04-27 10:47:28,558 | INFO | Processing file: backend/endpoints/whatsapp.py
+2025-04-27 10:47:28,558 | INFO | Added file: backend/endpoints/whatsapp.py, Lines: 119, Hash: 7b7abae252160667e841895373097b3f69008675661e594ee5c0089e497e4b31, MTime: 2025-04-27 05:39:06
+2025-04-27 10:47:28,558 | INFO | Processing file: backend/utils/__init__.py
+2025-04-27 10:47:28,558 | INFO | Added file: backend/utils/__init__.py, Lines: 3, Hash: f436efcd1385945a651b97824b3569fe97aa2510d28fc295f0612806b1389737, MTime: 2025-04-13 05:50:15
+2025-04-27 10:47:28,558 | INFO | Processing file: backend/utils/order_utils.py
+2025-04-27 10:47:28,559 | INFO | Added file: backend/utils/order_utils.py, Lines: 38, Hash: 5dbe1c10837f86d4f28f3ccd1bc5226c4e13a8f402bff30001c0b47db6e90aca, MTime: 2025-04-26 16:11:39
+2025-04-27 10:47:28,559 | INFO | Processing file: backend/twilio/__init__.py
+2025-04-27 10:47:28,559 | INFO | Added file: backend/twilio/__init__.py, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, MTime: 2025-04-23 14:57:53
+2025-04-27 10:47:28,559 | INFO | Processing file: backend/twilio/twilio_utils.py
+2025-04-27 10:47:28,559 | INFO | Added file: backend/twilio/twilio_utils.py, Lines: 51, Hash: c9d4d2ff350f64d5b61f81891766fa2197032b4be44fc92cf833b93291c76012, MTime: 2025-04-26 15:59:51
+2025-04-27 10:47:28,559 | INFO | Processing file: frontend/static/js/audit_trail.js
+2025-04-27 10:47:28,560 | INFO | Added file: frontend/static/js/audit_trail.js, Lines: 169, Hash: a0f94ccded539927958fc3760164369c45a063cf48399aac070444cc2ceb4cd2, MTime: 2025-04-23 07:54:46
+2025-04-27 10:47:28,560 | INFO | Processing file: frontend/static/js/new_order.js
+2025-04-27 10:47:28,560 | INFO | new_order.js details: Lines=623, Hash=67aaa49526bce382f2c0772444d939265710338f1db957b1aa0f59a235f53e00, MTime=2025-04-27 07:53:12
+2025-04-27 10:47:28,560 | INFO | new_order.js first 10 lines:
+let itemsList = [];
+let projectsList = [];
+let rowCount = 0;
+let latestOrderId = null;
+let latestOrderDetails = null;
+let currentOrderNumber = null;
+
+// Debounce utility function
+function debounce(fun...
+2025-04-27 10:47:28,560 | INFO | Added file: frontend/static/js/new_order.js, Lines: 623, Hash: 67aaa49526bce382f2c0772444d939265710338f1db957b1aa0f59a235f53e00, MTime: 2025-04-27 07:53:12
+2025-04-27 10:47:28,560 | INFO | Processing file: frontend/static/js/new_order_main.js
+2025-04-27 10:47:28,561 | INFO | Added file: frontend/static/js/new_order_main.js, Lines: 309, Hash: 1cd10ef0fb403136b617ec5e99117a6d03b29598c743daa7e766123ed0a270c6, MTime: 2025-04-27 07:54:41
+2025-04-27 10:47:28,561 | INFO | Processing file: frontend/static/js/new_order_modals.js
+2025-04-27 10:47:28,561 | INFO | Added file: frontend/static/js/new_order_modals.js, Lines: 153, Hash: 3e67e495be974b07aa29a7a2404e43a640758118d5c0bcba01375cd4ab87a568, MTime: 2025-04-27 07:56:32
+2025-04-27 10:47:28,561 | INFO | Processing file: frontend/static/js/new_order_utils.js
+2025-04-27 10:47:28,561 | INFO | Added file: frontend/static/js/new_order_utils.js, Lines: 174, Hash: c342bc476d6e4e10223fd8fe7eaa8bae2cf5b917538b378993a81d20f1371acf, MTime: 2025-04-27 09:17:53
+2025-04-27 10:47:28,561 | INFO | Processing file: frontend/static/js/pending_orders.js
+2025-04-27 10:47:28,561 | INFO | Added file: frontend/static/js/pending_orders.js, Lines: 136, Hash: 587586d8cdeafe4154d1156cb6386c0e0ea3d78d966518d34cbb13cb2db045e2, MTime: 2025-04-27 08:45:57
+2025-04-27 10:47:28,561 | INFO | Processing file: frontend/static/js/received_orders.js
+2025-04-27 10:47:28,562 | INFO | Added file: frontend/static/js/received_orders.js, Lines: 135, Hash: 69235ae3f1e1b4aeebb4b20fe1fa47631966e2ca93e4e65cf90f0ddf6a3dcbbf, MTime: 2025-04-26 14:30:42
+2025-04-27 10:47:28,562 | INFO | Processing file: frontend/static/js/components/attachment_modal.js
+2025-04-27 10:47:28,562 | INFO | Added file: frontend/static/js/components/attachment_modal.js, Lines: 166, Hash: 04f98b8f0c9cb85345b8bb44f0c069bf7cd85da1138d90beb207d02b7be55c49, MTime: 2025-04-23 05:26:12
+2025-04-27 10:47:28,562 | INFO | Processing file: frontend/static/js/components/expand_line_items.js
+2025-04-27 10:47:28,562 | INFO | Added file: frontend/static/js/components/expand_line_items.js, Lines: 74, Hash: 46a15875db4b64e900effb95ccefbef756b90ba7f9002e0dd01690e7e27889cb, MTime: 2025-04-21 12:11:27
+2025-04-27 10:47:28,562 | INFO | Processing file: frontend/static/js/components/order_note_modal.js
+2025-04-27 10:47:28,562 | INFO | Added file: frontend/static/js/components/order_note_modal.js, Lines: 134, Hash: 5d5d6d5f3162a07f82be723c52b77a9473384194d922d5c627e01e5bf8a5ef18, MTime: 2025-04-27 08:45:32
+2025-04-27 10:47:28,562 | INFO | Processing file: frontend/static/js/components/receive_modal.js
+2025-04-27 10:47:28,563 | INFO | Added file: frontend/static/js/components/receive_modal.js, Lines: 127, Hash: 2cd0f5c8a318d0be90757413ad366334b92b05e94715e0bc87d9f6b39a3f7ace, MTime: 2025-04-21 12:28:47
+2025-04-27 10:47:28,563 | INFO | Processing file: frontend/static/js/components/shared_filters.js
+2025-04-27 10:47:28,563 | INFO | Added file: frontend/static/js/components/shared_filters.js, Lines: 40, Hash: c2bcb059a440b2a141800eb89c7b5ef08ebfb237a15a5f029ab1d54d99728013, MTime: 2025-04-20 20:59:28
+2025-04-27 10:47:28,563 | INFO | Processing file: frontend/templates/audit_trail.html
+2025-04-27 10:47:28,563 | INFO | Added file: frontend/templates/audit_trail.html, Lines: 76, Hash: 15202e0430974f002903364295dc8963a8ce438e9fdc5e4052c4c8d13776c8b7, MTime: 2025-04-23 07:53:30
+2025-04-27 10:47:28,563 | INFO | Processing file: frontend/templates/home.html
+2025-04-27 10:47:28,564 | INFO | Added file: frontend/templates/home.html, Lines: 8, Hash: ac4d404264cf64dfb116e962a04b55652e74c04cddd42629831e37f32ae18b8c, MTime: 2025-04-17 16:06:02
+2025-04-27 10:47:28,564 | INFO | Processing file: frontend/templates/index.html
+2025-04-27 10:47:28,564 | INFO | Added file: frontend/templates/index.html, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, MTime: 2025-04-13 05:50:15
+2025-04-27 10:47:28,564 | INFO | Processing file: frontend/templates/login.html
+2025-04-27 10:47:28,564 | INFO | Added file: frontend/templates/login.html, Lines: 58, Hash: 70f4f0f58af0f08bb9ee5f0c49a66ca0bb0be3350e4bd22f31ba77d9ddaced78, MTime: 2025-04-18 10:12:24
+2025-04-27 10:47:28,564 | INFO | Processing file: frontend/templates/maintenance.html
+2025-04-27 10:47:28,564 | INFO | Added file: frontend/templates/maintenance.html, Lines: 425, Hash: d9b2684779fac0c6f289347f94415f80463dff50c9a6447324e8c90063a78618, MTime: 2025-04-26 08:57:20
+2025-04-27 10:47:28,564 | INFO | Processing file: frontend/templates/new_order.html
+2025-04-27 10:47:28,564 | INFO | Added file: frontend/templates/new_order.html, Lines: 114, Hash: e10b51d680259a724ad845d9a9050e341acd0e9f3bdf7151b87572012930b38a, MTime: 2025-04-27 07:56:58
+2025-04-27 10:47:28,564 | INFO | Processing file: frontend/templates/pending_orders.html
+2025-04-27 10:47:28,565 | INFO | Added file: frontend/templates/pending_orders.html, Lines: 81, Hash: d4adac055a3881b30b56e798c7b41029710f0fd5d95cabf0b8c7b5bf15c9fb2f, MTime: 2025-04-26 09:22:05
+2025-04-27 10:47:28,565 | INFO | Processing file: frontend/templates/print_template.html
+2025-04-27 10:47:28,565 | INFO | Added file: frontend/templates/print_template.html, Lines: 43, Hash: 13e2caadbdb4784dedc84b2e3541178a2ea3ab73e9ddb5fe72cafb78e0607777, MTime: 2025-04-17 05:31:59
+2025-04-27 10:47:28,565 | INFO | Processing file: frontend/templates/received_orders.html
+2025-04-27 10:47:28,565 | INFO | Added file: frontend/templates/received_orders.html, Lines: 73, Hash: eefb9d5bfdb1db7bfcdcb94e9e967203207abaae975e32d48691f013b5211039, MTime: 2025-04-26 14:27:45
+2025-04-27 10:47:28,565 | INFO | Output written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-27 10:57:13,329 | INFO | Starting script generation
+2025-04-27 10:57:13,333 | INFO | Directory tree generated successfully
+2025-04-27 10:57:13,333 | INFO | Database schema extracted successfully
+2025-04-27 10:57:13,333 | INFO | Processing file: backend/__init__.py
+2025-04-27 10:57:13,334 | INFO | Added file: backend/__init__.py, Lines: 8, Hash: 65ffe28a2aebdd73aa0be46543d4b3c378f9027d3d1c5cb0a33164cf94acd354, MTime: 2025-04-27 09:51:39
+2025-04-27 10:57:13,334 | INFO | Processing file: backend/database.py
+2025-04-27 10:57:13,334 | INFO | Added file: backend/database.py, Lines: 248, Hash: 82377db634c0a2cff4f1b1cb62851697091677c73b5077b80e9b3f50ab2d2991, MTime: 2025-04-26 08:57:20
+2025-04-27 10:57:13,334 | INFO | Processing file: backend/main.py
+2025-04-27 10:57:13,334 | INFO | Added file: backend/main.py, Lines: 121, Hash: 9c188a7cd09d77425cea1876a8c0940e400f3eb3c71cd5efe871ec6e7c3cbb61, MTime: 2025-04-27 10:22:10
+2025-04-27 10:57:13,334 | INFO | Processing file: backend/endpoints/__init__.py
+2025-04-27 10:57:13,334 | INFO | Added file: backend/endpoints/__init__.py, Lines: 33, Hash: 67ce0bfdddd4f28cf8deb00d99fc5eb9b73cc629785f88da0297b57165996707, MTime: 2025-04-26 14:11:14
+2025-04-27 10:57:13,334 | INFO | Processing file: backend/endpoints/auth.py
+2025-04-27 10:57:13,334 | INFO | Added file: backend/endpoints/auth.py, Lines: 58, Hash: 29786b3e14c7e5b8920a9652217fb313cc0f152b4da15d3fec5f895a96cc37bc, MTime: 2025-04-19 12:17:53
+2025-04-27 10:57:13,334 | INFO | Processing file: backend/endpoints/html_routes.py
+2025-04-27 10:57:13,334 | INFO | Added file: backend/endpoints/html_routes.py, Lines: 76, Hash: e03729084c7e77857f0fddcef0e6852d8737ba95001274c3e16a9517d8f2ff39, MTime: 2025-04-26 08:57:20
+2025-04-27 10:57:13,334 | INFO | Processing file: backend/endpoints/lookups.py
+2025-04-27 10:57:13,334 | INFO | Added file: backend/endpoints/lookups.py, Lines: 162, Hash: 764890e607c6b3649e60f67e16fb1d839d74d632cfdce0237b4570690d87988e, MTime: 2025-04-27 09:23:06
+2025-04-27 10:57:13,334 | INFO | Processing file: backend/endpoints/order_attachments.py
+2025-04-27 10:57:13,334 | INFO | Added file: backend/endpoints/order_attachments.py, Lines: 91, Hash: 4724d33164b1f3febbb321c2bbd4f59b3294c5a63cbdb3d9deab190b157ac5fa, MTime: 2025-04-26 15:42:58
+2025-04-27 10:57:13,334 | INFO | Processing file: backend/endpoints/order_notes.py
+2025-04-27 10:57:13,334 | INFO | Added file: backend/endpoints/order_notes.py, Lines: 38, Hash: 4e1569828a57fb391f167b170d81c624dbbbc18c2ad661bf9bfe8dc752b6347c, MTime: 2025-04-26 16:04:35
+2025-04-27 10:57:13,335 | INFO | Processing file: backend/endpoints/order_pdf.py
+2025-04-27 10:57:13,335 | INFO | Added file: backend/endpoints/order_pdf.py, Lines: 145, Hash: 27c863c6ce98ba9db0cf6fbf9842d92e72a197460aaef3af9cb5345c029f72eb, MTime: 2025-04-26 15:43:31
+2025-04-27 10:57:13,335 | INFO | Processing file: backend/endpoints/order_queries.py
+2025-04-27 10:57:13,335 | INFO | Added file: backend/endpoints/order_queries.py, Lines: 258, Hash: e14f1889fd1960fd2564f47a56b0f4927cc87e7d1de2652c8119deebc9ba126f, MTime: 2025-04-26 15:43:53
+2025-04-27 10:57:13,335 | INFO | Processing file: backend/endpoints/order_receiving.py
+2025-04-27 10:57:13,335 | INFO | Added file: backend/endpoints/order_receiving.py, Lines: 66, Hash: cc03655f46a3fbcba8f126d2060fe4273d7d88cdf5bdb71f800c8e278e3d3d47, MTime: 2025-04-26 15:44:23
+2025-04-27 10:57:13,335 | INFO | Processing file: backend/endpoints/orders.py
+2025-04-27 10:57:13,335 | INFO | Added file: backend/endpoints/orders.py, Lines: 348, Hash: 5abcf9d9086c719d7da73318321cd761f294e98196c649203714e551f805859b, MTime: 2025-04-27 10:57:04
+2025-04-27 10:57:13,335 | INFO | Processing file: backend/endpoints/requesters.py
+2025-04-27 10:57:13,335 | INFO | Added file: backend/endpoints/requesters.py, Lines: 16, Hash: cb6bfb4a14622f60078abfc0cc4e2b28146221f88c2a1696fd3644f1c415437b, MTime: 2025-04-17 05:31:59
+2025-04-27 10:57:13,335 | INFO | Processing file: backend/endpoints/supplier_lookup.py
+2025-04-27 10:57:13,335 | INFO | Added file: backend/endpoints/supplier_lookup.py, Lines: 64, Hash: 6cefc875a8eb0bc09fc4b8b62932ebd561efa721a53b669bb7d69c95668916bf, MTime: 2025-04-20 12:44:07
+2025-04-27 10:57:13,335 | INFO | Processing file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-27 10:57:13,335 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py, Lines: 68, Hash: 1b9b5e967ee05351f612323ed6b1c0c0a559213c7c6cc51a333d02dc3a42a28c, MTime: 2025-04-20 14:06:58
+2025-04-27 10:57:13,335 | INFO | Processing file: backend/endpoints/whatsapp.py
+2025-04-27 10:57:13,335 | INFO | Added file: backend/endpoints/whatsapp.py, Lines: 119, Hash: 7b7abae252160667e841895373097b3f69008675661e594ee5c0089e497e4b31, MTime: 2025-04-27 05:39:06
+2025-04-27 10:57:13,336 | INFO | Processing file: backend/utils/__init__.py
+2025-04-27 10:57:13,336 | INFO | Added file: backend/utils/__init__.py, Lines: 3, Hash: f436efcd1385945a651b97824b3569fe97aa2510d28fc295f0612806b1389737, MTime: 2025-04-13 05:50:15
+2025-04-27 10:57:13,336 | INFO | Processing file: backend/utils/order_utils.py
+2025-04-27 10:57:13,336 | INFO | Added file: backend/utils/order_utils.py, Lines: 38, Hash: 5dbe1c10837f86d4f28f3ccd1bc5226c4e13a8f402bff30001c0b47db6e90aca, MTime: 2025-04-26 16:11:39
+2025-04-27 10:57:13,336 | INFO | Processing file: backend/twilio/__init__.py
+2025-04-27 10:57:13,336 | INFO | Added file: backend/twilio/__init__.py, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, MTime: 2025-04-23 14:57:53
+2025-04-27 10:57:13,336 | INFO | Processing file: backend/twilio/twilio_utils.py
+2025-04-27 10:57:13,336 | INFO | Added file: backend/twilio/twilio_utils.py, Lines: 51, Hash: c9d4d2ff350f64d5b61f81891766fa2197032b4be44fc92cf833b93291c76012, MTime: 2025-04-26 15:59:51
+2025-04-27 10:57:13,336 | INFO | Processing file: frontend/static/js/audit_trail.js
+2025-04-27 10:57:13,336 | INFO | Added file: frontend/static/js/audit_trail.js, Lines: 169, Hash: a0f94ccded539927958fc3760164369c45a063cf48399aac070444cc2ceb4cd2, MTime: 2025-04-23 07:54:46
+2025-04-27 10:57:13,336 | INFO | Processing file: frontend/static/js/new_order.js
+2025-04-27 10:57:13,337 | INFO | new_order.js details: Lines=623, Hash=67aaa49526bce382f2c0772444d939265710338f1db957b1aa0f59a235f53e00, MTime=2025-04-27 07:53:12
+2025-04-27 10:57:13,337 | INFO | new_order.js first 10 lines:
+let itemsList = [];
+let projectsList = [];
+let rowCount = 0;
+let latestOrderId = null;
+let latestOrderDetails = null;
+let currentOrderNumber = null;
+
+// Debounce utility function
+function debounce(fun...
+2025-04-27 10:57:13,337 | INFO | Added file: frontend/static/js/new_order.js, Lines: 623, Hash: 67aaa49526bce382f2c0772444d939265710338f1db957b1aa0f59a235f53e00, MTime: 2025-04-27 07:53:12
+2025-04-27 10:57:13,337 | INFO | Processing file: frontend/static/js/new_order_main.js
+2025-04-27 10:57:13,337 | INFO | Added file: frontend/static/js/new_order_main.js, Lines: 309, Hash: 1cd10ef0fb403136b617ec5e99117a6d03b29598c743daa7e766123ed0a270c6, MTime: 2025-04-27 07:54:41
+2025-04-27 10:57:13,337 | INFO | Processing file: frontend/static/js/new_order_modals.js
+2025-04-27 10:57:13,337 | INFO | Added file: frontend/static/js/new_order_modals.js, Lines: 153, Hash: 3e67e495be974b07aa29a7a2404e43a640758118d5c0bcba01375cd4ab87a568, MTime: 2025-04-27 07:56:32
+2025-04-27 10:57:13,337 | INFO | Processing file: frontend/static/js/new_order_utils.js
+2025-04-27 10:57:13,337 | INFO | Added file: frontend/static/js/new_order_utils.js, Lines: 174, Hash: c342bc476d6e4e10223fd8fe7eaa8bae2cf5b917538b378993a81d20f1371acf, MTime: 2025-04-27 09:17:53
+2025-04-27 10:57:13,337 | INFO | Processing file: frontend/static/js/pending_orders.js
+2025-04-27 10:57:13,337 | INFO | Added file: frontend/static/js/pending_orders.js, Lines: 136, Hash: 587586d8cdeafe4154d1156cb6386c0e0ea3d78d966518d34cbb13cb2db045e2, MTime: 2025-04-27 08:45:57
+2025-04-27 10:57:13,337 | INFO | Processing file: frontend/static/js/received_orders.js
+2025-04-27 10:57:13,337 | INFO | Added file: frontend/static/js/received_orders.js, Lines: 135, Hash: 69235ae3f1e1b4aeebb4b20fe1fa47631966e2ca93e4e65cf90f0ddf6a3dcbbf, MTime: 2025-04-26 14:30:42
+2025-04-27 10:57:13,337 | INFO | Processing file: frontend/static/js/components/attachment_modal.js
+2025-04-27 10:57:13,337 | INFO | Added file: frontend/static/js/components/attachment_modal.js, Lines: 166, Hash: 04f98b8f0c9cb85345b8bb44f0c069bf7cd85da1138d90beb207d02b7be55c49, MTime: 2025-04-23 05:26:12
+2025-04-27 10:57:13,337 | INFO | Processing file: frontend/static/js/components/expand_line_items.js
+2025-04-27 10:57:13,337 | INFO | Added file: frontend/static/js/components/expand_line_items.js, Lines: 74, Hash: 46a15875db4b64e900effb95ccefbef756b90ba7f9002e0dd01690e7e27889cb, MTime: 2025-04-21 12:11:27
+2025-04-27 10:57:13,337 | INFO | Processing file: frontend/static/js/components/order_note_modal.js
+2025-04-27 10:57:13,338 | INFO | Added file: frontend/static/js/components/order_note_modal.js, Lines: 134, Hash: 5d5d6d5f3162a07f82be723c52b77a9473384194d922d5c627e01e5bf8a5ef18, MTime: 2025-04-27 08:45:32
+2025-04-27 10:57:13,338 | INFO | Processing file: frontend/static/js/components/receive_modal.js
+2025-04-27 10:57:13,338 | INFO | Added file: frontend/static/js/components/receive_modal.js, Lines: 127, Hash: 2cd0f5c8a318d0be90757413ad366334b92b05e94715e0bc87d9f6b39a3f7ace, MTime: 2025-04-21 12:28:47
+2025-04-27 10:57:13,338 | INFO | Processing file: frontend/static/js/components/shared_filters.js
+2025-04-27 10:57:13,338 | INFO | Added file: frontend/static/js/components/shared_filters.js, Lines: 40, Hash: c2bcb059a440b2a141800eb89c7b5ef08ebfb237a15a5f029ab1d54d99728013, MTime: 2025-04-20 20:59:28
+2025-04-27 10:57:13,338 | INFO | Processing file: frontend/templates/audit_trail.html
+2025-04-27 10:57:13,338 | INFO | Added file: frontend/templates/audit_trail.html, Lines: 76, Hash: 15202e0430974f002903364295dc8963a8ce438e9fdc5e4052c4c8d13776c8b7, MTime: 2025-04-23 07:53:30
+2025-04-27 10:57:13,338 | INFO | Processing file: frontend/templates/home.html
+2025-04-27 10:57:13,338 | INFO | Added file: frontend/templates/home.html, Lines: 8, Hash: ac4d404264cf64dfb116e962a04b55652e74c04cddd42629831e37f32ae18b8c, MTime: 2025-04-17 16:06:02
+2025-04-27 10:57:13,338 | INFO | Processing file: frontend/templates/index.html
+2025-04-27 10:57:13,338 | INFO | Added file: frontend/templates/index.html, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, MTime: 2025-04-13 05:50:15
+2025-04-27 10:57:13,338 | INFO | Processing file: frontend/templates/login.html
+2025-04-27 10:57:13,338 | INFO | Added file: frontend/templates/login.html, Lines: 58, Hash: 70f4f0f58af0f08bb9ee5f0c49a66ca0bb0be3350e4bd22f31ba77d9ddaced78, MTime: 2025-04-18 10:12:24
+2025-04-27 10:57:13,338 | INFO | Processing file: frontend/templates/maintenance.html
+2025-04-27 10:57:13,338 | INFO | Added file: frontend/templates/maintenance.html, Lines: 425, Hash: d9b2684779fac0c6f289347f94415f80463dff50c9a6447324e8c90063a78618, MTime: 2025-04-26 08:57:20
+2025-04-27 10:57:13,338 | INFO | Processing file: frontend/templates/new_order.html
+2025-04-27 10:57:13,338 | INFO | Added file: frontend/templates/new_order.html, Lines: 114, Hash: e10b51d680259a724ad845d9a9050e341acd0e9f3bdf7151b87572012930b38a, MTime: 2025-04-27 07:56:58
+2025-04-27 10:57:13,338 | INFO | Processing file: frontend/templates/pending_orders.html
+2025-04-27 10:57:13,338 | INFO | Added file: frontend/templates/pending_orders.html, Lines: 81, Hash: d4adac055a3881b30b56e798c7b41029710f0fd5d95cabf0b8c7b5bf15c9fb2f, MTime: 2025-04-26 09:22:05
+2025-04-27 10:57:13,338 | INFO | Processing file: frontend/templates/print_template.html
+2025-04-27 10:57:13,338 | INFO | Added file: frontend/templates/print_template.html, Lines: 43, Hash: 13e2caadbdb4784dedc84b2e3541178a2ea3ab73e9ddb5fe72cafb78e0607777, MTime: 2025-04-17 05:31:59
+2025-04-27 10:57:13,338 | INFO | Processing file: frontend/templates/received_orders.html
+2025-04-27 10:57:13,339 | INFO | Added file: frontend/templates/received_orders.html, Lines: 73, Hash: eefb9d5bfdb1db7bfcdcb94e9e967203207abaae975e32d48691f013b5211039, MTime: 2025-04-26 14:27:45
+2025-04-27 10:57:13,339 | INFO | Output written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-27 12:07:33,382 | INFO | Starting script generation
+2025-04-27 12:07:33,387 | INFO | Directory tree generated successfully
+2025-04-27 12:07:33,387 | INFO | Database schema extracted successfully
+2025-04-27 12:07:33,387 | INFO | Processing file: backend/__init__.py
+2025-04-27 12:07:33,388 | INFO | Added file: backend/__init__.py, Lines: 8, Hash: 65ffe28a2aebdd73aa0be46543d4b3c378f9027d3d1c5cb0a33164cf94acd354, MTime: 2025-04-27 09:51:39
+2025-04-27 12:07:33,388 | INFO | Processing file: backend/database.py
+2025-04-27 12:07:33,388 | INFO | Added file: backend/database.py, Lines: 248, Hash: 82377db634c0a2cff4f1b1cb62851697091677c73b5077b80e9b3f50ab2d2991, MTime: 2025-04-26 08:57:20
+2025-04-27 12:07:33,388 | INFO | Processing file: backend/main.py
+2025-04-27 12:07:33,388 | INFO | Added file: backend/main.py, Lines: 121, Hash: 9c188a7cd09d77425cea1876a8c0940e400f3eb3c71cd5efe871ec6e7c3cbb61, MTime: 2025-04-27 10:22:10
+2025-04-27 12:07:33,388 | INFO | Processing file: backend/endpoints/__init__.py
+2025-04-27 12:07:33,388 | INFO | Added file: backend/endpoints/__init__.py, Lines: 33, Hash: 67ce0bfdddd4f28cf8deb00d99fc5eb9b73cc629785f88da0297b57165996707, MTime: 2025-04-26 14:11:14
+2025-04-27 12:07:33,388 | INFO | Processing file: backend/endpoints/auth.py
+2025-04-27 12:07:33,389 | INFO | Added file: backend/endpoints/auth.py, Lines: 58, Hash: 29786b3e14c7e5b8920a9652217fb313cc0f152b4da15d3fec5f895a96cc37bc, MTime: 2025-04-19 12:17:53
+2025-04-27 12:07:33,389 | INFO | Processing file: backend/endpoints/html_routes.py
+2025-04-27 12:07:33,389 | INFO | Added file: backend/endpoints/html_routes.py, Lines: 76, Hash: e03729084c7e77857f0fddcef0e6852d8737ba95001274c3e16a9517d8f2ff39, MTime: 2025-04-26 08:57:20
+2025-04-27 12:07:33,389 | INFO | Processing file: backend/endpoints/lookups.py
+2025-04-27 12:07:33,389 | INFO | Added file: backend/endpoints/lookups.py, Lines: 162, Hash: 764890e607c6b3649e60f67e16fb1d839d74d632cfdce0237b4570690d87988e, MTime: 2025-04-27 09:23:06
+2025-04-27 12:07:33,389 | INFO | Processing file: backend/endpoints/order_attachments.py
+2025-04-27 12:07:33,389 | INFO | Added file: backend/endpoints/order_attachments.py, Lines: 91, Hash: 4724d33164b1f3febbb321c2bbd4f59b3294c5a63cbdb3d9deab190b157ac5fa, MTime: 2025-04-26 15:42:58
+2025-04-27 12:07:33,389 | INFO | Processing file: backend/endpoints/order_notes.py
+2025-04-27 12:07:33,389 | INFO | Added file: backend/endpoints/order_notes.py, Lines: 38, Hash: 4e1569828a57fb391f167b170d81c624dbbbc18c2ad661bf9bfe8dc752b6347c, MTime: 2025-04-26 16:04:35
+2025-04-27 12:07:33,389 | INFO | Processing file: backend/endpoints/order_pdf.py
+2025-04-27 12:07:33,390 | INFO | Added file: backend/endpoints/order_pdf.py, Lines: 145, Hash: 27c863c6ce98ba9db0cf6fbf9842d92e72a197460aaef3af9cb5345c029f72eb, MTime: 2025-04-26 15:43:31
+2025-04-27 12:07:33,390 | INFO | Processing file: backend/endpoints/order_queries.py
+2025-04-27 12:07:33,390 | INFO | Added file: backend/endpoints/order_queries.py, Lines: 258, Hash: e14f1889fd1960fd2564f47a56b0f4927cc87e7d1de2652c8119deebc9ba126f, MTime: 2025-04-26 15:43:53
+2025-04-27 12:07:33,390 | INFO | Processing file: backend/endpoints/order_receiving.py
+2025-04-27 12:07:33,390 | INFO | Added file: backend/endpoints/order_receiving.py, Lines: 66, Hash: cc03655f46a3fbcba8f126d2060fe4273d7d88cdf5bdb71f800c8e278e3d3d47, MTime: 2025-04-26 15:44:23
+2025-04-27 12:07:33,390 | INFO | Processing file: backend/endpoints/orders.py
+2025-04-27 12:07:33,390 | INFO | Added file: backend/endpoints/orders.py, Lines: 359, Hash: d8c8d2e96ba860571c818d05469ace0b31597fea7ce2819d5eba6a838ec6437a, MTime: 2025-04-27 12:06:02
+2025-04-27 12:07:33,390 | INFO | Processing file: backend/endpoints/requesters.py
+2025-04-27 12:07:33,391 | INFO | Added file: backend/endpoints/requesters.py, Lines: 16, Hash: cb6bfb4a14622f60078abfc0cc4e2b28146221f88c2a1696fd3644f1c415437b, MTime: 2025-04-17 05:31:59
+2025-04-27 12:07:33,391 | INFO | Processing file: backend/endpoints/supplier_lookup.py
+2025-04-27 12:07:33,391 | INFO | Added file: backend/endpoints/supplier_lookup.py, Lines: 64, Hash: 6cefc875a8eb0bc09fc4b8b62932ebd561efa721a53b669bb7d69c95668916bf, MTime: 2025-04-20 12:44:07
+2025-04-27 12:07:33,391 | INFO | Processing file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-27 12:07:33,391 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py, Lines: 68, Hash: 1b9b5e967ee05351f612323ed6b1c0c0a559213c7c6cc51a333d02dc3a42a28c, MTime: 2025-04-20 14:06:58
+2025-04-27 12:07:33,391 | INFO | Processing file: backend/endpoints/whatsapp.py
+2025-04-27 12:07:33,391 | INFO | Added file: backend/endpoints/whatsapp.py, Lines: 119, Hash: 7b7abae252160667e841895373097b3f69008675661e594ee5c0089e497e4b31, MTime: 2025-04-27 05:39:06
+2025-04-27 12:07:33,391 | INFO | Processing file: backend/utils/__init__.py
+2025-04-27 12:07:33,392 | INFO | Added file: backend/utils/__init__.py, Lines: 3, Hash: f436efcd1385945a651b97824b3569fe97aa2510d28fc295f0612806b1389737, MTime: 2025-04-13 05:50:15
+2025-04-27 12:07:33,392 | INFO | Processing file: backend/utils/order_utils.py
+2025-04-27 12:07:33,392 | INFO | Added file: backend/utils/order_utils.py, Lines: 38, Hash: 5dbe1c10837f86d4f28f3ccd1bc5226c4e13a8f402bff30001c0b47db6e90aca, MTime: 2025-04-26 16:11:39
+2025-04-27 12:07:33,392 | INFO | Processing file: backend/twilio/__init__.py
+2025-04-27 12:07:33,392 | INFO | Added file: backend/twilio/__init__.py, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, MTime: 2025-04-23 14:57:53
+2025-04-27 12:07:33,392 | INFO | Processing file: backend/twilio/twilio_utils.py
+2025-04-27 12:07:33,392 | INFO | Added file: backend/twilio/twilio_utils.py, Lines: 51, Hash: c9d4d2ff350f64d5b61f81891766fa2197032b4be44fc92cf833b93291c76012, MTime: 2025-04-26 15:59:51
+2025-04-27 12:07:33,393 | INFO | Processing file: frontend/static/js/audit_trail.js
+2025-04-27 12:07:33,393 | INFO | Added file: frontend/static/js/audit_trail.js, Lines: 169, Hash: a0f94ccded539927958fc3760164369c45a063cf48399aac070444cc2ceb4cd2, MTime: 2025-04-23 07:54:46
+2025-04-27 12:07:33,393 | INFO | Processing file: frontend/static/js/new_order.js
+2025-04-27 12:07:33,393 | INFO | new_order.js details: Lines=623, Hash=67aaa49526bce382f2c0772444d939265710338f1db957b1aa0f59a235f53e00, MTime=2025-04-27 07:53:12
+2025-04-27 12:07:33,393 | INFO | new_order.js first 10 lines:
+let itemsList = [];
+let projectsList = [];
+let rowCount = 0;
+let latestOrderId = null;
+let latestOrderDetails = null;
+let currentOrderNumber = null;
+
+// Debounce utility function
+function debounce(fun...
+2025-04-27 12:07:33,393 | INFO | Added file: frontend/static/js/new_order.js, Lines: 623, Hash: 67aaa49526bce382f2c0772444d939265710338f1db957b1aa0f59a235f53e00, MTime: 2025-04-27 07:53:12
+2025-04-27 12:07:33,393 | INFO | Processing file: frontend/static/js/new_order_main.js
+2025-04-27 12:07:33,393 | INFO | Added file: frontend/static/js/new_order_main.js, Lines: 309, Hash: 1cd10ef0fb403136b617ec5e99117a6d03b29598c743daa7e766123ed0a270c6, MTime: 2025-04-27 07:54:41
+2025-04-27 12:07:33,393 | INFO | Processing file: frontend/static/js/new_order_modals.js
+2025-04-27 12:07:33,394 | INFO | Added file: frontend/static/js/new_order_modals.js, Lines: 153, Hash: 3e67e495be974b07aa29a7a2404e43a640758118d5c0bcba01375cd4ab87a568, MTime: 2025-04-27 07:56:32
+2025-04-27 12:07:33,394 | INFO | Processing file: frontend/static/js/new_order_utils.js
+2025-04-27 12:07:33,394 | INFO | Added file: frontend/static/js/new_order_utils.js, Lines: 174, Hash: c342bc476d6e4e10223fd8fe7eaa8bae2cf5b917538b378993a81d20f1371acf, MTime: 2025-04-27 09:17:53
+2025-04-27 12:07:33,394 | INFO | Processing file: frontend/static/js/pending_orders.js
+2025-04-27 12:07:33,394 | INFO | Added file: frontend/static/js/pending_orders.js, Lines: 136, Hash: 587586d8cdeafe4154d1156cb6386c0e0ea3d78d966518d34cbb13cb2db045e2, MTime: 2025-04-27 08:45:57
+2025-04-27 12:07:33,394 | INFO | Processing file: frontend/static/js/received_orders.js
+2025-04-27 12:07:33,394 | INFO | Added file: frontend/static/js/received_orders.js, Lines: 135, Hash: 69235ae3f1e1b4aeebb4b20fe1fa47631966e2ca93e4e65cf90f0ddf6a3dcbbf, MTime: 2025-04-26 14:30:42
+2025-04-27 12:07:33,394 | INFO | Processing file: frontend/static/js/components/attachment_modal.js
+2025-04-27 12:07:33,395 | INFO | Added file: frontend/static/js/components/attachment_modal.js, Lines: 166, Hash: 04f98b8f0c9cb85345b8bb44f0c069bf7cd85da1138d90beb207d02b7be55c49, MTime: 2025-04-23 05:26:12
+2025-04-27 12:07:33,395 | INFO | Processing file: frontend/static/js/components/expand_line_items.js
+2025-04-27 12:07:33,395 | INFO | Added file: frontend/static/js/components/expand_line_items.js, Lines: 74, Hash: 46a15875db4b64e900effb95ccefbef756b90ba7f9002e0dd01690e7e27889cb, MTime: 2025-04-21 12:11:27
+2025-04-27 12:07:33,395 | INFO | Processing file: frontend/static/js/components/order_note_modal.js
+2025-04-27 12:07:33,395 | INFO | Added file: frontend/static/js/components/order_note_modal.js, Lines: 134, Hash: 5d5d6d5f3162a07f82be723c52b77a9473384194d922d5c627e01e5bf8a5ef18, MTime: 2025-04-27 08:45:32
+2025-04-27 12:07:33,395 | INFO | Processing file: frontend/static/js/components/receive_modal.js
+2025-04-27 12:07:33,396 | INFO | Added file: frontend/static/js/components/receive_modal.js, Lines: 127, Hash: 2cd0f5c8a318d0be90757413ad366334b92b05e94715e0bc87d9f6b39a3f7ace, MTime: 2025-04-21 12:28:47
+2025-04-27 12:07:33,396 | INFO | Processing file: frontend/static/js/components/shared_filters.js
+2025-04-27 12:07:33,396 | INFO | Added file: frontend/static/js/components/shared_filters.js, Lines: 40, Hash: c2bcb059a440b2a141800eb89c7b5ef08ebfb237a15a5f029ab1d54d99728013, MTime: 2025-04-20 20:59:28
+2025-04-27 12:07:33,396 | INFO | Processing file: frontend/templates/audit_trail.html
+2025-04-27 12:07:33,396 | INFO | Added file: frontend/templates/audit_trail.html, Lines: 76, Hash: 15202e0430974f002903364295dc8963a8ce438e9fdc5e4052c4c8d13776c8b7, MTime: 2025-04-23 07:53:30
+2025-04-27 12:07:33,396 | INFO | Processing file: frontend/templates/home.html
+2025-04-27 12:07:33,396 | INFO | Added file: frontend/templates/home.html, Lines: 8, Hash: ac4d404264cf64dfb116e962a04b55652e74c04cddd42629831e37f32ae18b8c, MTime: 2025-04-17 16:06:02
+2025-04-27 12:07:33,396 | INFO | Processing file: frontend/templates/index.html
+2025-04-27 12:07:33,396 | INFO | Added file: frontend/templates/index.html, Lines: 0, Hash: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, MTime: 2025-04-13 05:50:15
+2025-04-27 12:07:33,396 | INFO | Processing file: frontend/templates/login.html
+2025-04-27 12:07:33,397 | INFO | Added file: frontend/templates/login.html, Lines: 58, Hash: 70f4f0f58af0f08bb9ee5f0c49a66ca0bb0be3350e4bd22f31ba77d9ddaced78, MTime: 2025-04-18 10:12:24
+2025-04-27 12:07:33,397 | INFO | Processing file: frontend/templates/maintenance.html
+2025-04-27 12:07:33,397 | INFO | Added file: frontend/templates/maintenance.html, Lines: 425, Hash: d9b2684779fac0c6f289347f94415f80463dff50c9a6447324e8c90063a78618, MTime: 2025-04-26 08:57:20
+2025-04-27 12:07:33,397 | INFO | Processing file: frontend/templates/new_order.html
+2025-04-27 12:07:33,397 | INFO | Added file: frontend/templates/new_order.html, Lines: 114, Hash: e10b51d680259a724ad845d9a9050e341acd0e9f3bdf7151b87572012930b38a, MTime: 2025-04-27 07:56:58
+2025-04-27 12:07:33,397 | INFO | Processing file: frontend/templates/pending_orders.html
+2025-04-27 12:07:33,397 | INFO | Added file: frontend/templates/pending_orders.html, Lines: 81, Hash: d4adac055a3881b30b56e798c7b41029710f0fd5d95cabf0b8c7b5bf15c9fb2f, MTime: 2025-04-26 09:22:05
+2025-04-27 12:07:33,397 | INFO | Processing file: frontend/templates/print_template.html
+2025-04-27 12:07:33,398 | INFO | Added file: frontend/templates/print_template.html, Lines: 43, Hash: 13e2caadbdb4784dedc84b2e3541178a2ea3ab73e9ddb5fe72cafb78e0607777, MTime: 2025-04-17 05:31:59
+2025-04-27 12:07:33,398 | INFO | Processing file: frontend/templates/received_orders.html
+2025-04-27 12:07:33,398 | INFO | Added file: frontend/templates/received_orders.html, Lines: 73, Hash: eefb9d5bfdb1db7bfcdcb94e9e967203207abaae975e32d48691f013b5211039, MTime: 2025-04-26 14:27:45
+2025-04-27 12:07:33,398 | INFO | Output written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-27 16:16:24,637 | INFO | Starting full script generation
+2025-04-27 16:16:24,643 | INFO | Directory tree generated successfully
+2025-04-27 16:16:24,644 | INFO | Database schema extracted successfully
+2025-04-27 16:16:24,644 | INFO | Added file: backend/__init__.py
+2025-04-27 16:16:24,644 | INFO | Added file: backend/database.py
+2025-04-27 16:16:24,644 | INFO | Added file: backend/main.py
+2025-04-27 16:16:24,645 | INFO | Added file: backend/endpoints/__init__.py
+2025-04-27 16:16:24,645 | INFO | Added file: backend/endpoints/auth.py
+2025-04-27 16:16:24,645 | INFO | Added file: backend/endpoints/html_routes.py
+2025-04-27 16:16:24,645 | INFO | Added file: backend/endpoints/lookups.py
+2025-04-27 16:16:24,645 | INFO | Added file: backend/endpoints/order_attachments.py
+2025-04-27 16:16:24,645 | INFO | Added file: backend/endpoints/order_notes.py
+2025-04-27 16:16:24,646 | INFO | Added file: backend/endpoints/order_pdf.py
+2025-04-27 16:16:24,646 | INFO | Added file: backend/endpoints/order_queries.py
+2025-04-27 16:16:24,646 | INFO | Added file: backend/endpoints/order_receiving.py
+2025-04-27 16:16:24,646 | INFO | Added file: backend/endpoints/orders.py
+2025-04-27 16:16:24,646 | INFO | Added file: backend/endpoints/requesters.py
+2025-04-27 16:16:24,647 | INFO | Added file: backend/endpoints/supplier_lookup.py
+2025-04-27 16:16:24,647 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-27 16:16:24,647 | INFO | Added file: backend/endpoints/whatsapp.py
+2025-04-27 16:16:24,647 | INFO | Added file: backend/utils/__init__.py
+2025-04-27 16:16:24,647 | INFO | Added file: backend/utils/order_utils.py
+2025-04-27 16:16:24,648 | INFO | Added file: backend/twilio/__init__.py
+2025-04-27 16:16:24,648 | INFO | Added file: backend/twilio/twilio_utils.py
+2025-04-27 16:16:24,648 | INFO | Added file: frontend/static/js/audit_trail.js
+2025-04-27 16:16:24,649 | INFO | Added file: frontend/static/js/new_order.js
+2025-04-27 16:16:24,649 | INFO | Added file: frontend/static/js/new_order_main.js
+2025-04-27 16:16:24,649 | INFO | Added file: frontend/static/js/new_order_modals.js
+2025-04-27 16:16:24,649 | INFO | Added file: frontend/static/js/new_order_utils.js
+2025-04-27 16:16:24,649 | INFO | Added file: frontend/static/js/pending_orders.js
+2025-04-27 16:16:24,650 | INFO | Added file: frontend/static/js/received_orders.js
+2025-04-27 16:16:24,650 | INFO | Added file: frontend/static/js/components/attachment_modal.js
+2025-04-27 16:16:24,650 | INFO | Added file: frontend/static/js/components/expand_line_items.js
+2025-04-27 16:16:24,651 | INFO | Added file: frontend/static/js/components/order_note_modal.js
+2025-04-27 16:16:24,651 | INFO | Added file: frontend/static/js/components/receive_modal.js
+2025-04-27 16:16:24,651 | INFO | Added file: frontend/static/js/components/shared_filters.js
+2025-04-27 16:16:24,651 | INFO | Added file: frontend/templates/audit_trail.html
+2025-04-27 16:16:24,652 | INFO | Added file: frontend/templates/home.html
+2025-04-27 16:16:24,652 | INFO | Added file: frontend/templates/index.html
+2025-04-27 16:16:24,652 | INFO | Added file: frontend/templates/login.html
+2025-04-27 16:16:24,652 | INFO | Added file: frontend/templates/maintenance.html
+2025-04-27 16:16:24,652 | INFO | Added file: frontend/templates/new_order.html
+2025-04-27 16:16:24,653 | INFO | Added file: frontend/templates/pending_orders.html
+2025-04-27 16:16:24,653 | INFO | Added file: frontend/templates/print_template.html
+2025-04-27 16:16:24,653 | INFO | Added file: frontend/templates/received_orders.html
+2025-04-27 16:16:24,653 | INFO | Output successfully written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-28 05:22:33,508 | INFO | Starting full script generation
+2025-04-28 05:22:33,513 | INFO | Directory tree generated successfully
+2025-04-28 05:22:33,514 | INFO | Database schema extracted successfully
+2025-04-28 05:22:33,514 | INFO | Added file: backend/__init__.py
+2025-04-28 05:22:33,515 | INFO | Added file: backend/database.py
+2025-04-28 05:22:33,515 | INFO | Added file: backend/main.py
+2025-04-28 05:22:33,515 | INFO | Added file: backend/endpoints/__init__.py
+2025-04-28 05:22:33,515 | INFO | Added file: backend/endpoints/auth.py
+2025-04-28 05:22:33,516 | INFO | Added file: backend/endpoints/html_routes.py
+2025-04-28 05:22:33,516 | INFO | Added file: backend/endpoints/lookups.py
+2025-04-28 05:22:33,516 | INFO | Added file: backend/endpoints/order_attachments.py
+2025-04-28 05:22:33,516 | INFO | Added file: backend/endpoints/order_notes.py
+2025-04-28 05:22:33,516 | INFO | Added file: backend/endpoints/order_pdf.py
+2025-04-28 05:22:33,516 | INFO | Added file: backend/endpoints/order_queries.py
+2025-04-28 05:22:33,517 | INFO | Added file: backend/endpoints/order_receiving.py
+2025-04-28 05:22:33,517 | INFO | Added file: backend/endpoints/orders.py
+2025-04-28 05:22:33,517 | INFO | Added file: backend/endpoints/requesters.py
+2025-04-28 05:22:33,517 | INFO | Added file: backend/endpoints/supplier_lookup.py
+2025-04-28 05:22:33,517 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-28 05:22:33,518 | INFO | Added file: backend/endpoints/whatsapp.py
+2025-04-28 05:22:33,518 | INFO | Added file: backend/utils/__init__.py
+2025-04-28 05:22:33,518 | INFO | Added file: backend/utils/order_utils.py
+2025-04-28 05:22:33,518 | INFO | Added file: backend/twilio/__init__.py
+2025-04-28 05:22:33,518 | INFO | Added file: backend/twilio/twilio_utils.py
+2025-04-28 05:22:33,519 | INFO | Added file: frontend/static/js/audit_trail.js
+2025-04-28 05:22:33,519 | INFO | Added file: frontend/static/js/new_order.js
+2025-04-28 05:22:33,520 | INFO | Added file: frontend/static/js/new_order_main.js
+2025-04-28 05:22:33,520 | INFO | Added file: frontend/static/js/new_order_modals.js
+2025-04-28 05:22:33,520 | INFO | Added file: frontend/static/js/new_order_utils.js
+2025-04-28 05:22:33,520 | INFO | Added file: frontend/static/js/pending_orders.js
+2025-04-28 05:22:33,520 | INFO | Added file: frontend/static/js/received_orders.js
+2025-04-28 05:22:33,521 | INFO | Added file: frontend/static/js/components/attachment_modal.js
+2025-04-28 05:22:33,521 | INFO | Added file: frontend/static/js/components/expand_line_items.js
+2025-04-28 05:22:33,521 | INFO | Added file: frontend/static/js/components/order_note_modal.js
+2025-04-28 05:22:33,522 | INFO | Added file: frontend/static/js/components/receive_modal.js
+2025-04-28 05:22:33,522 | INFO | Added file: frontend/static/js/components/shared_filters.js
+2025-04-28 05:22:33,522 | INFO | Added file: frontend/templates/audit_trail.html
+2025-04-28 05:22:33,522 | INFO | Added file: frontend/templates/home.html
+2025-04-28 05:22:33,522 | INFO | Added file: frontend/templates/index.html
+2025-04-28 05:22:33,523 | INFO | Added file: frontend/templates/login.html
+2025-04-28 05:22:33,523 | INFO | Added file: frontend/templates/maintenance.html
+2025-04-28 05:22:33,523 | INFO | Added file: frontend/templates/new_order.html
+2025-04-28 05:22:33,523 | INFO | Added file: frontend/templates/pending_orders.html
+2025-04-28 05:22:33,524 | INFO | Added file: frontend/templates/print_template.html
+2025-04-28 05:22:33,524 | INFO | Added file: frontend/templates/received_orders.html
+2025-04-28 05:22:33,524 | INFO | Output successfully written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
