@@ -19016,3 +19016,2506 @@ INFO:     127.0.0.1:50508 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
 INFO:     127.0.0.1:50769 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
 INFO:     127.0.0.1:51024 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
 INFO:     127.0.0.1:51284 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51551 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51805 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52052 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52305 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52560 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52810 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53070 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53332 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53598 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53851 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54106 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54376 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54637 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54904 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55165 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55417 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55627 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55627 - "GET /lookups/users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55629 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55627 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:55632 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55633 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55636 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55637 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55689 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55952 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56164 - "PUT /lookups/business_details HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:56164 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56220 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56475 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56731 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56985 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57243 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/html_routes.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [21837]
+INFO:     Started server process [24682]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57502 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [24886] using StatReload
+INFO:     Started server process [24958]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57603 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57603 - "GET /lookups/users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57605 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57603 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:57607 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57610 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57611 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57613 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57778 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58035 - "PUT /lookups/business_details HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:58035 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58035 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58292 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58574 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58828 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59086 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59353 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24958]
+INFO:     Started server process [25212]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59624 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59873 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60133 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60378 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60633 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60898 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61148 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61417 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61671 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61937 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62194 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [25704] using StatReload
+INFO:     Started server process [25778]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:62419 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62419 - "GET /lookups/users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62420 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62423 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62425 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62426 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62428 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62420 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:62470 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62723 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62806 - "PUT /lookups/business_details HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:62806 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62986 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63240 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63497 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63760 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64019 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64282 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64537 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64804 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65065 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65323 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49195 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49464 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49720 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49992 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50249 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50512 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50764 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51019 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51276 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51527 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51782 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52052 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52313 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52591 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52846 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53097 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53373 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53628 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53886 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54113 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54113 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54113 - "GET /static/js/new_order_modals.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54114 - "GET /static/js/new_order_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54114 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54114 - "GET /api/business_details HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54148 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54405 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54658 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54929 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55200 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55458 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55712 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55970 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [27204] using StatReload
+INFO:     Started server process [27277]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56088 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56088 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56088 - "GET /static/js/new_order_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56089 - "GET /static/js/new_order_modals.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56089 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56089 - "GET /api/business_details HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56137 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56137 - "GET /static/css/maintenance.css HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56139 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56139 - "GET /lookups/users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56137 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56142 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56143 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56146 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56147 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56147 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:56173 - "GET /static/css/maintenance.css HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56253 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56399 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56399 - "GET /static/css/maintenance.css HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56400 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56400 - "GET /lookups/users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56399 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56403 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56404 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56406 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56408 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56408 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:56486 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56486 - "GET /static/css/maintenance.css HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56487 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56487 - "GET /lookups/users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56486 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56489 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56491 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56494 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56495 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56487 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:56536 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56791 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57046 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57320 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57576 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57837 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58102 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58368 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58635 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58907 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59176 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59445 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59711 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59967 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60234 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60496 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60753 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61003 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61263 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61518 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61776 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62038 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62285 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62536 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62791 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63065 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63331 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63586 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63846 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64116 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64389 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64644 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64902 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65156 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65399 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49262 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49517 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49770 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50028 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50267 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50515 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50781 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51029 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51282 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51534 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51806 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52067 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52332 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52594 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52849 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53117 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53370 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53625 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53878 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54134 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54402 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54661 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54912 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55168 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55422 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55672 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55925 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56177 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56430 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56686 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56966 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57062 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57062 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57062 - "GET /lookups/users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57063 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57062 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57066 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57067 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57069 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57069 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:57071 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57071 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57071 - "GET /lookups/users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57113 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57115 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57118 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57120 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57121 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57121 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:57252 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57505 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57580 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57580 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57580 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57581 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57585 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57587 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57584 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57584 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57585 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57585 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57650 - "GET /orders/api/orders/pending_orders?requester=Aaron HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57774 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58056 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58317 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58563 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58807 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59045 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59301 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59551 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59795 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60051 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60292 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60546 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60793 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61036 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61313 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61572 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61818 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62076 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62321 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62570 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62828 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63103 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63370 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63614 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63856 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64098 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64413 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64665 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64906 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65148 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65398 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49258 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49498 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49740 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49992 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50234 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50484 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50725 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50973 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51215 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51460 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51706 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51950 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52192 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52436 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52674 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52928 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53170 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53414 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53656 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53899 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54150 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54394 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54636 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54880 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55122 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55372 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55615 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55859 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56097 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56342 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56586 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56890 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57142 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27277]
+INFO:     Started server process [29273]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57400 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [29482] using StatReload
+INFO:     Started server process [29556]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57509 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57509 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57509 - "GET /static/js/new_order_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57510 - "GET /static/js/new_order_modals.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57510 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57510 - "GET /api/business_details HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57681 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57936 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57936 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57936 - "GET /static/js/new_order_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57938 - "GET /static/js/new_order_modals.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57936 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57936 - "GET /api/business_details HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57936 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57936 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57970 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57936 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57936 - "GET /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57970 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57973 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57975 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57976 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57978 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57978 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:58220 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58475 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58727 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58992 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59251 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59504 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59647 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59647 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59647 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59651 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59652 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59654 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59654 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59704 - "GET /orders/api/items_for_order/13 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59704 - "GET /orders/attachments/13 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59704 - "GET /orders/attachments/13 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59773 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59831 - "GET /orders/api/items_for_order/13 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60032 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60294 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60294 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60294 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60294 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60294 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:60312 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60804 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61057 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61317 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61358 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61358 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61358 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61358 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [30219] using StatReload
+INFO:     Started server process [30295]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61526 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61526 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61527 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61527 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:61526 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61526 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61553 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61553 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:61593 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61848 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62108 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62387 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62642 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62898 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63179 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63438 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63691 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63941 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64206 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64468 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64725 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64978 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65237 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65510 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [30817] using StatReload
+INFO:     Started server process [30892]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:49298 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49298 - "GET /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49299 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49302 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49303 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49305 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49307 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49307 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:49403 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49666 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49753 - "PUT /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49753 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49925 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49925 - "POST /lookups/users HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:49950 - "POST /lookups/requesters HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:49950 - "POST /lookups/items HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:49950 - "POST /lookups/projects HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:49950 - "PUT /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49950 - "PUT /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50132 - "POST /lookups/requesters HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:50185 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50448 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50720 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50891 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50891 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50891 - "GET /static/js/new_order_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50892 - "GET /static/js/new_order_modals.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50892 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50892 - "GET /api/business_details HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50985 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51244 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51299 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51299 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51300 - "GET /static/js/new_order_modals.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51299 - "GET /static/js/new_order_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51299 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51299 - "GET /api/business_details HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51505 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51768 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52025 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52285 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [31320] using StatReload
+INFO:     Started server process [31392]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:52420 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52420 - "GET /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52422 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52420 - "GET /favicon.ico HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 403, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py", line 85, in __call__
+    await self.app(scope, receive, send_wrapper)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/responses.py", line 313, in __init__
+    media_type = guess_type(filename or path)[0] or "text/plain"
+                 ~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 324, in guess_type
+    return _db.guess_type(url, strict)
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/mimetypes.py", line 125, in guess_type
+    url = os.fspath(url)
+TypeError: expected str, bytes or os.PathLike object, not list
+INFO:     127.0.0.1:52424 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52426 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52428 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52430 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52560 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52838 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53105 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53362 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53622 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53883 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54158 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54402 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54653 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54899 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55139 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55384 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55629 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55875 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56113 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56357 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56612 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56881 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57128 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57410 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57654 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57901 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58151 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58395 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58638 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58882 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59160 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59426 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59690 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59948 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60212 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60488 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60741 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60989 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61231 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61476 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61719 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61971 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62214 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62458 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62700 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62948 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63191 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63436 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63679 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63923 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64166 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64410 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64653 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64897 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65135 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65389 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49252 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49499 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49741 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49981 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50226 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50473 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50716 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50960 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51198 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51453 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51696 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51941 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52179 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52423 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52670 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52914 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53157 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53397 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53639 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53891 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54138 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54379 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54659 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54905 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55154 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55398 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55638 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55882 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56124 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56378 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56622 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56866 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57109 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57353 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57601 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57842 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58086 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58330 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58572 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58831 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59083 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59335 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59583 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59837 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60087 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60349 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60622 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60903 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61201 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61451 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61710 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61960 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62256 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62552 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62838 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63137 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63430 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63714 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64012 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64283 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64578 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64832 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65115 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65361 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49221 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49466 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49711 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49961 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50201 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50443 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50688 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50932 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51212 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51450 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51694 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51937 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52182 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52426 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52670 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52913 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53158 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53403 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53654 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53897 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54141 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54383 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54629 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54877 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55121 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55364 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55614 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55856 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56106 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56348 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56592 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56838 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57080 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57325 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57569 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57812 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58055 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58300 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58551 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58795 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59039 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59277 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59546 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59797 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60043 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60281 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60528 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60772 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61024 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61266 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61508 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61751 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61997 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62248 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62494 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62733 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62980 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63227 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63481 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63754 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64023 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64280 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64576 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64846 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65122 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65418 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49283 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49529 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49788 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50032 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50275 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50519 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50757 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51002 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51244 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51489 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51733 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51988 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52236 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52480 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52723 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52967 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53205 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53450 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53692 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53938 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54178 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54427 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54676 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54928 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55172 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55412 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55660 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55905 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56148 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56390 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56633 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56877 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57125 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57369 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57608 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57852 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58095 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58340 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58582 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58825 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59069 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59313 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59562 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59803 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60048 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60290 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60532 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60775 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61013 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61258 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61503 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61756 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61999 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62244 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62487 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62731 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62973 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63215 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63457 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63702 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63947 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64293 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64600 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64873 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65127 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65395 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49255 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49503 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49745 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49989 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50230 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50474 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50717 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50961 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51199 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51448 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51690 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51935 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52177 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52417 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52671 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52927 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53170 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53410 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53652 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53903 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54145 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54390 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54628 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54872 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55118 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55363 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55607 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55850 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56092 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56342 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56585 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56830 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57073 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57318 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57563 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57814 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58054 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58299 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58541 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58791 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59029 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59274 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59516 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59760 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60014 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60261 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60507 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60751 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60994 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61245 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61487 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61732 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61975 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62219 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62459 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62704 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62947 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63191 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63431 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63682 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63924 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64227 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64473 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64713 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65000 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65265 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49167 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49444 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49705 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50002 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50277 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50541 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50786 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51028 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51275 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51531 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51794 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52039 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52296 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52541 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52780 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53073 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53322 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53567 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53821 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54068 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54310 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54557 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54810 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55054 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55301 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55365 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55365 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55365 - "GET /static/js/new_order_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55366 - "GET /static/js/new_order_modals.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55365 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55365 - "GET /api/business_details HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55547 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55794 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56046 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56291 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56538 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56785 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57024 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57278 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57523 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57770 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58014 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58259 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58497 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58743 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58988 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59233 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59475 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59736 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59975 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60220 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60466 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [37409] using StatReload
+INFO:     Started server process [37480]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60662 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60662 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60662 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60662 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60662 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60662 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60662 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60662 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60663 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60766 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60766 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60766 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60766 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60766 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60766 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60766 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60766 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60767 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61220 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61243 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61243 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61243 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61243 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61243 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61243 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61243 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61243 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61244 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61552 - "POST /orders/generate_pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61712 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61954 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62054 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62054 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62054 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62054 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62054 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62054 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62054 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62054 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62056 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62448 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62690 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62933 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63177 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63420 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63666 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63914 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64159 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64401 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64659 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64902 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65148 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65391 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49250 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49493 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49747 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49993 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50245 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50497 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50749 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50990 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51237 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51480 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51731 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51979 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52223 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52467 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52714 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [39037] using StatReload
+INFO:     Started server process [39109]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:52956 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52956 - "GET /static/js/new_order_main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52956 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52956 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52956 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52956 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52956 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52956 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52956 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52957 - "POST /orders/generate_pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53176 - "POST /orders/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53207 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53207 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53207 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53207 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53207 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53235 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53242 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53243 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53245 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53243 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53245 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53245 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53291 - "GET /orders/api/orders/pending_orders?requester=Leon HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53291 - "GET /orders/api/items_for_order/13 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53353 - "GET /orders/attachments/13 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53353 - "GET /orders/attachments/13 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53463 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53463 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53463 - "GET /orders/api/items_for_order/55 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53463 - "GET /orders/attachments/55 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53463 - "GET /orders/attachments/55 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53565 - "GET /orders/api/items_for_order/55 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53728 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53971 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54218 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54468 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54714 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54962 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55214 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55455 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55712 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55959 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56205 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56693 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56932 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57179 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57425 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57670 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57913 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58184 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58428 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58675 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58919 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59164 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59408 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59651 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59898 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60146 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60389 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60640 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60882 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61123 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61371 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61620 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61862 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62108 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62351 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62598 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62842 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63101 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63343 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63592 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63844 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64088 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64331 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64578 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64825 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65070 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65308 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49173 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49416 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49663 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49907 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50150 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50397 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50644 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50889 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51135 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51381 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51633 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51877 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52133 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52376 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52622 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52867 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53113 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53358 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53603 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53845 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53905 - "GET /orders/api/items_for_order/37 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53928 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53928 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53928 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53929 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53933 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53932 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53935 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53935 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53932 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53932 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53965 - "GET /orders/api/items_for_order/13 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54112 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54358 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54600 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54843 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55089 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55340 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55587 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55826 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56077 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56319 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56594 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56838 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [43423] using StatReload
+INFO:     Started server process [43496]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56906 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56906 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56906 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56907 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56909 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56912 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56913 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56913 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56909 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56909 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56909 - "GET /orders/api/items_for_order/13 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57109 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57352 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57596 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57842 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [43828] using StatReload
+INFO:     Started server process [43900]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57915 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57915 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57915 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57916 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57919 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57920 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57922 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57922 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57916 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57916 - "GET /orders/api/orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57916 - "GET /orders/api/items_for_order/13 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58107 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58361 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58608 - "GET /orders/api/audit_trail HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [43900]
+INFO:     Started server process [43976]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [44244] using StatReload
+INFO:     Started server process [44318]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:58807 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58807 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58807 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58808 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58812 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58811 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58814 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58814 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58811 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58811 - "GET /orders/api/orders/pending_orders HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:58869 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:59124 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:59379 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:59641 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:59886 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:60135 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/order_queries.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [44318]
+INFO:     Started server process [44708]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [44976] using StatReload
+INFO:     Started server process [45049]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:60235 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60235 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60235 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60237 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60239 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60242 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60243 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60239 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60243 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60243 - "GET /orders/api/orders/pending_orders HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:60394 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:60633 - "GET /orders/api/orders/pending_orders?start_date=2025-04-27T08:11:14.420222 HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:60647 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:60894 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:61066 - "GET /orders/api/orders/pending_orders?start_date=2025-04-27 HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:61140 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:61384 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/order_queries.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [45049]
+INFO:     Started server process [45572]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61642 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [45842] using StatReload
+INFO:     Started server process [45915]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61757 - "GET /orders/api/orders/pending_orders?start_date=2025-04-27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61792 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61792 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61792 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61794 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61796 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61800 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61799 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61800 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61796 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61796 - "GET /orders/api/orders/pending_orders HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:61906 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62156 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62202 - "GET /orders/api/orders/pending_orders?start_date=2025-04-27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62401 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/order_queries.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [45915]
+INFO:     Started server process [46376]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [46643] using StatReload
+INFO:     Started server process [46715]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:62653 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62661 - "GET /orders/api/orders/pending_orders?start_date=2025-04-27 HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62902 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63151 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63393 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63641 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/order_queries.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [46715]
+INFO:     Started server process [47034]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [47301] using StatReload
+INFO:     Started server process [47375]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:63767 - "GET /orders/api/orders/pending_orders?start_date=2025-04-27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63898 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:64154 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:64181 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64181 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64181 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64182 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64185 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64188 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64186 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64188 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64186 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64186 - "GET /orders/api/orders/pending_orders HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:64408 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:64652 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:64896 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:65142 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:65291 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65291 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65291 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65292 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65294 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65297 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65298 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65298 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65292 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65292 - "GET /orders/api/orders/pending_orders HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:65397 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:49259 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/order_queries.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [47375]
+INFO:     Started server process [47983]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [48250] using StatReload
+INFO:     Started server process [48320]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:49485 - "GET /orders/api/orders/pending_orders?start_date=2025-04-27 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49519 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:49519 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49519 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49519 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49533 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49536 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49537 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49539 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49537 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49539 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49539 - "GET /orders/api/orders/pending_orders HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:49725 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49725 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49725 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49726 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49729 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49730 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49732 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49732 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49729 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49729 - "GET /orders/api/orders/pending_orders HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:49778 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:50022 - "GET /orders/api/audit_trail HTTP/1.1" 500 Internal Server Error
+WARNING:  StatReload detected changes in 'backend/endpoints/orders.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [48320]
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1310, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/__init__.py", line 1, in <module>
+    from backend.endpoints.lookups import router as lookups_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__init__.py", line 4, in <module>
+    from .orders import router as orders_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 171
+    html_content = f"""        
+                   ^
+SyntaxError: unterminated triple-quoted f-string literal (detected at line 301)
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [48836] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1310, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/__init__.py", line 1, in <module>
+    from backend.endpoints.lookups import router as lookups_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__init__.py", line 4, in <module>
+    from .orders import router as orders_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 171
+    html_content = f"""        
+                   ^
+SyntaxError: unterminated triple-quoted f-string literal (detected at line 301)
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [49291] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1310, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/__init__.py", line 1, in <module>
+    from backend.endpoints.lookups import router as lookups_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__init__.py", line 4, in <module>
+    from .orders import router as orders_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 171
+    html_content = f"""        
+                   ^
+SyntaxError: unterminated triple-quoted f-string literal (detected at line 301)
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [49948] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1310, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/__init__.py", line 1, in <module>
+    from backend.endpoints.lookups import router as lookups_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__init__.py", line 4, in <module>
+    from .orders import router as orders_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 171
+    html_content = f"""        
+                   ^
+SyntaxError: unterminated triple-quoted f-string literal (detected at line 301)
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [53121] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1310, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/__init__.py", line 1, in <module>
+    from backend.endpoints.lookups import router as lookups_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__init__.py", line 4, in <module>
+    from .orders import router as orders_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 171
+    html_content = f"""        
+                   ^
+SyntaxError: unterminated triple-quoted f-string literal (detected at line 301)
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [53460] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 719, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.3/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1310, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/__init__.py", line 1, in <module>
+    from backend.endpoints.lookups import router as lookups_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__init__.py", line 4, in <module>
+    from .orders import router as orders_router
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py", line 171
+    html_content = f"""        
+                   ^
+SyntaxError: unterminated triple-quoted f-string literal (detected at line 301)

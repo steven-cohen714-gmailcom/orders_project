@@ -1244,3 +1244,48 @@
 [2025-04-27T09:25:11.905736] {"action": "fetch_audit_trail", "count": 32}
 [2025-04-27T09:26:11.902429] {"action": "fetch_audit_trail", "count": 32}
 [2025-04-27T09:27:11.898371] {"action": "fetch_audit_trail", "count": 32}
+[2025-04-29T05:50:38.692139] {"error": "Invalid isoformat string: '2025/04/29'", "type": "pending_orders"}
+[2025-04-29T05:50:51.653878] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T05:51:51.656274] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T05:52:51.660855] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T05:53:51.647053] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T05:54:51.652038] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T05:55:51.655869] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T05:56:14.932882] {"error": "time data '2025-04-27T08:11:14.420222' does not match format '%Y/%m/%d'", "type": "pending_orders"}
+[2025-04-29T05:56:51.650653] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T05:57:48.871949] {"error": "400: Invalid date format: 2025-04-27T08:11:14.420222. Use yyyy-mm-dd.", "type": "pending_orders"}
+[2025-04-29T05:57:51.648889] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T05:58:51.657858] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T05:59:33.831693] {"error": "time data '2025-04-27T08:11:14.420222' does not match format '%Y/%m/%d'", "type": "pending_orders"}
+[2025-04-29T05:59:51.654332] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:00:51.654749] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:01:51.660675] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:02:18.485289] {"action": "fetch_pending_orders", "count": 2}
+[2025-04-29T06:02:26.307749] {"error": "time data '2025/04/29' does not match format '%Y-%m-%dT%H:%M:%S.%f'", "type": "pending_orders"}
+[2025-04-29T06:02:51.657364] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:03:51.656230] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:04:02.767938] {"action": "fetch_pending_orders", "count": 2}
+[2025-04-29T06:04:51.579253] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:05:51.613211] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:05:52.492968] {"error": "time data '2025-04-27T08:11:14.420222' does not match format '%Y/%m/%d'", "type": "pending_orders"}
+[2025-04-29T06:06:51.581257] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:07:51.576617] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:08:51.579693] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:09:51.580900] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:10:20.484171] {"action": "fetch_pending_orders", "count": 2}
+[2025-04-29T06:10:51.579649] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:11:51.581669] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:11:58.196191] {"error": "time data '2025/04/29' does not match format '%Y-%m-%dT%H:%M:%S.%f'", "type": "pending_orders"}
+[2025-04-29T06:12:51.577333] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:13:51.578829] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:14:51.577841] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:15:51.580914] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:16:27.440139] {"error": "time data '2025/04/29' does not match format '%Y-%m-%dT%H:%M:%S.%f'", "type": "pending_orders"}
+[2025-04-29T06:16:51.576506] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:17:51.576444] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:18:43.685459] {"action": "fetch_pending_orders", "count": 2}
+[2025-04-29T06:18:51.576997] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:18:54.705574] {"error": "time data '2025-04-26 12:45:20' does not match format '%Y/%m/%d'", "type": "pending_orders"}
+[2025-04-29T06:19:40.483014] {"error": "time data '2025-04-26 12:45:20' does not match format '%Y/%m/%d'", "type": "pending_orders"}
+[2025-04-29T06:19:51.494067] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T06:20:51.466404] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}

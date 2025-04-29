@@ -744,3 +744,515 @@ function debounce(fun...
 2025-04-28 05:22:33,524 | INFO | Added file: frontend/templates/print_template.html
 2025-04-28 05:22:33,524 | INFO | Added file: frontend/templates/received_orders.html
 2025-04-28 05:22:33,524 | INFO | Output successfully written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-28 08:28:15,751 | INFO | Starting full script generation
+2025-04-28 08:28:15,757 | INFO | Directory tree generated successfully
+2025-04-28 08:28:15,757 | INFO | Database schema extracted successfully
+2025-04-28 08:28:15,758 | INFO | Added file: backend/__init__.py
+2025-04-28 08:28:15,758 | INFO | Added file: backend/database.py
+2025-04-28 08:28:15,758 | INFO | Added file: backend/main.py
+2025-04-28 08:28:15,758 | INFO | Added file: backend/endpoints/__init__.py
+2025-04-28 08:28:15,759 | INFO | Added file: backend/endpoints/auth.py
+2025-04-28 08:28:15,759 | INFO | Added file: backend/endpoints/html_routes.py
+2025-04-28 08:28:15,759 | INFO | Added file: backend/endpoints/lookups.py
+2025-04-28 08:28:15,759 | INFO | Added file: backend/endpoints/order_attachments.py
+2025-04-28 08:28:15,759 | INFO | Added file: backend/endpoints/order_notes.py
+2025-04-28 08:28:15,760 | INFO | Added file: backend/endpoints/order_pdf.py
+2025-04-28 08:28:15,760 | INFO | Added file: backend/endpoints/order_queries.py
+2025-04-28 08:28:15,761 | INFO | Added file: backend/endpoints/order_receiving.py
+2025-04-28 08:28:15,761 | INFO | Added file: backend/endpoints/orders.py
+2025-04-28 08:28:15,761 | INFO | Added file: backend/endpoints/requesters.py
+2025-04-28 08:28:15,762 | INFO | Added file: backend/endpoints/supplier_lookup.py
+2025-04-28 08:28:15,762 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-28 08:28:15,762 | INFO | Added file: backend/endpoints/whatsapp.py
+2025-04-28 08:28:15,763 | INFO | Added file: backend/utils/__init__.py
+2025-04-28 08:28:15,763 | INFO | Added file: backend/utils/order_utils.py
+2025-04-28 08:28:15,763 | INFO | Added file: backend/twilio/__init__.py
+2025-04-28 08:28:15,763 | INFO | Added file: backend/twilio/twilio_utils.py
+2025-04-28 08:28:15,764 | INFO | Added file: frontend/static/js/audit_trail.js
+2025-04-28 08:28:15,764 | INFO | Added file: frontend/static/js/maintenance.js
+2025-04-28 08:28:15,764 | INFO | Added file: frontend/static/js/new_order.js
+2025-04-28 08:28:15,765 | INFO | Added file: frontend/static/js/new_order_main.js
+2025-04-28 08:28:15,765 | INFO | Added file: frontend/static/js/new_order_modals.js
+2025-04-28 08:28:15,765 | INFO | Added file: frontend/static/js/new_order_utils.js
+2025-04-28 08:28:15,765 | INFO | Added file: frontend/static/js/pending_orders.js
+2025-04-28 08:28:15,766 | INFO | Added file: frontend/static/js/received_orders.js
+2025-04-28 08:28:15,766 | INFO | Added file: frontend/static/js/components/attachment_modal.js
+2025-04-28 08:28:15,766 | INFO | Added file: frontend/static/js/components/expand_line_items.js
+2025-04-28 08:28:15,767 | INFO | Added file: frontend/static/js/components/order_note_modal.js
+2025-04-28 08:28:15,767 | INFO | Added file: frontend/static/js/components/receive_modal.js
+2025-04-28 08:28:15,767 | INFO | Added file: frontend/static/js/components/shared_filters.js
+2025-04-28 08:28:15,767 | INFO | Added file: frontend/templates/audit_trail.html
+2025-04-28 08:28:15,768 | INFO | Added file: frontend/templates/home.html
+2025-04-28 08:28:15,768 | INFO | Added file: frontend/templates/index.html
+2025-04-28 08:28:15,768 | INFO | Added file: frontend/templates/login.html
+2025-04-28 08:28:15,768 | INFO | Added file: frontend/templates/maintenance.html
+2025-04-28 08:28:15,768 | INFO | Added file: frontend/templates/new_order.html
+2025-04-28 08:28:15,768 | INFO | Added file: frontend/templates/pending_orders.html
+2025-04-28 08:28:15,769 | INFO | Added file: frontend/templates/print_template.html
+2025-04-28 08:28:15,769 | INFO | Added file: frontend/templates/received_orders.html
+2025-04-28 08:28:15,769 | INFO | Output successfully written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-28 08:41:48,970 | INFO | Starting full script generation
+2025-04-28 08:41:48,976 | INFO | Directory tree generated successfully
+2025-04-28 08:41:48,976 | INFO | Database schema extracted successfully
+2025-04-28 08:41:48,977 | INFO | Added file: backend/__init__.py
+2025-04-28 08:41:48,977 | INFO | Added file: backend/database.py
+2025-04-28 08:41:48,977 | INFO | Added file: backend/main.py
+2025-04-28 08:41:48,977 | INFO | Added file: backend/endpoints/__init__.py
+2025-04-28 08:41:48,978 | INFO | Added file: backend/endpoints/auth.py
+2025-04-28 08:41:48,978 | INFO | Added file: backend/endpoints/html_routes.py
+2025-04-28 08:41:48,978 | INFO | Added file: backend/endpoints/lookups.py
+2025-04-28 08:41:48,978 | INFO | Added file: backend/endpoints/order_attachments.py
+2025-04-28 08:41:48,979 | INFO | Added file: backend/endpoints/order_notes.py
+2025-04-28 08:41:48,979 | INFO | Added file: backend/endpoints/order_pdf.py
+2025-04-28 08:41:48,979 | INFO | Added file: backend/endpoints/order_queries.py
+2025-04-28 08:41:48,979 | INFO | Added file: backend/endpoints/order_receiving.py
+2025-04-28 08:41:48,979 | INFO | Added file: backend/endpoints/orders.py
+2025-04-28 08:41:48,980 | INFO | Added file: backend/endpoints/requesters.py
+2025-04-28 08:41:48,980 | INFO | Added file: backend/endpoints/supplier_lookup.py
+2025-04-28 08:41:48,980 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-28 08:41:48,980 | INFO | Added file: backend/endpoints/whatsapp.py
+2025-04-28 08:41:48,981 | INFO | Added file: backend/utils/__init__.py
+2025-04-28 08:41:48,981 | INFO | Added file: backend/utils/order_utils.py
+2025-04-28 08:41:48,981 | INFO | Added file: backend/twilio/__init__.py
+2025-04-28 08:41:48,981 | INFO | Added file: backend/twilio/twilio_utils.py
+2025-04-28 08:41:48,982 | INFO | Added file: frontend/static/js/audit_trail.js
+2025-04-28 08:41:48,982 | INFO | Added file: frontend/static/js/maintenance.js
+2025-04-28 08:41:48,982 | INFO | Added file: frontend/static/js/new_order.js
+2025-04-28 08:41:48,982 | INFO | Added file: frontend/static/js/new_order_main.js
+2025-04-28 08:41:48,982 | INFO | Added file: frontend/static/js/new_order_modals.js
+2025-04-28 08:41:48,983 | INFO | Added file: frontend/static/js/new_order_utils.js
+2025-04-28 08:41:48,983 | INFO | Added file: frontend/static/js/pending_orders.js
+2025-04-28 08:41:48,983 | INFO | Added file: frontend/static/js/received_orders.js
+2025-04-28 08:41:48,983 | INFO | Added file: frontend/static/js/components/attachment_modal.js
+2025-04-28 08:41:48,983 | INFO | Added file: frontend/static/js/components/expand_line_items.js
+2025-04-28 08:41:48,984 | INFO | Added file: frontend/static/js/components/order_note_modal.js
+2025-04-28 08:41:48,984 | INFO | Added file: frontend/static/js/components/receive_modal.js
+2025-04-28 08:41:48,984 | INFO | Added file: frontend/static/js/components/shared_filters.js
+2025-04-28 08:41:48,984 | INFO | Added file: frontend/templates/audit_trail.html
+2025-04-28 08:41:48,985 | INFO | Added file: frontend/templates/home.html
+2025-04-28 08:41:48,985 | INFO | Added file: frontend/templates/index.html
+2025-04-28 08:41:48,985 | INFO | Added file: frontend/templates/login.html
+2025-04-28 08:41:48,985 | INFO | Added file: frontend/templates/maintenance.html
+2025-04-28 08:41:48,985 | INFO | Added file: frontend/templates/new_order.html
+2025-04-28 08:41:48,985 | INFO | Added file: frontend/templates/pending_orders.html
+2025-04-28 08:41:48,986 | INFO | Added file: frontend/templates/print_template.html
+2025-04-28 08:41:48,986 | INFO | Added file: frontend/templates/received_orders.html
+2025-04-28 08:41:48,986 | INFO | Output successfully written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-28 08:54:19,063 | INFO | Starting full script generation
+2025-04-28 08:54:19,069 | INFO | Directory tree generated successfully
+2025-04-28 08:54:19,070 | INFO | Database schema extracted successfully
+2025-04-28 08:54:19,070 | INFO | Added file: backend/__init__.py
+2025-04-28 08:54:19,070 | INFO | Added file: backend/database.py
+2025-04-28 08:54:19,070 | INFO | Added file: backend/main.py
+2025-04-28 08:54:19,070 | INFO | Added file: backend/endpoints/__init__.py
+2025-04-28 08:54:19,070 | INFO | Added file: backend/endpoints/auth.py
+2025-04-28 08:54:19,070 | INFO | Added file: backend/endpoints/html_routes.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/endpoints/lookups.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/endpoints/order_attachments.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/endpoints/order_notes.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/endpoints/order_pdf.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/endpoints/order_queries.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/endpoints/order_receiving.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/endpoints/orders.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/endpoints/requesters.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/endpoints/supplier_lookup.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/endpoints/whatsapp.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/utils/__init__.py
+2025-04-28 08:54:19,071 | INFO | Added file: backend/utils/order_utils.py
+2025-04-28 08:54:19,072 | INFO | Added file: backend/twilio/__init__.py
+2025-04-28 08:54:19,072 | INFO | Added file: backend/twilio/twilio_utils.py
+2025-04-28 08:54:19,072 | INFO | Added file: frontend/static/js/audit_trail.js
+2025-04-28 08:54:19,072 | INFO | Added file: frontend/static/js/maintenance.js
+2025-04-28 08:54:19,072 | INFO | Added file: frontend/static/js/new_order.js
+2025-04-28 08:54:19,072 | INFO | Added file: frontend/static/js/new_order_main.js
+2025-04-28 08:54:19,072 | INFO | Added file: frontend/static/js/new_order_modals.js
+2025-04-28 08:54:19,072 | INFO | Added file: frontend/static/js/new_order_utils.js
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/static/js/pending_orders.js
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/static/js/received_orders.js
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/static/js/components/attachment_modal.js
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/static/js/components/expand_line_items.js
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/static/js/components/order_note_modal.js
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/static/js/components/receive_modal.js
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/static/js/components/shared_filters.js
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/templates/audit_trail.html
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/templates/home.html
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/templates/index.html
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/templates/login.html
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/templates/maintenance.html
+2025-04-28 08:54:19,073 | INFO | Added file: frontend/templates/new_order.html
+2025-04-28 08:54:19,074 | INFO | Added file: frontend/templates/pending_orders.html
+2025-04-28 08:54:19,074 | INFO | Added file: frontend/templates/print_template.html
+2025-04-28 08:54:19,074 | INFO | Added file: frontend/templates/received_orders.html
+2025-04-28 08:54:19,074 | INFO | Output successfully written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-28 11:40:10,721 | INFO | Starting full script generation
+2025-04-28 11:40:10,727 | INFO | Directory tree generated successfully
+2025-04-28 11:40:10,727 | INFO | Database schema extracted successfully
+2025-04-28 11:40:10,727 | INFO | Added file: backend/__init__.py
+2025-04-28 11:40:10,728 | INFO | Added file: backend/database.py
+2025-04-28 11:40:10,728 | INFO | Added file: backend/main.py
+2025-04-28 11:40:10,728 | INFO | Added file: backend/endpoints/__init__.py
+2025-04-28 11:40:10,728 | INFO | Added file: backend/endpoints/auth.py
+2025-04-28 11:40:10,728 | INFO | Added file: backend/endpoints/html_routes.py
+2025-04-28 11:40:10,728 | INFO | Added file: backend/endpoints/lookups.py
+2025-04-28 11:40:10,728 | INFO | Added file: backend/endpoints/order_attachments.py
+2025-04-28 11:40:10,728 | INFO | Added file: backend/endpoints/order_notes.py
+2025-04-28 11:40:10,728 | INFO | Added file: backend/endpoints/order_pdf.py
+2025-04-28 11:40:10,729 | INFO | Added file: backend/endpoints/order_queries.py
+2025-04-28 11:40:10,729 | INFO | Added file: backend/endpoints/order_receiving.py
+2025-04-28 11:40:10,729 | INFO | Added file: backend/endpoints/orders.py
+2025-04-28 11:40:10,729 | INFO | Added file: backend/endpoints/requesters.py
+2025-04-28 11:40:10,729 | INFO | Added file: backend/endpoints/supplier_lookup.py
+2025-04-28 11:40:10,729 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-28 11:40:10,729 | INFO | Added file: backend/endpoints/whatsapp.py
+2025-04-28 11:40:10,729 | INFO | Added file: backend/utils/__init__.py
+2025-04-28 11:40:10,730 | INFO | Added file: backend/utils/order_utils.py
+2025-04-28 11:40:10,730 | INFO | Added file: backend/twilio/__init__.py
+2025-04-28 11:40:10,730 | INFO | Added file: backend/twilio/twilio_utils.py
+2025-04-28 11:40:10,730 | INFO | Added file: frontend/static/js/audit_trail.js
+2025-04-28 11:40:10,730 | INFO | Added file: frontend/static/js/maintenance.js
+2025-04-28 11:40:10,731 | INFO | Added file: frontend/static/js/new_order.js
+2025-04-28 11:40:10,731 | INFO | Added file: frontend/static/js/new_order_main.js
+2025-04-28 11:40:10,731 | INFO | Added file: frontend/static/js/new_order_modals.js
+2025-04-28 11:40:10,731 | INFO | Added file: frontend/static/js/new_order_utils.js
+2025-04-28 11:40:10,731 | INFO | Added file: frontend/static/js/pending_orders.js
+2025-04-28 11:40:10,732 | INFO | Added file: frontend/static/js/received_orders.js
+2025-04-28 11:40:10,732 | INFO | Added file: frontend/static/js/components/attachment_modal.js
+2025-04-28 11:40:10,732 | INFO | Added file: frontend/static/js/components/expand_line_items.js
+2025-04-28 11:40:10,732 | INFO | Added file: frontend/static/js/components/order_note_modal.js
+2025-04-28 11:40:10,733 | INFO | Added file: frontend/static/js/components/receive_modal.js
+2025-04-28 11:40:10,733 | INFO | Added file: frontend/static/js/components/shared_filters.js
+2025-04-28 11:40:10,733 | INFO | Added file: frontend/templates/audit_trail.html
+2025-04-28 11:40:10,733 | INFO | Added file: frontend/templates/home.html
+2025-04-28 11:40:10,733 | INFO | Added file: frontend/templates/index.html
+2025-04-28 11:40:10,734 | INFO | Added file: frontend/templates/login.html
+2025-04-28 11:40:10,734 | INFO | Added file: frontend/templates/maintenance.html
+2025-04-28 11:40:10,734 | INFO | Added file: frontend/templates/new_order.html
+2025-04-28 11:40:10,734 | INFO | Added file: frontend/templates/pending_orders.html
+2025-04-28 11:40:10,734 | INFO | Added file: frontend/templates/print_template.html
+2025-04-28 11:40:10,734 | INFO | Added file: frontend/templates/received_orders.html
+2025-04-28 11:40:10,735 | INFO | Output successfully written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-29 03:26:28,685 | INFO | Starting full script generation
+2025-04-29 03:26:28,692 | INFO | Directory tree generated successfully
+2025-04-29 03:26:28,692 | INFO | Database schema extracted successfully
+2025-04-29 03:26:28,693 | INFO | Added file: backend/__init__.py
+2025-04-29 03:26:28,693 | INFO | Added file: backend/database.py
+2025-04-29 03:26:28,693 | INFO | Added file: backend/main.py
+2025-04-29 03:26:28,693 | INFO | Added file: backend/endpoints/__init__.py
+2025-04-29 03:26:28,694 | INFO | Added file: backend/endpoints/auth.py
+2025-04-29 03:26:28,694 | INFO | Added file: backend/endpoints/html_routes.py
+2025-04-29 03:26:28,694 | INFO | Added file: backend/endpoints/lookups.py
+2025-04-29 03:26:28,694 | INFO | Added file: backend/endpoints/order_attachments.py
+2025-04-29 03:26:28,694 | INFO | Added file: backend/endpoints/order_notes.py
+2025-04-29 03:26:28,695 | INFO | Added file: backend/endpoints/order_pdf.py
+2025-04-29 03:26:28,695 | INFO | Added file: backend/endpoints/order_queries.py
+2025-04-29 03:26:28,695 | INFO | Added file: backend/endpoints/order_receiving.py
+2025-04-29 03:26:28,695 | INFO | Added file: backend/endpoints/orders.py
+2025-04-29 03:26:28,696 | INFO | Added file: backend/endpoints/requesters.py
+2025-04-29 03:26:28,696 | INFO | Added file: backend/endpoints/supplier_lookup.py
+2025-04-29 03:26:28,696 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-29 03:26:28,696 | INFO | Added file: backend/endpoints/whatsapp.py
+2025-04-29 03:26:28,697 | INFO | Added file: backend/utils/__init__.py
+2025-04-29 03:26:28,697 | INFO | Added file: backend/utils/order_utils.py
+2025-04-29 03:26:28,697 | INFO | Added file: backend/twilio/__init__.py
+2025-04-29 03:26:28,698 | INFO | Added file: backend/twilio/twilio_utils.py
+2025-04-29 03:26:28,698 | INFO | Added file: frontend/static/js/audit_trail.js
+2025-04-29 03:26:28,698 | INFO | Added file: frontend/static/js/new_order.js
+2025-04-29 03:26:28,699 | INFO | Added file: frontend/static/js/new_order_main.js
+2025-04-29 03:26:28,699 | INFO | Added file: frontend/static/js/new_order_modals.js
+2025-04-29 03:26:28,699 | INFO | Added file: frontend/static/js/new_order_utils.js
+2025-04-29 03:26:28,699 | INFO | Added file: frontend/static/js/pending_orders.js
+2025-04-29 03:26:28,700 | INFO | Added file: frontend/static/js/received_orders.js
+2025-04-29 03:26:28,700 | INFO | Added file: frontend/static/js/components/attachment_modal.js
+2025-04-29 03:26:28,700 | INFO | Added file: frontend/static/js/components/expand_line_items.js
+2025-04-29 03:26:28,700 | INFO | Added file: frontend/static/js/components/order_note_modal.js
+2025-04-29 03:26:28,701 | INFO | Added file: frontend/static/js/components/receive_modal.js
+2025-04-29 03:26:28,701 | INFO | Added file: frontend/static/js/components/shared_filters.js
+2025-04-29 03:26:28,701 | INFO | Added file: frontend/templates/audit_trail.html
+2025-04-29 03:26:28,702 | INFO | Added file: frontend/templates/home.html
+2025-04-29 03:26:28,702 | INFO | Added file: frontend/templates/index.html
+2025-04-29 03:26:28,702 | INFO | Added file: frontend/templates/login.html
+2025-04-29 03:26:28,702 | INFO | Added file: frontend/templates/maintenance.html
+2025-04-29 03:26:28,702 | INFO | Added file: frontend/templates/new_order.html
+2025-04-29 03:26:28,702 | INFO | Added file: frontend/templates/pending_orders.html
+2025-04-29 03:26:28,703 | INFO | Added file: frontend/templates/print_template.html
+2025-04-29 03:26:28,703 | INFO | Added file: frontend/templates/received_orders.html
+2025-04-29 03:26:28,703 | INFO | Output successfully written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-29 03:47:13,710 | INFO | Starting full script generation
+2025-04-29 03:47:13,716 | INFO | Directory tree generated successfully
+2025-04-29 03:47:13,716 | INFO | Database schema extracted successfully
+2025-04-29 03:47:13,716 | INFO | Added file: backend/__init__.py
+2025-04-29 03:47:13,717 | INFO | Added file: backend/database.py
+2025-04-29 03:47:13,717 | INFO | Added file: backend/main.py
+2025-04-29 03:47:13,717 | INFO | Added file: backend/endpoints/__init__.py
+2025-04-29 03:47:13,717 | INFO | Added file: backend/endpoints/auth.py
+2025-04-29 03:47:13,718 | INFO | Added file: backend/endpoints/html_routes.py
+2025-04-29 03:47:13,718 | INFO | Added file: backend/endpoints/lookups.py
+2025-04-29 03:47:13,718 | INFO | Added file: backend/endpoints/order_attachments.py
+2025-04-29 03:47:13,718 | INFO | Added file: backend/endpoints/order_notes.py
+2025-04-29 03:47:13,718 | INFO | Added file: backend/endpoints/order_pdf.py
+2025-04-29 03:47:13,719 | INFO | Added file: backend/endpoints/order_queries.py
+2025-04-29 03:47:13,719 | INFO | Added file: backend/endpoints/order_receiving.py
+2025-04-29 03:47:13,719 | INFO | Added file: backend/endpoints/orders.py
+2025-04-29 03:47:13,719 | INFO | Added file: backend/endpoints/requesters.py
+2025-04-29 03:47:13,719 | INFO | Added file: backend/endpoints/supplier_lookup.py
+2025-04-29 03:47:13,720 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-29 03:47:13,720 | INFO | Added file: backend/endpoints/whatsapp.py
+2025-04-29 03:47:13,720 | INFO | Added file: backend/utils/__init__.py
+2025-04-29 03:47:13,720 | INFO | Added file: backend/utils/order_utils.py
+2025-04-29 03:47:13,720 | INFO | Added file: backend/twilio/__init__.py
+2025-04-29 03:47:13,720 | INFO | Added file: backend/twilio/twilio_utils.py
+2025-04-29 03:47:13,721 | INFO | Added file: frontend/static/js/audit_trail.js
+2025-04-29 03:47:13,721 | INFO | Added file: frontend/static/js/new_order.js
+2025-04-29 03:47:13,722 | INFO | Added file: frontend/static/js/new_order_main.js
+2025-04-29 03:47:13,722 | INFO | Added file: frontend/static/js/new_order_modals.js
+2025-04-29 03:47:13,722 | INFO | Added file: frontend/static/js/new_order_utils.js
+2025-04-29 03:47:13,722 | INFO | Added file: frontend/static/js/pending_orders.js
+2025-04-29 03:47:13,723 | INFO | Added file: frontend/static/js/received_orders.js
+2025-04-29 03:47:13,723 | INFO | Added file: frontend/static/js/components/attachment_modal.js
+2025-04-29 03:47:13,723 | INFO | Added file: frontend/static/js/components/expand_line_items.js
+2025-04-29 03:47:13,724 | INFO | Added file: frontend/static/js/components/order_note_modal.js
+2025-04-29 03:47:13,724 | INFO | Added file: frontend/static/js/components/receive_modal.js
+2025-04-29 03:47:13,724 | INFO | Added file: frontend/static/js/components/shared_filters.js
+2025-04-29 03:47:13,725 | INFO | Added file: frontend/templates/audit_trail.html
+2025-04-29 03:47:13,725 | INFO | Added file: frontend/templates/home.html
+2025-04-29 03:47:13,725 | INFO | Added file: frontend/templates/index.html
+2025-04-29 03:47:13,725 | INFO | Added file: frontend/templates/login.html
+2025-04-29 03:47:13,725 | INFO | Added file: frontend/templates/maintenance.html
+2025-04-29 03:47:13,726 | INFO | Added file: frontend/templates/new_order.html
+2025-04-29 03:47:13,726 | INFO | Added file: frontend/templates/pending_orders.html
+2025-04-29 03:47:13,726 | INFO | Added file: frontend/templates/print_template.html
+2025-04-29 03:47:13,726 | INFO | Added file: frontend/templates/received_orders.html
+2025-04-29 03:47:13,727 | INFO | Output successfully written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-29 04:09:11,856 | INFO | Starting corrected output
+2025-04-29 04:09:11,876 | INFO | Output script completed successfully.
+2025-04-29 04:16:29,106 | INFO | Starting full script generation
+2025-04-29 04:16:29,112 | INFO | Directory tree generated successfully
+2025-04-29 04:16:29,113 | INFO | Database schema extracted successfully
+2025-04-29 04:16:29,113 | INFO | Added file: backend/__init__.py
+2025-04-29 04:16:29,114 | INFO | Added file: backend/database.py
+2025-04-29 04:16:29,114 | INFO | Added file: backend/main.py
+2025-04-29 04:16:29,114 | INFO | Added file: backend/endpoints/__init__.py
+2025-04-29 04:16:29,114 | INFO | Added file: backend/endpoints/auth.py
+2025-04-29 04:16:29,115 | INFO | Added file: backend/endpoints/html_routes.py
+2025-04-29 04:16:29,115 | INFO | Added file: backend/endpoints/lookups.py
+2025-04-29 04:16:29,115 | INFO | Added file: backend/endpoints/order_attachments.py
+2025-04-29 04:16:29,115 | INFO | Added file: backend/endpoints/order_notes.py
+2025-04-29 04:16:29,115 | INFO | Added file: backend/endpoints/order_pdf.py
+2025-04-29 04:16:29,116 | INFO | Added file: backend/endpoints/order_queries.py
+2025-04-29 04:16:29,116 | INFO | Added file: backend/endpoints/order_receiving.py
+2025-04-29 04:16:29,116 | INFO | Added file: backend/endpoints/orders.py
+2025-04-29 04:16:29,116 | INFO | Added file: backend/endpoints/requesters.py
+2025-04-29 04:16:29,117 | INFO | Added file: backend/endpoints/supplier_lookup.py
+2025-04-29 04:16:29,117 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-29 04:16:29,117 | INFO | Added file: backend/endpoints/whatsapp.py
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/__init__.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/auth.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/html_routes.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/lookups.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/order_attachments.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/order_notes.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/order_pdf.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/order_queries.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/order_receiving.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/orders.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/requesters.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/supplier_lookup.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/supplier_lookup_takealot.cpython-313.pyc
+2025-04-29 04:16:29,117 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/__pycache__/whatsapp.cpython-313.pyc
+2025-04-29 04:16:29,118 | INFO | Added file: backend/utils/__init__.py
+2025-04-29 04:16:29,118 | INFO | Added file: backend/utils/order_utils.py
+2025-04-29 04:16:29,118 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/__pycache__/__init__.cpython-313.pyc
+2025-04-29 04:16:29,118 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/__pycache__/database.cpython-313.pyc
+2025-04-29 04:16:29,118 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/__pycache__/main.cpython-313.pyc
+2025-04-29 04:16:29,118 | INFO | Added file: backend/twilio/__init__.py
+2025-04-29 04:16:29,118 | INFO | Added file: backend/twilio/twilio_utils.py
+2025-04-29 04:16:29,118 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/twilio/__pycache__/__init__.cpython-313.pyc
+2025-04-29 04:16:29,118 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/twilio/__pycache__/twilio_utils.cpython-313.pyc
+2025-04-29 04:16:29,119 | WARNING | Skipped non-included file: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/css/style.css
+2025-04-29 04:16:29,119 | INFO | Added file: frontend/static/js/audit_trail.js
+2025-04-29 04:16:29,119 | INFO | Added file: frontend/static/js/new_order.js
+2025-04-29 04:16:29,120 | INFO | Added file: frontend/static/js/new_order_main.js
+2025-04-29 04:16:29,120 | INFO | Added file: frontend/static/js/new_order_modals.js
+2025-04-29 04:16:29,120 | INFO | Added file: frontend/static/js/new_order_utils.js
+2025-04-29 04:16:29,121 | INFO | Added file: frontend/static/js/pending_orders.js
+2025-04-29 04:16:29,121 | INFO | Added file: frontend/static/js/received_orders.js
+2025-04-29 04:16:29,121 | INFO | Added file: frontend/static/js/components/attachment_modal.js
+2025-04-29 04:16:29,121 | INFO | Added file: frontend/static/js/components/expand_line_items.js
+2025-04-29 04:16:29,122 | INFO | Added file: frontend/static/js/components/order_note_modal.js
+2025-04-29 04:16:29,122 | INFO | Added file: frontend/static/js/components/receive_modal.js
+2025-04-29 04:16:29,122 | INFO | Added file: frontend/static/js/components/shared_filters.js
+2025-04-29 04:16:29,123 | INFO | Added file: frontend/templates/audit_trail.html
+2025-04-29 04:16:29,123 | INFO | Added file: frontend/templates/home.html
+2025-04-29 04:16:29,123 | INFO | Added file: frontend/templates/index.html
+2025-04-29 04:16:29,123 | INFO | Added file: frontend/templates/login.html
+2025-04-29 04:16:29,123 | INFO | Added file: frontend/templates/maintenance.html
+2025-04-29 04:16:29,124 | INFO | Added file: frontend/templates/new_order.html
+2025-04-29 04:16:29,124 | INFO | Added file: frontend/templates/pending_orders.html
+2025-04-29 04:16:29,124 | INFO | Added file: frontend/templates/print_template.html
+2025-04-29 04:16:29,124 | INFO | Added file: frontend/templates/received_orders.html
+2025-04-29 04:16:29,128 | INFO | Directory tree generated successfully
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── __init__.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── database.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── __init__.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── auth.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── html_routes.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── lookups.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── order_attachments.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── order_notes.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── order_pdf.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── order_queries.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── order_receiving.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── orders.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── requesters.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── supplier_lookup.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── supplier_lookup_takealot.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   └── whatsapp.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── main.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   ├── __init__.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │   └── twilio_utils.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │       ├── __init__.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │       └── order_utils.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── orders.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       ├── audit_trail.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       │   ├── attachment_modal.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       │   ├── expand_line_items.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       │   ├── order_note_modal.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       │   ├── receive_modal.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       │   └── shared_filters.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       ├── new_order.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       ├── new_order_main.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       ├── new_order_modals.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       ├── new_order_utils.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       ├── pending_orders.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   │       └── received_orders.js
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │       ├── audit_trail.html
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │       ├── home.html
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │       ├── index.html
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │       ├── login.html
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │       ├── maintenance.html
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │       ├── new_order.html
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │       ├── pending_orders.html
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │       ├── print_template.html
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │       └── received_orders.html
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── add_debug_validation_handler.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── clear_transactional_data.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── git_pull_project.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── git_push_project.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── init_db_fresh.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── inject_filter_route.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── insert_get_all_orders.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── insert_next_order_number_route.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── insert_pending_route.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── insert_print_route.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── insert_receive_route.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── integration_tests.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── output_entire_project_scripts.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── prepare_lookup_tables.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── project_summary.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── repair_orders_routes.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── seed_static_data.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── start_server.py
+2025-04-29 04:16:29,128 | ERROR | MISSING IN EXPORT: │   ├── stuff_we_are_working_on_today.py
+2025-04-29 04:16:29,129 | ERROR | MISSING IN EXPORT: │   ├── test_authorisation_threshold_trigger.py
+2025-04-29 04:16:29,129 | ERROR | MISSING IN EXPORT: │   ├── test_invalid_data_handling.py
+2025-04-29 04:16:29,129 | ERROR | MISSING IN EXPORT: │   ├── test_invalid_items_variants.py
+2025-04-29 04:16:29,129 | ERROR | MISSING IN EXPORT: │   ├── test_pipeline_end_to_end.py
+2025-04-29 04:16:29,129 | ERROR | MISSING IN EXPORT: │   └── test_receive_partial.py
+2025-04-29 04:16:29,129 | ERROR | MISSING IN EXPORT: │           ├── brotli.py
+2025-04-29 04:16:29,129 | ERROR | MISSING IN EXPORT: │           ├── socks.py
+2025-04-29 04:16:29,129 | ERROR | MISSING IN EXPORT: │           ├── sockshandler.py
+2025-04-29 04:16:29,129 | ERROR | MISSING IN EXPORT: │           ├── typing_extensions.py
+2025-04-29 04:16:29,129 | INFO | Output successfully written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-29 04:23:44,754 | INFO | Starting full script generation
+2025-04-29 04:23:44,760 | INFO | Directory tree generated successfully
+2025-04-29 04:23:44,761 | INFO | Database schema extracted successfully
+2025-04-29 04:23:44,761 | INFO | Added file: backend/__init__.py
+2025-04-29 04:23:44,761 | INFO | Added file: backend/database.py
+2025-04-29 04:23:44,761 | INFO | Added file: backend/main.py
+2025-04-29 04:23:44,762 | INFO | Added file: backend/endpoints/__init__.py
+2025-04-29 04:23:44,762 | INFO | Added file: backend/endpoints/auth.py
+2025-04-29 04:23:44,762 | INFO | Added file: backend/endpoints/html_routes.py
+2025-04-29 04:23:44,762 | INFO | Added file: backend/endpoints/lookups.py
+2025-04-29 04:23:44,763 | INFO | Added file: backend/endpoints/order_attachments.py
+2025-04-29 04:23:44,763 | INFO | Added file: backend/endpoints/order_notes.py
+2025-04-29 04:23:44,763 | INFO | Added file: backend/endpoints/order_pdf.py
+2025-04-29 04:23:44,763 | INFO | Added file: backend/endpoints/order_queries.py
+2025-04-29 04:23:44,764 | INFO | Added file: backend/endpoints/order_receiving.py
+2025-04-29 04:23:44,764 | INFO | Added file: backend/endpoints/orders.py
+2025-04-29 04:23:44,764 | INFO | Added file: backend/endpoints/requesters.py
+2025-04-29 04:23:44,764 | INFO | Added file: backend/endpoints/supplier_lookup.py
+2025-04-29 04:23:44,765 | INFO | Added file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-29 04:23:44,765 | INFO | Added file: backend/endpoints/whatsapp.py
+2025-04-29 04:23:44,765 | INFO | Added file: backend/utils/__init__.py
+2025-04-29 04:23:44,765 | INFO | Added file: backend/utils/order_utils.py
+2025-04-29 04:23:44,766 | INFO | Added file: backend/twilio/__init__.py
+2025-04-29 04:23:44,766 | INFO | Added file: backend/twilio/twilio_utils.py
+2025-04-29 04:23:44,766 | INFO | Added file: frontend/static/js/audit_trail.js
+2025-04-29 04:23:44,767 | INFO | Added file: frontend/static/js/new_order.js
+2025-04-29 04:23:44,767 | INFO | Added file: frontend/static/js/new_order_main.js
+2025-04-29 04:23:44,767 | INFO | Added file: frontend/static/js/new_order_modals.js
+2025-04-29 04:23:44,768 | INFO | Added file: frontend/static/js/new_order_utils.js
+2025-04-29 04:23:44,768 | INFO | Added file: frontend/static/js/pending_orders.js
+2025-04-29 04:23:44,768 | INFO | Added file: frontend/static/js/received_orders.js
+2025-04-29 04:23:44,768 | INFO | Added file: frontend/static/js/components/attachment_modal.js
+2025-04-29 04:23:44,769 | INFO | Added file: frontend/static/js/components/expand_line_items.js
+2025-04-29 04:23:44,769 | INFO | Added file: frontend/static/js/components/order_note_modal.js
+2025-04-29 04:23:44,769 | INFO | Added file: frontend/static/js/components/receive_modal.js
+2025-04-29 04:23:44,769 | INFO | Added file: frontend/static/js/components/shared_filters.js
+2025-04-29 04:23:44,769 | INFO | Added file: frontend/templates/audit_trail.html
+2025-04-29 04:23:44,770 | INFO | Added file: frontend/templates/home.html
+2025-04-29 04:23:44,770 | INFO | Added file: frontend/templates/index.html
+2025-04-29 04:23:44,770 | INFO | Added file: frontend/templates/login.html
+2025-04-29 04:23:44,770 | INFO | Added file: frontend/templates/maintenance.html
+2025-04-29 04:23:44,770 | INFO | Added file: frontend/templates/new_order.html
+2025-04-29 04:23:44,770 | INFO | Added file: frontend/templates/pending_orders.html
+2025-04-29 04:23:44,771 | INFO | Added file: frontend/templates/print_template.html
+2025-04-29 04:23:44,771 | INFO | Added file: frontend/templates/received_orders.html
+2025-04-29 04:23:44,771 | INFO | Output successfully written to /Users/stevencohen/Projects/universal_recycling/orders_project/all_project_scripts.md
+2025-04-29 04:31:21,836 | INFO | Starting full script generation
+2025-04-29 04:31:21,841 | INFO | Directory tree generated successfully
+2025-04-29 04:31:21,841 | INFO | Database schema extracted successfully
+2025-04-29 04:31:21,842 | INFO | ✅ Added file: backend/__init__.py
+2025-04-29 04:31:21,842 | INFO | ✅ Added file: backend/database.py
+2025-04-29 04:31:21,842 | INFO | ✅ Added file: backend/main.py
+2025-04-29 04:31:21,843 | INFO | ✅ Added file: backend/endpoints/__init__.py
+2025-04-29 04:31:21,843 | INFO | ✅ Added file: backend/endpoints/auth.py
+2025-04-29 04:31:21,843 | INFO | ✅ Added file: backend/endpoints/html_routes.py
+2025-04-29 04:31:21,843 | INFO | ✅ Added file: backend/endpoints/lookups.py
+2025-04-29 04:31:21,843 | INFO | ✅ Added file: backend/endpoints/order_attachments.py
+2025-04-29 04:31:21,844 | INFO | ✅ Added file: backend/endpoints/order_notes.py
+2025-04-29 04:31:21,844 | INFO | ✅ Added file: backend/endpoints/order_pdf.py
+2025-04-29 04:31:21,844 | INFO | ✅ Added file: backend/endpoints/order_queries.py
+2025-04-29 04:31:21,844 | INFO | ✅ Added file: backend/endpoints/order_receiving.py
+2025-04-29 04:31:21,844 | INFO | ✅ Added file: backend/endpoints/orders.py
+2025-04-29 04:31:21,845 | INFO | ✅ Added file: backend/endpoints/requesters.py
+2025-04-29 04:31:21,845 | INFO | ✅ Added file: backend/endpoints/supplier_lookup.py
+2025-04-29 04:31:21,845 | INFO | ✅ Added file: backend/endpoints/supplier_lookup_takealot.py
+2025-04-29 04:31:21,845 | INFO | ✅ Added file: backend/endpoints/whatsapp.py
+2025-04-29 04:31:21,845 | INFO | ✅ Added file: backend/utils/__init__.py
+2025-04-29 04:31:21,846 | INFO | ✅ Added file: backend/utils/order_utils.py
+2025-04-29 04:31:21,846 | INFO | ✅ Added file: backend/twilio/__init__.py
+2025-04-29 04:31:21,846 | INFO | ✅ Added file: backend/twilio/twilio_utils.py
+2025-04-29 04:31:21,846 | INFO | ✅ Added file: frontend/static/js/audit_trail.js
+2025-04-29 04:31:21,847 | INFO | ✅ Added file: frontend/static/js/new_order.js
+2025-04-29 04:31:21,847 | INFO | ✅ Added file: frontend/static/js/new_order_main.js
+2025-04-29 04:31:21,847 | INFO | ✅ Added file: frontend/static/js/new_order_modals.js
+2025-04-29 04:31:21,847 | INFO | ✅ Added file: frontend/static/js/new_order_utils.js
+2025-04-29 04:31:21,848 | INFO | ✅ Added file: frontend/static/js/pending_orders.js
+2025-04-29 04:31:21,848 | INFO | ✅ Added file: frontend/static/js/received_orders.js
+2025-04-29 04:31:21,848 | INFO | ✅ Added file: frontend/static/js/components/attachment_modal.js
+2025-04-29 04:31:21,848 | INFO | ✅ Added file: frontend/static/js/components/expand_line_items.js
+2025-04-29 04:31:21,848 | INFO | ✅ Added file: frontend/static/js/components/order_note_modal.js
+2025-04-29 04:31:21,849 | INFO | ✅ Added file: frontend/static/js/components/receive_modal.js
+2025-04-29 04:31:21,849 | INFO | ✅ Added file: frontend/static/js/components/shared_filters.js
+2025-04-29 04:31:21,849 | INFO | ✅ Added file: frontend/templates/audit_trail.html
+2025-04-29 04:31:21,849 | INFO | ✅ Added file: frontend/templates/home.html
+2025-04-29 04:31:21,849 | INFO | ✅ Added file: frontend/templates/index.html
+2025-04-29 04:31:21,850 | INFO | ✅ Added file: frontend/templates/login.html
+2025-04-29 04:31:21,850 | INFO | ✅ Added file: frontend/templates/maintenance.html
+2025-04-29 04:31:21,850 | INFO | ✅ Added file: frontend/templates/new_order.html
+2025-04-29 04:31:21,850 | INFO | ✅ Added file: frontend/templates/pending_orders.html
+2025-04-29 04:31:21,850 | INFO | ✅ Added file: frontend/templates/print_template.html
+2025-04-29 04:31:21,850 | INFO | ✅ Added file: frontend/templates/received_orders.html
+2025-04-29 04:41:15,893 | INFO | Directory tree generated successfully

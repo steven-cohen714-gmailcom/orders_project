@@ -78,7 +78,13 @@ def get_pending_orders(
             """, params)
             orders = [dict(row) for row in cursor.fetchall()]
             for order in orders:
-                order["created_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
+                # Try parsing the date in both possible formats
+                try:
+                    # First try the SQLite CURRENT_TIMESTAMP format (YYYY-MM-DDTHH:MM:SS.ssssss)
+                    order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y")
+                except ValueError:
+                    # If that fails, try the YYYY/MM/DD format from manual inserts
+                    order["created_date"] = datetime.strptime(order["created_date"], "%Y/%m/%d").strftime("%d/%m/%Y")
         log_event("new_orders_log.txt", {"action": "fetch_pending_orders", "count": len(orders)})
         return {"orders": orders}
     except sqlite3.OperationalError as e:
@@ -158,7 +164,7 @@ def get_received_orders(
 def get_items_for_order(order_id: int):
     try:
         with sqlite3.connect("data/orders.db") as conn:
-            conn.row_factory = sqlite3.Row
+            conn.factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT id, item_code, item_description, project, qty_ordered, qty_received, received_date, price,
@@ -236,7 +242,7 @@ def get_audit_trail(
             for order in orders:
                 order["created_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
                 if order["received_date"]:
-                    order["received_date"] = datetime.fromisoformat(order["received_date"]).strftime("%d/%m/%Y")
+                    order["received_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
                 # Fetch items for this order
                 cursor.execute("""
                     SELECT id, item_code, item_description, project, qty_ordered, qty_received, received_date

@@ -52,7 +52,7 @@ async def create_order(request: Dict[str, Any]):
          raise HTTPException(status_code=400, detail=f"Supplier with ID {supplier_id} does not exist")
 
      total = sum(item["qty_ordered"] * item["price"] for item in items)        
-     created_date = datetime.now().strftime("%Y/%m/%d")
+     created_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
      # Insert the order      
      cursor.execute("""        
@@ -241,92 +241,7 @@ async def generate_pdf(request: Dict[str, Any]):
              </div>        
              <div class="order-details">        
                  <p><strong>Order Date:</strong> {datetime.now().strftime("%Y-%m-%d")}</p>        
-                 <p><strong>Supplier Name:</strong> {supplier_name}</p>        
-                 <p><strong>{supplier_address}</strong></p>        
-                 <p><strong>Note to Supplier:</strong></p>        
-                 <div class="note-box">{request.get("note_to_supplier", "")}</div>        
-                 <h2>Order Items</h2>        
-                 <table>        
-                     <tr>        
-                         <th>ITEM CODE</th>        
-                         <th>ITEM DESCRIPTION</th>        
-                         <th>QTY ORDERED</th>        
-                         <th>UNIT PRICE</th>        
-                         <th>TOTAL</th>        
-                     </tr>        
-     """        
-     for item in request.get("items", []):        
-         item_total = item["qty_ordered"] * item["price"]        
-         html_content += f"""        
-                     <tr>        
-                         <td>{item["item_code"]}</td>        
-                         <td>{item["item_description"]}</td>        
-                         <td>{item["qty_ordered"]}</td>        
-                         <td>{item["price"]}</td>        
-                         <td>{item_total}</td>        
-                     </tr>        
-         """        
-     html_content += f"""        
-                 </table>        
-                 <p class="total">Order Total: R{request.get("total", 0)}</p>        
-                 <p>ALL amounts excluding vat</p>        
-             </div>        
-         </body>        
-     </html>        
-     """
-
-     # Use WeasyPrint to generate the PDF        
-     pdf_file = BytesIO()        
-     HTML(string=html_content).write_pdf(pdf_file)        
-     pdf_data = pdf_file.getvalue()        
-     pdf_file.close()
-
-     end_time = datetime.now()        
-     time_taken = (end_time - start_time).total_seconds() * 1000        
-     pdf_logging.info(json.dumps({"action": "pdf_generated", "order_number": order_number, "time_taken_ms": time_taken}))
-
-     return Response(content=pdf_data, media_type="application/pdf")        
- except Exception as e:        
-     pdf_logging.error(f"Failed to generate PDF for order {order_number}: {str(e)}")        
-     raise HTTPException(status_code=500, detail=f"Failed to generate PDF: {str(e)}")        
- finally:        
-     if 'conn' in locals():        
-         conn.close()
-
-@router.put("/{order_id}/update_order_note")        
-async def update_order_note(order_id: int, request: dict):        
- note = request.get("order_note", "")        
- logging.info(f"Attempting to update order note for order {order_id}: {note}")    
-
- try:        
-     conn = get_db_connection()        
-     cursor = conn.cursor()        
-     cursor.execute("UPDATE orders SET order_note = ? WHERE id = ?", (note, order_id))        
-     if cursor.rowcount == 0:        
-         logging.warning(f"No order found with id {order_id} to update note")        
-         raise HTTPException(status_code=404, detail="Order not found")        
-     conn.commit()        
-     logging.info(json.dumps({"action": "note_updated", "order_id": order_id, "order_note": note}))        
-     return {"message": "Order note updated successfully"}        
- except sqlite3.Error as e:        
-     logging.error(f"Database error updating order note for order {order_id}: {str(e)}")        
-     raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")        
- except Exception as e:        
-     logging.error(f"Failed to update order note for order {order_id}: {str(e)}")        
-     raise HTTPException(status_code=500, detail=f"Failed to update order note: {str(e)}")        
- finally:        
-     if 'conn' in locals():        
-         conn.close()
-
-@router.get("/{order_id}/items")        
-async def get_order_items(order_id: int):        
- try:        
-     conn = get_db_connection()        
-     cursor = conn.cursor()        
-     cursor.execute("SELECT item_code, item_description, project, qty_ordered, price FROM order_items WHERE order_id = ?", (order_id,))        
-     items = cursor.fetchall()
-
-     result = []        
+    ...(truncated 4138 characters)... 
      for item in items:        
          result.append({        
              "item_code": item[0],        

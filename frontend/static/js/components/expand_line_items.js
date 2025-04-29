@@ -32,7 +32,7 @@ export async function expandLineItems(orderId, iconElement) {
       const header = document.createElement("tr");
       header.style.backgroundColor = "#f0f0f0";
       header.style.fontWeight = "bold";
-      ["Item Code", "Description", "Project", "Qty", "Price", "Total"].forEach(text => {
+      ["Item Code", "Description", "Project Code", "Qty", "Price", "Total"].forEach(text => {
         const th = document.createElement("td");
         th.textContent = text;
         header.appendChild(th);

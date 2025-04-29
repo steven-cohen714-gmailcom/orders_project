@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 import subprocess
 import sqlite3
@@ -5,6 +6,7 @@ from pathlib import Path
 import hashlib
 import logging
 import time
+import sys
 
 # --- Config ---
 PROJECT_ROOT = Path("/Users/stevencohen/Projects/universal_recycling/orders_project")
@@ -12,26 +14,24 @@ OUTPUT_FILE = PROJECT_ROOT / "all_project_scripts.md"
 LOG_FILE = PROJECT_ROOT / "logs/output_scripts.log"
 DB_FILE = PROJECT_ROOT / "data/orders.db"
 
-# Only include files from these directories
 INCLUDE_DIRS = [
     PROJECT_ROOT / "backend",
     PROJECT_ROOT / "frontend",
 ]
+INCLUDE_EXTENSIONS = {'.py', '.js', '.html'}
+EXCLUDE_DIRS = {'scripts', 'logs', 'data', 'uploads', 'venv'}
 
-# Only these file types
-INCLUDE_EXTENSIONS = ['.py', '.js', '.html']
-
-# Exclude entire folders
-EXCLUDE_DIRS = {
-    'scripts', 'logs', 'data', 'uploads', 'venv'
-}
-
-# Logging setup
+# --- Logging Setup ---
 logging.basicConfig(
     filename=LOG_FILE,
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s"
 )
+
+missed_files = []         # Files that failed to open
+written_files = set()     # Files successfully written to MD
+expected_files = set()    # All eligible .py/.js/.html files found
+
 
 def get_file_hash(file_path):
     try:
@@ -44,6 +44,7 @@ def get_file_hash(file_path):
         logging.error(f"Failed to hash {file_path}: {e}")
         return None
 
+
 def get_file_mtime(file_path):
     try:
         mtime = os.path.getmtime(file_path)
@@ -51,6 +52,7 @@ def get_file_mtime(file_path):
     except Exception as e:
         logging.error(f"Failed to get mtime for {file_path}: {e}")
         return "Unknown"
+
 
 def get_directory_tree():
     try:
@@ -66,102 +68,109 @@ def get_directory_tree():
         logging.error(f"Error generating directory tree: {e}")
         return f"Error generating directory tree: {e}"
 
+
 def get_database_schema():
     try:
         conn = sqlite3.connect(DB_FILE)
         cursor = conn.cursor()
         cursor.execute("SELECT name, sql FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")
-        schema = []
-        for name, sql in cursor.fetchall():
-            schema.append(f"### Table: {name}\n```sql\n{sql}\n```")
+        schema = [
+            f"### Table: {name}\n```sql\n{sql}\n```"
+            for name, sql in cursor.fetchall()
+        ]
         conn.close()
-        logging.info("Database schema extracted successfully")
         return "\n\n".join(schema) if schema else "No tables found in database."
     except sqlite3.Error as e:
         logging.error(f"Error accessing database: {e}")
         return f"Error accessing database: {e}"
 
+
 def collect_files(directory):
     contents = []
-    missing_folders = []
-    for root, dirs, files in os.walk(directory):
+    for root, _, files in os.walk(directory):
         rel_root = Path(root).relative_to(PROJECT_ROOT)
-
-        # Skip excluded dirs
         if any(part in EXCLUDE_DIRS for part in rel_root.parts):
             continue
 
-        script_files = [f for f in files if Path(f).suffix in INCLUDE_EXTENSIONS]
-
-        if not script_files:
-            missing_folders.append(str(rel_root))
-
-        for file in sorted(script_files):
+        for file in sorted(files):
             file_path = Path(root) / file
+            ext = file_path.suffix
+            if ext not in INCLUDE_EXTENSIONS:
+                continue
+
             relative_path = file_path.relative_to(PROJECT_ROOT)
+            expected_files.add(str(relative_path))  # Mark as expected
+
             try:
-                with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
-                line_count = len(content.splitlines())
+
                 file_hash = get_file_hash(file_path)
                 file_mtime = get_file_mtime(file_path)
+                line_count = len(content.splitlines())
+
                 contents.append(
                     f"### File: {relative_path}\n"
                     f"**SHA-256 Hash**: {file_hash}\n"
                     f"**Line Count**: {line_count}\n"
                     f"**Last Modified**: {file_mtime}\n"
-                    f"```{file_path.suffix[1:]}\n{content}\n```"
+                    f"```{ext[1:]}\n{content}\n```"
                 )
-                logging.info(f"Added file: {relative_path}")
+                written_files.add(str(relative_path))  # Mark as written
             except Exception as e:
+                missed_files.append(str(relative_path))
                 logging.error(f"Error reading file {relative_path}: {e}")
-                contents.append(f"### File: {relative_path}\n(Error reading file: {e})")
+                contents.append(
+                    f"### File: {relative_path}\n"
+                    f"(Error reading file: {e})"
+                )
 
-    return contents, missing_folders
+    return contents
+
 
 def main():
-    logging.info("Starting full script generation")
+    print("🛠 Generating full project script dump...")
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
             f.write("# Orders Project Scripts\n\n")
-            f.write("Generated by improved script to accurately capture all .py, .js, .html scripts in backend/ and frontend/, directory structure, missing folders, and database schema.\n\n")
+            f.write("Generated by integrity-verified script to capture .py, .js, .html scripts, directory tree, and DB schema.\n\n")
 
-            # Directory tree
-            f.write("## Directory Tree\n```")
+            # Tree
+            f.write("## Directory Tree\n```\n")
             f.write(get_directory_tree())
             f.write("```\n\n")
 
-            # Database schema
+            # Schema
             f.write("## Database Schema\n")
             f.write(get_database_schema())
             f.write("\n\n")
 
             # File contents
             f.write("## File Contents\n")
-            all_missing = []
             for directory in INCLUDE_DIRS:
-                if not directory.exists():
-                    f.write(f"### Directory: {directory.relative_to(PROJECT_ROOT)}\n(Directory not found)\n\n")
-                    logging.error(f"Directory not found: {directory}")
-                    continue
-                f.write(f"### Directory: {directory.relative_to(PROJECT_ROOT)}\n")
-                contents, missing = collect_files(directory)
+                rel_dir = directory.relative_to(PROJECT_ROOT)
+                f.write(f"### Directory: {rel_dir}\n")
+                contents = collect_files(directory)
                 for entry in contents:
-                    f.write(entry)
-                    f.write("\n\n")
-                all_missing.extend(missing)
+                    f.write(entry + "\n\n")
 
-            # List missing folders
-            if all_missing:
-                f.write("## Missing or Empty Folders\n")
-                for missing in sorted(set(all_missing)):
-                    f.write(f"- {missing}\n")
+        # Verification
+        skipped = sorted(expected_files - written_files)
 
-        logging.info(f"Output successfully written to {OUTPUT_FILE}")
-        print(f"✅ Output written to {OUTPUT_FILE}")
+        if missed_files or skipped:
+            print("\n❌ The following files were NOT included in the markdown output:")
+            for file in sorted(set(missed_files + skipped)):
+                print(f"- {file}")
+            sys.exit(1)
+        else:
+            print("\n✅ All files read and written successfully.")
+            sys.exit(0)
+
     except Exception as e:
-        logging.error(f"Failed to generate output: {e}")
-        print(f"❌ Error: Failed to generate output. Check {LOG_FILE} for details.")
+        logging.error(f"Fatal error during dump: {e}")
+        print(f"\n❌ Fatal error. See {LOG_FILE} for details.")
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

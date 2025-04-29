@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from backend.database import get_db_connection
@@ -37,16 +37,10 @@ async def new_order_page(request: Request):
                 FROM business_details WHERE id = 1
             """)
             row = cursor.fetchone()
-            business_details = dict(row) if row else {
-                "company_name": "Universal Recycling Company Pty Ltd",
-                "address_line1": "123 Industrial Road",
-                "address_line2": "Unit 4",
-                "city": "Cape Town",
-                "province": "Western Cape",
-                "postal_code": "8001",
-                "telephone": "+27 21 555 1234",
-                "vat_number": "VAT123456789"
-            }
+            if not row:
+                logging.error("No business details found in database")
+                raise HTTPException(status_code=500, detail="No business details found in database")
+            business_details = dict(row)
             logging.info(f"Business details fetched: {business_details}")
 
         return templates.TemplateResponse(

@@ -100,7 +100,14 @@ async function loadOrders() {
                      target.setAttribute("data-order-note", escapeHTML(newNote));       
                  });       
              });       
-             row.querySelector(".expand-icon").addEventListener("click", (e) => window.expandLineItems(order.id || '', e.target));       
+             row.querySelector(".expand-icon").addEventListener("click", (e) => {
+                 if (!order.id) {
+                     console.error("No order ID provided for expanding line items");
+                     alert("Cannot expand line items: No order ID available");
+                     return;
+                 }
+                 window.expandLineItems(order.id, e.target);
+             });       
              row.querySelector(".clip-icon").addEventListener("click", (e) => {       
                  const target = e.target;       
                  window.checkAttachments(order.id || '').then(has => {       
