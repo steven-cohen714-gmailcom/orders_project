@@ -1,4 +1,5 @@
 export async function expandLineItems(orderId, iconElement) {
+  console.log(`Expanding line items for order ID: ${orderId}`);
   const currentRow = iconElement.closest("tr");
   const existingDetailRow = document.getElementById(`items-row-${orderId}`);
 
@@ -11,9 +12,15 @@ export async function expandLineItems(orderId, iconElement) {
   }
 
   try {
+    console.log(`Fetching items from /orders/api/items_for_order/${orderId}`);
     const res = await fetch(`/orders/api/items_for_order/${orderId}`);
-    if (!res.ok) throw new Error("Failed to fetch line items");
+    console.log(`Response status: ${res.status}`);
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`Failed to fetch line items: ${res.status} - ${errorText}`);
+    }
     const data = await res.json();
+    console.log("Fetched items:", data);
 
     const newRow = document.createElement("tr");
     newRow.id = `items-row-${orderId}`;
@@ -22,6 +29,7 @@ export async function expandLineItems(orderId, iconElement) {
     cell.style.padding = "1rem";
 
     if (!data.items || data.items.length === 0) {
+      console.log("No items found for this order");
       cell.innerHTML = "<em>No items found for this order.</em>";
     } else {
       const table = document.createElement("table");
@@ -43,12 +51,12 @@ export async function expandLineItems(orderId, iconElement) {
         const row = document.createElement("tr");
 
         const cells = [
-          item.item_code,
-          item.item_description,
-          item.project,
-          item.qty_ordered,
-          `R${item.price.toFixed(2)}`,
-          `R${(item.qty_ordered * item.price).toFixed(2)}`
+          item.item_code || "N/A",
+          item.item_description || "N/A",
+          item.project || "N/A",
+          item.qty_ordered || 0,
+          item.price != null ? `R${item.price.toFixed(2)}` : "R0.00",
+          item.total != null ? `R${item.total.toFixed(2)}` : "R0.00"
         ];
 
         cells.forEach(text => {
@@ -69,6 +77,6 @@ export async function expandLineItems(orderId, iconElement) {
     iconElement.textContent = "⬆️";
   } catch (err) {
     console.error("❌ Could not load order line items:", err);
-    alert("❌ Could not load order line items");
+    alert(`❌ Could not load order line items: ${err.message}`);
   }
 }

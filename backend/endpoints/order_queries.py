@@ -3,7 +3,7 @@ from typing import Optional
 from datetime import datetime
 import sqlite3
 from pathlib import Path
-import json  # Add this import
+import json
 
 router = APIRouter(prefix="/orders/api", tags=["orders"])
 
@@ -35,7 +35,6 @@ def get_pending_orders(
             except ValueError:
                 raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use yyyy-mm-dd.")
 
-        # Include orders that are Pending, Waiting for Approval, Awaiting Authorisation, or Authorised
         filters.append("o.status IN ('Pending', 'Waiting for Approval', 'Awaiting Authorisation', 'Authorised')")
 
         if start_date:
@@ -78,13 +77,13 @@ def get_pending_orders(
             """, params)
             orders = [dict(row) for row in cursor.fetchall()]
             for order in orders:
-                # Try parsing the date in both possible formats
                 try:
-                    # First try the SQLite CURRENT_TIMESTAMP format (YYYY-MM-DDTHH:MM:SS.ssssss)
-                    order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y")
+                    order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y")
                 except ValueError:
-                    # If that fails, try the YYYY/MM/DD format from manual inserts
-                    order["created_date"] = datetime.strptime(order["created_date"], "%Y/%m/%d").strftime("%d/%m/%Y")
+                    try:
+                        order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y")
+                    except ValueError:
+                        order["created_date"] = datetime.strptime(order["created_date"], "%Y/%m/%d").strftime("%d/%m/%Y")
         log_event("new_orders_log.txt", {"action": "fetch_pending_orders", "count": len(orders)})
         return {"orders": orders}
     except sqlite3.OperationalError as e:
@@ -150,7 +149,13 @@ def get_received_orders(
             """, params)
             orders = [dict(row) for row in cursor.fetchall()]
             for order in orders:
-                order["created_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
+                try:
+                    order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y")
+                except ValueError:
+                    try:
+                        order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y")
+                    except ValueError:
+                        order["created_date"] = datetime.strptime(order["created_date"], "%Y/%m/%d").strftime("%d/%m/%Y")
         log_event("new_orders_log.txt", {"action": "fetch_received_orders", "count": len(orders)})
         return {"orders": orders}
     except sqlite3.OperationalError as e:
@@ -164,7 +169,7 @@ def get_received_orders(
 def get_items_for_order(order_id: int):
     try:
         with sqlite3.connect("data/orders.db") as conn:
-            conn.factory = sqlite3.Row
+            conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute("""
                 SELECT id, item_code, item_description, project, qty_ordered, qty_received, received_date, price,
@@ -240,10 +245,21 @@ def get_audit_trail(
             """, params)
             orders = [dict(row) for row in cursor.fetchall()]
             for order in orders:
-                order["created_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
+                try:
+                    order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y")
+                except ValueError:
+                    try:
+                        order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y")
+                    except ValueError:
+                        order["created_date"] = datetime.strptime(order["created_date"], "%Y/%m/%d").strftime("%d/%m/%Y")
                 if order["received_date"]:
-                    order["received_date"] = datetime.fromisoformat(order["created_date"]).strftime("%d/%m/%Y")
-                # Fetch items for this order
+                    try:
+                        order["received_date"] = datetime.strptime(order["received_date"], "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y")
+                    except ValueError:
+                        try:
+                            order["received_date"] = datetime.strptime(order["received_date"], "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y")
+                        except ValueError:
+                            order["received_date"] = datetime.strptime(order["received_date"], "%Y/%m/%d").strftime("%d/%m/%Y")
                 cursor.execute("""
                     SELECT id, item_code, item_description, project, qty_ordered, qty_received, received_date
                     FROM order_items
@@ -252,7 +268,13 @@ def get_audit_trail(
                 items = [dict(item_row) for item_row in cursor.fetchall()]
                 for item in items:
                     if item["received_date"]:
-                        item["received_date"] = datetime.fromisoformat(item["received_date"]).strftime("%d/%m/%Y")
+                        try:
+                            item["received_date"] = datetime.strptime(item["received_date"], "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y")
+                        except ValueError:
+                            try:
+                                item["received_date"] = datetime.strptime(item["received_date"], "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y")
+                            except ValueError:
+                                item["received_date"] = datetime.strptime(item["received_date"], "%Y/%m/%d").strftime("%d/%m/%Y")
                 order["items"] = items
         log_event("new_orders_log.txt", {"action": "fetch_audit_trail", "count": len(orders)})
         return {"orders": orders}

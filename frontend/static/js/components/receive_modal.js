@@ -1,12 +1,17 @@
-// File: frontend/static/js/components/receive_modal.js
-
 export function showReceiveModal(orderId, orderNumber) {
+  console.log(`Opening receive modal for order ID: ${orderId}, Order Number: ${orderNumber}`);
   fetch(`/orders/api/items_for_order/${orderId}`)
     .then(res => {
-      if (!res.ok) throw new Error("Failed to fetch items");
+      console.log(`Fetch response status for items: ${res.status}`);
+      if (!res.ok) {
+        return res.text().then(errorText => {
+          throw new Error(`Failed to fetch items: ${res.status} - ${errorText}`);
+        });
+      }
       return res.json();
     })
     .then(data => {
+      console.log("Fetched items for receive modal:", data);
       const modal = document.createElement("div");
       modal.className = "receive-modal";
       modal.style = `
@@ -46,41 +51,50 @@ export function showReceiveModal(orderId, orderNumber) {
 
       const inputs = [];
 
-      data.items.forEach(item => {
+      if (!data.items || data.items.length === 0) {
+        console.log("No items found for this order");
         const row = document.createElement("tr");
-        const total = item.qty_ordered * item.price;
-
-        [
-          item.item_code,
-          item.item_description,
-          item.project,
-          item.qty_ordered,
-          `R${item.price.toFixed(2)}`,
-          `R${total.toFixed(2)}`
-        ].forEach(text => {
-          const td = document.createElement("td");
-          td.textContent = text;
-          td.style.border = "1px solid #ccc";
-          row.appendChild(td);
-        });
-
-        const qtyInput = document.createElement("input");
-        qtyInput.type = "number";
-        qtyInput.min = 0;
-        qtyInput.step = 1;
-        qtyInput.value = item.qty_ordered;
-        qtyInput.style.width = "80px";
-
-        // Use the correct field name for ID
-        inputs.push({ itemId: item.id || item.item_id, input: qtyInput });
-
-        const inputTd = document.createElement("td");
-        inputTd.style.border = "1px solid #ccc";
-        inputTd.appendChild(qtyInput);
-        row.appendChild(inputTd);
-
+        const cell = document.createElement("td");
+        cell.colSpan = 7;
+        cell.textContent = "No items found for this order.";
+        row.appendChild(cell);
         table.appendChild(row);
-      });
+      } else {
+        data.items.forEach(item => {
+          const row = document.createElement("tr");
+          const total = (item.qty_ordered || 0) * (item.price || 0);
+
+          [
+            item.item_code || "N/A",
+            item.item_description || "N/A",
+            item.project || "N/A",
+            item.qty_ordered || 0,
+            item.price != null ? `R${item.price.toFixed(2)}` : "R0.00",
+            total != null ? `R${total.toFixed(2)}` : "R0.00"
+          ].forEach(text => {
+            const td = document.createElement("td");
+            td.textContent = text;
+            td.style.border = "1px solid #ccc";
+            row.appendChild(td);
+          });
+
+          const qtyInput = document.createElement("input");
+          qtyInput.type = "number";
+          qtyInput.min = 0;
+          qtyInput.step = 1;
+          qtyInput.value = item.qty_ordered || 0;
+          qtyInput.style.width = "80px";
+
+          inputs.push({ itemId: item.id || item.item_id, input: qtyInput });
+
+          const inputTd = document.createElement("td");
+          inputTd.style.border = "1px solid #ccc";
+          inputTd.appendChild(qtyInput);
+          row.appendChild(inputTd);
+
+          table.appendChild(row);
+        });
+      }
 
       const submitBtn = document.createElement("button");
       submitBtn.textContent = "Mark as Received";
@@ -89,28 +103,29 @@ export function showReceiveModal(orderId, orderNumber) {
         const payload = inputs.map(i => ({
           order_id: orderId,
           item_id: i.itemId,
-          qty_received: parseFloat(i.input.value)
+          qty_received: parseFloat(i.input.value) || 0
         }));
+        console.log("Submitting receive payload:", payload);
 
-        const res = await fetch("/orders/receive", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        if (res.ok) {
+        try {
+          const res = await fetch("/orders/receive", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          console.log(`Receive endpoint response status: ${res.status}`);
+          if (!res.ok) {
+            const err = await res.json();
+            throw new Error(JSON.stringify(err));
+          }
+          const data = await res.json();
+          console.log("Receive response:", data);
           alert("✅ Order marked as received");
           document.body.removeChild(modal);
           location.reload();
-        } else {
-          const err = await res.json();
-          if (Array.isArray(err.detail)) {
-            const messages = err.detail.map(obj => obj.msg || JSON.stringify(obj));
-            alert("❌ Failed to mark as received:\n" + messages.join("\n"));
-          } else {
-            alert("❌ Failed to mark as received: " + (err.detail || "Unknown error"));
-          }
-          
+        } catch (err) {
+          console.error("❌ Failed to mark as received:", err);
+          alert(`❌ Failed to mark as received: ${err.message}`);
         }
       };
 
@@ -122,6 +137,6 @@ export function showReceiveModal(orderId, orderNumber) {
     })
     .catch(err => {
       console.error("❌ Error loading receive modal:", err);
-      alert("❌ Could not open receive modal");
+      alert(`❌ Could not open receive modal: ${err.message}`);
     });
 }

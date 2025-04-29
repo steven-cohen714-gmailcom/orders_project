@@ -1289,3 +1289,14 @@
 [2025-04-29T06:19:40.483014] {"error": "time data '2025-04-26 12:45:20' does not match format '%Y/%m/%d'", "type": "pending_orders"}
 [2025-04-29T06:19:51.494067] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
 [2025-04-29T06:20:51.466404] {"error": "Invalid isoformat string: '2025/04/29'", "type": "audit_trail"}
+[2025-04-29T21:28:36.908774] {"error": "time data '2025-04-29 17:06:08' does not match format '%Y/%m/%d'", "type": "pending_orders"}
+[2025-04-29T21:32:53.305081] {"action": "fetch_pending_orders", "count": 35}
+[2025-04-29T21:43:58.838879] {"action": "fetch_pending_orders", "count": 35}
+[2025-04-29T21:44:30.474805] {"action": "fetch_pending_orders", "count": 35}
+[2025-04-29T21:44:38.622655] {"error": "'sqlite3.Connection' object has no attribute 'factory' and no __dict__ for setting new attributes", "type": "items_for_order"}
+[2025-04-29T21:45:01.064599] {"error": "'sqlite3.Connection' object has no attribute 'factory' and no __dict__ for setting new attributes", "type": "items_for_order"}
+[2025-04-29T21:50:55.684561] {"action": "fetch_items_for_order", "order_id": 55, "count": 1}
+[2025-04-29T21:51:09.925558] {"action": "fetch_items_for_order", "order_id": 55, "count": 1}
+[2025-04-29T21:51:22.605162] {"action": "fetch_pending_orders", "count": 35}
+[2025-04-29T21:51:29.317823] {"action": "fetch_items_for_order", "order_id": 55, "count": 1}
+[2025-04-29T21:51:41.605862] {"action": "fetch_items_for_order", "order_id": 55, "count": 1}

@@ -1,4 +1,3 @@
-// Load requesters into a given select element
 export async function loadRequesters(selectId) {
     try {
       const res = await fetch("/lookups/requesters");
@@ -16,10 +15,9 @@ export async function loadRequesters(selectId) {
     } catch (err) {
       console.error(`❌ Failed to load requesters for ${selectId}:`, err);
     }
-  }
+}
   
-  // Load suppliers into a given select element
-  export async function loadSuppliers(selectId) {
+export async function loadSuppliers(selectId) {
     try {
       const res = await fetch("/lookups/suppliers");
       const data = await res.json();
@@ -36,5 +34,4 @@ export async function loadRequesters(selectId) {
     } catch (err) {
       console.error(`❌ Failed to load suppliers for ${selectId}:`, err);
     }
-  }
-  
+}

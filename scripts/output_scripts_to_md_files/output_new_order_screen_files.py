@@ -6,19 +6,21 @@ import hashlib
 import logging
 import sys
 import time
+import subprocess
 
 # --- Config ---
 PROJECT_ROOT = Path("/Users/stevencohen/Projects/universal_recycling/orders_project")
-OUTPUT_FILE = PROJECT_ROOT / "output_new_order_screen_files.md"
+OUTPUT_FILE = PROJECT_ROOT / "output_new_order_screen_files.txt"  # Changed to .txt
 DB_FILE = PROJECT_ROOT / "data/orders.db"
 LOG_FILE = PROJECT_ROOT / "logs/output_new_order_screen_files.log"
 
 FILES_TO_DUMP = [
     "frontend/templates/new_order.html",
     "frontend/static/js/new_order_main.js",
-    "frontend/static/js/new_order.js",
     "frontend/static/js/new_order_modals.js",
     "frontend/static/js/new_order_utils.js",
+    "frontend/static/js/components/pdf_modal.js",
+    "frontend/static/js/components/order_note_modal.js",
     "backend/main.py",
     "backend/endpoints/html_routes.py",
     "backend/endpoints/orders.py",
@@ -61,23 +63,43 @@ def get_database_schema():
         cursor = conn.cursor()
         cursor.execute("SELECT name, sql FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'")
         schema = [
-            f"### Table: {name}\n```sql\n{sql}\n```"
+            f"Table: {name}\n{sql}\n"
             for name, sql in cursor.fetchall()
         ]
         conn.close()
-        return "\n\n".join(schema) if schema else "No tables found in database."
+        return "\n".join(schema) if schema else "No tables found in database."
     except sqlite3.Error as e:
         logging.error(f"Error accessing database schema: {e}")
         return f"Error accessing database schema: {e}"
+
+def get_directory_tree():
+    try:
+        result = subprocess.run(
+            ["tree", "-L", "5", str(PROJECT_ROOT)],
+            capture_output=True,
+            text=True
+        )
+        return result.stdout
+    except Exception as e:
+        logging.error(f"Failed to generate directory tree: {e}")
+        return f"Error generating directory tree: {e}"
 
 def main():
     print("🛠 Dumping New Orders Screen files...")
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            f.write("# New Orders Screen Files\n\n")
+            f.write("New Orders Screen Files\n\n")
             f.write("Generated for focused screen development.\n\n")
 
-            f.write("## File Contents\n")
+            # Directory Tree
+            f.write("Directory Tree\n")
+            f.write("----------------------------------------\n")
+            f.write(get_directory_tree())
+            f.write("\n\n")
+
+            # File Contents
+            f.write("File Contents\n")
+            f.write("----------------------------------------\n\n")
 
             for rel_path in FILES_TO_DUMP:
                 file_path = PROJECT_ROOT / rel_path
@@ -88,26 +110,28 @@ def main():
 
                         file_hash = get_file_hash(file_path)
                         file_mtime = get_file_mtime(file_path)
-                        ext = file_path.suffix[1:] if file_path.suffix.startswith('.') else 'txt'
 
-                        f.write(f"### File: {rel_path}\n")
-                        f.write(f"**SHA-256 Hash**: {file_hash}\n\n")
-                        f.write(f"**Last Modified**: {file_mtime}\n\n")
-                        f.write(f"```{ext}\n{content}\n```\n\n")
+                        f.write(f"File: {rel_path}\n")
+                        f.write(f"SHA-256 Hash: {file_hash}\n")
+                        f.write(f"Last Modified: {file_mtime}\n")
+                        f.write("----------------------------------------\n")
+                        f.write(content)
+                        f.write("\n\n----------------------------------------\n\n")
 
                         logging.info(f"✅ Dumped {rel_path}")
 
                     except Exception as e:
                         missed_files.append(str(rel_path))
                         logging.error(f"❌ Error reading {rel_path}: {e}")
-                        f.write(f"### File: {rel_path}\n(Error reading file: {e})\n\n")
+                        f.write(f"File: {rel_path}\n(Error reading file: {e})\n\n")
                 else:
                     missed_files.append(str(rel_path))
                     logging.error(f"❌ Missing file: {rel_path}")
-                    f.write(f"### File: {rel_path}\n(File not found)\n\n")
+                    f.write(f"File: {rel_path}\n(File not found)\n\n")
 
             # Database Schema
-            f.write("## Database Schema\n")
+            f.write("Database Schema\n")
+            f.write("----------------------------------------\n")
             f.write(get_database_schema())
             f.write("\n")
 

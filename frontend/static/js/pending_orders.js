@@ -4,8 +4,11 @@ import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal 
 import { showOrderNoteModal, showSupplierNoteModal } from './components/order_note_modal.js';       
 import { showReceiveModal } from './components/receive_modal.js';
 
+console.log("Loading pending_orders.js");
+
 async function loadFiltersAndOrders() {       
  try {    
+     console.log("Loading filters...");
      await Promise.all([       
          loadRequesters("filter-requester").catch(err => { console.error("Failed to load requesters:", err); throw err; }),       
          loadSuppliers("filter-supplier").catch(err => { console.error("Failed to load suppliers:", err); throw err; })       
