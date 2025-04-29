@@ -272,120 +272,125 @@ function populateDropdown(dropdownId, items, key, idKey = "id") {
 }
 
 async function previewOrder() {
-   console.log('previewOrder called');
-   const orderNumber = document.getElementById('order-number').textContent;
-   const supplierId = document.getElementById('supplier_id').value;
-   const noteToSupplier = document.getElementById('note_to_supplier').value;
-   console.log('Collected data:', { orderNumber, supplierId, noteToSupplier });
+    console.log('previewOrder called');
+    const orderNumber = document.getElementById('order-number').textContent;
+    const supplierId = document.getElementById('supplier_id').value;
+    const noteToSupplier = document.getElementById('note_to_supplier').value;
+    const date = new Date().toISOString().split('T')[0]; // Add current date
+    console.log('Collected data:', { orderNumber, supplierId, noteToSupplier, date });
 
-   if (!orderNumber || !supplierId) {
-       alert('Please fill in all required fields (Order Number, Supplier)');
-       return;
-   }
+    if (!orderNumber || !supplierId) {
+        alert('Please fill in all required fields (Order Number, Supplier)');
+        return;
+    }
 
-   const items = Array.from(document.querySelectorAll('#items-body tr')).map(row => {
-       const itemCode = row.querySelector('.item-code')?.value;
-       const itemDescription = itemsList.find(i => i.item_code === itemCode)?.item_description || '';
-       const project = row.querySelector('.project')?.value;
-       const qtyOrdered = parseFloat(row.querySelector('.qty-ordered')?.value) || 0;
-       const price = parseFloat(row.querySelector('.price')?.value) || 0;
-       if (!itemCode || !project || qtyOrdered <= 0 || price <= 0) {
-           throw new Error('All items must have a valid item code, project, quantity, and price');
-       }
-       return { item_code: itemCode, item_description: itemDescription, project, qty_ordered: qtyOrdered, price };
-   });
+    const items = Array.from(document.querySelectorAll('#items-body tr')).map(row => {
+        const itemCode = row.querySelector('.item-code')?.value;
+        const itemDescription = itemsList.find(i => i.item_code === itemCode)?.item_description || '';
+        const project = row.querySelector('.project')?.value;
+        const qtyOrdered = parseFloat(row.querySelector('.qty-ordered')?.value) || 0;
+        const price = parseFloat(row.querySelector('.price')?.value) || 0;
+        if (!itemCode || !project || qtyOrdered <= 0 || price <= 0) {
+            throw new Error('All items must have a valid item code, project, quantity, and price');
+        }
+        return { item_code: itemCode, item_description: itemDescription, project, qty_ordered: qtyOrdered, price };
+    });
 
-   console.log('Items:', items);
-   if (items.length === 0) {
-       alert('Please add at least one item to the order');
-       return;
-   }
+    console.log('Items:', items);
+    if (items.length === 0) {
+        alert('Please add at least one item to the order');
+        return;
+    }
 
-   const total = items.reduce((sum, item) => sum + (item.qty_ordered * item.price), 0);
-   if (!businessDetails || !businessDetails.company_name) {
-       console.error('No business details available');
-       alert('Error: No business details found');
-       return;
-   }
+    const total = items.reduce((sum, item) => sum + (item.qty_ordered * item.price), 0);
+    if (!businessDetails || !businessDetails.company_name) {
+        console.error('No business details available');
+        alert('Error: No business details found');
+        return;
+    }
 
-   const payload = {
-       order_number: orderNumber,
-       date: new Date().toISOString().split('T')[0],
-       supplier_id: parseInt(supplierId),
-       note_to_supplier: noteToSupplier,
-       items,
-       total,
-       business_details: businessDetails
-   };
+    const payload = {
+        order_number: orderNumber,
+        date: date,
+        supplier_id: parseInt(supplierId),
+        note_to_supplier: noteToSupplier,
+        items,
+        total,
+        business_details: businessDetails
+    };
 
-   console.log('Sending payload:', payload);
-   try {
-       const res = await fetch('/orders/generate_pdf', {
-           method: 'POST',
-           headers: { 'Content-Type': 'application/json' },
-           body: JSON.stringify(payload)
-       });
-       console.log(`Response status: ${res.status}`);
-       if (!res.ok) {
-           const errorText = await res.text();
-           throw new Error(`HTTP error! status: ${res.status} - ${errorText}`);
-       }
+    console.log('Sending payload:', payload);
+    try {
+        const res = await fetch('/orders/generate_pdf', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        console.log(`Response status: ${res.status}`);
+        if (!res.ok) {
+            const errorText = await res.text();
+            console.error('Error response:', errorText);
+            throw new Error(`HTTP error! status: ${res.status} - ${errorText}`);
+        }
 
-       const contentType = res.headers.get('content-type');
-       console.log('Content-Type:', contentType);
-       if (contentType && contentType.includes('application/pdf')) {
-           const blob = await res.blob();
-           console.log('Blob size:', blob.size);
+        const contentType = res.headers.get('content-type');
+        console.log('Content-Type:', contentType);
+        if (contentType && contentType.includes('application/pdf')) {
+            const blob = await res.blob();
+            console.log('Blob size:', blob.size);
+            if (blob.size === 0) {
+                throw new Error('Received empty PDF file');
+            }
 
-           const modal = document.createElement('div');
-           modal.style.position = 'fixed';
-           modal.style.top = '0';
-           modal.style.left = '0';
-           modal.style.width = '100vw';
-           modal.style.height = '100vh';
-           modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-           modal.style.display = 'flex';
-           modal.style.alignItems = 'center';
-           modal.style.justifyContent = 'center';
-           modal.style.zIndex = '9999';
+            const modal = document.createElement('div');
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100vw';
+            modal.style.height = '100vh';
+            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
+            modal.style.zIndex = '9999';
 
-           const inner = document.createElement('div');
-           inner.style.backgroundColor = 'white';
-           inner.style.padding = '1rem';
-           inner.style.borderRadius = '8px';
-           inner.style.width = '90%';
-           inner.style.maxWidth = '800px';
-           inner.style.height = '80vh';
-           inner.style.display = 'flex';
-           inner.style.flexDirection = 'column';
+            const inner = document.createElement('div');
+            inner.style.backgroundColor = 'white';
+            inner.style.padding = '1rem';
+            inner.style.borderRadius = '8px';
+            inner.style.width = '90%';
+            inner.style.maxWidth = '800px';
+            inner.style.height = '80vh';
+            inner.style.display = 'flex';
+            inner.style.flexDirection = 'column';
 
-           const iframe = document.createElement('iframe');
-           iframe.src = URL.createObjectURL(blob);
-           iframe.style.width = '100%';
-           iframe.style.height = '100%';
-           iframe.style.border = 'none';
-           inner.appendChild(iframe);
+            const iframe = document.createElement('iframe');
+            iframe.src = URL.createObjectURL(blob);
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            inner.appendChild(iframe);
 
-           const closeBtn = document.createElement('button');
-           closeBtn.textContent = 'Close';
-           closeBtn.style.marginTop = '1rem';
-           closeBtn.style.padding = '0.5rem 1rem';
-           closeBtn.style.cursor = 'pointer';
-           closeBtn.style.alignSelf = 'center';
-           closeBtn.onclick = () => document.body.removeChild(modal);
-           inner.appendChild(closeBtn);
+            const closeBtn = document.createElement('button');
+            closeBtn.textContent = 'Close';
+            closeBtn.style.marginTop = '1rem';
+            closeBtn.style.padding = '0.5rem 1rem';
+            closeBtn.style.cursor = 'pointer';
+            closeBtn.style.alignSelf = 'center';
+            closeBtn.onclick = () => document.body.removeChild(modal);
+            inner.appendChild(closeBtn);
 
-           modal.appendChild(inner);
-           document.body.appendChild(modal);
-           console.log('PDF displayed in modal');
-       } else {
-           const data = await res.json();
-           alert(`Unexpected response: ${JSON.stringify(data)}`);
-       }
-   } catch (error) {
-       console.error('Error generating PDF:', error);
-       alert(`Error generating PDF: ${error.message}`);
-   }
+            modal.appendChild(inner);
+            document.body.appendChild(modal);
+            console.log('PDF displayed in modal');
+        } else {
+            const data = await res.json();
+            throw new Error(`Unexpected response: ${JSON.stringify(data)}`);
+        }
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        alert(`Error generating PDF: ${error.message}`);
+    }
 }
 
 async function submitOrder() {
