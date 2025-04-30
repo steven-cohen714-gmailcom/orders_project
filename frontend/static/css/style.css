@@ -25,7 +25,6 @@ label.inline {
 }
 EOF
 
-cat <<EOF > frontend/static/js/date_utils.js
 export function setDateInputFormat(inputId) {
   const display = document.getElementById(\`\${inputId}-display\`);
   const hidden = document.getElementById(inputId);
