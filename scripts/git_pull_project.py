@@ -1,7 +1,11 @@
+#!/usr/bin/env python3
+
 import subprocess
 import os
 import sys
 from pathlib import Path
+from datetime import datetime
+import shutil
 
 def run(command, desc, check=True):
     print(f"🔧 {desc}...")
@@ -18,6 +22,14 @@ def run(command, desc, check=True):
         if check:
             sys.exit(1)
         return e
+
+def backup_database():
+    db_file = Path("data/orders.db")
+    if db_file.exists():
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        backup_file = Path(f"data/orders_backup_{timestamp}.db")
+        shutil.copy(db_file, backup_file)
+        print(f"🗃️ Backed up database to {backup_file}")
 
 def reset_untracked_files():
     print("🧹 Resetting untracked files to avoid conflicts...")
@@ -36,10 +48,11 @@ def reset_untracked_files():
             print(f"🧹 Resetting log file: {log_file}")
             run(["git", "checkout", "--", log_file], f"Reset {log_file}", check=False)
 
-    # Reset database file
+    # Reset and backup DB
     db_file = "data/orders.db"
     db_path = Path(db_file)
     if db_path.exists():
+        backup_database()
         print(f"🧹 Resetting database file: {db_file}")
         run(["git", "checkout", "--", db_file], f"Reset {db_file}", check=False)
 
@@ -48,7 +61,7 @@ def reset_untracked_files():
     subprocess.run(["find", ".", "-type", "f", "-name", "*.pyc", "-delete"], check=False)
 
 def main():
-    repo_path = Path("/Users/stevencohen/Projects/universal_recycling/orders_project")
+    repo_path = Path(__file__).resolve().parents[1]
     os.chdir(repo_path)
 
     if not (repo_path / ".git").exists():
@@ -112,9 +125,8 @@ def main():
         except SystemExit:
             print("⚠️ Stash pop failed, but local changes have been preserved.")
 
-    # Final cleanup of untracked files
+    # Final cleanup
     reset_untracked_files()
-
     print("✅ Git pull completed successfully!")
 
 if __name__ == "__main__":

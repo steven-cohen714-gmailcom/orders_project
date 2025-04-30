@@ -2422,3 +2422,9 @@
 2025-04-29 21:51:52,952 | INFO | Items fetched: 10 items
 2025-04-29 21:51:52,954 | INFO | Projects fetched: 10 items
 2025-04-29 21:51:52,956 | INFO | Settings fetched: {'last_order_number': 'URC000', 'order_number_start': 'URC1204', 'auth_threshold': '10000'}
+2025-04-30 13:48:43,755 | INFO | Database tables created successfully.
+2025-04-30 13:48:43,755 | INFO | ✅ Database initialized successfully.
+2025-04-30 13:48:52,872 | INFO | Requesters fetched: 5 items
+2025-04-30 13:48:52,873 | INFO | Suppliers fetched: 10 items
+2025-04-30 17:19:48,508 | INFO | Requesters fetched: 5 items
+2025-04-30 17:19:48,509 | INFO | Suppliers fetched: 10 items
