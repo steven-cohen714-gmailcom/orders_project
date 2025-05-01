@@ -3,23 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <title>Maintenance - Universal Recycling</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 2rem; }
-    .tabs { display: flex; gap: 1rem; margin-bottom: 1rem; }
-    .tab { padding: 0.5rem 1rem; cursor: pointer; background: #ddd; border-radius: 4px 4px 0 0; }
-    .tab.active { background: #007BFF; color: white; }
-    .tab-content { display: none; padding: 1rem; border: 1px solid #ccc; border-radius: 0 4px 4px 4px; }
-    .tab-content.active { display: block; }
-    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
-    input, select, button { padding: 0.4rem; margin: 0.2rem 0; }
-    button { cursor: pointer; background: #007BFF; color: white; border: none; border-radius: 4px; }
-    button:hover { background: #0056b3; }
-    .form-group { margin-bottom: 1rem; }
-    .form-group label { display: block; font-weight: bold; }
-  </style>
+  <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
+
+  {% include "_tab_nav.html" %}
+
   <h2>Maintenance</h2>
 
   <div class="tabs">
@@ -45,11 +34,11 @@
       </select>
       <button type="submit">Add User</button>
     </form>
-    <table id="users-table">
+    <table>
       <thead>
         <tr><th>Username</th><th>Rights</th><th>Actions</th></tr>
       </thead>
-      <tbody></tbody>
+      <tbody id="users-table"></tbody>
     </table>
   </div>
 
@@ -59,9 +48,9 @@
       <input type="text" id="requester-name" />
       <button onclick="addRequester()">Add Requester</button>
     </div>
-    <table id="requesters-table">
+    <table>
       <thead><tr><th>Name</th><th>Actions</th></tr></thead>
-      <tbody></tbody>
+      <tbody id="requesters-table"></tbody>
     </table>
   </div>
 
@@ -73,9 +62,9 @@
       <input type="text" id="item-description" />
       <button onclick="addItem()">Add Item</button>
     </div>
-    <table id="items-table">
+    <table>
       <thead><tr><th>Item Code</th><th>Description</th><th>Actions</th></tr></thead>
-      <tbody></tbody>
+      <tbody id="items-table"></tbody>
     </table>
   </div>
 
@@ -87,9 +76,9 @@
       <input type="text" id="project-name" />
       <button onclick="addProject()">Add Project</button>
     </div>
-    <table id="projects-table">
+    <table>
       <thead><tr><th>Project Code</th><th>Project Name</th><th>Actions</th></tr></thead>
-      <tbody></tbody>
+      <tbody id="projects-table"></tbody>
     </table>
   </div>
 
@@ -125,112 +114,19 @@
     </div>
   </div>
 
-<script>
-// --- Tabs ---
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.tab).classList.add('active');
+  <script>
+    // Tab switching logic
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+          document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+          tab.classList.add("active");
+          document.getElementById(tab.dataset.tab).classList.add("active");
+        });
+      });
     });
-  });
-
-  loadUsers(); loadRequesters(); loadItems(); loadProjects(); loadSettings(); loadBusinessDetails();
-});
-
-// --- Generic Fetch ---
-async function fetchData(endpoint) {
-  const res = await fetch(endpoint);
-  if (!res.ok) throw new Error(`Fetch failed for ${endpoint}`);
-  return res.json();
-}
-async function postData(endpoint, data) {
-  const res = await fetch(endpoint, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
-  if (!res.ok) throw new Error(`POST failed for ${endpoint}`);
-}
-async function putData(endpoint, data) {
-  const res = await fetch(endpoint, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data) });
-  if (!res.ok) throw new Error(`PUT failed for ${endpoint}`);
-}
-
-// --- Users ---
-async function loadUsers() { const data = await fetchData('/lookups/users'); const tbody = document.querySelector('#users-table tbody'); tbody.innerHTML = ''; data.users.forEach(user => { tbody.innerHTML += `<tr><td>${user.username}</td><td>${user.rights}</td><td><button onclick="editUser(${user.id}, '${user.username}', '${user.rights}')">Edit</button></td></tr>`; }); }
-async function addUser() {
-  const username = document.getElementById('user-username').value.trim();
-  const password = document.getElementById('user-password').value.trim();
-  const rights = document.getElementById('user-rights').value;
-  if (!username || !password || !rights) return alert('Fill all user fields.');
-  await postData('/lookups/users', {username, password, rights});
-  alert('User added successfully');
-  loadUsers();
-}
-async function editUser(id, username, rights) { const newUsername = prompt('New Username:', username); const newRights = prompt('New Rights:', rights); if (newUsername && newRights) { await putData(`/lookups/users/${id}`, {username:newUsername, rights:newRights}); loadUsers(); } }
-
-// --- Requesters ---
-async function loadRequesters() { const data = await fetchData('/lookups/requesters'); const tbody = document.querySelector('#requesters-table tbody'); tbody.innerHTML = ''; data.requesters.forEach(r => { tbody.innerHTML += `<tr><td>${r.name}</td><td><button onclick="editRequester(${r.id}, '${r.name}')">Edit</button></td></tr>`; }); }
-async function addRequester() {
-  const name = document.getElementById('requester-name').value.trim();
-  if (!name) return alert('Enter requester name.');
-  await postData('/lookups/requesters', {name});
-  alert('Requester added successfully');
-  loadRequesters();
-}
-async function editRequester(id, name) { const newName = prompt('New Name:', name); if (newName) { await putData(`/lookups/requesters/${id}`, {name:newName}); loadRequesters(); } }
-
-// --- Items ---
-async function loadItems() { const data = await fetchData('/lookups/items'); const tbody = document.querySelector('#items-table tbody'); tbody.innerHTML = ''; data.items.forEach(i => { tbody.innerHTML += `<tr><td>${i.item_code}</td><td>${i.item_description}</td><td><button onclick="editItem(${i.id}, '${i.item_code}', '${i.item_description}')">Edit</button></td></tr>`; }); }
-async function addItem() {
-  const code = document.getElementById('item-code').value.trim();
-  const desc = document.getElementById('item-description').value.trim();
-  if (!code || !desc) return alert('Fill item fields.');
-  await postData('/lookups/items', {item_code:code, item_description:desc});
-  alert('Item added successfully');
-  loadItems();
-}
-async function editItem(id, code, desc) { const newCode = prompt('New Item Code:', code); const newDesc = prompt('New Description:', desc); if (newCode && newDesc) { await putData(`/lookups/items/${id}`, {item_code:newCode, item_description:newDesc}); loadItems(); } }
-
-// --- Projects ---
-async function loadProjects() { const data = await fetchData('/lookups/projects'); const tbody = document.querySelector('#projects-table tbody'); tbody.innerHTML = ''; data.projects.forEach(p => { tbody.innerHTML += `<tr><td>${p.project_code}</td><td>${p.project_name}</td><td><button onclick="editProject(${p.id}, '${p.project_code}', '${p.project_name}')">Edit</button></td></tr>`; }); }
-async function addProject() {
-  const code = document.getElementById('project-code').value.trim();
-  const name = document.getElementById('project-name').value.trim();
-  if (!code || !name) return alert('Fill project fields.');
-  await postData('/lookups/projects', {project_code:code, project_name:name});
-  alert('Project added successfully');
-  loadProjects();
-}
-async function editProject(id, code, name) { const newCode = prompt('New Project Code:', code); const newName = prompt('New Project Name:', name); if (newCode && newName) { await putData(`/lookups/projects/${id}`, {project_code:newCode, project_name:newName}); loadProjects(); } }
-
-// --- Settings ---
-async function loadSettings() { const data = await fetchData('/lookups/settings'); document.getElementById('order-number-start').value = data.order_number_start || ''; document.getElementById('auth-threshold').value = data.auth_threshold || ''; }
-async function updateSettings() {
-  const orderStart = document.getElementById('order-number-start').value.trim();
-  const auth = document.getElementById('auth-threshold').value.trim();
-  await putData('/lookups/settings', {key:'order_number_start', value:orderStart});
-  await putData('/lookups/settings', {key:'auth_threshold', value:auth});
-  alert('Settings updated');
-}
-
-// --- Business Details ---
-async function loadBusinessDetails() { const data = await fetchData('/lookups/business_details'); for (const key in data) { const input = document.getElementById(key.replace('_', '-')); if (input) input.value = data[key] || ''; } }
-async function updateBusinessDetails() {
-  const details = {
-    company_name:document.getElementById('company-name').value,
-    address_line1:document.getElementById('address-line1').value,
-    address_line2:document.getElementById('address-line2').value,
-    city:document.getElementById('city').value,
-    province:document.getElementById('province').value,
-    postal_code:document.getElementById('postal-code').value,
-    telephone:document.getElementById('telephone').value,
-    vat_number:document.getElementById('vat-number').value
-  };
-  await putData('/lookups/business_details', details);
-  alert('Business details updated');
-  loadBusinessDetails();
-}
-</script>
+  </script>
 
 </body>
 </html>

@@ -1,110 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create New Order</title>
-    <link rel="icon" href="data:,">
-    <style>
-        body { font-family: Arial, sans-serif; padding: 2rem; }
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
-        .status { font-weight: bold; }
-        .filters { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
-        .filters label { font-weight: bold; }
-        select, textarea, input[type="number"], input[type="text"] {
-            padding: 0.4rem;
-            font-size: 1rem;
-            font-family: monospace;
-        }
-        button {
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            margin-top: 1rem;
-            margin-right: 1rem;
-        }
-        label {
-            display: block;
-            font-weight: bold;
-            margin-top: 1rem;
-        }
-        #note_to_supplier {
-            width: 100%;
-            height: 150px;
-            resize: vertical;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create New Order</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
 
-    <div>
-        <h2>Create Purchase Order</h2>
-        <div>
-            <label>Order Number: <span id="order-number">Loading...</span></label>
-        </div>
-        <div>
-            <div>
-                <label for="requester_id">Requester *</label>
-                <select id="requester_id" name="requester_id">
-                    <option value="">Select Requester</option>
-                    {% for requester in requesters %}
-                    <option value="{{ requester.id }}">{{ requester.name }}</option>
-                    {% endfor %}
-                </select>
-                <label for="supplier_id">Supplier *</label>
-                <select id="supplier_id" name="supplier_id">
-                    <option value="">Select Supplier</option>
-                    {% for supplier in suppliers %}
-                    <option value="{{ supplier.id }}">{{ supplier.name }}</option>
-                    {% endfor %}
-                </select>
-                <label for="note_to_supplier">Note to Supplier</label>
-                <textarea id="note_to_supplier" name="note_to_supplier" rows="3"></textarea>
-            </div>
-            <div>
-                <label>Delivery Address</label>
-                <div id="delivery-address">
-                    {{ business_details.company_name }}<br>
-                    {{ business_details.address_line1 }}<br>
-                    {% if business_details.address_line2 %}
-                    {{ business_details.address_line2 }}<br>
-                    {% endif %}
-                    {{ business_details.city }}, {{ business_details.province }} {{ business_details.postal_code }}<br>
-                    Telephone: {{ business_details.telephone }}<br>
-                    VAT Number: {{ business_details.vat_number }}
-                </div>
-            </div>
-        </div>
+  {% include "_tab_nav.html" %}
 
-        <table id="items-table">
-            <thead>
-                <tr>
-                    <th>Item Code</th>
-                    <th>Project</th>
-                    <th>Qty Ordered</th>
-                    <th>Price (R)</th>
-                    <th>Total (R)</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="items-body">
-            </tbody>
-        </table>
-        <button type="button" id="add-line">Add Item</button>
+  <div>
+    <h2>Create Purchase Order</h2>
 
-        <div>
-            <label>Total: R <span id="grand-total">0.00</span></label>
-            <div>Excluding VAT</div>
-        </div>
-
-        <div>
-            <button type="button" id="preview-order">View Purchase Order</button>
-            <button type="button" id="email-po">Email Purchase Order</button>
-            <button type="button" id="submit-order">Submit Order</button>
-            <button type="button" id="cancel-order">Cancel</button>
-        </div>
+    <div class="order-header">
+      <div class="order-line">
+        <label>Order Number: <span id="order-number">Loading...</span></label>
+      </div>
+      <div class="order-line">
+        <label for="request_date">Date:</label>
+        <input type="date" id="request_date" name="request_date">
+      </div>
     </div>
 
-    <script type="module" src="/static/js/new_order_main.js"></script>
+    <div class="form-group">
+      <div class="form-row">
+        <div class="column">
+          <label for="requester_id">Requester *</label>
+          <select id="requester_id" name="requester_id">
+            <option value="">Select Requester</option>
+            {% for requester in requesters %}
+            <option value="{{ requester.id }}">{{ requester.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="column">
+          <label for="supplier_id">Supplier *</label>
+          <select id="supplier_id" name="supplier_id">
+            <option value="">Select Supplier</option>
+            {% for supplier in suppliers %}
+            <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="column">
+          <label for="note_to_supplier">Note to Supplier</label>
+          <textarea id="note_to_supplier" name="note_to_supplier" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="delivery-block">
+      <label>Delivery Address</label>
+      <div id="delivery-address">
+        {{ business_details.company_name }}<br>
+        {{ business_details.address_line1 }}<br>
+        {% if business_details.address_line2 %}
+        {{ business_details.address_line2 }}<br>
+        {% endif %}
+        {{ business_details.city }}, {{ business_details.province }} {{ business_details.postal_code }}<br>
+        Telephone: {{ business_details.telephone }}<br>
+        VAT Number: {{ business_details.vat_number }}
+      </div>
+    </div>
+
+    <table id="items-table">
+      <thead>
+        <tr>
+          <th>Item Code</th>
+          <th>Project</th>
+          <th>Qty Ordered</th>
+          <th>Price (R)</th>
+          <th>Total (R)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="items-body"></tbody>
+    </table>
+
+    <div class="add-item-block">
+      <button type="button" id="add-line">Add Item</button>
+    </div>
+
+    <div class="summary">
+      <label>Total: R <span id="grand-total">0.00</span></label>
+      <div>Excluding VAT</div>
+    </div>
+
+    <div class="button-group">
+      <button type="button" id="preview-order">View Purchase Order</button>
+      <button type="button" id="email-po">Email Purchase Order</button>
+      <button type="button" id="submit-order">Submit Order</button>
+      <button type="button" id="cancel-order">Cancel</button>
+    </div>
+  </div>
+
+  <script type="module" src="/static/js/new_order_main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const path = window.location.pathname;
+      const tabButtons = document.querySelectorAll(".tab-buttons button");
+
+      tabButtons.forEach(btn => {
+        const target = btn.getAttribute("onclick").match(/location\.href='([^']+)'/)[1];
+        if (path.startsWith(target)) {
+          btn.classList.add("active");
+        }
+      });
+    });
+  </script>
 </body>
 </html>

@@ -3,36 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <title>Audit Trail</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 2rem; }
-    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: center; }
-    .status { font-weight: bold; }
-    .filters { margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
-    .filters label { font-weight: bold; }
-    input[type="date"], select {
-      padding: 0.4rem;
-      font-size: 1rem;
-      font-family: monospace;
-    }
-    button {
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-    }
-    .expand-icon, .clip-icon, .eye-icon, .note-icon, .supplier-note-icon {
-      cursor: pointer;
-      font-size: 1.2rem;
-      margin: 0 0.3rem;
-      display: inline-block;
-    }
-    .eye-icon.disabled {
-      opacity: 0.3;
-      cursor: default;
-    }
-    .audit-details { margin-top: 0.5rem; padding-left: 2rem; }
-  </style>
+  <link rel="stylesheet" href="/static/css/style.css" />
 </head>
 <body>
+
+  {% include "_tab_nav.html" %}
+
   <h2>Audit Trail</h2>
 
   <div class="filters">
