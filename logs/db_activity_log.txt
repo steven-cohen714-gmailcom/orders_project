@@ -8,3 +8,26 @@
 2025-04-30 19:13:12,380 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '+27 011 473-9600', 'vat_number': '4700130760'}
 2025-04-30 19:13:16,828 | INFO | Requesters fetched: 5 items
 2025-04-30 19:13:16,829 | INFO | Suppliers fetched: 10 items
+2025-05-01 04:57:44,968 | INFO | Database tables created successfully.
+2025-05-01 04:57:44,968 | INFO | ✅ Database initialized successfully.
+2025-05-01 04:57:53,587 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '+27 011 473-9600', 'vat_number': '4700130760'}
+2025-05-01 04:57:53,621 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '+27 011 473-9600', 'vat_number': '4700130760'}
+2025-05-01 04:57:53,656 | INFO | Requesters fetched: 5 items
+2025-05-01 04:57:53,658 | INFO | Suppliers fetched: 10 items
+2025-05-01 04:57:53,660 | INFO | Items fetched: 10 items
+2025-05-01 04:57:53,662 | INFO | Projects fetched: 10 items
+2025-05-01 04:57:53,663 | INFO | Settings fetched: {'last_order_number': 'URC000', 'order_number_start': 'URC1204', 'auth_threshold': '10000'}
+2025-05-01 04:58:12,664 | INFO | Requesters fetched: 5 items
+2025-05-01 04:58:12,665 | INFO | Suppliers fetched: 10 items
+2025-05-01 04:58:31,738 | INFO | Requesters fetched: 5 items
+2025-05-01 04:58:31,742 | INFO | Suppliers fetched: 10 items
+2025-05-01 04:58:50,718 | INFO | Suppliers fetched: 10 items
+2025-05-01 04:58:50,720 | INFO | Requesters fetched: 5 items
+2025-05-01 04:58:57,157 | INFO | Suppliers fetched: 10 items
+2025-05-01 04:58:57,158 | INFO | Requesters fetched: 5 items
+2025-05-01 04:59:23,660 | INFO | Requesters fetched: 5 items
+2025-05-01 04:59:23,662 | INFO | Items fetched: 10 items
+2025-05-01 04:59:23,664 | INFO | Projects fetched: 10 items
+2025-05-01 04:59:23,666 | INFO | Settings fetched: {'last_order_number': 'URC000', 'order_number_start': 'URC1204', 'auth_threshold': '10000'}
+2025-05-01 04:59:23,667 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company Pty Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '+27 011 473-9600', 'vat_number': '4700130760'}
+2025-05-01 04:59:23,668 | INFO | Users fetched: 4 items
