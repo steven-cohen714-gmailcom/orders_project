@@ -1,8 +1,53 @@
-<!-- frontend/templates/home.html -->
-<html>
-  <body>
-    <h2>Welcome, {{ username }}</h2>
-    <p><a href="/logout">Logout</a></p>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Orders Dashboard</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <style>
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
 
+    .tab-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .tab-buttons button {
+      background-color: #e0e0e0;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      color: black;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+
+    .tab-buttons button:hover {
+      background-color: #ccc;
+    }
+
+    .tab-buttons button.active {
+      background-color: #3367d6;
+      color: white;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>Welcome</h2>
+  <div class="tab-buttons">
+    <button onclick="location.href='/orders/new'">New Order</button>
+    <button onclick="location.href='/orders/pending_orders'">Pending Orders</button>
+    <button onclick="location.href='/orders/received_orders'">Received Orders</button>
+    <button onclick="location.href='/orders/audit_trail'">Audit Trail</button>
+    <button onclick="location.href='/maintenance'">Maintenance</button>
+    <button onclick="location.href='/logout'">Logout</button>
+  </div>
+</body>
+</html>
