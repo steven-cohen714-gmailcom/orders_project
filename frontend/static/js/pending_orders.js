@@ -25,11 +25,11 @@ async function loadFiltersAndOrders() {
 function escapeHTML(str) {
     if (typeof str !== 'string') return '';
     return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
+        .replace(/&/g, '&')
+        .replace(/</g, '<')
+        .replace(/>/g, '>')
+        .replace(/"/g, '"')
+        .replace(/'/g, '');
 }
 
 async function loadOrders() {
@@ -127,19 +127,20 @@ async function loadOrders() {
 
                 row.querySelector(".pdf-icon").addEventListener("click", async () => {
                     try {
-                        const res = await fetch(`/orders/api/order_summary/${order.id}`);
-                        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                        const data = await res.json();
-
-                        const response = await fetch("/orders/generate_pdf", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(data),
-                        });
+                        const response = await fetch(`/orders/api/generate_pdf_for_order/${order.id}`);
                         if (!response.ok) throw new Error(`PDF generation failed with status ${response.status}`);
 
-                        const blob = await response.blob();
-                        showPDFModal(blob, sanitizedOrderNumber);
+                        const contentType = response.headers.get('content-type');
+                        if (contentType && contentType.includes('application/pdf')) {
+                            const blob = await response.blob();
+                            if (blob.size === 0) {
+                                throw new Error('Received empty PDF file');
+                            }
+                            showPDFModal(blob);
+                        } else {
+                            const data = await response.json();
+                            throw new Error(`Unexpected response: ${JSON.stringify(data)}`);
+                        }
                     } catch (err) {
                         alert("❌ Could not generate PDF");
                         console.error(err);

@@ -277,7 +277,7 @@ async function previewOrder() {
    const orderNumber = document.getElementById('order-number').textContent;
    const supplierId = document.getElementById('supplier_id').value;
    const noteToSupplier = document.getElementById('note_to_supplier').value;
-   const date = new Date().toISOString().split('T')[0]; // Add current date
+   const date = document.getElementById('request_date').value || new Date().toISOString().split('T')[0];
    console.log('Collected data:', { orderNumber, supplierId, noteToSupplier, date });
 
    if (!orderNumber || !supplierId) {
@@ -310,15 +310,72 @@ async function previewOrder() {
        return;
    }
 
-   const payload = {
-       order_number: orderNumber,
-       date: date,
-       supplier_id: parseInt(supplierId),
-       note_to_supplier: noteToSupplier,
-       items,
-       total,
-       business_details: businessDetails
-   };
+   // Fetch supplier name
+   let supplierName = "Unknown Supplier";
+   const suppliersData = await fetchData("/lookups/suppliers");
+   const supplier = suppliersData.suppliers.find(s => s.id === parseInt(supplierId));
+   if (supplier) {
+       supplierName = supplier.name;
+   }
+
+   // Generate HTML for PDF matching print_template.html structure
+   const html = `
+       <html>
+       <head>
+           <title>Printable Order - ${orderNumber}</title>
+           <meta charset="UTF-8">
+           <style>
+               body { font-family: Arial, sans-serif; margin: 20px; }
+               h1 { text-align: center; }
+               table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+               th, td { border: 1px solid #000; padding: 6px; text-align: left; }
+               th { background-color: #f2f2f2; }
+           </style>
+       </head>
+       <body>
+           <h1>Order ${orderNumber}</h1>
+           <p><strong>Company:</strong> ${businessDetails.company_name}</p>
+           <p><strong>Address:</strong> ${businessDetails.address_line1}${businessDetails.address_line2 ? ', ' + businessDetails.address_line2 : ''}, ${businessDetails.city}, ${businessDetails.province} ${businessDetails.postal_code}</p>
+           <p><strong>Telephone:</strong> ${businessDetails.telephone}</p>
+           <p><strong>VAT Number:</strong> ${businessDetails.vat_number}</p>
+           <p><strong>Status:</strong> Draft</p>
+           <p><strong>Created Date:</strong> ${date}</p>
+           <p><strong>Received Date:</strong> N/A</p>
+           <p><strong>Total:</strong> R${total.toFixed(2)}</p>
+           <p><strong>Supplier:</strong> ${supplierName}</p>
+           <p><strong>Order Note:</strong> None</p>
+           <p><strong>Supplier Note:</strong> ${noteToSupplier || "None"}</p>
+
+           <h2>Line Items</h2>
+           <table border="1" cellpadding="6" cellspacing="0">
+               <thead>
+                   <tr>
+                       <th>Item Code</th>
+                       <th>Description</th>
+                       <th>Project</th>
+                       <th>Qty Ordered</th>
+                       <th>Price</th>
+                       <th>Total</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   ${items.map(item => `
+                       <tr>
+                           <td>${item.item_code}</td>
+                           <td>${item.item_description}</td>
+                           <td>${item.project}</td>
+                           <td>${item.qty_ordered}</td>
+                           <td>R${item.price.toFixed(2)}</td>
+                           <td>R${(item.qty_ordered * item.price).toFixed(2)}</td>
+                       </tr>
+                   `).join('')}
+               </tbody>
+           </table>
+       </body>
+       </html>
+   `;
+
+   const payload = { html };
 
    console.log('Sending payload:', payload);
    try {
@@ -414,7 +471,7 @@ async function submitOrder() {
       console.log('Submit Response:', data);
       if (data.message === "Order created successfully") {
           alert('✅ Order submitted successfully!');
-          // Reset the form to allow continued use
+          // Reset the form to allow continued use GARTH
           document.getElementById('requester_id').value = '';
           document.getElementById('supplier_id').value = '';
           document.getElementById('note_to_supplier').value = '';
@@ -481,8 +538,8 @@ document.addEventListener('DOMContentLoaded', async () => {
        console.log('Requester dropdown options:', document.getElementById('requester_id').options.length);
        console.log('Supplier dropdown options:', document.getElementById('supplier_id').options.length);
        await loadOrderNumber();
-       // ✅ Set today's date as default
-       const dateField = document.getElementById("order-date");
+       // Set today's date as default for request_date
+       const dateField = document.getElementById("request_date");
        if (dateField) {
            const today = new Date().toISOString().split('T')[0];
            dateField.value = today;

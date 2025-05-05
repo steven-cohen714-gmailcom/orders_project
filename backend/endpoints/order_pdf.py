@@ -1,143 +1,96 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from datetime import datetime
-import sqlite3
-from pathlib import Path
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-from fastapi.responses import FileResponse
-import time
-from typing import Optional, List
-import json
+from backend.database import get_db_connection
+import logging
 
-router = APIRouter(prefix="/orders", tags=["orders"])
+router = APIRouter()
 
-PDF_DIR = Path("data/pdfs")
-PDF_DIR.mkdir(parents=True, exist_ok=True)
-
-def log_event(filename: str, data: dict):
-    log_path = Path(f"logs/{filename}")
-    log_path.parent.mkdir(parents=True, exist_ok=True)
-    with log_path.open("a", encoding="utf-8") as f:
-        timestamp = datetime.now().isoformat()
-        f.write(f"[{timestamp}] {json.dumps(data, ensure_ascii=False)}\n")
-
-class OrderPDF(BaseModel):
-    order_number: str
-    date: str
-    supplier_id: int
-    note_to_supplier: Optional[str]
-    items: List[dict]
-    total: float
-    business_details: dict
-
-@router.post("/generate_pdf")
-def generate_pdf(order: OrderPDF):
-    start_time = time.time()
+@router.get("/orders/pdf/{order_id}")
+async def get_order_pdf(order_id: int):
     try:
-        with sqlite3.connect("data/orders.db") as conn:
+        with get_db_connection() as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
+            
             cursor.execute("""
-                SELECT name, address_line1, address_line2, address_line3, postal_code
-                FROM suppliers
-                WHERE id = ?
-            """, (order.supplier_id,))
-            supplier = cursor.fetchone()
-            if not supplier:
-                raise HTTPException(status_code=404, detail="Supplier not found")
-            supplier_dict = dict(supplier)
+                SELECT o.*, s.name as supplier_name, r.name as requester_name
+                FROM orders o
+                LEFT JOIN suppliers s ON o.supplier_id = s.id
+                LEFT JOIN requesters r ON o.requester_id = r.id
+                WHERE o.id = ?
+            """, (order_id,))
+            order = cursor.fetchone()
+            
+            if not order:
+                raise HTTPException(status_code=404, detail="Order not found")
 
-        pdf_path = PDF_DIR / f"order_{order.order_number}.pdf"
-        c = canvas.Canvas(str(pdf_path), pagesize=A4)
-        width, height = A4
+            cursor.execute("""
+                SELECT * FROM order_items WHERE order_id = ?
+            """, (order_id,))
+            items = cursor.fetchall()
 
-        c.setFont("Helvetica-Bold", 12)
-        c.drawString(50, height - 50, order.business_details.get("company_name", "Universal Recycling Company Pty Ltd"))
-        c.setFont("Helvetica", 10)
-        y = height - 65
-        c.drawString(50, y, order.business_details.get("address_line1", ""))
-        if order.business_details.get("address_line2"):
-            y -= 15
-            c.drawString(50, y, order.business_details.get("address_line2", ""))
-        y -= 15
-        c.drawString(50, y, f"{order.business_details.get('city', '')}, {order.business_details.get('province', '')} {order.business_details.get('postal_code', '')}")
-        y -= 15
-        c.drawString(50, y, f"Telephone: {order.business_details.get('telephone', '')}")
-        y -= 15
-        c.drawString(50, y, f"VAT Number: {order.business_details.get('vat_number', '')}")
+        order_dict = dict(order)
+        items_list = [dict(item) for item in items]
 
-        c.setFont("Helvetica-Bold", 16)
-        c.drawCentredString(width / 2, height - 150, f"Purchase Order {order.order_number}")
+        html_content = f"""
+        <html>
+        <head>
+            <title>Order {order_dict['order_number']}</title>
+            <style>
+                body {{ font-family: Arial, sans-serif; margin: 20px; }}
+                h1 {{ text-align: center; }}
+                table {{ width: 100%; border-collapse: collapse; margin-top: 20px; }}
+                th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
+                th {{ background-color: #f2f2f2; }}
+            </style>
+        </head>
+        <body>
+            <h1>Purchase Order {order_dict['order_number']}</h1>
+            <p><strong>Supplier:</strong> {order_dict['supplier_name']}</p>
+            <p><strong>Requester:</strong> {order_dict['requester_name']}</p>
+            <p><strong>Created Date:</strong> {order_dict['created_date']}</p>
+            <p><strong>Total:</strong> R{order_dict['total']}</p>
+            <p><strong>Order Note:</strong> {order_dict['order_note'] or 'None'}</p>
+            <p><strong>Note to Supplier:</strong> {order_dict['note_to_supplier'] or 'None'}</p>
+            <table>
+                <tr>
+                    <th>Item Code</th>
+                    <th>Description</th>
+                    <th>Project</th>
+                    <th>Qty Ordered</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+        """
 
-        c.setFont("Helvetica", 10)
-        y = height - 180
-        c.drawString(50, y, f"Order Date: {order.date}")
-        y -= 15
-        c.drawString(50, y, f"Supplier: {supplier_dict['name']}")
-        y -= 15
-        supplier_address = ", ".join(filter(None, [
-            supplier_dict.get("address_line1", ""),
-            supplier_dict.get("address_line2", ""),
-            supplier_dict.get("address_line3", ""),
-            supplier_dict.get("postal_code", "")
-        ]))
-        c.drawString(50, y, f"Supplier Address: {supplier_address}")
+        for item in items_list:
+            html_content += f"""
+                <tr>
+                    <td>{item['item_code']}</td>
+                    <td>{item['item_description']}</td>
+                    <td>{item['project']}</td>
+                    <td>{item['qty_ordered']}</td>
+                    <td>R{item['price']}</td>
+                    <td>R{item['total']}</td>
+                </tr>
+            """
 
-        y -= 40
-        c.setFont("Helvetica-Bold", 10)
-        headers = ["Stock Code", "Description", "Qty", "Unit Price", "Total"]
-        x_positions = [50, 130, 330, 420, 500]
-        for i, header in enumerate(headers):
-            c.drawString(x_positions[i], y, header)
-        y -= 5
-        c.line(50, y, width - 50, y)
+        html_content += """
+            </table>
+        </body>
+        </html>
+        """
 
-        c.setFont("Helvetica", 10)
-        y -= 15
-        for item in order.items:
-            c.drawString(x_positions[0], y, item["item_code"])
-            c.drawString(x_positions[1], y, item["item_description"][:40])
-            c.drawString(x_positions[2], y, str(item["qty_ordered"]))
-            c.drawString(x_positions[3], y, f"R{item['price']:.2f}")
-            c.drawString(x_positions[4], y, f"R{(item['qty_ordered'] * item['price']):.2f}")
-            y -= 15
-            if y < 50:
-                c.showPage()
-                y = height - 50
+        pdf_io = BytesIO()
+        HTML(string=html_content).write_pdf(target=pdf_io)
+        pdf_io.seek(0)
 
-        y -= 20
-        c.setFont("Helvetica-Bold", 10)
-        c.drawString(50, y, f"Total (Excluding Tax): R{order.total:.2f}")
-
-        if order.note_to_supplier:
-            y -= 20
-            c.setFont("Helvetica", 10)
-            text = c.beginText(50, y)
-            lines = order.note_to_supplier.splitlines()
-            text.textLine("Note to Supplier:")
-            for line in lines:
-                text.textLine(line)
-            c.drawText(text)
-            y -= 12 * (len(lines) + 1)
-
-        # ✅ Bottom date intentionally removed
-
-        c.showPage()
-        c.save()
-
-        end_time = time.time()
-        log_event("pdf_generation_log.txt", {
-            "action": "pdf_generated",
-            "order_number": order.order_number,
-            "time_taken_ms": (end_time - start_time) * 1000
-        })
-
-        return FileResponse(
-            pdf_path,
+        logging.info(f"PDF generated for order {order_id}")
+        return StreamingResponse(
+            pdf_io,
             media_type="application/pdf",
-            filename=f"order_{order.order_number}.pdf"
+            headers={"Content-Disposition": f"inline; filename=order_{order_id}.pdf"}
         )
+
     except Exception as e:
-        log_event("new_orders_log.txt", {"error": str(e), "type": "generate_pdf"})
-        raise HTTPException(status_code=500, detail=f"Failed to generate PDF: {str(e)}")
+        logging.error(f"PDF generation failed for order {order_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"PDF generation failed: {str(e)}")
