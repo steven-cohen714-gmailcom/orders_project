@@ -16,13 +16,30 @@ export function showViewAttachmentsModal(orderId, orderNumber, onUploadComplete 
         files.forEach(f => {
           const li = document.createElement("li");
           const link = document.createElement("a");
-          link.href = `/${f.file_path}`;
+          link.href = "#";
           link.textContent = f.filename;
-          link.target = "_blank";
           link.style.display = "block";
           link.style.marginBottom = "0.5rem";
           link.style.color = "green";
           link.style.textDecoration = "underline";
+          link.style.cursor = "pointer";
+
+          link.onclick = async (e) => {
+            e.preventDefault();
+            try {
+              // 👇 Set the global name for download
+              window.currentOrderNumberForPDF = `${orderNumber}_${f.filename}`;
+              const res = await fetch(`/${f.file_path}`);
+              if (!res.ok) throw new Error(`HTTP ${res.status}`);
+              const blob = await res.blob();
+              const module = await import('./pdf_modal.js');
+              module.showPDFModal(blob);
+            } catch (err) {
+              alert("❌ Failed to preview PDF");
+              console.error("PDF preview failed:", err);
+            }
+          };
+
           li.appendChild(link);
           list.appendChild(li);
         });

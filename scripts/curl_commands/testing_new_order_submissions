@@ -1,0 +1,23 @@
+curl -L -X POST http://localhost:8004/lookups/orders/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "order_number": "URC1300",
+    "status": "Pending",
+    "total": 200,
+    "order_note": "",
+    "note_to_supplier": "",
+    "requester_id": 2,
+    "supplier_id": 5,
+    "items": [
+      {
+        "item_code": "ITEM001",
+        "item_description": "Sample Item",
+        "project": "PROJ001",
+        "qty_ordered": 2,
+        "price": 100
+      }
+    ]
+  }' -v > curl_output.txt 2>&1
+
+and then run
+cat curl_output.txt

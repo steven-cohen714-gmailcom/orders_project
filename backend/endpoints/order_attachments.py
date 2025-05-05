@@ -4,7 +4,7 @@ import sqlite3
 from pathlib import Path
 import json  # Add this import
 
-router = APIRouter(prefix="/orders", tags=["orders"])
+router = APIRouter(tags=["orders"])
 
 UPLOAD_DIR = Path("data/uploads")
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)

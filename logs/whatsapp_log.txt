@@ -1,9 +1,0 @@
-[2025-04-24T06:46:36.722448] {"error": "list index out of range", "type": "webhook"}
-[2025-04-24T06:55:12.275257] {"error": "list index out of range", "type": "webhook"}
-[2025-04-24T06:58:59.135614] {"action": "received_message", "from": "whatsapp:+27645139217", "message": "authorised", "message_sid": ""}
-[2025-04-24T06:58:59.136826] {"error": "No order found for message SID "}
-[2025-04-24T07:12:35.280517] {"action": "received_message", "from": "whatsapp:+27645139217", "message": "authorised"}
-[2025-04-24T07:12:35.284567] {"action": "order_authorised", "order_number": "URC1051", "from": "whatsapp:+27645139217"}
-[2025-04-24T07:19:37.300981] {"action": "received_message", "from": "whatsapp:+27645139217", "message": "like this :"}
-[2025-04-24T07:27:59.084904] {"action": "received_message", "from": "whatsapp:+27645139217", "message": "authorised"}
-[2025-04-24T07:27:59.088790] {"action": "order_authorised", "order_number": "URC1053", "from": "whatsapp:+27645139217"}

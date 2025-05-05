@@ -1,177 +1,146 @@
-from fastapi import APIRouter, HTTPException, Request
-from backend.database import get_db_connection
-import logging
-import json
-from datetime import datetime
-from typing import Dict, Any
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from typing import List, Optional
 import sqlite3
+from datetime import datetime
 
-router = APIRouter()
+from backend.utils.db_utils import handle_db_errors, log_success, log_warning
+from backend.utils.order_utils import calculate_order_total
+from backend.database import create_order, get_db_connection
 
-# Configure logging
-logging.basicConfig(filename="logs/new_orders_log.txt", level=logging.INFO, format="[%(asctime)s] %(message)s")
+router = APIRouter(prefix="/orders", tags=["orders"])
 
-# Helper function to get current timestamp
-def get_current_timestamp():
-    return datetime.now().strftime("%Y-%m-%dT%H:%M:%S.%f")
+# Pydantic models
+class OrderItemCreate(BaseModel):
+    item_code: str
+    item_description: str
+    project: Optional[str] = None
+    qty_ordered: float
+    price: float
 
-@router.post("/")
-async def create_order(request: Dict[str, Any]):
-    order_data = request
-    order_number = order_data.get("order_number")
-    requester_id = order_data.get("requester_id")
-    supplier_id = order_data.get("supplier_id")
-    note_to_supplier = order_data.get("note_to_supplier", "")
-    items = order_data.get("items", [])
+class OrderCreate(BaseModel):
+    order_number: str
+    status: str
+    order_note: Optional[str] = None
+    note_to_supplier: Optional[str] = None
+    supplier_id: int
+    requester_id: int
+    items: List[OrderItemCreate]
 
-    if not all([order_number, requester_id, supplier_id, items]):
-        logging.error("Missing required fields in order creation request")
-        raise HTTPException(status_code=400, detail="Missing required fields")
+class OrderUpdate(BaseModel):
+    status: Optional[str] = None
+    order_note: Optional[str] = None
+    note_to_supplier: Optional[str] = None
+    supplier_id: Optional[int] = None
+    requester_id: Optional[int] = None
 
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
+# --- Routes ---
+@router.post("")
+@handle_db_errors(entity="order", action="creating")
+async def create_new_order(order: OrderCreate):
+    total = calculate_order_total([item.dict() for item in order.items])
+    order_data = {
+        "order_number": order.order_number,
+        "status": order.status,
+        "total": total,
+        "order_note": order.order_note,
+        "note_to_supplier": order.note_to_supplier,
+        "supplier_id": order.supplier_id,
+        "requester_id": order.requester_id
+    }
+    items = [item.dict() for item in order.items]
+    result = create_order(order_data, items)
+    log_success("order", "created", f"Order {order.order_number} with total R{total}")
+    return {"message": "Order created successfully", "order": result}
 
-        # Validate requester_id
-        cursor.execute("SELECT id FROM requesters WHERE id = ?", (requester_id,))
-        if not cursor.fetchone():
-            logging.error(f"Invalid requester_id: {requester_id}")
-            raise HTTPException(status_code=400, detail=f"Requester with ID {requester_id} does not exist")
-
-        # Validate supplier_id
-        cursor.execute("SELECT id FROM suppliers WHERE id = ?", (supplier_id,))
-        if not cursor.fetchone():
-            logging.error(f"Invalid supplier_id: {supplier_id}")
-            raise HTTPException(status_code=400, detail=f"Supplier with ID {supplier_id} does not exist")
-
-        total = sum(item["qty_ordered"] * item["price"] for item in items)
-        created_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        # Insert the order
-        cursor.execute("""
-            INSERT INTO orders (order_number, status, created_date, total, order_note, note_to_supplier, supplier_id, requester_id)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """, (order_number, "Pending", created_date, total, "", note_to_supplier, supplier_id, requester_id))
-        order_id = cursor.lastrowid
-
-        # Insert order items
-        for item in items:
-            cursor.execute("""
-                INSERT INTO order_items (order_id, item_code, item_description, project, qty_ordered, price)
-                VALUES (?, ?, ?, ?, ?, ?)
-            """, (order_id, item["item_code"], item["item_description"], item["project"], item["qty_ordered"], item["price"]))
-
-        conn.commit()
-        logging.info(json.dumps({"action": "submit_success", "order_number": order_number, "status": "Pending", "order_id": order_id}))
-        return {"message": "Order created successfully", "order": {"id": order_id}}
-    except sqlite3.Error as e:
-        logging.error(f"Database error during order creation: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-    except Exception as e:
-        logging.error(f"Error creating order: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error creating order: {str(e)}")
-    finally:
-        if 'conn' in locals():
-            conn.close()
-
-@router.get("/api/orders/pending_orders")
-async def get_pending_orders(start_date: str = None, end_date: str = None, requester: str = None, supplier: str = None, status: str = None):
-    query = """
-        SELECT o.id, o.order_number, o.created_date, o.total, o.status, o.note_to_supplier, o.order_note,
-               r.name as requester, s.name as supplier
+@router.get("")
+@handle_db_errors(entity="orders", action="fetching")
+async def get_orders():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT o.id, o.order_number, o.status, o.created_date, o.received_date, o.total,
+               o.order_note, o.note_to_supplier, o.supplier_id, o.requester_id,
+               s.name as supplier_name, r.name as requester_name
         FROM orders o
-        LEFT JOIN requesters r ON o.requester_id = r.id
         LEFT JOIN suppliers s ON o.supplier_id = s.id
-        WHERE o.status IN ('Pending', 'Waiting for Approval', 'Awaiting Authorisation', 'Authorised')
-    """
-    params = []
+        LEFT JOIN requesters r ON o.requester_id = r.id
+    """)
+    rows = cursor.fetchall()
+    conn.close()
+    result = [dict(row) for row in rows]
+    log_success("orders", "fetched", f"{len(result)} items")
+    return {"orders": result}
 
-    try:
-        if start_date:
-            datetime.strptime(start_date, "%Y-%m-%d")
-            query += " AND o.created_date >= ?"
-            params.append(start_date)
-        if end_date:
-            datetime.strptime(end_date, "%Y-%m-%d")
-            query += " AND o.created_date <= ?"
-            params.append(end_date)
-    except ValueError as e:
-        logging.error(f"Invalid date format: {str(e)}")
-        raise HTTPException(status_code=400, detail="Invalid date format. Use YYYY-MM-DD")
+@router.get("/{order_id}")
+@handle_db_errors(entity="order", action="fetching")
+async def get_order(order_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT o.id, o.order_number, o.status, o.created_date, o.received_date, o.total,
+               o.order_note, o.note_to_supplier, o.supplier_id, o.requester_id,
+               s.name as supplier_name, r.name as requester_name
+        FROM orders o
+        LEFT JOIN suppliers s ON o.supplier_id = s.id
+        LEFT JOIN requesters r ON o.requester_id = r.id
+        WHERE o.id = ?
+    """, (order_id,))
+    row = cursor.fetchone()
+    conn.close()
+    if not row:
+        log_warning("order", f"No order found with id {order_id}")
+        raise HTTPException(status_code=404, detail="Order not found")
+    log_success("order", "fetched", f"Order {row['order_number']}")
+    return dict(row)
 
-    if requester and requester != "All":
-        query += " AND r.name = ?"
-        params.append(requester)
-    if supplier and supplier != "All":
-        query += " AND s.name = ?"
-        params.append(supplier)
-    if status and status != "All":
-        query += " AND o.status = ?"
-        params.append(status)
+@router.put("/{order_id}")
+@handle_db_errors(entity="order", action="updating")
+async def update_order(order_id: int, order: OrderUpdate):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    updates = {}
+    if order.status:
+        updates["status"] = order.status
+    if order.order_note is not None:
+        updates["order_note"] = order.order_note
+    if order.note_to_supplier is not None:
+        updates["note_to_supplier"] = order.note_to_supplier
+    if order.supplier_id:
+        updates["supplier_id"] = order.supplier_id
+    if order.requester_id:
+        updates["requester_id"] = order.requester_id
 
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute(query, params)
-        orders = cursor.fetchall()
+    if not updates:
+        raise HTTPException(status_code=400, detail="No fields provided for update")
 
-        result = []
-        for order in orders:
-            result.append({
-                "id": order[0],
-                "order_number": order[1],
-                "created_date": order[2],
-                "total": float(order[3]) if order[3] is not None else 0.0,
-                "status": order[4],
-                "note_to_supplier": order[5] or "",
-                "order_note": order[6] or "",
-                "requester": order[7] or "Unknown",
-                "supplier": order[8] or "Unknown"
-            })
+    set_clause = ", ".join(f"{k} = ?" for k in updates.keys())
+    values = tuple(updates.values()) + (order_id,)
+    cursor.execute(f"UPDATE orders SET {set_clause} WHERE id = ?", values)
 
-        logging.info(json.dumps({"action": "fetch_pending_orders", "count": len(result), "params": params}))
-        return {"orders": result}
-    except sqlite3.Error as e:
-        logging.error(f"Database error fetching pending orders: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-    except Exception as e:
-        logging.error(f"Error fetching pending orders: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error fetching pending orders: {str(e)}")
-    finally:
-        if 'conn' in locals():
-            conn.close()
+    if cursor.rowcount == 0:
+        conn.close()
+        log_warning("order", f"No order found with id {order_id}")
+        raise HTTPException(status_code=404, detail="Order not found")
 
-@router.get("/api/audit_trail")
-async def get_audit_trail():
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='audit_trail'")
-        table_exists = cursor.fetchone()
-        if not table_exists:
-            logging.error("Audit trail table does not exist in the database")
-            raise HTTPException(status_code=500, detail="Audit trail table does not exist")
+    conn.commit()
+    conn.close()
+    log_success("order", "updated", f"Order {order_id} updated with fields {list(updates.keys())}")
+    return {"message": "Order updated successfully"}
 
-        cursor.execute("SELECT id, order_id, action, action_date FROM audit_trail ORDER BY action_date DESC")
-        audit_entries = cursor.fetchall()
-
-        result = []
-        for entry in audit_entries:
-            result.append({
-                "id": entry[0],
-                "order_id": entry[1],
-                "action": entry[2],
-                "timestamp": entry[3]
-            })
-
-        logging.info(json.dumps({"action": "fetch_audit_trail", "count": len(result)}))
-        return {"audit_trail": result}
-    except sqlite3.Error as e:
-        logging.error(f"Database error fetching audit trail: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-    except Exception as e:
-        logging.error(f"Error fetching audit trail: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error fetching audit trail: {str(e)}")
-    finally:
-        if 'conn' in locals():
-            conn.close()
+@router.get("/api/items_for_order/{order_id}")
+@handle_db_errors(entity="order_items", action="fetching")
+async def get_items_for_order(order_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT id, item_code, item_description, project, qty_ordered, qty_received,
+               received_date, price, total
+        FROM order_items
+        WHERE order_id = ?
+    """, (order_id,))
+    rows = cursor.fetchall()
+    conn.close()
+    result = [dict(row) for row in rows]
+    log_success("order_items", "fetched", f"{len(result)} items for order {order_id}")
+    return {"items": result}

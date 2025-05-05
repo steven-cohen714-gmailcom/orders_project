@@ -8,7 +8,7 @@ from reportlab.pdfgen import canvas
 from fastapi.responses import FileResponse
 import time
 from typing import Optional, List
-import json  # Add this import
+import json
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 
@@ -35,7 +35,6 @@ class OrderPDF(BaseModel):
 def generate_pdf(order: OrderPDF):
     start_time = time.time()
     try:
-        # Fetch supplier details
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
@@ -49,12 +48,10 @@ def generate_pdf(order: OrderPDF):
                 raise HTTPException(status_code=404, detail="Supplier not found")
             supplier_dict = dict(supplier)
 
-        # Generate PDF
         pdf_path = PDF_DIR / f"order_{order.order_number}.pdf"
         c = canvas.Canvas(str(pdf_path), pagesize=A4)
         width, height = A4
 
-        # Header: Business Details
         c.setFont("Helvetica-Bold", 12)
         c.drawString(50, height - 50, order.business_details.get("company_name", "Universal Recycling Company Pty Ltd"))
         c.setFont("Helvetica", 10)
@@ -70,11 +67,9 @@ def generate_pdf(order: OrderPDF):
         y -= 15
         c.drawString(50, y, f"VAT Number: {order.business_details.get('vat_number', '')}")
 
-        # Title
         c.setFont("Helvetica-Bold", 16)
         c.drawCentredString(width / 2, height - 150, f"Purchase Order {order.order_number}")
 
-        # Order Details
         c.setFont("Helvetica", 10)
         y = height - 180
         c.drawString(50, y, f"Order Date: {order.date}")
@@ -89,11 +84,10 @@ def generate_pdf(order: OrderPDF):
         ]))
         c.drawString(50, y, f"Supplier Address: {supplier_address}")
 
-        # Items Table
         y -= 40
         c.setFont("Helvetica-Bold", 10)
         headers = ["Stock Code", "Description", "Qty", "Unit Price", "Total"]
-        x_positions = [50, 100, 250, 350, 400]
+        x_positions = [50, 130, 330, 420, 500]
         for i, header in enumerate(headers):
             c.drawString(x_positions[i], y, header)
         y -= 5
@@ -103,7 +97,7 @@ def generate_pdf(order: OrderPDF):
         y -= 15
         for item in order.items:
             c.drawString(x_positions[0], y, item["item_code"])
-            c.drawString(x_positions[1], y, item["item_description"][:40])  # Truncate for space
+            c.drawString(x_positions[1], y, item["item_description"][:40])
             c.drawString(x_positions[2], y, str(item["qty_ordered"]))
             c.drawString(x_positions[3], y, f"R{item['price']:.2f}")
             c.drawString(x_positions[4], y, f"R{(item['qty_ordered'] * item['price']):.2f}")
@@ -112,18 +106,22 @@ def generate_pdf(order: OrderPDF):
                 c.showPage()
                 y = height - 50
 
-        # Total and Notes
         y -= 20
         c.setFont("Helvetica-Bold", 10)
         c.drawString(50, y, f"Total (Excluding Tax): R{order.total:.2f}")
+
         if order.note_to_supplier:
             y -= 20
             c.setFont("Helvetica", 10)
-            c.drawString(50, y, f"Note to Supplier: {order.note_to_supplier}")
+            text = c.beginText(50, y)
+            lines = order.note_to_supplier.splitlines()
+            text.textLine("Note to Supplier:")
+            for line in lines:
+                text.textLine(line)
+            c.drawText(text)
+            y -= 12 * (len(lines) + 1)
 
-        # Footer: Date (repeated as per request)
-        y -= 20
-        c.drawString(50, y, f"Date: {order.date}")
+        # ✅ Bottom date intentionally removed
 
         c.showPage()
         c.save()

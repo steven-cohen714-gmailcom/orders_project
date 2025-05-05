@@ -284,3 +284,46 @@ def get_audit_trail(
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "audit_trail"})
         raise HTTPException(status_code=500, detail=f"Failed to load audit trail: {e}")
+    
+@router.get("/order_summary/{order_id}")
+def get_order_summary(order_id: int):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+
+            cursor.execute("""
+                SELECT
+                    o.id, o.created_date, o.order_number,
+                    r.name AS requester, s.name AS supplier,
+                    o.order_note, o.note_to_supplier, o.total, o.status
+                FROM orders o
+                LEFT JOIN requesters r ON o.requester_id = r.id
+                LEFT JOIN suppliers s ON o.supplier_id = s.id
+                WHERE o.id = ?
+            """, (order_id,))
+            order = cursor.fetchone()
+            if not order:
+                raise HTTPException(status_code=404, detail="Order not found")
+            order_dict = dict(order)
+
+            cursor.execute("SELECT company_name, address_line1, address_line2, city FROM business_details LIMIT 1")
+            biz = cursor.fetchone()
+            if biz:
+                order_dict.update(dict(biz))
+
+            cursor.execute("""
+                SELECT item_code, item_description, project, qty_ordered, qty_received, price
+                FROM order_items
+                WHERE order_id = ?
+            """, (order_id,))
+            items = [dict(row) for row in cursor.fetchall()]
+            for item in items:
+                item["line_total"] = round(item["qty_ordered"] * item["price"], 2)
+            order_dict["items"] = items
+
+        log_event("new_orders_log.txt", {"action": "fetch_order_summary", "order_id": order_id})
+        return order_dict
+    except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "order_summary"})
+        raise HTTPException(status_code=500, detail=f"Failed to fetch order summary: {e}")

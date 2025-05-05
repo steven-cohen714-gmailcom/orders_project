@@ -73,8 +73,9 @@
       const tabButtons = document.querySelectorAll(".tab-buttons button");
 
       tabButtons.forEach(btn => {
-        const target = btn.getAttribute("onclick").match(/location\\.href='([^']+)'/)[1];
-        if (path.startsWith(target)) {
+        const onclick = btn.getAttribute("onclick");
+        const match = onclick && onclick.match(/location\.href='([^']+)'/);
+        if (match && match[1] && path.startsWith(match[1])) {
           btn.classList.add("active");
         }
       });

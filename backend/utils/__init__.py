@@ -1,3 +1,3 @@
 """
-Utility functions for Universal Recycling Purchase Order System
-""" 
+Utility module initializer. No endpoint imports allowed.
+"""

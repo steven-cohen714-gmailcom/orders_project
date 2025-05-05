@@ -4,20 +4,26 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from backend.endpoints.lookups import router as lookups_router
-from backend.endpoints.orders import router as orders_router
-from backend.endpoints.order_queries import router as order_queries_router
+
+from backend.endpoints import routers
+from backend.endpoints.admin import admin_router
 from backend.endpoints.order_pdf import router as pdf_router
-from backend.endpoints.auth import router as auth_router  # ✅ ADDED
+from backend.endpoints.auth import router as auth_router
+from backend.endpoints.order_queries import router as order_queries_router
+from backend.endpoints.orders import router as orders_router
+from backend.endpoints.order_attachments import router as attachments_router
+
 from backend.database import init_db, get_db_connection
 from pathlib import Path
 import logging
 import sys
 import os
 
+# Allow scripts to import from parent
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from scripts.add_debug_validation_handler import install_validation_handler
 
+# Setup logging
 Path("logs").mkdir(exist_ok=True)
 logging.basicConfig(
     filename="logs/server_startup.log",
@@ -32,6 +38,7 @@ except Exception as e:
     logging.exception("❌ Failed to initialize database")
     raise
 
+# --- FastAPI App Init ---
 app = FastAPI(
     title="Universal Recycling Purchase Order System",
     description="Purchase Order management system for Universal Recycling"
@@ -39,9 +46,11 @@ app = FastAPI(
 
 install_validation_handler(app)
 
+# --- Static and Upload Directories ---
 app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
 app.mount("/data/uploads", StaticFiles(directory="data/uploads"), name="uploads")
 
+# --- Middleware ---
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -53,26 +62,27 @@ app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")
 
 templates = Jinja2Templates(directory="frontend/templates")
 
-# 🔗 Routes
-app.include_router(lookups_router, prefix="/lookups")
+# --- Routers ---
+for router in routers:
+    app.include_router(router, prefix="/lookups")
+app.include_router(admin_router, prefix="/admin")
 app.include_router(order_queries_router)
-app.include_router(orders_router, prefix="/orders")
 app.include_router(pdf_router)
-app.include_router(auth_router)  # ✅ ADDED
+app.include_router(auth_router)
+app.include_router(orders_router, prefix="/orders")
+app.include_router(attachments_router, prefix="/orders")
 
-# 🔐 Login Page
+# --- Pages ---
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
 
-# 🏠 Post-login Home Screen (tabbed dashboard)
 @app.get("/home", response_class=HTMLResponse)
 async def home(request: Request):
     if not request.session.get("user"):
         return RedirectResponse("/")
     return templates.TemplateResponse("home.html", {"request": request})
 
-# 📝 New Order
 @app.get("/orders/new", response_class=HTMLResponse)
 async def new_order_page(request: Request):
     try:
@@ -93,9 +103,18 @@ async def new_order_page(request: Request):
             row = cursor.fetchone()
             if not row:
                 logging.error("No business details found in database")
-                raise HTTPException(status_code=500, detail="No business details found in database")
-            business_details = dict(row)
-            logging.info(f"Business details fetched: {business_details}")
+                business_details = {
+                    "company_name": "Default Company",
+                    "address_line1": "N/A",
+                    "address_line2": "",
+                    "city": "N/A",
+                    "province": "N/A",
+                    "postal_code": "N/A",
+                    "telephone": "N/A",
+                    "vat_number": "N/A"
+                }
+            else:
+                business_details = dict(row)
 
         return templates.TemplateResponse("new_order.html", {
             "request": request,
@@ -109,27 +128,22 @@ async def new_order_page(request: Request):
         logging.error(f"Error rendering new order page: {str(e)}")
         raise
 
-# 📋 Pending Orders
 @app.get("/orders/pending_orders", response_class=HTMLResponse)
 async def pending_orders_page(request: Request):
     return templates.TemplateResponse("pending_orders.html", {"request": request})
 
-# ✅ Received Orders
 @app.get("/orders/received_orders", response_class=HTMLResponse)
 async def received_orders_page(request: Request):
     return templates.TemplateResponse("received_orders.html", {"request": request})
 
-# 🕵️ Audit Trail
 @app.get("/orders/audit_trail", response_class=HTMLResponse)
 async def audit_trail_page(request: Request):
     return templates.TemplateResponse("audit_trail.html", {"request": request})
 
-# 🔧 Maintenance
 @app.get("/maintenance", response_class=HTMLResponse)
 async def maintenance_page(request: Request):
     return templates.TemplateResponse("maintenance.html", {"request": request})
 
-# 🖼️ Favicon
 @app.get("/favicon.ico", response_class=FileResponse)
 async def favicon():
     favicon_path = Path("frontend/static/favicon.ico")
@@ -137,6 +151,7 @@ async def favicon():
         return {"error": "Favicon not found"}, 404
     return FileResponse(favicon_path)
 
+# --- Dev CLI (if needed) ---
 if __name__ == "__main__":
     import uvicorn
     try:

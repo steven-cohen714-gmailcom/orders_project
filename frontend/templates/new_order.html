@@ -11,6 +11,33 @@
 
   {% include "_tab_nav.html" %}
 
+  <script>
+    // Log the raw JSON string for debugging
+    const rawBusinessDetails = '{{ business_details | tojson | safe }}';
+    console.log('Raw businessDetails:', rawBusinessDetails);
+    
+    // Parse JSON with error handling
+    try {
+      window.businessDetails = JSON.parse(rawBusinessDetails);
+      if (!window.businessDetails || !window.businessDetails.company_name) {
+        throw new Error('Business details are missing or invalid');
+      }
+    } catch (error) {
+      console.error('Failed to parse businessDetails:', error);
+      // Fallback to prevent runtime errors
+      window.businessDetails = {
+        company_name: "Default Company",
+        address_line1: "N/A",
+        address_line2: "",
+        city: "N/A",
+        province: "N/A",
+        postal_code: "N/A",
+        telephone: "N/A",
+        vat_number: "N/A"
+      };
+    }
+  </script>
+
   <div>
     <h2>Create Purchase Order</h2>
 
@@ -98,7 +125,7 @@
     </div>
   </div>
 
-  <script type="module" src="/static/js/new_order_main.js"></script>
+  <script type="module" src="/static/js/new_order_main.js?v=1"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const path = window.location.pathname;
