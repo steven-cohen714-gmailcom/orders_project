@@ -57,6 +57,10 @@ async def generate_pdf_for_order(order_id: int):
             if not business_details:
                 raise HTTPException(status_code=404, detail="Business details not found")
 
+        # Replace line breaks with <br> for HTML rendering
+        note_to_supplier = order['note_to_supplier'] or "None"
+        note_to_supplier = note_to_supplier.replace('\n', '<br>')
+
         # Generate HTML for PDF
         html_content = f"""
             <html>
@@ -84,7 +88,7 @@ async def generate_pdf_for_order(order_id: int):
                 <p><strong>Supplier:</strong> {order['supplier'] or "N/A"}</p>
                 <p><strong>Requester:</strong> {order['requester']}</p>
                 <p><strong>Order Note:</strong> {order['order_note'] or "None"}</p>
-                <p><strong>Supplier Note:</strong> {order['note_to_supplier'] or "None"}</p>
+                <p><strong>Supplier Note:</strong> {note_to_supplier}</p>
 
                 <h2>Line Items</h2>
                 <table border="1" cellpadding="6" cellspacing="0">

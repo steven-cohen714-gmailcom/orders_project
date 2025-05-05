@@ -276,7 +276,7 @@ async function previewOrder() {
    console.log('previewOrder called');
    const orderNumber = document.getElementById('order-number').textContent;
    const supplierId = document.getElementById('supplier_id').value;
-   const noteToSupplier = document.getElementById('note_to_supplier').value;
+   let noteToSupplier = document.getElementById('note_to_supplier').value;
    const date = document.getElementById('request_date').value || new Date().toISOString().split('T')[0];
    console.log('Collected data:', { orderNumber, supplierId, noteToSupplier, date });
 
@@ -318,6 +318,9 @@ async function previewOrder() {
        supplierName = supplier.name;
    }
 
+   // Replace line breaks with <br> for HTML rendering
+   noteToSupplier = noteToSupplier ? noteToSupplier.replace(/\n/g, '<br>') : "None";
+
    // Generate HTML for PDF matching print_template.html structure
    const html = `
        <html>
@@ -344,7 +347,7 @@ async function previewOrder() {
            <p><strong>Total:</strong> R${total.toFixed(2)}</p>
            <p><strong>Supplier:</strong> ${supplierName}</p>
            <p><strong>Order Note:</strong> None</p>
-           <p><strong>Supplier Note:</strong> ${noteToSupplier || "None"}</p>
+           <p><strong>Supplier Note:</strong> ${noteToSupplier}</p>
 
            <h2>Line Items</h2>
            <table border="1" cellpadding="6" cellspacing="0">

@@ -75,7 +75,9 @@ export function showOrderNoteModal(note, orderId, onSaveCallback) {
     modal.inner.appendChild(title);
   
     const noteDisplay = document.createElement("p");
-    noteDisplay.textContent = note || "Empty note";
+    // Replace line breaks with <br> for HTML rendering
+    const formattedNote = note ? note.replace(/\n/g, '<br>') : "Empty note";
+    noteDisplay.innerHTML = formattedNote;
     modal.inner.appendChild(noteDisplay);
   
     const closeBtn = document.createElement("button");
