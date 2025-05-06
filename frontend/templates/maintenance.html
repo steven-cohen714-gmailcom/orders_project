@@ -125,7 +125,257 @@
           document.getElementById(tab.dataset.tab).classList.add("active");
         });
       });
+
+      // Fetch and populate data for all tabs
+      fetchUsers();
+      fetchRequesters();
+      fetchItems();
+      fetchProjects();
+      fetchSettings();
+      fetchBusinessDetails();
     });
+
+    async function fetchUsers() {
+      try {
+        const res = await fetch("/lookups/users");
+        const data = await res.json();
+        const tbody = document.getElementById("users-table");
+        tbody.innerHTML = "";
+        data.users.forEach(user => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${user.username}</td>
+            <td>${user.rights}</td>
+            <td><button onclick="deleteUser(${user.id})">Delete</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Failed to fetch users:", err);
+      }
+    }
+
+    async function addUser() {
+      const username = document.getElementById("user-username").value;
+      const password = document.getElementById("user-password").value;
+      const rights = document.getElementById("user-rights").value;
+      try {
+        const res = await fetch("/lookups/users", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password, rights })
+        });
+        if (res.ok) fetchUsers();
+      } catch (err) {
+        console.error("Failed to add user:", err);
+      }
+    }
+
+    async function deleteUser(id) {
+      try {
+        const res = await fetch(`/lookups/users/${id}`, { method: "DELETE" });
+        if (res.ok) fetchUsers();
+      } catch (err) {
+        console.error("Failed to delete user:", err);
+      }
+    }
+
+    async function fetchRequesters() {
+      try {
+        const res = await fetch("/lookups/requesters");
+        const data = await res.json();
+        const tbody = document.getElementById("requesters-table");
+        tbody.innerHTML = "";
+        data.requesters.forEach(requester => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${requester.name}</td>
+            <td><button onclick="deleteRequester(${requester.id})">Delete</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Failed to fetch requesters:", err);
+      }
+    }
+
+    async function addRequester() {
+      const name = document.getElementById("requester-name").value;
+      try {
+        const res = await fetch("/lookups/requesters", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name })
+        });
+        if (res.ok) fetchRequesters();
+      } catch (err) {
+        console.error("Failed to add requester:", err);
+      }
+    }
+
+    async function deleteRequester(id) {
+      try {
+        const res = await fetch(`/lookups/requesters/${id}`, { method: "DELETE" });
+        if (res.ok) fetchRequesters();
+      } catch (err) {
+        console.error("Failed to delete requester:", err);
+      }
+    }
+
+    async function fetchItems() {
+      try {
+        const res = await fetch("/lookups/items");
+        const data = await res.json();
+        const tbody = document.getElementById("items-table");
+        tbody.innerHTML = "";
+        data.items.forEach(item => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${item.item_code}</td>
+            <td>${item.item_description}</td>
+            <td><button onclick="deleteItem(${item.id})">Delete</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Failed to fetch items:", err);
+      }
+    }
+
+    async function addItem() {
+      const item_code = document.getElementById("item-code").value;
+      const item_description = document.getElementById("item-description").value;
+      try {
+        const res = await fetch("/lookups/items", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ item_code, item_description })
+        });
+        if (res.ok) fetchItems();
+      } catch (err) {
+        console.error("Failed to add item:", err);
+      }
+    }
+
+    async function deleteItem(id) {
+      try {
+        const res = await fetch(`/lookups/items/${id}`, { method: "DELETE" });
+        if (res.ok) fetchItems();
+      } catch (err) {
+        console.error("Failed to delete item:", err);
+      }
+    }
+
+    async function fetchProjects() {
+      try {
+        const res = await fetch("/lookups/projects");
+        const data = await res.json();
+        const tbody = document.getElementById("projects-table");
+        tbody.innerHTML = "";
+        data.projects.forEach(project => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${project.project_code}</td>
+            <td>${project.project_name}</td>
+            <td><button onclick="deleteProject(${project.id})">Delete</td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Failed to fetch projects:", err);
+      }
+    }
+
+    async function addProject() {
+      const project_code = document.getElementById("project-code").value;
+      const project_name = document.getElementById("project-name").value;
+      try {
+        const res = await fetch("/lookups/projects", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ project_code, project_name })
+        });
+        if (res.ok) fetchProjects();
+      } catch (err) {
+        console.error("Failed to add project:", err);
+      }
+    }
+
+    async function deleteProject(id) {
+      try {
+        const res = await fetch(`/lookups/projects/${id}`, { method: "DELETE" });
+        if (res.ok) fetchProjects();
+      } catch (err) {
+        console.error("Failed to delete project:", err);
+      }
+    }
+
+    async function fetchSettings() {
+      try {
+        const res = await fetch("/lookups/settings");
+        const data = await res.json();
+        document.getElementById("order-number-start").value = data.order_number_start || "";
+        document.getElementById("auth-threshold").value = data.auth_threshold || "";
+      } catch (err) {
+        console.error("Failed to fetch settings:", err);
+      }
+    }
+
+    async function updateSettings() {
+      const order_number_start = document.getElementById("order-number-start").value;
+      const auth_threshold = document.getElementById("auth-threshold").value;
+      try {
+        const res = await fetch("/lookups/settings", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ order_number_start, auth_threshold })
+        });
+        if (res.ok) fetchSettings();
+      } catch (err) {
+        console.error("Failed to update settings:", err);
+      }
+    }
+
+    async function fetchBusinessDetails() {
+      try {
+        const res = await fetch("/lookups/business_details");
+        const data = await res.json();
+        document.getElementById("company-name").value = data.company_name || "";
+        document.getElementById("address-line1").value = data.address_line1 || "";
+        document.getElementById("address-line2").value = data.address_line2 || "";
+        document.getElementById("city").value = data.city || "";
+        document.getElementById("province").value = data.province || "";
+        document.getElementById("postal-code").value = data.postal_code || "";
+        document.getElementById("telephone").value = data.telephone || "";
+        document.getElementById("vat-number").value = data.vat_number || "";
+      } catch (err) {
+        console.error("Failed to fetch business details:", err);
+      }
+    }
+
+    async function updateBusinessDetails() {
+      const company_name = document.getElementById("company-name").value;
+      const address_line1 = document.getElementById("address-line1").value;
+      const address_line2 = document.getElementById("address-line2").value;
+      const city = document.getElementById("city").value;
+      const province = document.getElementById("province").value;
+      const postal_code = document.getElementById("postal-code").value;
+      const telephone = document.getElementById("telephone").value;
+      const vat_number = document.getElementById("vat-number").value;
+      try {
+        const res = await fetch("/lookups/business_details", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            company_name, address_line1, address_line2, city,
+            province, postal_code, telephone, vat_number
+          })
+        });
+        if (res.ok) fetchBusinessDetails();
+      } catch (err) {
+        console.error("Failed to update business details:", err);
+      }
+    }
   </script>
 
 </body>

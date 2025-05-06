@@ -1,77 +1,45 @@
-2025-05-05 14:44:04,528 | INFO | Database tables created successfully.
-2025-05-05 14:44:04,528 | INFO | ✅ Database initialized successfully.
-2025-05-05 14:44:38,893 | INFO | Requesters fetched: 5 items
-2025-05-05 14:44:38,917 | INFO | Suppliers fetched: 10 items
-2025-05-05 14:44:38,919 | INFO | Items fetched: 10 items
-2025-05-05 14:44:38,922 | INFO | Projects fetched: 10 items
-2025-05-05 14:44:38,923 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
-2025-05-05 15:03:06,747 | INFO | Database tables created successfully.
-2025-05-05 15:03:06,747 | INFO | ✅ Database initialized successfully.
-2025-05-05 15:08:43,380 | INFO | Database tables created successfully.
-2025-05-05 15:08:43,380 | INFO | ✅ Database initialized successfully.
-2025-05-05 15:09:08,033 | INFO | Requesters fetched: 5 items
-2025-05-05 15:09:08,052 | INFO | Suppliers fetched: 10 items
-2025-05-05 15:09:08,057 | INFO | Items fetched: 10 items
-2025-05-05 15:09:08,060 | INFO | Projects fetched: 10 items
-2025-05-05 15:09:08,063 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
-2025-05-05 15:18:15,071 | INFO | Database tables created successfully.
-2025-05-05 15:18:15,071 | INFO | ✅ Database initialized successfully.
-2025-05-05 15:18:48,688 | INFO | Requesters fetched: 5 items
-2025-05-05 15:18:48,706 | INFO | Suppliers fetched: 10 items
-2025-05-05 15:18:48,710 | INFO | Items fetched: 10 items
-2025-05-05 15:18:48,713 | INFO | Projects fetched: 10 items
-2025-05-05 15:18:48,716 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
-2025-05-05 15:27:45,971 | INFO | Database tables created successfully.
-2025-05-05 15:27:45,971 | INFO | ✅ Database initialized successfully.
-2025-05-05 15:28:16,302 | INFO | Database tables created successfully.
-2025-05-05 15:28:16,302 | INFO | ✅ Database initialized successfully.
-2025-05-05 15:28:37,487 | INFO | Database tables created successfully.
-2025-05-05 15:28:37,487 | INFO | ✅ Database initialized successfully.
-2025-05-05 15:28:53,636 | INFO | PDF generated at 2025-05-05T15:28:53.636871
-2025-05-05 15:30:09,734 | INFO | PDF generated at 2025-05-05T15:30:09.734347
-2025-05-05 15:40:51,084 | INFO | Requesters fetched: 5 items
-2025-05-05 15:40:51,103 | INFO | Suppliers fetched: 10 items
-2025-05-05 15:40:51,107 | INFO | Items fetched: 10 items
-2025-05-05 15:40:51,110 | INFO | Projects fetched: 10 items
-2025-05-05 15:40:51,114 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
-2025-05-05 15:46:07,932 | INFO | Database tables created successfully.
-2025-05-05 15:46:07,932 | INFO | ✅ Database initialized successfully.
-2025-05-05 15:46:22,570 | INFO | Requesters fetched: 5 items
-2025-05-05 15:46:22,589 | INFO | Suppliers fetched: 10 items
-2025-05-05 15:46:22,593 | INFO | Items fetched: 10 items
-2025-05-05 15:46:22,599 | INFO | Projects fetched: 10 items
-2025-05-05 15:46:22,601 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
-2025-05-05 15:46:48,639 | INFO | Suppliers fetched: 10 items
-2025-05-05 15:46:48,745 | INFO | PDF generated at 2025-05-05T15:46:48.745445
-2025-05-05 15:47:43,390 | INFO | ✅ [ORDER] Success created: Order URC1300 with total R290.0
-2025-05-05 15:47:45,872 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
-2025-05-05 15:47:54,879 | INFO | Requesters fetched: 5 items
-2025-05-05 15:47:54,880 | INFO | Suppliers fetched: 10 items
-2025-05-05 16:03:54,531 | INFO | Database tables created successfully.
-2025-05-05 16:03:54,531 | INFO | ✅ Database initialized successfully.
-2025-05-05 16:05:35,559 | INFO | Database tables created successfully.
-2025-05-05 16:05:35,559 | INFO | ✅ Database initialized successfully.
-2025-05-05 16:05:46,268 | INFO | Requesters fetched: 5 items
-2025-05-05 16:05:46,269 | INFO | Suppliers fetched: 10 items
-2025-05-05 16:06:04,922 | INFO | PDF generated for order 80 at 2025-05-05T16:06:04.922124
-2025-05-05 16:27:51,072 | INFO | Database tables created successfully.
-2025-05-05 16:27:51,072 | INFO | ✅ Database initialized successfully.
-2025-05-05 16:29:25,930 | INFO | Database tables created successfully.
-2025-05-05 16:29:25,931 | INFO | ✅ Database initialized successfully.
-2025-05-05 16:29:39,311 | INFO | Requesters fetched: 5 items
-2025-05-05 16:29:39,330 | INFO | Suppliers fetched: 10 items
-2025-05-05 16:29:39,335 | INFO | Items fetched: 10 items
-2025-05-05 16:29:39,338 | INFO | Projects fetched: 10 items
-2025-05-05 16:29:39,342 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
-2025-05-05 16:29:42,227 | INFO | Requesters fetched: 5 items
-2025-05-05 16:29:42,247 | INFO | Suppliers fetched: 10 items
-2025-05-05 16:29:42,251 | INFO | Items fetched: 10 items
-2025-05-05 16:29:42,253 | INFO | Projects fetched: 10 items
-2025-05-05 16:29:42,255 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
-2025-05-05 16:30:08,875 | INFO | Suppliers fetched: 10 items
-2025-05-05 16:30:08,983 | INFO | PDF generated at 2025-05-05T16:30:08.983011
-2025-05-05 16:30:23,627 | INFO | ✅ [ORDER] Success created: Order URC1300 with total R555.0
-2025-05-05 16:30:25,490 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
-2025-05-05 16:30:27,530 | INFO | Requesters fetched: 5 items
-2025-05-05 16:30:27,531 | INFO | Suppliers fetched: 10 items
-2025-05-05 16:30:36,163 | INFO | PDF generated for order 81 at 2025-05-05T16:30:36.163058
+2025-05-06 09:11:47,877 | INFO | Database tables created successfully.
+2025-05-06 09:11:47,878 | INFO | ✅ Database initialized successfully.
+2025-05-06 09:12:19,461 | INFO | Requesters fetched: 5 items
+2025-05-06 09:12:19,468 | INFO | Suppliers fetched: 10 items
+2025-05-06 09:12:19,471 | INFO | Items fetched: 10 items
+2025-05-06 09:12:19,472 | INFO | Projects fetched: 10 items
+2025-05-06 09:12:19,475 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 10:26:22,659 | INFO | Requesters fetched: 5 items
+2025-05-06 10:26:22,669 | INFO | Suppliers fetched: 10 items
+2025-05-06 10:26:22,672 | INFO | Items fetched: 10 items
+2025-05-06 10:26:22,674 | INFO | Projects fetched: 10 items
+2025-05-06 10:26:22,676 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 10:26:26,039 | INFO | Requesters fetched: 5 items
+2025-05-06 10:26:26,046 | INFO | Suppliers fetched: 10 items
+2025-05-06 10:26:26,050 | INFO | Items fetched: 10 items
+2025-05-06 10:26:26,052 | INFO | Projects fetched: 10 items
+2025-05-06 10:26:26,055 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 10:26:53,570 | INFO | Suppliers fetched: 10 items
+2025-05-06 10:26:53,693 | INFO | PDF generated at 2025-05-06T10:26:53.693455
+2025-05-06 10:27:02,495 | INFO | ✅ [ORDER] Success created: Order URC1300 with total R300.0
+2025-05-06 10:27:04,234 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 10:28:00,664 | INFO | Database tables created successfully.
+2025-05-06 10:28:00,664 | INFO | ✅ Database initialized successfully.
+2025-05-06 10:28:17,232 | INFO | Requesters fetched: 5 items
+2025-05-06 10:28:17,237 | INFO | Suppliers fetched: 10 items
+2025-05-06 10:28:17,240 | INFO | Items fetched: 10 items
+2025-05-06 10:28:17,242 | INFO | Projects fetched: 10 items
+2025-05-06 10:28:17,246 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 10:31:36,557 | INFO | Requesters fetched: 5 items
+2025-05-06 10:31:36,558 | INFO | Projects fetched: 10 items
+2025-05-06 10:31:36,565 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-06 10:31:36,569 | INFO | Users fetched: 4 items
+2025-05-06 10:31:36,570 | INFO | Items fetched: 10 items
+2025-05-06 10:31:36,570 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 10:31:43,591 | INFO | Requesters fetched: 5 items
+2025-05-06 10:31:43,599 | INFO | Suppliers fetched: 10 items
+2025-05-06 10:31:43,604 | INFO | Items fetched: 10 items
+2025-05-06 10:31:43,607 | INFO | Projects fetched: 10 items
+2025-05-06 10:31:43,609 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 10:32:07,647 | INFO | Suppliers fetched: 10 items
+2025-05-06 10:32:07,758 | INFO | PDF generated at 2025-05-06T10:32:07.758475
+2025-05-06 10:32:15,073 | INFO | ✅ [ORDER] Success created: Order URC1300 with total R300.0
+2025-05-06 10:32:17,488 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 10:32:25,786 | INFO | Requesters fetched: 5 items
+2025-05-06 10:32:25,787 | INFO | Suppliers fetched: 10 items
