@@ -24,6 +24,8 @@ with open(output_file, 'w', encoding='utf-8') as f:
         "backend/endpoints/order_queries.py",
         "backend/endpoints/lookups.py",
         "backend/endpoints/html_routes.py",
+        "backend/endpoints/__init__.py",
+        "backend/endpoints/lookups/__init__.py",
         "backend/utils/order_utils.py",
         "backend/database.py",
         "backend/main.py",

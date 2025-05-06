@@ -3,10 +3,19 @@ from pydantic import BaseModel, Field
 from typing import List
 from datetime import datetime
 import sqlite3
-from pathlib import Path  # Add this import
+from pathlib import Path
 import json
+import logging
 
-router = APIRouter(prefix="/orders", tags=["orders"])
+# Add logging to confirm endpoint registration
+logging.basicConfig(
+    filename="logs/server.log",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+)
+
+router = APIRouter(tags=["orders"])
+logging.info("Registering /orders/receive endpoint")  # Debug log
 
 def log_event(filename: str, data: dict):
     log_path = Path(f"logs/{filename}")

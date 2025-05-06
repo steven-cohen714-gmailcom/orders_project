@@ -43,3 +43,89 @@
 2025-05-06 10:32:17,488 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
 2025-05-06 10:32:25,786 | INFO | Requesters fetched: 5 items
 2025-05-06 10:32:25,787 | INFO | Suppliers fetched: 10 items
+2025-05-06 11:26:36,677 | INFO | Database tables created successfully.
+2025-05-06 11:26:36,677 | INFO | ✅ Database initialized successfully.
+2025-05-06 11:26:56,164 | INFO | Database tables created successfully.
+2025-05-06 11:26:56,164 | INFO | ✅ Database initialized successfully.
+2025-05-06 11:27:11,383 | INFO | Requesters fetched: 5 items
+2025-05-06 11:27:11,396 | INFO | Suppliers fetched: 10 items
+2025-05-06 11:27:11,401 | INFO | Items fetched: 10 items
+2025-05-06 11:27:11,404 | INFO | Projects fetched: 10 items
+2025-05-06 11:27:11,407 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 11:27:14,159 | INFO | Requesters fetched: 5 items
+2025-05-06 11:27:14,175 | INFO | Suppliers fetched: 10 items
+2025-05-06 11:27:14,179 | INFO | Items fetched: 10 items
+2025-05-06 11:27:14,181 | INFO | Projects fetched: 10 items
+2025-05-06 11:27:14,183 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 11:27:17,426 | INFO | Requesters fetched: 5 items
+2025-05-06 11:27:17,429 | INFO | Users fetched: 4 items
+2025-05-06 11:27:17,430 | INFO | Items fetched: 10 items
+2025-05-06 11:27:17,431 | INFO | Projects fetched: 10 items
+2025-05-06 11:27:17,433 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 11:27:17,433 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-06 11:27:22,511 | INFO | Users fetched: 4 items
+2025-05-06 11:27:22,513 | INFO | Requesters fetched: 5 items
+2025-05-06 11:27:22,515 | INFO | Items fetched: 10 items
+2025-05-06 11:27:22,516 | INFO | Projects fetched: 10 items
+2025-05-06 11:27:22,517 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 11:27:22,518 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-06 11:27:27,703 | INFO | Requesters fetched: 5 items
+2025-05-06 11:27:27,704 | INFO | Suppliers fetched: 10 items
+2025-05-06 11:36:39,048 | INFO | Database tables created successfully.
+2025-05-06 11:36:39,048 | INFO | ✅ Database initialized successfully.
+2025-05-06 11:38:33,791 | INFO | Database tables created successfully.
+2025-05-06 11:38:33,791 | INFO | ✅ Database initialized successfully.
+2025-05-06 12:39:29,148 | INFO | Registering /orders/receive endpoint
+2025-05-06 12:39:29,150 | INFO | Database tables created successfully.
+2025-05-06 12:39:29,150 | INFO | ✅ Database initialized successfully.
+2025-05-06 12:40:07,339 | INFO | Registering /orders/receive endpoint
+2025-05-06 12:40:07,341 | INFO | Database tables created successfully.
+2025-05-06 12:40:07,341 | INFO | ✅ Database initialized successfully.
+2025-05-06 12:40:58,975 | INFO | Requesters fetched: 5 items
+2025-05-06 12:40:58,976 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:41:05,892 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:41:05,893 | INFO | Requesters fetched: 5 items
+2025-05-06 12:41:10,267 | INFO | Requesters fetched: 5 items
+2025-05-06 12:41:10,275 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:41:10,280 | INFO | Items fetched: 10 items
+2025-05-06 12:41:10,282 | INFO | Projects fetched: 10 items
+2025-05-06 12:41:10,284 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 12:42:47,438 | INFO | Requesters fetched: 5 items
+2025-05-06 12:42:47,446 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:42:47,448 | INFO | Items fetched: 10 items
+2025-05-06 12:42:47,450 | INFO | Projects fetched: 10 items
+2025-05-06 12:42:47,454 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 12:43:22,179 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:43:22,286 | INFO | PDF generated at 2025-05-06T12:43:22.286853
+2025-05-06 12:43:39,712 | INFO | ✅ [ORDER] Success created: Order URC1300 with total R500.0
+2025-05-06 12:43:41,544 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 12:43:43,708 | INFO | Requesters fetched: 5 items
+2025-05-06 12:43:43,710 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:44:46,041 | INFO | Requesters fetched: 5 items
+2025-05-06 12:44:46,043 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:44:50,630 | INFO | Requesters fetched: 5 items
+2025-05-06 12:44:50,637 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:44:50,642 | INFO | Items fetched: 10 items
+2025-05-06 12:44:50,644 | INFO | Projects fetched: 10 items
+2025-05-06 12:44:50,646 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 12:45:38,058 | INFO | ✅ [ORDER] Success created: Order URC1300 with total R5000.0
+2025-05-06 12:45:39,909 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 12:45:43,299 | INFO | Requesters fetched: 5 items
+2025-05-06 12:45:43,308 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:45:44,421 | INFO | Requesters fetched: 5 items
+2025-05-06 12:45:44,423 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:45:58,740 | INFO | Requesters fetched: 5 items
+2025-05-06 12:45:58,742 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:46:04,228 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:46:04,229 | INFO | Requesters fetched: 5 items
+2025-05-06 12:47:29,983 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:47:29,984 | INFO | Requesters fetched: 5 items
+2025-05-06 12:47:32,857 | INFO | Users fetched: 4 items
+2025-05-06 12:47:32,859 | INFO | Requesters fetched: 5 items
+2025-05-06 12:47:32,859 | INFO | Items fetched: 10 items
+2025-05-06 12:47:32,861 | INFO | Projects fetched: 10 items
+2025-05-06 12:47:32,862 | INFO | Settings fetched: {'order_number_start': 'URC1300', 'auth_threshold': 10000}
+2025-05-06 12:47:32,863 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-06 12:47:58,032 | INFO | Requesters fetched: 5 items
+2025-05-06 12:47:58,034 | INFO | Suppliers fetched: 10 items
+2025-05-06 12:48:23,274 | INFO | PDF generated for order 85 at 2025-05-06T12:48:23.274323
