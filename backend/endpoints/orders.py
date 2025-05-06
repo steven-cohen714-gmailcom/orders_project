@@ -8,7 +8,7 @@ from backend.utils.db_utils import handle_db_errors, log_success, log_warning
 from backend.utils.order_utils import calculate_order_total
 from backend.database import create_order, get_db_connection
 
-router = APIRouter(prefix="/orders", tags=["orders"])
+router = APIRouter(tags=["orders"])  # Removed prefix="/orders"
 
 # Pydantic models
 class OrderItemCreate(BaseModel):

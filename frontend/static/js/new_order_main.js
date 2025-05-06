@@ -6,6 +6,7 @@ let itemsList = [];
 let projectsList = [];
 let rowCount = 0;
 let currentOrderNumber = "URC1000";
+let authThreshold = 0; // Added for authorization threshold
 
 // Debounce function
 function debounce(func, wait) {
@@ -37,15 +38,39 @@ async function loadDropdowns() {
   }
 }
 
-// Load order number
+// Load order number and authorization threshold
 async function loadOrderNumber() {
   try {
       const settingsData = await fetchData("/lookups/settings");
       currentOrderNumber = settingsData.order_number_start || "URC1000";
+      authThreshold = parseFloat(settingsData.auth_threshold) || 0; // Added
       document.getElementById("order-number").textContent = currentOrderNumber;
   } catch (error) {
       console.error("Error loading order number:", error);
       document.getElementById("order-number").textContent = "URC1000"; // Fallback
+  }
+}
+
+// Added: Function to increment and update order number
+async function incrementOrderNumber() {
+  try {
+      const currentNum = parseInt(currentOrderNumber.replace("URC", ""));
+      const nextNum = currentNum + 1;
+      const newOrderNumber = `URC${nextNum.toString().padStart(4, "0")}`;
+      const res = await fetch("/lookups/settings", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ order_number_start: newOrderNumber, auth_threshold: authThreshold })
+      });
+      if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error(`Failed to update order number: ${res.status} - ${errorText}`);
+      }
+      currentOrderNumber = newOrderNumber;
+      document.getElementById("order-number").textContent = currentOrderNumber;
+  } catch (error) {
+      console.error("Error incrementing order number:", error);
+      throw error;
   }
 }
 
@@ -152,6 +177,7 @@ function updateGrandTotal() {
   const totals = Array.from(document.querySelectorAll(".total")).map(input => parseFloat(input.value) || 0);
   const grandTotal = totals.reduce((sum, val) => sum + val, 0);
   document.getElementById("grand-total").textContent = grandTotal.toFixed(2);
+  return grandTotal; // Added return for use in submitOrder
 }
 
 // Delete a row
@@ -304,6 +330,12 @@ async function previewOrder() {
    }
 
    const total = items.reduce((sum, item) => sum + (item.qty_ordered * item.price), 0);
+   // Added: Check authorization threshold
+   let status = "Pending";
+   if (total > authThreshold) {
+       status = "Awaiting Authorisation";
+   }
+
    if (!businessDetails || !businessDetails.company_name) {
        console.error('No business details available');
        alert('Error: No business details found');
@@ -341,7 +373,7 @@ async function previewOrder() {
            <p><strong>Address:</strong> ${businessDetails.address_line1}${businessDetails.address_line2 ? ', ' + businessDetails.address_line2 : ''}, ${businessDetails.city}, ${businessDetails.province} ${businessDetails.postal_code}</p>
            <p><strong>Telephone:</strong> ${businessDetails.telephone}</p>
            <p><strong>VAT Number:</strong> ${businessDetails.vat_number}</p>
-           <p><strong>Status:</strong> Draft</p>
+           <p><strong>Status:</strong> ${status}</p>
            <p><strong>Created Date:</strong> ${date}</p>
            <p><strong>Received Date:</strong> N/A</p>
            <p><strong>Total:</strong> R${total.toFixed(2)}</p>
@@ -446,10 +478,15 @@ async function submitOrder() {
   }
 
   console.log('Current Order Number:', currentOrderNumber);
+  const total = updateGrandTotal();
+  let status = "Pending";
+  if (total > authThreshold) {
+      status = "Awaiting Authorisation";
+  }
   const orderData = {
       order_number: currentOrderNumber,
-      status: "Pending",
-      total: parseFloat(document.getElementById("grand-total").textContent) || 0,
+      status: status,
+      total: total,
       order_note: "",
       note_to_supplier: noteToSupplier,
       requester_id: parseInt(requesterId),
@@ -459,7 +496,7 @@ async function submitOrder() {
 
   console.log('Order Data:', orderData);
   try {
-      const res = await fetch('/lookups/orders/', {
+      const res = await fetch('/orders', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(orderData)
@@ -473,14 +510,13 @@ async function submitOrder() {
       const data = await res.json();
       console.log('Submit Response:', data);
       if (data.message === "Order created successfully") {
+          await incrementOrderNumber();
           alert('✅ Order submitted successfully!');
-          // Reset the form to allow continued use GARTH
           document.getElementById('requester_id').value = '';
           document.getElementById('supplier_id').value = '';
           document.getElementById('note_to_supplier').value = '';
           document.getElementById('items-body').innerHTML = '';
           rowCount = 0;
-          await loadOrderNumber(); // Reload order number for the next order
       } else {
           throw new Error(`Unexpected response: ${data.message}`);
       }

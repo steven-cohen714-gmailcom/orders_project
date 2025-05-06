@@ -1,9 +1,10 @@
 from fastapi import FastAPI, Request, HTTPException
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.routing import APIRouter
 
 from backend.endpoints import routers
 from backend.endpoints.admin import admin_router
@@ -64,42 +65,39 @@ app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")
 
 templates = Jinja2Templates(directory="frontend/templates")
 
-# --- Routers ---
-for router in routers:
-    app.include_router(router, prefix="/lookups")
-app.include_router(admin_router, prefix="/admin")
-app.include_router(order_queries_router)
-app.include_router(pdf_router)
-app.include_router(auth_router)
-app.include_router(orders_router, prefix="/orders")
-app.include_router(attachments_router, prefix="/orders")
-app.include_router(pdf_generator_router)
-app.include_router(order_receiving_router, prefix="/orders")
+# --- Static Routes Router (to take precedence over dynamic routes) ---
+static_router = APIRouter()
 
-# --- Pages ---
-@app.get("/", response_class=HTMLResponse)
+@static_router.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
+    logging.info("Rendering login page")
     return templates.TemplateResponse("login.html", {"request": request})
 
-@app.get("/home", response_class=HTMLResponse)
+@static_router.get("/home", response_class=HTMLResponse)
 async def home(request: Request):
     if not request.session.get("user"):
         return RedirectResponse("/")
+    logging.info("Rendering home page")
     return templates.TemplateResponse("home.html", {"request": request})
 
-@app.get("/orders/new", response_class=HTMLResponse)
+@static_router.get("/orders/new", response_class=HTMLResponse)
 async def new_order_page(request: Request):
+    logging.info("Starting to render new order page")
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT id, name FROM requesters ORDER BY name")
             requesters = [dict(row) for row in cursor.fetchall()]
+            logging.info(f"Requesters fetched: {requesters}")
             cursor.execute("SELECT id, name FROM suppliers ORDER BY name")
             suppliers = [dict(row) for row in cursor.fetchall()]
+            logging.info(f"Suppliers fetched: {suppliers}")
             cursor.execute("SELECT item_code, item_description FROM items ORDER BY item_code")
             items = [dict(row) for row in cursor.fetchall()]
+            logging.info(f"Items fetched: {items}")
             cursor.execute("SELECT project_code, project_name FROM projects ORDER BY project_code")
             projects = [dict(row) for row in cursor.fetchall()]
+            logging.info(f"Projects fetched: {projects}")
             cursor.execute("""
                 SELECT company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number
                 FROM business_details WHERE id = 1
@@ -119,41 +117,73 @@ async def new_order_page(request: Request):
                 }
             else:
                 business_details = dict(row)
+            logging.info(f"Business details fetched: {business_details}")
 
-        return templates.TemplateResponse("new_order.html", {
+        template_context = {
             "request": request,
             "requesters": requesters,
             "suppliers": suppliers,
             "items": items,
             "projects": projects,
             "business_details": business_details
-        })
+        }
+        logging.info(f"Template context: {template_context}")
+        
+        response = templates.TemplateResponse("new_order.html", template_context)
+        logging.info("Successfully rendered new_order.html")
+        return response
     except Exception as e:
-        logging.error(f"Error rendering new order page: {str(e)}")
-        raise
+        logging.error(f"Error rendering new order page: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Error rendering new order page: {str(e)}")
 
-@app.get("/orders/pending_orders", response_class=HTMLResponse)
+@static_router.get("/orders/pending_orders", response_class=HTMLResponse)
 async def pending_orders_page(request: Request):
+    logging.info("Rendering pending orders page")
     return templates.TemplateResponse("pending_orders.html", {"request": request})
 
-@app.get("/orders/received_orders", response_class=HTMLResponse)
+@static_router.get("/orders/received_orders", response_class=HTMLResponse)
 async def received_orders_page(request: Request):
+    logging.info("Rendering received orders page")
     return templates.TemplateResponse("received_orders.html", {"request": request})
 
-@app.get("/orders/audit_trail", response_class=HTMLResponse)
+@static_router.get("/orders/audit_trail", response_class=HTMLResponse)
 async def audit_trail_page(request: Request):
+    logging.info("Rendering audit trail page")
     return templates.TemplateResponse("audit_trail.html", {"request": request})
 
-@app.get("/maintenance", response_class=HTMLResponse)
+@static_router.get("/maintenance", response_class=HTMLResponse)
 async def maintenance_page(request: Request):
+    logging.info("Rendering maintenance page")
     return templates.TemplateResponse("maintenance.html", {"request": request})
 
-@app.get("/favicon.ico", response_class=FileResponse)
+@static_router.get("/favicon.ico")
 async def favicon():
     favicon_path = Path("frontend/static/favicon.ico")
     if not favicon_path.exists():
         return {"error": "Favicon not found"}, 404
-    return FileResponse(favicon_path)
+    try:
+        with open(favicon_path, "rb") as f:
+            content = f.read()
+        return Response(content=content, media_type="image/x-icon")
+    except Exception as e:
+        logging.error(f"Error serving favicon: {str(e)}", exc_info=True)
+        return {"error": "Failed to serve favicon"}, 500
+
+# --- Include Routers ---
+# Include static routes first to take precedence
+app.include_router(static_router)
+
+# Include other routers after static routes
+for router in routers:
+    app.include_router(router, prefix="/lookups")
+app.include_router(admin_router, prefix="/admin")
+app.include_router(order_queries_router)
+app.include_router(pdf_router)
+app.include_router(auth_router)
+app.include_router(orders_router, prefix="/orders")
+app.include_router(attachments_router, prefix="/orders")
+app.include_router(pdf_generator_router)
+app.include_router(order_receiving_router, prefix="/orders")
 
 # --- Dev CLI (if needed) ---
 if __name__ == "__main__":

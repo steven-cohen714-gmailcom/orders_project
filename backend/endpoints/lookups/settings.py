@@ -1,5 +1,3 @@
-# backend/endpoints/lookups/settings.py
-
 from fastapi import APIRouter, HTTPException
 from backend.database import get_db_connection
 import logging
@@ -7,17 +5,15 @@ import sqlite3
 
 router = APIRouter()
 
-# Configure logging
 logging.basicConfig(filename="logs/server.log", level=logging.INFO,
                     format="%(asctime)s | %(levelname)s | %(message)s")
-
 
 @router.get("/settings")
 async def get_settings():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT order_number_start, auth_threshold FROM settings")
+        cursor.execute("SELECT order_number_start, auth_threshold FROM settings WHERE id = 1")
         row = cursor.fetchone()
         if row:
             settings = {
@@ -26,6 +22,9 @@ async def get_settings():
             }
         else:
             settings = {"order_number_start": "URC1000", "auth_threshold": 0}
+            cursor.execute("INSERT INTO settings (id, order_number_start, auth_threshold) VALUES (1, ?, ?)",
+                          (settings["order_number_start"], settings["auth_threshold"]))
+            conn.commit()
         logging.info(f"Settings fetched: {settings}")
         return settings
     except sqlite3.Error as e:
@@ -36,7 +35,6 @@ async def get_settings():
         return {"order_number_start": "URC1000", "auth_threshold": 0}
     finally:
         conn.close()
-
 
 @router.put("/settings")
 async def update_settings(request: dict):
@@ -50,7 +48,11 @@ async def update_settings(request: dict):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("INSERT OR REPLACE INTO settings (order_number_start, auth_threshold) VALUES (?, ?)", (order_number_start, auth_threshold))
+        cursor.execute("UPDATE settings SET order_number_start = ?, auth_threshold = ? WHERE id = 1",
+                      (order_number_start, auth_threshold))
+        if cursor.rowcount == 0:
+            cursor.execute("INSERT INTO settings (id, order_number_start, auth_threshold) VALUES (1, ?, ?)",
+                          (order_number_start, auth_threshold))
         conn.commit()
         logging.info(f"Settings updated: order_number_start = {order_number_start}, auth_threshold = {auth_threshold}")
         return {"message": "Settings updated successfully"}

@@ -15,6 +15,7 @@
     <div class="tab active" data-tab="users">Users</div>
     <div class="tab" data-tab="requesters">Requesters</div>
     <div class="tab" data-tab="items">Items</div>
+    <div class="tab" data-tab="suppliers">Suppliers</div>
     <div class="tab" data-tab="projects">Projects</div>
     <div class="tab" data-tab="settings">Settings</div>
     <div class="tab" data-tab="business_details">Business Details</div>
@@ -65,6 +66,23 @@
     <table>
       <thead><tr><th>Item Code</th><th>Description</th><th>Actions</th></tr></thead>
       <tbody id="items-table"></tbody>
+    </table>
+  </div>
+
+  <div id="suppliers" class="tab-content">
+    <div class="form-group">
+      <h4>Add/Edit Supplier</h4>
+      <form id="supplier-form" onsubmit="event.preventDefault(); saveSupplier();">
+        <input type="hidden" id="supplier-id" />
+        <label for="supplier-name">Supplier Name:</label>
+        <input type="text" id="supplier-name" required />
+        <button type="submit">Save Supplier</button>
+        <button type="button" id="cancel-supplier-edit" style="display: none;" onclick="cancelSupplierEdit()">Cancel</button>
+      </form>
+    </div>
+    <table>
+      <thead><tr><th>Supplier Name</th><th>Actions</th></tr></thead>
+      <tbody id="suppliers-table"></tbody>
     </table>
   </div>
 
@@ -130,6 +148,7 @@
       fetchUsers();
       fetchRequesters();
       fetchItems();
+      fetchSuppliers();
       fetchProjects();
       fetchSettings();
       fetchBusinessDetails();
@@ -146,7 +165,7 @@
           row.innerHTML = `
             <td>${user.username}</td>
             <td>${user.rights}</td>
-            <td><button onclick="deleteUser(${user.id})">Delete</td>
+            <td><button onclick="deleteUser(${user.id})">Delete</button></td>
           `;
           tbody.appendChild(row);
         });
@@ -190,7 +209,7 @@
           const row = document.createElement("tr");
           row.innerHTML = `
             <td>${requester.name}</td>
-            <td><button onclick="deleteRequester(${requester.id})">Delete</td>
+            <td><button onclick="deleteRequester(${requester.id})">Delete</button></td>
           `;
           tbody.appendChild(row);
         });
@@ -233,7 +252,7 @@
           row.innerHTML = `
             <td>${item.item_code}</td>
             <td>${item.item_description}</td>
-            <td><button onclick="deleteItem(${item.id})">Delete</td>
+            <td><button onclick="deleteItem(${item.id})">Delete</button></td>
           `;
           tbody.appendChild(row);
         });
@@ -266,6 +285,69 @@
       }
     }
 
+    async function fetchSuppliers() {
+      try {
+        const res = await fetch("/lookups/suppliers");
+        const data = await res.json();
+        const tbody = document.getElementById("suppliers-table");
+        tbody.innerHTML = "";
+        data.suppliers.forEach(supplier => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${supplier.name}</td>
+            <td>
+              <button onclick="editSupplier(${supplier.id}, '${supplier.name}')">Edit</button>
+              <button onclick="deleteSupplier(${supplier.id})">Delete</button>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Failed to fetch suppliers:", err);
+      }
+    }
+
+    async function saveSupplier() {
+      const id = document.getElementById("supplier-id").value;
+      const name = document.getElementById("supplier-name").value;
+      try {
+        const method = id ? "PUT" : "POST";
+        const url = id ? `/lookups/suppliers/${id}` : "/lookups/suppliers";
+        const res = await fetch(url, {
+          method: method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name })
+        });
+        if (res.ok) {
+          fetchSuppliers();
+          cancelSupplierEdit();
+        }
+      } catch (err) {
+        console.error("Failed to save supplier:", err);
+      }
+    }
+
+    function editSupplier(id, name) {
+      document.getElementById("supplier-id").value = id;
+      document.getElementById("supplier-name").value = name;
+      document.getElementById("cancel-supplier-edit").style.display = "inline";
+    }
+
+    function cancelSupplierEdit() {
+      document.getElementById("supplier-id").value = "";
+      document.getElementById("supplier-name").value = "";
+      document.getElementById("cancel-supplier-edit").style.display = "none";
+    }
+
+    async function deleteSupplier(id) {
+      try {
+        const res = await fetch(`/lookups/suppliers/${id}`, { method: "DELETE" });
+        if (res.ok) fetchSuppliers();
+      } catch (err) {
+        console.error("Failed to delete supplier:", err);
+      }
+    }
+
     async function fetchProjects() {
       try {
         const res = await fetch("/lookups/projects");
@@ -277,7 +359,7 @@
           row.innerHTML = `
             <td>${project.project_code}</td>
             <td>${project.project_name}</td>
-            <td><button onclick="deleteProject(${project.id})">Delete</td>
+            <td><button onclick="deleteProject(${project.id})">Delete</button></td>
           `;
           tbody.appendChild(row);
         });

@@ -38,6 +38,15 @@ td {
   color: #333;
 }
 
+/* Left-align all cells in maintenance screen tables */
+#users-table td,
+#requesters-table td,
+#items-table td,
+#suppliers-table td,
+#projects-table td {
+  text-align: left;
+}
+
 /* ------------------ FILTERS ------------------ */
 .filters {
   margin-bottom: 1.5rem;
