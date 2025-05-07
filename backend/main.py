@@ -65,7 +65,7 @@ app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")
 
 templates = Jinja2Templates(directory="frontend/templates")
 
-# --- Static Routes Router (to take precedence over dynamic routes) ---
+# --- Static Routes Router ---
 static_router = APIRouter()
 
 @static_router.get("/", response_class=HTMLResponse)
@@ -156,6 +156,11 @@ async def maintenance_page(request: Request):
     logging.info("Rendering maintenance page")
     return templates.TemplateResponse("maintenance.html", {"request": request})
 
+@static_router.get("/orders/partially_delivered", response_class=HTMLResponse)
+async def partially_delivered_page(request: Request):
+    logging.info("Rendering partially delivered orders page")
+    return templates.TemplateResponse("partially_delivered.html", {"request": request})
+
 @static_router.get("/favicon.ico")
 async def favicon():
     favicon_path = Path("frontend/static/favicon.ico")
@@ -173,11 +178,14 @@ async def favicon():
 # Include static routes first to take precedence
 app.include_router(static_router)
 
-# Include other routers after static routes
+# Include lookup routers under /lookups
 for router in routers:
-    app.include_router(router, prefix="/lookups")
+    if router is not order_queries_router and router is not orders_router and router is not attachments_router and router is not pdf_generator_router and router is not order_receiving_router:
+        app.include_router(router, prefix="/lookups")
+
+# Include other routers with their specific prefixes
 app.include_router(admin_router, prefix="/admin")
-app.include_router(order_queries_router)
+app.include_router(order_queries_router, prefix="/orders/api")
 app.include_router(pdf_router)
 app.include_router(auth_router)
 app.include_router(orders_router, prefix="/orders")
@@ -185,7 +193,7 @@ app.include_router(attachments_router, prefix="/orders")
 app.include_router(pdf_generator_router)
 app.include_router(order_receiving_router, prefix="/orders")
 
-# --- Dev CLI (if needed) ---
+# --- Dev CLI ---
 if __name__ == "__main__":
     import uvicorn
     try:

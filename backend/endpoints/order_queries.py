@@ -5,7 +5,7 @@ import sqlite3
 from pathlib import Path
 import json
 
-router = APIRouter(prefix="/orders/api", tags=["orders"])
+router = APIRouter(tags=["orders"])
 
 def log_event(filename: str, data: dict):
     log_path = Path(f"logs/{filename}")
@@ -14,7 +14,7 @@ def log_event(filename: str, data: dict):
         timestamp = datetime.now().isoformat()
         f.write(f"[{timestamp}] {json.dumps(data, ensure_ascii=False)}\n")
 
-@router.get("/orders/pending_orders")
+@router.get("/pending_orders")
 def get_pending_orders(
     start_date: Optional[str] = Query(None),
     end_date: Optional[str] = Query(None),
@@ -327,3 +327,66 @@ def get_order_summary(order_id: int):
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "order_summary"})
         raise HTTPException(status_code=500, detail=f"Failed to fetch order summary: {e}")
+
+@router.get("/partially_delivered", response_model=dict)
+async def get_partially_delivered_orders(
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    requester: Optional[str] = Query(None),
+    supplier: Optional[str] = Query(None),
+    status: Optional[str] = Query(None)
+):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            query = """
+                SELECT DISTINCT o.id, o.order_number, o.status, o.created_date, o.total,
+                       o.order_note, o.note_to_supplier,
+                       r.name as requester, s.name as supplier
+                FROM orders o
+                JOIN order_items oi ON o.id = oi.order_id
+                LEFT JOIN requesters r ON o.requester_id = r.id
+                LEFT JOIN suppliers s ON o.supplier_id = s.id
+                WHERE oi.qty_received < oi.qty_ordered
+                AND o.status NOT IN ('Received', 'Partially Delivered - Accepted')
+            """
+            params = []
+            conditions = []
+            
+            if start_date:
+                conditions.append("o.created_date >= ?")
+                params.append(start_date)
+            if end_date:
+                conditions.append("o.created_date <= ?")
+                params.append(end_date)
+            if requester and requester != "All":
+                conditions.append("r.name = ?")
+                params.append(requester)
+            if supplier and supplier != "All":
+                conditions.append("s.name = ?")
+                params.append(supplier)
+            if status and status != "All":
+                conditions.append("o.status = ?")
+                params.append(status)
+            
+            if conditions:
+                query += " AND " + " AND ".join(conditions)
+                
+            query += " ORDER BY o.created_date DESC"
+            cursor.execute(query, params)
+            orders = [dict(row) for row in cursor.fetchall()]
+            
+            log_event("partially_delivered_log.txt", {
+                "action": "fetch_partially_delivered_orders",
+                "count": len(orders),
+                "params": {"start_date": start_date, "end_date": end_date, "requester": requester, "supplier": supplier, "status": status}
+            })
+            
+            return {"orders": orders}
+    except sqlite3.Error as e:
+        log_event("partially_delivered_log.txt", {"error": str(e), "type": "sqlite"})
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        log_event("partially_delivered_log.txt", {"error": str(e), "type": "general"})
+        raise HTTPException(status_code=500, detail=f"Failed to fetch partially delivered orders: {str(e)}")

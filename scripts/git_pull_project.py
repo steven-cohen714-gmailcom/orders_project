@@ -115,6 +115,17 @@ def attempt_fix_index():
     run(["git", "reset"], "Reset Git index")
     print("✅ Git index reset successfully.")
 
+def recreate_venv_if_required():
+    if Path("requirements.txt").exists():
+        print("🔁 Recreating virtual environment from requirements.txt...")
+        venv_dir = Path("venv")
+        if venv_dir.exists():
+            print("🧹 Removing existing virtual environment...")
+            shutil.rmtree(venv_dir)
+        run(["python3", "-m", "venv", "venv"], "Create new venv")
+        run(["venv/bin/pip", "install", "--upgrade", "pip"], "Upgrade pip")
+        run(["venv/bin/pip", "install", "-r", "requirements.txt"], "Install dependencies from requirements.txt")
+
 def main():
     repo_path = Path(__file__).resolve().parents[1]
     os.chdir(repo_path)
@@ -198,6 +209,7 @@ def main():
         except SystemExit:
             print("⚠️ Stash pop failed, but local changes have been preserved.")
 
+    recreate_venv_if_required()
     reset_untracked_files()
     print("✅ Git pull completed successfully!")
 

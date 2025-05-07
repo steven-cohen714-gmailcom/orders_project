@@ -4,11 +4,13 @@ import sys
 import subprocess
 import shutil
 from pathlib import Path
+import re
 
 # --- CONFIG ---
 PORT = "8004"
 APP_MODULE = "backend.main:app"
 LOG_FILE = "logs/server.log"
+ROUTE_AUDIT_FILE = "logs/route_audit.log"
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 VENV_UVICORN = PROJECT_ROOT / "venv/bin/uvicorn"
 RELOAD_DIR = "backend"
@@ -58,7 +60,25 @@ try:
 except Exception as e:
     print(f"⚠️ Could not create logs directory: {e}")
 
-# 6. Start the server
+# 6. Audit FastAPI routes
+print("🧠 Auditing registered routes...")
+try:
+    from importlib import import_module
+    app = import_module(APP_MODULE.split(":")[0]).__dict__[APP_MODULE.split(":")[1]]
+    with open(ROUTE_AUDIT_FILE, "w") as f:
+        f.write("🔍 Registered Routes:\n")
+        for route in app.routes:
+            path = getattr(route, "path", None)
+            if not path:
+                continue
+            f.write(f"{path}\n")
+            if re.search(r"/\b(\w+)\b(?:/.*)?/\1\b", path):
+                f.write(f"⚠️ Suspicious duplicate segment in: {path}\n")
+    print(f"✅ Route audit complete. Output → {ROUTE_AUDIT_FILE}")
+except Exception as e:
+    print(f"⚠️ Route audit skipped: {e}")
+
+# 7. Start the server
 print(f"🚀 Launching Uvicorn: {APP_MODULE} on port {PORT}...")
 try:
     subprocess.Popen(

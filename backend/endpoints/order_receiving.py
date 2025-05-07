@@ -1,21 +1,12 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
-from typing import List
 from datetime import datetime
 import sqlite3
 from pathlib import Path
 import json
-import logging
-
-# Add logging to confirm endpoint registration
-logging.basicConfig(
-    filename="logs/server.log",
-    level=logging.INFO,
-    format="%(asctime)s | %(levelname)s | %(message)s",
-)
+from pydantic import BaseModel
+from typing import List
 
 router = APIRouter(tags=["orders"])
-logging.info("Registering /orders/receive endpoint")  # Debug log
 
 def log_event(filename: str, data: dict):
     log_path = Path(f"logs/{filename}")
@@ -24,52 +15,117 @@ def log_event(filename: str, data: dict):
         timestamp = datetime.now().isoformat()
         f.write(f"[{timestamp}] {json.dumps(data, ensure_ascii=False)}\n")
 
-class ItemReceive(BaseModel):
-    order_id: int
+class ReceivedItem(BaseModel):
     item_id: int
-    qty_received: float = Field(gt=0)
+    received_qty: float
 
-@router.post("/receive")
-def mark_order_received(receive_data: List[ItemReceive]):
+class ReceivePayload(BaseModel):
+    items: List[ReceivedItem]
+
+@router.post("/receive/{order_id}", response_model=dict)
+async def receive_order(order_id: int, payload: ReceivePayload):
+    items = payload.items
+
     try:
-        now = datetime.now().isoformat()
         with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            order_ids_updated = set()
-
-            for item in receive_data:
+            cursor.execute("SELECT id FROM orders WHERE id = ?", (order_id,))
+            if not cursor.fetchone():
+                raise HTTPException(status_code=404, detail="Order not found")
+            
+            all_fully_received = True
+            for item in items:
+                item_id = item.item_id
+                qty_received = item.received_qty
+                
+                cursor.execute("""
+                    SELECT qty_ordered, qty_received
+                    FROM order_items
+                    WHERE id = ? AND order_id = ?
+                """, (item_id, order_id))
+                row = cursor.fetchone()
+                if not row:
+                    raise HTTPException(status_code=404, detail=f"Item {item_id} not found")
+                
+                current_qty_received = row["qty_received"] or 0
+                qty_ordered = row["qty_ordered"]
+                new_qty_received = current_qty_received + qty_received
+                
+                if new_qty_received > qty_ordered:
+                    raise HTTPException(status_code=400, detail=f"Received quantity for item {item_id} exceeds ordered quantity")
+                
                 cursor.execute("""
                     UPDATE order_items
                     SET qty_received = ?, received_date = ?
-                    WHERE id = ? AND order_id = ?
-                """, (item.qty_received, now, item.item_id, item.order_id))
-
-                cursor.execute("""
-                    INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
-                    VALUES (?, 'Received', ?, ?, ?)
-                """, (
-                    item.order_id,
-                    f"Item ID {item.item_id} received: {item.qty_received}",
-                    now,
-                    0
-                ))
-
-                order_ids_updated.add(item.order_id)
-
-            for order_id in order_ids_updated:
-                cursor.execute("""
-                    SELECT COUNT(*) FROM order_items
-                    WHERE order_id = ? AND (qty_received IS NULL OR qty_received < qty_ordered)
-                """, (order_id,))
-                incomplete = cursor.fetchone()[0]
-                if incomplete == 0:
-                    cursor.execute("""
-                        UPDATE orders SET status = 'Received', received_date = ?
-                        WHERE id = ?
-                    """, (now, order_id))
-
-        log_event("new_orders_log.txt", {"action": "receive", "orders": list(order_ids_updated)})
-        return {"status": "✅ Order(s) marked as received"}
+                    WHERE id = ?
+                """, (new_qty_received, datetime.now().isoformat(), item_id))
+                
+                if new_qty_received < qty_ordered:
+                    all_fully_received = False
+            
+            new_status = "Received" if all_fully_received else "Partially Received"
+            cursor.execute("""
+                UPDATE orders
+                SET status = ?, received_date = ?
+                WHERE id = ?
+            """, (new_status, datetime.now().isoformat(), order_id))
+            
+            cursor.execute("""
+                INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
+                VALUES (?, 'Received', ?, ?, ?)
+            """, (order_id, f"Order received: {json.dumps([i.dict() for i in items])}", datetime.now().isoformat(), 0))
+            
+            conn.commit()
+            
+            log_event("order_receiving_log.txt", {
+                "action": "receive",
+                "order_id": order_id,
+                "items": [i.dict() for i in items],
+                "status": new_status
+            })
+            
+            return {"message": "Order received successfully", "status": new_status}
+    except sqlite3.Error as e:
+        log_event("order_receiving_log.txt", {"error": str(e), "type": "sqlite"})
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     except Exception as e:
-        log_event("new_orders_log.txt", {"error": str(e), "type": "receive"})
-        raise HTTPException(status_code=500, detail=f"Failed to receive order(s): {e}")
+        log_event("order_receiving_log.txt", {"error": str(e), "type": "general"})
+        raise HTTPException(status_code=500, detail=f"Failed to receive order: {str(e)}")
+
+@router.post("/mark_complete/{order_id}", response_model=dict)
+async def mark_order_complete(order_id: int):
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT id FROM orders WHERE id = ?", (order_id,))
+            if not cursor.fetchone():
+                raise HTTPException(status_code=404, detail="Order not found")
+                
+            cursor.execute("""
+                UPDATE orders
+                SET status = 'Partially Delivered - Accepted'
+                WHERE id = ?
+            """, (order_id,))
+            
+            cursor.execute("""
+                INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
+                VALUES (?, 'Marked Complete', ?, ?, ?)
+            """, (order_id, f"Order marked as complete with partial delivery", datetime.now().isoformat(), 0))
+            
+            conn.commit()
+            
+            log_event("order_receiving_log.txt", {
+                "action": "mark_complete",
+                "order_id": order_id,
+                "status": "Partially Delivered - Accepted"
+            })
+            
+            return {"message": "Order marked as complete"}
+    except sqlite3.Error as e:
+        log_event("order_receiving_log.txt", {"error": str(e), "type": "sqlite"})
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        log_event("order_receiving_log.txt", {"error": str(e), "type": "general"})
+        raise HTTPException(status_code=500, detail=f"Failed to mark order as complete: {str(e)}")

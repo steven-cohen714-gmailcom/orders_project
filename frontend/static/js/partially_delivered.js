@@ -5,7 +5,7 @@ import { showOrderNoteModal, showSupplierNoteModal } from './components/order_no
 import { showReceiveModal } from './components/receive_modal.js';
 import { showPDFModal } from './components/pdf_modal.js';
 
-console.log("Loading pending_orders.js");
+console.log("Loading partially_delivered.js");
 
 async function loadFiltersAndOrders() {
     try {
@@ -18,7 +18,7 @@ async function loadFiltersAndOrders() {
         await loadOrders();
     } catch (error) {
         console.error("Error loading filters or orders:", error);
-        document.getElementById("pending-body").innerHTML = '<tr><td colspan="7">Error loading filters: ' + escapeHTML(error.message) + '</td></tr>';
+        document.getElementById("partially-delivered-body").innerHTML = '<tr><td colspan="7">Error loading filters: ' + escapeHTML(error.message) + '</td></tr>';
     }
 }
 
@@ -47,17 +47,17 @@ async function loadOrders() {
     if (status && status !== "All") params.append("status", status);
 
     try {
-        console.log("Fetching orders with params:", params.toString());
-        const res = await fetch(`/orders/api/pending_orders?${params.toString()}`);
+        console.log("Fetching partially delivered orders with params:", params.toString());
+        const res = await fetch(`/orders/api/partially_delivered?${params.toString()}`);
         if (!res.ok) {
             const errorText = await res.text();
             throw new Error(`HTTP error! Status: ${res.status}, Message: ${errorText}`);
         }
         const data = await res.json();
 
-        console.log("Pending Orders API Response:", JSON.stringify(data, null, 2));
+        console.log("Partially Delivered Orders API Response:", JSON.stringify(data, null, 2));
 
-        const tbody = document.getElementById("pending-body");
+        const tbody = document.getElementById("partially-delivered-body");
         tbody.innerHTML = "";
 
         if (data.orders && Array.isArray(data.orders) && data.orders.length > 0) {
@@ -83,7 +83,8 @@ async function loadOrders() {
                         <span class="clip-icon" title="View/Upload Attachments" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📎</span>
                         <span class="note-icon" title="Edit Order Note" data-order-id="${order.id || ''}" data-order-note="${sanitizedOrderNote}" id="order-note-${index}">📝</span>
                         <span class="supplier-note-icon" title="View Note to Supplier" data-supplier-note="${sanitizedSupplierNote}" data-order-number="${sanitizedOrderNumber}" id="supplier-note-${index}">📦</span>
-                        <span class="receive-icon" title="Mark as Received" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">✅</span>
+                        <span class="receive-icon" title="Receive More Items" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">✅</span>
+                        <span class="complete-icon" title="Mark as Complete" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">✔️</span>
                         <span class="pdf-icon" title="View Purchase Order PDF" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📄</span>
                     </td>
                 `;
@@ -124,7 +125,25 @@ async function loadOrders() {
                     });
                 });
                 row.querySelector(".receive-icon").addEventListener("click", () => window.showReceiveModal(order.id || '', sanitizedOrderNumber));
-
+                row.querySelector(".complete-icon").addEventListener("click", async () => {
+                    if (confirm(`Are you sure you want to mark order ${sanitizedOrderNumber} as complete with partial delivery?`)) {
+                        try {
+                            const res = await fetch(`/orders/mark_complete/${order.id}`, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                            });
+                            if (!res.ok) {
+                                const errorText = await res.text();
+                                throw new Error(`Failed to mark order as complete: ${res.status} - ${errorText}`);
+                            }
+                            alert(`Order ${sanitizedOrderNumber} marked as complete.`);
+                            loadOrders();
+                        } catch (error) {
+                            console.error("Error marking order as complete:", error);
+                            alert(`Failed to mark order as complete: ${error.message}`);
+                        }
+                    }
+                });
                 row.querySelector(".pdf-icon").addEventListener("click", async () => {
                     try {
                         const response = await fetch(`/orders/api/generate_pdf_for_order/${order.id}`);
@@ -148,11 +167,11 @@ async function loadOrders() {
                 });
             });
         } else {
-            tbody.innerHTML = '<tr><td colspan="7">No pending orders found.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7">No partially delivered orders found.</td></tr>';
         }
     } catch (error) {
         console.error("Error loading orders:", error);
-        document.getElementById("pending-body").innerHTML = '<tr><td colspan="7">Error loading orders: ' + escapeHTML(error.message) + '</td></tr>';
+        document.getElementById("partially-delivered-body").innerHTML = '<tr><td colspan="7">Error loading orders: ' + escapeHTML(error.message) + '</td></tr>';
     }
 }
 
