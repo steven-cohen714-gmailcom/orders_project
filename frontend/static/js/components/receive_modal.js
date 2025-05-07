@@ -100,15 +100,16 @@ export function showReceiveModal(orderId, orderNumber) {
       submitBtn.textContent = "Mark as Received";
       submitBtn.style = "margin-top:1rem; padding:0.5rem 1rem; cursor:pointer;";
       submitBtn.onclick = async () => {
-        const payload = inputs.map(i => ({
-          order_id: orderId,
-          item_id: i.itemId,
-          qty_received: parseFloat(i.input.value) || 0
-        }));
+        const payload = {
+          items: inputs.map(i => ({
+            item_id: i.itemId,
+            received_qty: parseFloat(i.input.value) || 0
+          }))
+        };
         console.log("Submitting receive payload:", payload);
 
         try {
-          const res = await fetch("/orders/receive", {
+          const res = await fetch(`/orders/receive/${orderId}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
