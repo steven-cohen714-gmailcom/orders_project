@@ -38,10 +38,19 @@ export function showReceiveModal(orderId, orderNumber) {
       title.textContent = `Mark Order #${orderNumber} as Received`;
 
       const table = document.createElement("table");
-      table.style = "width:100%; border-collapse:collapse; margin-top:1rem;";
+      table.className = "receive-modal-table";
 
       const header = document.createElement("tr");
-      ["Item Code", "Description", "Project", "Qty Ordered", "Price", "Total", "Actual Received Qty"].forEach(h => {
+      [
+        "Item Code",
+        "Description",
+        "Project",
+        "Qty Ordered",
+        "Qty Received to Date",
+        "Price",
+        "Total",
+        "Qty Received Now"
+      ].forEach(h => {
         const th = document.createElement("th");
         th.textContent = h;
         th.style.border = "1px solid #ccc";
@@ -55,7 +64,7 @@ export function showReceiveModal(orderId, orderNumber) {
         console.log("No items found for this order");
         const row = document.createElement("tr");
         const cell = document.createElement("td");
-        cell.colSpan = 7;
+        cell.colSpan = 8;
         cell.textContent = "No items found for this order.";
         row.appendChild(cell);
         table.appendChild(row);
@@ -63,12 +72,15 @@ export function showReceiveModal(orderId, orderNumber) {
         data.items.forEach(item => {
           const row = document.createElement("tr");
           const total = (item.qty_ordered || 0) * (item.price || 0);
+          const receivedToDate = item.qty_received || 0;
+          const qtyRemaining = Math.max((item.qty_ordered || 0) - receivedToDate, 0);
 
           [
             item.item_code || "N/A",
             item.item_description || "N/A",
             item.project || "N/A",
             item.qty_ordered || 0,
+            receivedToDate,
             item.price != null ? `R${item.price.toFixed(2)}` : "R0.00",
             total != null ? `R${total.toFixed(2)}` : "R0.00"
           ].forEach(text => {
@@ -82,7 +94,7 @@ export function showReceiveModal(orderId, orderNumber) {
           qtyInput.type = "number";
           qtyInput.min = 0;
           qtyInput.step = 1;
-          qtyInput.value = item.qty_ordered || 0;
+          qtyInput.value = qtyRemaining;
           qtyInput.style.width = "80px";
 
           inputs.push({ itemId: item.id || item.item_id, input: qtyInput });

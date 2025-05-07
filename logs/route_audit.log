@@ -85,6 +85,8 @@
 /orders/{order_id}
 /orders/{order_id}
 /orders/api/items_for_order/{order_id}
+/orders/orders/receive/{order_id}
+⚠️ Suspicious duplicate segment in: /orders/orders/receive/{order_id}
 /orders/upload_attachment
 /orders/attachments/{order_id}
 /orders/api/generate_pdf

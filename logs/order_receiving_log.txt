@@ -1,1 +1,1 @@
-[2025-05-07T06:13:24.185804] {"action": "receive", "order_id": 96, "items": [{"item_id": 124, "received_qty": 10.0}], "status": "Received"}
+[2025-05-07T10:22:14.363127] {"action": "receive", "order_id": 98, "items": [{"item_id": 126, "received_qty": 1.0}, {"item_id": 127, "received_qty": 6.0}], "status": "Partially Received"}

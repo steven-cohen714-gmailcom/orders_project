@@ -34,6 +34,13 @@ class OrderUpdate(BaseModel):
     supplier_id: Optional[int] = None
     requester_id: Optional[int] = None
 
+class ReceiveItem(BaseModel):
+    item_id: int
+    qty_received: float
+
+class ReceivePayload(BaseModel):
+    items: List[ReceiveItem]
+
 # --- Routes ---
 @router.post("")
 @handle_db_errors(entity="order", action="creating")
@@ -144,3 +151,27 @@ async def get_items_for_order(order_id: int):
     result = [dict(row) for row in rows]
     log_success("order_items", "fetched", f"{len(result)} items for order {order_id}")
     return {"items": result}
+
+@router.post("/orders/receive/{order_id}")
+@handle_db_errors(entity="receive", action="processing")
+async def mark_items_as_received(order_id: int, payload: ReceivePayload):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    for item in payload.items:
+        cursor.execute("""
+            UPDATE order_items
+            SET qty_received = ?, received_date = ?
+            WHERE id = ? AND order_id = ?
+        """, (item.qty_received, datetime.now().strftime("%Y-%m-%d"), item.item_id, order_id))
+
+    cursor.execute("""
+        UPDATE orders
+        SET status = 'Received', received_date = ?
+        WHERE id = ? AND status IN ('Pending', 'Awaiting Authorisation')
+    """, (datetime.now().strftime("%Y-%m-%d"), order_id))
+
+    conn.commit()
+    conn.close()
+    log_success("receive", "processed", f"Marked {len(payload.items)} items as received")
+    return {"message": "Items marked as received"}

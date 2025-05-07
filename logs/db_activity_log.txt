@@ -1,26 +1,27 @@
-2025-05-07 06:09:58,013 | INFO | Database tables created successfully.
-2025-05-07 06:09:58,013 | INFO | ✅ Database initialized successfully.
-2025-05-07 06:09:58,509 | INFO | Database tables created successfully.
-2025-05-07 06:09:58,509 | INFO | ✅ Database initialized successfully.
-2025-05-07 06:10:08,185 | INFO | Rendering pending orders page
-2025-05-07 06:10:08,250 | INFO | Requesters fetched: 5 items
-2025-05-07 06:10:08,250 | INFO | Suppliers fetched: 10 items
-2025-05-07 06:10:10,503 | INFO | Rendering pending orders page
-2025-05-07 06:10:10,541 | INFO | Requesters fetched: 5 items
-2025-05-07 06:10:10,543 | INFO | Suppliers fetched: 10 items
-2025-05-07 06:10:12,635 | INFO | Rendering pending orders page
-2025-05-07 06:10:12,672 | INFO | Requesters fetched: 5 items
-2025-05-07 06:10:12,673 | INFO | Suppliers fetched: 10 items
-2025-05-07 06:13:08,558 | INFO | Database tables created successfully.
-2025-05-07 06:13:08,558 | INFO | ✅ Database initialized successfully.
-2025-05-07 06:13:09,070 | INFO | Database tables created successfully.
-2025-05-07 06:13:09,070 | INFO | ✅ Database initialized successfully.
-2025-05-07 06:13:15,740 | INFO | Rendering pending orders page
-2025-05-07 06:13:15,806 | INFO | Requesters fetched: 5 items
-2025-05-07 06:13:15,807 | INFO | Suppliers fetched: 10 items
-2025-05-07 06:13:19,043 | INFO | Rendering pending orders page
-2025-05-07 06:13:19,082 | INFO | Requesters fetched: 5 items
-2025-05-07 06:13:19,083 | INFO | Suppliers fetched: 10 items
-2025-05-07 06:13:26,468 | INFO | Rendering pending orders page
-2025-05-07 06:13:26,509 | INFO | Requesters fetched: 5 items
-2025-05-07 06:13:26,510 | INFO | Suppliers fetched: 10 items
+2025-05-07 10:20:59,093 | INFO | Database tables created successfully.
+2025-05-07 10:20:59,093 | INFO | ✅ Database initialized successfully.
+2025-05-07 10:20:59,499 | INFO | Database tables created successfully.
+2025-05-07 10:20:59,499 | INFO | ✅ Database initialized successfully.
+2025-05-07 10:21:09,084 | INFO | Rendering partially delivered orders page
+2025-05-07 10:21:09,141 | INFO | Requesters fetched: 5 items
+2025-05-07 10:21:09,142 | INFO | Suppliers fetched: 10 items
+2025-05-07 10:21:11,138 | INFO | Rendering pending orders page
+2025-05-07 10:21:11,165 | INFO | Requesters fetched: 5 items
+2025-05-07 10:21:11,168 | INFO | Suppliers fetched: 10 items
+2025-05-07 10:21:32,802 | INFO | Rendering partially delivered orders page
+2025-05-07 10:21:32,825 | INFO | Requesters fetched: 5 items
+2025-05-07 10:21:32,826 | INFO | Suppliers fetched: 10 items
+2025-05-07 10:22:16,164 | INFO | Rendering partially delivered orders page
+2025-05-07 10:22:16,189 | INFO | Requesters fetched: 5 items
+2025-05-07 10:22:16,191 | INFO | Suppliers fetched: 10 items
+2025-05-07 10:22:46,604 | INFO | Rendering maintenance page
+2025-05-07 10:22:46,633 | INFO | Users fetched: 4 items
+2025-05-07 10:22:46,635 | INFO | Requesters fetched: 5 items
+2025-05-07 10:22:46,636 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-07 10:22:46,637 | INFO | Items fetched: 10 items
+2025-05-07 10:22:46,639 | INFO | Suppliers fetched: 10 items
+2025-05-07 10:22:46,640 | INFO | Projects fetched: 10 items
+2025-05-07 10:22:46,641 | INFO | Settings fetched: {'order_number_start': 'URC1308', 'auth_threshold': 10000}
+2025-05-07 10:22:49,354 | INFO | Rendering audit trail page
+2025-05-07 10:22:49,380 | INFO | Suppliers fetched: 10 items
+2025-05-07 10:22:49,381 | INFO | Requesters fetched: 5 items
