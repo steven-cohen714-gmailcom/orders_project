@@ -592,3 +592,66 @@ document.addEventListener('DOMContentLoaded', async () => {
        alert(`Error: ${err.message}`);
    }
 });
+
+// Add logToServer function for client-side logging
+async function logToServer(level, message, details = {}) {
+    try {
+        await fetch('/log_client', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ level, message, details, timestamp: new Date().toISOString() })
+        });
+    } catch (error) {
+        console.error('Failed to log to server:', error);
+    }
+}
+
+// Test function for previewOrder
+async function testPreviewOrder() {
+    console.log("Running testPreviewOrder");
+    await logToServer('INFO', 'Starting previewOrder test');
+
+    try {
+        // Ensure itemsList and projectsList are populated
+        if (!itemsList.length || !projectsList.length) {
+            throw new Error("Items or projects not loaded. Ensure dropdowns are populated.");
+        }
+
+        // Dynamically select the first item and project from lists
+        const testItem = itemsList[0];
+        const testProject = projectsList[0];
+        const testQty = 2;
+        const testPrice = 10;
+        const testTotal = (testQty * testPrice).toFixed(2);
+
+        // Mock DOM elements with dynamic data
+        document.body.innerHTML = `
+            <div id="order-number">URC1000</div>
+            <input id="request_date" value="2025-05-10">
+            <select id="supplier_id"><option value="1">Test Supplier</option></select>
+            <textarea id="note_to_supplier">Test note</textarea>
+            <table id="items-table"><tbody id="items-body">
+                <tr>
+                    <td><select class="item-code"><option value="${testItem.item_code}" data-description="${testItem.item_description}" selected>${testItem.item_code}</option></select></td>
+                    <td><select class="project"><option value="${testProject.project_code}" selected>${testProject.project_code}</option></select></td>
+                    <td><input type="number" class="qty-ordered" value="${testQty}"></td>
+                    <td><input type="number" class="price" value="${testPrice}"></td>
+                    <td><input type="text" class="total" value="${testTotal}"></td>
+                </tr>
+            </tbody></table>
+            <button id="preview-order">View Purchase Order</button>
+        `;
+
+        // Call the existing previewOrder function
+        await previewOrder();
+
+        console.log("Test passed: previewOrder executed without errors");
+        await logToServer('INFO', 'previewOrder test completed successfully');
+    } catch (error) {
+        console.error("Test failed:", error);
+        await logToServer('ERROR', 'previewOrder test failed', { error: error.message, stack: error.stack });
+        throw error;
+    }
+}
+
+window.testPreviewOrder = testPreviewOrder;

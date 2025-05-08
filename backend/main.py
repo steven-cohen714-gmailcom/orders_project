@@ -15,6 +15,7 @@ from backend.endpoints.orders import router as orders_router
 from backend.endpoints.order_attachments import router as attachments_router
 from backend.endpoints.pdf_generator import router as pdf_generator_router
 from backend.endpoints.order_receiving import router as order_receiving_router
+from backend.endpoints.utils import router as utils_router
 
 from backend.database import init_db, get_db_connection
 from pathlib import Path
@@ -192,6 +193,7 @@ app.include_router(orders_router, prefix="/orders")
 app.include_router(attachments_router, prefix="/orders")
 app.include_router(pdf_generator_router)
 app.include_router(order_receiving_router, prefix="/orders")
+app.include_router(utils_router)
 
 # --- Dev CLI ---
 if __name__ == "__main__":

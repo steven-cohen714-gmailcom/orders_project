@@ -94,3 +94,4 @@
 /orders/api/generate_pdf_for_order/{order_id}
 /orders/receive/{order_id}
 /orders/mark_complete/{order_id}
+/log_client
