@@ -1,0 +1,50 @@
+2025-05-08 20:10:45,728 | INFO | Test data inserted successfully
+2025-05-08 20:10:45,734 | ERROR | PDF endpoint test failed: Expected status 200, got 405: {"detail":"Method Not Allowed"}
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/scripts/test_preview_order.py", line 59, in test_preview_order_endpoint
+    raise AssertionError(f"Expected status 200, got {response.status_code}: {response.text}")
+AssertionError: Expected status 200, got 405: {"detail":"Method Not Allowed"}
+2025-05-08 20:17:41,703 | INFO | Test data inserted successfully
+2025-05-08 20:17:41,712 | ERROR | PDF endpoint test failed: Expected status 200, got 422: {"detail":[{"type":"int_parsing","loc":["path","order_id"],"msg":"Input should be a valid integer, unable to parse string as an integer","input":"None"}]}
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/scripts/test_preview_order.py", line 59, in test_preview_order_endpoint
+    raise AssertionError(f"Expected status 200, got {response.status_code}: {response.text}")
+AssertionError: Expected status 200, got 422: {"detail":[{"type":"int_parsing","loc":["path","order_id"],"msg":"Input should be a valid integer, unable to parse string as an integer","input":"None"}]}
+2025-05-08 20:19:25,653 | INFO | Test data inserted successfully
+2025-05-08 20:19:25,660 | ERROR | PDF endpoint test failed: Order creation response did not return an id
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/scripts/test_preview_order.py", line 57, in test_preview_order_endpoint
+    raise AssertionError("Order creation response did not return an id")
+AssertionError: Order creation response did not return an id
+2025-05-08 20:20:35,135 | INFO | Test data inserted successfully
+2025-05-08 20:20:35,141 | ERROR | PDF endpoint test failed: Failed to create order: 404: {"detail":"Not Found"}
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/scripts/test_preview_order.py", line 54, in test_preview_order_endpoint
+    raise AssertionError(f"Failed to create order: {response.status_code}: {response.text}")
+AssertionError: Failed to create order: 404: {"detail":"Not Found"}
+2025-05-08 20:22:31,758 | INFO | Test data inserted successfully
+2025-05-08 20:22:31,764 | ERROR | PDF endpoint test failed: Failed to create order: 404: {"detail":"Not Found"}
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/scripts/test_preview_order.py", line 63, in test_preview_order_endpoint
+    raise AssertionError(f"Failed to create order: {response.status_code}: {response.text}")
+AssertionError: Failed to create order: 404: {"detail":"Not Found"}
+2025-05-08 20:26:15,070 | INFO | Test data inserted successfully
+2025-05-08 20:26:15,077 | ERROR | PDF endpoint test failed: Failed to create order: 422: {"detail":[{"type":"missing","loc":["body","order_number"],"msg":"Field required","input":{"order_data":{"order_number":"URC1000","status":"Pending","total":20.0,"order_note":"","note_to_supplier":"Test note","supplier_id":1,"requester_id":1},"items":[{"item_code":"ITEM1","item_description":"Test Item","project":"PROJ1","qty_ordered":2.0,"price":10.0,"total":20.0}]}},{"type":"missing","loc":["body","status"],"msg":"Field required","input":{"order_data":{"order_number":"URC1000","status":"Pending","total":20.0,"order_note":"","note_to_supplier":"Test note","supplier_id":1,"requester_id":1},"items":[{"item_code":"ITEM1","item_description":"Test Item","project":"PROJ1","qty_ordered":2.0,"price":10.0,"total":20.0}]}},{"type":"missing","loc":["body","supplier_id"],"msg":"Field required","input":{"order_data":{"order_number":"URC1000","status":"Pending","total":20.0,"order_note":"","note_to_supplier":"Test note","supplier_id":1,"requester_id":1},"items":[{"item_code":"ITEM1","item_description":"Test Item","project":"PROJ1","qty_ordered":2.0,"price":10.0,"total":20.0}]}},{"type":"missing","loc":["body","requester_id"],"msg":"Field required","input":{"order_data":{"order_number":"URC1000","status":"Pending","total":20.0,"order_note":"","note_to_supplier":"Test note","supplier_id":1,"requester_id":1},"items":[{"item_code":"ITEM1","item_description":"Test Item","project":"PROJ1","qty_ordered":2.0,"price":10.0,"total":20.0}]}}]}
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/scripts/test_preview_order.py", line 57, in test_preview_order_endpoint
+    raise AssertionError(f"Failed to create order: {response.status_code}: {response.text}")
+AssertionError: Failed to create order: 422: {"detail":[{"type":"missing","loc":["body","order_number"],"msg":"Field required","input":{"order_data":{"order_number":"URC1000","status":"Pending","total":20.0,"order_note":"","note_to_supplier":"Test note","supplier_id":1,"requester_id":1},"items":[{"item_code":"ITEM1","item_description":"Test Item","project":"PROJ1","qty_ordered":2.0,"price":10.0,"total":20.0}]}},{"type":"missing","loc":["body","status"],"msg":"Field required","input":{"order_data":{"order_number":"URC1000","status":"Pending","total":20.0,"order_note":"","note_to_supplier":"Test note","supplier_id":1,"requester_id":1},"items":[{"item_code":"ITEM1","item_description":"Test Item","project":"PROJ1","qty_ordered":2.0,"price":10.0,"total":20.0}]}},{"type":"missing","loc":["body","supplier_id"],"msg":"Field required","input":{"order_data":{"order_number":"URC1000","status":"Pending","total":20.0,"order_note":"","note_to_supplier":"Test note","supplier_id":1,"requester_id":1},"items":[{"item_code":"ITEM1","item_description":"Test Item","project":"PROJ1","qty_ordered":2.0,"price":10.0,"total":20.0}]}},{"type":"missing","loc":["body","requester_id"],"msg":"Field required","input":{"order_data":{"order_number":"URC1000","status":"Pending","total":20.0,"order_note":"","note_to_supplier":"Test note","supplier_id":1,"requester_id":1},"items":[{"item_code":"ITEM1","item_description":"Test Item","project":"PROJ1","qty_ordered":2.0,"price":10.0,"total":20.0}]}}]}
+2025-05-08 20:27:17,245 | INFO | Test data inserted successfully
+2025-05-08 20:27:17,252 | ERROR | PDF endpoint test failed: Order creation response did not return an order_id
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/scripts/test_preview_order.py", line 59, in test_preview_order_endpoint
+    raise AssertionError("Order creation response did not return an order_id")
+AssertionError: Order creation response did not return an order_id
+2025-05-08 20:28:49,545 | INFO | Test data inserted successfully
+2025-05-08 20:28:49,552 | ERROR | PDF endpoint test failed: Order creation response did not return an id
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/scripts/test_preview_order.py", line 60, in test_preview_order_endpoint
+    raise AssertionError("Order creation response did not return an id")
+AssertionError: Order creation response did not return an id
+2025-05-08 20:30:29,976 | INFO | Test data inserted successfully
+2025-05-08 20:30:30,130 | INFO | PDF endpoint test passed

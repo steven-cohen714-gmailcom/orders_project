@@ -53,6 +53,7 @@
 /lookups/login
 /lookups/logout
 /lookups/orders/pdf/{order_id}
+/lookups/log_client
 /admin/requesters
 /admin/requesters
 /admin/requesters/{requester_id}
