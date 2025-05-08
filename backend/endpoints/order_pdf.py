@@ -1,6 +1,10 @@
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import StreamingResponse
 from backend.database import get_db_connection
+from weasyprint import HTML
+from io import BytesIO
 import logging
+import sqlite3
 
 router = APIRouter()
 
@@ -31,6 +35,8 @@ async def get_order_pdf(order_id: int):
         order_dict = dict(order)
         items_list = [dict(item) for item in items]
 
+        logo_path = "file:///Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/images/universal_logo.jpg"
+
         html_content = f"""
         <html>
         <head>
@@ -38,12 +44,15 @@ async def get_order_pdf(order_id: int):
             <style>
                 body {{ font-family: Arial, sans-serif; margin: 20px; }}
                 h1 {{ text-align: center; }}
+                img.logo {{ width: 150px; }}
                 table {{ width: 100%; border-collapse: collapse; margin-top: 20px; }}
                 th, td {{ border: 1px solid #ddd; padding: 8px; text-align: left; }}
                 th {{ background-color: #f2f2f2; }}
+                .vat-note {{ margin-top: 15px; font-style: italic; font-size: 0.9rem; }}
             </style>
         </head>
         <body>
+            <img src="{logo_path}" class="logo" />
             <h1>Purchase Order {order_dict['order_number']}</h1>
             <p><strong>Supplier:</strong> {order_dict['supplier_name']}</p>
             <p><strong>Requester:</strong> {order_dict['requester_name']}</p>
@@ -55,7 +64,6 @@ async def get_order_pdf(order_id: int):
                 <tr>
                     <th>Item Code</th>
                     <th>Description</th>
-                    <th>Project</th>
                     <th>Qty Ordered</th>
                     <th>Price</th>
                     <th>Total</th>
@@ -67,7 +75,6 @@ async def get_order_pdf(order_id: int):
                 <tr>
                     <td>{item['item_code']}</td>
                     <td>{item['item_description']}</td>
-                    <td>{item['project']}</td>
                     <td>{item['qty_ordered']}</td>
                     <td>R{item['price']}</td>
                     <td>R{item['total']}</td>
@@ -76,6 +83,7 @@ async def get_order_pdf(order_id: int):
 
         html_content += """
             </table>
+            <p class="vat-note">All prices exclude VAT.</p>
         </body>
         </html>
         """

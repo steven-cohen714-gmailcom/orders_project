@@ -290,3 +290,13 @@ button:hover {
 .receive-modal input[type="number"] {
   width: 80px;
 }
+i:hover {
+  cursor: pointer;
+}
+.note-icon:hover,
+.clip-icon:hover,
+.expand-icon:hover,
+.receive-icon:hover,
+.supplier-note-icon:hover {
+  cursor: pointer;
+}

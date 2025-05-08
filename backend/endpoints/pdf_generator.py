@@ -32,7 +32,6 @@ async def generate_pdf_for_order(order_id: int):
             conn.row_factory = lambda cursor, row: dict(zip([col[0] for col in cursor.description], row))
             cursor = conn.cursor()
 
-            # Fetch order details
             cursor.execute("""
                 SELECT o.*, s.name as supplier, r.name as requester
                 FROM orders o
@@ -44,11 +43,9 @@ async def generate_pdf_for_order(order_id: int):
             if not order:
                 raise HTTPException(status_code=404, detail="Order not found")
 
-            # Fetch order items
             cursor.execute("SELECT * FROM order_items WHERE order_id = ?", (order_id,))
             items = cursor.fetchall()
 
-            # Fetch business details
             cursor.execute("""
                 SELECT company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number
                 FROM business_details WHERE id = 1
@@ -57,11 +54,9 @@ async def generate_pdf_for_order(order_id: int):
             if not business_details:
                 raise HTTPException(status_code=404, detail="Business details not found")
 
-        # Replace line breaks with <br> for HTML rendering
-        note_to_supplier = order['note_to_supplier'] or "None"
-        note_to_supplier = note_to_supplier.replace('\n', '<br>')
+        logo_path = "file:///Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/images/universal_logo.jpg"
+        note_to_supplier = (order['note_to_supplier'] or "None").replace('\n', '<br>')
 
-        # Generate HTML for PDF
         html_content = f"""
             <html>
             <head>
@@ -70,12 +65,15 @@ async def generate_pdf_for_order(order_id: int):
                 <style>
                     body {{ font-family: Arial, sans-serif; margin: 20px; }}
                     h1 {{ text-align: center; }}
+                    img.logo {{ width: 150px; }}
                     table {{ width: 100%; border-collapse: collapse; margin-top: 20px; }}
                     th, td {{ border: 1px solid #000; padding: 6px; text-align: left; }}
                     th {{ background-color: #f2f2f2; }}
+                    .vat-note {{ margin-top: 15px; font-style: italic; font-size: 0.9rem; }}
                 </style>
             </head>
             <body>
+                <img src="{logo_path}" class="logo" />
                 <h1>Order {order['order_number']}</h1>
                 <p><strong>Company:</strong> {business_details['company_name']}</p>
                 <p><strong>Address:</strong> {business_details['address_line1']}{', ' + business_details['address_line2'] if business_details['address_line2'] else ''}, {business_details['city']}, {business_details['province']} {business_details['postal_code']}</p>
@@ -91,12 +89,11 @@ async def generate_pdf_for_order(order_id: int):
                 <p><strong>Supplier Note:</strong> {note_to_supplier}</p>
 
                 <h2>Line Items</h2>
-                <table border="1" cellpadding="6" cellspacing="0">
+                <table>
                     <thead>
                         <tr>
                             <th>Item Code</th>
                             <th>Description</th>
-                            <th>Project</th>
                             <th>Qty Ordered</th>
                             <th>Price</th>
                             <th>Total</th>
@@ -107,7 +104,6 @@ async def generate_pdf_for_order(order_id: int):
                             <tr>
                                 <td>{item['item_code']}</td>
                                 <td>{item['item_description']}</td>
-                                <td>{item['project']}</td>
                                 <td>{item['qty_ordered']}</td>
                                 <td>R{item['price']}</td>
                                 <td>R{item['total']}</td>
@@ -115,6 +111,7 @@ async def generate_pdf_for_order(order_id: int):
                         ''' for item in items)}
                     </tbody>
                 </table>
+                <p class="vat-note">All prices exclude VAT.</p>
             </body>
             </html>
         """

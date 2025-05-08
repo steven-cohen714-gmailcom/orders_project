@@ -355,60 +355,64 @@ async function previewOrder() {
 
    // Generate HTML for PDF matching print_template.html structure
    const html = `
-       <html>
-       <head>
-           <title>Printable Order - ${orderNumber}</title>
-           <meta charset="UTF-8">
-           <style>
-               body { font-family: Arial, sans-serif; margin: 20px; }
-               h1 { text-align: center; }
-               table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-               th, td { border: 1px solid #000; padding: 6px; text-align: left; }
-               th { background-color: #f2f2f2; }
-           </style>
-       </head>
-       <body>
-           <h1>Order ${orderNumber}</h1>
-           <p><strong>Company:</strong> ${businessDetails.company_name}</p>
-           <p><strong>Address:</strong> ${businessDetails.address_line1}${businessDetails.address_line2 ? ', ' + businessDetails.address_line2 : ''}, ${businessDetails.city}, ${businessDetails.province} ${businessDetails.postal_code}</p>
-           <p><strong>Telephone:</strong> ${businessDetails.telephone}</p>
-           <p><strong>VAT Number:</strong> ${businessDetails.vat_number}</p>
-           <p><strong>Status:</strong> ${status}</p>
-           <p><strong>Created Date:</strong> ${date}</p>
-           <p><strong>Received Date:</strong> N/A</p>
-           <p><strong>Total:</strong> R${total.toFixed(2)}</p>
-           <p><strong>Supplier:</strong> ${supplierName}</p>
-           <p><strong>Order Note:</strong> None</p>
-           <p><strong>Supplier Note:</strong> ${noteToSupplier}</p>
+    <html>
+    <head>
+        <title>Printable Order - ${orderNumber}</title>
+        <meta charset="UTF-8">
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            h1 { text-align: center; }
+            img.logo { position: absolute; top: 20px; left: 20px; width: 150px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #000; padding: 6px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            .vat-note { margin-top: 10px; font-style: italic; }
+        </style>
+    </head>
+    <body>
+        <img class="logo" src="file:///Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/images/universal_logo.jpg" />
+        <h1>Order ${orderNumber}</h1>
+        <p><strong>Company:</strong> ${businessDetails.company_name}</p>
+        <p><strong>Address:</strong> ${businessDetails.address_line1}${businessDetails.address_line2 ? ', ' + businessDetails.address_line2 : ''}, ${businessDetails.city}, ${businessDetails.province} ${businessDetails.postal_code}</p>
+        <p><strong>Telephone:</strong> ${businessDetails.telephone}</p>
+        <p><strong>VAT Number:</strong> ${businessDetails.vat_number}</p>
+        <p><strong>Status:</strong> ${status}</p>
+        <p><strong>Created Date:</strong> ${date}</p>
+        <p><strong>Received Date:</strong> N/A</p>
+        <p><strong>Total:</strong> R${total.toFixed(2)}</p>
+        <p><strong>Supplier:</strong> ${supplierName}</p>
+        <p><strong>Order Note:</strong> None</p>
+        <p><strong>Supplier Note:</strong> ${noteToSupplier}</p>
 
-           <h2>Line Items</h2>
-           <table border="1" cellpadding="6" cellspacing="0">
-               <thead>
-                   <tr>
-                       <th>Item Code</th>
-                       <th>Description</th>
-                       <th>Project</th>
-                       <th>Qty Ordered</th>
-                       <th>Price</th>
-                       <th>Total</th>
-                   </tr>
-               </thead>
-               <tbody>
-                   ${items.map(item => `
-                       <tr>
-                           <td>${item.item_code}</td>
-                           <td>${item.item_description}</td>
-                           <td>${item.project}</td>
-                           <td>${item.qty_ordered}</td>
-                           <td>R${item.price.toFixed(2)}</td>
-                           <td>R${(item.qty_ordered * item.price).toFixed(2)}</td>
-                       </tr>
-                   `).join('')}
-               </tbody>
-           </table>
-       </body>
-       </html>
-   `;
+        <h2>Line Items</h2>
+        <table border="1" cellpadding="6" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Item Code</th>
+                    <th>Description</th>
+                    <th>Project</th>
+                    <th>Qty Ordered</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${items.map(item => `
+                    <tr>
+                        <td>${item.item_code}</td>
+                        <td>${item.item_description}</td>
+                        <td>${item.project}</td>
+                        <td>${item.qty_ordered}</td>
+                        <td>R${item.price.toFixed(2)}</td>
+                        <td>R${(item.qty_ordered * item.price).toFixed(2)}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+        <p class="vat-note">All prices exclude VAT</p>
+    </body>
+    </html>
+`;
 
    const payload = { html };
 
