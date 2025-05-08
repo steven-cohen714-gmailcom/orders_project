@@ -2,6 +2,7 @@ import { expandLineItems } from "/static/js/components/expand_line_items.js";
 import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from "/static/js/components/attachment_modal.js";
 import { showOrderNoteModal, showSupplierNoteModal } from "/static/js/components/order_note_modal.js";
 import { loadRequesters, loadSuppliers } from "/static/js/components/shared_filters.js";
+import { showPDFModal } from "/static/js/components/pdf_modal.js";
 
 function populateDropdown(selectId, items, labelFunc, valueFunc) {
   const dropdown = document.getElementById(selectId);
@@ -53,10 +54,10 @@ function populateTable(data) {
         <span class="clip-icon" title="View/Upload Attachments" onclick="window.checkAttachments(${order.id}).then(has => has ? window.showViewAttachmentsModal(${order.id}, '${sanitizedOrderNumber}') : window.showUploadAttachmentsModal(${order.id}, '${sanitizedOrderNumber}', () => window.checkAttachments(${order.id}).then(has => this.classList.toggle('eye-icon', has))))">📎</span>
         <span class="note-icon" title="Edit Continuous Order Note" onclick="window.showOrderNoteModal('${sanitizedOrderNote}', ${order.id})">📝</span>
         <span class="supplier-note-icon" title="View Note to Supplier" onclick="try { window.showSupplierNoteModal('${sanitizedSupplierNote}'); } catch (e) { console.error('Failed to show supplier note for order ${order.order_number}:', e); alert('Error displaying supplier note: ' + e.message); }">📦</span>
+        <span class="pdf-icon" title="View Purchase Order PDF" data-order-id="${order.id}" data-order-number="${sanitizedOrderNumber}">📄</span>
       </td>
     `;
 
-    // Add audit trail details row
     const auditRow = tbody.insertRow();
     auditRow.style.display = "none";
     auditRow.classList.add(`audit-row-${order.id}`);
@@ -64,10 +65,10 @@ function populateTable(data) {
     auditCell.colSpan = 7;
     auditCell.classList.add("audit-details");
 
-    // Populate audit trail details
     let auditDetails = `
       <strong>Original Order Date:</strong> ${order.created_date}<br>
       <strong>Received Date:</strong> ${order.received_date || 'Not received yet'}<br>
+      <strong>User:</strong> Unknown<br>
     `;
     if (order.items && order.items.length > 0) {
       auditDetails += "<strong>Items Received:</strong><ul>";
@@ -75,8 +76,8 @@ function populateTable(data) {
         auditDetails += `
           <li>
             ${item.item_description} (Code: ${item.item_code})<br>
-            Ordered: ${item.qty_ordered}, Received: ${item.qty_received || 0}<br>
-            Received Date: ${item.received_date || 'Not received yet'}
+            Ordered: ${item.qty_ordered}<br>
+            Received: ${item.qty_received || 0} on ${item.received_date || 'N/A'}
           </li>
         `;
       });
@@ -153,12 +154,26 @@ function clearFilters() {
 
 document.addEventListener("DOMContentLoaded", () => {
   loadFiltersAndOrders();
-
   document.getElementById("run-btn").addEventListener("click", runFilters);
   document.getElementById("clear-btn").addEventListener("click", clearFilters);
-
-  // Periodically refresh the audit trail table every 30 seconds
   setInterval(runFilters, 30000);
+
+  document.addEventListener("click", async (e) => {
+    const icon = e.target.closest(".pdf-icon");
+    if (!icon) return;
+    const orderId = icon.getAttribute("data-order-id");
+    const orderNumber = icon.getAttribute("data-order-number");
+    try {
+      const res = await fetch(`/orders/api/generate_pdf_for_order/${orderId}`);
+      if (!res.ok) throw new Error(`PDF generation failed: ${res.status}`);
+      const blob = await res.blob();
+      window.currentOrderNumberForPDF = orderNumber;
+      showPDFModal(blob);
+    } catch (err) {
+      alert("❌ Could not generate PDF");
+      console.error(err);
+    }
+  });
 });
 
 window.expandLineItems = expandLineItems;
@@ -167,3 +182,4 @@ window.checkAttachments = checkAttachments;
 window.showViewAttachmentsModal = showViewAttachmentsModal;
 window.showOrderNoteModal = showOrderNoteModal;
 window.showSupplierNoteModal = showSupplierNoteModal;
+window.showPDFModal = showPDFModal;
