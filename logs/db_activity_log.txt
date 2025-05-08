@@ -18,3 +18,23 @@
 2025-05-08 08:48:34,521 | INFO | Rendering audit trail page
 2025-05-08 08:48:34,559 | INFO | Suppliers fetched: 10 items
 2025-05-08 08:48:34,561 | INFO | Requesters fetched: 5 items
+2025-05-08 08:58:17,542 | INFO | Database tables created successfully.
+2025-05-08 08:58:17,542 | INFO | ✅ Database initialized successfully.
+2025-05-08 08:58:18,055 | INFO | Database tables created successfully.
+2025-05-08 08:58:18,055 | INFO | ✅ Database initialized successfully.
+2025-05-08 08:58:30,165 | INFO | Rendering audit trail page
+2025-05-08 08:58:30,216 | INFO | Suppliers fetched: 10 items
+2025-05-08 08:58:30,217 | INFO | Requesters fetched: 5 items
+2025-05-08 08:58:31,796 | INFO | Rendering pending orders page
+2025-05-08 08:58:31,836 | INFO | Requesters fetched: 5 items
+2025-05-08 08:58:31,837 | INFO | Suppliers fetched: 10 items
+2025-05-08 08:58:37,689 | INFO | Rendering received orders page
+2025-05-08 08:58:37,727 | INFO | Requesters fetched: 5 items
+2025-05-08 08:58:37,741 | INFO | Suppliers fetched: 10 items
+2025-05-08 08:58:41,243 | INFO | Rendering partially delivered orders page
+2025-05-08 08:58:41,287 | INFO | Requesters fetched: 5 items
+2025-05-08 08:58:41,290 | INFO | Suppliers fetched: 10 items
+2025-05-08 08:58:42,700 | INFO | Rendering audit trail page
+2025-05-08 08:58:42,739 | INFO | Suppliers fetched: 10 items
+2025-05-08 08:58:42,741 | INFO | Requesters fetched: 5 items
+2025-05-08 08:59:08,937 | INFO | PDF generated for order 92 at 2025-05-08T08:59:08.937723

@@ -1,4 +1,4 @@
-import { expandLineItems } from "/static/js/components/expand_line_items.js";
+import { expandLineItemsForAudit } from "/static/js/components/expand_line_items.js";
 import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from "/static/js/components/attachment_modal.js";
 import { showOrderNoteModal, showSupplierNoteModal } from "/static/js/components/order_note_modal.js";
 import { loadRequesters, loadSuppliers } from "/static/js/components/shared_filters.js";
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-window.expandLineItems = expandLineItems;
+window.expandLineItems = expandLineItemsForAudit;
 window.showUploadAttachmentsModal = showUploadAttachmentsModal;
 window.checkAttachments = checkAttachments;
 window.showViewAttachmentsModal = showViewAttachmentsModal;
