@@ -48,3 +48,5 @@ Traceback (most recent call last):
 AssertionError: Order creation response did not return an id
 2025-05-08 20:30:29,976 | INFO | Test data inserted successfully
 2025-05-08 20:30:30,130 | INFO | PDF endpoint test passed
+2025-05-09 06:14:52,881 | INFO | Test data inserted successfully
+2025-05-09 06:14:52,989 | INFO | PDF endpoint test passed
