@@ -95,3 +95,4 @@
 /orders/receive/{order_id}
 /orders/mark_complete/{order_id}
 /log_client
+/orders/email_purchase_order/{order_id}

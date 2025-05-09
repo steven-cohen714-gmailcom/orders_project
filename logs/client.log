@@ -1,2 +1,44 @@
-2025-05-08 21:50:27,062 | INFO | Starting previewOrder test | Details: {}
-2025-05-08 21:50:27,257 | INFO | previewOrder test completed successfully | Details: {}
+2025-05-09 14:05:28,050 | ERROR | No order submitted yet for emailing | Details: {}
+2025-05-09 14:05:51,237 | INFO | previewOrder started | Details: {}
+2025-05-09 14:05:51,848 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
+2025-05-09 14:05:58,077 | ERROR | No order submitted yet for emailing | Details: {}
+2025-05-09 14:45:30,273 | INFO | previewOrder started | Details: {}
+2025-05-09 14:45:30,435 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
+2025-05-09 14:45:35,146 | INFO | No order submitted yet, attempting to preview before emailing | Details: {}
+2025-05-09 14:45:35,151 | INFO | previewOrder started | Details: {}
+2025-05-09 14:45:35,243 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
+2025-05-09 14:45:44,764 | INFO | No order submitted yet, attempting to preview before emailing | Details: {}
+2025-05-09 14:45:44,769 | INFO | previewOrder started | Details: {}
+2025-05-09 14:45:44,863 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
+2025-05-09 14:45:52,455 | INFO | No order submitted yet, attempting to preview before emailing | Details: {}
+2025-05-09 14:45:52,458 | INFO | previewOrder started | Details: {}
+2025-05-09 14:45:52,561 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
+2025-05-09 14:52:25,252 | INFO | previewOrder started | Details: {}
+2025-05-09 14:52:25,415 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
+2025-05-09 14:52:31,388 | ERROR | No order submitted yet for emailing | Details: {}
+2025-05-09 14:58:11,877 | INFO | No order submitted yet, submitting order for emailing | Details: {}
+2025-05-09 14:58:11,883 | INFO | submitOrder started | Details: {}
+2025-05-09 14:58:11,902 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1001"}
+2025-05-09 14:58:17,237 | ERROR | Failed to obtain order ID after submission | Details: {}
+2025-05-09 14:58:31,892 | INFO | No order submitted yet, submitting order for emailing | Details: {}
+2025-05-09 14:58:31,897 | INFO | submitOrder started | Details: {}
+2025-05-09 14:58:31,901 | ERROR | Missing required fields in submitOrder | Details: {"requesterId": "", "supplierId": ""}
+2025-05-09 14:58:34,010 | ERROR | Failed to obtain order ID after submission | Details: {}
+2025-05-09 15:00:17,468 | INFO | No order submitted yet, submitting order for emailing | Details: {}
+2025-05-09 15:00:17,473 | INFO | submitOrder started | Details: {}
+2025-05-09 15:00:17,490 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1002"}
+2025-05-09 15:00:43,353 | ERROR | Failed to obtain order ID after submission | Details: {}
+2025-05-09 15:01:57,364 | INFO | No order submitted yet, submitting order for emailing | Details: {}
+2025-05-09 15:01:57,370 | INFO | submitOrder started | Details: {}
+2025-05-09 15:01:57,391 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1003"}
+2025-05-09 15:01:59,021 | ERROR | Failed to obtain order ID after submission | Details: {}
+2025-05-09 15:10:18,104 | INFO | No order submitted yet, submitting order for emailing | Details: {}
+2025-05-09 15:10:18,109 | INFO | submitOrder started | Details: {}
+2025-05-09 15:10:18,134 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1004"}
+2025-05-09 15:10:20,516 | ERROR | Failed to obtain order ID after submission | Details: {}
+2025-05-09 15:10:48,018 | INFO | No order submitted yet, submitting order for emailing | Details: {}
+2025-05-09 15:10:48,023 | INFO | submitOrder started | Details: {}
+2025-05-09 15:10:48,045 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1005"}
+2025-05-09 15:10:49,881 | ERROR | Failed to obtain order ID after submission | Details: {}
+2025-05-09 15:10:54,170 | INFO | submitOrder started | Details: {}
+2025-05-09 15:10:54,176 | ERROR | Missing required fields in submitOrder | Details: {"requesterId": "", "supplierId": ""}

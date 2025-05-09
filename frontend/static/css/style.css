@@ -300,3 +300,11 @@ i:hover {
 .supplier-note-icon:hover {
   cursor: pointer;
 }
+.email-icon {
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 1.2em;
+}
+.email-icon:hover {
+  color: #007bff;
+}

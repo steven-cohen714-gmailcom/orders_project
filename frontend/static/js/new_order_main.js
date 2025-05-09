@@ -7,6 +7,7 @@ let projectsList = [];
 let rowCount = 0;
 let currentOrderNumber = "URC1000";
 let authThreshold = 0; // Added for authorization threshold
+let currentOrderId = null; // Added to store order ID after submission
 
 // Debounce function
 function debounce(func, wait) {
@@ -298,8 +299,25 @@ function populateDropdown(dropdownId, items, key, idKey = "id") {
   }
 }
 
+// Added: Function to send email
+async function sendEmail(orderId) {
+    try {
+        const response = await fetch(`/orders/email_purchase_order/${orderId}`, {
+            method: 'POST',
+            credentials: 'include'
+        });
+        if (!response.ok) throw new Error('Failed to send email');
+        await logToServer('INFO', 'Email sent successfully', { orderId });
+        alert('Email sent successfully');
+    } catch (error) {
+        await logToServer('ERROR', 'Failed to send email', { orderId, error: error.message });
+        alert('Failed to send email: ' + error.message);
+    }
+}
+
 async function previewOrder() {
    console.log('previewOrder called');
+   await logToServer('INFO', 'previewOrder started');
    const orderNumber = document.getElementById('order-number').textContent;
    const supplierId = document.getElementById('supplier_id').value;
    let noteToSupplier = document.getElementById('note_to_supplier').value;
@@ -307,6 +325,7 @@ async function previewOrder() {
    console.log('Collected data:', { orderNumber, supplierId, noteToSupplier, date });
 
    if (!orderNumber || !supplierId) {
+       await logToServer('ERROR', 'Missing required fields in previewOrder', { orderNumber, supplierId });
        alert('Please fill in all required fields (Order Number, Supplier)');
        return;
    }
@@ -325,6 +344,7 @@ async function previewOrder() {
 
    console.log('Items:', items);
    if (items.length === 0) {
+       await logToServer('ERROR', 'No items in order for previewOrder');
        alert('Please add at least one item to the order');
        return;
    }
@@ -337,6 +357,7 @@ async function previewOrder() {
    }
 
    if (!businessDetails || !businessDetails.company_name) {
+       await logToServer('ERROR', 'No business details available for previewOrder');
        console.error('No business details available');
        alert('Error: No business details found');
        return;
@@ -427,6 +448,7 @@ async function previewOrder() {
        if (!res.ok) {
            const errorText = await res.text();
            console.error('Error response:', errorText);
+           await logToServer('ERROR', 'Failed to generate PDF in previewOrder', { status: res.status, errorText });
            throw new Error(`HTTP error! status: ${res.status} - ${errorText}`);
        }
 
@@ -436,29 +458,35 @@ async function previewOrder() {
            const blob = await res.blob();
            console.log('Blob size:', blob.size);
            if (blob.size === 0) {
+               await logToServer('ERROR', 'Received empty PDF file in previewOrder');
                throw new Error('Received empty PDF file');
            }
 
            showPDFModal(blob);
+           await logToServer('INFO', 'PDF generated successfully in previewOrder', { orderNumber });
 
        } else {
            const data = await res.json();
+           await logToServer('ERROR', 'Unexpected response in previewOrder', { response: JSON.stringify(data) });
            throw new Error(`Unexpected response: ${JSON.stringify(data)}`);
        }
    } catch (error) {
        console.error('Error generating PDF:', error);
+       await logToServer('ERROR', 'Error generating PDF in previewOrder', { error: error.message });
        alert(`Error generating PDF: ${error.message}`);
    }
 }
 
 async function submitOrder() {
   console.log('debouncedSubmitOrder triggered');
+  await logToServer('INFO', 'submitOrder started');
   const requesterId = document.getElementById('requester_id').value;
   const supplierId = document.getElementById('supplier_id').value;
   const noteToSupplier = document.getElementById('note_to_supplier').value;
   console.log('Submitting order with:', { requester_id: requesterId, supplier_id: supplierId, note_to_supplier: noteToSupplier });
 
   if (!requesterId || !supplierId) {
+      await logToServer('ERROR', 'Missing required fields in submitOrder', { requesterId, supplierId });
       alert('Please fill in all required fields (Requester, Supplier)');
       return;
   }
@@ -477,6 +505,7 @@ async function submitOrder() {
 
   console.log('Items:', items);
   if (items.length === 0) {
+      await logToServer('ERROR', 'No items in order for submitOrder');
       alert('Please add at least one item to the order');
       return;
   }
@@ -508,13 +537,16 @@ async function submitOrder() {
       console.log(`Submit Response Status: ${res.status}`);
       if (!res.ok) {
           const errorText = await res.text();
+          await logToServer('ERROR', 'Failed to submit order', { status: res.status, errorText });
           throw new Error(`Failed to submit order: ${res.status} - ${errorText}`);
       }
 
       const data = await res.json();
       console.log('Submit Response:', data);
       if (data.message === "Order created successfully") {
+          currentOrderId = data.order_id; // Store order ID
           await incrementOrderNumber();
+          await logToServer('INFO', 'Order submitted successfully', { orderNumber: currentOrderNumber, orderId: currentOrderId });
           alert('✅ Order submitted successfully!');
           document.getElementById('requester_id').value = '';
           document.getElementById('supplier_id').value = '';
@@ -522,10 +554,12 @@ async function submitOrder() {
           document.getElementById('items-body').innerHTML = '';
           rowCount = 0;
       } else {
+          await logToServer('ERROR', 'Unexpected response in submitOrder', { response: data.message });
           throw new Error(`Unexpected response: ${data.message}`);
       }
   } catch (error) {
       console.error('Order submission failed:', error.message);
+      await logToServer('ERROR', 'Order submission failed', { error: error.message });
       alert(`❌ Order submission failed: ${error.message}`);
   }
 }
@@ -542,10 +576,19 @@ function setupEventListeners() {
       console.error('Submit button not found');
   }
 
-  document.getElementById('preview-order').addEventListener('click', previewOrder);
-  document.getElementById('email-po').addEventListener('click', () => {
-      alert('Email functionality not implemented yet');
-  });
+  document.getElementById('email-po').addEventListener('click', async () => {
+    if (!currentOrderId) {
+        await logToServer('INFO', 'No order submitted yet, submitting order for emailing');
+        await submitOrder();
+    }
+    if (currentOrderId) {
+        await sendEmail(currentOrderId);
+    } else {
+        await logToServer('ERROR', 'Failed to obtain order ID after submission');
+        alert('Failed to submit order for emailing');
+    }
+});
+
   document.getElementById('cancel-order').addEventListener('click', () => {
       if (confirm('Are you sure you want to cancel?')) {
           window.location.href = '/orders/pending_orders';
