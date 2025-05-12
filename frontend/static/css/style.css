@@ -115,7 +115,8 @@ button:hover {
 .eye-icon,
 .note-icon,
 .supplier-note-icon,
-.receive-icon {
+.receive-icon,
+.pdf-icon {
   cursor: pointer;
   font-size: 1.2rem;
   margin: 0 0.4rem;

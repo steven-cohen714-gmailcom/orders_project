@@ -118,7 +118,7 @@ function addRow() {
   projectCell.appendChild(projectSelect);
   row.appendChild(projectCell);
 
-  // Quantity input
+// Quantity input
   const qtyCell = document.createElement("td");
   const qtyInput = document.createElement("input");
   qtyInput.type = "number";
@@ -129,7 +129,7 @@ function addRow() {
   qtyCell.appendChild(qtyInput);
   row.appendChild(qtyCell);
 
-  // Price input (placeholder; assuming no price data in itemsList)
+// Price input
   const priceCell = document.createElement("td");
   const priceInput = document.createElement("input");
   priceInput.type = "number";
@@ -140,7 +140,7 @@ function addRow() {
   priceCell.appendChild(priceInput);
   row.appendChild(priceCell);
 
-  // Total (read-only)
+// Total
   const totalCell = document.createElement("td");
   const totalInput = document.createElement("input");
   totalInput.type = "text";
@@ -151,7 +151,7 @@ function addRow() {
   totalCell.appendChild(totalInput);
   row.appendChild(totalCell);
 
-  // Actions (delete button)
+// Actions
   const actionsCell = document.createElement("td");
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "Delete";
@@ -165,333 +165,237 @@ function addRow() {
 
 // Update row total
 function updateTotal(itemSelect) {
-  const row = itemSelect.closest("tr");
-  const qty = parseFloat(row.querySelector(".qty-ordered").value) || 0;
-  const price = parseFloat(row.querySelector(".price").value) || 0;
-  const total = qty * price;
-  row.querySelector(".total").value = total.toFixed(2);
-  updateGrandTotal();
-}
-
-// Update grand total
-function updateGrandTotal() {
-  const totals = Array.from(document.querySelectorAll(".total")).map(input => parseFloat(input.value) || 0);
-  const grandTotal = totals.reduce((sum, val) => sum + val, 0);
-  document.getElementById("grand-total").textContent = grandTotal.toFixed(2);
-  return grandTotal; // Added return for use in submitOrder
-}
-
-// Delete a row
-function deleteRow(rowId) {
-  const row = document.getElementById(rowId);
-  if (row) {
-      row.remove();
-      updateGrandTotal();
+    const row = itemSelect.closest("tr");
+    const qty = parseFloat(row.querySelector(".qty-ordered").value) || 0;
+    const price = parseFloat(row.querySelector(".price").value) || 0;
+    const total = qty * price;
+    row.querySelector(".total").value = total.toFixed(2);
+    updateGrandTotal();
   }
-}
-
-// Modal functions (inlined since new_order_modals.js is not provided)
-function showOrderNoteModal(note, callback) {
-  const modal = createBaseModal();
-  const title = document.createElement("h3");
-  title.textContent = "Order Note";
-  modal.inner.appendChild(title);
-
-  const textarea = document.createElement("textarea");
-  textarea.value = note || "";
-  textarea.style.width = "100%";
-  textarea.style.height = "150px";
-  modal.inner.appendChild(textarea);
-
-  const saveBtn = document.createElement("button");
-  saveBtn.textContent = "Save";
-  saveBtn.style.marginTop = "1rem";
-  saveBtn.onclick = () => {
-      callback(textarea.value);
-      document.body.removeChild(modal.container);
-  };
-  modal.inner.appendChild(saveBtn);
-
-  const closeBtn = document.createElement("button");
-  closeBtn.textContent = "Close";
-  closeBtn.style.marginTop = "1rem";
-  closeBtn.style.marginLeft = "1rem";
-  closeBtn.onclick = () => document.body.removeChild(modal.container);
-  modal.inner.appendChild(closeBtn);
-
-  document.body.appendChild(modal.container);
-}
-
-function showSupplierNoteModal(note) {
-  const modal = createBaseModal();
-  const title = document.createElement("h3");
-  title.textContent = "Note to Supplier";
-  modal.inner.appendChild(title);
-
-  const p = document.createElement("p");
-  p.textContent = note || "No note provided";
-  modal.inner.appendChild(p);
-
-  const closeBtn = document.createElement("button");
-  closeBtn.textContent = "Close";
-  closeBtn.style.marginTop = "1rem";
-  closeBtn.onclick = () => document.body.removeChild(modal.container);
-  modal.inner.appendChild(closeBtn);
-
-  document.body.appendChild(modal.container);
-}
-
-function createBaseModal() {
-  const container = document.createElement("div");
-  container.style.position = "fixed";
-  container.style.top = "0";
-  container.style.left = "0";
-  container.style.width = "100vw";
-  container.style.height = "100vh";
-  container.style.backgroundColor = "rgba(0,0,0,0.5)";
-  container.style.display = "flex";
-  container.style.alignItems = "center";
-  container.style.justifyContent = "center";
-  container.style.zIndex = "9999";
-
-  const inner = document.createElement("div");
-  inner.style.backgroundColor = "white";
-  inner.style.padding = "1.5rem";
-  inner.style.borderRadius = "8px";
-  inner.style.width = "90%";
-  inner.style.maxWidth = "500px";
-  inner.style.maxHeight = "80vh";
-  inner.style.overflowY = "auto";
-  container.appendChild(inner);
-
-  return { container, inner };
-}
-
-// Core functionality
-let businessDetails = null;
-
-async function fetchData(endpoint) {
-  try {
-      const response = await fetch(`http://localhost:8004${endpoint}`, {
-          method: 'GET',
-          credentials: 'include'
-      });
-      if (!response.ok) {
-          throw new Error(`Failed to fetch ${endpoint}: ${response.status}`);
-      }
-      return await response.json();
-  } catch (error) {
-      console.error(`Error fetching ${endpoint}:`, error);
-      throw error;
+  
+  // Update grand total
+  function updateGrandTotal() {
+    const totals = Array.from(document.querySelectorAll(".total")).map(input => parseFloat(input.value) || 0);
+    const grandTotal = totals.reduce((sum, val) => sum + val, 0);
+    document.getElementById("grand-total").textContent = grandTotal.toFixed(2);
+    return grandTotal; // Added return for use in submitOrder
   }
-}
-
-function populateDropdown(dropdownId, items, key, idKey = "id") {
-  const dropdown = document.getElementById(dropdownId);
-  dropdown.innerHTML = '<option value="">Select ' + dropdownId.replace('_id', '') + '</option>';
-  if (items && Array.isArray(items)) {
-      items.forEach(item => {
-          const option = document.createElement("option");
-          option.value = item[idKey];
-          option.textContent = item[key];
-          dropdown.appendChild(option);
-      });
+  
+  // Delete a row
+  function deleteRow(rowId) {
+    const row = document.getElementById(rowId);
+    if (row) {
+        row.remove();
+        updateGrandTotal();
+    }
   }
-}
-
-// Added: Function to send email
-async function sendEmail(orderId) {
+  
+  // Modal functions (inlined since new_order_modals.js is not provided)
+  function showOrderNoteModal(note, callback) {
+    const modal = createBaseModal();
+    const title = document.createElement("h3");
+    title.textContent = "Order Note";
+    modal.inner.appendChild(title);
+  
+    const textarea = document.createElement("textarea");
+    textarea.value = note || "";
+    textarea.style.width = "100%";
+    textarea.style.height = "150px";
+    modal.inner.appendChild(textarea);
+  
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "Save";
+    saveBtn.style.marginTop = "1rem";
+    saveBtn.onclick = () => {
+        callback(textarea.value);
+        document.body.removeChild(modal.container);
+    };
+    modal.inner.appendChild(saveBtn);
+  
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "Close";
+    closeBtn.style.marginTop = "1rem";
+    closeBtn.style.marginLeft = "1rem";
+    closeBtn.onclick = () => document.body.removeChild(modal.container);
+    modal.inner.appendChild(closeBtn);
+  
+    document.body.appendChild(modal.container);
+  }
+  
+  function showSupplierNoteModal(note) {
+    const modal = createBaseModal();
+    const title = document.createElement("h3");
+    title.textContent = "Note to Supplier";
+    modal.inner.appendChild(title);
+  
+    const p = document.createElement("p");
+    p.textContent = note || "No note provided";
+    modal.inner.appendChild(p);
+  
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "Close";
+    closeBtn.style.marginTop = "1rem";
+    closeBtn.onclick = () => document.body.removeChild(modal.container);
+    modal.inner.appendChild(closeBtn);
+  
+    document.body.appendChild(modal.container);
+  }
+  
+  function createBaseModal() {
+    const container = document.createElement("div");
+    container.style.position = "fixed";
+    container.style.top = "0";
+    container.style.left = "0";
+    container.style.width = "100vw";
+    container.style.height = "100vh";
+    container.style.backgroundColor = "rgba(0,0,0,0.5)";
+    container.style.display = "flex";
+    container.style.alignItems = "center";
+    container.style.justifyContent = "center";
+    container.style.zIndex = "9999";
+  
+    const inner = document.createElement("div");
+    inner.style.backgroundColor = "white";
+    inner.style.padding = "1.5rem";
+    inner.style.borderRadius = "8px";
+    inner.style.width = "90%";
+    inner.style.maxWidth = "500px";
+    inner.style.maxHeight = "80vh";
+    inner.style.overflowY = "auto";
+    container.appendChild(inner);
+  
+    return { container, inner };
+  }
+  
+  // Core functionality
+  let businessDetails = null;
+  
+  async function fetchData(endpoint) {
     try {
-        const response = await fetch(`/orders/email_purchase_order/${orderId}`, {
-            method: 'POST',
+        const response = await fetch(`http://localhost:8004${endpoint}`, {
+            method: 'GET',
             credentials: 'include'
         });
-        if (!response.ok) throw new Error('Failed to send email');
-        await logToServer('INFO', 'Email sent successfully', { orderId });
-        alert('Email sent successfully');
+        if (!response.ok) {
+            throw new Error(`Failed to fetch ${endpoint}: ${response.status}`);
+        }
+        return await response.json();
     } catch (error) {
-        await logToServer('ERROR', 'Failed to send email', { orderId, error: error.message });
-        alert('Failed to send email: ' + error.message);
+        console.error(`Error fetching ${endpoint}:`, error);
+        throw error;
     }
-}
-
-async function previewOrder() {
-   console.log('previewOrder called');
-   await logToServer('INFO', 'previewOrder started');
-   const orderNumber = document.getElementById('order-number').textContent;
-   const supplierId = document.getElementById('supplier_id').value;
-   let noteToSupplier = document.getElementById('note_to_supplier').value;
-   const date = document.getElementById('request_date').value || new Date().toISOString().split('T')[0];
-   console.log('Collected data:', { orderNumber, supplierId, noteToSupplier, date });
-
-   if (!orderNumber || !supplierId) {
-       await logToServer('ERROR', 'Missing required fields in previewOrder', { orderNumber, supplierId });
-       alert('Please fill in all required fields (Order Number, Supplier)');
-       return;
-   }
-
-   const items = Array.from(document.querySelectorAll('#items-body tr')).map(row => {
-       const itemCode = row.querySelector('.item-code')?.value;
-       const itemDescription = itemsList.find(i => i.item_code === itemCode)?.item_description || '';
-       const project = row.querySelector('.project')?.value;
-       const qtyOrdered = parseFloat(row.querySelector('.qty-ordered')?.value) || 0;
-       const price = parseFloat(row.querySelector('.price')?.value) || 0;
-       if (!itemCode || !project || qtyOrdered <= 0 || price <= 0) {
-           throw new Error('All items must have a valid item code, project, quantity, and price');
-       }
-       return { item_code: itemCode, item_description: itemDescription, project, qty_ordered: qtyOrdered, price };
-   });
-
-   console.log('Items:', items);
-   if (items.length === 0) {
-       await logToServer('ERROR', 'No items in order for previewOrder');
-       alert('Please add at least one item to the order');
-       return;
-   }
-
-   const total = items.reduce((sum, item) => sum + (item.qty_ordered * item.price), 0);
-   // Added: Check authorization threshold
-   let status = "Pending";
-   if (total > authThreshold) {
-       status = "Awaiting Authorisation";
-   }
-
-   if (!businessDetails || !businessDetails.company_name) {
-       await logToServer('ERROR', 'No business details available for previewOrder');
-       console.error('No business details available');
-       alert('Error: No business details found');
-       return;
-   }
-
-   // Fetch supplier name
-   let supplierName = "Unknown Supplier";
-   const suppliersData = await fetchData("/lookups/suppliers");
-   const supplier = suppliersData.suppliers.find(s => s.id === parseInt(supplierId));
-   if (supplier) {
-       supplierName = supplier.name;
-   }
-
-   // Replace line breaks with <br> for HTML rendering
-   noteToSupplier = noteToSupplier ? noteToSupplier.replace(/\n/g, '<br>') : "None";
-
-   // Generate HTML for PDF matching print_template.html structure
-   const html = `
-    <html>
-    <head>
-        <title>Printable Order - ${orderNumber}</title>
-        <meta charset="UTF-8">
-        <style>
-            body { font-family: Arial, sans-serif; margin: 20px; }
-            h1 { text-align: center; }
-            img.logo { position: absolute; top: 20px; left: 20px; width: 150px; }
-            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-            th, td { border: 1px solid #000; padding: 6px; text-align: left; }
-            th { background-color: #f2f2f2; }
-            .vat-note { margin-top: 10px; font-style: italic; }
-        </style>
-    </head>
-    <body>
-        <img class="logo" src="file:///Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/images/universal_logo.jpg" />
-        <h1>Order ${orderNumber}</h1>
-        <p><strong>Company:</strong> ${businessDetails.company_name}</p>
-        <p><strong>Address:</strong> ${businessDetails.address_line1}${businessDetails.address_line2 ? ', ' + businessDetails.address_line2 : ''}, ${businessDetails.city}, ${businessDetails.province} ${businessDetails.postal_code}</p>
-        <p><strong>Telephone:</strong> ${businessDetails.telephone}</p>
-        <p><strong>VAT Number:</strong> ${businessDetails.vat_number}</p>
-        <p><strong>Status:</strong> ${status}</p>
-        <p><strong>Created Date:</strong> ${date}</p>
-        <p><strong>Received Date:</strong> N/A</p>
-        <p><strong>Total:</strong> R${total.toFixed(2)}</p>
-        <p><strong>Supplier:</strong> ${supplierName}</p>
-        <p><strong>Order Note:</strong> None</p>
-        <p><strong>Supplier Note:</strong> ${noteToSupplier}</p>
-
-        <h2>Line Items</h2>
-        <table border="1" cellpadding="6" cellspacing="0">
-            <thead>
-                <tr>
-                    <th>Item Code</th>
-                    <th>Description</th>
-                    <th>Project</th>
-                    <th>Qty Ordered</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${items.map(item => `
-                    <tr>
-                        <td>${item.item_code}</td>
-                        <td>${item.item_description}</td>
-                        <td>${item.project}</td>
-                        <td>${item.qty_ordered}</td>
-                        <td>R${item.price.toFixed(2)}</td>
-                        <td>R${(item.qty_ordered * item.price).toFixed(2)}</td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-        <p class="vat-note">All prices exclude VAT</p>
-    </body>
-    </html>
-`;
-
-   const payload = { html };
-
-   console.log('Sending payload:', payload);
-   try {
-        const res = await fetch('/orders/api/generate_pdf', {
-           method: 'POST',
-           headers: { 'Content-Type': 'application/json' },
-           body: JSON.stringify(payload)
-       });
-       console.log(`Response status: ${res.status}`);
-       if (!res.ok) {
-           const errorText = await res.text();
-           console.error('Error response:', errorText);
-           await logToServer('ERROR', 'Failed to generate PDF in previewOrder', { status: res.status, errorText });
-           throw new Error(`HTTP error! status: ${res.status} - ${errorText}`);
-       }
-
-       const contentType = res.headers.get('content-type');
-       console.log('Content-Type:', contentType);
-       if (contentType && contentType.includes('application/pdf')) {
-           const blob = await res.blob();
-           console.log('Blob size:', blob.size);
-           if (blob.size === 0) {
-               await logToServer('ERROR', 'Received empty PDF file in previewOrder');
-               throw new Error('Received empty PDF file');
-           }
-
-           showPDFModal(blob);
-           await logToServer('INFO', 'PDF generated successfully in previewOrder', { orderNumber });
-
-       } else {
-           const data = await res.json();
-           await logToServer('ERROR', 'Unexpected response in previewOrder', { response: JSON.stringify(data) });
-           throw new Error(`Unexpected response: ${JSON.stringify(data)}`);
-       }
-   } catch (error) {
-       console.error('Error generating PDF:', error);
-       await logToServer('ERROR', 'Error generating PDF in previewOrder', { error: error.message });
-       alert(`Error generating PDF: ${error.message}`);
-   }
-}
-
-async function submitOrder() {
-  console.log('debouncedSubmitOrder triggered');
-  await logToServer('INFO', 'submitOrder started');
-  const requesterId = document.getElementById('requester_id').value;
-  const supplierId = document.getElementById('supplier_id').value;
-  const noteToSupplier = document.getElementById('note_to_supplier').value;
-  console.log('Submitting order with:', { requester_id: requesterId, supplier_id: supplierId, note_to_supplier: noteToSupplier });
-
-  if (!requesterId || !supplierId) {
+  }
+  
+  function populateDropdown(dropdownId, items, key, idKey = "id") {
+    const dropdown = document.getElementById(dropdownId);
+    dropdown.innerHTML = '<option value="">Select ' + dropdownId.replace('_id', '') + '</option>';
+    if (items && Array.isArray(items)) {
+        items.forEach(item => {
+            const option = document.createElement("option");
+            option.value = item[idKey];
+            option.textContent = item[key];
+            dropdown.appendChild(option);
+        });
+    }
+  }
+  
+  // Added: Function to send email
+  async function sendEmail(orderId) {
+      try {
+          const response = await fetch(`/orders/email_purchase_order/${orderId}`, {
+              method: 'POST',
+              credentials: 'include'
+          });
+          if (!response.ok) throw new Error('Failed to send email');
+          await logToServer('INFO', 'Email sent successfully', { orderId });
+          alert('Email sent successfully');
+      } catch (error) {
+          await logToServer('ERROR', 'Failed to send email', { orderId, error: error.message });
+          alert('Failed to send email: ' + error.message);
+      }
+  }
+  
+  async function previewOrder() {
+    console.log('previewOrder called');
+    await logToServer('INFO', 'previewOrder started');
+  
+    const requesterId = document.getElementById('requester_id').value;
+    const supplierId = document.getElementById('supplier_id').value;
+    const noteToSupplier = document.getElementById('note_to_supplier').value;
+    const orderNumber = document.getElementById('order-number').textContent;
+    const total = updateGrandTotal();
+  
+    if (!requesterId || !supplierId) {
+      alert('Please fill in all required fields (Requester, Supplier)');
+      return;
+    }
+  
+    const items = Array.from(document.querySelectorAll('#items-body tr')).map(row => {
+      const itemCode = row.querySelector('.item-code')?.value;
+      const itemDescription = itemsList.find(i => i.item_code === itemCode)?.item_description || '';
+      const project = row.querySelector('.project')?.value;
+      const qtyOrdered = parseFloat(row.querySelector('.qty-ordered')?.value) || 0;
+      const price = parseFloat(row.querySelector('.price')?.value) || 0;
+      if (!itemCode || !project || qtyOrdered <= 0 || price <= 0) {
+        throw new Error('Each item must have a valid code, project, quantity, and price');
+      }
+      return { item_code: itemCode, item_description: itemDescription, project, qty_ordered: qtyOrdered, price };
+    });
+  
+    if (!items.length) {
+      alert("Please add at least one item to the order");
+      return;
+    }
+  
+    const payload = {
+      order_number: orderNumber,
+      total: total,
+      order_note: "",
+      note_to_supplier: noteToSupplier,
+      requester_id: parseInt(requesterId),
+      supplier_id: parseInt(supplierId),
+      items
+    };
+  
+    try {
+      const pdfRes = await fetch("/orders/api/preview_pdf_new_order", {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+  
+      if (!pdfRes.ok || !pdfRes.headers.get("content-type")?.includes("application/pdf")) {
+        const err = await pdfRes.text();
+        throw new Error(`Failed to generate PDF: ${pdfRes.status} - ${err}`);
+      }
+  
+      const blob = await pdfRes.blob();
+      if (!blob.size) throw new Error("Empty PDF file");
+  
+      showPDFModal(blob);
+      await logToServer('INFO', 'Preview PDF displayed (no DB write)');
+    } catch (error) {
+      console.error("Preview failed:", error);
+      await logToServer('ERROR', 'PreviewOrder failed (no DB write)', { error: error.message });
+      alert(`Error: ${error.message}`);
+    }
+  }
+  
+  async function submitOrder() {
+    console.log('debouncedSubmitOrder triggered');
+    await logToServer('INFO', 'submitOrder started');
+    const requesterId = document.getElementById('requester_id').value;
+    const supplierId = document.getElementById('supplier_id').value;
+    const noteToSupplier = document.getElementById('note_to_supplier').value;
+    console.log('Submitting order with:', { requester_id: requesterId, supplier_id: supplierId, note_to_supplier: noteToSupplier });
+  
+    if (!requesterId || !supplierId) {
       await logToServer('ERROR', 'Missing required fields in submitOrder', { requesterId, supplierId });
       alert('Please fill in all required fields (Requester, Supplier)');
       return;
-  }
-
-  const items = Array.from(document.querySelectorAll('#items-body tr')).map(row => {
+    }
+  
+    const items = Array.from(document.querySelectorAll('#items-body tr')).map(row => {
       const itemCode = row.querySelector('.item-code')?.value;
       const itemDescription = itemsList.find(i => i.item_code === itemCode)?.item_description || '';
       const project = row.querySelector('.project')?.value;
@@ -501,22 +405,22 @@ async function submitOrder() {
           throw new Error('All items must have a valid item code, project, quantity, and price');
       }
       return { item_code: itemCode, item_description: itemDescription, project, qty_ordered: qtyOrdered, price };
-  });
-
-  console.log('Items:', items);
-  if (items.length === 0) {
+    });
+  
+    console.log('Items:', items);
+    if (items.length === 0) {
       await logToServer('ERROR', 'No items in order for submitOrder');
       alert('Please add at least one item to the order');
       return;
-  }
-
-  console.log('Current Order Number:', currentOrderNumber);
-  const total = updateGrandTotal();
-  let status = "Pending";
-  if (total > authThreshold) {
+    }
+  
+    console.log('Current Order Number:', currentOrderNumber);
+    const total = updateGrandTotal();
+    let status = "Pending";
+    if (total > authThreshold) {
       status = "Awaiting Authorisation";
-  }
-  const orderData = {
+    }
+    const orderData = {
       order_number: currentOrderNumber,
       status: status,
       total: total,
@@ -525,176 +429,220 @@ async function submitOrder() {
       requester_id: parseInt(requesterId),
       supplier_id: parseInt(supplierId),
       items
-  };
-
-  console.log('Order Data:', orderData);
-  try {
+    };
+  
+    console.log('Order Data:', orderData);
+    try {
       const res = await fetch('/orders', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(orderData)
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
       });
       console.log(`Submit Response Status: ${res.status}`);
       if (!res.ok) {
-          const errorText = await res.text();
-          await logToServer('ERROR', 'Failed to submit order', { status: res.status, errorText });
-          throw new Error(`Failed to submit order: ${res.status} - ${errorText}`);
+        const errorText = await res.text();
+        await logToServer('ERROR', 'Failed to submit order', { status: res.status, errorText });
+        throw new Error(`Failed to submit order: ${res.status} - ${errorText}`);
       }
-
+  
       const data = await res.json();
       console.log('Submit Response:', data);
       if (data.message === "Order created successfully") {
-          currentOrderId = data.order_id; // Store order ID
-          await incrementOrderNumber();
-          await logToServer('INFO', 'Order submitted successfully', { orderNumber: currentOrderNumber, orderId: currentOrderId });
-          alert('✅ Order submitted successfully!');
-          document.getElementById('requester_id').value = '';
-          document.getElementById('supplier_id').value = '';
-          document.getElementById('note_to_supplier').value = '';
-          document.getElementById('items-body').innerHTML = '';
-          rowCount = 0;
+        currentOrderId = data.order_id;
+        await incrementOrderNumber();
+        await logToServer('INFO', 'Order submitted successfully', {
+          orderNumber: currentOrderNumber,
+          orderId: currentOrderId
+        });
+        alert('✅ Order submitted successfully!');
+        document.getElementById('requester_id').value = '';
+        document.getElementById('supplier_id').value = '';
+        document.getElementById('note_to_supplier').value = '';
+        document.getElementById('items-body').innerHTML = '';
+        rowCount = 0;
       } else {
-          await logToServer('ERROR', 'Unexpected response in submitOrder', { response: data.message });
-          throw new Error(`Unexpected response: ${data.message}`);
+        await logToServer('ERROR', 'Unexpected response in submitOrder', { response: data.message });
+        throw new Error(`Unexpected response: ${data.message}`);
       }
-  } catch (error) {
+    } catch (error) {
       console.error('Order submission failed:', error.message);
       await logToServer('ERROR', 'Order submission failed', { error: error.message });
       alert(`❌ Order submission failed: ${error.message}`);
+    }
   }
-}
-
-function setupEventListeners() {
-  const submitBtn = document.getElementById('submit-order');
-  if (submitBtn) {
+  
+  function logStatus(message) {
+    const logBox = document.getElementById("status-messages");
+    const entry = document.createElement("div");
+    const now = new Date().toLocaleTimeString();
+    entry.textContent = `[${now}] ${message}`;
+    logBox.appendChild(entry);
+    logBox.scrollTop = logBox.scrollHeight;
+  }
+  
+  function setupEventListeners() {
+    const submitBtn = document.getElementById('submit-order');
+    if (submitBtn) {
       console.log('Submit button exists:', !!submitBtn);
       submitBtn.addEventListener('click', () => {
-          console.log('Submit button clicked');
-          debounce(submitOrder, 500)();
+        console.log('Submit button clicked');
+        debounce(submitOrder, 500)();
       });
-  } else {
-      console.error('Submit button not found');
-  }
-
-  document.getElementById('email-po').addEventListener('click', async () => {
-    if (!currentOrderId) {
-        await logToServer('INFO', 'No order submitted yet, submitting order for emailing');
-        await submitOrder();
-    }
-    if (currentOrderId) {
-        await sendEmail(currentOrderId);
     } else {
-        await logToServer('ERROR', 'Failed to obtain order ID after submission');
-        alert('Failed to submit order for emailing');
+      console.error('Submit button not found');
     }
-});
-
-  document.getElementById('cancel-order').addEventListener('click', () => {
-      if (confirm('Are you sure you want to cancel?')) {
-          window.location.href = '/orders/pending_orders';
+  
+    const previewBtn = document.getElementById('preview-order');
+    if (previewBtn) {
+      previewBtn.addEventListener('click', () => {
+        previewOrder();
+      });
+    } else {
+      console.error('Preview button not found');
+    }
+  
+    function logStatus(message) {
+        const logBox = document.getElementById("status-messages");
+        const entry = document.createElement("div");
+        const now = new Date().toLocaleTimeString();
+        entry.textContent = `[${now}] ${message}`;
+        logBox.appendChild(entry);
+        logBox.scrollTop = logBox.scrollHeight;
       }
-  });
 
-  document.getElementById('add-line').addEventListener('click', () => {
+    document.getElementById('email-po').addEventListener('click', async () => {
+        logStatus("🟡 Checking order submission status...");
+        if (!currentOrderId) {
+          logStatus("🟡 No order ID yet. Attempting to submit...");
+          await submitOrder();
+        }
+      
+        if (currentOrderId) {
+          logStatus(`📨 Submitting email for Order ID ${currentOrderId}...`);
+          try {
+            await sendEmail(currentOrderId);
+            logStatus("✅ Email sent successfully.");
+          } catch (err) {
+            logStatus("❌ Email failed: " + err.message);
+          }
+        } else {
+          logStatus("❌ Failed to submit order. Cannot send email.");
+        }
+      });
+  
+    document.getElementById('cancel-order').addEventListener('click', () => {
+      if (confirm('Are you sure you want to cancel?')) {
+        window.location.href = '/orders/pending_orders';
+      }
+    });
+  
+    document.getElementById('add-line').addEventListener('click', () => {
       addRow();
-  });
-
-  document.getElementById('items-body').addEventListener('change', (e) => {
+    });
+  
+    document.getElementById('items-body').addEventListener('change', (e) => {
       if (e.target.classList.contains('item-code')) {
-          updateTotal(e.target);
+        updateTotal(e.target);
       }
       if (e.target.classList.contains('qty-ordered') || e.target.classList.contains('price')) {
-          const itemSelect = e.target.closest('tr').querySelector('.item-code');
-          updateTotal(itemSelect);
+        const itemSelect = e.target.closest('tr').querySelector('.item-code');
+        updateTotal(itemSelect);
       }
+    });
+  }
+  
+  document.addEventListener('DOMContentLoaded', async () => {
+    console.log('Page loaded');
+    setupEventListeners();
+    try {
+      businessDetails = window.businessDetails;
+      if (!businessDetails || !businessDetails.company_name) {
+        throw new Error('No business details found');
+      }
+      console.log('Business details loaded:', businessDetails);
+      await loadDropdowns();
+      console.log('Requester dropdown options:', document.getElementById('requester_id').options.length);
+      console.log('Supplier dropdown options:', document.getElementById('supplier_id').options.length);
+      await loadOrderNumber();
+      const dateField = document.getElementById("request_date");
+      if (dateField) {
+        const today = new Date().toISOString().split('T')[0];
+        dateField.value = today;
+      }
+    } catch (err) {
+      console.error('Initialization failed:', err.message);
+      alert(`Error: ${err.message}`);
+    }
   });
-}
 
-document.addEventListener('DOMContentLoaded', async () => {
-   console.log('Page loaded');
-   setupEventListeners();
-   try {
-       // Use pre-loaded business details
-       businessDetails = window.businessDetails;
-       if (!businessDetails || !businessDetails.company_name) {
-           throw new Error('No business details found');
-       }
-       console.log('Business details loaded:', businessDetails);
-       await loadDropdowns();
-       console.log('Requester dropdown options:', document.getElementById('requester_id').options.length);
-       console.log('Supplier dropdown options:', document.getElementById('supplier_id').options.length);
-       await loadOrderNumber();
-       // Set today's date as default for request_date
-       const dateField = document.getElementById("request_date");
-       if (dateField) {
-           const today = new Date().toISOString().split('T')[0];
-           dateField.value = today;
-       }
-   } catch (err) {
-       console.error('Initialization failed:', err.message);
-       alert(`Error: ${err.message}`);
-   }
-});
-
-// Add logToServer function for client-side logging
+  // Add logToServer function for client-side logging
 async function logToServer(level, message, details = {}) {
     try {
-        await fetch('/log_client', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ level, message, details, timestamp: new Date().toISOString() })
-        });
+      await fetch('/log_client', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          level,
+          message,
+          details,
+          timestamp: new Date().toISOString()
+        })
+      });
     } catch (error) {
-        console.error('Failed to log to server:', error);
+      console.error('Failed to log to server:', error);
     }
-}
-
-// Test function for previewOrder
-async function testPreviewOrder() {
+  }
+  
+  // Test function for previewOrder
+  async function testPreviewOrder() {
     console.log("Running testPreviewOrder");
     await logToServer('INFO', 'Starting previewOrder test');
-
+  
     try {
-        // Ensure itemsList and projectsList are populated
-        if (!itemsList.length || !projectsList.length) {
-            throw new Error("Items or projects not loaded. Ensure dropdowns are populated.");
-        }
-
-        // Dynamically select the first item and project from lists
-        const testItem = itemsList[0];
-        const testProject = projectsList[0];
-        const testQty = 2;
-        const testPrice = 10;
-        const testTotal = (testQty * testPrice).toFixed(2);
-
-        // Mock DOM elements with dynamic data
-        document.body.innerHTML = `
-            <div id="order-number">URC1000</div>
-            <input id="request_date" value="2025-05-10">
-            <select id="supplier_id"><option value="1">Test Supplier</option></select>
-            <textarea id="note_to_supplier">Test note</textarea>
-            <table id="items-table"><tbody id="items-body">
-                <tr>
-                    <td><select class="item-code"><option value="${testItem.item_code}" data-description="${testItem.item_description}" selected>${testItem.item_code}</option></select></td>
-                    <td><select class="project"><option value="${testProject.project_code}" selected>${testProject.project_code}</option></select></td>
-                    <td><input type="number" class="qty-ordered" value="${testQty}"></td>
-                    <td><input type="number" class="price" value="${testPrice}"></td>
-                    <td><input type="text" class="total" value="${testTotal}"></td>
-                </tr>
-            </tbody></table>
-            <button id="preview-order">View Purchase Order</button>
-        `;
-
-        // Call the existing previewOrder function
-        await previewOrder();
-
-        console.log("Test passed: previewOrder executed without errors");
-        await logToServer('INFO', 'previewOrder test completed successfully');
+      // Ensure itemsList and projectsList are populated
+      if (!itemsList.length || !projectsList.length) {
+        throw new Error("Items or projects not loaded. Ensure dropdowns are populated.");
+      }
+  
+      // Dynamically select the first item and project from lists
+      const testItem = itemsList[0];
+      const testProject = projectsList[0];
+      const testQty = 2;
+      const testPrice = 10;
+      const testTotal = (testQty * testPrice).toFixed(2);
+  
+      // Mock DOM elements with dynamic data
+      document.body.innerHTML = `
+        <div id="order-number">URC1000</div>
+        <input id="request_date" value="2025-05-10">
+        <select id="supplier_id"><option value="1">Test Supplier</option></select>
+        <textarea id="note_to_supplier">Test note</textarea>
+        <table id="items-table"><tbody id="items-body">
+            <tr>
+                <td><select class="item-code"><option value="${testItem.item_code}" data-description="${testItem.item_description}" selected>${testItem.item_code}</option></select></td>
+                <td><select class="project"><option value="${testProject.project_code}" selected>${testProject.project_code}</option></select></td>
+                <td><input type="number" class="qty-ordered" value="${testQty}"></td>
+                <td><input type="number" class="price" value="${testPrice}"></td>
+                <td><input type="text" class="total" value="${testTotal}"></td>
+            </tr>
+        </tbody></table>
+        <button id="preview-order">View Purchase Order</button>
+      `;
+  
+      // Call the existing previewOrder function
+      await previewOrder();
+  
+      console.log("Test passed: previewOrder executed without errors");
+      await logToServer('INFO', 'previewOrder test completed successfully');
     } catch (error) {
-        console.error("Test failed:", error);
-        await logToServer('ERROR', 'previewOrder test failed', { error: error.message, stack: error.stack });
-        throw error;
+      console.error("Test failed:", error);
+      await logToServer('ERROR', 'previewOrder test failed', {
+        error: error.message,
+        stack: error.stack
+      });
+      throw error;
     }
-}
-
-window.testPreviewOrder = testPreviewOrder;
+  }
+  
+  window.testPreviewOrder = testPreviewOrder;
+  

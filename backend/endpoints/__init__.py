@@ -5,7 +5,6 @@ from .auth import router as auth_router
 from .order_queries import router as order_queries_router
 from .order_pdf import router as pdf_router
 from .order_attachments import router as attachments_router
-from .pdf_generator import router as pdf_generator_router
 from .order_receiving import router as order_receiving_router
 from .utils import router as utils_router
 
@@ -17,7 +16,6 @@ routers = [
     order_queries_router,
     pdf_router,
     attachments_router,
-    pdf_generator_router,
     order_receiving_router,
     utils_router
 ]

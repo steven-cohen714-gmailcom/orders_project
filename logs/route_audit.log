@@ -78,6 +78,7 @@
 /orders/api/audit_trail
 /orders/api/order_summary/{order_id}
 /orders/api/partially_delivered
+/orders/api/preview_pdf_new_order
 /orders/pdf/{order_id}
 /login
 /logout
@@ -90,9 +91,8 @@
 ⚠️ Suspicious duplicate segment in: /orders/orders/receive/{order_id}
 /orders/upload_attachment
 /orders/attachments/{order_id}
-/orders/api/generate_pdf
 /orders/api/generate_pdf_for_order/{order_id}
 /orders/receive/{order_id}
 /orders/mark_complete/{order_id}
 /log_client
-/orders/email_purchase_order/{order_id}
+/orders/email_purchase_order

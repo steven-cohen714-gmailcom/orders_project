@@ -1,3 +1,4 @@
+import logging
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
@@ -43,22 +44,26 @@ class ReceivePayload(BaseModel):
 
 # --- Routes ---
 @router.post("")
-@handle_db_errors(entity="order", action="creating")
 async def create_new_order(order: OrderCreate):
-    total = calculate_order_total([item.dict() for item in order.items])
-    order_data = {
-        "order_number": order.order_number,
-        "status": order.status,
-        "total": total,
-        "order_note": order.order_note,
-        "note_to_supplier": order.note_to_supplier,
-        "supplier_id": order.supplier_id,
-        "requester_id": order.requester_id
-    }
-    items = [item.dict() for item in order.items]
-    result = create_order(order_data, items)
-    log_success("order", "created", f"Order {order.order_number} with total R{total}")
-    return {"message": "Order created successfully", "order": result}
+    try:
+        logging.info(f"🔍 Incoming order: {order}")
+        total = calculate_order_total([item.dict() for item in order.items])
+        order_data = {
+            "order_number": order.order_number,
+            "status": order.status,
+            "total": total,
+            "order_note": order.order_note,
+            "note_to_supplier": order.note_to_supplier,
+            "supplier_id": order.supplier_id,
+            "requester_id": order.requester_id
+        }
+        items = [item.dict() for item in order.items]
+        result = create_order(order_data, items)
+        log_success("order", "created", f"Order {order.order_number} with total R{total}")
+        return {"message": "Order created successfully", "order_id": result["id"]}
+    except Exception as e:
+        logging.exception("❌ Order creation failed")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("")
 @handle_db_errors(entity="orders", action="fetching")

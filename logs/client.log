@@ -1,44 +1,67 @@
-2025-05-09 14:05:28,050 | ERROR | No order submitted yet for emailing | Details: {}
-2025-05-09 14:05:51,237 | INFO | previewOrder started | Details: {}
-2025-05-09 14:05:51,848 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
-2025-05-09 14:05:58,077 | ERROR | No order submitted yet for emailing | Details: {}
-2025-05-09 14:45:30,273 | INFO | previewOrder started | Details: {}
-2025-05-09 14:45:30,435 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
-2025-05-09 14:45:35,146 | INFO | No order submitted yet, attempting to preview before emailing | Details: {}
-2025-05-09 14:45:35,151 | INFO | previewOrder started | Details: {}
-2025-05-09 14:45:35,243 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
-2025-05-09 14:45:44,764 | INFO | No order submitted yet, attempting to preview before emailing | Details: {}
-2025-05-09 14:45:44,769 | INFO | previewOrder started | Details: {}
-2025-05-09 14:45:44,863 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
-2025-05-09 14:45:52,455 | INFO | No order submitted yet, attempting to preview before emailing | Details: {}
-2025-05-09 14:45:52,458 | INFO | previewOrder started | Details: {}
-2025-05-09 14:45:52,561 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
-2025-05-09 14:52:25,252 | INFO | previewOrder started | Details: {}
-2025-05-09 14:52:25,415 | INFO | PDF generated successfully in previewOrder | Details: {"orderNumber": "URC1000"}
-2025-05-09 14:52:31,388 | ERROR | No order submitted yet for emailing | Details: {}
-2025-05-09 14:58:11,877 | INFO | No order submitted yet, submitting order for emailing | Details: {}
-2025-05-09 14:58:11,883 | INFO | submitOrder started | Details: {}
-2025-05-09 14:58:11,902 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1001"}
-2025-05-09 14:58:17,237 | ERROR | Failed to obtain order ID after submission | Details: {}
-2025-05-09 14:58:31,892 | INFO | No order submitted yet, submitting order for emailing | Details: {}
-2025-05-09 14:58:31,897 | INFO | submitOrder started | Details: {}
-2025-05-09 14:58:31,901 | ERROR | Missing required fields in submitOrder | Details: {"requesterId": "", "supplierId": ""}
-2025-05-09 14:58:34,010 | ERROR | Failed to obtain order ID after submission | Details: {}
-2025-05-09 15:00:17,468 | INFO | No order submitted yet, submitting order for emailing | Details: {}
-2025-05-09 15:00:17,473 | INFO | submitOrder started | Details: {}
-2025-05-09 15:00:17,490 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1002"}
-2025-05-09 15:00:43,353 | ERROR | Failed to obtain order ID after submission | Details: {}
-2025-05-09 15:01:57,364 | INFO | No order submitted yet, submitting order for emailing | Details: {}
-2025-05-09 15:01:57,370 | INFO | submitOrder started | Details: {}
-2025-05-09 15:01:57,391 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1003"}
-2025-05-09 15:01:59,021 | ERROR | Failed to obtain order ID after submission | Details: {}
-2025-05-09 15:10:18,104 | INFO | No order submitted yet, submitting order for emailing | Details: {}
-2025-05-09 15:10:18,109 | INFO | submitOrder started | Details: {}
-2025-05-09 15:10:18,134 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1004"}
-2025-05-09 15:10:20,516 | ERROR | Failed to obtain order ID after submission | Details: {}
-2025-05-09 15:10:48,018 | INFO | No order submitted yet, submitting order for emailing | Details: {}
-2025-05-09 15:10:48,023 | INFO | submitOrder started | Details: {}
-2025-05-09 15:10:48,045 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1005"}
-2025-05-09 15:10:49,881 | ERROR | Failed to obtain order ID after submission | Details: {}
-2025-05-09 15:10:54,170 | INFO | submitOrder started | Details: {}
-2025-05-09 15:10:54,176 | ERROR | Missing required fields in submitOrder | Details: {"requesterId": "", "supplierId": ""}
+2025-05-10 16:44:10,755 | INFO | No order submitted yet, submitting order for emailing | Details: {}
+2025-05-10 16:44:10,760 | INFO | submitOrder started | Details: {}
+2025-05-10 16:44:10,779 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1006"}
+2025-05-10 16:44:16,813 | ERROR | Failed to obtain order ID after submission | Details: {}
+2025-05-10 16:44:41,631 | INFO | No order submitted yet, submitting order for emailing | Details: {}
+2025-05-10 16:44:41,635 | INFO | submitOrder started | Details: {}
+2025-05-10 16:44:41,640 | ERROR | Missing required fields in submitOrder | Details: {"requesterId": "", "supplierId": ""}
+2025-05-10 16:44:43,620 | ERROR | Failed to obtain order ID after submission | Details: {}
+2025-05-10 16:44:47,252 | INFO | submitOrder started | Details: {}
+2025-05-10 16:44:47,257 | ERROR | Missing required fields in submitOrder | Details: {"requesterId": "", "supplierId": ""}
+2025-05-10 16:53:11,430 | INFO | previewOrder started | Details: {}
+2025-05-10 16:53:11,437 | ERROR | Missing fields in previewOrder | Details: {"requesterId": "", "supplierId": ""}
+2025-05-10 16:53:31,771 | INFO | previewOrder started | Details: {}
+2025-05-10 16:53:31,790 | ERROR | PreviewOrder failed | Details: {"error": "Failed to generate PDF: 422 - {\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"path\",\"order_id\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"undefined\"}]}"}
+2025-05-10 16:54:04,501 | INFO | submitOrder started | Details: {}
+2025-05-10 16:54:04,524 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1007"}
+2025-05-10 16:55:09,267 | INFO | previewOrder started | Details: {}
+2025-05-10 16:55:09,274 | ERROR | Missing fields in previewOrder | Details: {"requesterId": "", "supplierId": ""}
+2025-05-10 16:55:40,924 | INFO | previewOrder started | Details: {}
+2025-05-10 16:55:40,942 | ERROR | PreviewOrder failed | Details: {"error": "Failed to generate PDF: 422 - {\"detail\":[{\"type\":\"int_parsing\",\"loc\":[\"path\",\"order_id\"],\"msg\":\"Input should be a valid integer, unable to parse string as an integer\",\"input\":\"undefined\"}]}"}
+2025-05-10 16:57:54,932 | INFO | previewOrder started | Details: {}
+2025-05-10 16:57:54,937 | ERROR | Missing fields in previewOrder | Details: {"requesterId": "", "supplierId": ""}
+2025-05-10 16:58:15,991 | INFO | previewOrder started | Details: {}
+2025-05-10 16:58:16,005 | ERROR | PreviewOrder failed | Details: {"error": "Failed to save draft: 500 - {\"detail\":\"Unexpected server error.\"}"}
+2025-05-10 17:31:49,389 | INFO | previewOrder started | Details: {}
+2025-05-10 17:31:49,405 | ERROR | PreviewOrder failed | Details: {"error": "Failed to save draft: 500 - {\"detail\":\"Unexpected server error.\"}"}
+2025-05-10 17:34:18,368 | INFO | previewOrder started | Details: {}
+2025-05-10 17:34:18,383 | ERROR | PreviewOrder failed | Details: {"error": "Failed to save draft: 500 - {\"detail\":\"Unexpected server error.\"}"}
+2025-05-10 17:37:47,600 | INFO | previewOrder started | Details: {}
+2025-05-10 17:37:47,612 | ERROR | PreviewOrder failed | Details: {"error": "Failed to save draft: 500 - {\"detail\":\"Unexpected server error.\"}"}
+2025-05-10 17:42:46,511 | INFO | previewOrder started | Details: {}
+2025-05-10 17:42:46,521 | ERROR | PreviewOrder failed | Details: {"error": "Failed to save draft: 500 - Traceback (most recent call last):\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py\", line 48, in create_new_order\n    logging.info(f\"\ud83d\udd0d Incoming order: {order}\")\n    ^^^^^^^\nNameError: name 'logging' is not defined. Did you forget to import 'logging'?\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py\", line 165, in __call__\n    await self.app(scope, receive, _send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py\", line 85, in __call__\n    await self.app(scope, receive, send_wrapper)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py\", line 93, in __call__\n    await self.simple_response(scope, receive, send, request_headers=headers)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py\", line 144, in simple_response\n    await self.app(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py\", line 62, in __call__\n    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py\", line 53, in wrapped_app\n    raise exc\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py\", line 42, in wrapped_app\n    await app(scope, receive, sender)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py\", line 714, in __call__\n    await self.middleware_stack(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py\", line 734, in app\n    await route.handle(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py\", line 288, in handle\n    await self.app(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py\", line 76, in app\n    await wrap_app_handling_exceptions(app, request)(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py\", line 53, in wrapped_app\n    raise exc\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py\", line 42, in wrapped_app\n    await app(scope, receive, sender)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py\", line 73, in app\n    response = await f(request)\n               ^^^^^^^^^^^^^^^^\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py\", line 301, in app\n    raw_response = await run_endpoint_function(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n    )\n    ^\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py\", line 212, in run_endpoint_function\n    return await dependant.call(**values)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py\", line 64, in create_new_order\n    logging.exception(\"\u274c Order creation failed\")\n    ^^^^^^^\nNameError: name 'logging' is not defined. Did you forget to import 'logging'?\n"}
+2025-05-10 17:44:32,293 | INFO | previewOrder started | Details: {}
+2025-05-10 17:44:32,309 | ERROR | PreviewOrder failed | Details: {"error": "Failed to save draft: 500 - {\"detail\":\"'order_id'\"}"}
+2025-05-10 17:55:05,159 | INFO | previewOrder started | Details: {}
+2025-05-10 17:55:05,335 | INFO | Preview PDF displayed | Details: {"order_id": 122}
+2025-05-10 17:55:15,253 | ERROR | Failed to send email | Details: {"orderId": 122, "error": "Failed to send email"}
+2025-05-10 18:24:03,756 | INFO | previewOrder started | Details: {}
+2025-05-10 18:24:03,763 | ERROR | Missing fields in previewOrder | Details: {"requesterId": "", "supplierId": ""}
+2025-05-10 18:24:07,561 | INFO | No order submitted yet, submitting order for emailing | Details: {}
+2025-05-10 18:24:07,565 | INFO | submitOrder started | Details: {}
+2025-05-10 18:24:07,569 | ERROR | Missing required fields in submitOrder | Details: {"requesterId": "", "supplierId": ""}
+2025-05-10 18:24:09,800 | ERROR | Failed to obtain order ID after submission | Details: {}
+2025-05-10 18:24:27,998 | INFO | previewOrder started | Details: {}
+2025-05-10 18:24:28,168 | INFO | Preview PDF displayed | Details: {"order_id": 123}
+2025-05-10 18:24:36,335 | ERROR | Failed to send email | Details: {"orderId": 123, "error": "Failed to send email"}
+2025-05-10 18:34:17,281 | INFO | previewOrder started | Details: {}
+2025-05-10 18:34:17,447 | INFO | Preview PDF displayed | Details: {"order_id": 124}
+2025-05-10 18:34:20,796 | ERROR | Failed to send email | Details: {"orderId": 124, "error": "Failed to send email"}
+2025-05-11 06:35:36,972 | INFO | previewOrder started | Details: {}
+2025-05-11 06:35:36,989 | ERROR | PreviewOrder failed | Details: {"error": "Failed to generate PDF: 404 - {\"detail\":\"Not Found\"}"}
+2025-05-11 06:35:47,615 | ERROR | Failed to send email | Details: {"orderId": 125, "error": "Failed to send email"}
+2025-05-11 17:36:28,760 | INFO | previewOrder started | Details: {}
+2025-05-11 17:36:28,776 | ERROR | PreviewOrder failed | Details: {"error": "Failed to generate PDF: 404 - {\"detail\":\"Not Found\"}"}
+2025-05-11 17:36:47,845 | INFO | submitOrder started | Details: {}
+2025-05-11 17:36:47,861 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1008", "orderId": 127}
+2025-05-12 10:57:49,384 | INFO | previewOrder started | Details: {}
+2025-05-12 10:57:49,397 | ERROR | PreviewOrder failed (no DB write) | Details: {"error": "Failed to generate PDF: 404 - {\"detail\":\"Not Found\"}"}
+2025-05-12 10:58:29,466 | INFO | previewOrder started | Details: {}
+2025-05-12 10:58:49,173 | INFO | previewOrder started | Details: {}
+2025-05-12 10:58:49,185 | ERROR | PreviewOrder failed (no DB write) | Details: {"error": "Failed to generate PDF: 404 - {\"detail\":\"Not Found\"}"}
+2025-05-12 11:06:08,580 | INFO | previewOrder started | Details: {}
+2025-05-12 11:06:08,592 | ERROR | PreviewOrder failed (no DB write) | Details: {"error": "Failed to generate PDF: 404 - {\"detail\":\"Not Found\"}"}
+2025-05-12 11:34:09,319 | INFO | previewOrder started | Details: {}
+2025-05-12 11:34:09,349 | ERROR | PreviewOrder failed (no DB write) | Details: {"error": "Failed to generate PDF: 500 - Traceback (most recent call last):\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/errors.py\", line 165, in __call__\n    await self.app(scope, receive, _send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/sessions.py\", line 85, in __call__\n    await self.app(scope, receive, send_wrapper)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py\", line 93, in __call__\n    await self.simple_response(scope, receive, send, request_headers=headers)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/cors.py\", line 144, in simple_response\n    await self.app(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/middleware/exceptions.py\", line 62, in __call__\n    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py\", line 53, in wrapped_app\n    raise exc\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py\", line 42, in wrapped_app\n    await app(scope, receive, sender)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py\", line 714, in __call__\n    await self.middleware_stack(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py\", line 734, in app\n    await route.handle(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py\", line 288, in handle\n    await self.app(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py\", line 76, in app\n    await wrap_app_handling_exceptions(app, request)(scope, receive, send)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py\", line 53, in wrapped_app\n    raise exc\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/_exception_handler.py\", line 42, in wrapped_app\n    await app(scope, receive, sender)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/starlette/routing.py\", line 73, in app\n    response = await f(request)\n               ^^^^^^^^^^^^^^^^\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py\", line 301, in app\n    raw_response = await run_endpoint_function(\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n    )\n    ^\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/fastapi/routing.py\", line 212, in run_endpoint_function\n    return await dependant.call(**values)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/new_order_pdf_generator.py\", line 23, in generate_preview_pdf_for_new_order\n    html_content = template.render(\n        order_number=form_data.get(\"order_number\", \"URCxxxx\"),\n    ...<14 lines>...\n        items=form_data.get(\"items\", [])\n    )\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/jinja2/environment.py\", line 1295, in render\n    self.environment.handle_exception()\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/jinja2/environment.py\", line 942, in handle_exception\n    raise rewrite_traceback_stack(source=source)\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/frontend/templates/pdf_template.html\", line 5, in top-level template code\n    <title>Printable Order - {{ order.order_number }}</title>\n    ^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/jinja2/environment.py\", line 490, in getattr\n    return getattr(obj, attribute)\njinja2.exceptions.UndefinedError: 'order' is undefined\n"}
+2025-05-12 11:40:49,149 | INFO | previewOrder started | Details: {}
+2025-05-12 11:40:49,274 | INFO | Preview PDF displayed (no DB write) | Details: {}

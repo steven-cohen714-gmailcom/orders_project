@@ -1,28 +1,32 @@
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
-from starlette.middleware.sessions import SessionMiddleware
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.routing import APIRouter
 
-from backend.endpoints import routers
-from backend.endpoints.admin import admin_router
-from backend.endpoints.order_pdf import router as pdf_router
-from backend.endpoints.auth import router as auth_router
-from backend.endpoints.order_queries import router as order_queries_router
-from backend.endpoints.orders import router as orders_router
-from backend.endpoints.order_attachments import router as attachments_router
-from backend.endpoints.pdf_generator import router as pdf_generator_router
-from backend.endpoints.order_receiving import router as order_receiving_router
-from backend.endpoints.utils import router as utils_router
-from backend.endpoints.order_email import router as order_email_router
-
-from backend.database import init_db, get_db_connection
 from pathlib import Path
 import logging
 import sys
 import os
+
+# --- Database ---
+from backend.database import init_db, get_db_connection
+
+# --- Routers ---
+from backend.endpoints import routers
+from backend.endpoints.admin import admin_router
+from backend.endpoints.auth import router as auth_router
+from backend.endpoints.orders import router as orders_router
+from backend.endpoints.order_pdf import router as pdf_router
+from backend.endpoints.pending_order_pdf_generator import router as pending_order_pdf_router
+from backend.endpoints.new_order_pdf_generator import router as new_order_pdf_router
+from backend.endpoints.order_queries import router as order_queries_router
+from backend.endpoints.order_receiving import router as order_receiving_router
+from backend.endpoints.order_attachments import router as attachments_router
+from backend.endpoints.order_email import router as order_email_router
+from backend.endpoints.utils import router as utils_router
 
 # Allow scripts to import from parent
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -45,6 +49,7 @@ except Exception as e:
 
 # --- FastAPI App Init ---
 app = FastAPI(
+    debug=True,
     title="Universal Recycling Purchase Order System",
     description="Purchase Order management system for Universal Recycling"
 )
@@ -182,17 +187,18 @@ app.include_router(static_router)
 
 # Include lookup routers under /lookups
 for router in routers:
-    if router is not order_queries_router and router is not orders_router and router is not attachments_router and router is not pdf_generator_router and router is not order_receiving_router:
+    if router is not order_queries_router and router is not orders_router and router is not attachments_router and router is not order_receiving_router:
         app.include_router(router, prefix="/lookups")
 
 # Include other routers with their specific prefixes
 app.include_router(admin_router, prefix="/admin")
 app.include_router(order_queries_router, prefix="/orders/api")
+app.include_router(new_order_pdf_router, prefix="/orders/api")
 app.include_router(pdf_router)
 app.include_router(auth_router)
 app.include_router(orders_router, prefix="/orders")
 app.include_router(attachments_router, prefix="/orders")
-app.include_router(pdf_generator_router)
+app.include_router(pending_order_pdf_router, prefix="/orders/api")
 app.include_router(order_receiving_router, prefix="/orders")
 app.include_router(utils_router)
 app.include_router(order_email_router, prefix="/orders")

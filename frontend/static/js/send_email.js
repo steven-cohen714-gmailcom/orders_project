@@ -1,38 +1,33 @@
-export async function emailPurchaseOrder(orderId, orderNumber) {
-    /**
-     * Send a purchase order email for the given order ID.
-     *
-     * @param {number} orderId - The ID of the order
-     * @param {string} orderNumber - The order number for display
-     */
+/**
+ * Sends an email containing a purchase order PDF generated from raw HTML.
+ *
+ * @param {string} html - The full HTML string to convert into a PDF.
+ * @param {string} orderNumber - The order number (e.g. "URC1024").
+ * @param {string} recipientEmail - The supplier’s email address.
+ */
+export async function emailPurchaseOrder(html, orderNumber, recipientEmail) {
     try {
-        const response = await fetch(`/orders/email_purchase_order/${orderId}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include"
-        });
-
-        if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.detail || "Failed to send email");
-        }
-
-        const data = await response.json();
-        alert(data.detail || `✅ Purchase Order ${orderNumber} emailed successfully`);
+      const response = await fetch("/orders/email_purchase_order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          html: html,
+          order_number: orderNumber,
+          recipient_email: recipientEmail
+        })
+      });
+  
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.detail || "Email sending failed");
+      }
+  
+      const result = await response.json();
+      alert(result.status || `✅ Purchase Order ${orderNumber} emailed successfully`);
     } catch (error) {
-        console.error(`Error emailing purchase order ${orderNumber}:`, error);
-        alert(`❌ Error emailing purchase order ${orderNumber}: ${error.message}`);
+      console.error(`❌ Failed to email PO ${orderNumber}:`, error);
+      alert(`❌ Error emailing PO ${orderNumber}: ${error.message}`);
     }
-}
-
-// For new_order.js compatibility
-document.getElementById('email-po')?.addEventListener('click', async () => {
-    const orderNumber = document.getElementById('order-number')?.textContent || "Unknown";
-    const orderIdMatch = orderNumber.match(/URC(\d+)/);
-    if (!orderIdMatch) {
-        alert("❌ Invalid order number format");
-        return;
-    }
-    const orderId = parseInt(orderIdMatch[1], 10);
-    await emailPurchaseOrder(orderId, orderNumber);
-});
+  }
+  
