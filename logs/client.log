@@ -68,3 +68,7 @@
 2025-05-12 16:30:09,924 | INFO | previewOrder started | Details: {}
 2025-05-12 16:30:10,043 | INFO | Preview PDF displayed (no DB write) | Details: {}
 2025-05-12 16:31:24,459 | INFO | previewOrder started | Details: {}
+2025-05-13 05:14:17,945 | INFO | previewOrder started | Details: {}
+2025-05-13 05:14:18,091 | INFO | Preview PDF displayed (no DB write) | Details: {}
+2025-05-13 05:14:26,757 | INFO | submitOrder started | Details: {}
+2025-05-13 05:14:26,779 | INFO | Order submitted successfully | Details: {"orderNumber": "URC1009", "orderId": 128}

@@ -1,12 +1,14 @@
+#!/usr/bin/env python3
+
 import os
 import re
 
-# Define root directory and what to exclude
+# Config
 PROJECT_ROOT = "orders_project"
 EXCLUDE_DIRS = {"venv", "__pycache__", ".git", ".idea", ".mypy_cache", ".pytest_cache"}
 ALLOWED_EXTS = {".py", ".js", ".html"}
 
-# Collect all relevant files
+# Step 1: Collect all relevant file paths
 file_paths = []
 for root, dirs, files in os.walk(PROJECT_ROOT):
     dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
@@ -16,36 +18,32 @@ for root, dirs, files in os.walk(PROJECT_ROOT):
             rel_path = os.path.relpath(os.path.join(root, f), PROJECT_ROOT)
             file_paths.append(rel_path)
 
-# Build reference map from all files
+# Step 2: Scan all files for references
 references = set()
 for root, dirs, files in os.walk(PROJECT_ROOT):
     dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
     for f in files:
-        path = os.path.join(root, f)
         ext = os.path.splitext(f)[1]
         if ext not in ALLOWED_EXTS:
             continue
+        path = os.path.join(root, f)
         try:
             with open(path, "r", encoding="utf-8", errors="ignore") as file:
                 content = file.read()
-                for fp in file_paths:
-                    # Strip extensions for import-style references
-                    base_name = os.path.splitext(fp)[0]
-                    pattern = re.escape(base_name)
-                    if re.search(rf'\b{pattern}\b', content):
-                        references.add(fp)
+                for target_path in file_paths:
+                    base_name = os.path.splitext(target_path)[0]
+                    if base_name in content:
+                        references.add(target_path)
         except Exception as e:
-            print(f"Error reading {path}: {e}")
+            print(f"⚠️ Skipped unreadable file: {path}")
 
-# Report unused files
-print("\n📦 Unused Files Report:\n")
-unused = 0
-for fp in file_paths:
-    if fp not in references:
-        print(f"⚠️ Possibly unused: {fp}")
-        unused += 1
+# Step 3: Report unused files
+unused = sorted([fp for fp in file_paths if fp not in references])
 
-if unused == 0:
-    print("✅ All files appear to be in use.")
+if unused:
+    print("\n📦 Possibly Unused Files:\n")
+    for fp in unused:
+        print(f"⚠️  {fp}")
+    print(f"\n🔍 Total: {len(unused)} (verify manually before deleting!)")
 else:
-    print(f"\n🔍 Total possibly unused: {unused}")
+    print("✅ No unused files detected.")

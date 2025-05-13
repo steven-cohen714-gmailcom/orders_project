@@ -37,6 +37,22 @@ export function showReceiveModal(orderId, orderNumber) {
       const title = document.createElement("h3");
       title.textContent = `Mark Order #${orderNumber} as Received`;
 
+      // --- Add receipt date input ---
+      const dateLabel = document.createElement("label");
+      dateLabel.textContent = "Receipt Date:";
+      dateLabel.style = "margin-right: 1rem; font-weight: bold;";
+
+      const dateInput = document.createElement("input");
+      dateInput.type = "date";
+      dateInput.required = true;
+      dateInput.valueAsDate = new Date();
+
+      const dateContainer = document.createElement("div");
+      dateContainer.style = "margin-bottom: 1rem;";
+      dateContainer.appendChild(dateLabel);
+      dateContainer.appendChild(dateInput);
+      modal.appendChild(dateContainer);
+
       const table = document.createElement("table");
       table.className = "receive-modal-table";
 
@@ -112,7 +128,14 @@ export function showReceiveModal(orderId, orderNumber) {
       submitBtn.textContent = "Mark as Received";
       submitBtn.style = "margin-top:1rem; padding:0.5rem 1rem; cursor:pointer;";
       submitBtn.onclick = async () => {
+        const receiptDate = dateInput.value;
+        if (!receiptDate) {
+          alert("❌ Please select a receipt date.");
+          return;
+        }
+
         const payload = {
+          receipt_date: receiptDate,
           items: inputs.map(i => ({
             item_id: i.itemId,
             received_qty: parseFloat(i.input.value) || 0

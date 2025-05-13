@@ -2,23 +2,27 @@
 
 import subprocess
 import socket
+import sys
 
-def run(cmd):
-    return subprocess.run(cmd, check=False, capture_output=True, text=True)
+def run(cmd, desc=None, check=True):
+    if desc:
+        print(f"🔧 {desc}")
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if check and result.returncode != 0:
+        print(f"❌ Error during: {desc or ' '.join(cmd)}")
+        print(result.stderr.strip())
+        sys.exit(1)
+    return result
 
 hostname = socket.gethostname()
 
-print("🧠 Checking for changes...")
-run(["git", "add", "."])
+print("🧠 Force-staging EVERYTHING including deletions...")
+run(["git", "add", "-A"], "Staging all files (including deletions)")
 
-status = run(["git", "diff", "--cached", "--quiet"])
-if status.returncode == 0:
-    print("✅ No changes to commit.")
-else:
-    print("💾 Committing work...")
-    run(["git", "commit", "-m", f"WIP from {hostname}"])
+print("💾 Forcing commit of ALL files...")
+run(["git", "commit", "-m", f'FULL SYNC from {hostname}'], "Committing", check=False)
 
-print("📤 Pushing to origin...")
-run(["git", "push"])
+print("📤 Force pushing to GitHub (replaces remote)...")
+run(["git", "push", "--force"], "Force push")
 
-print("✅ Done — safe to leave this machine.")
+print("✅ Studio state is now live on GitHub — full replacement.")

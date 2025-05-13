@@ -2,24 +2,35 @@
 
 import subprocess
 import socket
+import sys
 
-def run(cmd):
-    return subprocess.run(cmd, check=False, capture_output=True, text=True)
+def run(cmd, desc=None, check=True):
+    if desc:
+        print(f"🔧 {desc}")
+    result = subprocess.run(cmd, capture_output=True, text=True)
+    if check and result.returncode != 0:
+        print(f"❌ Error during: {desc or ' '.join(cmd)}")
+        print(result.stderr.strip())
+        sys.exit(1)
+    return result
 
 hostname = socket.gethostname()
+stash_msg = f"Auto-stash from {hostname}"
 
 print("📥 Checking for local changes...")
-status = run(["git", "status", "--porcelain"])
+status = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True)
+
 if status.stdout.strip():
     print("📦 Stashing local work...")
-    run(["git", "stash", "push", "-u", "-m", f"Auto-stash from {hostname}"])
+    run(["git", "stash", "push", "-u", "-m", stash_msg], "Stashing")
 
 print("🔄 Pulling latest with rebase...")
-run(["git", "pull", "--rebase", "origin", "main"])
+run(["git", "pull", "--rebase", "origin", "main"], "Pulling from origin")
 
-stash_list = run(["git", "stash", "list"])
-if f"Auto-stash from {hostname}" in stash_list.stdout:
+# Check if stash exists before popping
+stash_list = subprocess.run(["git", "stash", "list"], capture_output=True, text=True)
+if stash_msg in stash_list.stdout:
     print("🔁 Re-applying stashed changes...")
-    run(["git", "stash", "pop"])
+    run(["git", "stash", "pop"], "Stash pop")
 
 print("✅ Ready to work.")
