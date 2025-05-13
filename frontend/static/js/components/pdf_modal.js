@@ -1,7 +1,6 @@
 // File: frontend/static/js/components/pdf_modal.js
 
 export function showPDFModal(blob) {
-    // Create the modal overlay
     const modal = document.createElement("div");
     modal.style.position = "fixed";
     modal.style.top = 0;
@@ -14,7 +13,6 @@ export function showPDFModal(blob) {
     modal.style.justifyContent = "center";
     modal.style.zIndex = 10000;
 
-    // Modal content container
     const contentWrapper = document.createElement("div");
     contentWrapper.style.width = "80%";
     contentWrapper.style.height = "80%";
@@ -25,23 +23,54 @@ export function showPDFModal(blob) {
     contentWrapper.style.boxShadow = "0 0 10px #fff";
     contentWrapper.style.overflow = "hidden";
 
-    // Header bar for buttons
     const headerBar = document.createElement("div");
     headerBar.style.display = "flex";
-    headerBar.style.justifyContent = "space-between";
+    headerBar.style.justifyContent = "flex-end";
     headerBar.style.alignItems = "center";
     headerBar.style.backgroundColor = "#f0f0f0";
     headerBar.style.padding = "8px 12px";
 
-    // Create the iframe to display PDF
-    const iframe = document.createElement("iframe");
     const pdfURL = URL.createObjectURL(blob);
+    const iframe = document.createElement("iframe");
     iframe.src = pdfURL;
     iframe.style.width = "100%";
     iframe.style.height = "100%";
     iframe.style.border = "none";
 
-    // Download button
+    // === 📧 Email Button ===
+    const emailBtn = document.createElement("button");
+    emailBtn.textContent = "📧 Email PDF";
+    emailBtn.style.background = "#28a745";
+    emailBtn.style.color = "#fff";
+    emailBtn.style.border = "none";
+    emailBtn.style.padding = "6px 12px";
+    emailBtn.style.borderRadius = "4px";
+    emailBtn.style.cursor = "pointer";
+    emailBtn.style.marginRight = "8px";
+    emailBtn.onclick = async () => {
+        const orderId = window.currentOrderIdForPDF;
+        if (!orderId) return alert("Order ID not available");
+
+        try {
+            const response = await fetch(`/orders/email_purchase_order/${orderId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
+            });
+
+            if (!response.ok) {
+                const error = await response.text();
+                throw new Error(error);
+            }
+
+            alert("✅ Purchase order emailed successfully.");
+        } catch (err) {
+            console.error("Email failed:", err);
+            alert("❌ Failed to send email. See console for details.");
+        }
+    };
+
+    // === Download Button ===
     const downloadBtn = document.createElement("button");
     downloadBtn.textContent = "Download PDF";
     downloadBtn.style.background = "#007bff";
@@ -53,14 +82,19 @@ export function showPDFModal(blob) {
     downloadBtn.onclick = () => {
         const link = document.createElement("a");
         link.href = pdfURL;
-
-        // Use dynamic name if set, fallback to "PurchaseOrder.pdf"
         const filename = window.currentOrderNumberForPDF || "PurchaseOrder.pdf";
         link.download = filename;
         link.click();
     };
 
-    // Close button
+    const buttonGroup = document.createElement("div");
+    buttonGroup.style.display = "flex";
+    buttonGroup.style.alignItems = "center";
+    buttonGroup.style.gap = "10px"; // ← KEY: adds spacing between buttons
+
+    buttonGroup.appendChild(emailBtn);
+    buttonGroup.appendChild(downloadBtn);
+
     const closeBtn = document.createElement("button");
     closeBtn.textContent = "✖";
     closeBtn.style.background = "transparent";
@@ -73,11 +107,9 @@ export function showPDFModal(blob) {
         URL.revokeObjectURL(pdfURL);
     };
 
-    // Append buttons to header bar
-    headerBar.appendChild(downloadBtn);
+    headerBar.appendChild(buttonGroup);
     headerBar.appendChild(closeBtn);
 
-    // Close modal on background click
     modal.addEventListener("click", (e) => {
         if (e.target === modal) {
             document.body.removeChild(modal);
@@ -85,7 +117,6 @@ export function showPDFModal(blob) {
         }
     });
 
-    // Assemble modal
     contentWrapper.appendChild(headerBar);
     contentWrapper.appendChild(iframe);
     modal.appendChild(contentWrapper);

@@ -509,32 +509,6 @@ function updateTotal(itemSelect) {
         logBox.appendChild(entry);
         logBox.scrollTop = logBox.scrollHeight;
       }
-
-    document.getElementById('email-po').addEventListener('click', async () => {
-        logStatus("🟡 Checking order submission status...");
-        if (!currentOrderId) {
-          logStatus("🟡 No order ID yet. Attempting to submit...");
-          await submitOrder();
-        }
-      
-        if (currentOrderId) {
-          logStatus(`📨 Submitting email for Order ID ${currentOrderId}...`);
-          try {
-            await sendEmail(currentOrderId);
-            logStatus("✅ Email sent successfully.");
-          } catch (err) {
-            logStatus("❌ Email failed: " + err.message);
-          }
-        } else {
-          logStatus("❌ Failed to submit order. Cannot send email.");
-        }
-      });
-  
-    document.getElementById('cancel-order').addEventListener('click', () => {
-      if (confirm('Are you sure you want to cancel?')) {
-        window.location.href = '/orders/pending_orders';
-      }
-    });
   
     document.getElementById('add-line').addEventListener('click', () => {
       addRow();
