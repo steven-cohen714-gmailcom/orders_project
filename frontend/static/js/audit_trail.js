@@ -1,185 +1,136 @@
-import { expandLineItemsForAudit } from "/static/js/components/expand_line_items.js";
+import { expandLineItemsWithReceipts } from "/static/js/components/expand_line_items.js";
 import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from "/static/js/components/attachment_modal.js";
 import { showOrderNoteModal, showSupplierNoteModal } from "/static/js/components/order_note_modal.js";
 import { loadRequesters, loadSuppliers } from "/static/js/components/shared_filters.js";
-import { showPDFModal } from "/static/js/components/pdf_modal.js";
-
-function populateDropdown(selectId, items, labelFunc, valueFunc) {
-  const dropdown = document.getElementById(selectId);
-  dropdown.innerHTML = `<option value="">All</option>`;
-  items.forEach(item => {
-    const opt = document.createElement("option");
-    opt.value = valueFunc(item);
-    opt.textContent = labelFunc(item);
-    dropdown.appendChild(opt);
-  });
-}
 
 function escapeHTML(str) {
   if (!str) return "";
-  return str.replace(/'/g, "\\'").replace(/"/g, "\\\"").replace(/</g, "<").replace(/>/g, ">").replace(/\n/g, " ").replace(/\r/g, "");
-}
-
-function populateTable(data) {
-  const tbody = document.getElementById("audit-body");
-  tbody.innerHTML = "";
-
-  if (!data.orders || data.orders.length === 0) {
-    const row = tbody.insertRow();
-    const cell = row.insertCell(0);
-    cell.colSpan = 7;
-    cell.textContent = "No orders found.";
-    return;
-  }
-
-  data.orders.forEach(order => {
-    const row = tbody.insertRow();
-    row.setAttribute("data-order-id", order.id);
-
-    const sanitizedOrderNote = escapeHTML(order.order_note || "");
-    const sanitizedSupplierNote = escapeHTML(order.note_to_supplier || "");
-    const sanitizedOrderNumber = escapeHTML(order.order_number);
-    const sanitizedSupplier = escapeHTML(order.supplier || "N/A");
-    const sanitizedRequester = escapeHTML(order.requester);
-
-    row.innerHTML = `
-      <td>${order.created_date}</td>
-      <td>${sanitizedOrderNumber}</td>
-      <td>${sanitizedRequester}</td>
-      <td>${sanitizedSupplier}</td>
-      <td>R${order.total.toFixed(2)}</td>
-      <td>${order.status}</td>
-      <td>
-        <span class="expand-icon" onclick="window.expandLineItems(${order.id}, this)">⬇️</span>
-        <span class="clip-icon" title="View/Upload Attachments" onclick="window.checkAttachments(${order.id}).then(has => has ? window.showViewAttachmentsModal(${order.id}, '${sanitizedOrderNumber}') : window.showUploadAttachmentsModal(${order.id}, '${sanitizedOrderNumber}', () => window.checkAttachments(${order.id}).then(has => this.classList.toggle('eye-icon', has))))">📎</span>
-        <span class="note-icon" title="Edit Continuous Order Note" onclick="window.showOrderNoteModal('${sanitizedOrderNote}', ${order.id})">📝</span>
-        <span class="supplier-note-icon" title="View Note to Supplier" onclick="try { window.showSupplierNoteModal('${sanitizedSupplierNote}'); } catch (e) { console.error('Failed to show supplier note for order ${order.order_number}:', e); alert('Error displaying supplier note: ' + e.message); }">📦</span>
-        <span class="pdf-icon" title="View Purchase Order PDF" data-order-id="${order.id}" data-order-number="${sanitizedOrderNumber}">📄</span>
-      </td>
-    `;
-
-    const auditRow = tbody.insertRow();
-    auditRow.style.display = "none";
-    auditRow.classList.add(`audit-row-${order.id}`);
-    const auditCell = auditRow.insertCell(0);
-    auditCell.colSpan = 7;
-    auditCell.classList.add("audit-details");
-
-    let auditDetails = `
-      <strong>Original Order Date:</strong> ${order.created_date}<br>
-      <strong>Received Date:</strong> ${order.received_date || 'Not received yet'}<br>
-      <strong>User:</strong> Unknown<br>
-    `;
-    if (order.items && order.items.length > 0) {
-      auditDetails += "<strong>Items Received:</strong><ul>";
-      order.items.forEach(item => {
-        auditDetails += `
-          <li>
-            ${item.item_description} (Code: ${item.item_code})<br>
-            Ordered: ${item.qty_ordered}<br>
-            Received: ${item.qty_received || 0} on ${item.received_date || 'N/A'}
-          </li>
-        `;
-      });
-      auditDetails += "</ul>";
-    }
-    auditCell.innerHTML = auditDetails;
-  });
+  return str
+    .replace(/&/g, "&")
+    .replace(/</g, "<")
+    .replace(/>/g, ">")
+    .replace(/"/g, "\"")
+    .replace(/'/g, "\'");
 }
 
 async function loadFiltersAndOrders() {
   try {
-    const [suppliersRes, requestersRes] = await Promise.all([
-      fetch("/lookups/suppliers").then(res => res.json()),
-      fetch("/lookups/requesters").then(res => res.json())
-    ]);
-
-    populateDropdown("filter-supplier", suppliersRes.suppliers, s => `${s.account_number} — ${s.name}`, s => s.name);
-    populateDropdown("filter-requester", requestersRes.requesters, r => r.name, r => r.name);
-
-    await runFilters();
+    await loadRequesters("filter-requester");
+    await loadSuppliers("filter-supplier");
+    await loadOrders();
   } catch (err) {
-    console.error("Failed to load filters", err);
+    console.error("❌ Failed to load filters or orders:", err);
+    document.getElementById("audit-body").innerHTML = `<tr><td colspan="7">Error loading filters: ${escapeHTML(err.message)}</td></tr>`;
   }
 }
 
-async function runFilters() {
-  const supplierName = document.getElementById("filter-supplier").value;
-  const requesterName = document.getElementById("filter-requester").value;
+async function loadOrders() {
+  const startDate = document.getElementById("start-date").value;
+  const endDate = document.getElementById("end-date").value;
+  const requester = document.getElementById("filter-requester").value;
+  const supplier = document.getElementById("filter-supplier").value;
   const status = document.getElementById("filter-status").value;
-  let startDate = document.getElementById("start-date").value;
-  let endDate = document.getElementById("end-date").value;
-
-  const isValidDate = (dateStr) => {
-    if (!dateStr) return true;
-    const date = new Date(dateStr);
-    return !isNaN(date.getTime()) && dateStr === date.toISOString().split("T")[0];
-  };
-
-  if (startDate && !isValidDate(startDate)) {
-    alert("Invalid start date. Please select a valid date.");
-    return;
-  }
-  if (endDate && !isValidDate(endDate)) {
-    alert("Invalid end date. Please select a valid date.");
-    return;
-  }
 
   const params = new URLSearchParams();
-  if (supplierName) params.append("supplier", supplierName);
-  if (requesterName) params.append("requester", requesterName);
-  if (status && status !== "All") params.append("status", status);
   if (startDate) params.append("start_date", startDate);
   if (endDate) params.append("end_date", endDate);
+  if (requester && requester !== "All") params.append("requester", requester);
+  if (supplier && supplier !== "All") params.append("supplier", supplier);
+  if (status && status !== "All") params.append("status", status);
 
   try {
-    const res = await fetch(`/orders/api/audit_trail?${params.toString()}`);
+    const res = await fetch(`/orders/api/audit_trail_orders?${params.toString()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
     const data = await res.json();
-    populateTable(data);
+
+    const tbody = document.getElementById("audit-body");
+    tbody.innerHTML = "";
+
+    if (data.orders && Array.isArray(data.orders) && data.orders.length > 0) {
+      data.orders.forEach((order, index) => {
+        const row = document.createElement("tr");
+        const sanitizedOrderNote = escapeHTML(order.order_note || "");
+        const sanitizedSupplierNote = escapeHTML(order.note_to_supplier || "");
+        const sanitizedOrderNumber = escapeHTML(order.order_number);
+        const sanitizedSupplier = escapeHTML(order.supplier || "N/A");
+        const sanitizedRequester = escapeHTML(order.requester);
+        const sanitizedDate = escapeHTML(order.created_date || "");
+        const sanitizedTotal = order.total != null ? `R${parseFloat(order.total).toFixed(2)}` : "R0.00";
+        const sanitizedStatus = escapeHTML(order.status || "");
+
+        row.innerHTML = `
+          <td>${sanitizedDate}</td>
+          <td>${sanitizedOrderNumber}</td>
+          <td>${sanitizedRequester}</td>
+          <td>${sanitizedSupplier}</td>
+          <td>${sanitizedTotal}</td>
+          <td><span class="status">${sanitizedStatus}</span></td>
+          <td>
+            <span class="expand-icon" style="cursor:pointer" title="View Line Items">⬇️</span>
+            <span class="clip-icon" style="cursor:pointer" title="View/Upload Attachments">📎</span>
+            <span class="note-icon" style="cursor:pointer" title="Edit Order Note">📝</span>
+            <span class="supplier-note-icon" style="cursor:pointer" title="View Note to Supplier">📦</span>
+          </td>`;
+
+        tbody.appendChild(row);
+
+        row.querySelector(".expand-icon").addEventListener("click", (e) => {
+          expandLineItemsWithReceipts(order.id, e.target);
+        });
+
+        row.querySelector(".clip-icon").addEventListener("click", async (e) => {
+          const target = e.target;
+          const has = await checkAttachments(order.id);
+          if (has) {
+            showViewAttachmentsModal(order.id, sanitizedOrderNumber);
+          } else {
+            showUploadAttachmentsModal(order.id, sanitizedOrderNumber, async () => {
+              const newHas = await checkAttachments(order.id);
+              target.classList.toggle("eye-icon", newHas);
+            });
+          }
+        });
+
+        row.querySelector(".note-icon").addEventListener("click", (e) => {
+          const target = e.target;
+          showOrderNoteModal(sanitizedOrderNote, order.id, (newNote) => {
+            target.setAttribute("data-order-note", escapeHTML(newNote));
+          });
+        });
+
+        row.querySelector(".supplier-note-icon").addEventListener("click", () => {
+          try {
+            showSupplierNoteModal(sanitizedSupplierNote);
+          } catch (e) {
+            console.error(`Failed to show supplier note for order ${sanitizedOrderNumber}:`, e);
+            alert(`Error displaying supplier note: ${e.message}`);
+          }
+        });
+      });
+    } else {
+      tbody.innerHTML = '<tr><td colspan="7">No audit trail orders found.</td></tr>';
+    }
   } catch (err) {
-    console.error("Failed to fetch audit trail", err);
-    alert("Failed to load audit trail: " + err.message);
+    console.error("❌ Error loading audit trail orders:", err);
+    document.getElementById("audit-body").innerHTML = `<tr><td colspan="7">Error loading orders: ${escapeHTML(err.message)}</td></tr>`;
   }
 }
 
 function clearFilters() {
-  document.getElementById("filter-supplier").value = "";
-  document.getElementById("filter-requester").value = "";
-  document.getElementById("filter-status").value = "";
   document.getElementById("start-date").value = "";
   document.getElementById("end-date").value = "";
-  runFilters();
+  document.getElementById("filter-requester").value = "All";
+  document.getElementById("filter-supplier").value = "All";
+  document.getElementById("filter-status").value = "All";
+  loadOrders();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadFiltersAndOrders();
-  document.getElementById("run-btn").addEventListener("click", runFilters);
-  document.getElementById("clear-btn").addEventListener("click", clearFilters);
-  setInterval(runFilters, 30000);
+document.getElementById("run-btn").addEventListener("click", loadOrders);
+document.getElementById("clear-btn").addEventListener("click", clearFilters);
+document.addEventListener("DOMContentLoaded", loadFiltersAndOrders);
 
-  document.addEventListener("click", async (e) => {
-    const icon = e.target.closest(".pdf-icon");
-    if (!icon) return;
-    const orderId = icon.getAttribute("data-order-id");
-    const orderNumber = icon.getAttribute("data-order-number");
-    try {
-      const res = await fetch(`/orders/api/generate_pdf_for_order/${orderId}`);
-      if (!res.ok) throw new Error(`PDF generation failed: ${res.status}`);
-      const blob = await res.blob();
-      window.currentOrderNumberForPDF = orderNumber;
-      showPDFModal(blob);
-    } catch (err) {
-      alert("❌ Could not generate PDF");
-      console.error(err);
-    }
-  });
-});
-
-window.expandLineItems = expandLineItemsForAudit;
 window.showUploadAttachmentsModal = showUploadAttachmentsModal;
 window.checkAttachments = checkAttachments;
 window.showViewAttachmentsModal = showViewAttachmentsModal;
 window.showOrderNoteModal = showOrderNoteModal;
 window.showSupplierNoteModal = showSupplierNoteModal;
-window.showPDFModal = showPDFModal;
