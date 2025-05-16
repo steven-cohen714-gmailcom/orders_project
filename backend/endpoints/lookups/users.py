@@ -1,97 +1,90 @@
-# backend/endpoints/lookups/users.py
-
 from fastapi import APIRouter, HTTPException
 from backend.database import get_db_connection
-import logging
-import sqlite3
+import bcrypt
 
 router = APIRouter()
 
-# Configure logging
-logging.basicConfig(filename="logs/server.log", level=logging.INFO,
-                    format="%(asctime)s | %(levelname)s | %(message)s")
-
-
-@router.get("/users")
+@router.get("/users")  # Removed /lookups prefix
 async def get_users():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, username, rights, auth_threshold_band FROM users")
+    users = cursor.fetchall()
+    conn.close()
+    return {"users": [{"id": u[0], "username": u[1], "rights": u[2], "auth_threshold_band": u[3]} for u in users]}
+
+@router.post("/users")  # Removed /lookups prefix
+async def add_user(username: str, password: str, rights: str, auth_threshold_band: int = None):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Hash the password
+    password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    
     try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, username, rights FROM users")
-        users = cursor.fetchall()
-        result = [{"id": u[0], "username": u[1], "rights": u[2]} for u in users]
-        logging.info(f"Users fetched: {len(result)} items")
-        return {"users": result}
-    except sqlite3.Error as e:
-        logging.error(f"Database error fetching users: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-    except Exception as e:
-        logging.error(f"Error fetching users: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error fetching users: {str(e)}")
-    finally:
-        conn.close()
-
-
-@router.post("/users")
-async def add_user(payload: dict):
-    username = payload.get("username")
-    password = payload.get("password")  # Stored raw for now (no hashing)
-    rights = payload.get("rights")
-
-    if not username or not password or not rights:
-        logging.error("Missing username, password or rights in add_user request")
-        raise HTTPException(status_code=400, detail="Missing username, password, or rights")
-
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO users (username, password_hash, rights) VALUES (?, ?, ?)",
-            (username, password, rights)
+            "INSERT INTO users (username, password_hash, rights, auth_threshold_band) VALUES (?, ?, ?, ?)",
+            (username, password_hash, rights, auth_threshold_band)
         )
         conn.commit()
-        logging.info(f"New user added: {username} with rights {rights}")
-        return {"message": "User added successfully"}
-    except sqlite3.IntegrityError as e:
-        logging.error(f"Integrity error adding user: {str(e)}")
-        raise HTTPException(status_code=400, detail="User could not be added (possibly duplicate username).")
-    except sqlite3.Error as e:
-        logging.error(f"Database error adding user: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+        return {"status": "User added successfully"}
     except Exception as e:
-        logging.error(f"Error adding user: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error adding user: {str(e)}")
+        conn.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
     finally:
         conn.close()
 
-
-@router.put("/users/{user_id}")
-async def update_user(user_id: int, payload: dict):
-    new_username = payload.get("username")
-    new_rights = payload.get("rights")
-
-    if not new_username or not new_rights:
-        logging.error("Missing username or rights in update_user request")
-        raise HTTPException(status_code=400, detail="Missing username or rights")
-
+@router.put("/users/{user_id}")  # Removed /lookups prefix
+async def update_user(user_id: int, username: str, password: str = None, rights: str = None, auth_threshold_band: int = None):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
     try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute(
-            "UPDATE users SET username = ?, rights = ? WHERE id = ?",
-            (new_username, new_rights, user_id)
-        )
+        # Fetch current user data
+        cursor.execute("SELECT username, password_hash, rights, auth_threshold_band FROM users WHERE id = ?", (user_id,))
+        user = cursor.fetchone()
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Prepare updated values
+        new_username = username or user[0]
+        new_rights = rights or user[2]
+        new_auth_threshold_band = auth_threshold_band if auth_threshold_band is not None else user[3]
+        
+        # Update password only if provided
+        if password:
+            password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            cursor.execute(
+                "UPDATE users SET username = ?, password_hash = ?, rights = ?, auth_threshold_band = ? WHERE id = ?",
+                (new_username, password_hash, new_rights, new_auth_threshold_band, user_id)
+            )
+        else:
+            cursor.execute(
+                "UPDATE users SET username = ?, rights = ?, auth_threshold_band = ? WHERE id = ?",
+                (new_username, new_rights, new_auth_threshold_band, user_id)
+            )
+        
+        conn.commit()
+        return {"status": "User updated successfully"}
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+    finally:
+        conn.close()
+
+@router.delete("/users/{user_id}")  # Removed /lookups prefix
+async def delete_user(user_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
         if cursor.rowcount == 0:
-            logging.warning(f"No user found with id {user_id} to update")
             raise HTTPException(status_code=404, detail="User not found")
         conn.commit()
-        logging.info(f"User {user_id} updated: username -> {new_username}, rights -> {new_rights}")
-        return {"message": "User updated successfully"}
-    except sqlite3.Error as e:
-        logging.error(f"Database error updating user {user_id}: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+        return {"status": "User deleted successfully"}
     except Exception as e:
-        logging.error(f"Error updating user {user_id}: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error updating user: {str(e)}")
+        conn.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
     finally:
         conn.close()

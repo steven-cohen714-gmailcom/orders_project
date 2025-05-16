@@ -19,9 +19,8 @@ from backend.endpoints import routers
 from backend.endpoints.admin import admin_router
 from backend.endpoints.auth import router as auth_router
 from backend.endpoints.orders import router as orders_router
-from backend.endpoints.order_pdf import router as pdf_router
-from backend.endpoints.pending_order_pdf_generator import router as pending_order_pdf_router
 from backend.endpoints.new_order_pdf_generator import router as new_order_pdf_router
+from backend.endpoints.pending_order_pdf_generator import router as pending_order_pdf_router
 from backend.endpoints.order_queries import router as order_queries_router
 from backend.endpoints.order_receiving import router as order_receiving_router
 from backend.endpoints.order_attachments import router as attachments_router
@@ -68,7 +67,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(SessionMiddleware, secret_key="supersecretkey123")
+app.add_middleware(SessionMiddleware, secret_key="your-new-secure-key")  # Replace with a secure key
 
 templates = Jinja2Templates(directory="frontend/templates")
 
@@ -194,14 +193,13 @@ for router in routers:
 app.include_router(admin_router, prefix="/admin")
 app.include_router(order_queries_router, prefix="/orders/api")
 app.include_router(new_order_pdf_router, prefix="/orders/api")
-app.include_router(pdf_router)
 app.include_router(auth_router)
 app.include_router(orders_router, prefix="/orders")
 app.include_router(attachments_router, prefix="/orders")
-app.include_router(pending_order_pdf_router, prefix="/orders/api")
 app.include_router(order_receiving_router, prefix="/orders")
 app.include_router(utils_router)
 app.include_router(order_email_router, prefix="/orders")
+app.include_router(pending_order_pdf_router, prefix="/orders/api")
 
 # --- Dev CLI ---
 if __name__ == "__main__":

@@ -1,66 +1,56 @@
 from fastapi import APIRouter, HTTPException
 from backend.database import get_db_connection
-import logging
-import sqlite3
 
 router = APIRouter()
 
-logging.basicConfig(filename="logs/server.log", level=logging.INFO,
-                    format="%(asctime)s | %(levelname)s | %(message)s")
-
-@router.get("/settings")
+@router.get("/lookups/settings")
 async def get_settings():
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT order_number_start, auth_threshold FROM settings WHERE id = 1")
-        row = cursor.fetchone()
-        if row:
-            settings = {
-                "order_number_start": row[0] if row[0] is not None else "URC1000",
-                "auth_threshold": int(row[1]) if row[1] is not None else 0
-            }
-        else:
-            settings = {"order_number_start": "URC1000", "auth_threshold": 0}
-            cursor.execute("INSERT INTO settings (id, order_number_start, auth_threshold) VALUES (1, ?, ?)",
-                          (settings["order_number_start"], settings["auth_threshold"]))
-            conn.commit()
-        logging.info(f"Settings fetched: {settings}")
-        return settings
-    except sqlite3.Error as e:
-        logging.error(f"Database error fetching settings: {str(e)}")
-        return {"order_number_start": "URC1000", "auth_threshold": 0}
-    except Exception as e:
-        logging.error(f"Error fetching settings: {str(e)}")
-        return {"order_number_start": "URC1000", "auth_threshold": 0}
-    finally:
-        conn.close()
-
-@router.put("/settings")
-async def update_settings(request: dict):
-    order_number_start = request.get("order_number_start")
-    auth_threshold = request.get("auth_threshold")
-
-    if not order_number_start or auth_threshold is None:
-        logging.error("Missing order_number_start or auth_threshold in update settings request")
-        raise HTTPException(status_code=400, detail="Missing order_number_start or auth_threshold")
-
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("UPDATE settings SET order_number_start = ?, auth_threshold = ? WHERE id = 1",
-                      (order_number_start, auth_threshold))
-        if cursor.rowcount == 0:
-            cursor.execute("INSERT INTO settings (id, order_number_start, auth_threshold) VALUES (1, ?, ?)",
-                          (order_number_start, auth_threshold))
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT order_number_start, auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4 FROM settings WHERE id = 1")
+    row = cursor.fetchone()
+    if row:
+        settings = {
+            "order_number_start": row[0] if row[0] is not None else "URC1000",
+            "auth_threshold_1": int(row[1]) if row[1] is not None else 0,
+            "auth_threshold_2": int(row[2]) if row[2] is not None else 0,
+            "auth_threshold_3": int(row[3]) if row[3] is not None else 0,
+            "auth_threshold_4": int(row[4]) if row[4] is not None else 0
+        }
+    else:
+        settings = {
+            "order_number_start": "URC1000",
+            "auth_threshold_1": 0,
+            "auth_threshold_2": 0,
+            "auth_threshold_3": 0,
+            "auth_threshold_4": 0
+        }
+        cursor.execute(
+            "INSERT INTO settings (id, order_number_start, auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4) VALUES (1, ?, ?, ?, ?, ?)",
+            (settings["order_number_start"], settings["auth_threshold_1"], settings["auth_threshold_2"], settings["auth_threshold_3"], settings["auth_threshold_4"])
+        )
         conn.commit()
-        logging.info(f"Settings updated: order_number_start = {order_number_start}, auth_threshold = {auth_threshold}")
+    conn.close()
+    return settings
+
+@router.put("/lookups/settings")
+async def update_settings(order_number_start: str, auth_threshold_1: int, auth_threshold_2: int, auth_threshold_3: int, auth_threshold_4: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute(
+            "UPDATE settings SET order_number_start = ?, auth_threshold_1 = ?, auth_threshold_2 = ?, auth_threshold_3 = ?, auth_threshold_4 = ? WHERE id = 1",
+            (order_number_start, auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4)
+        )
+        if cursor.rowcount == 0:
+            cursor.execute(
+                "INSERT INTO settings (id, order_number_start, auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4) VALUES (1, ?, ?, ?, ?, ?)",
+                (order_number_start, auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4)
+            )
+        conn.commit()
         return {"message": "Settings updated successfully"}
-    except sqlite3.Error as e:
-        logging.error(f"Database error updating settings: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
     except Exception as e:
-        logging.error(f"Error updating settings: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error updating settings: {str(e)}")
+        conn.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
     finally:
         conn.close()

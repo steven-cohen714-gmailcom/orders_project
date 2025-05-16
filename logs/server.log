@@ -1,48 +1,84 @@
 INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
 INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [20714] using StatReload
-INFO:     Started server process [20788]
+INFO:     Started reloader process [33356] using StatReload
+INFO:     Started server process [33430]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:56769 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56769 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56770 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56772 - "GET /static/js/audit_trail.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56770 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56769 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56772 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56774 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56801 - "GET /orders/received_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56801 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56801 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56801 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56801 - "GET /orders/partially_delivered HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56801 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56801 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56801 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56801 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57486 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57486 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57487 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57489 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57489 - "GET /lookups/users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57487 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57486 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57489 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57492 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57493 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57495 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57495 - "GET /favicon.ico HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups/settings.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33430]
+INFO:     Started server process [33452]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
 INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
 INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [21087] using StatReload
-INFO:     Started server process [21162]
+INFO:     Started reloader process [33665] using StatReload
+INFO:     Started server process [33739]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:58100 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58100 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:58101 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58100 - "GET /static/js/audit_trail.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58101 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58100 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58104 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58105 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58105 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58105 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58105 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58105 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58105 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:58105 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:58105 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58105 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58105 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58150 - "GET /orders/api/receipt_logs/129 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58151 - "GET /orders/api/items_for_order/129 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57740 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57740 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57741 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57743 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57743 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57741 - "GET /lookups/users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57740 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57743 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57745 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57747 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57749 - "GET /lookups/settings HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57749 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58155 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58155 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58156 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58158 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58158 - "GET /users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58156 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58155 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58158 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58161 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58163 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58164 - "GET /settings HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58164 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58210 - "POST /users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58210 - "POST /users HTTP/1.1" 404 Not Found
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups/users.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [33739]
+INFO:     Started server process [34143]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [34353] using StatReload
+INFO:     Started server process [34428]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59221 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59221 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59222 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59224 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59224 - "GET /users HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59222 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59221 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59224 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59227 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59228 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59230 - "GET /settings HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59230 - "GET /favicon.ico HTTP/1.1" 200 OK

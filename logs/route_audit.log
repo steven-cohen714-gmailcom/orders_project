@@ -26,11 +26,15 @@
 /lookups/projects
 /lookups/projects
 /lookups/projects/{project_id}
-/lookups/settings
-/lookups/settings
+/lookups/lookups/settings
+⚠️ Suspicious duplicate segment in: /lookups/lookups/settings
+/lookups/lookups/settings
+⚠️ Suspicious duplicate segment in: /lookups/lookups/settings
+/lookups/business_details
 /lookups/business_details
 /lookups/users
 /lookups/users
+/lookups/users/{user_id}
 /lookups/users/{user_id}
 /lookups/requesters
 /lookups/requesters
@@ -44,15 +48,18 @@
 /lookups/projects
 /lookups/projects
 /lookups/projects/{project_id}
-/lookups/settings
-/lookups/settings
+/lookups/lookups/settings
+⚠️ Suspicious duplicate segment in: /lookups/lookups/settings
+/lookups/lookups/settings
+⚠️ Suspicious duplicate segment in: /lookups/lookups/settings
+/lookups/business_details
 /lookups/business_details
 /lookups/users
 /lookups/users
 /lookups/users/{user_id}
+/lookups/users/{user_id}
 /lookups/login
 /lookups/logout
-/lookups/orders/pdf/{order_id}
 /lookups/log_client
 /admin/requesters
 /admin/requesters
@@ -66,11 +73,13 @@
 /admin/projects
 /admin/projects
 /admin/projects/{project_id}
-/admin/settings
-/admin/settings
+/admin/lookups/settings
+/admin/lookups/settings
+/admin/business_details
 /admin/business_details
 /admin/users
 /admin/users
+/admin/users/{user_id}
 /admin/users/{user_id}
 /orders/api/pending_orders
 /orders/api/received_orders
@@ -79,7 +88,6 @@
 /orders/api/order_summary/{order_id}
 /orders/api/partially_delivered
 /orders/api/preview_pdf_new_order
-/orders/pdf/{order_id}
 /login
 /logout
 /orders
@@ -94,7 +102,7 @@
 /orders/api/audit_trail_orders
 /orders/upload_attachment
 /orders/attachments/{order_id}
-/orders/api/generate_pdf_for_order/{order_id}
 /orders/receive/{order_id}
 /log_client
 /orders/email_purchase_order
+/orders/api/generate_pdf_for_order/{order_id}
