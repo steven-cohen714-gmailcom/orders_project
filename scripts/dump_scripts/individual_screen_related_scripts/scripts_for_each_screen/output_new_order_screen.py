@@ -2,23 +2,23 @@ from pathlib import Path
 import os
 
 os.chdir("/Users/stevencohen/Projects/universal_recycling/orders_project")
-output_file = Path("scripts_for_each_screen/output_received_orders_screen_files.txt")
+output_file = Path("scripts_for_each_screen/output_new_order_screen_files.txt")
 output_file.parent.mkdir(parents=True, exist_ok=True)
 
 with open(output_file, 'w', encoding='utf-8') as f:
     for rel_path in [
-        "frontend/templates/received_orders.html",
-        "frontend/static/js/received_orders.js",
-        "frontend/static/js/components/expand_line_items.js",
-        "frontend/static/js/components/pdf_modal.js",
-        "frontend/static/js/components/shared_filters.js",
         "frontend/static/css/style.css",
-        "backend/endpoints/order_pdf.py",
-        "backend/endpoints/order_queries.py",
         "backend/endpoints/html_routes.py",
-        "backend/utils/order_utils.py",
+        "backend/endpoints/lookups/settings.py",
+        "backend/endpoints/lookups/users.py",
+        "backend/endpoints/utils.py",
         "backend/database.py",
         "backend/main.py",
+        "frontend/templates/new_order.html",
+        "frontend/static/js/new_order_main.js",
+        "frontend/static/js/new_order_modals.js",
+        "frontend/static/js/components/pdf_modal.js",
+        "backend/endpoints/new_order_pdf_generator.py",
     ]:
         f.write(f"📄 {rel_path}\n" + "-"*60 + "\n")
         try:
