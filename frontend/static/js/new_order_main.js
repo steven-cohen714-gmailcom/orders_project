@@ -1,7 +1,9 @@
 // frontend/static/js/new_order_main.js
 
-// Utility functions (inlined since new_order_utils.js is not provided)
-import { showPDFModal } from "./components/pdf_modal.js";
+import { previewOrder } from "./new_order_screen/pdf_utils.js";
+import { submitOrder } from "./new_order_screen/submit_utils.js";
+import { logToServer } from "./components/utils.js";
+
 let itemsList = [];
 let projectsList = [];
 let rowCount = 0;
@@ -315,183 +317,23 @@ function updateTotal(itemSelect) {
       }
   }
   
-  async function previewOrder() {
-    console.log('previewOrder called');
-    await logToServer('INFO', 'previewOrder started');
-
-    const requesterId = document.getElementById('requester_id').value;
-    const supplierId = document.getElementById('supplier_id').value;
-    const noteToSupplier = document.getElementById('note_to_supplier').value;
-    const orderNumber = document.getElementById('order-number').textContent;
-    const createdDate = document.getElementById('request_date').value;
-    const total = updateGrandTotal();
-
-    if (!requesterId || !supplierId || !createdDate) {
-        alert('Please fill in all required fields (Requester, Supplier, Date)');
-        return;
-    }
-
-    const items = Array.from(document.querySelectorAll('#items-body tr')).map(row => {
-        const itemCode = row.querySelector('.item-code')?.value;
-        const itemDescription = itemsList.find(i => i.item_code === itemCode)?.item_description || '';
-        const project = row.querySelector('.project')?.value;
-        const qtyOrdered = parseFloat(row.querySelector('.qty-ordered')?.value) || 0;
-        const price = parseFloat(row.querySelector('.price')?.value) || 0;
-        if (!itemCode || !project || qtyOrdered <= 0 || price <= 0) {
-            throw new Error('Each item must have a valid code, project, quantity, and price');
-        }
-        return { item_code: itemCode, item_description: itemDescription, project, qty_ordered: qtyOrdered, price };
-    });
-
-    if (!items.length) {
-        alert("Please add at least one item to the order");
-        return;
-    }
-
-    const payload = {
-        order_number: orderNumber,
-        created_date: createdDate,
-        supplier_name: document.getElementById("supplier_id").selectedOptions[0]?.text || "",
-        requester_name: document.getElementById("requester_id").selectedOptions[0]?.text || "",
-        total: total,
-        order_note: "",
-        note_to_supplier: noteToSupplier,
-        requester_id: parseInt(requesterId),
-        supplier_id: parseInt(supplierId),
-        items
-    };
-
-    try {
-        const pdfRes = await fetch("/orders/api/preview_pdf_new_order", {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        if (!pdfRes.ok || !pdfRes.headers.get("content-type")?.includes("application/pdf")) {
-            const err = await pdfRes.text();
-            throw new Error(`Failed to generate PDF: ${pdfRes.status} - ${err}`);
-        }
-
-        const blob = await pdfRes.blob();
-        if (!blob.size) throw new Error("Empty PDF file");
-
-        showPDFModal(blob);
-        await logToServer('INFO', 'Preview PDF displayed (no DB write)');
-    } catch (error) {
-        console.error("Preview failed:", error);
-        await logToServer('ERROR', 'PreviewOrder failed (no DB write)', { error: error.message });
-        alert(`Error: ${error.message}`);
-    }
-}
-  
-  async function submitOrder() {
-    console.log('debouncedSubmitOrder triggered');
-    await logToServer('INFO', 'submitOrder started');
-    const requesterId = document.getElementById('requester_id').value;
-    const supplierId = document.getElementById('supplier_id').value;
-    const noteToSupplier = document.getElementById('note_to_supplier').value;
-    console.log('Submitting order with:', { requester_id: requesterId, supplier_id: supplierId, note_to_supplier: noteToSupplier });
-  
-    if (!requesterId || !supplierId) {
-      await logToServer('ERROR', 'Missing required fields in submitOrder', { requesterId, supplierId });
-      alert('Please fill in all required fields (Requester, Supplier)');
-      return;
-    }
-  
-    const items = Array.from(document.querySelectorAll('#items-body tr')).map(row => {
-      const itemCode = row.querySelector('.item-code')?.value;
-      const itemDescription = itemsList.find(i => i.item_code === itemCode)?.item_description || '';
-      const project = row.querySelector('.project')?.value;
-      const qtyOrdered = parseFloat(row.querySelector('.qty-ordered')?.value) || 0;
-      const price = parseFloat(row.querySelector('.price')?.value) || 0;
-      if (!itemCode || !project || qtyOrdered <= 0 || price <= 0) {
-          throw new Error('All items must have a valid item code, project, quantity, and price');
-      }
-      return { item_code: itemCode, item_description: itemDescription, project, qty_ordered: qtyOrdered, price };
-    });
-  
-    console.log('Items:', items);
-    if (items.length === 0) {
-      await logToServer('ERROR', 'No items in order for submitOrder');
-      alert('Please add at least one item to the order');
-      return;
-    }
-  
-    console.log('Current Order Number:', currentOrderNumber);
-    const total = updateGrandTotal();
-    let status = "Pending";
-    if (total > authThreshold) {
-      status = "Awaiting Authorisation";
-    }
-    const orderData = {
-      order_number: currentOrderNumber,
-      status: status,
-      total: total,
-      order_note: "",
-      note_to_supplier: noteToSupplier,
-      requester_id: parseInt(requesterId),
-      supplier_id: parseInt(supplierId),
-      items
-    };
-  
-    console.log('Order Data:', orderData);
-    try {
-      const res = await fetch('/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData)
-      });
-      console.log(`Submit Response Status: ${res.status}`);
-      if (!res.ok) {
-        const errorText = await res.text();
-        await logToServer('ERROR', 'Failed to submit order', { status: res.status, errorText });
-        throw new Error(`Failed to submit order: ${res.status} - ${errorText}`);
-      }
-  
-      const data = await res.json();
-      console.log('Submit Response:', data);
-      if (data.message === "Order created successfully") {
-        currentOrderId = data.order_id;
-        await incrementOrderNumber();
-        await logToServer('INFO', 'Order submitted successfully', {
-          orderNumber: currentOrderNumber,
-          orderId: currentOrderId
-        });
-        alert('✅ Order submitted successfully!');
-        document.getElementById('requester_id').value = '';
-        document.getElementById('supplier_id').value = '';
-        document.getElementById('note_to_supplier').value = '';
-        document.getElementById('items-body').innerHTML = '';
-        rowCount = 0;
-      } else {
-        await logToServer('ERROR', 'Unexpected response in submitOrder', { response: data.message });
-        throw new Error(`Unexpected response: ${data.message}`);
-      }
-    } catch (error) {
-      console.error('Order submission failed:', error.message);
-      await logToServer('ERROR', 'Order submission failed', { error: error.message });
-      alert(`❌ Order submission failed: ${error.message}`);
-    }
-  }
-  
-  function logStatus(message) {
-    const logBox = document.getElementById("status-messages");
-    const entry = document.createElement("div");
-    const now = new Date().toLocaleTimeString();
-    entry.textContent = `[${now}] ${message}`;
-    logBox.appendChild(entry);
-    logBox.scrollTop = logBox.scrollHeight;
-  }
-  
-  function setupEventListeners() {
+function setupEventListeners() {
     const submitBtn = document.getElementById('submit-order');
     if (submitBtn) {
       console.log('Submit button exists:', !!submitBtn);
       submitBtn.addEventListener('click', () => {
-        console.log('Submit button clicked');
-        debounce(submitOrder, 500)();
-      });
+  console.log('Submit button clicked');
+  debounce(() => submitOrder({
+    currentOrderNumber,
+    authThreshold,
+    itemsList,
+    updateGrandTotal,
+    incrementOrderNumber,
+    logToServer,
+    setCurrentOrderId: (id) => currentOrderId = id
+  }), 500)();
+});
+
     } else {
       console.error('Submit button not found');
     }
@@ -499,21 +341,15 @@ function updateTotal(itemSelect) {
     const previewBtn = document.getElementById('preview-order');
     if (previewBtn) {
       previewBtn.addEventListener('click', () => {
-        previewOrder();
+        previewOrder({
+          itemsList, 
+          updateGrandTotal, 
+          logToServer });
       });
     } else {
       console.error('Preview button not found');
     }
-  
-    function logStatus(message) {
-        const logBox = document.getElementById("status-messages");
-        const entry = document.createElement("div");
-        const now = new Date().toLocaleTimeString();
-        entry.textContent = `[${now}] ${message}`;
-        logBox.appendChild(entry);
-        logBox.scrollTop = logBox.scrollHeight;
-      }
-  
+
     document.getElementById('add-line').addEventListener('click', () => {
       addRow();
     });
@@ -552,75 +388,3 @@ function updateTotal(itemSelect) {
       alert(`Error: ${err.message}`);
     }
   });
-
-  // Add logToServer function for client-side logging
-async function logToServer(level, message, details = {}) {
-    try {
-      await fetch('/log_client', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          level,
-          message,
-          details,
-          timestamp: new Date().toISOString()
-        })
-      });
-    } catch (error) {
-      console.error('Failed to log to server:', error);
-    }
-  }
-  
-  // Test function for previewOrder
-  async function testPreviewOrder() {
-    console.log("Running testPreviewOrder");
-    await logToServer('INFO', 'Starting previewOrder test');
-  
-    try {
-      // Ensure itemsList and projectsList are populated
-      if (!itemsList.length || !projectsList.length) {
-        throw new Error("Items or projects not loaded. Ensure dropdowns are populated.");
-      }
-  
-      // Dynamically select the first item and project from lists
-      const testItem = itemsList[0];
-      const testProject = projectsList[0];
-      const testQty = 2;
-      const testPrice = 10;
-      const testTotal = (testQty * testPrice).toFixed(2);
-  
-      // Mock DOM elements with dynamic data
-      document.body.innerHTML = `
-        <div id="order-number">URC1000</div>
-        <input id="request_date" value="2025-05-10">
-        <select id="supplier_id"><option value="1">Test Supplier</option></select>
-        <textarea id="note_to_supplier">Test note</textarea>
-        <table id="items-table"><tbody id="items-body">
-            <tr>
-                <td><select class="item-code"><option value="${testItem.item_code}" data-description="${testItem.item_description}" selected>${testItem.item_code}</option></select></td>
-                <td><select class="project"><option value="${testProject.project_code}" selected>${testProject.project_code}</option></select></td>
-                <td><input type="number" class="qty-ordered" value="${testQty}"></td>
-                <td><input type="number" class="price" value="${testPrice}"></td>
-                <td><input type="text" class="total" value="${testTotal}"></td>
-            </tr>
-        </tbody></table>
-        <button id="preview-order">View Purchase Order</button>
-      `;
-  
-      // Call the existing previewOrder function
-      await previewOrder();
-  
-      console.log("Test passed: previewOrder executed without errors");
-      await logToServer('INFO', 'previewOrder test completed successfully');
-    } catch (error) {
-      console.error("Test failed:", error);
-      await logToServer('ERROR', 'previewOrder test failed', {
-        error: error.message,
-        stack: error.stack
-      });
-      throw error;
-    }
-  }
-  
-  window.testPreviewOrder = testPreviewOrder;
-  

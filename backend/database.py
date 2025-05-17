@@ -175,28 +175,58 @@ def init_db():
         logging.error(f"Failed to initialize database: {str(e)}")
         raise
 
+def determine_status_and_band(total: float) -> tuple[str, int]:
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4 FROM settings WHERE id = 1")
+        row = cursor.fetchone()
+        if not row:
+            raise ValueError("Authorization thresholds not configured.")
+
+        thresholds = [row["auth_threshold_1"], row["auth_threshold_2"], row["auth_threshold_3"], row["auth_threshold_4"]]
+        status = "Pending"
+        required_band = 0
+
+        if total > thresholds[0]:
+            status = "Awaiting Authorisation"
+            if total <= thresholds[1]:
+                required_band = 1
+            elif total <= thresholds[2]:
+                required_band = 2
+            elif total <= thresholds[3]:
+                required_band = 3
+            else:
+                required_band = 4
+
+        return status, required_band
+
 def create_order(order_data: dict, items: list) -> dict:
+    status, required_band = determine_status_and_band(order_data["total"])
+
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
             INSERT INTO orders (
-                order_number, status, total, order_note, note_to_supplier, supplier_id, requester_id
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                order_number, status, total, order_note, note_to_supplier,
+                supplier_id, requester_id, required_auth_band
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             order_data["order_number"],
-            order_data["status"],
+            status,
             order_data["total"],
             order_data["order_note"],
             order_data["note_to_supplier"],
             order_data["supplier_id"],
-            order_data["requester_id"]
+            order_data["requester_id"],
+            required_band
         ))
         order_id = cursor.lastrowid
 
         for item in items:
             cursor.execute("""
                 INSERT INTO order_items (
-                    order_id, item_code, item_description, project, qty_ordered, price, total
+                    order_id, item_code, item_description, project,
+                    qty_ordered, price, total
                 ) VALUES (?, ?, ?, ?, ?, ?, ?)
             """, (
                 order_id,
@@ -216,7 +246,9 @@ def create_order(order_data: dict, items: list) -> dict:
         conn.commit()
 
         cursor.execute("""
-            SELECT id, order_number, status, created_date, total, order_note, note_to_supplier, supplier_id, requester_id
+            SELECT id, order_number, status, created_date, total,
+                   order_note, note_to_supplier, supplier_id,
+                   requester_id, required_auth_band
             FROM orders WHERE id = ?
         """, (order_id,))
         order = cursor.fetchone()

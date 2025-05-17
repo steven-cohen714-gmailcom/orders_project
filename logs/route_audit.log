@@ -57,6 +57,7 @@
 /lookups/login
 /lookups/logout
 /lookups/log_client
+/lookups/log
 /admin/requesters
 /admin/requesters
 /admin/requesters/{requester_id}
@@ -100,5 +101,6 @@
 /orders/attachments/{order_id}
 /orders/receive/{order_id}
 /log_client
+/log
 /orders/email_purchase_order
 /orders/api/generate_pdf_for_order/{order_id}

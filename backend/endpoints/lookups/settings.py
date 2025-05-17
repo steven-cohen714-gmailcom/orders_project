@@ -1,8 +1,20 @@
 from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 from backend.database import get_db_connection
 
 router = APIRouter()
 
+
+# --- Schema for incoming JSON body ---
+class SettingsPayload(BaseModel):
+    order_number_start: str
+    auth_threshold_1: int
+    auth_threshold_2: int
+    auth_threshold_3: int
+    auth_threshold_4: int
+
+
+# --- GET settings ---
 @router.get("/settings")
 async def get_settings():
     conn = get_db_connection()
@@ -30,7 +42,6 @@ async def get_settings():
             "auth_threshold_4": int(row[4]) if row[4] is not None else 0
         }
     else:
-        # Defaults if settings not found
         settings = {
             "order_number_start": "URC1000",
             "auth_threshold_1": 0,
@@ -58,14 +69,9 @@ async def get_settings():
     return settings
 
 
+# --- PUT settings ---
 @router.put("/settings")
-async def update_settings(
-    order_number_start: str,
-    auth_threshold_1: int,
-    auth_threshold_2: int,
-    auth_threshold_3: int,
-    auth_threshold_4: int
-):
+async def update_settings(payload: SettingsPayload):
     conn = get_db_connection()
     cursor = conn.cursor()
     try:
@@ -81,11 +87,11 @@ async def update_settings(
             WHERE id = 1
             """,
             (
-                order_number_start,
-                auth_threshold_1,
-                auth_threshold_2,
-                auth_threshold_3,
-                auth_threshold_4
+                payload.order_number_start,
+                payload.auth_threshold_1,
+                payload.auth_threshold_2,
+                payload.auth_threshold_3,
+                payload.auth_threshold_4
             )
         )
         if cursor.rowcount == 0:
@@ -96,11 +102,11 @@ async def update_settings(
                 VALUES (1, ?, ?, ?, ?, ?)
                 """,
                 (
-                    order_number_start,
-                    auth_threshold_1,
-                    auth_threshold_2,
-                    auth_threshold_3,
-                    auth_threshold_4
+                    payload.order_number_start,
+                    payload.auth_threshold_1,
+                    payload.auth_threshold_2,
+                    payload.auth_threshold_3,
+                    payload.auth_threshold_4
                 )
             )
         conn.commit()
