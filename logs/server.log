@@ -1,42 +1,32 @@
-INFO:     127.0.0.1:60881 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60881 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:60882 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60884 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60884 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60884 - "GET /static/js/maintenance_screen/users.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60882 - "GET /static/js/maintenance_screen/requesters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60881 - "GET /static/js/maintenance_screen/items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60888 - "GET /static/js/maintenance_screen/projects.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60886 - "GET /static/js/maintenance_screen/suppliers.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60890 - "GET /static/js/maintenance_screen/settings.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60888 - "GET /static/js/maintenance_screen/business_details.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60888 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60890 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60886 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60882 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60881 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60884 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60888 - "GET /lookups/business_details HTTP/1.1" 200 OK
-INFO:     127.0.0.1:60888 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64857 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64857 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:64858 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64860 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64860 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64860 - "GET /static/js/maintenance_screen/users.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64858 - "GET /static/js/maintenance_screen/requesters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64857 - "GET /static/js/maintenance_screen/items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64863 - "GET /static/js/maintenance_screen/suppliers.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64865 - "GET /static/js/maintenance_screen/projects.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64866 - "GET /static/js/maintenance_screen/settings.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64860 - "GET /static/js/maintenance_screen/business_details.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64860 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64866 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64863 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64865 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64857 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64858 - "GET /lookups/business_details HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64860 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64860 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64932 - "PUT /lookups/users/2 HTTP/1.1" 422 Unprocessable Content
-INFO:     127.0.0.1:65014 - "PUT /lookups/users/2 HTTP/1.1" 422 Unprocessable Content
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [55997] using StatReload
+INFO:     Started server process [56066]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51605 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51606 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51605 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51608 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51608 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51608 - "GET /static/js/maintenance_screen/items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51606 - "GET /static/js/maintenance_screen/suppliers.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51605 - "GET /static/js/maintenance_screen/users.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51613 - "GET /static/js/maintenance_screen/settings.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51611 - "GET /static/js/maintenance_screen/projects.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51614 - "GET /static/js/maintenance_screen/business_details.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51608 - "GET /static/js/maintenance_screen/requesters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51608 - "GET /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51611 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51614 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51613 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51605 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51606 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51608 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51608 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51869 - "POST /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51869 - "GET /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51946 - "POST /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51946 - "GET /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52016 - "PUT /lookups/users/2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52016 - "GET /lookups/users HTTP/1.1" 200 OK

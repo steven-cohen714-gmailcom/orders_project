@@ -6,7 +6,7 @@ export function initUsers() {
   const cancelBtn = document.getElementById("cancel-user-edit");
   if (cancelBtn) {
     cancelBtn.addEventListener("click", cancelUserEdit);
-    cancelBtn.style.display = "none"; // hidden initially
+    cancelBtn.style.display = "none";
   }
 
   const form = document.querySelector("#users form");
@@ -43,7 +43,7 @@ async function fetchUsers() {
       row.appendChild(rightsCell);
 
       const thresholdBandCell = document.createElement("td");
-      thresholdBandCell.textContent = user.auth_threshold_band || "Not Set";
+      thresholdBandCell.textContent = user.auth_threshold_band ?? "Not Set";
       row.appendChild(thresholdBandCell);
 
       const actionsCell = document.createElement("td");
@@ -74,9 +74,19 @@ async function addOrUpdateUser() {
   const username = document.getElementById("user-username")?.value;
   const password = document.getElementById("user-password")?.value;
   const rights = document.getElementById("user-rights")?.value;
-  const auth_threshold_band = document.getElementById("user-auth-threshold-band")?.value || null;
+  const authThresholdBandRaw = document.getElementById("user-auth-threshold-band")?.value;
 
-  if (!username || !rights) return;
+  const auth_threshold_band = authThresholdBandRaw === "" ? null : parseInt(authThresholdBandRaw, 10);
+
+  if (!username || !rights) {
+    alert("Username and rights are required.");
+    return;
+  }
+
+  if (!id && !password) {
+    alert("Password is required when adding a new user.");
+    return;
+  }
 
   const method = id ? "PUT" : "POST";
   const url = id ? `/lookups/users/${id}` : "/lookups/users";
@@ -96,9 +106,21 @@ async function addOrUpdateUser() {
     if (res.ok) {
       fetchUsers();
       cancelUserEdit();
+    } else {
+      const errorData = await res.json();
+      let msg = "Failed to save user.";
+      if (errorData.detail) {
+        msg += " " + (
+          Array.isArray(errorData.detail)
+            ? errorData.detail.map(e => e.msg).join(", ")
+            : errorData.detail
+        );
+      }
+      alert(msg);
     }
   } catch (err) {
     console.error("Failed to add/update user:", err);
+    alert("Unexpected error occurred.");
   }
 }
 
@@ -106,7 +128,7 @@ function editUser(id, username, rights, auth_threshold_band) {
   document.getElementById("user-id").value = id;
   document.getElementById("user-username").value = username;
   document.getElementById("user-rights").value = rights;
-  document.getElementById("user-auth-threshold-band").value = auth_threshold_band || "";
+  document.getElementById("user-auth-threshold-band").value = auth_threshold_band ?? "";
   document.getElementById("user-password").value = "";
 
   document.getElementById("cancel-user-edit").style.display = "inline";

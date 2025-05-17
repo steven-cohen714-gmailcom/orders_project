@@ -1884,3 +1884,39 @@ sqlite3.OperationalError: database is locked
 2025-05-17 11:30:09,692 | INFO | Items fetched: 12 items
 2025-05-17 11:30:09,693 | INFO | Projects fetched: 12 items
 2025-05-17 11:30:09,693 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 12:17:56,582 | INFO | Database tables created successfully.
+2025-05-17 12:17:56,582 | INFO | ✅ Database initialized successfully.
+2025-05-17 12:18:08,295 | INFO | Database tables created successfully.
+2025-05-17 12:18:08,295 | INFO | ✅ Database initialized successfully.
+2025-05-17 12:18:08,846 | INFO | Database tables created successfully.
+2025-05-17 12:18:08,846 | INFO | ✅ Database initialized successfully.
+2025-05-17 12:18:29,356 | INFO | Rendering maintenance page
+2025-05-17 12:18:29,421 | INFO | Suppliers fetched: 11 items
+2025-05-17 12:18:29,423 | INFO | Projects fetched: 12 items
+2025-05-17 12:18:29,424 | INFO | Requesters fetched: 7 items
+2025-05-17 12:18:29,425 | INFO | Items fetched: 12 items
+2025-05-17 12:18:29,426 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 12:21:44,302 | INFO | Database tables created successfully.
+2025-05-17 12:21:44,302 | INFO | ✅ Database initialized successfully.
+2025-05-17 12:22:49,469 | INFO | Database tables created successfully.
+2025-05-17 12:22:49,469 | INFO | ✅ Database initialized successfully.
+2025-05-17 12:22:50,029 | INFO | Database tables created successfully.
+2025-05-17 12:22:50,029 | INFO | ✅ Database initialized successfully.
+2025-05-17 12:22:57,526 | INFO | Rendering maintenance page
+2025-05-17 12:22:57,591 | INFO | Requesters fetched: 7 items
+2025-05-17 12:22:57,592 | INFO | Items fetched: 12 items
+2025-05-17 12:22:57,592 | INFO | Suppliers fetched: 11 items
+2025-05-17 12:22:57,593 | INFO | Projects fetched: 12 items
+2025-05-17 12:22:57,594 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 12:41:09,360 | INFO | Database tables created successfully.
+2025-05-17 12:41:09,361 | INFO | ✅ Database initialized successfully.
+2025-05-17 12:45:35,596 | INFO | Database tables created successfully.
+2025-05-17 12:45:35,597 | INFO | ✅ Database initialized successfully.
+2025-05-17 12:45:36,130 | INFO | Database tables created successfully.
+2025-05-17 12:45:36,130 | INFO | ✅ Database initialized successfully.
+2025-05-17 12:45:44,732 | INFO | Rendering maintenance page
+2025-05-17 12:45:44,802 | INFO | Requesters fetched: 7 items
+2025-05-17 12:45:44,803 | INFO | Items fetched: 12 items
+2025-05-17 12:45:44,803 | INFO | Suppliers fetched: 11 items
+2025-05-17 12:45:44,804 | INFO | Projects fetched: 12 items
+2025-05-17 12:45:44,805 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
