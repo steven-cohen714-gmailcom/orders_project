@@ -318,3 +318,56 @@ i:hover {
 .email-icon:hover {
   color: #007bff;
 }
+
+/* ------------------ FORM FIELD SPACING (MAINTENANCE) ------------------ */
+
+#settings .form-group label,
+#settings .form-group input {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#settings .form-group input {
+  width: 250px;
+  padding: 0.5rem;
+}
+
+#settings .form-group {
+  margin-bottom: 1.2rem;
+}
+
+/* ------------------ BUSINESS DETAILS FORM SPACING ------------------ */
+
+#business_details .form-group label,
+#business_details .form-group input {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#business_details .form-group input {
+  width: 280px;
+  padding: 0.5rem;
+}
+
+#business_details .form-group {
+  margin-bottom: 1.2rem;
+}
+
+/* ------------------ USERS TAB FORM SPACING ------------------ */
+
+#users .form-group label,
+#users .form-group input,
+#users .form-group select {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#users .form-group input,
+#users .form-group select {
+  width: 280px;
+  padding: 0.5rem;
+}
+
+#users .form-group {
+  margin-bottom: 1.2rem;
+}

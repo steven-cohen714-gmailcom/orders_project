@@ -1772,3 +1772,115 @@ sqlite3.OperationalError: database is locked
 2025-05-17 05:15:13,954 | INFO | Suppliers fetched: 11 items
 2025-05-17 05:15:13,956 | INFO | Projects fetched: 11 items
 2025-05-17 05:15:13,958 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 10:11:14,571 | INFO | Database tables created successfully.
+2025-05-17 10:11:14,571 | INFO | ✅ Database initialized successfully.
+2025-05-17 10:11:15,114 | INFO | Database tables created successfully.
+2025-05-17 10:11:15,114 | INFO | ✅ Database initialized successfully.
+2025-05-17 10:11:47,772 | INFO | Rendering login page
+2025-05-17 10:11:59,901 | INFO | Rendering home page
+2025-05-17 10:12:05,711 | INFO | Rendering maintenance page
+2025-05-17 10:17:13,968 | INFO | Database tables created successfully.
+2025-05-17 10:17:13,969 | INFO | ✅ Database initialized successfully.
+2025-05-17 10:17:14,541 | INFO | Database tables created successfully.
+2025-05-17 10:17:14,541 | INFO | ✅ Database initialized successfully.
+2025-05-17 10:17:19,783 | INFO | Rendering maintenance page
+2025-05-17 10:29:21,367 | INFO | Database tables created successfully.
+2025-05-17 10:29:21,367 | INFO | ✅ Database initialized successfully.
+2025-05-17 10:29:21,913 | INFO | Database tables created successfully.
+2025-05-17 10:29:21,913 | INFO | ✅ Database initialized successfully.
+2025-05-17 10:29:30,934 | INFO | Rendering maintenance page
+2025-05-17 10:29:30,997 | INFO | Requesters fetched: 5 items
+2025-05-17 10:29:30,998 | INFO | Suppliers fetched: 11 items
+2025-05-17 10:29:31,000 | INFO | Items fetched: 11 items
+2025-05-17 10:29:31,000 | INFO | Projects fetched: 11 items
+2025-05-17 10:29:31,001 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 10:37:46,743 | INFO | Rendering maintenance page
+2025-05-17 10:37:46,792 | INFO | Requesters fetched: 5 items
+2025-05-17 10:37:46,795 | INFO | Items fetched: 11 items
+2025-05-17 10:37:46,798 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 10:37:46,801 | INFO | Suppliers fetched: 11 items
+2025-05-17 10:37:46,802 | INFO | Projects fetched: 11 items
+2025-05-17 10:41:09,651 | INFO | Rendering maintenance page
+2025-05-17 10:41:09,699 | INFO | Requesters fetched: 5 items
+2025-05-17 10:41:09,700 | INFO | Items fetched: 11 items
+2025-05-17 10:41:09,701 | INFO | Suppliers fetched: 11 items
+2025-05-17 10:41:09,702 | INFO | Projects fetched: 11 items
+2025-05-17 10:41:09,703 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 10:42:35,001 | INFO | Rendering maintenance page
+2025-05-17 10:42:35,052 | INFO | Requesters fetched: 5 items
+2025-05-17 10:42:35,052 | INFO | Items fetched: 11 items
+2025-05-17 10:42:35,053 | INFO | Suppliers fetched: 11 items
+2025-05-17 10:42:35,054 | INFO | Projects fetched: 11 items
+2025-05-17 10:42:35,056 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 10:44:36,835 | INFO | Rendering maintenance page
+2025-05-17 10:44:36,873 | INFO | Requesters fetched: 5 items
+2025-05-17 10:44:36,874 | INFO | Items fetched: 11 items
+2025-05-17 10:44:36,874 | INFO | Suppliers fetched: 11 items
+2025-05-17 10:44:36,875 | INFO | Projects fetched: 11 items
+2025-05-17 10:44:36,876 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 10:44:50,295 | INFO | Rendering received orders page
+2025-05-17 10:44:50,355 | INFO | Requesters fetched: 5 items
+2025-05-17 10:44:50,381 | INFO | Suppliers fetched: 11 items
+2025-05-17 10:44:51,296 | INFO | Rendering pending orders page
+2025-05-17 10:44:51,339 | INFO | Requesters fetched: 5 items
+2025-05-17 10:44:51,340 | INFO | Suppliers fetched: 11 items
+2025-05-17 10:44:53,834 | INFO | Rendering maintenance page
+2025-05-17 10:44:53,879 | INFO | Requesters fetched: 5 items
+2025-05-17 10:44:53,880 | INFO | Items fetched: 11 items
+2025-05-17 10:44:53,883 | INFO | Suppliers fetched: 11 items
+2025-05-17 10:44:53,886 | INFO | Projects fetched: 11 items
+2025-05-17 10:44:53,888 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 10:47:11,253 | INFO | Rendering maintenance page
+2025-05-17 10:47:11,297 | INFO | Requesters fetched: 5 items
+2025-05-17 10:47:11,298 | INFO | Items fetched: 11 items
+2025-05-17 10:47:11,298 | INFO | Suppliers fetched: 11 items
+2025-05-17 10:47:11,299 | INFO | Projects fetched: 11 items
+2025-05-17 10:47:11,300 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 10:50:17,057 | INFO | Database tables created successfully.
+2025-05-17 10:50:17,057 | INFO | ✅ Database initialized successfully.
+2025-05-17 10:50:17,622 | INFO | Database tables created successfully.
+2025-05-17 10:50:17,622 | INFO | ✅ Database initialized successfully.
+2025-05-17 10:50:25,347 | INFO | Rendering maintenance page
+2025-05-17 10:50:25,407 | INFO | Requesters fetched: 5 items
+2025-05-17 10:50:25,408 | INFO | Items fetched: 11 items
+2025-05-17 10:50:25,409 | INFO | Suppliers fetched: 11 items
+2025-05-17 10:50:25,410 | INFO | Projects fetched: 11 items
+2025-05-17 10:50:25,411 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 11:00:39,298 | INFO | Database tables created successfully.
+2025-05-17 11:00:39,298 | INFO | ✅ Database initialized successfully.
+2025-05-17 11:00:51,401 | INFO | Database tables created successfully.
+2025-05-17 11:00:51,401 | INFO | ✅ Database initialized successfully.
+2025-05-17 11:00:51,968 | INFO | Database tables created successfully.
+2025-05-17 11:00:51,969 | INFO | ✅ Database initialized successfully.
+2025-05-17 11:00:59,060 | INFO | Rendering maintenance page
+2025-05-17 11:00:59,123 | INFO | Requesters fetched: 5 items
+2025-05-17 11:00:59,124 | INFO | Items fetched: 11 items
+2025-05-17 11:00:59,125 | INFO | Suppliers fetched: 11 items
+2025-05-17 11:00:59,126 | INFO | Projects fetched: 11 items
+2025-05-17 11:00:59,127 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 11:02:47,450 | INFO | New requester added: Shannon
+2025-05-17 11:02:47,453 | INFO | Requesters fetched: 6 items
+2025-05-17 11:03:33,160 | INFO | New project added: Test - Test Project
+2025-05-17 11:03:33,165 | INFO | Projects fetched: 12 items
+2025-05-17 11:04:05,303 | INFO | New item added: Test - Test Item
+2025-05-17 11:04:05,307 | INFO | Items fetched: 12 items
+2025-05-17 11:04:21,496 | INFO | Rendering maintenance page
+2025-05-17 11:04:21,535 | INFO | Requesters fetched: 6 items
+2025-05-17 11:04:21,536 | INFO | Items fetched: 12 items
+2025-05-17 11:04:21,537 | INFO | Suppliers fetched: 11 items
+2025-05-17 11:04:21,538 | INFO | Projects fetched: 12 items
+2025-05-17 11:04:21,539 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 11:06:24,192 | INFO | New requester added: Daniel
+2025-05-17 11:06:24,201 | INFO | Requesters fetched: 7 items
+2025-05-17 11:14:34,543 | INFO | Rendering maintenance page
+2025-05-17 11:14:34,592 | INFO | Requesters fetched: 7 items
+2025-05-17 11:14:34,594 | INFO | Items fetched: 12 items
+2025-05-17 11:14:34,595 | INFO | Suppliers fetched: 11 items
+2025-05-17 11:14:34,595 | INFO | Projects fetched: 12 items
+2025-05-17 11:14:34,597 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-17 11:30:09,651 | INFO | Rendering maintenance page
+2025-05-17 11:30:09,691 | INFO | Suppliers fetched: 11 items
+2025-05-17 11:30:09,691 | INFO | Requesters fetched: 7 items
+2025-05-17 11:30:09,692 | INFO | Items fetched: 12 items
+2025-05-17 11:30:09,693 | INFO | Projects fetched: 12 items
+2025-05-17 11:30:09,693 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved

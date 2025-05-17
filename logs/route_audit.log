@@ -26,10 +26,8 @@
 /lookups/projects
 /lookups/projects
 /lookups/projects/{project_id}
-/lookups/lookups/settings
-⚠️ Suspicious duplicate segment in: /lookups/lookups/settings
-/lookups/lookups/settings
-⚠️ Suspicious duplicate segment in: /lookups/lookups/settings
+/lookups/settings
+/lookups/settings
 /lookups/business_details
 /lookups/business_details
 /lookups/users
@@ -48,10 +46,8 @@
 /lookups/projects
 /lookups/projects
 /lookups/projects/{project_id}
-/lookups/lookups/settings
-⚠️ Suspicious duplicate segment in: /lookups/lookups/settings
-/lookups/lookups/settings
-⚠️ Suspicious duplicate segment in: /lookups/lookups/settings
+/lookups/settings
+/lookups/settings
 /lookups/business_details
 /lookups/business_details
 /lookups/users
@@ -73,8 +69,8 @@
 /admin/projects
 /admin/projects
 /admin/projects/{project_id}
-/admin/lookups/settings
-/admin/lookups/settings
+/admin/settings
+/admin/settings
 /admin/business_details
 /admin/business_details
 /admin/users
