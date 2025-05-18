@@ -28,6 +28,7 @@
 /lookups/projects/{project_id}
 /lookups/settings
 /lookups/settings
+/lookups/order_number
 /lookups/business_details
 /lookups/business_details
 /lookups/users
@@ -48,6 +49,7 @@
 /lookups/projects/{project_id}
 /lookups/settings
 /lookups/settings
+/lookups/order_number
 /lookups/business_details
 /lookups/business_details
 /lookups/users
@@ -72,6 +74,7 @@
 /admin/projects/{project_id}
 /admin/settings
 /admin/settings
+/admin/order_number
 /admin/business_details
 /admin/business_details
 /admin/users

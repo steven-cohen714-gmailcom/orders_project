@@ -1,8 +1,6 @@
-// submit_utils.js
-
 export async function submitOrder({
     currentOrderNumber,
-    authThreshold,
+    authThresholds, // array: [threshold_1, threshold_2, threshold_3, threshold_4]
     itemsList,
     updateGrandTotal,
     incrementOrderNumber,
@@ -28,25 +26,44 @@ export async function submitOrder({
         const project = row.querySelector('.project')?.value;
         const qtyOrdered = parseFloat(row.querySelector('.qty-ordered')?.value) || 0;
         const price = parseFloat(row.querySelector('.price')?.value) || 0;
+
         if (!itemCode || !project || qtyOrdered <= 0 || price <= 0) {
             throw new Error('All items must have a valid item code, project, quantity, and price');
         }
-        return { item_code: itemCode, item_description: itemDescription, project, qty_ordered: qtyOrdered, price };
+
+        return {
+            item_code: itemCode,
+            item_description: itemDescription,
+            project,
+            qty_ordered: qtyOrdered,
+            price
+        };
     });
 
     const total = updateGrandTotal();
+
+    // --- Determine status and band ---
     let status = "Pending";
-    if (total > authThreshold) {
-        status = "Awaiting Authorisation";
+    let authBandRequired = null;
+
+    for (let i = 0; i < authThresholds.length; i++) {
+        if (total > authThresholds[i]) {
+            status = "Awaiting Authorisation";
+            authBandRequired = i + 1;
+        } else {
+            break;
+        }
     }
 
     const orderData = {
         order_number: currentOrderNumber,
-        total: total,
+        total,
         order_note: "",
         note_to_supplier: noteToSupplier,
         requester_id: parseInt(requesterId),
         supplier_id: parseInt(supplierId),
+        status,
+        ...(authBandRequired ? { auth_band_required: authBandRequired } : {}),
         items
     };
 
@@ -66,11 +83,14 @@ export async function submitOrder({
         const data = await res.json();
         if (data.message === "Order created successfully") {
             setCurrentOrderId(data.order_id);
-            await incrementOrderNumber();
-            await logToServer('INFO', 'Order submitted successfully', {
-                orderNumber: currentOrderNumber,
+
+            const newOrderNumber = await incrementOrderNumber(currentOrderNumber);
+
+            await logToServer('INFO', 'Order submitted and order number incremented', {
+                orderNumber: newOrderNumber,
                 orderId: data.order_id
             });
+
             alert('✅ Order submitted successfully!');
             document.getElementById('requester_id').value = '';
             document.getElementById('supplier_id').value = '';

@@ -46,7 +46,13 @@ async function loadOrderNumber() {
   try {
       const settingsData = await fetchData("/lookups/settings");
       currentOrderNumber = settingsData.order_number_start || "URC1000";
-      authThreshold = parseFloat(settingsData.auth_threshold) || 0; // Added
+      authThreshold = [
+        parseFloat(settingsData.auth_threshold_1 || 0),
+        parseFloat(settingsData.auth_threshold_2 || 0),
+        parseFloat(settingsData.auth_threshold_3 || 0),
+        parseFloat(settingsData.auth_threshold_4 || 0)
+      ];
+      
       document.getElementById("order-number").textContent = currentOrderNumber;
   } catch (error) {
       console.error("Error loading order number:", error);
@@ -55,25 +61,28 @@ async function loadOrderNumber() {
 }
 
 // Added: Function to increment and update order number
-async function incrementOrderNumber() {
+async function incrementOrderNumber(currentOrderNumber) {
+  const current = currentOrderNumber.match(/\d+$/);
+  const prefix = currentOrderNumber.replace(/\d+$/, "");
+  const nextNum = current ? String(parseInt(current[0]) + 1).padStart(4, "0") : "1001";
+  const newOrderNumber = `${prefix}${nextNum}`;
+
   try {
-      const currentNum = parseInt(currentOrderNumber.replace("URC", ""));
-      const nextNum = currentNum + 1;
-      const newOrderNumber = `URC${nextNum.toString().padStart(4, "0")}`;
-      const res = await fetch("/lookups/settings", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ order_number_start: newOrderNumber, auth_threshold: authThreshold })
+      const res = await fetch('/lookups/order_number', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order_number_start: newOrderNumber })
       });
+
       if (!res.ok) {
           const errorText = await res.text();
-          throw new Error(`Failed to update order number: ${res.status} - ${errorText}`);
+          console.error("Failed to update order number:", errorText);
       }
-      currentOrderNumber = newOrderNumber;
-      document.getElementById("order-number").textContent = currentOrderNumber;
-  } catch (error) {
-      console.error("Error incrementing order number:", error);
-      throw error;
+
+      return newOrderNumber;
+  } catch (err) {
+      console.error("Exception during order number update:", err.message);
+      return currentOrderNumber;  // fallback
   }
 }
 
@@ -316,7 +325,7 @@ function updateTotal(itemSelect) {
           alert('Failed to send email: ' + error.message);
       }
   }
-  
+
 function setupEventListeners() {
     const submitBtn = document.getElementById('submit-order');
     if (submitBtn) {
@@ -325,12 +334,12 @@ function setupEventListeners() {
   console.log('Submit button clicked');
   debounce(() => submitOrder({
     currentOrderNumber,
-    authThreshold,
+    authThresholds: authThreshold,
     itemsList,
     updateGrandTotal,
     incrementOrderNumber,
     logToServer,
-    setCurrentOrderId: (id) => currentOrderId = id
+    setCurrentOrderId: (id) => currentOrderId = id,
   }), 500)();
 });
 

@@ -9,9 +9,9 @@ from backend.utils.db_utils import handle_db_errors, log_success, log_warning
 from backend.utils.order_utils import calculate_order_total
 from backend.database import create_order, get_db_connection
 
-router = APIRouter(tags=["orders"])  # Removed prefix="/orders"
+router = APIRouter(tags=["orders"])
 
-# Pydantic models
+# --- Models ---
 class OrderItemCreate(BaseModel):
     item_code: str
     item_description: str
@@ -27,6 +27,7 @@ class OrderCreate(BaseModel):
     supplier_id: int
     requester_id: int
     items: List[OrderItemCreate]
+    auth_band_required: Optional[int] = None  # NEW FIELD
 
 class OrderUpdate(BaseModel):
     status: Optional[str] = None
@@ -55,7 +56,8 @@ async def create_new_order(order: OrderCreate):
             "order_note": order.order_note,
             "note_to_supplier": order.note_to_supplier,
             "supplier_id": order.supplier_id,
-            "requester_id": order.requester_id
+            "requester_id": order.requester_id,
+            "auth_band_required": order.auth_band_required  # NEW FIELD
         }
         items = [item.dict() for item in order.items]
         result = create_order(order_data, items)

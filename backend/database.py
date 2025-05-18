@@ -111,10 +111,14 @@ def init_db():
 
             # Create settings table
             cursor.execute("""
-                CREATE TABLE IF NOT EXISTS settings (
-                    key TEXT PRIMARY KEY,
-                    value TEXT
-                )
+            CREATE TABLE IF NOT EXISTS settings (
+                id INTEGER PRIMARY KEY CHECK (id = 1),
+                order_number_start TEXT,
+                auth_threshold_1 INTEGER,
+                auth_threshold_2 INTEGER,
+                auth_threshold_3 INTEGER,
+                auth_threshold_4 INTEGER
+            )
             """)
 
             # Create users table
@@ -254,19 +258,40 @@ def create_order(order_data: dict, items: list) -> dict:
         order = cursor.fetchone()
         return dict(order)
 
-def get_setting(key: str) -> str:
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("SELECT value FROM settings WHERE key = ?", (key,))
-        row = cursor.fetchone()
-        return row["value"] if row else None
-
-def update_setting(key: str, value: str):
+def get_settings() -> dict:
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
-            INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)
-        """, (key, value))
+            SELECT order_number_start, auth_threshold_1, auth_threshold_2,
+                   auth_threshold_3, auth_threshold_4
+            FROM settings
+            WHERE id = 1
+        """)
+        row = cursor.fetchone()
+        return dict(row) if row else {}
+
+def update_settings(payload: dict):
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO settings (
+                id, order_number_start, auth_threshold_1, auth_threshold_2,
+                auth_threshold_3, auth_threshold_4
+            ) VALUES (?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                order_number_start = excluded.order_number_start,
+                auth_threshold_1 = excluded.auth_threshold_1,
+                auth_threshold_2 = excluded.auth_threshold_2,
+                auth_threshold_3 = excluded.auth_threshold_3,
+                auth_threshold_4 = excluded.auth_threshold_4
+        """, (
+            1,
+            payload["order_number_start"],
+            payload["auth_threshold_1"],
+            payload["auth_threshold_2"],
+            payload["auth_threshold_3"],
+            payload["auth_threshold_4"]
+        ))
         conn.commit()
 
 def get_business_details() -> dict:
