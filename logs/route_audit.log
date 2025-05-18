@@ -14,6 +14,8 @@
 /maintenance
 /orders/partially_delivered
 /favicon.ico
+/orders/api/awaiting_authorisation
+/orders/api/authorise_order/{order_id}
 /lookups/requesters
 /lookups/requesters
 /lookups/requesters/{requester_id}
@@ -60,6 +62,9 @@
 /lookups/logout
 /lookups/log_client
 /lookups/log
+/orders/new
+/orders/pending_orders
+/mobile/authorisations
 /admin/requesters
 /admin/requesters
 /admin/requesters/{requester_id}

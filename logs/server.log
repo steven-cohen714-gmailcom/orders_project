@@ -1,0 +1,17 @@
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [79783] using StatReload
+INFO:     Started server process [79852]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     192.168.22.155:61064 - "GET / HTTP/1.1" 200 OK
+INFO:     192.168.22.155:61064 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     192.168.22.155:61065 - "POST /login HTTP/1.1" 200 OK
+INFO:     192.168.22.155:61065 - "GET /home HTTP/1.1" 200 OK
+INFO:     192.168.22.155:61065 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     192.168.22.155:61066 - "GET /mobile/authorisations HTTP/1.1" 200 OK
+INFO:     192.168.22.155:61066 - "GET /static/mobile/css/authorisations.css HTTP/1.1" 404 Not Found
+INFO:     192.168.22.155:61068 - "GET /static/mobile/js/authorisations_screen/main.js HTTP/1.1" 304 Not Modified
+INFO:     192.168.22.155:61068 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 403 Forbidden
+INFO:     192.168.22.155:61068 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     192.168.22.155:61073 - "GET /static/mobile/css/authorisations.css HTTP/1.1" 404 Not Found

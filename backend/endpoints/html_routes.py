@@ -14,6 +14,7 @@ logging.basicConfig(
 router = APIRouter()
 templates = Jinja2Templates(directory="frontend/templates")
 
+
 @router.get("/orders/new", response_class=HTMLResponse)
 async def new_order_page(request: Request):
     try:
@@ -58,6 +59,7 @@ async def new_order_page(request: Request):
         logging.error(f"Error rendering new order page: {str(e)}")
         raise
 
+
 @router.get("/orders/pending_orders", response_class=HTMLResponse)
 async def pending_orders_page(request: Request):
     try:
@@ -67,4 +69,16 @@ async def pending_orders_page(request: Request):
         )
     except Exception as e:
         logging.error(f"Error rendering pending orders page: {str(e)}")
+        raise
+
+
+@router.get("/mobile/authorisations", response_class=HTMLResponse)
+async def mobile_authorisations_screen(request: Request):
+    try:
+        return templates.TemplateResponse(
+            "mobile/authorisations.html",
+            {"request": request}
+        )
+    except Exception as e:
+        logging.error(f"Error rendering mobile authorisations screen: {str(e)}")
         raise

@@ -5,6 +5,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.routing import APIRouter
+from backend.endpoints import html_routes
 
 from pathlib import Path
 import logging
@@ -26,6 +27,7 @@ from backend.endpoints.order_receiving import router as order_receiving_router
 from backend.endpoints.order_attachments import router as attachments_router
 from backend.endpoints.order_email import router as order_email_router
 from backend.endpoints.utils import router as utils_router
+from backend.endpoints.mobile.awaiting_authorisation import router as mobile_auth_router
 
 # Allow scripts to import from parent
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -183,6 +185,7 @@ async def favicon():
 # --- Include Routers ---
 # Include static routes first to take precedence
 app.include_router(static_router)
+app.include_router(mobile_auth_router)
 
 # Include lookup routers under /lookups
 for router in routers:
@@ -190,6 +193,7 @@ for router in routers:
         app.include_router(router, prefix="/lookups")
 
 # Include other routers with their specific prefixes
+app.include_router(html_routes.router)
 app.include_router(admin_router, prefix="/admin")
 app.include_router(order_queries_router, prefix="/orders/api")
 app.include_router(new_order_pdf_router, prefix="/orders/api")

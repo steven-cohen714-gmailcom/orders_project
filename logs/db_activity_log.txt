@@ -2376,3 +2376,60 @@ sqlite3.ProgrammingError: You can only execute one statement at a time.
 2025-05-18 05:35:31,382 | INFO | ✅ Database initialized successfully.
 2025-05-18 05:35:31,911 | INFO | Database tables created successfully.
 2025-05-18 05:35:31,911 | INFO | ✅ Database initialized successfully.
+2025-05-18 07:15:44,103 | INFO | Database tables created successfully.
+2025-05-18 07:15:44,103 | INFO | ✅ Database initialized successfully.
+2025-05-18 07:44:41,080 | INFO | Database tables created successfully.
+2025-05-18 07:44:41,080 | INFO | ✅ Database initialized successfully.
+2025-05-18 07:49:36,467 | INFO | Database tables created successfully.
+2025-05-18 07:49:36,467 | INFO | ✅ Database initialized successfully.
+2025-05-18 07:49:51,823 | INFO | Database tables created successfully.
+2025-05-18 07:49:51,823 | INFO | ✅ Database initialized successfully.
+2025-05-18 07:49:52,254 | INFO | Database tables created successfully.
+2025-05-18 07:49:52,254 | INFO | ✅ Database initialized successfully.
+2025-05-18 07:55:04,484 | INFO | Rendering login page
+2025-05-18 07:55:15,267 | INFO | Rendering home page
+2025-05-18 07:55:21,515 | INFO | Rendering pending orders page
+2025-05-18 07:55:21,559 | INFO | Requesters fetched: 7 items
+2025-05-18 07:55:21,560 | INFO | Suppliers fetched: 11 items
+2025-05-18 07:55:35,924 | INFO | Rendering partially delivered orders page
+2025-05-18 07:55:35,950 | INFO | Requesters fetched: 7 items
+2025-05-18 07:55:35,953 | INFO | Suppliers fetched: 11 items
+2025-05-18 07:55:39,574 | INFO | Rendering audit trail page
+2025-05-18 07:55:39,598 | INFO | Requesters fetched: 7 items
+2025-05-18 07:55:39,602 | INFO | Suppliers fetched: 11 items
+2025-05-18 07:55:39,609 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 86 total orders for audit trail
+2025-05-18 07:55:42,121 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 143
+2025-05-18 07:55:44,081 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 142
+2025-05-18 07:55:46,355 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 134
+2025-05-18 07:55:48,324 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 135
+2025-05-18 08:10:53,404 | INFO | Database tables created successfully.
+2025-05-18 08:10:53,404 | INFO | ✅ Database initialized successfully.
+2025-05-18 08:16:11,883 | INFO | Database tables created successfully.
+2025-05-18 08:16:11,883 | INFO | ✅ Database initialized successfully.
+2025-05-18 08:16:55,443 | INFO | Database tables created successfully.
+2025-05-18 08:16:55,443 | INFO | ✅ Database initialized successfully.
+2025-05-18 08:16:55,852 | INFO | Database tables created successfully.
+2025-05-18 08:16:55,852 | INFO | ✅ Database initialized successfully.
+2025-05-18 08:20:06,477 | INFO | Rendering login page
+2025-05-18 08:20:16,118 | INFO | Rendering home page
+2025-05-18 08:23:03,471 | INFO | Database tables created successfully.
+2025-05-18 08:23:03,471 | INFO | ✅ Database initialized successfully.
+2025-05-18 08:23:23,934 | INFO | Database tables created successfully.
+2025-05-18 08:23:23,934 | INFO | ✅ Database initialized successfully.
+2025-05-18 08:23:24,335 | INFO | Database tables created successfully.
+2025-05-18 08:23:24,336 | INFO | ✅ Database initialized successfully.
+2025-05-18 08:23:44,560 | INFO | Rendering home page
+2025-05-18 08:24:05,296 | INFO | Rendering login page
+2025-05-18 08:24:16,247 | INFO | Rendering home page
+2025-05-18 08:25:27,069 | INFO | Rendering login page
+2025-05-18 08:25:34,967 | INFO | Rendering home page
+2025-05-18 08:28:35,243 | INFO | Rendering login page
+2025-05-18 08:28:44,033 | INFO | Rendering home page
+2025-05-18 08:33:33,486 | INFO | Database tables created successfully.
+2025-05-18 08:33:33,486 | INFO | ✅ Database initialized successfully.
+2025-05-18 08:39:20,670 | INFO | Database tables created successfully.
+2025-05-18 08:39:20,670 | INFO | ✅ Database initialized successfully.
+2025-05-18 08:39:21,087 | INFO | Database tables created successfully.
+2025-05-18 08:39:21,087 | INFO | ✅ Database initialized successfully.
+2025-05-18 08:39:52,765 | INFO | Rendering login page
+2025-05-18 08:40:01,898 | INFO | Rendering home page
