@@ -2433,3 +2433,17 @@ sqlite3.ProgrammingError: You can only execute one statement at a time.
 2025-05-18 08:39:21,087 | INFO | ✅ Database initialized successfully.
 2025-05-18 08:39:52,765 | INFO | Rendering login page
 2025-05-18 08:40:01,898 | INFO | Rendering home page
+2025-05-19 10:46:50,398 | INFO | Database tables created successfully.
+2025-05-19 10:46:50,398 | INFO | ✅ Database initialized successfully.
+2025-05-19 10:46:50,792 | INFO | Database tables created successfully.
+2025-05-19 10:46:50,792 | INFO | ✅ Database initialized successfully.
+2025-05-19 10:47:57,896 | INFO | Rendering login page
+2025-05-19 10:48:07,584 | INFO | Rendering home page
+2025-05-19 10:49:16,880 | INFO | Rendering maintenance page
+2025-05-19 10:49:16,919 | INFO | Requesters fetched: 7 items
+2025-05-19 10:49:16,920 | INFO | Items fetched: 12 items
+2025-05-19 10:49:16,921 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:49:16,922 | INFO | Projects fetched: 12 items
+2025-05-19 10:49:16,924 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 10:53:00,297 | INFO | Rendering login page
+2025-05-19 10:53:11,629 | INFO | Rendering home page
