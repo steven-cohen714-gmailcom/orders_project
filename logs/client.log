@@ -157,3 +157,11 @@
 2025-05-18 05:13:47,675 | ERROR | ERROR | Order submission failed | {"error": "Cannot read properties of undefined (reading 'match')"}
 2025-05-18 05:27:09,619 | INFO | INFO | submitOrder started | {}
 2025-05-18 05:27:09,637 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1022", "orderId": 143}
+2025-05-19 12:27:22,328 | INFO | INFO | previewOrder started | {}
+2025-05-19 12:27:22,518 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-19 12:27:44,597 | INFO | INFO | submitOrder started | {}
+2025-05-19 12:27:44,629 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1001", "orderId": 144}
+2025-05-19 13:04:43,281 | INFO | INFO | previewOrder started | {}
+2025-05-19 13:04:43,416 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-19 13:04:49,222 | INFO | INFO | submitOrder started | {}
+2025-05-19 13:04:49,251 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1002", "orderId": 145}

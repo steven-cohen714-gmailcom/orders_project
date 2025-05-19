@@ -1,27 +1,41 @@
-document.getElementById("login-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const username = document.getElementById("username").value.trim().toLowerCase();
-  const password = document.getElementById("password").value;
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("login-form");
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+  const errorBox = document.getElementById("login-error");
 
-  if (!username || !password) {
-    document.getElementById("login-error").textContent = "Please enter both username and password";
+  if (!form || !usernameInput || !passwordInput || !errorBox) {
+    console.error("Login form elements not found in the DOM");
     return;
   }
 
-  try {
-    const res = await fetch("/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password })
-    });
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    if (res.ok) {
-      window.location.href = "/home";
-    } else {
-      const data = await res.json();
-      document.getElementById("login-error").textContent = data.detail || "Login failed";
+    const username = usernameInput.value.trim().toLowerCase();
+    const password = passwordInput.value;
+
+    if (!username || !password) {
+      errorBox.textContent = "Please enter both username and password";
+      return;
     }
-  } catch (err) {
-    document.getElementById("login-error").textContent = "An error occurred. Please try again.";
-  }
+
+    try {
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+
+      if (response.ok) {
+        window.location.href = "/home";
+      } else {
+        const errorData = await response.json();
+        errorBox.textContent = errorData?.detail || "Invalid credentials. Please try again.";
+      }
+    } catch (err) {
+      console.error("Login request failed:", err);
+      errorBox.textContent = "Unexpected error occurred. Please try again later.";
+    }
+  });
 });

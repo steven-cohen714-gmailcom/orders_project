@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, constr
 from typing import Optional
 from backend.database import get_db_connection
 import bcrypt
@@ -11,14 +11,14 @@ router = APIRouter()
 # ----------------------------
 
 class UserCreate(BaseModel):
-    username: str
-    password: str
+    username: constr(strip_whitespace=True, min_length=1)
+    password: constr(strip_whitespace=True, min_length=4)
     rights: str
     auth_threshold_band: Optional[int] = None
 
 class UserUpdate(BaseModel):
-    username: str
-    password: Optional[str] = None
+    username: constr(strip_whitespace=True, min_length=1)
+    password: Optional[constr(strip_whitespace=True, min_length=4)] = None
     rights: str
     auth_threshold_band: Optional[int] = None
 
@@ -82,20 +82,23 @@ async def update_user(user_id: int, payload: UserUpdate):
         if not cursor.fetchone():
             raise HTTPException(status_code=404, detail="User not found")
 
-        if payload.password:
-            password_hash = bcrypt.hashpw(payload.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-            cursor.execute(
-                "UPDATE users SET username = ?, password_hash = ?, rights = ?, auth_threshold_band = ? WHERE id = ?",
-                (payload.username, password_hash, payload.rights, payload.auth_threshold_band, user_id)
-            )
-        else:
-            cursor.execute(
-                "UPDATE users SET username = ?, rights = ?, auth_threshold_band = ? WHERE id = ?",
-                (payload.username, payload.rights, payload.auth_threshold_band, user_id)
-            )
+        fields_to_update = {
+            "username": payload.username,
+            "rights": payload.rights,
+            "auth_threshold_band": payload.auth_threshold_band
+        }
 
+        if payload.password and payload.password.strip():
+            password_hash = bcrypt.hashpw(payload.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            fields_to_update["password_hash"] = password_hash
+
+        set_clause = ", ".join([f"{key} = ?" for key in fields_to_update])
+        values = list(fields_to_update.values()) + [user_id]
+
+        cursor.execute(f"UPDATE users SET {set_clause} WHERE id = ?", values)
         conn.commit()
         return {"status": "User updated successfully"}
+
     except Exception as e:
         conn.rollback()
         raise HTTPException(status_code=400, detail=str(e))

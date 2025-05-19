@@ -2447,3 +2447,222 @@ sqlite3.ProgrammingError: You can only execute one statement at a time.
 2025-05-19 10:49:16,924 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
 2025-05-19 10:53:00,297 | INFO | Rendering login page
 2025-05-19 10:53:11,629 | INFO | Rendering home page
+2025-05-19 10:56:37,140 | INFO | Rendering maintenance page
+2025-05-19 10:56:37,180 | INFO | Requesters fetched: 7 items
+2025-05-19 10:56:37,181 | INFO | Items fetched: 12 items
+2025-05-19 10:56:37,182 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:56:37,182 | INFO | Projects fetched: 12 items
+2025-05-19 10:56:37,184 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 10:56:39,190 | INFO | Rendering pending orders page
+2025-05-19 10:56:39,224 | INFO | Requesters fetched: 7 items
+2025-05-19 10:56:39,226 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:56:40,133 | INFO | Rendering received orders page
+2025-05-19 10:56:40,160 | INFO | Requesters fetched: 7 items
+2025-05-19 10:56:40,168 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:56:40,891 | INFO | Rendering partially delivered orders page
+2025-05-19 10:56:40,917 | INFO | Requesters fetched: 7 items
+2025-05-19 10:56:40,919 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:56:41,909 | INFO | Rendering audit trail page
+2025-05-19 10:56:41,934 | INFO | Requesters fetched: 7 items
+2025-05-19 10:56:41,940 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:56:41,942 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 0 total orders for audit trail
+2025-05-19 10:56:56,522 | INFO | Rendering maintenance page
+2025-05-19 10:56:56,580 | INFO | Requesters fetched: 7 items
+2025-05-19 10:56:56,582 | INFO | Items fetched: 12 items
+2025-05-19 10:56:56,583 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:56:56,583 | INFO | Projects fetched: 12 items
+2025-05-19 10:56:56,585 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 10:56:57,445 | INFO | Rendering audit trail page
+2025-05-19 10:56:57,492 | INFO | Requesters fetched: 7 items
+2025-05-19 10:56:57,512 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:56:57,517 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 0 total orders for audit trail
+2025-05-19 10:56:58,232 | INFO | Rendering partially delivered orders page
+2025-05-19 10:56:58,280 | INFO | Requesters fetched: 7 items
+2025-05-19 10:56:58,282 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:56:59,171 | INFO | Rendering received orders page
+2025-05-19 10:56:59,218 | INFO | Requesters fetched: 7 items
+2025-05-19 10:56:59,236 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:57:00,126 | INFO | Rendering pending orders page
+2025-05-19 10:57:00,177 | INFO | Requesters fetched: 7 items
+2025-05-19 10:57:00,179 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:57:01,242 | INFO | Starting to render new order page
+2025-05-19 10:57:01,243 | INFO | Requesters fetched: [{'id': 2, 'name': 'Aaron'}, {'id': 7, 'name': 'Daniel'}, {'id': 5, 'name': 'Omar'}, {'id': 3, 'name': 'Raymond'}, {'id': 6, 'name': 'Shannon'}, {'id': 1, 'name': 'Test Requester'}, {'id': 4, 'name': 'Yolande'}]
+2025-05-19 10:57:01,243 | INFO | Suppliers fetched: [{'id': 4, 'name': '2 Rv Pump Cc'}, {'id': 5, 'name': 'Duncanmec Pty Ltd'}, {'id': 6, 'name': 'Eagles Eye Logistix (pty)ltd'}, {'id': 7, 'name': 'Forklift Parts World (pty) Ltd'}, {'id': 9, 'name': 'G Fox & Co. (pty) Ltd'}, {'id': 8, 'name': 'Galaxy Trading'}, {'id': 10, 'name': 'Hoist Crane Supplies & Services (pty) Ltd'}, {'id': 11, 'name': 'Idwala Industrial Mineral'}, {'id': 12, 'name': 'J & J Fabrications'}, {'id': 13, 'name': 'J G Diesel Discounters (pty) Ltd T/a Diesel Discount'}, {'id': 1, 'name': 'Test Supplier'}]
+2025-05-19 10:57:01,243 | INFO | Items fetched: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}, {'item_code': 'ITEM1', 'item_description': 'Test Item'}, {'item_code': 'Test', 'item_description': 'Test Item'}]
+2025-05-19 10:57:01,243 | INFO | Projects fetched: [{'project_code': 'DR09M', 'project_name': 'Ball Mill Dross'}, {'project_code': 'IN10M', 'project_name': 'Stores Building Maintenance'}, {'project_code': 'KA04M', 'project_name': 'Rasper No.2'}, {'project_code': 'PR10M', 'project_name': 'Eddy Current No.2'}, {'project_code': 'PR30M', 'project_name': 'Tata Novus (VGY369GP)'}, {'project_code': 'PR67M', 'project_name': 'Hms Plant'}, {'project_code': 'PR68M', 'project_name': 'Eddy Current Plant'}, {'project_code': 'PROJ1', 'project_name': 'Test Project'}, {'project_code': 'TR30M', 'project_name': 'Baling Press Becker Gs2'}, {'project_code': 'TR59M', 'project_name': 'Man Truck (PKJ134GP)'}, {'project_code': 'TR71M', 'project_name': 'Scania G460 A6 X 4nz (KR99PMGP)'}, {'project_code': 'Test', 'project_name': 'Test Project'}]
+2025-05-19 10:57:01,243 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company (Pty) Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '011 473-9600', 'vat_number': '4700130760'}
+2025-05-19 10:57:01,243 | INFO | Template context: {'request': <starlette.requests.Request object at 0x1067e89f0>, 'requesters': [{'id': 2, 'name': 'Aaron'}, {'id': 7, 'name': 'Daniel'}, {'id': 5, 'name': 'Omar'}, {'id': 3, 'name': 'Raymond'}, {'id': 6, 'name': 'Shannon'}, {'id': 1, 'name': 'Test Requester'}, {'id': 4, 'name': 'Yolande'}], 'suppliers': [{'id': 4, 'name': '2 Rv Pump Cc'}, {'id': 5, 'name': 'Duncanmec Pty Ltd'}, {'id': 6, 'name': 'Eagles Eye Logistix (pty)ltd'}, {'id': 7, 'name': 'Forklift Parts World (pty) Ltd'}, {'id': 9, 'name': 'G Fox & Co. (pty) Ltd'}, {'id': 8, 'name': 'Galaxy Trading'}, {'id': 10, 'name': 'Hoist Crane Supplies & Services (pty) Ltd'}, {'id': 11, 'name': 'Idwala Industrial Mineral'}, {'id': 12, 'name': 'J & J Fabrications'}, {'id': 13, 'name': 'J G Diesel Discounters (pty) Ltd T/a Diesel Discount'}, {'id': 1, 'name': 'Test Supplier'}], 'items': [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}, {'item_code': 'ITEM1', 'item_description': 'Test Item'}, {'item_code': 'Test', 'item_description': 'Test Item'}], 'projects': [{'project_code': 'DR09M', 'project_name': 'Ball Mill Dross'}, {'project_code': 'IN10M', 'project_name': 'Stores Building Maintenance'}, {'project_code': 'KA04M', 'project_name': 'Rasper No.2'}, {'project_code': 'PR10M', 'project_name': 'Eddy Current No.2'}, {'project_code': 'PR30M', 'project_name': 'Tata Novus (VGY369GP)'}, {'project_code': 'PR67M', 'project_name': 'Hms Plant'}, {'project_code': 'PR68M', 'project_name': 'Eddy Current Plant'}, {'project_code': 'PROJ1', 'project_name': 'Test Project'}, {'project_code': 'TR30M', 'project_name': 'Baling Press Becker Gs2'}, {'project_code': 'TR59M', 'project_name': 'Man Truck (PKJ134GP)'}, {'project_code': 'TR71M', 'project_name': 'Scania G460 A6 X 4nz (KR99PMGP)'}, {'project_code': 'Test', 'project_name': 'Test Project'}], 'business_details': {'company_name': 'Universal Recycling Company (Pty) Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '011 473-9600', 'vat_number': '4700130760'}}
+2025-05-19 10:57:01,250 | INFO | Successfully rendered new_order.html
+2025-05-19 10:57:01,306 | INFO | Requesters fetched: 7 items
+2025-05-19 10:57:01,323 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:57:01,326 | INFO | Items fetched: 12 items
+2025-05-19 10:57:01,329 | INFO | Projects fetched: 12 items
+2025-05-19 10:57:03,189 | INFO | Rendering home page
+2025-05-19 10:57:06,225 | INFO | Rendering pending orders page
+2025-05-19 10:57:06,279 | INFO | Requesters fetched: 7 items
+2025-05-19 10:57:06,280 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:57:16,231 | INFO | Rendering maintenance page
+2025-05-19 10:57:16,288 | INFO | Requesters fetched: 7 items
+2025-05-19 10:57:16,289 | INFO | Items fetched: 12 items
+2025-05-19 10:57:16,290 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:57:16,292 | INFO | Projects fetched: 12 items
+2025-05-19 10:57:16,293 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 10:57:34,534 | INFO | Starting to render new order page
+2025-05-19 10:57:34,535 | INFO | Requesters fetched: [{'id': 2, 'name': 'Aaron'}, {'id': 7, 'name': 'Daniel'}, {'id': 5, 'name': 'Omar'}, {'id': 3, 'name': 'Raymond'}, {'id': 6, 'name': 'Shannon'}, {'id': 1, 'name': 'Test Requester'}, {'id': 4, 'name': 'Yolande'}]
+2025-05-19 10:57:34,535 | INFO | Suppliers fetched: [{'id': 4, 'name': '2 Rv Pump Cc'}, {'id': 5, 'name': 'Duncanmec Pty Ltd'}, {'id': 6, 'name': 'Eagles Eye Logistix (pty)ltd'}, {'id': 7, 'name': 'Forklift Parts World (pty) Ltd'}, {'id': 9, 'name': 'G Fox & Co. (pty) Ltd'}, {'id': 8, 'name': 'Galaxy Trading'}, {'id': 10, 'name': 'Hoist Crane Supplies & Services (pty) Ltd'}, {'id': 11, 'name': 'Idwala Industrial Mineral'}, {'id': 12, 'name': 'J & J Fabrications'}, {'id': 13, 'name': 'J G Diesel Discounters (pty) Ltd T/a Diesel Discount'}, {'id': 1, 'name': 'Test Supplier'}]
+2025-05-19 10:57:34,535 | INFO | Items fetched: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}, {'item_code': 'ITEM1', 'item_description': 'Test Item'}, {'item_code': 'Test', 'item_description': 'Test Item'}]
+2025-05-19 10:57:34,535 | INFO | Projects fetched: [{'project_code': 'DR09M', 'project_name': 'Ball Mill Dross'}, {'project_code': 'IN10M', 'project_name': 'Stores Building Maintenance'}, {'project_code': 'KA04M', 'project_name': 'Rasper No.2'}, {'project_code': 'PR10M', 'project_name': 'Eddy Current No.2'}, {'project_code': 'PR30M', 'project_name': 'Tata Novus (VGY369GP)'}, {'project_code': 'PR67M', 'project_name': 'Hms Plant'}, {'project_code': 'PR68M', 'project_name': 'Eddy Current Plant'}, {'project_code': 'PROJ1', 'project_name': 'Test Project'}, {'project_code': 'TR30M', 'project_name': 'Baling Press Becker Gs2'}, {'project_code': 'TR59M', 'project_name': 'Man Truck (PKJ134GP)'}, {'project_code': 'TR71M', 'project_name': 'Scania G460 A6 X 4nz (KR99PMGP)'}, {'project_code': 'Test', 'project_name': 'Test Project'}]
+2025-05-19 10:57:34,535 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company (Pty) Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '011 473-9600', 'vat_number': '4700130760'}
+2025-05-19 10:57:34,535 | INFO | Template context: {'request': <starlette.requests.Request object at 0x1066112e0>, 'requesters': [{'id': 2, 'name': 'Aaron'}, {'id': 7, 'name': 'Daniel'}, {'id': 5, 'name': 'Omar'}, {'id': 3, 'name': 'Raymond'}, {'id': 6, 'name': 'Shannon'}, {'id': 1, 'name': 'Test Requester'}, {'id': 4, 'name': 'Yolande'}], 'suppliers': [{'id': 4, 'name': '2 Rv Pump Cc'}, {'id': 5, 'name': 'Duncanmec Pty Ltd'}, {'id': 6, 'name': 'Eagles Eye Logistix (pty)ltd'}, {'id': 7, 'name': 'Forklift Parts World (pty) Ltd'}, {'id': 9, 'name': 'G Fox & Co. (pty) Ltd'}, {'id': 8, 'name': 'Galaxy Trading'}, {'id': 10, 'name': 'Hoist Crane Supplies & Services (pty) Ltd'}, {'id': 11, 'name': 'Idwala Industrial Mineral'}, {'id': 12, 'name': 'J & J Fabrications'}, {'id': 13, 'name': 'J G Diesel Discounters (pty) Ltd T/a Diesel Discount'}, {'id': 1, 'name': 'Test Supplier'}], 'items': [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}, {'item_code': 'ITEM1', 'item_description': 'Test Item'}, {'item_code': 'Test', 'item_description': 'Test Item'}], 'projects': [{'project_code': 'DR09M', 'project_name': 'Ball Mill Dross'}, {'project_code': 'IN10M', 'project_name': 'Stores Building Maintenance'}, {'project_code': 'KA04M', 'project_name': 'Rasper No.2'}, {'project_code': 'PR10M', 'project_name': 'Eddy Current No.2'}, {'project_code': 'PR30M', 'project_name': 'Tata Novus (VGY369GP)'}, {'project_code': 'PR67M', 'project_name': 'Hms Plant'}, {'project_code': 'PR68M', 'project_name': 'Eddy Current Plant'}, {'project_code': 'PROJ1', 'project_name': 'Test Project'}, {'project_code': 'TR30M', 'project_name': 'Baling Press Becker Gs2'}, {'project_code': 'TR59M', 'project_name': 'Man Truck (PKJ134GP)'}, {'project_code': 'TR71M', 'project_name': 'Scania G460 A6 X 4nz (KR99PMGP)'}, {'project_code': 'Test', 'project_name': 'Test Project'}], 'business_details': {'company_name': 'Universal Recycling Company (Pty) Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '011 473-9600', 'vat_number': '4700130760'}}
+2025-05-19 10:57:34,535 | INFO | Successfully rendered new_order.html
+2025-05-19 10:57:34,588 | INFO | Requesters fetched: 7 items
+2025-05-19 10:57:34,607 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:57:34,610 | INFO | Items fetched: 12 items
+2025-05-19 10:57:34,613 | INFO | Projects fetched: 12 items
+2025-05-19 10:57:52,359 | INFO | Rendering maintenance page
+2025-05-19 10:57:52,421 | INFO | Requesters fetched: 7 items
+2025-05-19 10:57:52,421 | INFO | Items fetched: 12 items
+2025-05-19 10:57:52,422 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:57:52,423 | INFO | Projects fetched: 12 items
+2025-05-19 10:57:52,425 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 10:58:27,352 | INFO | Rendering login page
+2025-05-19 10:59:24,270 | INFO | Rendering maintenance page
+2025-05-19 10:59:24,306 | INFO | Requesters fetched: 7 items
+2025-05-19 10:59:24,307 | INFO | Items fetched: 12 items
+2025-05-19 10:59:24,308 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 10:59:24,310 | INFO | Suppliers fetched: 11 items
+2025-05-19 10:59:24,311 | INFO | Projects fetched: 12 items
+2025-05-19 11:10:36,878 | INFO | Database tables created successfully.
+2025-05-19 11:10:36,878 | INFO | ✅ Database initialized successfully.
+2025-05-19 11:34:54,200 | INFO | Database tables created successfully.
+2025-05-19 11:34:54,200 | INFO | ✅ Database initialized successfully.
+2025-05-19 11:37:32,622 | INFO | Database tables created successfully.
+2025-05-19 11:37:32,622 | INFO | ✅ Database initialized successfully.
+2025-05-19 11:41:09,612 | INFO | Database tables created successfully.
+2025-05-19 11:41:09,612 | INFO | ✅ Database initialized successfully.
+2025-05-19 11:41:10,007 | INFO | Database tables created successfully.
+2025-05-19 11:41:10,007 | INFO | ✅ Database initialized successfully.
+2025-05-19 11:41:24,142 | INFO | Rendering login page
+2025-05-19 11:41:40,885 | INFO | Rendering maintenance page
+2025-05-19 11:41:40,925 | INFO | Requesters fetched: 7 items
+2025-05-19 11:41:40,927 | INFO | Items fetched: 12 items
+2025-05-19 11:41:40,929 | INFO | Suppliers fetched: 11 items
+2025-05-19 11:41:40,929 | INFO | Projects fetched: 12 items
+2025-05-19 11:41:40,930 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 11:42:19,653 | INFO | Rendering login page
+2025-05-19 11:46:21,423 | INFO | Rendering maintenance page
+2025-05-19 11:46:21,455 | INFO | Requesters fetched: 7 items
+2025-05-19 11:46:21,456 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 11:46:21,456 | INFO | Items fetched: 12 items
+2025-05-19 11:46:21,457 | INFO | Suppliers fetched: 11 items
+2025-05-19 11:46:21,458 | INFO | Projects fetched: 12 items
+2025-05-19 11:46:26,138 | INFO | Rendering maintenance page
+2025-05-19 11:46:26,173 | INFO | Requesters fetched: 7 items
+2025-05-19 11:46:26,174 | INFO | Items fetched: 12 items
+2025-05-19 11:46:26,174 | INFO | Suppliers fetched: 11 items
+2025-05-19 11:46:26,176 | INFO | Projects fetched: 12 items
+2025-05-19 11:46:26,178 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 11:47:32,820 | INFO | Rendering login page
+2025-05-19 11:48:32,631 | INFO | Rendering login page
+2025-05-19 11:48:44,465 | INFO | Rendering login page
+2025-05-19 11:53:52,823 | INFO | Rendering login page
+2025-05-19 11:53:59,819 | INFO | Rendering home page
+2025-05-19 12:01:54,931 | INFO | Database tables created successfully.
+2025-05-19 12:01:54,931 | INFO | ✅ Database initialized successfully.
+2025-05-19 12:10:33,997 | INFO | Rendering home page
+2025-05-19 12:10:35,899 | INFO | Rendering maintenance page
+2025-05-19 12:10:35,955 | INFO | Items fetched: 12 items
+2025-05-19 12:10:35,960 | INFO | Projects fetched: 12 items
+2025-05-19 12:10:35,962 | INFO | Requesters fetched: 7 items
+2025-05-19 12:10:35,964 | INFO | Suppliers fetched: 11 items
+2025-05-19 12:10:35,982 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 12:13:11,455 | INFO | Rendering maintenance page
+2025-05-19 12:13:11,501 | INFO | Suppliers fetched: 11 items
+2025-05-19 12:13:11,502 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 12:13:11,503 | INFO | Requesters fetched: 7 items
+2025-05-19 12:13:11,503 | INFO | Items fetched: 12 items
+2025-05-19 12:13:11,507 | INFO | Projects fetched: 12 items
+2025-05-19 12:13:49,663 | INFO | Rendering login page
+2025-05-19 12:15:01,226 | INFO | Rendering maintenance page
+2025-05-19 12:15:01,261 | INFO | Suppliers fetched: 11 items
+2025-05-19 12:15:01,262 | INFO | Requesters fetched: 7 items
+2025-05-19 12:15:01,265 | INFO | Items fetched: 12 items
+2025-05-19 12:15:01,266 | INFO | Projects fetched: 12 items
+2025-05-19 12:15:01,269 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-19 12:15:37,659 | INFO | Rendering login page
+2025-05-19 12:16:04,503 | INFO | Rendering login page
+2025-05-19 12:21:35,297 | INFO | Rendering login page
+2025-05-19 12:23:56,678 | INFO | Rendering login page
+2025-05-19 12:24:32,707 | INFO | Rendering home page
+2025-05-19 12:26:15,726 | INFO | Rendering login page
+2025-05-19 12:26:23,978 | INFO | Rendering home page
+2025-05-19 12:26:52,208 | INFO | Starting to render new order page
+2025-05-19 12:26:52,209 | INFO | Requesters fetched: [{'id': 2, 'name': 'Aaron'}, {'id': 7, 'name': 'Daniel'}, {'id': 5, 'name': 'Omar'}, {'id': 3, 'name': 'Raymond'}, {'id': 6, 'name': 'Shannon'}, {'id': 1, 'name': 'Test Requester'}, {'id': 4, 'name': 'Yolande'}]
+2025-05-19 12:26:52,209 | INFO | Suppliers fetched: [{'id': 4, 'name': '2 Rv Pump Cc'}, {'id': 5, 'name': 'Duncanmec Pty Ltd'}, {'id': 6, 'name': 'Eagles Eye Logistix (pty)ltd'}, {'id': 7, 'name': 'Forklift Parts World (pty) Ltd'}, {'id': 9, 'name': 'G Fox & Co. (pty) Ltd'}, {'id': 8, 'name': 'Galaxy Trading'}, {'id': 10, 'name': 'Hoist Crane Supplies & Services (pty) Ltd'}, {'id': 11, 'name': 'Idwala Industrial Mineral'}, {'id': 12, 'name': 'J & J Fabrications'}, {'id': 13, 'name': 'J G Diesel Discounters (pty) Ltd T/a Diesel Discount'}, {'id': 1, 'name': 'Test Supplier'}]
+2025-05-19 12:26:52,210 | INFO | Items fetched: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}, {'item_code': 'ITEM1', 'item_description': 'Test Item'}, {'item_code': 'Test', 'item_description': 'Test Item'}]
+2025-05-19 12:26:52,210 | INFO | Projects fetched: [{'project_code': 'DR09M', 'project_name': 'Ball Mill Dross'}, {'project_code': 'IN10M', 'project_name': 'Stores Building Maintenance'}, {'project_code': 'KA04M', 'project_name': 'Rasper No.2'}, {'project_code': 'PR10M', 'project_name': 'Eddy Current No.2'}, {'project_code': 'PR30M', 'project_name': 'Tata Novus (VGY369GP)'}, {'project_code': 'PR67M', 'project_name': 'Hms Plant'}, {'project_code': 'PR68M', 'project_name': 'Eddy Current Plant'}, {'project_code': 'PROJ1', 'project_name': 'Test Project'}, {'project_code': 'TR30M', 'project_name': 'Baling Press Becker Gs2'}, {'project_code': 'TR59M', 'project_name': 'Man Truck (PKJ134GP)'}, {'project_code': 'TR71M', 'project_name': 'Scania G460 A6 X 4nz (KR99PMGP)'}, {'project_code': 'Test', 'project_name': 'Test Project'}]
+2025-05-19 12:26:52,210 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company (Pty) Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '011 473-9600', 'vat_number': '4700130760'}
+2025-05-19 12:26:52,210 | INFO | Template context: {'request': <starlette.requests.Request object at 0x1071fed50>, 'requesters': [{'id': 2, 'name': 'Aaron'}, {'id': 7, 'name': 'Daniel'}, {'id': 5, 'name': 'Omar'}, {'id': 3, 'name': 'Raymond'}, {'id': 6, 'name': 'Shannon'}, {'id': 1, 'name': 'Test Requester'}, {'id': 4, 'name': 'Yolande'}], 'suppliers': [{'id': 4, 'name': '2 Rv Pump Cc'}, {'id': 5, 'name': 'Duncanmec Pty Ltd'}, {'id': 6, 'name': 'Eagles Eye Logistix (pty)ltd'}, {'id': 7, 'name': 'Forklift Parts World (pty) Ltd'}, {'id': 9, 'name': 'G Fox & Co. (pty) Ltd'}, {'id': 8, 'name': 'Galaxy Trading'}, {'id': 10, 'name': 'Hoist Crane Supplies & Services (pty) Ltd'}, {'id': 11, 'name': 'Idwala Industrial Mineral'}, {'id': 12, 'name': 'J & J Fabrications'}, {'id': 13, 'name': 'J G Diesel Discounters (pty) Ltd T/a Diesel Discount'}, {'id': 1, 'name': 'Test Supplier'}], 'items': [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}, {'item_code': 'ITEM1', 'item_description': 'Test Item'}, {'item_code': 'Test', 'item_description': 'Test Item'}], 'projects': [{'project_code': 'DR09M', 'project_name': 'Ball Mill Dross'}, {'project_code': 'IN10M', 'project_name': 'Stores Building Maintenance'}, {'project_code': 'KA04M', 'project_name': 'Rasper No.2'}, {'project_code': 'PR10M', 'project_name': 'Eddy Current No.2'}, {'project_code': 'PR30M', 'project_name': 'Tata Novus (VGY369GP)'}, {'project_code': 'PR67M', 'project_name': 'Hms Plant'}, {'project_code': 'PR68M', 'project_name': 'Eddy Current Plant'}, {'project_code': 'PROJ1', 'project_name': 'Test Project'}, {'project_code': 'TR30M', 'project_name': 'Baling Press Becker Gs2'}, {'project_code': 'TR59M', 'project_name': 'Man Truck (PKJ134GP)'}, {'project_code': 'TR71M', 'project_name': 'Scania G460 A6 X 4nz (KR99PMGP)'}, {'project_code': 'Test', 'project_name': 'Test Project'}], 'business_details': {'company_name': 'Universal Recycling Company (Pty) Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '011 473-9600', 'vat_number': '4700130760'}}
+2025-05-19 12:26:52,217 | INFO | Successfully rendered new_order.html
+2025-05-19 12:26:52,250 | INFO | Requesters fetched: 7 items
+2025-05-19 12:26:52,261 | INFO | Suppliers fetched: 11 items
+2025-05-19 12:26:52,263 | INFO | Items fetched: 12 items
+2025-05-19 12:26:52,265 | INFO | Projects fetched: 12 items
+2025-05-19 12:27:22,328 | INFO | INFO | previewOrder started | {}
+2025-05-19 12:27:22,518 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-19 12:27:44,597 | INFO | INFO | submitOrder started | {}
+2025-05-19 12:27:44,611 | INFO | 🔍 Incoming order: order_number='URC1000' status='Awaiting Authorisation' order_note='' note_to_supplier='URC1000\n1\n2\n3\n4\n' supplier_id=9 requester_id=3 items=[OrderItemCreate(item_code='BECK054', item_description='Becker  Machine Spout Liner For  M48', project='PR10M', qty_ordered=3.0, price=5000.0)] auth_band_required=1
+2025-05-19 12:27:44,614 | INFO | ✅ [ORDER] Success created: Order URC1000 with total R15000.0
+2025-05-19 12:27:44,629 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1001", "orderId": 144}
+2025-05-19 12:27:49,165 | INFO | Rendering pending orders page
+2025-05-19 12:27:49,231 | INFO | Requesters fetched: 7 items
+2025-05-19 12:27:49,233 | INFO | Suppliers fetched: 11 items
+2025-05-19 12:27:52,429 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 144
+2025-05-19 12:28:01,037 | INFO | Generating PDF for order_id=144, order_number=URC1000
+2025-05-19 12:38:19,738 | INFO | Database tables created successfully.
+2025-05-19 12:38:19,738 | INFO | ✅ Database initialized successfully.
+2025-05-19 12:38:20,250 | INFO | Database tables created successfully.
+2025-05-19 12:38:20,251 | INFO | ✅ Database initialized successfully.
+2025-05-19 12:38:29,476 | INFO | Rendering login page
+2025-05-19 12:38:37,190 | INFO | Rendering home page
+2025-05-19 12:38:51,719 | INFO | Rendering pending orders page
+2025-05-19 12:38:51,753 | INFO | Requesters fetched: 7 items
+2025-05-19 12:38:51,754 | INFO | Suppliers fetched: 11 items
+2025-05-19 12:39:04,221 | INFO | Rendering login page
+2025-05-19 12:44:52,789 | INFO | Generating PDF for order_id=144, order_number=URC1000
+2025-05-19 12:45:37,235 | INFO | Rendering pending orders page
+2025-05-19 12:45:37,300 | INFO | Requesters fetched: 7 items
+2025-05-19 12:45:37,302 | INFO | Suppliers fetched: 11 items
+2025-05-19 12:45:59,392 | INFO | Rendering audit trail page
+2025-05-19 12:45:59,416 | INFO | Requesters fetched: 7 items
+2025-05-19 12:45:59,421 | INFO | Suppliers fetched: 11 items
+2025-05-19 12:45:59,425 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-05-19 12:46:03,304 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 144
+2025-05-19 12:46:15,013 | INFO | Rendering audit trail page
+2025-05-19 12:46:15,045 | INFO | Requesters fetched: 7 items
+2025-05-19 12:46:15,050 | INFO | Suppliers fetched: 11 items
+2025-05-19 12:46:15,052 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-05-19 12:48:34,746 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 144
+2025-05-19 13:04:07,273 | INFO | Starting to render new order page
+2025-05-19 13:04:07,288 | INFO | Requesters fetched: [{'id': 2, 'name': 'Aaron'}, {'id': 7, 'name': 'Daniel'}, {'id': 5, 'name': 'Omar'}, {'id': 3, 'name': 'Raymond'}, {'id': 6, 'name': 'Shannon'}, {'id': 1, 'name': 'Test Requester'}, {'id': 4, 'name': 'Yolande'}]
+2025-05-19 13:04:07,289 | INFO | Suppliers fetched: [{'id': 4, 'name': '2 Rv Pump Cc'}, {'id': 5, 'name': 'Duncanmec Pty Ltd'}, {'id': 6, 'name': 'Eagles Eye Logistix (pty)ltd'}, {'id': 7, 'name': 'Forklift Parts World (pty) Ltd'}, {'id': 9, 'name': 'G Fox & Co. (pty) Ltd'}, {'id': 8, 'name': 'Galaxy Trading'}, {'id': 10, 'name': 'Hoist Crane Supplies & Services (pty) Ltd'}, {'id': 11, 'name': 'Idwala Industrial Mineral'}, {'id': 12, 'name': 'J & J Fabrications'}, {'id': 13, 'name': 'J G Diesel Discounters (pty) Ltd T/a Diesel Discount'}, {'id': 1, 'name': 'Test Supplier'}]
+2025-05-19 13:04:07,289 | INFO | Items fetched: [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}, {'item_code': 'ITEM1', 'item_description': 'Test Item'}, {'item_code': 'Test', 'item_description': 'Test Item'}]
+2025-05-19 13:04:07,289 | INFO | Projects fetched: [{'project_code': 'DR09M', 'project_name': 'Ball Mill Dross'}, {'project_code': 'IN10M', 'project_name': 'Stores Building Maintenance'}, {'project_code': 'KA04M', 'project_name': 'Rasper No.2'}, {'project_code': 'PR10M', 'project_name': 'Eddy Current No.2'}, {'project_code': 'PR30M', 'project_name': 'Tata Novus (VGY369GP)'}, {'project_code': 'PR67M', 'project_name': 'Hms Plant'}, {'project_code': 'PR68M', 'project_name': 'Eddy Current Plant'}, {'project_code': 'PROJ1', 'project_name': 'Test Project'}, {'project_code': 'TR30M', 'project_name': 'Baling Press Becker Gs2'}, {'project_code': 'TR59M', 'project_name': 'Man Truck (PKJ134GP)'}, {'project_code': 'TR71M', 'project_name': 'Scania G460 A6 X 4nz (KR99PMGP)'}, {'project_code': 'Test', 'project_name': 'Test Project'}]
+2025-05-19 13:04:07,290 | INFO | Business details fetched: {'company_name': 'Universal Recycling Company (Pty) Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '011 473-9600', 'vat_number': '4700130760'}
+2025-05-19 13:04:07,290 | INFO | Template context: {'request': <starlette.requests.Request object at 0x11980d910>, 'requesters': [{'id': 2, 'name': 'Aaron'}, {'id': 7, 'name': 'Daniel'}, {'id': 5, 'name': 'Omar'}, {'id': 3, 'name': 'Raymond'}, {'id': 6, 'name': 'Shannon'}, {'id': 1, 'name': 'Test Requester'}, {'id': 4, 'name': 'Yolande'}], 'suppliers': [{'id': 4, 'name': '2 Rv Pump Cc'}, {'id': 5, 'name': 'Duncanmec Pty Ltd'}, {'id': 6, 'name': 'Eagles Eye Logistix (pty)ltd'}, {'id': 7, 'name': 'Forklift Parts World (pty) Ltd'}, {'id': 9, 'name': 'G Fox & Co. (pty) Ltd'}, {'id': 8, 'name': 'Galaxy Trading'}, {'id': 10, 'name': 'Hoist Crane Supplies & Services (pty) Ltd'}, {'id': 11, 'name': 'Idwala Industrial Mineral'}, {'id': 12, 'name': 'J & J Fabrications'}, {'id': 13, 'name': 'J G Diesel Discounters (pty) Ltd T/a Diesel Discount'}, {'id': 1, 'name': 'Test Supplier'}], 'items': [{'item_code': 'ABRA025', 'item_description': 'Flap Wheel  50 X 20  X  6  Mm  P80'}, {'item_code': 'BEAR059', 'item_description': 'Bearing 51144'}, {'item_code': 'BEAR180', 'item_description': 'Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage'}, {'item_code': 'BECK054', 'item_description': 'Becker  Machine Spout Liner For  M48'}, {'item_code': 'BELT014', 'item_description': 'Belt 750mm 315/3/3.2/1.6 X 22 Mtr'}, {'item_code': 'BLAD009', 'item_description': 'Blade Twin Shaft 5t Shapening'}, {'item_code': 'BLAD010', 'item_description': 'Blade Twin Shaft Spacer Shapening'}, {'item_code': 'BULB003', 'item_description': 'Bulb 12 V Scsf  G1073'}, {'item_code': 'BULB004', 'item_description': 'Bulb 12 V Dcdf  G1034'}, {'item_code': 'CAPS019', 'item_description': 'Screw M 10 X 35 Cap'}, {'item_code': 'ITEM1', 'item_description': 'Test Item'}, {'item_code': 'Test', 'item_description': 'Test Item'}], 'projects': [{'project_code': 'DR09M', 'project_name': 'Ball Mill Dross'}, {'project_code': 'IN10M', 'project_name': 'Stores Building Maintenance'}, {'project_code': 'KA04M', 'project_name': 'Rasper No.2'}, {'project_code': 'PR10M', 'project_name': 'Eddy Current No.2'}, {'project_code': 'PR30M', 'project_name': 'Tata Novus (VGY369GP)'}, {'project_code': 'PR67M', 'project_name': 'Hms Plant'}, {'project_code': 'PR68M', 'project_name': 'Eddy Current Plant'}, {'project_code': 'PROJ1', 'project_name': 'Test Project'}, {'project_code': 'TR30M', 'project_name': 'Baling Press Becker Gs2'}, {'project_code': 'TR59M', 'project_name': 'Man Truck (PKJ134GP)'}, {'project_code': 'TR71M', 'project_name': 'Scania G460 A6 X 4nz (KR99PMGP)'}, {'project_code': 'Test', 'project_name': 'Test Project'}], 'business_details': {'company_name': 'Universal Recycling Company (Pty) Ltd', 'address_line1': 'Albertina Sisulu Rd & Watt Street', 'address_line2': 'Industria', 'city': 'Johannesburg', 'province': 'Gauteng', 'postal_code': '2093', 'telephone': '011 473-9600', 'vat_number': '4700130760'}}
+2025-05-19 13:04:07,328 | INFO | Successfully rendered new_order.html
+2025-05-19 13:04:07,392 | INFO | Requesters fetched: 7 items
+2025-05-19 13:04:07,414 | INFO | Suppliers fetched: 11 items
+2025-05-19 13:04:07,417 | INFO | Items fetched: 12 items
+2025-05-19 13:04:07,423 | INFO | Projects fetched: 12 items
+2025-05-19 13:04:43,281 | INFO | INFO | previewOrder started | {}
+2025-05-19 13:04:43,416 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-19 13:04:49,222 | INFO | INFO | submitOrder started | {}
+2025-05-19 13:04:49,244 | INFO | 🔍 Incoming order: order_number='URC1001' status='Awaiting Authorisation' order_note='' note_to_supplier='URC1001' supplier_id=8 requester_id=4 items=[OrderItemCreate(item_code='BLAD009', item_description='Blade Twin Shaft 5t Shapening', project='PR10M', qty_ordered=1.0, price=12000.0)] auth_band_required=1
+2025-05-19 13:04:49,246 | INFO | ✅ [ORDER] Success created: Order URC1001 with total R12000.0
+2025-05-19 13:04:49,251 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1002", "orderId": 145}
+2025-05-19 13:04:54,188 | INFO | Rendering pending orders page
+2025-05-19 13:04:54,214 | INFO | Requesters fetched: 7 items
+2025-05-19 13:04:54,216 | INFO | Suppliers fetched: 11 items
+2025-05-19 13:08:31,320 | INFO | Generating PDF for order_id=145, order_number=URC1001
+2025-05-19 13:17:43,771 | INFO | Generating PDF for order_id=145, order_number=URC1001

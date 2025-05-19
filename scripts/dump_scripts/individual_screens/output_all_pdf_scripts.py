@@ -5,7 +5,7 @@ from pathlib import Path
 
 # === CONFIGURATION ===
 project_root = Path("/Users/stevencohen/Projects/universal_recycling/orders_project")
-output_file = project_root / "text_files_for_screens" / "pdf_related_files.txt"
+output_file = project_root / "scripts_for_each_screen" / "pdf_related_files.txt"
 
 # Match content in files or filenames
 content_keywords = {

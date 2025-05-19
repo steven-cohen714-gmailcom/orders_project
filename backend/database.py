@@ -121,14 +121,15 @@ def init_db():
             )
             """)
 
-            # Create users table
+            # Create users table with auth band
             cursor.execute("""
-                CREATE TABLE IF NOT EXISTS users (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    username TEXT,
-                    password_hash TEXT NOT NULL,
-                    rights TEXT NOT NULL
-                )
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL UNIQUE,
+                password_hash TEXT NOT NULL,
+                rights TEXT NOT NULL,
+                auth_threshold_band INTEGER  -- Nullable, used to filter access on authorisation PWA
+            )
             """)
 
             # Create projects table

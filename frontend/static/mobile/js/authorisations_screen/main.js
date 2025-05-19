@@ -1,7 +1,25 @@
 console.log("📱 Mobile authorisation screen loaded");
 
+function formatDate(dateStr) {
+  if (!dateStr) return "—";
+  try {
+    const date = new Date(dateStr);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = date.toLocaleString("default", { month: "short" });
+    const year = date.getFullYear().toString().slice(-2);
+    return `${day} ${month} ${year}`;
+  } catch {
+    return "—";
+  }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("order-list");
+
+  const username = sessionStorage.getItem("username");
+  if (username) {
+    document.getElementById("username-placeholder").textContent = username;
+  }
 
   try {
     const res = await fetch("/orders/api/awaiting_authorisation");
@@ -18,23 +36,27 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    const list = document.createElement("ul");
+    container.innerHTML = ""; // Clear "Loading orders..."
 
     data.forEach(order => {
-      const item = document.createElement("li");
-      item.style.marginBottom = "1rem";
+      const item = document.createElement("div");
+      item.className = "order-row";
 
-      const heading = document.createElement("div");
-      heading.textContent = `Order ${order.order_number} — Total: R${order.total}`;
-      heading.style.fontWeight = "bold";
+      const dateFormatted = formatDate(order.created_date);
+
+      item.innerHTML = `
+        <span>${dateFormatted}</span>
+        <span>${order.order_number}</span>
+        <span>R${order.total}</span>
+        <span class="buttons"></span>
+      `;
 
       const viewBtn = document.createElement("button");
       viewBtn.textContent = "View PDF";
-      viewBtn.onclick = () => window.open(`/orders/pdf/${order.id}`, "_blank");
+      viewBtn.onclick = () => window.open(`/orders/api/generate_pdf_for_order/${order.id}`, "_blank");
 
       const authBtn = document.createElement("button");
       authBtn.textContent = "Authorise";
-      authBtn.style.marginLeft = "1rem";
       authBtn.onclick = async () => {
         try {
           const res = await fetch(`/orders/api/authorise_order/${order.id}`, {
@@ -45,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             authBtn.textContent = "✅ Authorised";
             authBtn.disabled = true;
             viewBtn.disabled = true;
-            heading.style.color = "green";
+            item.style.opacity = 0.6;
           } else {
             alert("❌ Failed to authorise: " + result.message);
           }
@@ -55,14 +77,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
       };
 
-      item.appendChild(heading);
-      item.appendChild(viewBtn);
-      item.appendChild(authBtn);
-      list.appendChild(item);
+      item.querySelector(".buttons").appendChild(viewBtn);
+      item.querySelector(".buttons").appendChild(authBtn);
+      container.appendChild(item);
     });
 
-    container.innerHTML = "";
-    container.appendChild(list);
   } catch (err) {
     container.textContent = "❌ Failed to load orders.";
     console.error("Fetch error:", err);

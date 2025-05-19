@@ -7,12 +7,17 @@ output_file.parent.mkdir(parents=True, exist_ok=True)
 
 with open(output_file, 'w', encoding='utf-8') as f:
     for rel_path in [
-        "frontend/templates/login.html",
-        "frontend/static/js/login.js",
-        "frontend/static/css/style.css",
-        "backend/endpoints/auth.py",
-        "backend/endpoints/html_routes.py",
         "backend/main.py",
+        "frontend/templates/maintenance.html",
+        "backend/database.py",
+        "backend/endpoints/html_routes.py",
+        "frontend/static/css/style.css",
+        "frontend/static/js/maintenance_screen/users.js",
+        "frontend/templates/login.html",
+        "backend/endpoints/lookups/users.py",
+        "frontend/static/js/login.js",
+        "backend/endpoints/auth.py",
+
     ]:
         f.write(f"📄 {rel_path}\n" + "-"*60 + "\n")
         try:

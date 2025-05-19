@@ -11,7 +11,7 @@ export function initUsers() {
 
   const form = document.querySelector("#users form");
   if (form) {
-    form.addEventListener("submit", async event => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       await addOrUpdateUser();
     });
@@ -26,6 +26,8 @@ export function initUsers() {
 async function fetchUsers() {
   try {
     const res = await fetch("/lookups/users");
+    if (!res.ok) throw new Error("Failed to fetch users");
+
     const data = await res.json();
     const tbody = document.getElementById("users-table");
     if (!tbody) return;
@@ -34,34 +36,11 @@ async function fetchUsers() {
     data.users.forEach(user => {
       const row = document.createElement("tr");
 
-      const usernameCell = document.createElement("td");
-      usernameCell.textContent = user.username;
-      row.appendChild(usernameCell);
+      row.appendChild(createCell(user.username));
+      row.appendChild(createCell(user.rights));
+      row.appendChild(createCell(user.auth_threshold_band ?? "Not Set"));
+      row.appendChild(createActionsCell(user));
 
-      const rightsCell = document.createElement("td");
-      rightsCell.textContent = user.rights;
-      row.appendChild(rightsCell);
-
-      const thresholdBandCell = document.createElement("td");
-      thresholdBandCell.textContent = user.auth_threshold_band ?? "Not Set";
-      row.appendChild(thresholdBandCell);
-
-      const actionsCell = document.createElement("td");
-
-      const editButton = document.createElement("button");
-      editButton.textContent = "Edit";
-      editButton.addEventListener("click", () =>
-        editUser(user.id, user.username, user.rights, user.auth_threshold_band)
-      );
-      actionsCell.appendChild(editButton);
-
-      const deleteButton = document.createElement("button");
-      deleteButton.textContent = "Delete";
-      deleteButton.style.marginLeft = "8px";
-      deleteButton.addEventListener("click", () => deleteUser(user.id));
-      actionsCell.appendChild(deleteButton);
-
-      row.appendChild(actionsCell);
       tbody.appendChild(row);
     });
   } catch (err) {
@@ -69,14 +48,38 @@ async function fetchUsers() {
   }
 }
 
+function createCell(content) {
+  const cell = document.createElement("td");
+  cell.textContent = content;
+  return cell;
+}
+
+function createActionsCell(user) {
+  const cell = document.createElement("td");
+
+  const editBtn = document.createElement("button");
+  editBtn.textContent = "Edit";
+  editBtn.addEventListener("click", () =>
+    populateUserForm(user.id, user.username, user.rights, user.auth_threshold_band)
+  );
+  cell.appendChild(editBtn);
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.style.marginLeft = "8px";
+  deleteBtn.addEventListener("click", () => deleteUser(user.id));
+  cell.appendChild(deleteBtn);
+
+  return cell;
+}
+
 async function addOrUpdateUser() {
   const id = document.getElementById("user-id")?.value;
-  const username = document.getElementById("user-username")?.value;
+  const username = document.getElementById("user-username")?.value.trim();
   const password = document.getElementById("user-password")?.value;
   const rights = document.getElementById("user-rights")?.value;
-  const authThresholdBandRaw = document.getElementById("user-auth-threshold-band")?.value;
-
-  const auth_threshold_band = authThresholdBandRaw === "" ? null : parseInt(authThresholdBandRaw, 10);
+  const bandRaw = document.getElementById("user-auth-threshold-band")?.value;
+  const auth_threshold_band = bandRaw === "" ? null : parseInt(bandRaw, 10);
 
   if (!username || !rights) {
     alert("Username and rights are required.");
@@ -90,8 +93,8 @@ async function addOrUpdateUser() {
 
   const method = id ? "PUT" : "POST";
   const url = id ? `/lookups/users/${id}` : "/lookups/users";
-
   const payload = { username, rights, auth_threshold_band };
+
   if (method === "POST" || password) {
     payload.password = password;
   }
@@ -103,28 +106,26 @@ async function addOrUpdateUser() {
       body: JSON.stringify(payload)
     });
 
-    if (res.ok) {
-      fetchUsers();
-      cancelUserEdit();
-    } else {
-      const errorData = await res.json();
-      let msg = "Failed to save user.";
-      if (errorData.detail) {
-        msg += " " + (
-          Array.isArray(errorData.detail)
-            ? errorData.detail.map(e => e.msg).join(", ")
-            : errorData.detail
-        );
-      }
-      alert(msg);
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(
+        error.detail
+          ? (Array.isArray(error.detail)
+              ? error.detail.map(e => e.msg).join(", ")
+              : error.detail)
+          : "Unknown error"
+      );
     }
+
+    fetchUsers();
+    cancelUserEdit();
   } catch (err) {
-    console.error("Failed to add/update user:", err);
-    alert("Unexpected error occurred.");
+    console.error("Failed to save user:", err);
+    alert("Failed to save user. " + err.message);
   }
 }
 
-function editUser(id, username, rights, auth_threshold_band) {
+function populateUserForm(id, username, rights, auth_threshold_band) {
   document.getElementById("user-id").value = id;
   document.getElementById("user-username").value = username;
   document.getElementById("user-rights").value = rights;
@@ -147,10 +148,18 @@ function cancelUserEdit() {
 }
 
 async function deleteUser(id) {
+  if (!confirm("Are you sure you want to delete this user?")) return;
+
   try {
     const res = await fetch(`/lookups/users/${id}`, { method: "DELETE" });
-    if (res.ok) fetchUsers();
+    if (res.ok) {
+      fetchUsers();
+    } else {
+      const err = await res.json();
+      throw new Error(err.detail || "Delete failed");
+    }
   } catch (err) {
     console.error("Failed to delete user:", err);
+    alert("Failed to delete user. " + err.message);
   }
 }
