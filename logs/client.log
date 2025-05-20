@@ -173,3 +173,11 @@
 2025-05-20 12:34:07,622 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1004", "orderId": 147}
 2025-05-20 12:38:01,605 | INFO | INFO | submitOrder started | {}
 2025-05-20 12:38:01,622 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1005", "orderId": 148}
+2025-05-20 16:50:44,341 | INFO | INFO | previewOrder started | {}
+2025-05-20 16:50:44,502 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-20 16:50:48,753 | INFO | INFO | submitOrder started | {}
+2025-05-20 16:50:48,772 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1006", "orderId": 149}
+2025-05-20 17:19:41,857 | INFO | INFO | previewOrder started | {}
+2025-05-20 17:19:42,011 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-20 17:19:49,027 | INFO | INFO | submitOrder started | {}
+2025-05-20 17:19:49,047 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1007", "orderId": 150}

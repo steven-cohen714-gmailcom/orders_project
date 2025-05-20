@@ -27,6 +27,10 @@ with open(output_file, 'w', encoding='utf-8') as f:
         "backend/endpoints/orders.py",
         "backend/endpoints/pending_order_pdf_generator.py",
         "frontend/static/js/components/expand_line_items.js",
+        "frontend/templates/authorisations_per_user.html",
+        "frontend/static/js/authorisations_per_user.js",
+        "frontend/static/js/components/pdf_modal.js",
+
     ]:
         f.write(f"📄 {rel_path}\n" + "-"*60 + "\n")
         try:

@@ -1,6 +1,7 @@
 // File: frontend/static/js/authorisations_per_user.js
 
 import { loadRequesters, loadSuppliers } from "./components/shared_filters.js";
+import { showPDFModal } from "./components/pdf_modal.js";
 
 console.log("🔐 Authorisations per user screen loaded");
 
@@ -48,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const orders = await res.json();
 
       const filtered = orders.filter(order => {
-        if (order.required_auth_band !== currentUser.band) return false;
+        if (Number(order.required_auth_band) !== Number(currentUser.auth_threshold_band)) return false;
         if (requesterSelect.value !== "All" && order.requester_name !== requesterSelect.value) return false;
         if (supplierSelect.value !== "All" && order.supplier_name !== supplierSelect.value) return false;
         if (startDateInput.value && new Date(order.created_date) < new Date(startDateInput.value)) return false;
@@ -81,7 +82,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
 
         const viewBtn = row.querySelector(".view-btn");
-        viewBtn.onclick = () => window.open(`/orders/api/generate_pdf_for_order/${order.id}`, "_blank");
+        viewBtn.onclick = async () => {
+          try {
+            const res = await fetch(`/orders/api/generate_pdf_for_order/${order.id}`);
+            if (!res.ok) {
+              const errorText = await res.text();
+              console.error(`❌ Failed to fetch PDF:`, errorText);
+              alert("❌ Could not load PDF.");
+              return;
+            }
+
+            const blob = await res.blob();
+            window.currentOrderIdForPDF = order.id;
+            window.currentOrderNumberForPDF = order.order_number;
+            showPDFModal(blob);
+          } catch (err) {
+            console.error("❌ PDF fetch error:", err);
+            alert("❌ Failed to load PDF.");
+          }
+        };
 
         const authBtn = row.querySelector(".auth-btn");
         authBtn.onclick = async () => {
@@ -89,10 +108,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const res = await fetch(`/orders/api/authorise_order/${order.id}`, { method: "POST" });
             const result = await res.json();
             if (result.status === "success") {
-              authBtn.textContent = "✅ Authorised";
-              authBtn.disabled = true;
-              viewBtn.disabled = true;
-              row.style.opacity = 0.5;
+              row.remove();
             } else {
               alert("❌ Failed to authorise: " + result.message);
             }
