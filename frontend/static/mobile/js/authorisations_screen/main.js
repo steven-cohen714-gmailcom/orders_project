@@ -16,9 +16,17 @@ function formatDate(dateStr) {
 document.addEventListener("DOMContentLoaded", async () => {
   const container = document.getElementById("order-list");
 
-  const username = sessionStorage.getItem("username");
-  if (username) {
-    document.getElementById("username-placeholder").textContent = username;
+  // 🔍 Fetch username from session via backend
+  try {
+    const res = await fetch("/mobile/get_user_info");
+    const user = await res.json();
+    const username = user.username || "";
+    const heading = document.querySelector("h2");
+    if (heading) {
+      heading.innerHTML = `<span style="font-weight: normal;">${username}</span>, please review the orders below which are waiting for you to authorise:`;
+    }
+  } catch (err) {
+    console.error("❌ Failed to fetch user info:", err);
   }
 
   try {

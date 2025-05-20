@@ -20,18 +20,23 @@ async def new_order_page(request: Request):
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
+
             # Fetch requesters
             cursor.execute("SELECT id, name FROM requesters ORDER BY name")
             requesters = [dict(row) for row in cursor.fetchall()]
+
             # Fetch suppliers
             cursor.execute("SELECT id, name FROM suppliers ORDER BY name")
             suppliers = [dict(row) for row in cursor.fetchall()]
+
             # Fetch items
             cursor.execute("SELECT item_code, item_description FROM items ORDER BY item_code")
             items = [dict(row) for row in cursor.fetchall()]
+
             # Fetch projects
             cursor.execute("SELECT project_code, project_name FROM projects ORDER BY project_code")
             projects = [dict(row) for row in cursor.fetchall()]
+
             # Fetch business details
             cursor.execute("""
                 SELECT company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number
@@ -41,6 +46,7 @@ async def new_order_page(request: Request):
             if not row:
                 logging.error("No business details found in database")
                 raise HTTPException(status_code=500, detail="No business details found in database")
+
             business_details = dict(row)
             logging.info(f"Business details fetched: {business_details}")
 
@@ -63,10 +69,7 @@ async def new_order_page(request: Request):
 @router.get("/orders/pending_orders", response_class=HTMLResponse)
 async def pending_orders_page(request: Request):
     try:
-        return templates.TemplateResponse(
-            "pending_orders.html",
-            {"request": request}
-        )
+        return templates.TemplateResponse("pending_orders.html", {"request": request})
     except Exception as e:
         logging.error(f"Error rendering pending orders page: {str(e)}")
         raise
@@ -75,10 +78,27 @@ async def pending_orders_page(request: Request):
 @router.get("/mobile/authorisations", response_class=HTMLResponse)
 async def mobile_authorisations_screen(request: Request):
     try:
-        return templates.TemplateResponse(
-            "mobile/authorisations.html",
-            {"request": request}
-        )
+        return templates.TemplateResponse("mobile/authorisations.html", {"request": request})
     except Exception as e:
         logging.error(f"Error rendering mobile authorisations screen: {str(e)}")
+        raise
+
+
+@router.get("/orders/authorisations_per_user", response_class=HTMLResponse)
+async def authorisations_per_user_screen(request: Request):
+    try:
+        return templates.TemplateResponse("authorisations_per_user.html", {"request": request})
+    except Exception as e:
+        logging.error(f"Error rendering authorisations_per_user screen: {str(e)}")
+        raise
+
+
+# 🧠 IMPORTANT: Any route like `/orders/{order_id}` must come AFTER all fixed-path routes like `/orders/authorisations_per_user`
+@router.get("/orders/{order_id}", response_class=HTMLResponse)
+async def view_order_by_id(order_id: int, request: Request):
+    try:
+        # Placeholder view logic if needed
+        return templates.TemplateResponse("order_detail.html", {"request": request, "order_id": order_id})
+    except Exception as e:
+        logging.error(f"Error rendering order detail page: {str(e)}")
         raise

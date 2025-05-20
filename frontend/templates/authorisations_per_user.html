@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Authorisations</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  {% include "_tab_nav.html" %}
+
+  <h2 id="user-heading">User, here are your authorisations:</h2>
+
+  <div class="filters">
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date">
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date">
+    <label for="filter-requester">Requester:</label>
+    <select id="filter-requester">
+      <option value="All">All</option>
+    </select>
+    <label for="filter-supplier">Supplier:</label>
+    <select id="filter-supplier">
+      <option value="All">All</option>
+    </select>
+    <label for="filter-status">Status:</label>
+    <select id="filter-status" disabled>
+      <option value="Awaiting Authorisation" selected>Awaiting Authorisation</option>
+    </select>
+    <button id="run-btn">Run</button>
+    <button id="clear-btn">Clear</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Request Date</th>
+        <th>Order Number</th>
+        <th>Requester</th>
+        <th>Supplier</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="pending-body"></tbody>
+  </table>
+
+  <script type="module" src="/static/js/authorisations_per_user.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const path = window.location.pathname;
+      const tabButtons = document.querySelectorAll(".tab-buttons button");
+      tabButtons.forEach(btn => {
+        const target = btn.getAttribute("onclick").match(/location\.href='([^']+)'/)[1];
+        if (path.startsWith(target)) {
+          btn.classList.add("active");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

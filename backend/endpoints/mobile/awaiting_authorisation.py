@@ -1,9 +1,23 @@
 from fastapi import APIRouter, Request, HTTPException
 from backend.database import get_db_connection
 from datetime import datetime
+from fastapi.responses import JSONResponse
 import json
+import logging
 
 router = APIRouter()
+logger = logging.getLogger("uvicorn")
+
+
+@router.get("/mobile/get_user_info")
+async def get_user_info(request: Request):
+    user = request.session.get("user")
+    if not user:
+        raise HTTPException(status_code=401, detail="User not authenticated")
+
+    logger.info(f"🔍 Session user before JSONResponse: {user}")
+    return JSONResponse(content=user if isinstance(user, dict) else json.loads(user))
+
 
 @router.get("/orders/api/awaiting_authorisation")
 async def get_orders_awaiting_authorisation(request: Request):
@@ -23,11 +37,20 @@ async def get_orders_awaiting_authorisation(request: Request):
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT id, order_number, total, created_date
-            FROM orders
-            WHERE status = 'Awaiting Authorisation'
-            AND required_auth_band = ?
-            ORDER BY created_date DESC
+            SELECT 
+                o.id,
+                o.order_number,
+                o.total,
+                o.created_date,
+                o.status,
+                r.name AS requester_name,
+                s.name AS supplier_name
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE o.status = 'Awaiting Authorisation'
+              AND o.required_auth_band = ?
+            ORDER BY o.created_date DESC
         """, (band,))
         return [dict(row) for row in cursor.fetchall()]
 
