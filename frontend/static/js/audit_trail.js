@@ -2,15 +2,16 @@ import { expandLineItemsWithReceipts } from "/static/js/components/expand_line_i
 import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from "/static/js/components/attachment_modal.js";
 import { showOrderNoteModal, showSupplierNoteModal } from "/static/js/components/order_note_modal.js";
 import { loadRequesters, loadSuppliers } from "/static/js/components/shared_filters.js";
+import { showPDFModal } from "/static/js/components/pdf_modal.js";
 
 function escapeHTML(str) {
   if (!str) return "";
   return str
-    .replace(/&/g, "&")
-    .replace(/</g, "<")
-    .replace(/>/g, ">")
-    .replace(/"/g, "\"")
-    .replace(/'/g, "\'");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 async function loadFiltersAndOrders() {
@@ -20,7 +21,7 @@ async function loadFiltersAndOrders() {
     await loadOrders();
   } catch (err) {
     console.error("❌ Failed to load filters or orders:", err);
-    document.getElementById("audit-body").innerHTML = `<tr><td colspan="7">Error loading filters: ${escapeHTML(err.message)}</td></tr>`;
+    document.getElementById("audit-body").innerHTML = `<tr><td colspan="8">Error loading filters: ${escapeHTML(err.message)}</td></tr>`;
   }
 }
 
@@ -42,12 +43,15 @@ async function loadOrders() {
     const res = await fetch(`/orders/api/audit_trail_orders?${params.toString()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
     const data = await res.json();
+    data.orders.forEach((o, i) => {
+      console.log(`🧾 Order ${i}:`, o.order_number, "| Last Action:", o.last_action);
+    });    
 
     const tbody = document.getElementById("audit-body");
     tbody.innerHTML = "";
 
     if (data.orders && Array.isArray(data.orders) && data.orders.length > 0) {
-      data.orders.forEach((order, index) => {
+      data.orders.forEach((order) => {
         const row = document.createElement("tr");
         const sanitizedOrderNote = escapeHTML(order.order_note || "");
         const sanitizedSupplierNote = escapeHTML(order.note_to_supplier || "");
@@ -57,6 +61,8 @@ async function loadOrders() {
         const sanitizedDate = escapeHTML(order.created_date || "");
         const sanitizedTotal = order.total != null ? `R${parseFloat(order.total).toFixed(2)}` : "R0.00";
         const sanitizedStatus = escapeHTML(order.status || "");
+        const rawLastAction = order.last_action !== null && order.last_action !== undefined ? order.last_action : "No actions yet";
+        const sanitizedLastAction = escapeHTML(rawLastAction);
 
         row.innerHTML = `
           <td>${sanitizedDate}</td>
@@ -65,11 +71,13 @@ async function loadOrders() {
           <td>${sanitizedSupplier}</td>
           <td>${sanitizedTotal}</td>
           <td><span class="status">${sanitizedStatus}</span></td>
+          <td>${sanitizedLastAction}</td>
           <td>
             <span class="expand-icon" style="cursor:pointer" title="View Line Items">⬇️</span>
             <span class="clip-icon" style="cursor:pointer" title="View/Upload Attachments">📎</span>
             <span class="note-icon" style="cursor:pointer" title="Edit Order Note">📝</span>
             <span class="supplier-note-icon" style="cursor:pointer" title="View Note to Supplier">📦</span>
+            <span class="pdf-icon" style="cursor:pointer" title="View Purchase Order PDF">📄</span>
           </td>`;
 
         tbody.appendChild(row);
@@ -91,6 +99,26 @@ async function loadOrders() {
           }
         });
 
+        row.querySelector(".pdf-icon").addEventListener("click", async () => {
+          try {
+            const response = await fetch(`/orders/api/generate_pdf_for_order/${order.id}`);
+            if (!response.ok) throw new Error(`PDF generation failed with status ${response.status}`);
+
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/pdf')) {
+              const blob = await response.blob();
+              if (blob.size === 0) throw new Error('Received empty PDF file');
+              showPDFModal(blob);
+            } else {
+              const data = await response.json();
+              throw new Error(`Unexpected response: ${JSON.stringify(data)}`);
+            }
+          } catch (err) {
+            console.error(`❌ Failed to show PDF for order ${sanitizedOrderNumber}:`, err);
+            alert("❌ Could not load purchase order PDF.");
+          }
+        });
+
         row.querySelector(".note-icon").addEventListener("click", (e) => {
           const target = e.target;
           showOrderNoteModal(sanitizedOrderNote, order.id, (newNote) => {
@@ -108,11 +136,11 @@ async function loadOrders() {
         });
       });
     } else {
-      tbody.innerHTML = '<tr><td colspan="7">No audit trail orders found.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8">No audit trail orders found.</td></tr>';
     }
   } catch (err) {
     console.error("❌ Error loading audit trail orders:", err);
-    document.getElementById("audit-body").innerHTML = `<tr><td colspan="7">Error loading orders: ${escapeHTML(err.message)}</td></tr>`;
+    document.getElementById("audit-body").innerHTML = `<tr><td colspan="8">Error loading orders: ${escapeHTML(err.message)}</td></tr>`;
   }
 }
 
@@ -128,9 +156,3 @@ function clearFilters() {
 document.getElementById("run-btn").addEventListener("click", loadOrders);
 document.getElementById("clear-btn").addEventListener("click", clearFilters);
 document.addEventListener("DOMContentLoaded", loadFiltersAndOrders);
-
-window.showUploadAttachmentsModal = showUploadAttachmentsModal;
-window.checkAttachments = checkAttachments;
-window.showViewAttachmentsModal = showViewAttachmentsModal;
-window.showOrderNoteModal = showOrderNoteModal;
-window.showSupplierNoteModal = showSupplierNoteModal;

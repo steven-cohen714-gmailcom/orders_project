@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (response.ok) {
-        window.location.href = "/home";
+        window.location.href = "/orders/pending_orders";
       } else {
         const errorData = await response.json();
         errorBox.textContent = errorData?.detail || "Invalid credentials. Please try again.";

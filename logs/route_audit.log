@@ -5,7 +5,6 @@
 /redoc
 /static
 /data/uploads
-/
 /home
 /orders/new
 /orders/pending_orders
@@ -59,6 +58,7 @@
 /lookups/users
 /lookups/users/{user_id}
 /lookups/users/{user_id}
+/lookups/
 /lookups/login
 /lookups/logout
 /lookups/log_client
@@ -93,9 +93,8 @@
 /orders/api/received_orders
 /orders/api/items_for_order/{order_id}
 /orders/api/audit_trail
-/orders/api/order_summary/{order_id}
-/orders/api/partially_delivered
 /orders/api/preview_pdf_new_order
+/
 /login
 /logout
 /orders

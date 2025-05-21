@@ -5,3 +5,7 @@
 [2025-05-14T05:49:51.016619] {"action": "receive", "order_id": 129, "items": [{"item_id": 159, "received_qty": 3.0}], "status": "Partially Received", "receipt_date": "2025-05-14"}
 [2025-05-15T07:38:03.546499] {"action": "receive", "order_id": 133, "items": [{"item_id": 163, "received_qty": 2.0}], "status": "Partially Received", "receipt_date": "2025-05-15"}
 [2025-05-18T04:40:03.895182] {"action": "receive", "order_id": 135, "items": [{"item_id": 165, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-05-18"}
+[2025-05-21T03:38:55.373134] {"action": "receive", "order_id": 150, "items": [{"item_id": 180, "received_qty": 2.0}], "status": "Partially Received", "receipt_date": "2025-05-21"}
+[2025-05-21T04:46:04.212120] {"action": "receive", "order_id": 146, "items": [{"item_id": 176, "received_qty": 2.0}], "status": "Received", "receipt_date": "2025-05-21"}
+[2025-05-21T05:06:03.256851] {"action": "receive", "order_id": 154, "items": [{"item_id": 184, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-05-21"}
+[2025-05-21T05:27:10.063943] {"action": "receive", "order_id": 151, "items": [{"item_id": 181, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-05-21"}

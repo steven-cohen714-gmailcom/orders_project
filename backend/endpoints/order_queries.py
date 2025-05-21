@@ -232,161 +232,59 @@ def get_audit_trail(
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
+
             cursor.execute(f"""
                 SELECT
                     o.id, o.created_date, o.received_date, o.order_number,
                     r.name AS requester, s.name AS supplier,
-                    o.order_note, o.note_to_supplier, o.total, o.status
+                    o.order_note, o.note_to_supplier, o.total, o.status,
+                    (
+                        SELECT 
+                            COALESCE(at.action, 'No actions yet') ||
+                            CASE 
+                                WHEN u.username IS NOT NULL THEN ' by ' || u.username 
+                                ELSE '' 
+                            END ||
+                            CASE 
+                                WHEN at.action_date IS NOT NULL THEN ' at ' || at.action_date 
+                                ELSE '' 
+                            END
+                        FROM audit_trail at
+                        LEFT JOIN users u ON at.user_id = u.id
+                        WHERE at.order_id = o.id
+                        ORDER BY at.action_date DESC
+                        LIMIT 1
+                    ) AS last_action
                 FROM orders o
                 LEFT JOIN requesters r ON o.requester_id = r.id
                 LEFT JOIN suppliers s ON o.supplier_id = s.id
                 WHERE {where_clause}
                 ORDER BY o.created_date DESC
             """, params)
+
             orders = [dict(row) for row in cursor.fetchall()]
+
             for order in orders:
                 try:
                     order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y")
-                except ValueError:
-                    try:
-                        order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y")
-                    except ValueError:
-                        order["created_date"] = datetime.strptime(order["created_date"], "%Y/%m/%d").strftime("%d/%m/%Y")
+                except:
+                    pass
                 if order["received_date"]:
                     try:
                         order["received_date"] = datetime.strptime(order["received_date"], "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y")
-                    except ValueError:
-                        try:
-                            order["received_date"] = datetime.strptime(order["received_date"], "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y")
-                        except ValueError:
-                            order["received_date"] = datetime.strptime(order["received_date"], "%Y/%m/%d").strftime("%d/%m/%Y")
+                    except:
+                        pass
+
                 cursor.execute("""
                     SELECT id, item_code, item_description, project, qty_ordered, qty_received, received_date
                     FROM order_items
                     WHERE order_id = ?
                 """, (order["id"],))
-                items = [dict(item_row) for item_row in cursor.fetchall()]
-                for item in items:
-                    if item["received_date"]:
-                        try:
-                            item["received_date"] = datetime.strptime(item["received_date"], "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y")
-                        except ValueError:
-                            try:
-                                item["received_date"] = datetime.strptime(item["received_date"], "%Y-%m-%dT%H:%M:%S.%f").strftime("%d/%m/%Y")
-                            except ValueError:
-                                item["received_date"] = datetime.strptime(item["received_date"], "%Y/%m/%d").strftime("%d/%m/%Y")
-                order["items"] = items
+                order["items"] = [dict(item) for item in cursor.fetchall()]
+
         log_event("new_orders_log.txt", {"action": "fetch_audit_trail", "count": len(orders)})
         return {"orders": orders}
-    except sqlite3.OperationalError as e:
-        log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_query", "query": "audit_trail"})
-        raise HTTPException(status_code=500, detail=f"Database query error: {e}")
+
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "audit_trail"})
         raise HTTPException(status_code=500, detail=f"Failed to load audit trail: {e}")
-    
-@router.get("/order_summary/{order_id}")
-def get_order_summary(order_id: int):
-    try:
-        with sqlite3.connect("data/orders.db") as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-
-            cursor.execute("""
-                SELECT
-                    o.id, o.created_date, o.order_number,
-                    r.name AS requester, s.name AS supplier,
-                    o.order_note, o.note_to_supplier, o.total, o.status
-                FROM orders o
-                LEFT JOIN requesters r ON o.requester_id = r.id
-                LEFT JOIN suppliers s ON o.supplier_id = s.id
-                WHERE o.id = ?
-            """, (order_id,))
-            order = cursor.fetchone()
-            if not order:
-                raise HTTPException(status_code=404, detail="Order not found")
-            order_dict = dict(order)
-
-            cursor.execute("SELECT company_name, address_line1, address_line2, city FROM business_details LIMIT 1")
-            biz = cursor.fetchone()
-            if biz:
-                order_dict.update(dict(biz))
-
-            cursor.execute("""
-                SELECT item_code, item_description, project, qty_ordered, qty_received, price
-                FROM order_items
-                WHERE order_id = ?
-            """, (order_id,))
-            items = [dict(row) for row in cursor.fetchall()]
-            for item in items:
-                item["line_total"] = round(item["qty_ordered"] * item["price"], 2)
-            order_dict["items"] = items
-
-        log_event("new_orders_log.txt", {"action": "fetch_order_summary", "order_id": order_id})
-        return order_dict
-    except Exception as e:
-        log_event("new_orders_log.txt", {"error": str(e), "type": "order_summary"})
-        raise HTTPException(status_code=500, detail=f"Failed to fetch order summary: {e}")
-
-@router.get("/partially_delivered", response_model=dict)
-async def get_partially_delivered_orders(
-    start_date: Optional[str] = Query(None),
-    end_date: Optional[str] = Query(None),
-    requester: Optional[str] = Query(None),
-    supplier: Optional[str] = Query(None),
-    status: Optional[str] = Query(None)
-):
-    try:
-        with sqlite3.connect("data/orders.db") as conn:
-            conn.row_factory = sqlite3.Row
-            cursor = conn.cursor()
-            query = """
-                SELECT DISTINCT o.id, o.order_number, o.status, o.created_date, o.total,
-                       o.order_note, o.note_to_supplier,
-                       r.name as requester, s.name as supplier
-                FROM orders o
-                JOIN order_items oi ON o.id = oi.order_id
-                LEFT JOIN requesters r ON o.requester_id = r.id
-                LEFT JOIN suppliers s ON o.supplier_id = s.id
-                WHERE oi.qty_received < oi.qty_ordered
-                AND o.status NOT IN ('Received', 'Partially Delivered - Accepted')
-            """
-            params = []
-            conditions = []
-            
-            if start_date:
-                conditions.append("o.created_date >= ?")
-                params.append(start_date)
-            if end_date:
-                conditions.append("o.created_date <= ?")
-                params.append(end_date)
-            if requester and requester != "All":
-                conditions.append("r.name = ?")
-                params.append(requester)
-            if supplier and supplier != "All":
-                conditions.append("s.name = ?")
-                params.append(supplier)
-            if status and status != "All":
-                conditions.append("o.status = ?")
-                params.append(status)
-            
-            if conditions:
-                query += " AND " + " AND ".join(conditions)
-                
-            query += " ORDER BY o.created_date DESC"
-            cursor.execute(query, params)
-            orders = [dict(row) for row in cursor.fetchall()]
-            
-            log_event("partially_delivered_log.txt", {
-                "action": "fetch_partially_delivered_orders",
-                "count": len(orders),
-                "params": {"start_date": start_date, "end_date": end_date, "requester": requester, "supplier": supplier, "status": status}
-            })
-            
-            return {"orders": orders}
-    except sqlite3.Error as e:
-        log_event("partially_delivered_log.txt", {"error": str(e), "type": "sqlite"})
-        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
-    except Exception as e:
-        log_event("partially_delivered_log.txt", {"error": str(e), "type": "general"})
-        raise HTTPException(status_code=500, detail=f"Failed to fetch partially delivered orders: {str(e)}")

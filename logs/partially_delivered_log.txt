@@ -17,3 +17,8 @@
 [2025-05-19T10:56:40.926725] {"action": "fetch_partially_delivered_orders", "count": 0, "params": {"start_date": null, "end_date": null, "requester": null, "supplier": null, "status": null}}
 [2025-05-19T10:56:58.298967] {"action": "fetch_partially_delivered_orders", "count": 0, "params": {"start_date": null, "end_date": null, "requester": null, "supplier": null, "status": null}}
 [2025-05-20T11:04:01.741376] {"action": "fetch_partially_delivered_orders", "count": 0, "params": {"start_date": null, "end_date": null, "requester": null, "supplier": null, "status": null}}
+[2025-05-21T03:39:00.010286] {"action": "fetch_partially_delivered_orders", "count": 1, "params": {"start_date": null, "end_date": null, "requester": null, "supplier": null, "status": null}}
+[2025-05-21T03:40:32.339987] {"action": "fetch_partially_delivered_orders", "count": 1, "params": {"start_date": null, "end_date": null, "requester": null, "supplier": null, "status": null}}
+[2025-05-21T03:40:41.689493] {"action": "fetch_partially_delivered_orders", "count": 1, "params": {"start_date": null, "end_date": null, "requester": null, "supplier": null, "status": null}}
+[2025-05-21T04:40:14.250496] {"action": "fetch_partially_delivered_orders", "count": 1, "params": {"start_date": null, "end_date": null, "requester": null, "supplier": null, "status": null}}
+[2025-05-21T04:43:54.834014] {"action": "fetch_partially_delivered_orders", "count": 1, "params": {"start_date": null, "end_date": null, "requester": null, "supplier": null, "status": null}}

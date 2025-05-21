@@ -15,6 +15,12 @@ import os
 # --- Database ---
 from backend.database import init_db, get_db_connection
 
+# --- Login Check Helper ---
+def require_login(request: Request):
+    if not request.session.get("user"):
+        return RedirectResponse("/", status_code=302)
+    return None
+
 # --- Routers ---
 from backend.endpoints import routers
 from backend.endpoints.admin import admin_router
@@ -69,17 +75,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(SessionMiddleware, secret_key="your-new-secure-key")  # Replace with a secure key
+app.add_middleware(SessionMiddleware, secret_key="your-new-secure-key")
 
 templates = Jinja2Templates(directory="frontend/templates")
 
 # --- Static Routes Router ---
 static_router = APIRouter()
-
-@static_router.get("/", response_class=HTMLResponse)
-async def read_root(request: Request):
-    logging.info("Rendering login page")
-    return templates.TemplateResponse("login.html", {"request": request})
 
 @static_router.get("/home", response_class=HTMLResponse)
 async def home(request: Request):
@@ -90,83 +91,84 @@ async def home(request: Request):
 
 @static_router.get("/orders/new", response_class=HTMLResponse)
 async def new_order_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+
     logging.info("Starting to render new order page")
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT id, name FROM requesters ORDER BY name")
             requesters = [dict(row) for row in cursor.fetchall()]
-            logging.info(f"Requesters fetched: {requesters}")
             cursor.execute("SELECT id, name FROM suppliers ORDER BY name")
             suppliers = [dict(row) for row in cursor.fetchall()]
-            logging.info(f"Suppliers fetched: {suppliers}")
             cursor.execute("SELECT item_code, item_description FROM items ORDER BY item_code")
             items = [dict(row) for row in cursor.fetchall()]
-            logging.info(f"Items fetched: {items}")
             cursor.execute("SELECT project_code, project_name FROM projects ORDER BY project_code")
             projects = [dict(row) for row in cursor.fetchall()]
-            logging.info(f"Projects fetched: {projects}")
             cursor.execute("""
                 SELECT company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number
                 FROM business_details WHERE id = 1
             """)
             row = cursor.fetchone()
-            if not row:
-                logging.error("No business details found in database")
-                business_details = {
-                    "company_name": "Default Company",
-                    "address_line1": "N/A",
-                    "address_line2": "",
-                    "city": "N/A",
-                    "province": "N/A",
-                    "postal_code": "N/A",
-                    "telephone": "N/A",
-                    "vat_number": "N/A"
-                }
-            else:
-                business_details = dict(row)
-            logging.info(f"Business details fetched: {business_details}")
+            business_details = dict(row) if row else {
+                "company_name": "Default Company",
+                "address_line1": "N/A",
+                "address_line2": "",
+                "city": "N/A",
+                "province": "N/A",
+                "postal_code": "N/A",
+                "telephone": "N/A",
+                "vat_number": "N/A"
+            }
 
-        template_context = {
+        return templates.TemplateResponse("new_order.html", {
             "request": request,
             "requesters": requesters,
             "suppliers": suppliers,
             "items": items,
             "projects": projects,
             "business_details": business_details
-        }
-        logging.info(f"Template context: {template_context}")
-        
-        response = templates.TemplateResponse("new_order.html", template_context)
-        logging.info("Successfully rendered new_order.html")
-        return response
+        })
+
     except Exception as e:
         logging.error(f"Error rendering new order page: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error rendering new order page: {str(e)}")
 
 @static_router.get("/orders/pending_orders", response_class=HTMLResponse)
 async def pending_orders_page(request: Request):
-    logging.info("Rendering pending orders page")
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
     return templates.TemplateResponse("pending_orders.html", {"request": request})
 
 @static_router.get("/orders/received_orders", response_class=HTMLResponse)
 async def received_orders_page(request: Request):
-    logging.info("Rendering received orders page")
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
     return templates.TemplateResponse("received_orders.html", {"request": request})
 
 @static_router.get("/orders/audit_trail", response_class=HTMLResponse)
 async def audit_trail_page(request: Request):
-    logging.info("Rendering audit trail page")
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
     return templates.TemplateResponse("audit_trail.html", {"request": request})
 
 @static_router.get("/maintenance", response_class=HTMLResponse)
 async def maintenance_page(request: Request):
-    logging.info("Rendering maintenance page")
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
     return templates.TemplateResponse("maintenance.html", {"request": request})
 
 @static_router.get("/orders/partially_delivered", response_class=HTMLResponse)
 async def partially_delivered_page(request: Request):
-    logging.info("Rendering partially delivered orders page")
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
     return templates.TemplateResponse("partially_delivered.html", {"request": request})
 
 @static_router.get("/favicon.ico")
@@ -183,16 +185,13 @@ async def favicon():
         return {"error": "Failed to serve favicon"}, 500
 
 # --- Include Routers ---
-# Include static routes first to take precedence
 app.include_router(static_router)
 app.include_router(mobile_auth_router)
 
-# Include lookup routers under /lookups
 for router in routers:
     if router is not order_queries_router and router is not orders_router and router is not attachments_router and router is not order_receiving_router:
         app.include_router(router, prefix="/lookups")
 
-# Include other routers with their specific prefixes
 app.include_router(html_routes.router)
 app.include_router(admin_router, prefix="/admin")
 app.include_router(order_queries_router, prefix="/orders/api")

@@ -1,53 +1,18 @@
 INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
 INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [10391] using StatReload
-INFO:     Started server process [10460]
+INFO:     Started reloader process [98302] using StatReload
+INFO:     Started server process [98376]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:64049 - "GET /logout HTTP/1.1" 302 Found
-INFO:     127.0.0.1:64049 - "GET / HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64049 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:64051 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64049 - "GET /static/js/login.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64049 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64083 - "POST /login HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64083 - "GET /home HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64083 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64083 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64083 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:64083 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64086 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:64083 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64086 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64086 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64083 - "GET /static/js/maintenance_screen/requesters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64086 - "GET /static/js/maintenance_screen/users.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64103 - "GET /static/js/maintenance_screen/items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64104 - "GET /static/js/maintenance_screen/suppliers.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64107 - "GET /static/js/maintenance_screen/projects.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64108 - "GET /static/js/maintenance_screen/settings.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64108 - "GET /static/js/maintenance_screen/business_details.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64108 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64104 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64107 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64103 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64086 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64083 - "GET /lookups/business_details HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64108 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64108 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64108 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64108 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:64086 - "GET /static/js/authorisations_per_user.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64083 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64083 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64086 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64086 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64086 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     🔍 Session user before JSONResponse: {"id": 14, "username": "steven", "rights": "edit", "auth_threshold_band": 1}
-INFO:     127.0.0.1:64086 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64086 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64163 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64163 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64163 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64163 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64176 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62408 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62408 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62409 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62408 - "GET /static/js/audit_trail.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62408 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62409 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62412 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62413 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62415 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62415 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62415 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62415 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK

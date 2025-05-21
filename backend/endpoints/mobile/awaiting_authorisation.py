@@ -43,6 +43,7 @@ async def get_orders_awaiting_authorisation(request: Request):
                 o.total,
                 o.created_date,
                 o.status,
+                o.required_auth_band,
                 r.name AS requester_name,
                 s.name AS supplier_name
             FROM orders o
