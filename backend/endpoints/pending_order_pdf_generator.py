@@ -11,8 +11,11 @@ import logging
 
 router = APIRouter()
 
+# ✅ Use relative paths for template and logo
 TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "../../frontend/templates")
-LOGO_PATH = "file:///Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/images/universal_logo.jpg"
+LOGO_PATH = "file://" + os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../../frontend/static/images/universal_logo.jpg")
+)
 
 env = Environment(loader=FileSystemLoader(TEMPLATE_PATH))
 
@@ -43,7 +46,7 @@ async def generate_pdf_for_order(order_id: int):
             cursor.execute("SELECT * FROM order_items WHERE order_id = ?", (order_id,))
             items = cursor.fetchall()
 
-            # Compute item totals if not present
+            # Compute item totals
             for item in items:
                 try:
                     qty = float(item.get("qty_ordered", 0))

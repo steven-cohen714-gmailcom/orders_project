@@ -91,6 +91,7 @@
 /admin/users/{user_id}
 /orders/api/pending_orders
 /orders/api/received_orders
+/orders/api/partially_delivered
 /orders/api/items_for_order/{order_id}
 /orders/api/audit_trail
 /orders/api/preview_pdf_new_order

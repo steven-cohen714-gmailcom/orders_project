@@ -191,3 +191,36 @@
 2025-05-21 04:00:52,063 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1010", "orderId": 153}
 2025-05-21 05:05:41,209 | INFO | INFO | submitOrder started | {}
 2025-05-21 05:05:41,226 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1011", "orderId": 154}
+2025-05-21 15:30:29,674 | INFO | INFO | previewOrder started | {}
+2025-05-21 15:30:30,324 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-21 15:30:38,733 | INFO | INFO | submitOrder started | {}
+2025-05-21 15:30:38,836 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1012", "orderId": 155}
+2025-05-21 15:49:05,159 | INFO | INFO | submitOrder started | {}
+2025-05-21 15:49:05,567 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1013", "orderId": 156}
+2025-05-21 15:56:12,381 | INFO | INFO | submitOrder started | {}
+2025-05-21 15:56:12,544 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1014", "orderId": 157}
+2025-05-21 16:03:16,263 | INFO | INFO | previewOrder started | {}
+2025-05-21 16:03:17,398 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-21 16:03:22,596 | INFO | INFO | submitOrder started | {}
+2025-05-21 16:03:23,169 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1015", "orderId": 158}
+2025-05-21 16:16:01,735 | INFO | INFO | previewOrder started | {}
+2025-05-21 16:16:02,209 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-21 16:16:07,047 | INFO | INFO | submitOrder started | {}
+2025-05-21 16:16:07,697 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "URC1016", "orderId": 159}
+2025-05-22 07:44:44,522 | INFO | INFO | previewOrder started | {}
+2025-05-22 07:44:45,189 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-22 07:45:04,751 | INFO | INFO | submitOrder started | {}
+2025-05-22 07:45:04,885 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2094", "orderId": 160}
+2025-05-22 08:51:39,395 | INFO | INFO | previewOrder started | {}
+2025-05-22 08:51:40,049 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-22 08:51:51,536 | INFO | INFO | submitOrder started | {}
+2025-05-22 08:51:51,715 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2095", "orderId": 161}
+2025-05-22 08:53:42,690 | INFO | INFO | submitOrder started | {}
+2025-05-22 08:53:47,153 | INFO | INFO | submitOrder started | {}
+2025-05-22 08:53:55,689 | INFO | INFO | submitOrder started | {}
+2025-05-22 08:53:55,836 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2096", "orderId": 162}
+2025-05-22 09:23:44,810 | INFO | INFO | submitOrder started | {}
+2025-05-22 09:24:01,878 | INFO | INFO | previewOrder started | {}
+2025-05-22 09:24:02,358 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-22 09:24:28,212 | INFO | INFO | submitOrder started | {}
+2025-05-22 09:24:28,325 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2097", "orderId": 163}

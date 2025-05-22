@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, HTTPException
-from fastapi.responses import RedirectResponse, HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from backend.database import get_db_connection
 import bcrypt
@@ -14,12 +14,16 @@ async def login_page(request: Request):
 
 @router.post("/login")
 async def login(request: Request):
-    data = await request.json()
+    try:
+        data = await request.json()
+    except Exception:
+        return JSONResponse(status_code=400, content={"error": "Invalid JSON payload"})
+
     username = data.get("username", "").strip().lower()
     password = data.get("password", "")
 
     if not username or not password:
-        raise HTTPException(status_code=400, detail="Username and password are required")
+        return JSONResponse(status_code=400, content={"error": "Username and password are required"})
 
     try:
         conn = get_db_connection()
@@ -32,25 +36,25 @@ async def login(request: Request):
         conn.close()
 
         if not user:
-            raise HTTPException(status_code=401, detail="Invalid username or password")
+            return JSONResponse(status_code=401, content={"error": "Invalid username or password"})
 
         stored_hash = user["password_hash"]
         if not bcrypt.checkpw(password.encode("utf-8"), stored_hash.encode("utf-8")):
-            raise HTTPException(status_code=401, detail="Invalid username or password")
+            return JSONResponse(status_code=401, content={"error": "Invalid username or password"})
 
-        request.session["user"] = json.dumps({
+        request.session["user"] = {
             "id": user["id"],
             "username": user["username"],
             "rights": user["rights"],
             "auth_threshold_band": user["auth_threshold_band"]
-        })
+        }
 
-        return RedirectResponse("/orders/pending_orders", status_code=302)
+        return JSONResponse(status_code=200, content={"success": True})
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Login failed due to server error: {str(e)}")
+        return JSONResponse(status_code=500, content={"error": f"Login failed due to server error: {str(e)}"})
 
 @router.get("/logout")
 async def logout(request: Request):
     request.session.clear()
-    return RedirectResponse("/", status_code=302)
+    return JSONResponse(status_code=200, content={"message": "Logged out successfully"})

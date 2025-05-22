@@ -24,14 +24,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch("/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ username, password }),
       });
 
       if (response.ok) {
         window.location.href = "/orders/pending_orders";
       } else {
-        const errorData = await response.json();
-        errorBox.textContent = errorData?.detail || "Invalid credentials. Please try again.";
+        let errorMessage = "Invalid credentials. Please try again.";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData?.error || errorData?.detail || errorMessage;
+        } catch (parseErr) {
+          console.warn("Non-JSON error response:", parseErr);
+        }
+        errorBox.textContent = errorMessage;
       }
     } catch (err) {
       console.error("Login request failed:", err);

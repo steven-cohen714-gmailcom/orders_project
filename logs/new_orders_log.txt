@@ -210,3 +210,96 @@
 [2025-05-21T05:26:56.370463] {"action": "fetch_pending_orders", "count": 8}
 [2025-05-21T05:27:04.790326] {"action": "fetch_items_for_order", "order_id": 151, "count": 1}
 [2025-05-21T05:27:12.031507] {"action": "fetch_pending_orders", "count": 7}
+[2025-05-21T04:31:02.244975] {"action": "fetch_pending_orders", "count": 7}
+[2025-05-21T04:37:14.597979] {"action": "attachment_uploaded", "order_id": 153, "filename": "Intimisso.pdf", "path": "data/uploads/153_Intimisso.pdf", "size_bytes": 527661}
+[2025-05-21T05:21:30.280287] {"action": "fetch_pending_orders", "count": 7}
+[2025-05-21T06:13:29.373892] {"action": "fetch_pending_orders", "count": 7}
+[2025-05-21T06:20:25.466002] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T07:16:10.884971] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T07:23:05.203470] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T07:23:39.106604] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T07:26:27.284339] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T07:59:42.325986] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T07:59:49.649858] {"action": "fetch_received_orders", "count": 0}
+[2025-05-21T07:59:59.844811] {"action": "fetch_received_orders", "count": 0}
+[2025-05-21T08:00:01.339369] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T11:15:13.460880] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T11:15:21.836815] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T13:01:59.710745] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T14:57:47.862988] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T15:20:42.943756] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T15:29:36.989120] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T15:30:44.733985] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T15:30:47.830753] {"action": "fetch_items_for_order", "order_id": 155, "count": 1}
+[2025-05-21T15:30:57.669065] {"action": "attachment_uploaded", "order_id": 155, "filename": "Investment_Made_-_12_May_2025.jpg", "path": "data/uploads/155_Investment_Made_-_12_May_2025.jpg", "size_bytes": 150520}
+[2025-05-21T15:31:41.678314] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T15:31:47.386741] {"action": "fetch_items_for_order", "order_id": 155, "count": 1}
+[2025-05-21T15:32:07.796586] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T15:32:10.542458] {"action": "fetch_items_for_order", "order_id": 155, "count": 1}
+[2025-05-21T15:32:17.631018] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T15:33:57.661713] {"action": "fetch_items_for_order", "order_id": 155, "count": 1}
+[2025-05-21T15:40:56.910266] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T15:41:14.533451] {"action": "fetch_items_for_order", "order_id": 155, "count": 1}
+[2025-05-21T15:41:25.975278] {"action": "fetch_items_for_order", "order_id": 155, "count": 1}
+[2025-05-21T15:41:35.770725] {"action": "fetch_received_orders", "count": 1}
+[2025-05-21T15:48:38.933201] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T15:49:13.843326] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T15:49:17.110788] {"action": "fetch_items_for_order", "order_id": 156, "count": 1}
+[2025-05-21T15:49:34.220938] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T15:49:41.619841] {"action": "fetch_items_for_order", "order_id": 156, "count": 1}
+[2025-05-21T15:55:49.210949] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T15:56:19.575944] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T15:56:25.929366] {"action": "fetch_items_for_order", "order_id": 157, "count": 1}
+[2025-05-21T15:56:26.561085] {"action": "fetch_items_for_order", "order_id": 157, "count": 1}
+[2025-05-21T15:57:47.802281] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T15:57:57.663033] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T15:58:00.052503] {"action": "fetch_items_for_order", "order_id": 157, "count": 1}
+[2025-05-21T15:58:07.354122] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T16:02:30.012030] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T16:03:31.271803] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T16:04:02.034059] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T16:04:08.866153] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T16:04:15.570388] {"action": "fetch_items_for_order", "order_id": 158, "count": 1}
+[2025-05-21T16:04:26.800717] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T16:04:35.470247] {"action": "fetch_items_for_order", "order_id": 158, "count": 1}
+[2025-05-21T16:15:03.190215] {"action": "fetch_items_for_order", "order_id": 158, "count": 1}
+[2025-05-21T16:15:26.463070] {"action": "fetch_items_for_order", "order_id": 158, "count": 1}
+[2025-05-21T16:15:32.864257] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T16:15:35.943114] {"action": "fetch_received_orders", "count": 4}
+[2025-05-21T16:16:19.471549] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T16:16:39.085358] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-21T16:16:42.672710] {"action": "fetch_items_for_order", "order_id": 159, "count": 1}
+[2025-05-21T16:16:56.047196] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T16:17:01.535959] {"action": "fetch_items_for_order", "order_id": 159, "count": 1}
+[2025-05-21T16:17:05.147277] {"action": "fetch_items_for_order", "order_id": 159, "count": 1}
+[2025-05-21T16:17:18.875621] {"action": "fetch_items_for_order", "order_id": 159, "count": 1}
+[2025-05-21T16:17:22.398051] {"action": "fetch_items_for_order", "order_id": 159, "count": 1}
+[2025-05-21T16:17:29.980577] {"action": "fetch_received_orders", "count": 5}
+[2025-05-21T16:17:31.930003] {"action": "fetch_items_for_order", "order_id": 159, "count": 1}
+[2025-05-21T16:25:22.097878] {"action": "fetch_received_orders", "count": 5}
+[2025-05-21T16:25:24.531700] {"action": "fetch_received_orders", "count": 5}
+[2025-05-21T16:25:39.071023] {"action": "fetch_received_orders", "count": 5}
+[2025-05-21T16:33:45.746309] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-21T16:33:53.992547] {"action": "fetch_received_orders", "count": 5}
+[2025-05-22T07:24:10.428925] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-22T07:25:27.787746] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-22T07:25:30.757532] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-22T07:32:24.316881] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-22T07:34:27.574152] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-22T07:42:54.403040] {"action": "fetch_pending_orders", "count": 0}
+[2025-05-22T07:45:10.437491] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-22T08:51:56.268727] {"action": "fetch_pending_orders", "count": 2}
+[2025-05-22T08:52:02.262789] {"action": "fetch_items_for_order", "order_id": 161, "count": 1}
+[2025-05-22T08:53:09.825549] {"action": "fetch_pending_orders", "count": 2}
+[2025-05-22T08:53:59.365157] {"action": "fetch_pending_orders", "count": 3}
+[2025-05-22T08:54:22.880652] {"action": "fetch_items_for_order", "order_id": 162, "count": 1}
+[2025-05-22T08:55:29.441048] {"action": "fetch_received_orders", "count": 5}
+[2025-05-22T08:55:36.935228] {"action": "fetch_pending_orders", "count": 3}
+[2025-05-22T08:55:44.268414] {"action": "fetch_received_orders", "count": 5}
+[2025-05-22T09:21:43.634459] {"action": "fetch_pending_orders", "count": 3}
+[2025-05-22T09:24:38.035662] {"action": "fetch_pending_orders", "count": 4}
+[2025-05-22T09:25:38.485863] {"action": "fetch_received_orders", "count": 5}
+[2025-05-22T09:32:45.385835] {"action": "fetch_pending_orders", "count": 4}
+[2025-05-22T09:32:51.468068] {"action": "fetch_received_orders", "count": 5}
+[2025-05-22T09:33:01.699316] {"action": "fetch_pending_orders", "count": 4}
+[2025-05-22T09:33:40.972725] {"action": "fetch_items_for_order", "order_id": 161, "count": 1}

@@ -75,7 +75,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(SessionMiddleware, secret_key="your-new-secure-key")
+app.add_middleware(SessionMiddleware, secret_key="your-new-secure-key", same_site="lax", https_only=False)
 
 templates = Jinja2Templates(directory="frontend/templates")
 

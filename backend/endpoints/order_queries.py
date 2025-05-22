@@ -165,6 +165,30 @@ def get_received_orders(
         log_event("new_orders_log.txt", {"error": str(e), "type": "received_orders"})
         raise HTTPException(status_code=500, detail=f"Failed to load received orders: {e}")
 
+@router.get("/partially_delivered")
+def get_partially_delivered_orders():
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT DISTINCT o.id, o.created_date, o.order_number,
+                    r.name AS requester, s.name AS supplier,
+                    o.order_note, o.note_to_supplier, o.total, o.status
+                FROM orders o
+                LEFT JOIN requesters r ON o.requester_id = r.id
+                LEFT JOIN suppliers s ON o.supplier_id = s.id
+                JOIN order_items oi ON o.id = oi.order_id
+                WHERE oi.qty_received < oi.qty_ordered
+                AND o.status != 'Cancelled'
+                ORDER BY o.created_date DESC
+            """)
+            orders = [dict(row) for row in cursor.fetchall()]
+            return {"orders": orders}
+    except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "partially_delivered"})
+        raise HTTPException(status_code=500, detail=f"Failed to fetch partially delivered orders: {e}")
+
 @router.get("/items_for_order/{order_id}")
 def get_items_for_order(order_id: int):
     try:

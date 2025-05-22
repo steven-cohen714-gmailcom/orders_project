@@ -283,7 +283,7 @@ function updateTotal(itemSelect) {
   
   async function fetchData(endpoint) {
     try {
-        const response = await fetch(`http://localhost:8004${endpoint}`, {
+        const response = await fetch(endpoint, {
             method: 'GET',
             credentials: 'include'
         });

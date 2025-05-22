@@ -11,8 +11,11 @@ from backend.database import get_db_connection  # ✅ Pulls live business detail
 
 router = APIRouter()
 
+# ✅ Relative paths for portability
 TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "../../frontend/templates")
-LOGO_PATH = "file:///Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/images/universal_logo.jpg"
+LOGO_PATH = "file://" + os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "../../frontend/static/images/universal_logo.jpg")
+)
 env = Environment(loader=FileSystemLoader(TEMPLATE_PATH))
 
 

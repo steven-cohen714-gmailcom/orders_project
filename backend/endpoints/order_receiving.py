@@ -32,10 +32,19 @@ async def receive_order(order_id: int, payload: ReceivePayload):
         with sqlite3.connect("data/orders.db") as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT id FROM orders WHERE id = ?", (order_id,))
-            if not cursor.fetchone():
-                raise HTTPException(status_code=404, detail="Order not found")
             
+            cursor.execute("SELECT status FROM orders WHERE id = ?", (order_id,))
+            status_row = cursor.fetchone()
+            if not status_row:
+                raise HTTPException(status_code=404, detail="Order not found")
+
+            order_status = status_row["status"]
+            if order_status not in ("Authorised", "Partially Received"):
+                raise HTTPException(
+                    status_code=403,
+                    detail=f"Order must be 'Authorised' or 'Partially Received' before receiving. Current status: {order_status}"
+                )
+
             all_fully_received = True
 
             for item in items:
