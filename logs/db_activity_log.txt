@@ -7887,3 +7887,42 @@ sqlite3.ProgrammingError: You can only execute one statement at a time.
 2025-05-22 14:24:51,198 | INFO | ✅ Database initialized successfully.
 2025-05-22 14:24:53,411 | INFO | Database tables created successfully.
 2025-05-22 14:24:53,412 | INFO | ✅ Database initialized successfully.
+2025-05-22 16:58:40,392 | INFO | Database tables created successfully.
+2025-05-22 16:58:40,392 | INFO | ✅ Database initialized successfully.
+2025-05-22 16:58:40,774 | INFO | Database tables created successfully.
+2025-05-22 16:58:40,774 | INFO | ✅ Database initialized successfully.
+2025-05-22 16:58:58,531 | INFO | Requesters fetched: 7 items
+2025-05-22 16:58:58,533 | INFO | Suppliers fetched: 11 items
+2025-05-22 17:03:36,373 | INFO | Requesters fetched: 7 items
+2025-05-22 17:03:36,375 | INFO | Suppliers fetched: 11 items
+2025-05-22 17:04:03,362 | INFO | Requesters fetched: 7 items
+2025-05-22 17:04:03,363 | INFO | Suppliers fetched: 11 items
+2025-05-22 17:04:10,124 | INFO | Requesters fetched: 7 items
+2025-05-22 17:04:10,125 | INFO | Suppliers fetched: 11 items
+2025-05-22 17:05:24,288 | INFO | Suppliers fetched: 11 items
+2025-05-22 17:05:24,289 | INFO | Requesters fetched: 7 items
+2025-05-22 20:28:40,318 | INFO | Starting to render new order page
+2025-05-22 20:28:40,362 | INFO | Requesters fetched: 7 items
+2025-05-22 20:28:40,365 | INFO | Suppliers fetched: 11 items
+2025-05-22 20:28:40,368 | INFO | Items fetched: 12 items
+2025-05-22 20:28:40,372 | INFO | Projects fetched: 12 items
+2025-05-22 20:28:43,002 | INFO | Requesters fetched: 7 items
+2025-05-22 20:28:43,004 | INFO | Suppliers fetched: 11 items
+2025-05-22 20:35:04,222 | INFO | Requesters fetched: 7 items
+2025-05-22 20:35:04,223 | INFO | Suppliers fetched: 11 items
+2025-05-22 20:35:15,088 | INFO | Requesters fetched: 7 items
+2025-05-22 20:35:15,089 | INFO | Suppliers fetched: 11 items
+2025-05-22 20:39:19,635 | INFO | Database tables created successfully.
+2025-05-22 20:39:19,635 | INFO | ✅ Database initialized successfully.
+2025-05-22 20:39:45,462 | INFO | Database tables created successfully.
+2025-05-22 20:39:45,462 | INFO | ✅ Database initialized successfully.
+2025-05-22 20:39:45,885 | INFO | Database tables created successfully.
+2025-05-22 20:39:45,885 | INFO | ✅ Database initialized successfully.
+2025-05-22 20:39:57,117 | INFO | Requesters fetched: 7 items
+2025-05-22 20:39:57,118 | INFO | Suppliers fetched: 11 items
+2025-05-22 20:40:02,622 | INFO | Requesters fetched: 7 items
+2025-05-22 20:40:02,623 | INFO | Suppliers fetched: 11 items
+2025-05-22 20:40:05,411 | INFO | Requesters fetched: 7 items
+2025-05-22 20:40:05,413 | INFO | Suppliers fetched: 11 items
+2025-05-22 20:40:07,136 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 163
+2025-05-22 20:40:12,241 | INFO | Generating PDF for order_id=163, order_number=2096

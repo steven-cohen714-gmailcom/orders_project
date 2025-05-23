@@ -21,3 +21,7 @@
 [2025-05-21T16:16:51.197742] {"action": "receive", "order_id": 159, "items": [{"item_id": 189, "received_qty": 1.0}], "status": "Partially Received", "receipt_date": "2025-05-21"}
 [2025-05-21T16:17:11.745664] {"action": "receive", "order_id": 159, "items": [{"item_id": 189, "received_qty": 2.0}], "status": "Partially Received", "receipt_date": "2025-05-21"}
 [2025-05-21T16:17:25.262762] {"action": "receive", "order_id": 159, "items": [{"item_id": 189, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-05-21"}
+[2025-05-22T20:35:11.196386] {"error": "403: Order must be 'Authorised' or 'Partially Received' before receiving. Current status: Pending", "type": "general"}
+[2025-05-22T20:35:22.597790] {"error": "403: Order must be 'Authorised' or 'Partially Received' before receiving. Current status: Pending", "type": "general"}
+[2025-05-22T20:36:03.137643] {"error": "403: Order must be 'Authorised' or 'Partially Received' before receiving. Current status: Pending", "type": "general"}
+[2025-05-22T20:40:01.007696] {"action": "receive", "order_id": 163, "items": [{"item_id": 193, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-05-22"}

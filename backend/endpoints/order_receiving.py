@@ -39,10 +39,10 @@ async def receive_order(order_id: int, payload: ReceivePayload):
                 raise HTTPException(status_code=404, detail="Order not found")
 
             order_status = status_row["status"]
-            if order_status not in ("Authorised", "Partially Received"):
+            if order_status not in ("Pending", "Partially Received"):
                 raise HTTPException(
                     status_code=403,
-                    detail=f"Order must be 'Authorised' or 'Partially Received' before receiving. Current status: {order_status}"
+                    detail=f"Order must be 'Pending' or 'Partially Received' before receiving. Current status: {order_status}"
                 )
 
             all_fully_received = True
@@ -78,7 +78,7 @@ async def receive_order(order_id: int, payload: ReceivePayload):
                     WHERE id = ?
                 """, (new_qty_received, receipt_date, item_id))
 
-                # NEW: Insert detailed record into received_item_logs
+                # Insert detailed record into received_item_logs
                 cursor.execute("""
                     INSERT INTO received_item_logs (order_item_id, qty_received, received_by_user_id, received_date)
                     VALUES (?, ?, ?, ?)
