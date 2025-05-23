@@ -1,3 +1,4 @@
+from backend.database import get_db_connection
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
 from datetime import datetime
@@ -312,3 +313,23 @@ def get_audit_trail(
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "audit_trail"})
         raise HTTPException(status_code=500, detail=f"Failed to load audit trail: {e}")
+    
+@router.get("/last_audit_action/{order_id}")
+def get_last_audit_action(order_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT details, action_date
+        FROM audit_trail
+        WHERE order_id = ?
+        ORDER BY action_date DESC
+        LIMIT 1
+    """, (order_id,))
+    row = cursor.fetchone()
+    conn.close()
+
+    if row:
+        return {"details": row["details"], "action_date": row["action_date"]}
+    else:
+        return {"details": "No actions yet", "action_date": None}
+

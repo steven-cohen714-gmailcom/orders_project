@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           try {
             const res = await fetch(`/orders/api/authorise_order/${order.id}`, { method: "POST" });
             const result = await res.json();
-            if (result.status === "success") {
+            if (result.message === "Order authorised") {
               row.remove();
             } else {
               alert("❌ Failed to authorise: " + result.message);

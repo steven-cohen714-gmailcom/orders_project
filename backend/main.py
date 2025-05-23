@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.routing import APIRouter
 from backend.endpoints import html_routes
+from backend.endpoints.order_notes import router as order_notes_router
 
 from pathlib import Path
 import logging
@@ -203,6 +204,7 @@ app.include_router(order_receiving_router, prefix="/orders")
 app.include_router(utils_router)
 app.include_router(order_email_router, prefix="/orders")
 app.include_router(pending_order_pdf_router, prefix="/orders/api")
+app.include_router(order_notes_router)
 
 # --- Dev CLI ---
 if __name__ == "__main__":

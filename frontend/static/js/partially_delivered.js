@@ -11,8 +11,8 @@ async function loadFiltersAndOrders() {
     try {
         console.log("Loading filters...");
         await Promise.all([
-            loadRequesters("filter-requester").catch(err => { console.error("Failed to load requesters:", err); throw err; }),
-            loadSuppliers("filter-supplier").catch(err => { console.error("Failed to load suppliers:", err); throw err; })
+            loadRequesters("filter-requester"),
+            loadSuppliers("filter-supplier")
         ]);
         console.log("Filters loaded successfully");
         await loadOrders();
@@ -25,11 +25,11 @@ async function loadFiltersAndOrders() {
 function escapeHTML(str) {
     if (typeof str !== 'string') return '';
     return str
-        .replace(/&/g, '&')
-        .replace(/</g, '<')
-        .replace(/>/g, '>')
-        .replace(/"/g, '"')
-        .replace(/'/g, '');
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
 
 async function loadOrders() {
@@ -49,13 +49,8 @@ async function loadOrders() {
     try {
         console.log("Fetching partially delivered orders with params:", params.toString());
         const res = await fetch(`/orders/api/partially_delivered?${params.toString()}`);
-        if (!res.ok) {
-            const errorText = await res.text();
-            throw new Error(`HTTP error! Status: ${res.status}, Message: ${errorText}`);
-        }
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}, Message: ${await res.text()}`);
         const data = await res.json();
-
-        console.log("Partially Delivered Orders API Response:", JSON.stringify(data, null, 2));
 
         const tbody = document.getElementById("partially-delivered-body");
         tbody.innerHTML = "";
@@ -71,6 +66,13 @@ async function loadOrders() {
                 const sanitizedDate = escapeHTML(order.created_date || "");
                 const sanitizedTotal = order.total != null ? `R${parseFloat(order.total).toFixed(2)}` : "R0.00";
                 const sanitizedStatus = escapeHTML(order.status || "");
+                const rawStatus = (order.status || "").trim();
+                const receiveIconHTML = (["Pending", "Authorised", "Partially Received"].includes(rawStatus))
+                    ? `<span class="receive-icon" style="color: green; cursor: pointer;" title="Receive More Items" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">✅</span>`
+                    : (rawStatus === "Awaiting Authorisation"
+                        ? `<span class="receive-icon disabled" style="color: grey; cursor: not-allowed;" title="Cannot receive until authorised">✅</span>`
+                        : "");
+
                 row.innerHTML = `
                     <td>${sanitizedDate}</td>
                     <td>${sanitizedOrderNumber}</td>
@@ -83,12 +85,21 @@ async function loadOrders() {
                         <span class="clip-icon" title="View/Upload Attachments" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📎</span>
                         <span class="note-icon" title="Edit Order Note" data-order-id="${order.id || ''}" data-order-note="${sanitizedOrderNote}" id="order-note-${index}">📝</span>
                         <span class="supplier-note-icon" title="View Note to Supplier" data-supplier-note="${sanitizedSupplierNote}" data-order-number="${sanitizedOrderNumber}" id="supplier-note-${index}">📦</span>
-                        <span class="receive-icon" title="Receive More Items" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">✅</span>
+                        ${receiveIconHTML}
                         <span class="complete-icon" title="Mark as Complete" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">✔️</span>
                         <span class="pdf-icon" title="View Purchase Order PDF" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📄</span>
                     </td>
                 `;
                 tbody.appendChild(row);
+
+                if (["Pending", "Authorised", "Partially Received"].includes(rawStatus)) {
+                    const receiveIcon = row.querySelector(".receive-icon");
+                    if (receiveIcon) {
+                        receiveIcon.addEventListener("click", () =>
+                            window.showReceiveModal(order.id || '', sanitizedOrderNumber)
+                        );
+                    }
+                }
 
                 row.querySelector(`#supplier-note-${index}`).addEventListener("click", () => {
                     try {
@@ -98,12 +109,14 @@ async function loadOrders() {
                         alert(`Error displaying supplier note: ${e.message}`);
                     }
                 });
+
                 row.querySelector(`#order-note-${index}`).addEventListener("click", (e) => {
                     const target = e.target;
                     window.showOrderNoteModal(sanitizedOrderNote, order.id || '', (newNote) => {
                         target.setAttribute("data-order-note", escapeHTML(newNote));
                     });
                 });
+
                 row.querySelector(".expand-icon").addEventListener("click", (e) => {
                     if (!order.id) {
                         console.error("No order ID provided for expanding line items");
@@ -112,19 +125,20 @@ async function loadOrders() {
                     }
                     window.expandLineItems(order.id, e.target);
                 });
-                row.querySelector(".clip-icon").addEventListener("click", (e) => {
+
+                row.querySelector(".clip-icon").addEventListener("click", async (e) => {
                     const target = e.target;
-                    window.checkAttachments(order.id || '').then(has => {
-                        if (has) {
-                            window.showViewAttachmentsModal(order.id || '', sanitizedOrderNumber);
-                        } else {
-                            window.showUploadAttachmentsModal(order.id || '', sanitizedOrderNumber, () => {
-                                window.checkAttachments(order.id || '').then(has => target.classList.toggle('eye-icon', has));
-                            });
-                        }
-                    });
+                    const has = await window.checkAttachments(order.id || '');
+                    if (has) {
+                        window.showViewAttachmentsModal(order.id || '', sanitizedOrderNumber);
+                    } else {
+                        window.showUploadAttachmentsModal(order.id || '', sanitizedOrderNumber, async () => {
+                            const recheck = await window.checkAttachments(order.id || '');
+                            target.classList.toggle('eye-icon', recheck);
+                        });
+                    }
                 });
-                row.querySelector(".receive-icon").addEventListener("click", () => window.showReceiveModal(order.id || '', sanitizedOrderNumber));
+
                 row.querySelector(".complete-icon").addEventListener("click", async () => {
                     if (confirm(`Are you sure you want to mark order ${sanitizedOrderNumber} as complete with partial delivery?`)) {
                         try {
@@ -144,6 +158,7 @@ async function loadOrders() {
                         }
                     }
                 });
+
                 row.querySelector(".pdf-icon").addEventListener("click", async () => {
                     try {
                         const response = await fetch(`/orders/api/generate_pdf_for_order/${order.id}`);

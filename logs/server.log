@@ -1,157 +1,29 @@
 INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
 INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [5239] using StatReload
-INFO:     Started server process [5308]
+INFO:     Started reloader process [18369] using StatReload
+INFO:     Started server process [18438]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:49973 - "GET / HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49973 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49974 - "GET /static/js/login.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49974 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49976 - "POST /login HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49976 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49976 - "GET /static/js/pending_orders.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:49976 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49978 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49978 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50029 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50029 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50031 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50031 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50029 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50033 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50037 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50036 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50039 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50036 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50039 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50039 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50045 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50045 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50046 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50045 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50046 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50053 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50054 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50051 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50048 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50048 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50054 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50054 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50056 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50056 - "GET /static/js/pending_orders.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:50056 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50058 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50058 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50066 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:50254 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50255 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50254 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50255 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50254 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50257 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50261 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50260 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50263 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50255 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:50255 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50260 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50260 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51703 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51703 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51705 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51705 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51703 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51707 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51703 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51703 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:51703 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51703 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51703 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51703 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51703 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51703 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51707 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:51703 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51707 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51707 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51703 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51705 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51721 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51723 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51725 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51705 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51725 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51725 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53268 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53268 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53270 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53270 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53268 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53273 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53276 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53275 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53278 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53275 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53276 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53276 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53280 - "GET /orders/api/items_for_order/163 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53280 - "POST /orders/receive/163 HTTP/1.1" 500 Internal Server Error
-INFO:     127.0.0.1:53280 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53280 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53282 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53280 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53282 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53285 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53289 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53286 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53290 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53285 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53290 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53290 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53290 - "GET /orders/api/items_for_order/163 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53290 - "POST /orders/receive/163 HTTP/1.1" 500 Internal Server Error
-INFO:     127.0.0.1:53298 - "POST /orders/receive/163 HTTP/1.1" 500 Internal Server Error
-INFO:     127.0.0.1:53346 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-WARNING:  StatReload detected changes in 'backend/endpoints/order_receiving.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [5308]
-INFO:     Started server process [6114]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
-INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [6394] using StatReload
-INFO:     Started server process [6464]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     127.0.0.1:54212 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54212 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54213 - "GET /static/js/pending_orders.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54213 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54212 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54215 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54221 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54219 - "GET /static/js/components/receive_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54218 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54219 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54218 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54218 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54218 - "GET /orders/api/items_for_order/163 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54218 - "POST /orders/receive/163 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54218 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54218 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54223 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54223 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54223 - "GET /orders/received_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54223 - "GET /static/js/received_orders.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54223 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54223 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54223 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54218 - "GET /orders/api/receipt_logs/163 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54223 - "GET /orders/api/items_for_order/163 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54223 - "GET /orders/attachments/163 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54223 - "GET /orders/attachments/163 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54223 - "GET /orders/api/generate_pdf_for_order/163 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52838 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52838 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52839 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52841 - "GET /static/js/audit_trail.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52841 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52838 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52844 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52845 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/last_audit_action/165 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/last_audit_action/164 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/last_audit_action/163 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/last_audit_action/162 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/last_audit_action/161 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/last_audit_action/160 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/last_audit_action/159 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/last_audit_action/158 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/last_audit_action/157 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/last_audit_action/156 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52839 - "GET /orders/api/last_audit_action/155 HTTP/1.1" 200 OK

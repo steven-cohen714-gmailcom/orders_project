@@ -81,23 +81,26 @@ async def authorise_order(order_id: int, request: Request):
         if row["status"] != "Awaiting Authorisation":
             raise HTTPException(status_code=400, detail="Order is not in an authorisable state")
 
-        # Update order status
-        cursor.execute("""
-            UPDATE orders
-            SET status = 'Authorised'
-            WHERE id = ?
-        """, (order_id,))
+    # Update order status safely
+    cursor.execute("""
+        UPDATE orders
+        SET status = 'Authorised'
+        WHERE id = ? AND status = 'Awaiting Authorisation'
+    """, (order_id,))
 
-        # Insert into audit trail
-        cursor.execute("""
-            INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
-            VALUES (?, 'Authorised', ?, ?, ?)
-        """, (
-            order_id,
-            f"Order authorised by {username}",
-            datetime.utcnow().isoformat(),
-            user_id
-        ))
+    if cursor.rowcount == 0:
+        raise HTTPException(status_code=400, detail="Order was already authorised or in an invalid state")
 
-        conn.commit()
-        return {"status": "success", "message": "Order authorised"}
+    # Insert into audit trail
+    cursor.execute("""
+        INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
+        VALUES (?, 'Authorised', ?, ?, ?)
+    """, (
+        order_id,
+        f"Order authorised by {username}",
+        datetime.utcnow().isoformat(),
+        user_id
+    ))
+
+    conn.commit()
+    return {"message": "Order authorised"}

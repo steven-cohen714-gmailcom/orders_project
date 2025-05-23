@@ -64,7 +64,7 @@ async def upload_attachment(file: UploadFile, order_id: int = Form(...)):
             "size_bytes": file_size
         })
 
-        return {"status": "✅ Attachment uploaded"}
+        return {"message": "Attachment uploaded successfully"}
     except sqlite3.Error as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "sqlite_upload"})
         raise HTTPException(status_code=500, detail=f"Database error during upload: {str(e)}")

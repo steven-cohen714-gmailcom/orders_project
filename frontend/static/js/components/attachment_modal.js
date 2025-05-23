@@ -126,7 +126,7 @@ function handleFiles(fileList, orderId, modalInner, onUploadComplete = null) {
       .then(res => res.json())
       .then(data => {
         const msg = document.createElement("p");
-        msg.textContent = data.status;
+        msg.textContent = data.message;
         msg.style.color = "green";
         modalInner.appendChild(msg);
         if (onUploadComplete) onUploadComplete();

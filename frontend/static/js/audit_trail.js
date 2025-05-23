@@ -43,15 +43,12 @@ async function loadOrders() {
     const res = await fetch(`/orders/api/audit_trail_orders?${params.toString()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
     const data = await res.json();
-    data.orders.forEach((o, i) => {
-      console.log(`🧾 Order ${i}:`, o.order_number, "| Last Action:", o.last_action);
-    });    
 
     const tbody = document.getElementById("audit-body");
     tbody.innerHTML = "";
 
     if (data.orders && Array.isArray(data.orders) && data.orders.length > 0) {
-      data.orders.forEach((order) => {
+      for (const order of data.orders) {
         const row = document.createElement("tr");
         const sanitizedOrderNote = escapeHTML(order.order_note || "");
         const sanitizedSupplierNote = escapeHTML(order.note_to_supplier || "");
@@ -61,8 +58,6 @@ async function loadOrders() {
         const sanitizedDate = escapeHTML(order.created_date || "");
         const sanitizedTotal = order.total != null ? `R${parseFloat(order.total).toFixed(2)}` : "R0.00";
         const sanitizedStatus = escapeHTML(order.status || "");
-        const rawLastAction = order.last_action !== null && order.last_action !== undefined ? order.last_action : "No actions yet";
-        const sanitizedLastAction = escapeHTML(rawLastAction);
 
         row.innerHTML = `
           <td>${sanitizedDate}</td>
@@ -71,7 +66,7 @@ async function loadOrders() {
           <td>${sanitizedSupplier}</td>
           <td>${sanitizedTotal}</td>
           <td><span class="status">${sanitizedStatus}</span></td>
-          <td>${sanitizedLastAction}</td>
+          <td class="last-action-cell">Loading...</td>
           <td>
             <span class="expand-icon" style="cursor:pointer" title="View Line Items">⬇️</span>
             <span class="clip-icon" style="cursor:pointer" title="View/Upload Attachments">📎</span>
@@ -81,6 +76,16 @@ async function loadOrders() {
           </td>`;
 
         tbody.appendChild(row);
+
+        // Fetch and inject latest audit action
+        try {
+          const actionRes = await fetch(`/orders/api/last_audit_action/${order.id}`);
+          const actionData = await actionRes.json();
+          const lastActionCell = row.querySelector(".last-action-cell");
+          lastActionCell.textContent = actionData.details || "No actions yet";
+        } catch (err) {
+          console.error(`❌ Error fetching last action for order ${order.order_number}:`, err);
+        }
 
         row.querySelector(".expand-icon").addEventListener("click", (e) => {
           expandLineItemsWithReceipts(order.id, e.target);
@@ -134,7 +139,7 @@ async function loadOrders() {
             alert(`Error displaying supplier note: ${e.message}`);
           }
         });
-      });
+      }
     } else {
       tbody.innerHTML = '<tr><td colspan="8">No audit trail orders found.</td></tr>';
     }

@@ -32,7 +32,7 @@ async def save_order_note(order_id: int, data: dict):
             """, (order_id, f"Order note updated to: {order_note}", datetime.now().isoformat(), 0))
 
         log_event("new_orders_log.txt", {"action": "note_updated", "order_id": order_id, "order_note": order_note})
-        return {"status": "✅ Order note updated"}
+        return {"message": "Order note updated successfully"}
     except Exception as e:
         log_event("new_orders_log.txt", {"error": str(e), "type": "save_note"})
         raise HTTPException(status_code=500, detail=f"Failed to save order note: {e}")

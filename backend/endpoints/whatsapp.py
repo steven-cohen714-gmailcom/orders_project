@@ -46,7 +46,7 @@ async def send_whatsapp(msg: WhatsAppMessage):
                 }
             )
         )
-        return {"status": "Message sent", "sid": sid}
+        return {"message": "Message sent", "sid": sid}
     except Exception as e:
         logging.error(json.dumps({"error": str(e), "type": "send"}))
         raise HTTPException(status_code=500, detail=f"Failed to send message: {str(e)}")
@@ -82,7 +82,7 @@ async def whatsapp_webhook(request: Request):
             logging.error(
                 json.dumps({"error": f"No order found for message SID {message_sid}"})
             )
-            return {"status": "No order found"}
+            raise HTTPException(status_code=404, detail="No order found")
 
         order_number = order_info["order_number"]
 
@@ -111,9 +111,9 @@ async def whatsapp_webhook(request: Request):
                     }
                 )
             )
-            return {"status": "Order authorised"}
+            return {"message": "Order authorised"}
         else:
-            return {"status": "Message received"}
+            return {"message": "Message received"}
     except Exception as e:
         logging.error(json.dumps({"error": str(e), "type": "webhook"}))
-        return {"status": "Error processing webhook"}
+        raise HTTPException(status_code=500, detail="Error processing webhook")

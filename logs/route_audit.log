@@ -94,6 +94,7 @@
 /orders/api/partially_delivered
 /orders/api/items_for_order/{order_id}
 /orders/api/audit_trail
+/orders/api/last_audit_action/{order_id}
 /orders/api/preview_pdf_new_order
 /
 /login
@@ -115,3 +116,4 @@
 /log
 /orders/email_purchase_order
 /orders/api/generate_pdf_for_order/{order_id}
+/orders/save_note/{order_id}

@@ -24,7 +24,7 @@ export async function emailPurchaseOrder(html, orderNumber, recipientEmail) {
       }
   
       const result = await response.json();
-      alert(result.status || `✅ Purchase Order ${orderNumber} emailed successfully`);
+      alert(result.message || `✅ Purchase Order ${orderNumber} emailed successfully`);
     } catch (error) {
       console.error(`❌ Failed to email PO ${orderNumber}:`, error);
       alert(`❌ Error emailing PO ${orderNumber}: ${error.message}`);

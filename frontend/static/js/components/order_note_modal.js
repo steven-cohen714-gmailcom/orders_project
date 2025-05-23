@@ -25,11 +25,12 @@ export function showOrderNoteModal(note, orderId, onSaveCallback) {
         const newNote = textarea.value;
         console.log(`Saving order note for order ${orderId}:`, newNote);
         try {
-            const res = await fetch(`/orders/${orderId}/update_order_note`, {
-                method: "PUT",
+            const res = await fetch(`/orders/save_note/${orderId}`, {
+                method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ order_note: newNote })
             });
+
             console.log(`Update order note response status: ${res.status}`);
             if (!res.ok) {
                 const errorText = await res.text();

@@ -42,7 +42,7 @@ async def email_purchase_order(request: Request):
         )
 
         logging.info(f"✅ Email sent for order {order_number} to {recipient_email}")
-        return {"status": "Email sent successfully"}
+        return {"message": f"Purchase Order {order_number} emailed successfully"}
 
     except Exception as e:
         logging.exception("❌ Failed to send purchase order email")

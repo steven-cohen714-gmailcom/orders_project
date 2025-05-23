@@ -7926,3 +7926,197 @@ sqlite3.ProgrammingError: You can only execute one statement at a time.
 2025-05-22 20:40:05,413 | INFO | Suppliers fetched: 11 items
 2025-05-22 20:40:07,136 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 163
 2025-05-22 20:40:12,241 | INFO | Generating PDF for order_id=163, order_number=2096
+2025-05-23 08:28:46,047 | INFO | Database tables created successfully.
+2025-05-23 08:28:46,047 | INFO | ✅ Database initialized successfully.
+2025-05-23 08:28:46,452 | INFO | Database tables created successfully.
+2025-05-23 08:28:46,452 | INFO | ✅ Database initialized successfully.
+2025-05-23 10:56:34,028 | INFO | Requesters fetched: 7 items
+2025-05-23 10:56:34,030 | INFO | Suppliers fetched: 11 items
+2025-05-23 10:56:37,151 | INFO | Starting to render new order page
+2025-05-23 10:56:37,186 | INFO | Requesters fetched: 7 items
+2025-05-23 10:56:37,192 | INFO | Suppliers fetched: 11 items
+2025-05-23 10:56:37,194 | INFO | Items fetched: 12 items
+2025-05-23 10:56:37,197 | INFO | Projects fetched: 12 items
+2025-05-23 10:57:23,428 | INFO | INFO | previewOrder started | {}
+2025-05-23 10:57:23,605 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-23 10:57:33,401 | INFO | INFO | submitOrder started | {}
+2025-05-23 10:57:33,415 | INFO | 🔍 Incoming order: order_number='2097' status='Awaiting Authorisation' order_note='' note_to_supplier='2097\n1\n2\n3\n4\n' supplier_id=5 requester_id=4 items=[OrderItemCreate(item_code='BEAR180', item_description='Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage', project='IN10M', qty_ordered=3.0, price=300.0), OrderItemCreate(item_code='BELT014', item_description='Belt 750mm 315/3/3.2/1.6 X 22 Mtr', project='PR10M', qty_ordered=1.0, price=10000.0)] auth_band_required=1
+2025-05-23 10:57:33,419 | INFO | ✅ [ORDER] Success created: Order 2097 with total R10900.0
+2025-05-23 10:57:33,428 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2098", "orderId": 164}
+2025-05-23 10:57:56,685 | INFO | Requesters fetched: 7 items
+2025-05-23 10:57:56,686 | INFO | Suppliers fetched: 11 items
+2025-05-23 10:58:00,925 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 164
+2025-05-23 10:59:29,615 | INFO | Generating PDF for order_id=164, order_number=2097
+2025-05-23 10:59:38,128 | INFO | Requesters fetched: 7 items
+2025-05-23 10:59:38,130 | INFO | Suppliers fetched: 11 items
+2025-05-23 10:59:44,176 | INFO | Generating PDF for order_id=164, order_number=2097
+2025-05-23 10:59:55,243 | INFO | Requesters fetched: 7 items
+2025-05-23 10:59:55,246 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:01:00,665 | INFO | Requesters fetched: 7 items
+2025-05-23 11:01:00,669 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:01:15,834 | INFO | Requesters fetched: 7 items
+2025-05-23 11:01:15,836 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:01:26,105 | INFO | Requesters fetched: 7 items
+2025-05-23 11:01:26,107 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:07:10,128 | INFO | Requesters fetched: 7 items
+2025-05-23 11:07:10,130 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:07:22,381 | INFO | Requesters fetched: 7 items
+2025-05-23 11:07:22,382 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:07:24,989 | INFO | Requesters fetched: 7 items
+2025-05-23 11:07:24,990 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:10:03,989 | INFO | Database tables created successfully.
+2025-05-23 11:10:03,989 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:10:10,225 | INFO | Requesters fetched: 7 items
+2025-05-23 11:10:10,226 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:10:42,057 | INFO | Database tables created successfully.
+2025-05-23 11:10:42,057 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:10:42,512 | INFO | Database tables created successfully.
+2025-05-23 11:10:42,512 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:10:51,323 | INFO | Requesters fetched: 7 items
+2025-05-23 11:10:51,325 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:12:27,566 | INFO | Database tables created successfully.
+2025-05-23 11:12:27,566 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:14:40,060 | INFO | Database tables created successfully.
+2025-05-23 11:14:40,060 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:14:40,474 | INFO | Database tables created successfully.
+2025-05-23 11:14:40,474 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:14:49,066 | INFO | Requesters fetched: 7 items
+2025-05-23 11:14:49,068 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:19:15,588 | INFO | Database tables created successfully.
+2025-05-23 11:19:15,588 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:19:43,759 | INFO | Database tables created successfully.
+2025-05-23 11:19:43,759 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:19:44,171 | INFO | Database tables created successfully.
+2025-05-23 11:19:44,171 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:19:53,344 | INFO | Requesters fetched: 7 items
+2025-05-23 11:19:53,346 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:20:53,646 | INFO | Database tables created successfully.
+2025-05-23 11:20:53,646 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:21:08,230 | INFO | Database tables created successfully.
+2025-05-23 11:21:08,230 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:21:08,631 | INFO | Database tables created successfully.
+2025-05-23 11:21:08,631 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:21:18,411 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:21:18,412 | INFO | Requesters fetched: 7 items
+2025-05-23 11:21:32,046 | INFO | Requesters fetched: 7 items
+2025-05-23 11:21:32,054 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:21:41,141 | INFO | Requesters fetched: 7 items
+2025-05-23 11:21:41,145 | INFO | Suppliers fetched: 11 items
+2025-05-23 11:21:41,150 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 10 total orders for audit trail
+2025-05-23 11:28:58,037 | INFO | Database tables created successfully.
+2025-05-23 11:28:58,037 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:33:40,559 | INFO | Database tables created successfully.
+2025-05-23 11:33:40,559 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:37:12,090 | INFO | Database tables created successfully.
+2025-05-23 11:37:12,091 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:39:09,286 | INFO | Database tables created successfully.
+2025-05-23 11:39:09,286 | INFO | ✅ Database initialized successfully.
+2025-05-23 11:42:29,782 | INFO | Database tables created successfully.
+2025-05-23 11:42:29,782 | INFO | ✅ Database initialized successfully.
+2025-05-23 12:13:09,924 | INFO | Database tables created successfully.
+2025-05-23 12:13:09,924 | INFO | ✅ Database initialized successfully.
+2025-05-23 12:13:10,341 | INFO | Database tables created successfully.
+2025-05-23 12:13:10,341 | INFO | ✅ Database initialized successfully.
+2025-05-23 12:13:44,651 | INFO | Requesters fetched: 7 items
+2025-05-23 12:13:44,653 | INFO | Suppliers fetched: 11 items
+2025-05-23 12:13:44,655 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 10 total orders for audit trail
+2025-05-23 12:13:46,865 | INFO | Requesters fetched: 7 items
+2025-05-23 12:13:46,866 | INFO | Suppliers fetched: 11 items
+2025-05-23 12:17:47,170 | INFO | Requesters fetched: 7 items
+2025-05-23 12:17:47,171 | INFO | Suppliers fetched: 11 items
+2025-05-23 12:20:31,427 | INFO | Requesters fetched: 7 items
+2025-05-23 12:20:31,429 | INFO | Suppliers fetched: 11 items
+2025-05-23 12:20:43,394 | INFO | Requesters fetched: 7 items
+2025-05-23 12:20:43,395 | INFO | Suppliers fetched: 11 items
+2025-05-23 12:20:46,256 | INFO | Requesters fetched: 7 items
+2025-05-23 12:20:46,257 | INFO | Suppliers fetched: 11 items
+2025-05-23 12:25:18,121 | INFO | Requesters fetched: 7 items
+2025-05-23 12:25:18,122 | INFO | Suppliers fetched: 11 items
+2025-05-23 12:25:21,546 | INFO | Requesters fetched: 7 items
+2025-05-23 12:25:21,547 | INFO | Suppliers fetched: 11 items
+2025-05-23 12:26:00,599 | INFO | Requesters fetched: 7 items
+2025-05-23 12:26:00,600 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:01:49,310 | INFO | Database tables created successfully.
+2025-05-23 13:01:49,311 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:01:49,712 | INFO | Database tables created successfully.
+2025-05-23 13:01:49,712 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:02:06,865 | INFO | Requesters fetched: 7 items
+2025-05-23 13:02:06,866 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:02:26,220 | INFO | Requesters fetched: 7 items
+2025-05-23 13:02:26,222 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:02:28,070 | INFO | Starting to render new order page
+2025-05-23 13:02:28,102 | INFO | Requesters fetched: 7 items
+2025-05-23 13:02:28,107 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:02:28,109 | INFO | Items fetched: 12 items
+2025-05-23 13:02:28,111 | INFO | Projects fetched: 12 items
+2025-05-23 13:03:11,475 | INFO | INFO | submitOrder started | {}
+2025-05-23 13:03:11,483 | INFO | 🔍 Incoming order: order_number='2098' status='Awaiting Authorisation' order_note='' note_to_supplier='2098\n1\n2\n3\n4\n' supplier_id=6 requester_id=4 items=[OrderItemCreate(item_code='BEAR180', item_description='Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage', project='PR10M', qty_ordered=3.0, price=800.0), OrderItemCreate(item_code='BELT014', item_description='Belt 750mm 315/3/3.2/1.6 X 22 Mtr', project='PR30M', qty_ordered=1.0, price=10000.0)] auth_band_required=1
+2025-05-23 13:03:11,485 | INFO | ✅ [ORDER] Success created: Order 2098 with total R12400.0
+2025-05-23 13:03:11,496 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2099", "orderId": 165}
+2025-05-23 13:03:22,857 | INFO | Requesters fetched: 7 items
+2025-05-23 13:03:22,859 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:03:32,989 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 165
+2025-05-23 13:03:36,397 | INFO | Requesters fetched: 7 items
+2025-05-23 13:03:36,406 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:03:55,388 | INFO | Generating PDF for order_id=165, order_number=2098
+2025-05-23 13:21:04,020 | INFO | Database tables created successfully.
+2025-05-23 13:21:04,020 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:22:01,780 | INFO | Requesters fetched: 7 items
+2025-05-23 13:22:01,782 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:22:15,388 | INFO | Requesters fetched: 7 items
+2025-05-23 13:22:15,389 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:22:32,250 | INFO | Requesters fetched: 7 items
+2025-05-23 13:22:32,257 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:22:33,438 | INFO | Requesters fetched: 7 items
+2025-05-23 13:22:33,439 | INFO | Items fetched: 12 items
+2025-05-23 13:22:33,441 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:22:33,442 | INFO | Projects fetched: 12 items
+2025-05-23 13:22:33,445 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-23 13:22:38,805 | INFO | Requesters fetched: 7 items
+2025-05-23 13:22:38,807 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:22:38,810 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 11 total orders for audit trail
+2025-05-23 13:26:22,650 | INFO | Database tables created successfully.
+2025-05-23 13:26:22,650 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:29:17,810 | INFO | Requesters fetched: 7 items
+2025-05-23 13:29:17,812 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:29:17,813 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 11 total orders for audit trail
+2025-05-23 13:29:21,045 | INFO | Requesters fetched: 7 items
+2025-05-23 13:29:21,048 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:29:21,053 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 11 total orders for audit trail
+2025-05-23 13:29:30,046 | INFO | Requesters fetched: 7 items
+2025-05-23 13:29:30,049 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:29:30,052 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 11 total orders for audit trail
+2025-05-23 13:29:33,295 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 165
+2025-05-23 13:30:28,382 | INFO | Requesters fetched: 7 items
+2025-05-23 13:30:28,386 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:30:28,389 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 11 total orders for audit trail
+2025-05-23 13:45:40,523 | INFO | Database tables created successfully.
+2025-05-23 13:45:40,524 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:45:51,209 | INFO | Database tables created successfully.
+2025-05-23 13:45:51,209 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:45:51,636 | INFO | Database tables created successfully.
+2025-05-23 13:45:51,636 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:45:58,572 | INFO | Requesters fetched: 7 items
+2025-05-23 13:45:58,577 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:45:58,580 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 11 total orders for audit trail
+2025-05-23 13:46:12,249 | INFO | Requesters fetched: 7 items
+2025-05-23 13:46:12,254 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:46:12,257 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 11 total orders for audit trail
+2025-05-23 13:48:54,747 | INFO | Database tables created successfully.
+2025-05-23 13:48:54,748 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:49:04,477 | INFO | Database tables created successfully.
+2025-05-23 13:49:04,477 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:49:04,927 | INFO | Database tables created successfully.
+2025-05-23 13:49:04,928 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:49:10,288 | INFO | Requesters fetched: 7 items
+2025-05-23 13:49:10,292 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:49:10,295 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 11 total orders for audit trail
+2025-05-23 13:50:21,759 | INFO | Database tables created successfully.
+2025-05-23 13:50:21,759 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:50:30,026 | INFO | Database tables created successfully.
+2025-05-23 13:50:30,026 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:50:30,450 | INFO | Database tables created successfully.
+2025-05-23 13:50:30,450 | INFO | ✅ Database initialized successfully.
+2025-05-23 13:50:36,138 | INFO | Requesters fetched: 7 items
+2025-05-23 13:50:36,142 | INFO | Suppliers fetched: 11 items
+2025-05-23 13:50:36,145 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 11 total orders for audit trail
