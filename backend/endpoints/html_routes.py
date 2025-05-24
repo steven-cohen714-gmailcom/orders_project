@@ -75,10 +75,10 @@ async def pending_orders_page(request: Request):
         raise
 
 
-@router.get("/mobile/authorisations", response_class=HTMLResponse)
+@router.get("/mobile/mobile_authorisations", response_class=HTMLResponse)
 async def mobile_authorisations_screen(request: Request):
     try:
-        return templates.TemplateResponse("mobile/authorisations.html", {"request": request})
+        return templates.TemplateResponse("mobile/mobile_authorisations.html", {"request": request})
     except Exception as e:
         logging.error(f"Error rendering mobile authorisations screen: {str(e)}")
         raise
@@ -93,11 +93,9 @@ async def authorisations_per_user_screen(request: Request):
         raise
 
 
-# 🧠 IMPORTANT: Any route like `/orders/{order_id}` must come AFTER all fixed-path routes like `/orders/authorisations_per_user`
 @router.get("/orders/{order_id}", response_class=HTMLResponse)
 async def view_order_by_id(order_id: int, request: Request):
     try:
-        # Placeholder view logic if needed
         return templates.TemplateResponse("order_detail.html", {"request": request, "order_id": order_id})
     except Exception as e:
         logging.error(f"Error rendering order detail page: {str(e)}")

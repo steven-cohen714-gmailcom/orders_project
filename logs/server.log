@@ -1,73 +1,33 @@
-INFO:     127.0.0.1:53962 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53962 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53962 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53962 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53962 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53962 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53964 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53964 - "POST /orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53964 - "PUT /lookups/order_number HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53964 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53972 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53972 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53972 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [31646] using StatReload
+INFO:     Started server process [31715]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54926 - "GET /mobile/authorisations HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54926 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54927 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55040 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55040 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55042 - "GET /static/js/authorisations_per_user.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55042 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55040 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55040 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55040 - "GET /lookups/suppliers HTTP/1.1" 200 OK
 INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:53972 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53972 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53972 - "GET /mobile/authorisations HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53972 - "GET /static/mobile/css/authorisations.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53974 - "GET /static/mobile/js/authorisations_screen/main.js HTTP/1.1" 200 OK
-INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:53974 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53974 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53972 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53976 - "GET /static/mobile/manifest.json HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:53981 - "GET /mobile/authorisations HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53981 - "GET /static/mobile/css/authorisations.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53981 - "GET /static/mobile/js/authorisations_screen/main.js HTTP/1.1" 200 OK
-INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:53981 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53982 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53982 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54021 - "GET /mobile/authorisations HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54021 - "GET /static/mobile/css/authorisations.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54022 - "GET /static/mobile/js/authorisations_screen/main.js HTTP/1.1" 200 OK
-INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:54021 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54022 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54021 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54024 - "GET /static/mobile/manifest.json HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:54026 - "GET /orders/api/generate_pdf_for_order/167 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54028 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54319 - "GET /mobile/authorisations HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54319 - "GET /static/mobile/css/authorisations.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54320 - "GET /static/mobile/js/authorisations_screen/main.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54319 - "GET /static/js/components/mobile_pdf_modal.js HTTP/1.1" 200 OK
-INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:54319 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54319 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54320 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54322 - "GET /static/mobile/manifest.json HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:54324 - "GET /orders/api/generate_pdf_for_order/167 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54393 - "GET /orders/api/generate_pdf_for_order/167 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54395 - "GET /orders/api/generate_pdf_for_order/167 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54398 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54398 - "GET /static/js/audit_trail.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:54398 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:54400 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:54400 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/167 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/166 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/165 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/164 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/163 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/162 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/161 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/160 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/159 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/158 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/157 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/156 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54400 - "GET /orders/api/last_audit_action/155 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55040 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55040 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55103 - "GET /mobile/mobile_authorisations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55103 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55105 - "GET /static/mobile/css/authorisations.css HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55107 - "GET /static/mobile/js/authorisations_screen/main.js HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55109 - "GET /static/mobile/manifest.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55107 - "GET /favicon.ico HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'backend/endpoints/html_routes.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31715]
+INFO:     Started server process [31810]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.

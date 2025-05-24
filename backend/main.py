@@ -34,7 +34,7 @@ from backend.endpoints.order_receiving import router as order_receiving_router
 from backend.endpoints.order_attachments import router as attachments_router
 from backend.endpoints.order_email import router as order_email_router
 from backend.endpoints.utils import router as utils_router
-from backend.endpoints.mobile.awaiting_authorisation import router as mobile_auth_router
+from backend.endpoints.mobile.mobile_awaiting_authorisation import router as mobile_auth_router
 
 # Allow scripts to import from parent
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))

@@ -65,7 +65,7 @@
 /lookups/log
 /orders/new
 /orders/pending_orders
-/mobile/authorisations
+/mobile/mobile_authorisations
 /orders/authorisations_per_user
 /orders/{order_id}
 /admin/requesters

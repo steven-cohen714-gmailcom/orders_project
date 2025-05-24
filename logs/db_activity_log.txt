@@ -8162,3 +8162,174 @@ sqlite3.ProgrammingError: You can only execute one statement at a time.
 2025-05-23 18:58:48,057 | INFO | Requesters fetched: 7 items
 2025-05-23 18:58:48,059 | INFO | Suppliers fetched: 11 items
 2025-05-23 18:58:48,062 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 13 total orders for audit trail
+2025-05-24 03:55:39,289 | INFO | Database tables created successfully.
+2025-05-24 03:55:39,289 | INFO | ✅ Database initialized successfully.
+2025-05-24 04:00:17,803 | INFO | Database tables created successfully.
+2025-05-24 04:00:17,803 | INFO | ✅ Database initialized successfully.
+2025-05-24 04:02:27,163 | INFO | Database tables created successfully.
+2025-05-24 04:02:27,163 | INFO | ✅ Database initialized successfully.
+2025-05-24 04:02:27,662 | INFO | Database tables created successfully.
+2025-05-24 04:02:27,662 | INFO | ✅ Database initialized successfully.
+2025-05-24 04:02:59,739 | INFO | Database tables created successfully.
+2025-05-24 04:02:59,739 | INFO | ✅ Database initialized successfully.
+2025-05-24 04:03:54,767 | INFO | Database tables created successfully.
+2025-05-24 04:03:54,767 | INFO | ✅ Database initialized successfully.
+2025-05-24 04:03:55,276 | INFO | Database tables created successfully.
+2025-05-24 04:03:55,276 | INFO | ✅ Database initialized successfully.
+2025-05-24 04:18:35,586 | INFO | Database tables created successfully.
+2025-05-24 04:18:35,586 | INFO | ✅ Database initialized successfully.
+2025-05-24 04:18:36,073 | INFO | Database tables created successfully.
+2025-05-24 04:18:36,073 | INFO | ✅ Database initialized successfully.
+2025-05-24 04:28:18,051 | INFO | Generating PDF for order_id=167, order_number=2100
+2025-05-24 04:28:29,200 | INFO | Generating PDF for order_id=167, order_number=2100
+2025-05-24 04:30:03,637 | INFO | Requesters fetched: 7 items
+2025-05-24 04:30:03,638 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:37:45,593 | INFO | Requesters fetched: 7 items
+2025-05-24 04:37:45,598 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:37:47,854 | INFO | Starting to render new order page
+2025-05-24 04:37:47,882 | INFO | Requesters fetched: 7 items
+2025-05-24 04:37:47,885 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:37:47,887 | INFO | Items fetched: 12 items
+2025-05-24 04:37:47,891 | INFO | Projects fetched: 12 items
+2025-05-24 04:38:06,078 | INFO | INFO | submitOrder started | {}
+2025-05-24 04:38:06,086 | INFO | 🔍 Incoming order: order_number='2101' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=9 requester_id=5 items=[OrderItemCreate(item_code='BELT014', item_description='Belt 750mm 315/3/3.2/1.6 X 22 Mtr', project='PR67M', qty_ordered=1.0, price=11000.0)] auth_band_required=1
+2025-05-24 04:38:06,089 | INFO | ✅ [ORDER] Success created: Order 2101 with total R11000.0
+2025-05-24 04:38:06,097 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2102", "orderId": 168}
+2025-05-24 04:38:09,064 | INFO | Requesters fetched: 7 items
+2025-05-24 04:38:09,068 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:38:14,352 | INFO | Generating PDF for order_id=168, order_number=2101
+2025-05-24 04:42:59,772 | INFO | Requesters fetched: 7 items
+2025-05-24 04:42:59,775 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:43:05,967 | INFO | Requesters fetched: 7 items
+2025-05-24 04:43:05,972 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:43:10,133 | INFO | Requesters fetched: 7 items
+2025-05-24 04:43:10,135 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:43:18,469 | INFO | Starting to render new order page
+2025-05-24 04:43:18,488 | INFO | Requesters fetched: 7 items
+2025-05-24 04:43:18,491 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:43:18,493 | INFO | Items fetched: 12 items
+2025-05-24 04:43:18,496 | INFO | Projects fetched: 12 items
+2025-05-24 04:43:48,480 | INFO | INFO | submitOrder started | {}
+2025-05-24 04:43:48,485 | INFO | 🔍 Incoming order: order_number='2102' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=9 requester_id=5 items=[OrderItemCreate(item_code='BECK054', item_description='Becker  Machine Spout Liner For  M48', project='PR68M', qty_ordered=1.0, price=16000.0)] auth_band_required=1
+2025-05-24 04:43:48,489 | INFO | ✅ [ORDER] Success created: Order 2102 with total R16000.0
+2025-05-24 04:43:48,501 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2103", "orderId": 169}
+2025-05-24 04:43:55,438 | INFO | Generating PDF for order_id=169, order_number=2102
+2025-05-24 04:44:01,168 | INFO | Requesters fetched: 7 items
+2025-05-24 04:44:01,174 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:44:32,251 | INFO | Requesters fetched: 7 items
+2025-05-24 04:44:32,254 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:59:24,907 | INFO | Starting to render new order page
+2025-05-24 04:59:24,929 | INFO | Requesters fetched: 7 items
+2025-05-24 04:59:24,932 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:59:24,939 | INFO | Items fetched: 12 items
+2025-05-24 04:59:24,941 | INFO | Projects fetched: 12 items
+2025-05-24 04:59:46,177 | INFO | INFO | submitOrder started | {}
+2025-05-24 04:59:46,183 | INFO | 🔍 Incoming order: order_number='2103' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=8 requester_id=4 items=[OrderItemCreate(item_code='BELT014', item_description='Belt 750mm 315/3/3.2/1.6 X 22 Mtr', project='PR68M', qty_ordered=1.0, price=14000.0)] auth_band_required=1
+2025-05-24 04:59:46,185 | INFO | ✅ [ORDER] Success created: Order 2103 with total R14000.0
+2025-05-24 04:59:46,192 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2104", "orderId": 170}
+2025-05-24 04:59:49,996 | INFO | Requesters fetched: 7 items
+2025-05-24 04:59:49,999 | INFO | Suppliers fetched: 11 items
+2025-05-24 04:59:57,406 | INFO | Generating PDF for order_id=170, order_number=2103
+2025-05-24 05:00:23,919 | INFO | Starting to render new order page
+2025-05-24 05:00:23,935 | INFO | Requesters fetched: 7 items
+2025-05-24 05:00:23,941 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:00:23,945 | INFO | Items fetched: 12 items
+2025-05-24 05:00:23,947 | INFO | Projects fetched: 12 items
+2025-05-24 05:00:41,570 | INFO | INFO | submitOrder started | {}
+2025-05-24 05:00:41,575 | INFO | 🔍 Incoming order: order_number='2104' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=8 requester_id=4 items=[OrderItemCreate(item_code='BELT014', item_description='Belt 750mm 315/3/3.2/1.6 X 22 Mtr', project='PR67M', qty_ordered=1.0, price=11000.0)] auth_band_required=1
+2025-05-24 05:00:41,578 | INFO | ✅ [ORDER] Success created: Order 2104 with total R11000.0
+2025-05-24 05:00:41,585 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2105", "orderId": 171}
+2025-05-24 05:00:53,828 | INFO | Rendering home page
+2025-05-24 05:00:57,996 | INFO | Requesters fetched: 7 items
+2025-05-24 05:00:57,999 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:09:15,078 | INFO | INFO | submitOrder started | {}
+2025-05-24 05:09:15,084 | INFO | 🔍 Incoming order: order_number='2104' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=9 requester_id=4 items=[OrderItemCreate(item_code='BELT014', item_description='Belt 750mm 315/3/3.2/1.6 X 22 Mtr', project='PR30M', qty_ordered=1.0, price=16000.0)] auth_band_required=1
+2025-05-24 05:09:15,088 | INFO | ✅ [ORDER] Success created: Order 2104 with total R16000.0
+2025-05-24 05:09:15,095 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2105", "orderId": 172}
+2025-05-24 05:15:56,067 | INFO | INFO | submitOrder started | {}
+2025-05-24 05:15:56,073 | INFO | 🔍 Incoming order: order_number='2104' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=9 requester_id=4 items=[OrderItemCreate(item_code='BLAD009', item_description='Blade Twin Shaft 5t Shapening', project='TR30M', qty_ordered=1.0, price=13000.0)] auth_band_required=1
+2025-05-24 05:15:56,076 | INFO | ✅ [ORDER] Success created: Order 2104 with total R13000.0
+2025-05-24 05:15:56,084 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2105", "orderId": 173}
+2025-05-24 05:16:03,390 | INFO | Starting to render new order page
+2025-05-24 05:16:03,421 | INFO | Requesters fetched: 7 items
+2025-05-24 05:16:03,424 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:16:03,427 | INFO | Items fetched: 12 items
+2025-05-24 05:16:03,429 | INFO | Projects fetched: 12 items
+2025-05-24 05:16:08,852 | INFO | Requesters fetched: 7 items
+2025-05-24 05:16:08,855 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:16:24,790 | INFO | Starting to render new order page
+2025-05-24 05:16:24,804 | INFO | Requesters fetched: 7 items
+2025-05-24 05:16:24,809 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:16:24,812 | INFO | Items fetched: 12 items
+2025-05-24 05:16:24,814 | INFO | Projects fetched: 12 items
+2025-05-24 05:16:43,151 | INFO | INFO | submitOrder started | {}
+2025-05-24 05:16:43,156 | INFO | 🔍 Incoming order: order_number='2105' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=8 requester_id=5 items=[OrderItemCreate(item_code='BULB004', item_description='Bulb 12 V Dcdf  G1034', project='PR67M', qty_ordered=1.0, price=12000.0)] auth_band_required=1
+2025-05-24 05:16:43,160 | INFO | ✅ [ORDER] Success created: Order 2105 with total R12000.0
+2025-05-24 05:16:43,168 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2106", "orderId": 174}
+2025-05-24 05:24:49,423 | INFO | Starting to render new order page
+2025-05-24 05:24:49,444 | INFO | Requesters fetched: 7 items
+2025-05-24 05:24:49,446 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:24:49,448 | INFO | Items fetched: 12 items
+2025-05-24 05:24:49,449 | INFO | Projects fetched: 12 items
+2025-05-24 05:25:07,181 | INFO | INFO | submitOrder started | {}
+2025-05-24 05:25:07,186 | INFO | 🔍 Incoming order: order_number='2106' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=7 requester_id=4 items=[OrderItemCreate(item_code='BECK054', item_description='Becker  Machine Spout Liner For  M48', project='PR30M', qty_ordered=1.0, price=17000.0)] auth_band_required=1
+2025-05-24 05:25:07,190 | INFO | ✅ [ORDER] Success created: Order 2106 with total R17000.0
+2025-05-24 05:25:07,198 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2107", "orderId": 175}
+2025-05-24 05:25:12,685 | INFO | Requesters fetched: 7 items
+2025-05-24 05:25:12,686 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:25:16,199 | INFO | Requesters fetched: 7 items
+2025-05-24 05:25:16,202 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:26:01,137 | INFO | Requesters fetched: 7 items
+2025-05-24 05:26:01,141 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:26:02,102 | INFO | Requesters fetched: 7 items
+2025-05-24 05:26:02,104 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:26:05,712 | INFO | Starting to render new order page
+2025-05-24 05:26:05,728 | INFO | Requesters fetched: 7 items
+2025-05-24 05:26:05,734 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:26:05,736 | INFO | Items fetched: 12 items
+2025-05-24 05:26:05,738 | INFO | Projects fetched: 12 items
+2025-05-24 05:26:26,709 | INFO | INFO | submitOrder started | {}
+2025-05-24 05:26:26,714 | INFO | 🔍 Incoming order: order_number='2107' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=10 requester_id=4 items=[OrderItemCreate(item_code='BELT014', item_description='Belt 750mm 315/3/3.2/1.6 X 22 Mtr', project='PR67M', qty_ordered=3.0, price=6000.0)] auth_band_required=1
+2025-05-24 05:26:26,716 | INFO | ✅ [ORDER] Success created: Order 2107 with total R18000.0
+2025-05-24 05:26:26,722 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2108", "orderId": 176}
+2025-05-24 05:26:29,714 | INFO | Requesters fetched: 7 items
+2025-05-24 05:26:29,716 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:26:35,173 | INFO | Requesters fetched: 7 items
+2025-05-24 05:26:35,177 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:27:05,316 | INFO | Generating PDF for order_id=176, order_number=2107
+2025-05-24 05:35:01,726 | INFO | Requesters fetched: 7 items
+2025-05-24 05:35:01,729 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:35:04,070 | INFO | Starting to render new order page
+2025-05-24 05:35:04,094 | INFO | Requesters fetched: 7 items
+2025-05-24 05:35:04,104 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:35:04,107 | INFO | Items fetched: 12 items
+2025-05-24 05:35:04,109 | INFO | Projects fetched: 12 items
+2025-05-24 05:35:19,276 | INFO | INFO | submitOrder started | {}
+2025-05-24 05:35:19,284 | INFO | 🔍 Incoming order: order_number='2108' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=8 requester_id=3 items=[OrderItemCreate(item_code='BLAD009', item_description='Blade Twin Shaft 5t Shapening', project='PR68M', qty_ordered=1.0, price=15000.0)] auth_band_required=1
+2025-05-24 05:35:19,287 | INFO | ✅ [ORDER] Success created: Order 2108 with total R15000.0
+2025-05-24 05:35:19,296 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2109", "orderId": 177}
+2025-05-24 05:35:23,943 | INFO | Requesters fetched: 7 items
+2025-05-24 05:35:23,948 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:55:22,815 | ERROR | Error rendering mobile authorisations screen: 'mobile/authorisations.html' not found in search path: 'frontend/templates'
+2025-05-24 05:58:37,502 | INFO | Database tables created successfully.
+2025-05-24 05:58:37,502 | INFO | ✅ Database initialized successfully.
+2025-05-24 05:58:45,884 | ERROR | Error rendering mobile authorisations screen: 'mobile/authorisations.html' not found in search path: 'frontend/templates'
+2025-05-24 05:59:00,099 | INFO | Database tables created successfully.
+2025-05-24 05:59:00,099 | INFO | ✅ Database initialized successfully.
+2025-05-24 05:59:00,608 | INFO | Database tables created successfully.
+2025-05-24 05:59:00,608 | INFO | ✅ Database initialized successfully.
+2025-05-24 05:59:13,737 | ERROR | Error rendering mobile authorisations screen: 'mobile/authorisations.html' not found in search path: 'frontend/templates'
+2025-05-24 05:59:16,555 | INFO | Requesters fetched: 7 items
+2025-05-24 05:59:16,559 | INFO | Suppliers fetched: 11 items
+2025-05-24 05:59:20,097 | ERROR | Error rendering mobile authorisations screen: 'mobile/authorisations.html' not found in search path: 'frontend/templates'
+2025-05-24 05:59:38,319 | ERROR | Error rendering mobile authorisations screen: 'mobile/authorisations.html' not found in search path: 'frontend/templates'
+2025-05-24 06:02:58,856 | INFO | Database tables created successfully.
+2025-05-24 06:02:58,856 | INFO | ✅ Database initialized successfully.
+2025-05-24 06:03:57,753 | INFO | Database tables created successfully.
+2025-05-24 06:03:57,753 | INFO | ✅ Database initialized successfully.
+2025-05-24 06:03:58,269 | INFO | Database tables created successfully.
+2025-05-24 06:03:58,270 | INFO | ✅ Database initialized successfully.
+2025-05-24 06:04:31,723 | INFO | Requesters fetched: 7 items
+2025-05-24 06:04:31,725 | INFO | Suppliers fetched: 11 items
+2025-05-24 06:08:54,358 | INFO | Database tables created successfully.
+2025-05-24 06:08:54,358 | INFO | ✅ Database initialized successfully.

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mobile Authorisations</title>
+  <link rel="stylesheet" href="/static/mobile/css/mobile_authorisations.css" />
+  <link rel="manifest" href="/static/mobile/manifest.json" />
+</head>
+<body>
+  <div class="mobile-container">
+    <h2><span id="username-placeholder"></span>, <strong>please review the orders below which are waiting for you to authorise:</strong></h2>
+    <div id="order-list">Loading orders...</div>
+  </div>
+
+  <script type="module" src="/static/mobile/js/authorisations_screen/mobile_main.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/static/mobile/service-worker.js")
+        .then(() => console.log("✅ Service Worker Registered"))
+        .catch(err => console.error("❌ SW Registration Failed:", err));
+    }
+  </script>
+</body>
+</html>
