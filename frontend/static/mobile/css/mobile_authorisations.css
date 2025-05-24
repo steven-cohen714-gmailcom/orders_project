@@ -1,4 +1,4 @@
-/* frontend/static/mobile/css/authorisations.css */
+/* frontend/static/mobile/css/mobile_authorisations.css */
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
@@ -19,29 +19,27 @@ h2 {
   margin: 0 auto;
 }
 
-.order-headers {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 2fr;
-  font-weight: bold;
-  margin: 1rem 0 0.5rem;
-  padding: 0 0.5rem;
-  color: #555;
+.order-row {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  word-wrap: break-word;
 }
 
-.order-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 2fr;
-  align-items: center;
-  background: white;
-  padding: 0.75rem 0.5rem;
-  margin-bottom: 0.75rem;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+.order-row > div {
+  margin: 0.2rem 0;
 }
 
 .order-row .buttons {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 0.4rem;
+  margin-top: 0.5rem;
 }
 
 button {
@@ -63,17 +61,6 @@ button:hover:not(:disabled) {
 button:disabled {
   background-color: #ccc;
   cursor: default;
-}
-
-.order-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.8rem 1rem;
-  background-color: white;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
 /* Toast notifications */
@@ -128,4 +115,26 @@ button:disabled {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   z-index: 999;
   cursor: pointer;
+}
+
+#confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#confirmation-modal div {
+  background: #f0f4ff;
+  padding: 1.5rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+  text-align: center;
 }

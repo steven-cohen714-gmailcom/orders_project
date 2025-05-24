@@ -39,10 +39,10 @@ async def receive_order(order_id: int, payload: ReceivePayload):
                 raise HTTPException(status_code=404, detail="Order not found")
 
             order_status = status_row["status"]
-            if order_status not in ("Pending", "Partially Received"):
+            if order_status not in ("Pending", "Authorised", "Partially Received"):
                 raise HTTPException(
                     status_code=403,
-                    detail=f"Order must be 'Pending' or 'Partially Received' before receiving. Current status: {order_status}"
+                   detail=f"Order must be 'Pending', 'Authorised', or 'Partially Received' before receiving. Current status: {order_status}"
                 )
 
             all_fully_received = True

@@ -8333,3 +8333,97 @@ sqlite3.ProgrammingError: You can only execute one statement at a time.
 2025-05-24 06:04:31,725 | INFO | Suppliers fetched: 11 items
 2025-05-24 06:08:54,358 | INFO | Database tables created successfully.
 2025-05-24 06:08:54,358 | INFO | ✅ Database initialized successfully.
+2025-05-24 07:55:05,646 | INFO | Database tables created successfully.
+2025-05-24 07:55:05,646 | INFO | ✅ Database initialized successfully.
+2025-05-24 07:55:06,089 | INFO | Database tables created successfully.
+2025-05-24 07:55:06,089 | INFO | ✅ Database initialized successfully.
+2025-05-24 07:55:13,992 | INFO | Requesters fetched: 7 items
+2025-05-24 07:55:13,995 | INFO | Suppliers fetched: 11 items
+2025-05-24 07:55:41,856 | INFO | Starting to render new order page
+2025-05-24 07:55:41,897 | INFO | Requesters fetched: 7 items
+2025-05-24 07:55:41,902 | INFO | Suppliers fetched: 11 items
+2025-05-24 07:55:41,910 | INFO | Items fetched: 12 items
+2025-05-24 07:55:41,914 | INFO | Projects fetched: 12 items
+2025-05-24 07:55:58,032 | INFO | INFO | submitOrder started | {}
+2025-05-24 07:56:29,328 | INFO | INFO | submitOrder started | {}
+2025-05-24 07:56:29,335 | INFO | 🔍 Incoming order: order_number='2109' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=6 requester_id=5 items=[OrderItemCreate(item_code='BELT014', item_description='Belt 750mm 315/3/3.2/1.6 X 22 Mtr', project='PR67M', qty_ordered=1.0, price=11000.0)] auth_band_required=1
+2025-05-24 07:56:29,339 | INFO | ✅ [ORDER] Success created: Order 2109 with total R11000.0
+2025-05-24 07:56:29,353 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2110", "orderId": 178}
+2025-05-24 07:56:37,907 | INFO | Requesters fetched: 7 items
+2025-05-24 07:56:37,908 | INFO | Suppliers fetched: 11 items
+2025-05-24 07:57:45,682 | INFO | Requesters fetched: 7 items
+2025-05-24 07:57:45,683 | INFO | Suppliers fetched: 11 items
+2025-05-24 08:20:45,616 | INFO | Database tables created successfully.
+2025-05-24 08:20:45,616 | INFO | ✅ Database initialized successfully.
+2025-05-24 08:20:49,941 | INFO | Database tables created successfully.
+2025-05-24 08:20:49,941 | INFO | ✅ Database initialized successfully.
+2025-05-24 08:20:50,358 | INFO | Database tables created successfully.
+2025-05-24 08:20:50,358 | INFO | ✅ Database initialized successfully.
+2025-05-24 08:21:03,958 | INFO | Requesters fetched: 7 items
+2025-05-24 08:21:03,960 | INFO | Suppliers fetched: 11 items
+2025-05-24 08:21:07,157 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 177
+2025-05-24 08:21:16,531 | INFO | Requesters fetched: 7 items
+2025-05-24 08:21:16,533 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:05:18,722 | INFO | Requesters fetched: 7 items
+2025-05-24 09:05:18,723 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:05:20,049 | INFO | Starting to render new order page
+2025-05-24 09:05:20,079 | INFO | Requesters fetched: 7 items
+2025-05-24 09:05:20,082 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:05:20,085 | INFO | Items fetched: 12 items
+2025-05-24 09:05:20,088 | INFO | Projects fetched: 12 items
+2025-05-24 09:05:34,028 | INFO | INFO | submitOrder started | {}
+2025-05-24 09:05:34,036 | INFO | 🔍 Incoming order: order_number='2110' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=9 requester_id=5 items=[OrderItemCreate(item_code='BECK054', item_description='Becker  Machine Spout Liner For  M48', project='DR09M', qty_ordered=1.0, price=11000.0)] auth_band_required=1
+2025-05-24 09:05:34,039 | INFO | ✅ [ORDER] Success created: Order 2110 with total R11000.0
+2025-05-24 09:05:34,048 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2111", "orderId": 179}
+2025-05-24 09:05:38,143 | INFO | Requesters fetched: 7 items
+2025-05-24 09:05:38,145 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:05:42,049 | INFO | Requesters fetched: 7 items
+2025-05-24 09:05:42,052 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:16:00,177 | INFO | Database tables created successfully.
+2025-05-24 09:16:00,177 | INFO | ✅ Database initialized successfully.
+2025-05-24 09:16:21,472 | INFO | Database tables created successfully.
+2025-05-24 09:16:21,472 | INFO | ✅ Database initialized successfully.
+2025-05-24 09:16:21,927 | INFO | Database tables created successfully.
+2025-05-24 09:16:21,927 | INFO | ✅ Database initialized successfully.
+2025-05-24 09:18:37,323 | INFO | Database tables created successfully.
+2025-05-24 09:18:37,323 | INFO | ✅ Database initialized successfully.
+2025-05-24 09:18:43,997 | INFO | Database tables created successfully.
+2025-05-24 09:18:43,997 | INFO | ✅ Database initialized successfully.
+2025-05-24 09:18:44,398 | INFO | Database tables created successfully.
+2025-05-24 09:18:44,398 | INFO | ✅ Database initialized successfully.
+2025-05-24 09:19:39,139 | INFO | Database tables created successfully.
+2025-05-24 09:19:39,139 | INFO | ✅ Database initialized successfully.
+2025-05-24 09:19:39,551 | INFO | Database tables created successfully.
+2025-05-24 09:19:39,551 | INFO | ✅ Database initialized successfully.
+2025-05-24 09:22:13,129 | INFO | Database tables created successfully.
+2025-05-24 09:22:13,129 | INFO | ✅ Database initialized successfully.
+2025-05-24 09:25:33,760 | INFO | Requesters fetched: 7 items
+2025-05-24 09:25:33,762 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:25:38,286 | INFO | Requesters fetched: 7 items
+2025-05-24 09:25:38,290 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:25:40,408 | INFO | Requesters fetched: 7 items
+2025-05-24 09:25:40,409 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:25:42,411 | INFO | Requesters fetched: 7 items
+2025-05-24 09:25:42,413 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-24 09:25:42,414 | INFO | Items fetched: 12 items
+2025-05-24 09:25:42,416 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:25:42,417 | INFO | Projects fetched: 12 items
+2025-05-24 09:25:43,865 | INFO | Requesters fetched: 7 items
+2025-05-24 09:25:43,868 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:25:43,871 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 25 total orders for audit trail
+2025-05-24 09:25:49,978 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 179
+2025-05-24 09:25:52,073 | INFO | Generating PDF for order_id=179, order_number=2110
+2025-05-24 09:26:14,218 | INFO | Generating PDF for order_id=178, order_number=2109
+2025-05-24 09:29:18,625 | INFO | Starting to render new order page
+2025-05-24 09:29:18,653 | INFO | Requesters fetched: 7 items
+2025-05-24 09:29:18,658 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:29:18,661 | INFO | Items fetched: 12 items
+2025-05-24 09:29:18,664 | INFO | Projects fetched: 12 items
+2025-05-24 09:29:36,745 | INFO | INFO | submitOrder started | {}
+2025-05-24 09:29:36,752 | INFO | 🔍 Incoming order: order_number='2111' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=6 requester_id=3 items=[OrderItemCreate(item_code='BEAR180', item_description='Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage', project='DR09M', qty_ordered=1.0, price=14000.0)] auth_band_required=1
+2025-05-24 09:29:36,755 | INFO | ✅ [ORDER] Success created: Order 2111 with total R14000.0
+2025-05-24 09:29:36,766 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2112", "orderId": 180}
+2025-05-24 09:29:40,742 | INFO | Requesters fetched: 7 items
+2025-05-24 09:29:40,743 | INFO | Suppliers fetched: 11 items
+2025-05-24 09:37:26,309 | INFO | Requesters fetched: 7 items
+2025-05-24 09:37:26,310 | INFO | Suppliers fetched: 11 items

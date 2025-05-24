@@ -83,6 +83,13 @@ templates = Jinja2Templates(directory="frontend/templates")
 # --- Static Routes Router ---
 static_router = APIRouter()
 
+@static_router.get("/mobile/authorisations", response_class=HTMLResponse)
+async def mobile_authorisations_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("mobile/mobile_authorisations.html", {"request": request})
+
 @static_router.get("/home", response_class=HTMLResponse)
 async def home(request: Request):
     if not request.session.get("user"):

@@ -25,3 +25,9 @@
 [2025-05-22T20:35:22.597790] {"error": "403: Order must be 'Authorised' or 'Partially Received' before receiving. Current status: Pending", "type": "general"}
 [2025-05-22T20:36:03.137643] {"error": "403: Order must be 'Authorised' or 'Partially Received' before receiving. Current status: Pending", "type": "general"}
 [2025-05-22T20:40:01.007696] {"action": "receive", "order_id": 163, "items": [{"item_id": 193, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-05-22"}
+[2025-05-24T07:55:22.323959] {"error": "403: Order must be 'Pending' or 'Partially Received' before receiving. Current status: Authorised", "type": "general"}
+[2025-05-24T07:56:44.067602] {"error": "403: Order must be 'Pending' or 'Partially Received' before receiving. Current status: Authorised", "type": "general"}
+[2025-05-24T07:57:51.161033] {"error": "403: Order must be 'Pending' or 'Partially Received' before receiving. Current status: Authorised", "type": "general"}
+[2025-05-24T08:15:04.846349] {"error": "403: Order must be 'Pending' or 'Partially Received' before receiving. Current status: Authorised", "type": "general"}
+[2025-05-24T08:21:14.240208] {"action": "receive", "order_id": 177, "items": [{"item_id": 210, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-05-24"}
+[2025-05-24T09:25:36.754533] {"action": "receive", "order_id": 179, "items": [{"item_id": 212, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-05-24"}
