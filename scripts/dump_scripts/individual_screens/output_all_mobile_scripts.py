@@ -18,13 +18,16 @@ with open(output_file, 'w', encoding='utf-8') as f:
         "backend/utils.py",
         "backend/database.py",
         "backend/main.py",
-        "frontend/templates/mobile/authorisations.html",
-        "frontend/static/mobile/js/authorisations_screen/main.js",
-        "frontend/static/mobile/js/css/authorisations.css",
+        "frontend/templates/mobile/mobile_authorisations.html",
+        "frontend/templates/authorisations_per_user.html"
+        "frontend/static/mobile/js/authorisations_screen/mobile_main.js",
+        "frontend/static/mobile/js/css/mobile_authorisations.css",
+        "frontend/static/mobile/js/components/mobile_pdf_modal.js",
+        "frontend/static/js/authorisations_per_user.js"
+        "backend/endpoints/mobile/mobile_awaiting_authorisation.py",
         "frontend/static/mobile/manifest.json",
         "frontend/static/mobile/service-worker.js",
-        "frontend/static/mobile/js/components/pdf_modal.js",
-        "backend/endpoints/mobile/awaiting_authorisation.py",
+       
     ]:
         f.write(f"📄 {rel_path}\n" + "-"*60 + "\n")
         try:

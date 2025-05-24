@@ -1,46 +1,52 @@
 // File: frontend/static/js/authorisations_per_user.js
 
 import { loadRequesters, loadSuppliers } from "./components/shared_filters.js";
-import { showPDFModal } from "./components/pdf_modal.js";
-
-console.log("🔐 Authorisations per user screen loaded");
 
 export async function setupAuthorisationUI({
   user,
   mountPointId,
-  isMobile = false,
+  showPDF,
   onAuthorised = () => {},
-  onError = () => {},
-  showPDF = showPDFModal
+  onError = () => {}
 }) {
+  console.log("🔐 My Authorisations screen (desktop) loaded");
+
   const tableBody = document.getElementById(mountPointId);
   if (!tableBody) {
-    console.error(`❌ Could not find mount point with ID '${mountPointId}'`);
+    console.error(`❌ Mount point '${mountPointId}' not found.`);
     return;
   }
 
-  async function renderFilteredOrders() {
-    tableBody.innerHTML = "<tr><td colspan='7'>Loading...</td></tr>";
+  await loadRequesters("filter-requester");
+  await loadSuppliers("filter-supplier");
+
+  await loadOrdersForUser(user);
+
+  async function loadOrdersForUser(user) {
+    tableBody.innerHTML = "<tr><td colspan='7'>Loading orders...</td></tr>";
 
     try {
       const res = await fetch("/orders/api/awaiting_authorisation");
       const orders = await res.json();
 
-      const filtered = orders.filter(order => {
-        if (Number(order.required_auth_band) !== Number(user.auth_threshold_band)) return false;
-        return true;
-      });
+      const userBand = parseInt(user.auth_threshold_band);
+      const eligibleOrders = orders.filter(
+        order => parseInt(order.required_auth_band) === userBand
+      );
 
-      if (filtered.length === 0) {
+      if (eligibleOrders.length === 0) {
         tableBody.innerHTML = "<tr><td colspan='7'>✅ No orders awaiting your authorisation.</td></tr>";
         return;
       }
 
       tableBody.innerHTML = "";
-      for (const order of filtered) {
+
+      for (const order of eligibleOrders) {
         const row = document.createElement("tr");
-        const date = new Date(order.created_date);
-        const formattedDate = `${date.getDate()} ${date.toLocaleString("default", { month: "short" })} ${date.getFullYear()}`;
+        const created = new Date(order.created_date);
+        const formattedDate = `${created.getDate()} ${created.toLocaleString("default", {
+          month: "short"
+        })} ${created.getFullYear()}`;
 
         row.innerHTML = `
           <td>${formattedDate}</td>
@@ -49,37 +55,44 @@ export async function setupAuthorisationUI({
           <td>${order.supplier_name}</td>
           <td>R${order.total}</td>
           <td>${order.status}</td>
-          <td class="actions-cell">
+          <td>
             <button class="view-btn">View</button>
             <button class="auth-btn">Authorise</button>
           </td>
         `;
 
-        row.querySelector(".view-btn").onclick = () => showPDF(order.id);
+        row.querySelector(".view-btn").addEventListener("click", () => {
+          try {
+            showPDF(order.id);  // ✅ delegate to external handler
+          } catch (err) {
+            console.error("❌ Error triggering PDF display:", err);
+            onError("❌ Could not open PDF preview.");
+          }
+        });
 
-        row.querySelector(".auth-btn").onclick = async () => {
+        row.querySelector(".auth-btn").addEventListener("click", async () => {
           try {
             const res = await fetch(`/orders/api/authorise_order/${order.id}`, { method: "POST" });
             const result = await res.json();
+
             if (result.message === "Order authorised") {
+              console.log(`✅ Authorised order ${order.order_number}`);
               onAuthorised(order);
               row.remove();
             } else {
               onError("❌ Failed to authorise: " + result.message);
             }
           } catch (err) {
-            console.error("❌ Authorisation error:", err);
-            onError("❌ Error sending authorisation request.");
+            console.error("❌ Error during authorisation:", err);
+            onError("❌ Network or server error while authorising.");
           }
-        };
+        });
 
         tableBody.appendChild(row);
       }
     } catch (err) {
-      console.error("❌ Failed to fetch or render orders:", err);
-      tableBody.innerHTML = "<tr><td colspan='7'>❌ Could not load orders.</td></tr>";
+      console.error("❌ Could not load orders:", err);
+      tableBody.innerHTML = "<tr><td colspan='7'>❌ Error loading orders.</td></tr>";
     }
   }
-
-  await renderFilteredOrders();
 }
