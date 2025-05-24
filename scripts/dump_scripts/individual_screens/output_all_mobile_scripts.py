@@ -21,6 +21,9 @@ with open(output_file, 'w', encoding='utf-8') as f:
         "frontend/templates/mobile/authorisations.html",
         "frontend/static/mobile/js/authorisations_screen/main.js",
         "frontend/static/mobile/js/css/authorisations.css",
+        "frontend/static/mobile/manifest.json",
+        "frontend/static/mobile/service-worker.js",
+        "frontend/static/mobile/js/components/pdf_modal.js",
         "backend/endpoints/mobile/awaiting_authorisation.py",
     ]:
         f.write(f"📄 {rel_path}\n" + "-"*60 + "\n")

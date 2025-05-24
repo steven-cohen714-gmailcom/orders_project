@@ -8120,3 +8120,45 @@ sqlite3.ProgrammingError: You can only execute one statement at a time.
 2025-05-23 13:50:36,138 | INFO | Requesters fetched: 7 items
 2025-05-23 13:50:36,142 | INFO | Suppliers fetched: 11 items
 2025-05-23 13:50:36,145 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 11 total orders for audit trail
+2025-05-23 17:55:24,394 | INFO | Database tables created successfully.
+2025-05-23 17:55:24,394 | INFO | ✅ Database initialized successfully.
+2025-05-23 17:55:24,787 | INFO | Database tables created successfully.
+2025-05-23 17:55:24,787 | INFO | ✅ Database initialized successfully.
+2025-05-23 17:56:47,231 | INFO | Starting to render new order page
+2025-05-23 17:56:47,264 | INFO | Requesters fetched: 7 items
+2025-05-23 17:56:47,270 | INFO | Suppliers fetched: 11 items
+2025-05-23 17:56:47,273 | INFO | Items fetched: 12 items
+2025-05-23 17:56:47,274 | INFO | Projects fetched: 12 items
+2025-05-23 17:56:49,486 | INFO | Starting to render new order page
+2025-05-23 17:56:49,521 | INFO | Requesters fetched: 7 items
+2025-05-23 17:56:49,524 | INFO | Suppliers fetched: 11 items
+2025-05-23 17:56:49,525 | INFO | Items fetched: 12 items
+2025-05-23 17:56:49,528 | INFO | Projects fetched: 12 items
+2025-05-23 17:57:26,376 | INFO | INFO | submitOrder started | {}
+2025-05-23 17:57:26,384 | INFO | 🔍 Incoming order: order_number='2099' status='Awaiting Authorisation' order_note='' note_to_supplier='1\n2\n3\n4\n' supplier_id=6 requester_id=2 items=[OrderItemCreate(item_code='BEAR180', item_description='Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage', project='DR09M', qty_ordered=1.0, price=12400.0), OrderItemCreate(item_code='BEAR059', item_description='Bearing 51144', project='DR09M', qty_ordered=1.0, price=3000.0)] auth_band_required=1
+2025-05-23 17:57:26,387 | INFO | ✅ [ORDER] Success created: Order 2099 with total R15400.0
+2025-05-23 17:57:26,397 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2100", "orderId": 166}
+2025-05-23 17:57:33,206 | INFO | Requesters fetched: 7 items
+2025-05-23 17:57:33,207 | INFO | Suppliers fetched: 11 items
+2025-05-23 17:57:38,633 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 166
+2025-05-23 17:57:53,644 | INFO | Requesters fetched: 7 items
+2025-05-23 17:57:53,647 | INFO | Suppliers fetched: 11 items
+2025-05-23 17:58:17,847 | INFO | Generating PDF for order_id=166, order_number=2099
+2025-05-23 18:14:25,263 | INFO | Starting to render new order page
+2025-05-23 18:14:25,285 | INFO | Requesters fetched: 7 items
+2025-05-23 18:14:25,288 | INFO | Suppliers fetched: 11 items
+2025-05-23 18:14:25,290 | INFO | Items fetched: 12 items
+2025-05-23 18:14:25,292 | INFO | Projects fetched: 12 items
+2025-05-23 18:14:54,738 | INFO | INFO | submitOrder started | {}
+2025-05-23 18:14:54,745 | INFO | 🔍 Incoming order: order_number='2100' status='Awaiting Authorisation' order_note='' note_to_supplier='2100\n1\n2\n3\n4\n' supplier_id=7 requester_id=4 items=[OrderItemCreate(item_code='BEAR180', item_description='Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage', project='TR30M', qty_ordered=1.0, price=11000.0)] auth_band_required=1
+2025-05-23 18:14:54,747 | INFO | ✅ [ORDER] Success created: Order 2100 with total R11000.0
+2025-05-23 18:14:54,755 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2101", "orderId": 167}
+2025-05-23 18:14:59,849 | INFO | Requesters fetched: 7 items
+2025-05-23 18:14:59,850 | INFO | Suppliers fetched: 11 items
+2025-05-23 18:19:55,264 | INFO | Generating PDF for order_id=167, order_number=2100
+2025-05-23 18:36:45,901 | INFO | Generating PDF for order_id=167, order_number=2100
+2025-05-23 18:57:41,110 | INFO | Generating PDF for order_id=167, order_number=2100
+2025-05-23 18:58:06,261 | INFO | Generating PDF for order_id=167, order_number=2100
+2025-05-23 18:58:48,057 | INFO | Requesters fetched: 7 items
+2025-05-23 18:58:48,059 | INFO | Suppliers fetched: 11 items
+2025-05-23 18:58:48,062 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 13 total orders for audit trail
