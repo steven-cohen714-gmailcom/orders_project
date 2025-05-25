@@ -24,6 +24,7 @@ def require_login(request: Request):
 
 # --- Routers ---
 from backend.endpoints import routers
+from backend.endpoints.mobile import mobile_auth
 from backend.endpoints.admin import admin_router
 from backend.endpoints.auth import router as auth_router
 from backend.endpoints.orders import router as orders_router
@@ -205,6 +206,7 @@ app.include_router(admin_router, prefix="/admin")
 app.include_router(order_queries_router, prefix="/orders/api")
 app.include_router(new_order_pdf_router, prefix="/orders/api")
 app.include_router(auth_router)
+app.include_router(mobile_auth.router)
 app.include_router(orders_router, prefix="/orders")
 app.include_router(attachments_router, prefix="/orders")
 app.include_router(order_receiving_router, prefix="/orders")

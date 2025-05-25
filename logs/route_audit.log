@@ -100,6 +100,9 @@
 /
 /login
 /logout
+/mobile/login
+/mobile/logout
+/mobile/get_user_info
 /orders
 /orders
 /orders/{order_id}

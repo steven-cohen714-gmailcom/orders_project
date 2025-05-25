@@ -19,12 +19,14 @@ with open(output_file, 'w', encoding='utf-8') as f:
         "backend/database.py",
         "backend/main.py",
         "frontend/templates/mobile/mobile_authorisations.html",
+        "frontend/templates/mobile/mobile_login.html",
         "frontend/templates/authorisations_per_user.html"
         "frontend/static/mobile/js/authorisations_screen/mobile_main.js",
         "frontend/static/mobile/js/css/mobile_authorisations.css",
         "frontend/static/mobile/js/components/mobile_pdf_modal.js",
         "frontend/static/js/authorisations_per_user.js"
         "backend/endpoints/mobile/mobile_awaiting_authorisation.py",
+        "backend/endpoints/mobile/mobile_auth.py",
         "frontend/static/mobile/manifest.json",
         "frontend/static/mobile/service-worker.js",
        

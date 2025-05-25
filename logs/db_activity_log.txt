@@ -20,3 +20,106 @@
 2025-05-24 15:17:30,971 | INFO | Suppliers fetched: 11 items
 2025-05-24 15:17:33,430 | INFO | Generating PDF for order_id=183, order_number=2114
 2025-05-24 15:17:42,580 | INFO | Generating PDF for order_id=183, order_number=2114
+2025-05-25 04:05:43,593 | INFO | Requesters fetched: 7 items
+2025-05-25 04:05:43,595 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:05:46,016 | INFO | Starting to render new order page
+2025-05-25 04:05:46,045 | INFO | Requesters fetched: 7 items
+2025-05-25 04:05:46,047 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:05:46,050 | INFO | Items fetched: 12 items
+2025-05-25 04:05:46,052 | INFO | Projects fetched: 12 items
+2025-05-25 04:06:28,044 | INFO | INFO | previewOrder started | {}
+2025-05-25 04:06:28,166 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-25 04:06:33,118 | INFO | INFO | submitOrder started | {}
+2025-05-25 04:06:33,126 | INFO | 🔍 Incoming order: order_number='2115' status='Awaiting Authorisation' order_note='' note_to_supplier='2115\n1\n2\n3\n4\n' supplier_id=9 requester_id=4 items=[OrderItemCreate(item_code='BEAR180', item_description='Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage', project='PR67M', qty_ordered=1.0, price=12654.0)] auth_band_required=1
+2025-05-25 04:06:33,130 | INFO | ✅ [ORDER] Success created: Order 2115 with total R12654.0
+2025-05-25 04:06:33,138 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2116", "orderId": 184}
+2025-05-25 04:06:36,188 | INFO | Requesters fetched: 7 items
+2025-05-25 04:06:36,192 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:06:40,961 | INFO | Requesters fetched: 7 items
+2025-05-25 04:06:40,964 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:07:13,387 | INFO | Requesters fetched: 7 items
+2025-05-25 04:07:13,391 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:07:14,677 | INFO | Requesters fetched: 7 items
+2025-05-25 04:07:14,682 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:08:54,735 | INFO | Requesters fetched: 7 items
+2025-05-25 04:08:54,737 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:09:06,299 | INFO | Requesters fetched: 7 items
+2025-05-25 04:09:06,303 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:13:21,170 | INFO | Requesters fetched: 7 items
+2025-05-25 04:13:21,173 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:15:18,279 | INFO | Requesters fetched: 7 items
+2025-05-25 04:15:18,284 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:15:28,367 | INFO | Requesters fetched: 7 items
+2025-05-25 04:15:28,372 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:21:14,715 | INFO | Requesters fetched: 7 items
+2025-05-25 04:21:14,718 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:42:06,894 | INFO | Generating PDF for order_id=184, order_number=2115
+2025-05-25 04:42:42,586 | INFO | Requesters fetched: 7 items
+2025-05-25 04:42:42,588 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:42:44,984 | INFO | Starting to render new order page
+2025-05-25 04:42:45,005 | INFO | Requesters fetched: 7 items
+2025-05-25 04:42:45,010 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:42:45,013 | INFO | Items fetched: 12 items
+2025-05-25 04:42:45,019 | INFO | Projects fetched: 12 items
+2025-05-25 04:43:20,125 | INFO | INFO | submitOrder started | {}
+2025-05-25 04:43:20,131 | INFO | 🔍 Incoming order: order_number='2116' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=7 requester_id=4 items=[OrderItemCreate(item_code='BEAR180', item_description='Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage', project='PR10M', qty_ordered=1.0, price=11200.0)] auth_band_required=1
+2025-05-25 04:43:20,134 | INFO | ✅ [ORDER] Success created: Order 2116 with total R11200.0
+2025-05-25 04:43:20,143 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2117", "orderId": 185}
+2025-05-25 04:43:46,625 | INFO | INFO | submitOrder started | {}
+2025-05-25 04:43:46,631 | INFO | 🔍 Incoming order: order_number='2116' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=7 requester_id=5 items=[OrderItemCreate(item_code='BELT014', item_description='Belt 750mm 315/3/3.2/1.6 X 22 Mtr', project='PR68M', qty_ordered=1.0, price=15256.0)] auth_band_required=1
+2025-05-25 04:43:46,634 | INFO | ✅ [ORDER] Success created: Order 2116 with total R15256.0
+2025-05-25 04:43:46,643 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2117", "orderId": 186}
+2025-05-25 04:43:50,096 | INFO | Requesters fetched: 7 items
+2025-05-25 04:43:50,097 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:44:35,591 | INFO | Requesters fetched: 7 items
+2025-05-25 04:44:35,595 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:44:39,525 | INFO | Generating PDF for order_id=186, order_number=2116
+2025-05-25 04:52:38,055 | INFO | Requesters fetched: 7 items
+2025-05-25 04:52:38,058 | INFO | Suppliers fetched: 11 items
+2025-05-25 04:52:44,693 | INFO | Generating PDF for order_id=185, order_number=2116
+2025-05-25 04:52:56,352 | INFO | Requesters fetched: 7 items
+2025-05-25 04:52:56,355 | INFO | Suppliers fetched: 11 items
+2025-05-25 05:24:14,393 | INFO | Requesters fetched: 7 items
+2025-05-25 05:24:14,395 | INFO | Suppliers fetched: 11 items
+2025-05-25 05:30:40,075 | INFO | Requesters fetched: 7 items
+2025-05-25 05:30:40,076 | INFO | Suppliers fetched: 11 items
+2025-05-25 05:30:52,752 | INFO | Requesters fetched: 7 items
+2025-05-25 05:30:52,763 | INFO | Suppliers fetched: 11 items
+2025-05-25 05:44:56,010 | INFO | Database tables created successfully.
+2025-05-25 05:44:56,010 | INFO | ✅ Database initialized successfully.
+2025-05-25 05:44:56,547 | INFO | Database tables created successfully.
+2025-05-25 05:44:56,548 | INFO | ✅ Database initialized successfully.
+2025-05-25 05:45:27,584 | INFO | Requesters fetched: 7 items
+2025-05-25 05:45:27,587 | INFO | Suppliers fetched: 11 items
+2025-05-25 05:45:30,414 | INFO | Starting to render new order page
+2025-05-25 05:45:30,443 | INFO | Requesters fetched: 7 items
+2025-05-25 05:45:30,447 | INFO | Suppliers fetched: 11 items
+2025-05-25 05:45:30,449 | INFO | Items fetched: 12 items
+2025-05-25 05:45:30,451 | INFO | Projects fetched: 12 items
+2025-05-25 05:45:50,515 | INFO | INFO | submitOrder started | {}
+2025-05-25 05:45:50,523 | INFO | 🔍 Incoming order: order_number='2117' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=8 requester_id=4 items=[OrderItemCreate(item_code='BECK054', item_description='Becker  Machine Spout Liner For  M48', project='KA04M', qty_ordered=1.0, price=41000.0)] auth_band_required=4
+2025-05-25 05:45:50,526 | INFO | ✅ [ORDER] Success created: Order 2117 with total R41000.0
+2025-05-25 05:45:50,536 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2118", "orderId": 187}
+2025-05-25 05:46:13,436 | INFO | INFO | submitOrder started | {}
+2025-05-25 05:46:13,441 | INFO | 🔍 Incoming order: order_number='2117' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=4 requester_id=5 items=[OrderItemCreate(item_code='BEAR059', item_description='Bearing 51144', project='IN10M', qty_ordered=1.0, price=15654.0)] auth_band_required=1
+2025-05-25 05:46:13,445 | INFO | ✅ [ORDER] Success created: Order 2117 with total R15654.0
+2025-05-25 05:46:13,451 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2118", "orderId": 188}
+2025-05-25 05:46:16,605 | INFO | Requesters fetched: 7 items
+2025-05-25 05:46:16,608 | INFO | Suppliers fetched: 11 items
+2025-05-25 05:46:20,681 | INFO | Requesters fetched: 7 items
+2025-05-25 05:46:20,684 | INFO | Suppliers fetched: 11 items
+2025-05-25 05:46:24,448 | INFO | Requesters fetched: 7 items
+2025-05-25 05:46:24,451 | INFO | Suppliers fetched: 11 items
+2025-05-25 05:46:28,637 | INFO | Requesters fetched: 7 items
+2025-05-25 05:46:28,639 | INFO | Suppliers fetched: 11 items
+2025-05-25 05:46:37,918 | INFO | Starting to render new order page
+2025-05-25 05:46:37,932 | INFO | Requesters fetched: 7 items
+2025-05-25 05:46:37,937 | INFO | Suppliers fetched: 11 items
+2025-05-25 05:46:37,939 | INFO | Items fetched: 12 items
+2025-05-25 05:46:37,942 | INFO | Projects fetched: 12 items
+2025-05-25 05:46:56,353 | INFO | INFO | submitOrder started | {}
+2025-05-25 05:46:56,358 | INFO | 🔍 Incoming order: order_number='2118' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=4 requester_id=4 items=[OrderItemCreate(item_code='BEAR059', item_description='Bearing 51144', project='KA04M', qty_ordered=1.0, price=14789.0)] auth_band_required=1
+2025-05-25 05:46:56,362 | INFO | ✅ [ORDER] Success created: Order 2118 with total R14789.0
+2025-05-25 05:46:56,370 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2119", "orderId": 189}
+2025-05-25 05:46:59,735 | INFO | Requesters fetched: 7 items
+2025-05-25 05:46:59,739 | INFO | Suppliers fetched: 11 items
