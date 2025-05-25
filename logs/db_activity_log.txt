@@ -123,3 +123,132 @@
 2025-05-25 05:46:56,370 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2119", "orderId": 189}
 2025-05-25 05:46:59,735 | INFO | Requesters fetched: 7 items
 2025-05-25 05:46:59,739 | INFO | Suppliers fetched: 11 items
+2025-05-25 06:28:17,263 | INFO | Database tables created successfully.
+2025-05-25 06:28:17,263 | INFO | ✅ Database initialized successfully.
+2025-05-25 06:28:17,777 | INFO | Database tables created successfully.
+2025-05-25 06:28:17,777 | INFO | ✅ Database initialized successfully.
+2025-05-25 06:28:40,732 | INFO | Requesters fetched: 7 items
+2025-05-25 06:28:40,735 | INFO | Suppliers fetched: 11 items
+2025-05-25 06:28:42,986 | INFO | Starting to render new order page
+2025-05-25 06:28:43,007 | INFO | Requesters fetched: 7 items
+2025-05-25 06:28:43,011 | INFO | Suppliers fetched: 11 items
+2025-05-25 06:28:43,013 | INFO | Items fetched: 12 items
+2025-05-25 06:28:43,018 | INFO | Projects fetched: 12 items
+2025-05-25 06:29:50,933 | INFO | INFO | previewOrder started | {}
+2025-05-25 06:29:51,123 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-25 06:30:01,378 | INFO | INFO | submitOrder started | {}
+2025-05-25 06:30:01,387 | INFO | 🔍 Incoming order: order_number='2119' status='Awaiting Authorisation' order_note='' note_to_supplier='2119\n1\n2\n3\n4\n' supplier_id=7 requester_id=3 items=[OrderItemCreate(item_code='BECK054', item_description='Becker  Machine Spout Liner For  M48', project='PR10M', qty_ordered=1.0, price=12000.0)] auth_band_required=1
+2025-05-25 06:30:01,389 | INFO | ✅ [ORDER] Success created: Order 2119 with total R12000.0
+2025-05-25 06:30:01,397 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2120", "orderId": 190}
+2025-05-25 06:30:08,343 | INFO | Requesters fetched: 7 items
+2025-05-25 06:30:08,344 | INFO | Suppliers fetched: 11 items
+2025-05-25 06:30:12,206 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 190
+2025-05-25 06:30:25,215 | INFO | Generating PDF for order_id=190, order_number=2119
+2025-05-25 06:36:08,754 | INFO | Starting to render new order page
+2025-05-25 06:36:08,775 | INFO | Requesters fetched: 7 items
+2025-05-25 06:36:08,778 | INFO | Suppliers fetched: 11 items
+2025-05-25 06:36:08,781 | INFO | Items fetched: 12 items
+2025-05-25 06:36:08,783 | INFO | Projects fetched: 12 items
+2025-05-25 06:53:56,599 | INFO | Requesters fetched: 7 items
+2025-05-25 06:53:56,601 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:19:50,319 | INFO | Requesters fetched: 7 items
+2025-05-25 07:19:50,320 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:20:56,308 | INFO | Requesters fetched: 7 items
+2025-05-25 07:20:56,313 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:20:56,316 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 36 total orders for audit trail
+2025-05-25 07:27:48,586 | INFO | Database tables created successfully.
+2025-05-25 07:27:48,586 | INFO | ✅ Database initialized successfully.
+2025-05-25 07:28:18,028 | INFO | Requesters fetched: 7 items
+2025-05-25 07:28:18,031 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:28:18,034 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 36 total orders for audit trail
+2025-05-25 07:28:31,732 | INFO | Requesters fetched: 7 items
+2025-05-25 07:28:31,734 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:28:35,681 | INFO | Requesters fetched: 7 items
+2025-05-25 07:28:35,682 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:29:31,438 | INFO | Requesters fetched: 7 items
+2025-05-25 07:29:31,448 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:29:31,452 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 36 total orders for audit trail
+2025-05-25 07:29:38,900 | INFO | Requesters fetched: 7 items
+2025-05-25 07:29:38,904 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:29:46,650 | INFO | Requesters fetched: 7 items
+2025-05-25 07:29:46,651 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:29:51,048 | INFO | Requesters fetched: 7 items
+2025-05-25 07:29:51,055 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:29:51,059 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 36 total orders for audit trail
+2025-05-25 07:34:04,757 | INFO | Database tables created successfully.
+2025-05-25 07:34:04,758 | INFO | ✅ Database initialized successfully.
+2025-05-25 07:34:20,679 | INFO | Requesters fetched: 7 items
+2025-05-25 07:34:20,682 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:34:22,662 | INFO | Starting to render new order page
+2025-05-25 07:34:22,700 | INFO | Requesters fetched: 7 items
+2025-05-25 07:34:22,704 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:34:22,707 | INFO | Items fetched: 12 items
+2025-05-25 07:34:22,719 | INFO | Projects fetched: 12 items
+2025-05-25 07:35:03,679 | INFO | INFO | previewOrder started | {}
+2025-05-25 07:35:03,844 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-25 07:35:08,088 | INFO | INFO | submitOrder started | {}
+2025-05-25 07:35:08,096 | INFO | 🔍 Incoming order: order_number='2120' status='Awaiting Authorisation' order_note='' note_to_supplier='Supplier note to 2120' supplier_id=6 requester_id=3 items=[OrderItemCreate(item_code='BECK054', item_description='Becker  Machine Spout Liner For  M48', project='PR30M', qty_ordered=1.0, price=14000.0)] auth_band_required=1
+2025-05-25 07:35:08,098 | INFO | ✅ [ORDER] Success created: Order 2120 with total R14000.0
+2025-05-25 07:35:08,107 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2121", "orderId": 191}
+2025-05-25 07:35:12,735 | INFO | Requesters fetched: 7 items
+2025-05-25 07:35:12,737 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:37:15,290 | INFO | Generating PDF for order_id=191, order_number=2120
+2025-05-25 07:37:21,696 | INFO | Requesters fetched: 7 items
+2025-05-25 07:37:21,699 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:37:33,846 | INFO | Requesters fetched: 7 items
+2025-05-25 07:37:33,849 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:37:37,548 | INFO | Requesters fetched: 7 items
+2025-05-25 07:37:37,553 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:37:37,556 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 37 total orders for audit trail
+2025-05-25 07:42:41,545 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 191
+2025-05-25 07:44:46,953 | INFO | Requesters fetched: 7 items
+2025-05-25 07:44:46,956 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:44:46,962 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 37 total orders for audit trail
+2025-05-25 07:51:04,252 | INFO | Requesters fetched: 7 items
+2025-05-25 07:51:04,254 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:51:04,256 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 37 total orders for audit trail
+2025-05-25 07:51:32,127 | INFO | Starting to render new order page
+2025-05-25 07:51:32,159 | INFO | Requesters fetched: 7 items
+2025-05-25 07:51:32,163 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:51:32,167 | INFO | Items fetched: 12 items
+2025-05-25 07:51:32,169 | INFO | Projects fetched: 12 items
+2025-05-25 07:52:04,493 | INFO | Database tables created successfully.
+2025-05-25 07:52:04,494 | INFO | ✅ Database initialized successfully.
+2025-05-25 07:52:05,048 | INFO | Database tables created successfully.
+2025-05-25 07:52:05,048 | INFO | ✅ Database initialized successfully.
+2025-05-25 07:52:16,555 | INFO | Starting to render new order page
+2025-05-25 07:52:16,616 | INFO | Requesters fetched: 7 items
+2025-05-25 07:52:16,621 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:52:16,623 | INFO | Items fetched: 12 items
+2025-05-25 07:52:16,625 | INFO | Projects fetched: 12 items
+2025-05-25 07:52:19,977 | INFO | Starting to render new order page
+2025-05-25 07:52:19,995 | INFO | Requesters fetched: 7 items
+2025-05-25 07:52:19,999 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:52:20,005 | INFO | Items fetched: 12 items
+2025-05-25 07:52:20,008 | INFO | Projects fetched: 12 items
+2025-05-25 07:53:10,794 | INFO | INFO | previewOrder started | {}
+2025-05-25 07:53:10,990 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-25 07:53:16,160 | INFO | INFO | submitOrder started | {}
+2025-05-25 07:53:16,167 | INFO | 🔍 Incoming order: order_number='2121' status='Awaiting Authorisation' order_note='Order note 2121' note_to_supplier='Supplier note 2121' supplier_id=6 requester_id=4 items=[OrderItemCreate(item_code='BELT014', item_description='Belt 750mm 315/3/3.2/1.6 X 22 Mtr', project='PR68M', qty_ordered=1.0, price=12121.0)] auth_band_required=1
+2025-05-25 07:53:16,169 | INFO | ✅ [ORDER] Success created: Order 2121 with total R12121.0
+2025-05-25 07:53:16,182 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2122", "orderId": 192}
+2025-05-25 07:53:20,731 | INFO | Requesters fetched: 7 items
+2025-05-25 07:53:20,732 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:53:34,912 | INFO | Requesters fetched: 7 items
+2025-05-25 07:53:34,915 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:53:52,219 | INFO | Requesters fetched: 7 items
+2025-05-25 07:53:52,221 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:54:24,489 | INFO | Requesters fetched: 7 items
+2025-05-25 07:54:24,495 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:54:24,509 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 38 total orders for audit trail
+2025-05-25 07:55:05,547 | INFO | Requesters fetched: 7 items
+2025-05-25 07:55:05,564 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:55:09,330 | INFO | Requesters fetched: 7 items
+2025-05-25 07:55:09,332 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:55:39,495 | INFO | Requesters fetched: 7 items
+2025-05-25 07:55:39,497 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:59:37,693 | INFO | Requesters fetched: 7 items
+2025-05-25 07:59:37,694 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:59:43,904 | INFO | Requesters fetched: 7 items
+2025-05-25 07:59:43,911 | INFO | Suppliers fetched: 11 items
+2025-05-25 07:59:43,920 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 38 total orders for audit trail

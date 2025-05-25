@@ -58,7 +58,7 @@ export async function submitOrder({
     const orderData = {
         order_number: currentOrderNumber,
         total,
-        order_note: "",
+        order_note: document.getElementById("order_note").value,  // ✅ fixed
         note_to_supplier: noteToSupplier,
         requester_id: parseInt(requesterId),
         supplier_id: parseInt(supplierId),

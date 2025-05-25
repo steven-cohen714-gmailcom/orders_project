@@ -12,3 +12,15 @@
 2025-05-25 05:46:13,451 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2118", "orderId": 188}
 2025-05-25 05:46:56,353 | INFO | INFO | submitOrder started | {}
 2025-05-25 05:46:56,370 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2119", "orderId": 189}
+2025-05-25 06:29:50,933 | INFO | INFO | previewOrder started | {}
+2025-05-25 06:29:51,123 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-25 06:30:01,378 | INFO | INFO | submitOrder started | {}
+2025-05-25 06:30:01,397 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2120", "orderId": 190}
+2025-05-25 07:35:03,679 | INFO | INFO | previewOrder started | {}
+2025-05-25 07:35:03,844 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-25 07:35:08,088 | INFO | INFO | submitOrder started | {}
+2025-05-25 07:35:08,107 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2121", "orderId": 191}
+2025-05-25 07:53:10,794 | INFO | INFO | previewOrder started | {}
+2025-05-25 07:53:10,990 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-25 07:53:16,160 | INFO | INFO | submitOrder started | {}
+2025-05-25 07:53:16,182 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2122", "orderId": 192}

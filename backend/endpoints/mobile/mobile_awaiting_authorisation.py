@@ -44,6 +44,7 @@ async def get_orders_awaiting_authorisation(request: Request):
                 o.created_date,
                 o.status,
                 o.required_auth_band,
+                o.order_note,
                 r.name AS requester_name,
                 s.name AS supplier_name
             FROM orders o
@@ -81,26 +82,27 @@ async def authorise_order(order_id: int, request: Request):
         if row["status"] != "Awaiting Authorisation":
             raise HTTPException(status_code=400, detail="Order is not in an authorisable state")
 
-    # Update order status safely
-    cursor.execute("""
-        UPDATE orders
-        SET status = 'Authorised'
-        WHERE id = ? AND status = 'Awaiting Authorisation'
-    """, (order_id,))
+        # Update order status safely
+        cursor.execute("""
+            UPDATE orders
+            SET status = 'Authorised'
+            WHERE id = ? AND status = 'Awaiting Authorisation'
+        """, (order_id,))
 
-    if cursor.rowcount == 0:
-        raise HTTPException(status_code=400, detail="Order was already authorised or in an invalid state")
+        if cursor.rowcount == 0:
+            raise HTTPException(status_code=400, detail="Order was already authorised or in an invalid state")
 
-    # Insert into audit trail
-    cursor.execute("""
-        INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
-        VALUES (?, 'Authorised', ?, ?, ?)
-    """, (
-        order_id,
-        f"Order authorised by {username}",
-        datetime.utcnow().isoformat(),
-        user_id
-    ))
+        # Insert into audit trail
+        cursor.execute("""
+            INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
+            VALUES (?, 'Authorised', ?, ?, ?)
+        """, (
+            order_id,
+            f"Order authorised by {username}",
+            datetime.utcnow().isoformat(),
+            user_id
+        ))
 
-    conn.commit()
+        conn.commit()  # ✅ ensure commit happens before connection closes
+
     return {"message": "Order authorised"}

@@ -105,10 +105,14 @@ async function loadOrders() {
                         alert(`Error displaying supplier note: ${e.message}`);
                     }
                 });
-                row.querySelector(`#order-note-${index}`).addEventListener("click", (e) => {
-                    const target = e.target;
-                    window.showOrderNoteModal(sanitizedOrderNote, order.id || '', (newNote) => {
-                        target.setAttribute("data-order-note", escapeHTML(newNote));
+                const noteIcon = row.querySelector(`#order-note-${index}`);
+                noteIcon.addEventListener("click", (e) => {
+                    const orderId = noteIcon.getAttribute("data-order-id");
+                    const note = noteIcon.getAttribute("data-order-note");
+                    window.showOrderNoteModal(note, orderId, (newNote) => {
+                        noteIcon.setAttribute("data-order-note", escapeHTML(newNote));
+                        noteIcon.title = "Edit Order Note\n" + newNote;
+
                     });
                 });
                 row.querySelector(".expand-icon").addEventListener("click", (e) => {
