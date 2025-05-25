@@ -12,11 +12,8 @@
   {% include "_tab_nav.html" %}
 
   <script>
-    // Log the raw JSON string for debugging
     const rawBusinessDetails = '{{ business_details | tojson | safe }}';
     console.log('Raw businessDetails:', rawBusinessDetails);
-    
-    // Parse JSON with error handling
     try {
       window.businessDetails = JSON.parse(rawBusinessDetails);
       if (!window.businessDetails || !window.businessDetails.company_name) {
@@ -24,7 +21,6 @@
       }
     } catch (error) {
       console.error('Failed to parse businessDetails:', error);
-      // Fallback to prevent runtime errors
       window.businessDetails = {
         company_name: "Default Company",
         address_line1: "N/A",
@@ -51,41 +47,48 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <div class="form-row">
-        <div class="column">
-          <label for="requester_id">Requester *</label>
-          <select id="requester_id" name="requester_id">
-            <option value="">Select Requester</option>
-            {% for requester in requesters %}
-            <option value="{{ requester.id }}">{{ requester.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
+<div class="form-group" style="max-width: 900px; margin: 2rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
 
-        <div class="column">
-          <label for="supplier_id">Supplier *</label>
-          <select id="supplier_id" name="supplier_id">
-            <option value="">Select Supplier</option>
-            {% for supplier in suppliers %}
-            <option value="{{ supplier.id }}">{{ supplier.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
+  <div class="column">
+    <label for="requester_id">Requester *</label>
+    <select id="requester_id" name="requester_id">
+      <option value="">Select Requester</option>
+      {% for requester in requesters %}
+      <option value="{{ requester.id }}">{{ requester.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
 
-        <div class="column">
-          <label for="note_to_supplier">Note to Supplier</label>
-          <textarea id="note_to_supplier" name="note_to_supplier" rows="3"></textarea>
-        </div>
+  <div class="column">
+    <label for="supplier_id">Supplier *</label>
+    <select id="supplier_id" name="supplier_id">
+      <option value="">Select Supplier</option>
+      {% for supplier in suppliers %}
+      <option value="{{ supplier.id }}">{{ supplier.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
 
-        <div class="column">
-          <label for="order_note">Order Note</label>
-          <textarea id="order_note" name="order_note" rows="3" placeholder="Internal notes about this order..."></textarea>
-        </div>
-      </div>
-    </div>
+  <div class="column">
+    <label for="payment_terms">Payment Terms</label>
+    <select id="payment_terms" name="payment_terms">
+      <option value="On account">On account</option>
+      <option value="COD">COD</option>
+    </select>
+  </div>
 
-    <div class="delivery-block">
+  <div class="column">
+    <label for="note_to_supplier">Note to Supplier</label>
+    <textarea id="note_to_supplier" name="note_to_supplier" rows="3" placeholder="Note to your supplier about this order..."></textarea>
+  </div>
+
+  <div class="column">
+    <label for="order_note">Order Note</label>
+    <textarea id="order_note" name="order_note" style="min-height: 100px;" placeholder="Internal notes about this order..."></textarea>
+  </div>
+
+  </div>
+      <div class="delivery-block">
       <label>Delivery Address</label>
       <div id="delivery-address">
         {{ business_details.company_name }}<br>
@@ -143,6 +146,7 @@
       });
     });
   </script>
+
   <div id="email-status-log" style="margin-top: 2rem; padding: 1rem; border: 1px solid #ccc; background-color: #f9f9f9; font-family: monospace; font-size: 0.9rem;">
     <strong>Status Log:</strong>
     <div id="status-messages"></div>

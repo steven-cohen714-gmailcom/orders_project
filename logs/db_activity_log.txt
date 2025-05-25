@@ -252,3 +252,142 @@
 2025-05-25 07:59:43,904 | INFO | Requesters fetched: 7 items
 2025-05-25 07:59:43,911 | INFO | Suppliers fetched: 11 items
 2025-05-25 07:59:43,920 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 38 total orders for audit trail
+2025-05-25 08:06:33,915 | INFO | Starting to render new order page
+2025-05-25 08:06:33,947 | INFO | Requesters fetched: 7 items
+2025-05-25 08:06:33,951 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:06:33,955 | INFO | Items fetched: 12 items
+2025-05-25 08:06:33,957 | INFO | Projects fetched: 12 items
+2025-05-25 08:11:35,426 | INFO | Starting to render new order page
+2025-05-25 08:11:35,461 | INFO | Requesters fetched: 7 items
+2025-05-25 08:11:35,464 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:11:35,468 | INFO | Items fetched: 12 items
+2025-05-25 08:11:35,471 | INFO | Projects fetched: 12 items
+2025-05-25 08:31:21,730 | INFO | Starting to render new order page
+2025-05-25 08:31:21,762 | INFO | Requesters fetched: 7 items
+2025-05-25 08:31:21,765 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:31:21,767 | INFO | Items fetched: 12 items
+2025-05-25 08:31:21,769 | INFO | Projects fetched: 12 items
+2025-05-25 08:31:44,057 | INFO | Database tables created successfully.
+2025-05-25 08:31:44,058 | INFO | ✅ Database initialized successfully.
+2025-05-25 08:31:44,587 | INFO | Database tables created successfully.
+2025-05-25 08:31:44,587 | INFO | ✅ Database initialized successfully.
+2025-05-25 08:31:51,514 | INFO | Starting to render new order page
+2025-05-25 08:31:51,567 | INFO | Requesters fetched: 7 items
+2025-05-25 08:31:51,569 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:31:51,572 | INFO | Items fetched: 12 items
+2025-05-25 08:31:51,573 | INFO | Projects fetched: 12 items
+2025-05-25 08:32:31,616 | INFO | INFO | previewOrder started | {}
+2025-05-25 08:32:31,805 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-25 08:32:37,952 | INFO | INFO | submitOrder started | {}
+2025-05-25 08:32:37,959 | INFO | 🔍 Incoming order: order_number='2122' status='Awaiting Authorisation' order_note='Order note 2122' note_to_supplier='Supplier note 2122' supplier_id=8 requester_id=3 items=[OrderItemCreate(item_code='BLAD009', item_description='Blade Twin Shaft 5t Shapening', project='PR67M', qty_ordered=1.0, price=12356.0)] auth_band_required=1
+2025-05-25 08:32:37,962 | INFO | ✅ [ORDER] Success created: Order 2122 with total R12356.0
+2025-05-25 08:32:37,970 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2123", "orderId": 193}
+2025-05-25 08:32:41,724 | INFO | Requesters fetched: 7 items
+2025-05-25 08:32:41,726 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:32:56,848 | INFO | Requesters fetched: 7 items
+2025-05-25 08:32:56,856 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:32:56,860 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 39 total orders for audit trail
+2025-05-25 08:33:11,504 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 193
+2025-05-25 08:33:14,521 | INFO | Requesters fetched: 7 items
+2025-05-25 08:33:14,524 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:33:17,652 | INFO | Requesters fetched: 7 items
+2025-05-25 08:33:17,654 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:33:31,443 | INFO | Generating PDF for order_id=193, order_number=2122
+2025-05-25 08:33:46,992 | INFO | Requesters fetched: 7 items
+2025-05-25 08:33:46,994 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:33:51,560 | INFO | Requesters fetched: 7 items
+2025-05-25 08:33:51,567 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:33:51,571 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 39 total orders for audit trail
+2025-05-25 08:53:19,592 | INFO | Starting to render new order page
+2025-05-25 08:53:19,631 | INFO | Requesters fetched: 7 items
+2025-05-25 08:53:19,634 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:53:19,637 | INFO | Items fetched: 12 items
+2025-05-25 08:53:19,640 | INFO | Projects fetched: 12 items
+2025-05-25 08:53:48,197 | INFO | INFO | submitOrder started | {}
+2025-05-25 08:53:48,201 | INFO | 🔍 Incoming order: order_number='2123' status='Awaiting Authorisation' order_note='Order note 2123' note_to_supplier='Supplier note 2123' supplier_id=6 requester_id=4 items=[OrderItemCreate(item_code='BELT014', item_description='Belt 750mm 315/3/3.2/1.6 X 22 Mtr', project='PR30M', qty_ordered=1.0, price=12000.0)] auth_band_required=1
+2025-05-25 08:53:48,204 | INFO | ✅ [ORDER] Success created: Order 2123 with total R12000.0
+2025-05-25 08:53:48,211 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2124", "orderId": 194}
+2025-05-25 08:54:23,676 | INFO | INFO | submitOrder started | {}
+2025-05-25 08:54:23,682 | INFO | 🔍 Incoming order: order_number='2123' status='Awaiting Authorisation' order_note='Order note 2124' note_to_supplier='Supplier note 2124' supplier_id=7 requester_id=2 items=[OrderItemCreate(item_code='BEAR180', item_description='Bearing Nylos Ring For 23034 Mac 4 W33 Brass Cage', project='KA04M', qty_ordered=1.0, price=11556.0)] auth_band_required=1
+2025-05-25 08:54:23,686 | INFO | ✅ [ORDER] Success created: Order 2123 with total R11556.0
+2025-05-25 08:54:23,693 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2124", "orderId": 195}
+2025-05-25 08:54:28,536 | INFO | Requesters fetched: 7 items
+2025-05-25 08:54:28,537 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:54:41,178 | INFO | Requesters fetched: 7 items
+2025-05-25 08:54:41,191 | INFO | Suppliers fetched: 11 items
+2025-05-25 08:56:23,033 | INFO | Generating PDF for order_id=195, order_number=2123
+2025-05-25 09:19:34,306 | INFO | Requesters fetched: 7 items
+2025-05-25 09:19:34,307 | INFO | Suppliers fetched: 11 items
+2025-05-25 09:19:36,646 | INFO | Starting to render new order page
+2025-05-25 09:19:36,673 | INFO | Requesters fetched: 7 items
+2025-05-25 09:19:36,676 | INFO | Suppliers fetched: 11 items
+2025-05-25 09:19:36,678 | INFO | Items fetched: 12 items
+2025-05-25 09:19:36,684 | INFO | Projects fetched: 12 items
+2025-05-25 09:40:26,710 | INFO | Starting to render new order page
+2025-05-25 09:40:26,739 | INFO | Requesters fetched: 7 items
+2025-05-25 09:40:26,744 | INFO | Suppliers fetched: 11 items
+2025-05-25 09:40:26,745 | INFO | Items fetched: 12 items
+2025-05-25 09:40:26,747 | INFO | Projects fetched: 12 items
+2025-05-25 09:40:30,070 | INFO | Starting to render new order page
+2025-05-25 09:40:30,098 | INFO | Requesters fetched: 7 items
+2025-05-25 09:40:30,101 | INFO | Suppliers fetched: 11 items
+2025-05-25 09:40:30,103 | INFO | Items fetched: 12 items
+2025-05-25 09:40:30,105 | INFO | Projects fetched: 12 items
+2025-05-25 09:40:35,651 | INFO | Starting to render new order page
+2025-05-25 09:40:35,679 | INFO | Requesters fetched: 7 items
+2025-05-25 09:40:35,682 | INFO | Suppliers fetched: 11 items
+2025-05-25 09:40:35,684 | INFO | Items fetched: 12 items
+2025-05-25 09:40:35,687 | INFO | Projects fetched: 12 items
+2025-05-25 09:40:51,955 | INFO | Starting to render new order page
+2025-05-25 09:40:51,985 | INFO | Requesters fetched: 7 items
+2025-05-25 09:40:51,988 | INFO | Suppliers fetched: 11 items
+2025-05-25 09:40:51,989 | INFO | Items fetched: 12 items
+2025-05-25 09:40:51,993 | INFO | Projects fetched: 12 items
+2025-05-25 09:48:31,558 | INFO | Starting to render new order page
+2025-05-25 09:48:31,591 | INFO | Requesters fetched: 7 items
+2025-05-25 09:48:49,680 | INFO | Starting to render new order page
+2025-05-25 09:48:49,721 | INFO | Requesters fetched: 7 items
+2025-05-25 09:48:49,723 | INFO | Suppliers fetched: 11 items
+2025-05-25 09:48:49,725 | INFO | Items fetched: 12 items
+2025-05-25 09:48:49,727 | INFO | Projects fetched: 12 items
+2025-05-25 09:51:47,686 | INFO | Starting to render new order page
+2025-05-25 09:51:47,727 | INFO | Requesters fetched: 7 items
+2025-05-25 09:51:47,729 | INFO | Suppliers fetched: 11 items
+2025-05-25 09:51:47,731 | INFO | Items fetched: 12 items
+2025-05-25 09:51:47,732 | INFO | Projects fetched: 12 items
+2025-05-25 09:54:30,244 | INFO | Starting to render new order page
+2025-05-25 09:54:30,284 | INFO | Requesters fetched: 7 items
+2025-05-25 09:55:39,516 | INFO | Starting to render new order page
+2025-05-25 09:55:39,550 | INFO | Requesters fetched: 7 items
+2025-05-25 09:57:01,658 | INFO | Starting to render new order page
+2025-05-25 09:57:01,689 | INFO | Requesters fetched: 7 items
+2025-05-25 09:59:18,910 | INFO | Starting to render new order page
+2025-05-25 09:59:18,942 | INFO | Requesters fetched: 7 items
+2025-05-25 09:59:18,944 | INFO | Suppliers fetched: 11 items
+2025-05-25 09:59:18,946 | INFO | Items fetched: 12 items
+2025-05-25 09:59:18,947 | INFO | Projects fetched: 12 items
+2025-05-25 10:03:54,894 | INFO | Starting to render new order page
+2025-05-25 10:03:54,925 | INFO | Requesters fetched: 7 items
+2025-05-25 10:03:54,927 | INFO | Suppliers fetched: 11 items
+2025-05-25 10:03:54,928 | INFO | Items fetched: 12 items
+2025-05-25 10:03:54,930 | INFO | Projects fetched: 12 items
+2025-05-25 10:07:26,683 | INFO | Starting to render new order page
+2025-05-25 10:07:26,713 | INFO | Requesters fetched: 7 items
+2025-05-25 10:07:26,716 | INFO | Suppliers fetched: 11 items
+2025-05-25 10:07:26,718 | INFO | Items fetched: 12 items
+2025-05-25 10:07:26,719 | INFO | Projects fetched: 12 items
+2025-05-25 10:11:30,750 | INFO | Starting to render new order page
+2025-05-25 10:11:30,791 | INFO | Requesters fetched: 7 items
+2025-05-25 10:11:30,793 | INFO | Suppliers fetched: 11 items
+2025-05-25 10:11:30,794 | INFO | Items fetched: 12 items
+2025-05-25 10:11:30,797 | INFO | Projects fetched: 12 items
+2025-05-25 10:15:52,503 | INFO | Starting to render new order page
+2025-05-25 10:15:52,533 | INFO | Requesters fetched: 7 items
+2025-05-25 10:15:52,536 | INFO | Suppliers fetched: 11 items
+2025-05-25 10:15:52,540 | INFO | Items fetched: 12 items
+2025-05-25 10:15:52,541 | INFO | Projects fetched: 12 items
+2025-05-25 10:20:53,077 | INFO | Requesters fetched: 7 items
+2025-05-25 10:20:53,078 | INFO | Items fetched: 12 items
+2025-05-25 10:20:53,079 | INFO | Suppliers fetched: 11 items
+2025-05-25 10:20:53,080 | INFO | Projects fetched: 12 items
+2025-05-25 10:20:53,082 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved

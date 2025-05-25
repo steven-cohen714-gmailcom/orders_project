@@ -13,6 +13,7 @@ export async function submitOrder({
     const requesterId = document.getElementById('requester_id').value;
     const supplierId = document.getElementById('supplier_id').value;
     const noteToSupplier = document.getElementById('note_to_supplier').value;
+    const paymentTerms = document.getElementById('payment_terms').value;
 
     if (!requesterId || !supplierId) {
         await logToServer('ERROR', 'Missing required fields', { requesterId, supplierId });
@@ -60,6 +61,7 @@ export async function submitOrder({
         total,
         order_note: document.getElementById("order_note").value,  // ✅ fixed
         note_to_supplier: noteToSupplier,
+        payment_terms: paymentTerms,
         requester_id: parseInt(requesterId),
         supplier_id: parseInt(supplierId),
         status,

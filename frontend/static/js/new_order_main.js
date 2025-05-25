@@ -332,6 +332,8 @@ function setupEventListeners() {
       console.log('Submit button exists:', !!submitBtn);
       submitBtn.addEventListener('click', () => {
   console.log('Submit button clicked');
+  const paymentTerms = document.getElementById("payment_terms")?.value || "On account";
+
   debounce(() => submitOrder({
     currentOrderNumber,
     authThresholds: authThreshold,
@@ -340,6 +342,7 @@ function setupEventListeners() {
     incrementOrderNumber,
     logToServer,
     setCurrentOrderId: (id) => currentOrderId = id,
+    paymentTerms
   }), 500)();
 });
 
