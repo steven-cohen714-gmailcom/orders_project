@@ -391,3 +391,287 @@
 2025-05-25 10:20:53,079 | INFO | Suppliers fetched: 11 items
 2025-05-25 10:20:53,080 | INFO | Projects fetched: 12 items
 2025-05-25 10:20:53,082 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-25 15:15:25,661 | INFO | Database tables created successfully.
+2025-05-25 15:15:25,661 | INFO | ✅ Database initialized successfully.
+2025-05-25 15:15:26,186 | INFO | Database tables created successfully.
+2025-05-25 15:15:26,186 | INFO | ✅ Database initialized successfully.
+2025-05-25 15:15:42,401 | INFO | Requesters fetched: 7 items
+2025-05-25 15:15:42,402 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:15:45,201 | INFO | Requesters fetched: 7 items
+2025-05-25 15:15:45,209 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:15:45,211 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 0 total orders for audit trail
+2025-05-25 15:15:47,031 | INFO | Requesters fetched: 7 items
+2025-05-25 15:15:47,033 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:15:49,014 | INFO | Requesters fetched: 7 items
+2025-05-25 15:15:49,017 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:15:50,208 | INFO | Requesters fetched: 7 items
+2025-05-25 15:15:50,210 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:15:51,511 | INFO | Starting to render new order page
+2025-05-25 15:15:51,542 | INFO | Requesters fetched: 7 items
+2025-05-25 15:15:51,545 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:15:51,547 | INFO | Items fetched: 0 items
+2025-05-25 15:15:51,550 | INFO | Projects fetched: 0 items
+2025-05-25 15:15:53,966 | INFO | Requesters fetched: 7 items
+2025-05-25 15:15:53,968 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:15:56,277 | INFO | Requesters fetched: 7 items
+2025-05-25 15:15:56,281 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:15:59,913 | INFO | Requesters fetched: 7 items
+2025-05-25 15:15:59,914 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-25 15:15:59,916 | INFO | Items fetched: 0 items
+2025-05-25 15:15:59,917 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:15:59,917 | INFO | Projects fetched: 0 items
+2025-05-25 15:22:14,838 | INFO | Database tables created successfully.
+2025-05-25 15:22:14,838 | INFO | ✅ Database initialized successfully.
+2025-05-25 15:23:41,904 | INFO | Database tables created successfully.
+2025-05-25 15:23:41,904 | INFO | ✅ Database initialized successfully.
+2025-05-25 15:24:22,114 | INFO | Database tables created successfully.
+2025-05-25 15:24:22,115 | INFO | ✅ Database initialized successfully.
+2025-05-25 15:24:22,652 | INFO | Database tables created successfully.
+2025-05-25 15:24:22,652 | INFO | ✅ Database initialized successfully.
+2025-05-25 15:24:44,815 | INFO | Requesters fetched: 7 items
+2025-05-25 15:24:44,816 | INFO | Items fetched: 0 items
+2025-05-25 15:24:44,816 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:24:44,817 | INFO | Projects fetched: 0 items
+2025-05-25 15:24:44,818 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-25 15:26:33,038 | INFO | Requesters fetched: 7 items
+2025-05-25 15:26:33,038 | INFO | Items fetched: 0 items
+2025-05-25 15:26:33,039 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:26:33,039 | INFO | Projects fetched: 0 items
+2025-05-25 15:26:33,040 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-25 15:26:43,688 | ERROR | Error importing items CSV: 400: CSV is empty or invalid.
+2025-05-25 15:33:26,118 | INFO | Database tables created successfully.
+2025-05-25 15:33:26,118 | INFO | ✅ Database initialized successfully.
+2025-05-25 15:33:41,874 | INFO | Database tables created successfully.
+2025-05-25 15:33:41,874 | INFO | ✅ Database initialized successfully.
+2025-05-25 15:33:42,407 | INFO | Database tables created successfully.
+2025-05-25 15:33:42,407 | INFO | ✅ Database initialized successfully.
+2025-05-25 15:33:46,213 | INFO | Requesters fetched: 7 items
+2025-05-25 15:33:46,214 | INFO | Items fetched: 0 items
+2025-05-25 15:33:46,215 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:33:46,216 | INFO | Projects fetched: 0 items
+2025-05-25 15:33:46,218 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-25 15:33:57,822 | INFO | ✅ Imported 9978 items from CSV.
+2025-05-25 15:34:11,239 | INFO | Requesters fetched: 7 items
+2025-05-25 15:34:11,249 | INFO | Items fetched: 9978 items
+2025-05-25 15:34:11,279 | INFO | Suppliers fetched: 0 items
+2025-05-25 15:34:11,280 | INFO | Projects fetched: 0 items
+2025-05-25 15:34:11,282 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-26 04:54:54,604 | INFO | Database tables created successfully.
+2025-05-26 04:54:54,605 | INFO | ✅ Database initialized successfully.
+2025-05-26 04:56:10,228 | INFO | Database tables created successfully.
+2025-05-26 04:56:10,229 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:02:43,892 | INFO | Database tables created successfully.
+2025-05-26 05:02:43,893 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:03:33,490 | INFO | Database tables created successfully.
+2025-05-26 05:03:33,490 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:03:34,009 | INFO | Database tables created successfully.
+2025-05-26 05:03:34,009 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:04:16,274 | INFO | Requesters fetched: 7 items
+2025-05-26 05:04:16,282 | INFO | Items fetched: 9978 items
+2025-05-26 05:04:16,319 | INFO | Suppliers fetched: 0 items
+2025-05-26 05:04:16,320 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-26 05:04:16,320 | INFO | Projects fetched: 0 items
+2025-05-26 05:06:18,233 | INFO | Database tables created successfully.
+2025-05-26 05:06:18,233 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:07:44,518 | INFO | Database tables created successfully.
+2025-05-26 05:07:44,518 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:07:52,902 | INFO | Database tables created successfully.
+2025-05-26 05:07:52,902 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:07:53,424 | INFO | Database tables created successfully.
+2025-05-26 05:07:53,425 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:08:00,032 | INFO | Requesters fetched: 7 items
+2025-05-26 05:08:00,041 | INFO | Items fetched: 9978 items
+2025-05-26 05:08:00,073 | INFO | Suppliers fetched: 0 items
+2025-05-26 05:08:00,073 | INFO | Projects fetched: 0 items
+2025-05-26 05:08:00,074 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-26 05:08:10,592 | INFO | ✅ Imported 795 suppliers from CSV.
+2025-05-26 05:08:13,352 | INFO | Requesters fetched: 7 items
+2025-05-26 05:08:13,354 | INFO | Projects fetched: 0 items
+2025-05-26 05:08:13,365 | INFO | Items fetched: 9978 items
+2025-05-26 05:08:13,401 | INFO | Suppliers fetched: 795 items
+2025-05-26 05:08:13,406 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-26 05:08:23,790 | INFO | ✅ Imported 206 projects from CSV.
+2025-05-26 05:08:25,973 | INFO | Requesters fetched: 7 items
+2025-05-26 05:08:25,981 | INFO | Items fetched: 9978 items
+2025-05-26 05:08:26,014 | INFO | Suppliers fetched: 795 items
+2025-05-26 05:08:26,017 | INFO | Projects fetched: 206 items
+2025-05-26 05:08:26,019 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-26 05:36:00,747 | INFO | Database tables created successfully.
+2025-05-26 05:36:00,747 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:36:01,264 | INFO | Database tables created successfully.
+2025-05-26 05:36:01,264 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:36:18,462 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-26 05:36:18,472 | INFO | Items fetched: 9978 items
+2025-05-26 05:36:18,503 | INFO | Projects fetched: 206 items
+2025-05-26 05:36:18,505 | INFO | Requesters fetched: 7 items
+2025-05-26 05:36:18,506 | INFO | Suppliers fetched: 795 items
+2025-05-26 05:36:24,324 | INFO | Starting to render new order page
+2025-05-26 05:36:24,473 | INFO | Requesters fetched: 7 items
+2025-05-26 05:36:24,479 | INFO | Suppliers fetched: 795 items
+2025-05-26 05:36:24,500 | INFO | Items fetched: 9978 items
+2025-05-26 05:36:24,539 | INFO | Projects fetched: 206 items
+2025-05-26 05:49:19,078 | INFO | Database tables created successfully.
+2025-05-26 05:49:19,078 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:49:19,601 | INFO | Database tables created successfully.
+2025-05-26 05:49:19,601 | INFO | ✅ Database initialized successfully.
+2025-05-26 05:49:25,635 | INFO | Starting to render new order page
+2025-05-26 05:49:25,740 | INFO | Requesters fetched: 7 items
+2025-05-26 05:49:25,753 | INFO | Suppliers fetched: 795 items
+2025-05-26 05:49:25,770 | INFO | Items fetched: 9978 items
+2025-05-26 05:49:25,805 | INFO | Projects fetched: 206 items
+2025-05-26 05:51:16,831 | INFO | Starting to render new order page
+2025-05-26 05:51:16,928 | INFO | Requesters fetched: 7 items
+2025-05-26 05:51:16,932 | INFO | Suppliers fetched: 795 items
+2025-05-26 05:51:16,950 | INFO | Items fetched: 9978 items
+2025-05-26 05:51:16,986 | INFO | Projects fetched: 206 items
+2025-05-26 05:53:26,287 | INFO | INFO | previewOrder started | {}
+2025-05-26 05:53:26,476 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-26 05:53:32,067 | INFO | INFO | submitOrder started | {}
+2025-05-26 05:53:32,074 | INFO | 🔍 Incoming order: order_number='2124' status='Awaiting Authorisation' order_note='Order note 2124' note_to_supplier='Supplier note 2124' supplier_id=33 requester_id=7 items=[OrderItemCreate(item_code='ABRA004', item_description='RUBBER BACKING PAD 115 MM', project='AD04M', qty_ordered=1.0, price=12000.0)] auth_band_required=1
+2025-05-26 05:53:32,076 | INFO | ✅ [ORDER] Success created: Order 2124 with total R12000.0
+2025-05-26 05:53:32,083 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2125", "orderId": 196}
+2025-05-26 05:53:36,580 | INFO | Requesters fetched: 7 items
+2025-05-26 05:53:36,583 | INFO | Suppliers fetched: 795 items
+2025-05-26 05:53:59,956 | INFO | Requesters fetched: 7 items
+2025-05-26 05:53:59,960 | INFO | Suppliers fetched: 795 items
+2025-05-26 05:54:02,489 | INFO | Generating PDF for order_id=196, order_number=2124
+2025-05-26 05:54:34,165 | INFO | Requesters fetched: 7 items
+2025-05-26 05:54:34,175 | INFO | Suppliers fetched: 795 items
+2025-05-26 05:54:38,091 | INFO | Requesters fetched: 7 items
+2025-05-26 05:54:38,100 | INFO | Suppliers fetched: 795 items
+2025-05-26 05:54:38,109 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-05-26 05:59:56,843 | INFO | Requesters fetched: 7 items
+2025-05-26 05:59:56,845 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-26 05:59:56,855 | INFO | Items fetched: 9978 items
+2025-05-26 05:59:56,909 | INFO | Suppliers fetched: 795 items
+2025-05-26 05:59:56,913 | INFO | Projects fetched: 206 items
+2025-05-26 06:00:10,545 | INFO | Starting to render new order page
+2025-05-26 06:00:10,682 | INFO | Requesters fetched: 7 items
+2025-05-26 06:00:10,688 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:00:10,711 | INFO | Items fetched: 9978 items
+2025-05-26 06:00:10,753 | INFO | Projects fetched: 206 items
+2025-05-26 06:00:50,901 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:00:50,912 | INFO | 🔍 Incoming order: order_number='3000' status='Awaiting Authorisation' order_note='Order note 3000' note_to_supplier='Supplier note 3000' supplier_id=21 requester_id=4 items=[OrderItemCreate(item_code='ABRA005', item_description='FIBER DISC 115 MMX 22  P36', project='AD13M', qty_ordered=1.0, price=15632.0)] auth_band_required=1
+2025-05-26 06:00:50,914 | INFO | ✅ [ORDER] Success created: Order 3000 with total R15632.0
+2025-05-26 06:00:50,921 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3001", "orderId": 197}
+2025-05-26 06:00:54,422 | INFO | Requesters fetched: 7 items
+2025-05-26 06:00:54,424 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:01:02,935 | INFO | Requesters fetched: 7 items
+2025-05-26 06:01:02,943 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:01:02,956 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 2 total orders for audit trail
+2025-05-26 06:01:05,086 | INFO | Requesters fetched: 7 items
+2025-05-26 06:01:05,090 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:01:19,774 | INFO | Starting to render new order page
+2025-05-26 06:01:19,839 | INFO | Requesters fetched: 7 items
+2025-05-26 06:01:19,843 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:01:19,862 | INFO | Items fetched: 9978 items
+2025-05-26 06:01:19,904 | INFO | Projects fetched: 206 items
+2025-05-26 06:01:59,987 | INFO | INFO | previewOrder started | {}
+2025-05-26 06:02:00,099 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-26 06:02:04,882 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:02:04,891 | INFO | 🔍 Incoming order: order_number='3001' status='Awaiting Authorisation' order_note='Order 3001' note_to_supplier='Supplier 3001' supplier_id=22 requester_id=5 items=[OrderItemCreate(item_code='ABRA004', item_description='RUBBER BACKING PAD 115 MM', project='ARP10O', qty_ordered=1.0, price=16568.0)] auth_band_required=1
+2025-05-26 06:02:04,894 | INFO | ✅ [ORDER] Success created: Order 3001 with total R16568.0
+2025-05-26 06:02:04,900 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3002", "orderId": 198}
+2025-05-26 06:02:14,216 | INFO | Requesters fetched: 7 items
+2025-05-26 06:02:14,219 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:02:17,058 | INFO | Starting to render new order page
+2025-05-26 06:02:17,127 | INFO | Requesters fetched: 7 items
+2025-05-26 06:02:17,131 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:02:17,147 | INFO | Items fetched: 9978 items
+2025-05-26 06:02:17,187 | INFO | Projects fetched: 206 items
+2025-05-26 06:06:26,759 | INFO | Starting to render new order page
+2025-05-26 06:06:26,807 | INFO | Requesters fetched: 7 items
+2025-05-26 06:06:26,809 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:06:26,831 | INFO | Items fetched: 9978 items
+2025-05-26 06:06:26,866 | INFO | Projects fetched: 206 items
+2025-05-26 06:06:59,935 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:06:59,945 | INFO | 🔍 Incoming order: order_number='3002' status='Pending' order_note='' note_to_supplier='' supplier_id=25 requester_id=6 items=[OrderItemCreate(item_code='ABRA007', item_description='CUTTING DISC STONE 230 MM', project='AD16M', qty_ordered=1.0, price=300.0)] auth_band_required=None
+2025-05-26 06:06:59,949 | INFO | ✅ [ORDER] Success created: Order 3002 with total R300.0
+2025-05-26 06:06:59,956 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3003", "orderId": 199}
+2025-05-26 06:07:27,303 | INFO | INFO | previewOrder started | {}
+2025-05-26 06:07:27,425 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-26 06:07:35,425 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:07:35,435 | INFO | 🔍 Incoming order: order_number='3002' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=23 requester_id=5 items=[OrderItemCreate(item_code='ABRA005', item_description='FIBER DISC 115 MMX 22  P36', project='AD12M', qty_ordered=1.0, price=15235.0)] auth_band_required=1
+2025-05-26 06:07:35,438 | INFO | ✅ [ORDER] Success created: Order 3002 with total R15235.0
+2025-05-26 06:07:35,445 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3003", "orderId": 200}
+2025-05-26 06:07:38,683 | INFO | Requesters fetched: 7 items
+2025-05-26 06:07:38,686 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:20:04,033 | INFO | Starting to render new order page
+2025-05-26 06:20:04,101 | INFO | Requesters fetched: 7 items
+2025-05-26 06:20:04,104 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:20:04,126 | INFO | Items fetched: 9978 items
+2025-05-26 06:20:04,163 | INFO | Projects fetched: 206 items
+2025-05-26 06:20:06,702 | INFO | Requesters fetched: 7 items
+2025-05-26 06:20:06,704 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-26 06:20:06,714 | INFO | Items fetched: 9978 items
+2025-05-26 06:20:06,754 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:20:06,758 | INFO | Projects fetched: 206 items
+2025-05-26 06:20:12,148 | INFO | Starting to render new order page
+2025-05-26 06:20:12,270 | INFO | Requesters fetched: 7 items
+2025-05-26 06:20:12,278 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:20:12,301 | INFO | Items fetched: 9978 items
+2025-05-26 06:20:12,342 | INFO | Projects fetched: 206 items
+2025-05-26 06:20:14,601 | INFO | Starting to render new order page
+2025-05-26 06:20:14,671 | INFO | Requesters fetched: 7 items
+2025-05-26 06:20:14,675 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:20:14,693 | INFO | Items fetched: 9978 items
+2025-05-26 06:20:14,733 | INFO | Projects fetched: 206 items
+2025-05-26 06:20:56,536 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:20:56,546 | INFO | 🔍 Incoming order: order_number='3003' status='Pending' order_note='Order note 3003' note_to_supplier='Supplier note 3003' supplier_id=19 requester_id=4 items=[OrderItemCreate(item_code='ABRA004', item_description='RUBBER BACKING PAD 115 MM', project='AD01P', qty_ordered=1.0, price=450.0)] auth_band_required=None
+2025-05-26 06:20:56,548 | INFO | ✅ [ORDER] Success created: Order 3003 with total R450.0
+2025-05-26 06:20:56,555 | ERROR | ERROR | Order submission failed | {"error": "setCurrentOrderNumber is not defined"}
+2025-05-26 06:23:24,432 | INFO | Starting to render new order page
+2025-05-26 06:23:24,511 | INFO | Requesters fetched: 7 items
+2025-05-26 06:23:24,514 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:23:24,530 | INFO | Items fetched: 9978 items
+2025-05-26 06:23:24,567 | INFO | Projects fetched: 206 items
+2025-05-26 06:23:51,859 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:23:51,864 | INFO | 🔍 Incoming order: order_number='3004' status='Pending' order_note='' note_to_supplier='' supplier_id=20 requester_id=4 items=[OrderItemCreate(item_code='ABRA004', item_description='RUBBER BACKING PAD 115 MM', project='AD05M', qty_ordered=1.0, price=500.0)] auth_band_required=None
+2025-05-26 06:23:51,866 | INFO | ✅ [ORDER] Success created: Order 3004 with total R500.0
+2025-05-26 06:23:51,873 | ERROR | ERROR | Order submission failed | {"error": "setCurrentOrderNumber is not defined"}
+2025-05-26 06:29:18,954 | INFO | Starting to render new order page
+2025-05-26 06:29:19,031 | INFO | Requesters fetched: 7 items
+2025-05-26 06:29:19,044 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:29:19,079 | INFO | Items fetched: 9978 items
+2025-05-26 06:29:19,119 | INFO | Projects fetched: 206 items
+2025-05-26 06:29:25,751 | INFO | Requesters fetched: 7 items
+2025-05-26 06:29:25,753 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-26 06:29:25,763 | INFO | Items fetched: 9978 items
+2025-05-26 06:29:25,802 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:29:25,807 | INFO | Projects fetched: 206 items
+2025-05-26 06:29:29,172 | INFO | Starting to render new order page
+2025-05-26 06:29:29,303 | INFO | Requesters fetched: 7 items
+2025-05-26 06:29:29,308 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:29:29,333 | INFO | Items fetched: 9978 items
+2025-05-26 06:29:29,370 | INFO | Projects fetched: 206 items
+2025-05-26 06:29:49,985 | INFO | INFO | previewOrder started | {}
+2025-05-26 06:29:50,097 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-26 06:29:55,064 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:29:55,075 | INFO | 🔍 Incoming order: order_number='3005' status='Pending' order_note='' note_to_supplier='' supplier_id=23 requester_id=6 items=[OrderItemCreate(item_code='ABRA005', item_description='FIBER DISC 115 MMX 22  P36', project='AD13M', qty_ordered=1.0, price=600.0)] auth_band_required=None
+2025-05-26 06:29:55,078 | INFO | ✅ [ORDER] Success created: Order 3005 with total R600.0
+2025-05-26 06:29:55,085 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3006", "orderId": 203}
+2025-05-26 06:30:24,073 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:30:24,084 | INFO | 🔍 Incoming order: order_number='3006' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=22 requester_id=5 items=[OrderItemCreate(item_code='ABRA005', item_description='FIBER DISC 115 MMX 22  P36', project='AD13M', qty_ordered=1.0, price=12777.0)] auth_band_required=1
+2025-05-26 06:30:24,086 | INFO | ✅ [ORDER] Success created: Order 3006 with total R12777.0
+2025-05-26 06:30:24,093 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3007", "orderId": 204}
+2025-05-26 06:30:29,471 | INFO | Requesters fetched: 7 items
+2025-05-26 06:30:29,474 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:30:39,668 | INFO | Requesters fetched: 7 items
+2025-05-26 06:30:39,675 | INFO | Suppliers fetched: 795 items
+2025-05-26 06:30:44,319 | INFO | Generating PDF for order_id=204, order_number=3006
+2025-05-26 07:34:34,163 | INFO | Requesters fetched: 7 items
+2025-05-26 07:34:34,175 | INFO | Suppliers fetched: 795 items
+2025-05-26 07:34:36,428 | INFO | Requesters fetched: 7 items
+2025-05-26 07:34:36,431 | INFO | Suppliers fetched: 795 items
+2025-05-26 07:34:37,216 | INFO | Requesters fetched: 7 items
+2025-05-26 07:34:37,221 | INFO | Suppliers fetched: 795 items
+2025-05-26 07:34:37,961 | INFO | Requesters fetched: 7 items
+2025-05-26 07:34:37,963 | INFO | Suppliers fetched: 795 items
+2025-05-26 07:34:39,040 | INFO | Requesters fetched: 7 items
+2025-05-26 07:34:39,046 | INFO | Suppliers fetched: 795 items
+2025-05-26 07:34:39,059 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 0 total orders for audit trail
+2025-05-26 07:34:41,047 | INFO | Requesters fetched: 7 items
+2025-05-26 07:34:41,058 | INFO | Items fetched: 9978 items
+2025-05-26 07:34:41,093 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-26 07:34:41,095 | INFO | Suppliers fetched: 795 items
+2025-05-26 07:34:41,099 | INFO | Projects fetched: 206 items

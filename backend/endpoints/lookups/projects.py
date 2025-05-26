@@ -1,16 +1,17 @@
-# backend/endpoints/lookups/projects.py
-
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, UploadFile, File
 from backend.database import get_db_connection
 import logging
 import sqlite3
+import csv
 
 router = APIRouter()
 
 # Configure logging
-logging.basicConfig(filename="logs/server.log", level=logging.INFO,
-                    format="%(asctime)s | %(levelname)s | %(message)s")
-
+logging.basicConfig(
+    filename="logs/server.log",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s"
+)
 
 @router.get("/projects")
 async def get_projects():
@@ -97,3 +98,41 @@ async def update_project(project_id: int, payload: dict):
         raise HTTPException(status_code=500, detail=f"Error updating project: {str(e)}")
     finally:
         conn.close()
+
+
+@router.post("/import_projects_csv")
+async def import_projects_csv(file: UploadFile = File(...)):
+    if not file.filename.endswith(".csv"):
+        raise HTTPException(status_code=400, detail="Only CSV files are supported.")
+
+    try:
+        contents = await file.read()
+        lines = contents.decode("utf-8").splitlines()
+        reader = csv.DictReader(lines)
+
+        projects = []
+        for row in reader:
+            code = row.get("code", "").strip()
+            description = row.get("description", "").strip()
+            if code and description:
+                projects.append((code, description))
+
+        if not projects:
+            raise HTTPException(status_code=400, detail="CSV is empty or invalid.")
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM projects;")
+        cursor.executemany(
+            "INSERT INTO projects (project_code, project_name) VALUES (?, ?);",
+            projects
+        )
+        conn.commit()
+        conn.close()
+
+        logging.info(f"✅ Imported {len(projects)} projects from CSV.")
+        return {"inserted": len(projects)}
+
+    except Exception as e:
+        logging.error(f"❌ Error importing projects CSV: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Import failed: {str(e)}")

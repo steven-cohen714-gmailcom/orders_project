@@ -5,7 +5,8 @@ export async function submitOrder({
     updateGrandTotal,
     incrementOrderNumber,
     logToServer,
-    setCurrentOrderId
+    setCurrentOrderId,
+    setCurrentOrderNumber
 }) {
     console.log('submitOrder triggered');
     await logToServer('INFO', 'submitOrder started');
@@ -87,6 +88,8 @@ export async function submitOrder({
             setCurrentOrderId(data.order_id);
 
             const newOrderNumber = await incrementOrderNumber(currentOrderNumber);
+            setCurrentOrderNumber(newOrderNumber);
+            document.getElementById("order-number").textContent = newOrderNumber;
 
             await logToServer('INFO', 'Order submitted and order number incremented', {
                 orderNumber: newOrderNumber,

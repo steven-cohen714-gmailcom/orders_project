@@ -36,6 +36,9 @@ from backend.endpoints.order_attachments import router as attachments_router
 from backend.endpoints.order_email import router as order_email_router
 from backend.endpoints.utils import router as utils_router
 from backend.endpoints.mobile.mobile_awaiting_authorisation import router as mobile_auth_router
+from backend.endpoints.lookups import items as items_router
+from backend.endpoints.lookups import suppliers as suppliers_router
+from backend.endpoints.lookups import projects as projects_router
 
 # Allow scripts to import from parent
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -214,6 +217,9 @@ app.include_router(utils_router)
 app.include_router(order_email_router, prefix="/orders")
 app.include_router(pending_order_pdf_router, prefix="/orders/api")
 app.include_router(order_notes_router)
+app.include_router(items_router.router, prefix="/lookups")
+app.include_router(suppliers_router.router, prefix="/maintenance")
+app.include_router(projects_router.router, prefix="/maintenance")
 
 # --- Dev CLI ---
 if __name__ == "__main__":

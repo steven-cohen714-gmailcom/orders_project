@@ -1,443 +1,193 @@
-INFO:     127.0.0.1:50053 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50053 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:50053 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:50053 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50053 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50053 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50053 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50053 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51336 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51336 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:51337 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51339 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51337 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51339 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51336 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51336 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51336 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51336 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51336 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51336 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51336 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56451 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56451 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56451 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56452 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56452 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56451 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56454 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56454 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56454 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56454 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56454 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56454 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56454 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
-INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [57927] using StatReload
-INFO:     Started server process [58001]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     127.0.0.1:56590 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56590 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56591 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56590 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56590 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56591 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56597 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56597 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56597 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56597 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56597 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56597 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56597 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56773 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56773 - "POST /orders/api/preview_pdf_new_order HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56773 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56803 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56803 - "POST /orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56803 - "PUT /lookups/order_number HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56803 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56803 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56822 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56803 - "GET /static/js/pending_orders.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:56803 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56822 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56822 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56886 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/193 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/192 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/191 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/190 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/189 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/188 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/187 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/186 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/185 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/184 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/183 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/182 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/181 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/180 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/179 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/178 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/177 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/176 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/175 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/174 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/173 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/172 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/171 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/170 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/169 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/168 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/167 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/166 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/165 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/164 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/163 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/162 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/161 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/160 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/159 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/158 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/157 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/156 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56886 - "GET /orders/api/last_audit_action/155 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56946 - "GET /orders/api/receipt_logs/193 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /orders/api/items_for_order/193 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50173 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50173 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50174 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50176 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50176 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50174 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50173 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50173 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50173 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50173 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50173 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50173 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50173 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50325 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50325 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50325 - "PUT /lookups/order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50325 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50447 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50447 - "POST /orders/api/preview_pdf_new_order HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50447 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50482 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50482 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50482 - "PUT /lookups/order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50482 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50482 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50482 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50482 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50511 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50511 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53717 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53717 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53719 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53719 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53717 - "GET /static/js/components/utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53719 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53719 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53719 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53719 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53719 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53719 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53719 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53719 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53719 - "GET /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53717 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53719 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53717 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53745 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53747 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53749 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53750 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53772 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53772 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53772 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53772 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53772 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53772 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53772 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53772 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53772 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53774 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53772 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53774 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53772 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53788 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53788 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53788 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53788 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53788 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53788 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53788 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53981 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53981 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53981 - "PUT /lookups/order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53981 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54632 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54632 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54632 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54633 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54633 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54632 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54635 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54635 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54635 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54635 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54635 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54635 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54635 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54758 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54758 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54758 - "PUT /lookups/order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54758 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56166 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56166 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56167 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56166 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56166 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56167 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56169 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56167 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56167 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56167 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56167 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56167 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56167 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56199 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56199 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56201 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56201 - "GET /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56199 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56201 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56205 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56206 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56208 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56209 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56201 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56205 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56205 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56205 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56205 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56205 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56205 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56205 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56205 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56315 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56315 - "POST /orders/api/preview_pdf_new_order HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56315 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56315 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56315 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56315 - "PUT /lookups/order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56315 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56456 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56456 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56456 - "PUT /lookups/order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56456 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56478 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56478 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56478 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56480 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56480 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56530 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56530 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
 INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:56888 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56972 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56972 - "GET /static/js/authorisations_per_user.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56532 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56532 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56532 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56532 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56532 - "GET /orders/api/generate_pdf_for_order/204 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56532 - "POST /orders/api/authorise_order/204 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52740 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52740 - "GET /static/js/authorisations_per_user.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
 INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:56888 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "POST /orders/api/authorise_order/192 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57039 - "GET /mobile/mobile_authorisations HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57039 - "GET /static/mobile/css/mobile_authorisations.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57040 - "GET /static/js/authorisations_per_user.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57042 - "GET /static/js/components/mobile_pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57042 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:57042 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57039 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57040 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57042 - "GET /static/mobile/service-worker.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:57042 - "GET /mobile/authorisations HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57040 - "GET /static/mobile/css/authorisations.css HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:57039 - "GET /static/mobile/js/authorisations_screen/main.js HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:57039 - "GET /orders/api/generate_pdf_for_order/193 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57093 - "POST /orders/api/authorise_order/193 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:57121 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57121 - "GET /static/js/authorisations_per_user.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:57120 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:57120 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/193 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/192 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/191 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/190 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/189 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/188 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/187 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/186 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/185 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/184 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/183 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/182 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/181 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/180 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/179 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/178 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/177 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/176 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/175 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/174 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/173 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/172 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/171 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/170 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/169 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/168 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/167 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/166 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/165 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/164 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/163 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/162 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/161 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/160 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/159 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/158 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/157 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/156 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57120 - "GET /orders/api/last_audit_action/155 HTTP/1.1" 200 OK
-INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     192.168.0.145:55734 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     192.168.0.145:55734 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62092 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62092 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:62094 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:62094 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:62094 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62094 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62094 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62094 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62094 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62214 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62214 - "POST /orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62214 - "PUT /lookups/order_number HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62214 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62369 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62369 - "POST /orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62369 - "PUT /lookups/order_number HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62369 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62369 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62391 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:62369 - "GET /static/js/pending_orders.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:62369 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62391 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62391 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62450 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62450 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:62450 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62450 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62450 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62450 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     192.168.0.145:55757 - "GET /mobile/authorisations HTTP/1.1" 200 OK
-INFO:     192.168.0.145:55760 - "GET /static/js/authorisations_per_user.js HTTP/1.1" 304 Not Modified
-INFO:     192.168.0.145:55759 - "GET /static/mobile/css/mobile_authorisations.css HTTP/1.1" 304 Not Modified
-INFO:     192.168.0.145:55761 - "GET /static/js/components/mobile_pdf_modal.js HTTP/1.1" 304 Not Modified
-INFO:     192.168.0.145:55762 - "GET /static/mobile/manifest.json HTTP/1.1" 304 Not Modified
-INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     192.168.0.145:55757 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     192.168.0.145:55759 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     192.168.0.145:55764 - "GET /orders/api/generate_pdf_for_order/195 HTTP/1.1" 200 OK
-INFO:     192.168.0.145:55766 - "POST /orders/api/authorise_order/195 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52109 - "GET / HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52109 - "GET /static/js/login.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52109 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52112 - "POST /login HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52112 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52112 - "GET /static/js/pending_orders.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52112 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52114 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52114 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52114 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52114 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52114 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52114 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52114 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52114 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52114 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52114 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52303 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52303 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52304 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52304 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52303 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52303 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52303 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52304 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52306 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52308 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52308 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52310 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52308 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52310 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52312 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52310 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52310 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52310 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52310 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52310 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52310 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52318 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52318 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52320 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52318 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52320 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52322 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52322 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52322 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52322 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52322 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52322 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52322 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52366 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52366 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52368 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52368 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52366 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52370 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52366 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52366 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52374 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52374 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52375 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52374 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52375 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52377 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52377 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52377 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52377 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52377 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52377 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52377 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52435 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52435 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52436 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52435 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52436 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52438 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52436 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52436 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52436 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52436 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52436 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52436 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52472 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52472 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52473 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52472 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52473 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52475 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52473 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52473 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52487 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52487 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52489 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52487 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52489 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52491 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52489 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52489 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52508 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52508 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52510 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52508 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52510 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52512 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52512 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52512 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52531 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52531 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52533 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52533 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52531 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52535 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52535 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52535 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52535 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52535 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52535 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52535 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52613 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52613 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52615 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52615 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52613 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52617 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52613 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52613 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52613 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52613 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52613 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52613 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52651 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52651 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52653 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52653 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52651 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52655 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52655 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52655 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52655 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52655 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52655 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52655 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52705 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52705 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52706 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52706 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52705 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52708 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52705 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52705 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52705 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52705 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52705 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52705 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52787 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52787 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52789 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52789 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52787 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52791 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52791 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52791 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52791 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52791 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52791 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52791 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52865 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52865 - "GET /static/js/maintenance.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52865 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52865 - "GET /static/js/maintenance_screen/users.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52867 - "GET /static/js/maintenance_screen/items.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52870 - "GET /static/js/maintenance_screen/requesters.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52872 - "GET /static/js/maintenance_screen/projects.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52875 - "GET /static/js/maintenance_screen/suppliers.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52873 - "GET /static/js/maintenance_screen/settings.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52865 - "GET /static/js/maintenance_screen/business_details.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52865 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52873 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52875 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52872 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52870 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52867 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52865 - "GET /lookups/business_details HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52875 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52740 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /orders/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52740 - "GET /static/js/received_orders.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52740 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52740 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52740 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52740 - "GET /orders/partially_delivered HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52740 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52754 - "GET /static/js/partially_delivered.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52754 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52740 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /orders/api/partially_delivered HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52754 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52754 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52754 - "GET /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52740 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52754 - "GET /lookups/business_details HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52785 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52786 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52787 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52740 - "GET /favicon.ico HTTP/1.1" 200 OK

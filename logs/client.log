@@ -32,3 +32,29 @@
 2025-05-25 08:53:48,211 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2124", "orderId": 194}
 2025-05-25 08:54:23,676 | INFO | INFO | submitOrder started | {}
 2025-05-25 08:54:23,693 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2124", "orderId": 195}
+2025-05-26 05:53:26,287 | INFO | INFO | previewOrder started | {}
+2025-05-26 05:53:26,476 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-26 05:53:32,067 | INFO | INFO | submitOrder started | {}
+2025-05-26 05:53:32,083 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "2125", "orderId": 196}
+2025-05-26 06:00:50,901 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:00:50,921 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3001", "orderId": 197}
+2025-05-26 06:01:59,987 | INFO | INFO | previewOrder started | {}
+2025-05-26 06:02:00,099 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-26 06:02:04,882 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:02:04,900 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3002", "orderId": 198}
+2025-05-26 06:06:59,935 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:06:59,956 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3003", "orderId": 199}
+2025-05-26 06:07:27,303 | INFO | INFO | previewOrder started | {}
+2025-05-26 06:07:27,425 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-26 06:07:35,425 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:07:35,445 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3003", "orderId": 200}
+2025-05-26 06:20:56,536 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:20:56,555 | ERROR | ERROR | Order submission failed | {"error": "setCurrentOrderNumber is not defined"}
+2025-05-26 06:23:51,859 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:23:51,873 | ERROR | ERROR | Order submission failed | {"error": "setCurrentOrderNumber is not defined"}
+2025-05-26 06:29:49,985 | INFO | INFO | previewOrder started | {}
+2025-05-26 06:29:50,097 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-26 06:29:55,064 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:29:55,085 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3006", "orderId": 203}
+2025-05-26 06:30:24,073 | INFO | INFO | submitOrder started | {}
+2025-05-26 06:30:24,093 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3007", "orderId": 204}

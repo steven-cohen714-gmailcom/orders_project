@@ -3,6 +3,7 @@
 import { previewOrder } from "./new_order_screen/pdf_utils.js";
 import { submitOrder } from "./new_order_screen/submit_utils.js";
 import { logToServer } from "./components/utils.js";
+import { enableFuzzySearch } from "./components/utils.js";
 
 let itemsList = [];
 let projectsList = [];
@@ -31,10 +32,13 @@ async function loadDropdowns() {
       populateDropdown("requester_id", requestersData?.requesters, "name");
       const suppliersData = await fetchData("/lookups/suppliers");
       populateDropdown("supplier_id", suppliersData?.suppliers, "name");
+      enableFuzzySearch("supplier_id");
       const itemsData = await fetchData("/lookups/items");
       itemsList = itemsData?.items || [];
+      enableFuzzySearch("item_code_1");
       const projectsData = await fetchData("/lookups/projects");
       projectsList = projectsData?.projects || [];
+      enableFuzzySearch("project_1");
   } catch (error) {
       console.error("Error loading dropdowns:", error);
       throw error;
@@ -107,8 +111,8 @@ function addRow() {
   itemsList.forEach(item => {
       const option = document.createElement("option");
       option.value = item.item_code;
-      option.textContent = `${item.item_code} - ${item.item_description}`; // Display code and description
-      option.dataset.description = item.item_description;
+      option.textContent = `${item.item_code} - ${item.item_description}`;
+      option.dataset.description = item.item_description?.toLowerCase() || "";
       itemSelect.appendChild(option);
   });
   itemCell.appendChild(itemSelect);
@@ -123,7 +127,8 @@ function addRow() {
   projectsList.forEach(project => {
       const option = document.createElement("option");
       option.value = project.project_code;
-      option.textContent = `${project.project_code} - ${project.project_name}`; // Display code and name
+      option.textContent = `${project.project_code} - ${project.project_name}`;
+      option.dataset.description = project.project_name?.toLowerCase() || "";
       projectSelect.appendChild(option);
   });
   projectCell.appendChild(projectSelect);
@@ -171,6 +176,8 @@ function addRow() {
   row.appendChild(actionsCell);
 
   tbody.appendChild(row);
+  enableFuzzySearch(itemSelect.id);
+  enableFuzzySearch(projectSelect.id);
   updateTotal(itemSelect);
 }
 
@@ -300,15 +307,20 @@ function updateTotal(itemSelect) {
   function populateDropdown(dropdownId, items, key, idKey = "id") {
     const dropdown = document.getElementById(dropdownId);
     dropdown.innerHTML = '<option value="">Select ' + dropdownId.replace('_id', '') + '</option>';
+
     if (items && Array.isArray(items)) {
-        items.forEach(item => {
-            const option = document.createElement("option");
-            option.value = item[idKey];
-            option.textContent = item[key];
-            dropdown.appendChild(option);
-        });
+      items.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item[idKey];
+        option.textContent = item[key];
+
+        // ✨ Description used for fuzzy filtering
+        option.dataset.description = item[key]?.toLowerCase() || "";
+
+        dropdown.appendChild(option);
+      });
     }
-  }
+}
   
   // Added: Function to send email
   async function sendEmail(orderId) {
@@ -342,6 +354,7 @@ function setupEventListeners() {
     incrementOrderNumber,
     logToServer,
     setCurrentOrderId: (id) => currentOrderId = id,
+    setCurrentOrderNumber: (newNum) => currentOrderNumber = newNum,
     paymentTerms
   }), 500)();
 });

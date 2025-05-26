@@ -1,16 +1,17 @@
-# backend/endpoints/lookups/items.py
-
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, UploadFile, File
 from backend.database import get_db_connection
 import logging
 import sqlite3
+import csv
 
 router = APIRouter()
 
 # Configure logging
-logging.basicConfig(filename="logs/server.log", level=logging.INFO,
-                    format="%(asctime)s | %(levelname)s | %(message)s")
-
+logging.basicConfig(
+    filename="logs/server.log",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s"
+)
 
 @router.get("/items")
 async def get_items():
@@ -97,3 +98,42 @@ async def update_item(item_id: int, payload: dict):
         raise HTTPException(status_code=500, detail=f"Error updating item: {str(e)}")
     finally:
         conn.close()
+
+
+@router.post("/maintenance/import_items_csv")
+async def import_items_csv(file: UploadFile = File(...)):
+    if not file.filename.endswith(".csv"):
+        raise HTTPException(status_code=400, detail="Only CSV files are supported.")
+
+    try:
+        contents = await file.read()
+        lines = contents.decode("utf-8").splitlines()
+        reader = csv.DictReader(lines)
+
+        items = []
+        for row in reader:
+            # Expect lowercase column headers: "code", "description"
+            item_code = row.get("code", "").strip()
+            description = row.get("description", "").strip()
+            if item_code and description:
+                items.append((item_code, description))
+
+        if not items:
+            raise HTTPException(status_code=400, detail="CSV is empty or invalid.")
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM items;")
+        cursor.executemany(
+            "INSERT INTO items (item_code, item_description) VALUES (?, ?);",
+            items
+        )
+        conn.commit()
+        conn.close()
+
+        logging.info(f"✅ Imported {len(items)} items from CSV.")
+        return {"inserted": len(items)}
+
+    except Exception as e:
+        logging.error(f"❌ Error importing items CSV: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Import failed: {str(e)}")

@@ -21,6 +21,7 @@
     <div class="tab" data-tab="business_details">Business Details</div>
   </div>
 
+  <!-- Users -->
   <div id="users" class="tab-content active">
     <form class="form-group" onsubmit="event.preventDefault();">
       <input type="hidden" id="user-id" />
@@ -46,18 +47,12 @@
       <button type="button" id="cancel-user-edit" style="display: none;">Cancel</button>
     </form>
     <table>
-      <thead>
-        <tr>
-          <th>Username</th>
-          <th>Rights</th>
-          <th>Threshold Band</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Username</th><th>Rights</th><th>Threshold Band</th><th>Actions</th></tr></thead>
       <tbody id="users-table"></tbody>
     </table>
   </div>
 
+  <!-- Requesters -->
   <div id="requesters" class="tab-content">
     <div class="form-group">
       <label for="requester-name">Name:</label>
@@ -70,6 +65,7 @@
     </table>
   </div>
 
+  <!-- Items -->
   <div id="items" class="tab-content">
     <div class="form-group">
       <label for="item-code">Item Code:</label>
@@ -78,12 +74,19 @@
       <input type="text" id="item-description" />
       <button id="add-item-button">Add Item</button>
     </div>
+    <div class="form-group">
+      <hr style="margin-top: 1.5rem; margin-bottom: 1rem;" />
+      <label for="items-csv-upload">Import Items CSV:</label>
+      <input type="file" id="items-csv-upload" accept=".csv" />
+      <button id="import-items-button">Import CSV</button>
+    </div>
     <table>
       <thead><tr><th>Item Code</th><th>Description</th><th>Actions</th></tr></thead>
       <tbody id="items-table"></tbody>
     </table>
   </div>
 
+  <!-- Suppliers -->
   <div id="suppliers" class="tab-content">
     <div class="form-group">
       <h4>Add/Edit Supplier</h4>
@@ -95,12 +98,19 @@
         <button type="button" id="cancel-supplier-edit" style="display: none;">Cancel</button>
       </form>
     </div>
+    <div class="form-group">
+      <hr style="margin-top: 1.5rem; margin-bottom: 1rem;" />
+      <label for="suppliers-csv-upload">Import Suppliers CSV:</label>
+      <input type="file" id="suppliers-csv-upload" accept=".csv" />
+      <button id="import-suppliers-button">Import CSV</button>
+    </div>
     <table>
       <thead><tr><th>Supplier Name</th><th>Actions</th></tr></thead>
       <tbody id="suppliers-table"></tbody>
     </table>
   </div>
 
+  <!-- Projects -->
   <div id="projects" class="tab-content">
     <div class="form-group">
       <label for="project-code">Project Code:</label>
@@ -109,12 +119,19 @@
       <input type="text" id="project-name" />
       <button id="add-project-button">Add Project</button>
     </div>
+    <div class="form-group">
+      <hr style="margin-top: 1.5rem; margin-bottom: 1rem;" />
+      <label for="projects-csv-upload">Import Projects CSV:</label>
+      <input type="file" id="projects-csv-upload" accept=".csv" />
+      <button id="import-projects-button">Import CSV</button>
+    </div>
     <table>
       <thead><tr><th>Project Code</th><th>Project Name</th><th>Actions</th></tr></thead>
       <tbody id="projects-table"></tbody>
     </table>
   </div>
 
+  <!-- Settings -->
   <div id="settings" class="tab-content">
     <div class="form-group">
       <label for="order-number-start">Start Order Number:</label>
@@ -131,6 +148,7 @@
     </div>
   </div>
 
+  <!-- Business Details -->
   <div id="business_details" class="tab-content">
     <div class="form-group">
       <label for="company-name">Company Name:</label>

@@ -54,3 +54,6 @@ if backup_path.exists():
     backup_path.replace(db_path)
 
 print("✅ VM now EXACTLY matches GitHub — but live DB preserved.")
+
+print("📦 Installing Python dependencies...")
+run(["venv/bin/pip", "install", "-r", "requirements.txt"], "Updating virtualenv packages")
