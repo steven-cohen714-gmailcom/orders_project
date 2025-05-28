@@ -58,3 +58,7 @@
 2025-05-26 06:29:55,085 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3006", "orderId": 203}
 2025-05-26 06:30:24,073 | INFO | INFO | submitOrder started | {}
 2025-05-26 06:30:24,093 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3007", "orderId": 204}
+2025-05-28 05:40:38,094 | INFO | INFO | previewOrder started | {}
+2025-05-28 05:40:38,312 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-28 05:40:42,807 | INFO | INFO | submitOrder started | {}
+2025-05-28 05:40:42,828 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3008", "orderId": 205}

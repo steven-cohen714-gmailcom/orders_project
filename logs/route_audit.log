@@ -11,6 +11,7 @@
 /orders/pending_orders
 /orders/received_orders
 /orders/audit_trail
+/cod_payments_screen
 /maintenance
 /orders/partially_delivered
 /favicon.ico
@@ -68,6 +69,7 @@
 /lookups/
 /lookups/login
 /lookups/logout
+/lookups/session_debug
 /lookups/log_client
 /lookups/log
 /orders/new
@@ -105,10 +107,13 @@
 /orders/api/items_for_order/{order_id}
 /orders/api/audit_trail
 /orders/api/last_audit_action/{order_id}
+/orders/api/order_summary
+/orders/api/cod_orders
 /orders/api/preview_pdf_new_order
 /
 /login
 /logout
+/session_debug
 /mobile/login
 /mobile/logout
 /mobile/get_user_info
@@ -142,3 +147,12 @@
 /maintenance/projects
 /maintenance/projects/{project_id}
 /maintenance/import_projects_csv
+/orders/api/cod_orders
+/orders/api/mark_cod_paid
+/requisitions
+/lookups/lookups/requisitioners
+⚠️ Suspicious duplicate segment in: /lookups/lookups/requisitioners
+/lookups/lookups/requisitioners
+⚠️ Suspicious duplicate segment in: /lookups/lookups/requisitioners
+/lookups/lookups/requisitioners/{id}
+⚠️ Suspicious duplicate segment in: /lookups/lookups/requisitioners/{id}

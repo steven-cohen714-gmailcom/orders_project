@@ -6,10 +6,9 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.routing import APIRouter
 from backend.endpoints import html_routes
-#from backend.endpoints.orders import cod_orders_api
-#from endpoints.orders import check_for_cod_orders
-#from backend.endpoints.orders import mark_cod_paid_api
-#from backend.endpoints import requisitions
+from backend.endpoints.cod_orders import cod_orders_api
+from backend.endpoints.cod_orders import mark_cod_paid_api
+from backend.endpoints import requisitions
 
 from pathlib import Path
 import logging
@@ -238,7 +237,6 @@ app.include_router(order_notes_router)
 app.include_router(items_router.router, prefix="/lookups")
 app.include_router(suppliers_router.router, prefix="/maintenance")
 app.include_router(projects_router.router, prefix="/maintenance")
-app.include_router(check_for_cod_orders.router)
 app.include_router(cod_orders_api.router, prefix="/orders")
 app.include_router(mark_cod_paid_api.router, prefix="/orders")
 app.include_router(requisitions.router)

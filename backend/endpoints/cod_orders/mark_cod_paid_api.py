@@ -12,7 +12,7 @@ class PaymentInfo(BaseModel):
     payment_date: str  # YYYY-MM-DD
     amount_paid: float
 
-@router.post("/orders/api/mark_cod_paid")
+@router.post("/api/mark_cod_paid")
 def mark_cod_paid(payload: PaymentInfo, request: Request):
     try:
         user = request.session.get("user", "unknown")

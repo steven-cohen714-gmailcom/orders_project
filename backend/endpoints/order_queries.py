@@ -333,3 +333,93 @@ def get_last_audit_action(order_id: int):
     else:
         return {"details": "No actions yet", "action_date": None}
 
+@router.get("/order_summary")
+def get_order_summary():
+    try:
+        with sqlite3.connect("data/orders.db") as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT
+                    COALESCE(SUM(CASE WHEN status = 'Pending' THEN 1 ELSE 0 END), 0) AS pending,
+                    COALESCE(SUM(CASE WHEN status = 'Awaiting Authorisation' THEN 1 ELSE 0 END), 0) AS awaiting,
+                    COALESCE(SUM(CASE WHEN status = 'Authorised' THEN 1 ELSE 0 END), 0) AS authorised,
+                    COALESCE(SUM(CASE WHEN status = 'Received' THEN 1 ELSE 0 END), 0) AS received,
+                    COUNT(*) AS total
+                FROM orders
+            """)
+            row = cursor.fetchone()
+            return {
+                "pending": row[0],
+                "awaiting": row[1],
+                "authorised": row[2],
+                "received": row[3],
+                "total": row[4]
+            }
+    except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "order_summary"})
+        raise HTTPException(status_code=500, detail=f"Failed to load order summary: {e}")
+
+@router.get("/cod_orders")
+def get_cod_orders(
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    supplier: Optional[str] = Query(None)
+):
+    try:
+        filters = ["o.payment_terms = 'COD'"]
+        params = []
+
+        def validate_date(date_str):
+            if not date_str:
+                return None
+            try:
+                datetime.strptime(date_str, "%Y-%m-%d")
+                return date_str
+            except ValueError:
+                raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use yyyy-mm-dd.")
+
+        if start_date:
+            start_date = validate_date(start_date)
+            filters.append("DATE(o.created_date) >= DATE(?)")
+            params.append(start_date)
+
+        if end_date:
+            end_date = validate_date(end_date)
+            filters.append("DATE(o.created_date) <= DATE(?)")
+            params.append(end_date)
+
+        if supplier:
+            filters.append("s.name LIKE ?")
+            params.append(f"%{supplier}%")
+
+        where_clause = " AND ".join(filters)
+
+        with sqlite3.connect("data/orders.db") as conn:
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute(f"""
+                SELECT
+                    o.id, o.created_date, o.order_number, o.total, o.payment_terms,
+                    o.amount_paid, o.payment_date,
+                    s.name AS supplier
+                FROM orders o
+                LEFT JOIN suppliers s ON o.supplier_id = s.id
+                WHERE {where_clause}
+                ORDER BY o.created_date DESC
+            """, params)
+            orders = [dict(row) for row in cursor.fetchall()]
+            for order in orders:
+                try:
+                    order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y")
+                except:
+                    pass
+                if order.get("payment_date"):
+                    try:
+                        order["payment_date"] = datetime.strptime(order["payment_date"], "%Y-%m-%d %H:%M:%S").strftime("%d/%m/%Y")
+                    except:
+                        pass
+        log_event("new_orders_log.txt", {"action": "fetch_cod_orders", "count": len(orders)})
+        return {"orders": orders}
+    except Exception as e:
+        log_event("new_orders_log.txt", {"error": str(e), "type": "cod_orders"})
+        raise HTTPException(status_code=500, detail=f"Failed to fetch COD orders: {e}")

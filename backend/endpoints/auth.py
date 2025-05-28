@@ -42,12 +42,17 @@ async def login(request: Request):
         if not bcrypt.checkpw(password.encode("utf-8"), stored_hash.encode("utf-8")):
             return JSONResponse(status_code=401, content={"error": "Invalid username or password"})
 
+        user_roles = user["rights"] or "view"
+
         request.session["user"] = {
             "id": user["id"],
             "username": user["username"],
-            "rights": user["rights"],
+            "rights": user_roles,
             "auth_threshold_band": user["auth_threshold_band"]
         }
+
+        # Assign session roles from DB
+        request.session["roles"] = user_roles
 
         return JSONResponse(status_code=200, content={"success": True})
 
@@ -58,3 +63,10 @@ async def login(request: Request):
 async def logout(request: Request):
     request.session.clear()
     return JSONResponse(status_code=200, content={"message": "Logged out successfully"})
+
+@router.get("/session_debug")
+async def session_debug(request: Request):
+    return JSONResponse(content={
+        "user": request.session.get("user"),
+        "roles": request.session.get("roles")
+    })

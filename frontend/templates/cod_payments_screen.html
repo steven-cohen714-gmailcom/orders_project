@@ -1,17 +1,23 @@
-<!-- File: frontend/templates/payments_overview.html -->
-
+<!-- File: frontend/templates/cod_payments_screen.html -->
 {% extends "base.html" %}
+
 {% block content %}
-<h2>💰 Payments Overview (COD Orders)</h2>
+<h2>💰 COD Payments</h2>
 
 <div class="filter-bar">
   <label for="start-date">Start Date:</label>
   <input type="date" id="start-date">
-
+  
   <label for="end-date">End Date:</label>
   <input type="date" id="end-date">
 
-  <button id="filter-btn">Apply Filters</button>
+  <label for="filter-supplier">Supplier:</label>
+  <select id="filter-supplier">
+    <option value="All">All</option>
+  </select>
+
+  <button id="clear-btn">Clear</button>
+  <button id="filter-btn">Run</button>
 </div>
 
 <table id="payments-table">
@@ -24,24 +30,24 @@
       <th>Payment Terms</th>
       <th>Payment Date</th>
       <th>Amount Paid</th>
-      <th>Action</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody id="payments-body">
-    <!-- Filled dynamically by JS -->
+    <!-- JS will populate this -->
   </tbody>
 </table>
 
-<!-- Modal -->
+<!-- Payment Modal -->
 <div id="payment-modal" class="modal hidden">
   <div class="modal-content">
     <h3>Mark Order as Paid</h3>
     <form id="payment-form">
       <input type="hidden" id="modal-order-id">
-      <label>Payment Amount:</label>
+      <label for="modal-amount-paid">Payment Amount:</label>
       <input type="number" id="modal-amount-paid" step="0.01" required>
 
-      <label>Payment Date:</label>
+      <label for="modal-payment-date">Payment Date:</label>
       <input type="date" id="modal-payment-date" required>
 
       <button type="submit">Confirm Payment</button>
@@ -53,5 +59,5 @@
 {% endblock %}
 
 {% block scripts %}
-<script type="module" src="/static/js/payments_overview.js"></script>
+<script type="module" src="/static/js/cod_payments_screen.js" defer></script>
 {% endblock %}
