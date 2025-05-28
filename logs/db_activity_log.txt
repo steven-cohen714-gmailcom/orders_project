@@ -675,3 +675,5 @@
 2025-05-26 07:34:41,093 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
 2025-05-26 07:34:41,095 | INFO | Suppliers fetched: 795 items
 2025-05-26 07:34:41,099 | INFO | Projects fetched: 206 items
+2025-05-28 03:44:04,999 | INFO | Database initialized successfully.
+2025-05-28 03:44:04,999 | INFO | ✅ Database initialized successfully.

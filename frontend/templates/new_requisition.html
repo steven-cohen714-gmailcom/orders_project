@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Requisition</title>
+  <link rel="stylesheet" href="/static/css/main.css">
+  <script type="module" src="/static/js/new_requisition_main.js" defer></script>
+</head>
+
+<body>
+  <div class="container">
+    <h2>📦 New Requisition</h2>
+
+    <select id="project-template" style="display:none;"></select>
+
+    <!-- Requisition Header -->
+    <div class="form-group">
+      <label for="requisitioner">Requisitioner:</label>
+      <select id="requisitioner" required></select>
+    </div>
+
+    <div class="form-group">
+      <label for="requisition-note">Requisition Note:</label>
+      <textarea id="requisition-note" rows="3" placeholder="Optional note..."></textarea>
+    </div>
+
+    <!-- Line Items Table -->
+    <table id="requisition-table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Project</th>
+          <th>Quantity</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="line-items-body">
+        <!-- JS will populate rows -->
+      </tbody>
+    </table>
+
+    <div class="form-actions">
+      <button id="add-line" type="button">➕ Add Line</button>
+    </div>
+
+    <!-- Submit + PDF -->
+    <div class="form-actions">
+      <button id="preview-pdf" type="button">📄 View PDF</button>
+      <button id="submit-requisition" type="button">✅ Submit Requisition</button>
+    </div>
+
+    <!-- Message Log -->
+    <div id="requisition-log" class="message-log"></div>
+  </div>
+</body>
+</html>

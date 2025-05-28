@@ -21,16 +21,14 @@ def init_db():
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
-            
-            # Create requesters table
+
+            # -- Core Tables --
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS requesters (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    name TEXT
+                    name TEXT UNIQUE
                 )
             """)
-
-            # Create suppliers table
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS suppliers (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -48,8 +46,6 @@ def init_db():
                     postal_code TEXT
                 )
             """)
-
-            # Create orders table
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS orders (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -62,12 +58,14 @@ def init_db():
                     note_to_supplier TEXT,
                     supplier_id INTEGER,
                     requester_id INTEGER,
+                    required_auth_band INTEGER,
+                    payment_terms TEXT DEFAULT 'On account',
+                    payment_date TEXT,
+                    amount_paid REAL,
                     FOREIGN KEY (supplier_id) REFERENCES suppliers(id),
                     FOREIGN KEY (requester_id) REFERENCES requesters(id)
                 )
             """)
-
-            # Create order_items table
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS order_items (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -83,8 +81,6 @@ def init_db():
                     FOREIGN KEY (order_id) REFERENCES orders(id)
                 )
             """)
-
-            # Create attachments table
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS attachments (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -95,8 +91,6 @@ def init_db():
                     FOREIGN KEY (order_id) REFERENCES orders(id)
                 )
             """)
-
-            # Create audit_trail table
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS audit_trail (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -108,49 +102,41 @@ def init_db():
                     FOREIGN KEY (order_id) REFERENCES orders(id)
                 )
             """)
-
-            # Create settings table
             cursor.execute("""
-            CREATE TABLE IF NOT EXISTS settings (
-                id INTEGER PRIMARY KEY CHECK (id = 1),
-                order_number_start TEXT,
-                auth_threshold_1 INTEGER,
-                auth_threshold_2 INTEGER,
-                auth_threshold_3 INTEGER,
-                auth_threshold_4 INTEGER
-            )
+                CREATE TABLE IF NOT EXISTS settings (
+                    id INTEGER PRIMARY KEY CHECK (id = 1),
+                    order_number_start TEXT,
+                    auth_threshold_1 INTEGER,
+                    auth_threshold_2 INTEGER,
+                    auth_threshold_3 INTEGER,
+                    auth_threshold_4 INTEGER,
+                    requisition_number_start TEXT DEFAULT 'REQ1000'
+                )
             """)
-
-            # Create users table with auth band
             cursor.execute("""
-            CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT NOT NULL UNIQUE,
-                password_hash TEXT NOT NULL,
-                rights TEXT NOT NULL,
-                auth_threshold_band INTEGER  -- Nullable, used to filter access on authorisation PWA
-            )
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT UNIQUE NOT NULL,
+                    password_hash TEXT NOT NULL,
+                    rights TEXT NOT NULL,
+                    auth_threshold_band INTEGER CHECK (auth_threshold_band IN (1, 2, 3, 4)),
+                    roles TEXT
+                )
             """)
-
-            # Create projects table
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS projects (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    project_code TEXT,
+                    project_code TEXT UNIQUE,
                     project_name TEXT
                 )
             """)
-
-            # Create items table
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS items (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    item_code TEXT,
+                    item_code TEXT UNIQUE,
                     item_description TEXT
                 )
             """)
-
-            # Create business_details table
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS business_details (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -164,8 +150,6 @@ def init_db():
                     vat_number TEXT
                 )
             """)
-
-            # Insert default business details if not exists
             cursor.execute("""
                 INSERT OR IGNORE INTO business_details (
                     id, company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number
@@ -174,10 +158,40 @@ def init_db():
                 )
             """)
 
+            # -- New: Requisitions --
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS requisitioners (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT UNIQUE NOT NULL
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS requisitions (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    requisition_number TEXT UNIQUE,
+                    requisitioner_id INTEGER NOT NULL,
+                    requisition_date TEXT DEFAULT CURRENT_TIMESTAMP,
+                    requisition_note TEXT,
+                    status TEXT DEFAULT 'submitted',
+                    converted_order_id INTEGER DEFAULT NULL,
+                    FOREIGN KEY (requisitioner_id) REFERENCES requisitioners(id)
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS requisition_items (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    requisition_id INTEGER NOT NULL,
+                    description TEXT NOT NULL,
+                    project TEXT,
+                    quantity REAL,
+                    FOREIGN KEY (requisition_id) REFERENCES requisitions(id)
+                )
+            """)
+
             conn.commit()
-            logging.info("Database tables created successfully.")
+            logging.info("Database initialized successfully.")
     except sqlite3.Error as e:
-        logging.error(f"Failed to initialize database: {str(e)}")
+        logging.error(f"❌ DB init failed: {e}")
         raise
 
 def determine_status_and_band(total: float) -> tuple[str, int]:
@@ -187,11 +201,9 @@ def determine_status_and_band(total: float) -> tuple[str, int]:
         row = cursor.fetchone()
         if not row:
             raise ValueError("Authorization thresholds not configured.")
-
         thresholds = [row["auth_threshold_1"], row["auth_threshold_2"], row["auth_threshold_3"], row["auth_threshold_4"]]
         status = "Pending"
         required_band = 0
-
         if total > thresholds[0]:
             status = "Awaiting Authorisation"
             if total <= thresholds[1]:
@@ -202,12 +214,10 @@ def determine_status_and_band(total: float) -> tuple[str, int]:
                 required_band = 3
             else:
                 required_band = 4
-
         return status, required_band
 
 def create_order(order_data: dict, items: list) -> dict:
     status, required_band = determine_status_and_band(order_data["total"])
-
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
@@ -226,7 +236,6 @@ def create_order(order_data: dict, items: list) -> dict:
             required_band
         ))
         order_id = cursor.lastrowid
-
         for item in items:
             cursor.execute("""
                 INSERT INTO order_items (
@@ -242,31 +251,23 @@ def create_order(order_data: dict, items: list) -> dict:
                 item["price"],
                 item["qty_ordered"] * item["price"]
             ))
-
         cursor.execute("""
             INSERT INTO audit_trail (order_id, action, details, user_id)
             VALUES (?, 'Created', ?, ?)
         """, (order_id, f"Order {order_data['order_number']} created", 0))
-
         conn.commit()
-
         cursor.execute("""
-            SELECT id, order_number, status, created_date, total,
-                   order_note, note_to_supplier, supplier_id,
-                   requester_id, required_auth_band
-            FROM orders WHERE id = ?
+            SELECT * FROM orders WHERE id = ?
         """, (order_id,))
-        order = cursor.fetchone()
-        return dict(order)
+        return dict(cursor.fetchone())
 
 def get_settings() -> dict:
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
             SELECT order_number_start, auth_threshold_1, auth_threshold_2,
-                   auth_threshold_3, auth_threshold_4
-            FROM settings
-            WHERE id = 1
+                   auth_threshold_3, auth_threshold_4, requisition_number_start
+            FROM settings WHERE id = 1
         """)
         row = cursor.fetchone()
         return dict(row) if row else {}
@@ -277,21 +278,23 @@ def update_settings(payload: dict):
         cursor.execute("""
             INSERT INTO settings (
                 id, order_number_start, auth_threshold_1, auth_threshold_2,
-                auth_threshold_3, auth_threshold_4
-            ) VALUES (?, ?, ?, ?, ?, ?)
+                auth_threshold_3, auth_threshold_4, requisition_number_start
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
                 order_number_start = excluded.order_number_start,
                 auth_threshold_1 = excluded.auth_threshold_1,
                 auth_threshold_2 = excluded.auth_threshold_2,
                 auth_threshold_3 = excluded.auth_threshold_3,
-                auth_threshold_4 = excluded.auth_threshold_4
+                auth_threshold_4 = excluded.auth_threshold_4,
+                requisition_number_start = excluded.requisition_number_start
         """, (
             1,
             payload["order_number_start"],
             payload["auth_threshold_1"],
             payload["auth_threshold_2"],
             payload["auth_threshold_3"],
-            payload["auth_threshold_4"]
+            payload["auth_threshold_4"],
+            payload.get("requisition_number_start", "REQ1000")
         ))
         conn.commit()
 
@@ -299,7 +302,8 @@ def get_business_details() -> dict:
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number
+            SELECT company_name, address_line1, address_line2, city, province,
+                   postal_code, telephone, vat_number
             FROM business_details WHERE id = 1
         """)
         row = cursor.fetchone()

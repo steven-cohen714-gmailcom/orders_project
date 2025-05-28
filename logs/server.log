@@ -1,193 +1,95 @@
-INFO:     127.0.0.1:50173 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50173 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:50174 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50176 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50176 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50174 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50173 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50173 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50173 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50173 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50173 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50173 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50173 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50325 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50325 - "POST /orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50325 - "PUT /lookups/order_number HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50325 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50447 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50447 - "POST /orders/api/preview_pdf_new_order HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50447 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50482 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50482 - "POST /orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50482 - "PUT /lookups/order_number HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50482 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50482 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50482 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:50482 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50511 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50511 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53717 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53717 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:53719 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53719 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53717 - "GET /static/js/components/utils.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:53719 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53719 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53719 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53719 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53719 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53719 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53719 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:53719 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:53719 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53717 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53719 - "GET /lookups/business_details HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53717 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53745 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53747 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53749 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53750 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53772 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53772 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:53772 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53772 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53772 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53772 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53772 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53772 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53772 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:53774 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53772 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53774 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53772 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53788 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53788 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53788 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53788 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53788 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53788 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53788 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53981 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53981 - "POST /orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53981 - "PUT /lookups/order_number HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53981 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54632 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54632 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:54632 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54633 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54633 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54632 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54635 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54635 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54635 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54635 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54635 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54635 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54635 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54758 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54758 - "POST /orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54758 - "PUT /lookups/order_number HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54758 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56166 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56166 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56167 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56166 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56166 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56167 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56169 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56167 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56167 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56167 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56167 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56167 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56167 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56199 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56199 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56201 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:56201 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56199 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56201 - "GET /lookups/business_details HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56205 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56206 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56208 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56209 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56201 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56205 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56205 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56205 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:56205 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56205 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56205 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56205 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56205 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56315 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56315 - "POST /orders/api/preview_pdf_new_order HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56315 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56315 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56315 - "POST /orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56315 - "PUT /lookups/order_number HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56315 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56456 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56456 - "POST /orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56456 - "PUT /lookups/order_number HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56456 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56478 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56478 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56478 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56480 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56480 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56530 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56530 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:56532 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56532 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56532 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56532 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56532 - "GET /orders/api/generate_pdf_for_order/204 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56532 - "POST /orders/api/authorise_order/204 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52739 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52739 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:52740 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52740 - "GET /static/js/authorisations_per_user.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52739 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52739 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
-INFO:     127.0.0.1:52739 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52739 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52739 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52739 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52739 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52739 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:52740 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /orders/received_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:52740 - "GET /static/js/received_orders.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52740 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52740 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52740 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52740 - "GET /orders/partially_delivered HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52740 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:52754 - "GET /static/js/partially_delivered.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52754 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52740 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /orders/api/partially_delivered HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:52754 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:52754 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:52754 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52740 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52739 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52754 - "GET /lookups/business_details HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52785 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52786 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52787 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:52740 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [60250] using StatReload
+Process SpawnProcess-1:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 9, in <module>
+    from backend.endpoints.orders import cod_orders_api
+ImportError: cannot import name 'cod_orders_api' from 'backend.endpoints.orders' (/Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py)
+WARNING:  StatReload detected changes in 'backend/main.py'. Reloading...
+Process SpawnProcess-2:
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 313, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 66, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 70, in serve
+    await self._serve(sockets)
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/server.py", line 77, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/config.py", line 435, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/venv/lib/python3.13/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/opt/homebrew/Cellar/python@3.13/3.13.2/Frameworks/Python.framework/Versions/3.13/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 1026, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 241, in <module>
+    app.include_router(check_for_cod_orders.router)
+                       ^^^^^^^^^^^^^^^^^^^^
+NameError: name 'check_for_cod_orders' is not defined

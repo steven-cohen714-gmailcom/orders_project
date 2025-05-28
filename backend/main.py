@@ -6,7 +6,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.routing import APIRouter
 from backend.endpoints import html_routes
-from backend.endpoints.order_notes import router as order_notes_router
+#from backend.endpoints.orders import cod_orders_api
+#from endpoints.orders import check_for_cod_orders
+#from backend.endpoints.orders import mark_cod_paid_api
+#from backend.endpoints import requisitions
 
 from pathlib import Path
 import logging
@@ -39,6 +42,8 @@ from backend.endpoints.mobile.mobile_awaiting_authorisation import router as mob
 from backend.endpoints.lookups import items as items_router
 from backend.endpoints.lookups import suppliers as suppliers_router
 from backend.endpoints.lookups import projects as projects_router
+from backend.endpoints.order_notes import router as order_notes_router
+from backend.endpoints.lookups import requisitioners as requisitioners_router
 
 # Allow scripts to import from parent
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -169,6 +174,19 @@ async def audit_trail_page(request: Request):
         return login_redirect
     return templates.TemplateResponse("audit_trail.html", {"request": request})
 
+@static_router.get("/cod_payments_screen", response_class=HTMLResponse)
+async def cod_payments_screen(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+
+    roles = request.session.get("roles", "")
+    role_set = {r.strip() for r in roles.split(",")}
+    if "admin" not in role_set and "payment" not in role_set:
+        return templates.TemplateResponse("access_denied.html", {"request": request})
+
+    return templates.TemplateResponse("cod_payments_screen.html", {"request": request})
+
 @static_router.get("/maintenance", response_class=HTMLResponse)
 async def maintenance_page(request: Request):
     login_redirect = require_login(request)
@@ -220,6 +238,11 @@ app.include_router(order_notes_router)
 app.include_router(items_router.router, prefix="/lookups")
 app.include_router(suppliers_router.router, prefix="/maintenance")
 app.include_router(projects_router.router, prefix="/maintenance")
+app.include_router(check_for_cod_orders.router)
+app.include_router(cod_orders_api.router, prefix="/orders")
+app.include_router(mark_cod_paid_api.router, prefix="/orders")
+app.include_router(requisitions.router)
+app.include_router(requisitioners_router.router, prefix="/lookups")
 
 # --- Dev CLI ---
 if __name__ == "__main__":

@@ -32,21 +32,43 @@ async def get_suppliers():
     finally:
         conn.close()
 
-
 @router.post("/suppliers")
 async def add_supplier(payload: dict):
-    name = payload.get("name")
-    if not name:
-        logging.error("Missing name in add_supplier request")
-        raise HTTPException(status_code=400, detail="Missing supplier name")
-
     try:
+        account_number = payload.get("account_number", "")
+        name = payload.get("name", "")
+        telephone = payload.get("telephone", "")
+        vat_number = payload.get("vat_number", "")
+        registration_number = payload.get("registration_number", "")
+        email = payload.get("email", "")
+        contact_name = payload.get("contact_name", "")
+        contact_telephone = payload.get("contact_telephone", "")
+        address_line1 = payload.get("address_line1", "")
+        address_line2 = payload.get("address_line2", "")
+        address_line3 = payload.get("address_line3", "")
+        postal_code = payload.get("postal_code", "")
+
+        if not name:
+            raise HTTPException(status_code=400, detail="Missing supplier name")
+
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO suppliers (name) VALUES (?)", (name,))
+        cursor.execute("""
+            INSERT INTO suppliers (
+                account_number, name, telephone, vat_number, registration_number,
+                email, contact_name, contact_telephone,
+                address_line1, address_line2, address_line3, postal_code
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            account_number, name, telephone, vat_number, registration_number,
+            email, contact_name, contact_telephone,
+            address_line1, address_line2, address_line3, postal_code
+        ))
+
         conn.commit()
         logging.info(f"New supplier added: {name}")
         return {"message": "Supplier added successfully"}
+
     except sqlite3.Error as e:
         logging.error(f"Database error adding supplier: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
@@ -55,7 +77,6 @@ async def add_supplier(payload: dict):
         raise HTTPException(status_code=500, detail=f"Error adding supplier: {str(e)}")
     finally:
         conn.close()
-
 
 @router.put("/suppliers/{supplier_id}")
 async def update_supplier(supplier_id: int, payload: dict):
@@ -82,7 +103,6 @@ async def update_supplier(supplier_id: int, payload: dict):
         raise HTTPException(status_code=500, detail=f"Error updating supplier: {str(e)}")
     finally:
         conn.close()
-
 
 @router.post("/import_suppliers_csv")
 async def import_suppliers_csv(file: UploadFile = File(...)):

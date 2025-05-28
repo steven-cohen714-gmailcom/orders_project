@@ -1,0 +1,57 @@
+<!-- File: frontend/templates/payments_overview.html -->
+
+{% extends "base.html" %}
+{% block content %}
+<h2>💰 Payments Overview (COD Orders)</h2>
+
+<div class="filter-bar">
+  <label for="start-date">Start Date:</label>
+  <input type="date" id="start-date">
+
+  <label for="end-date">End Date:</label>
+  <input type="date" id="end-date">
+
+  <button id="filter-btn">Apply Filters</button>
+</div>
+
+<table id="payments-table">
+  <thead>
+    <tr>
+      <th>Order #</th>
+      <th>Supplier</th>
+      <th>Created Date</th>
+      <th>Total</th>
+      <th>Payment Terms</th>
+      <th>Payment Date</th>
+      <th>Amount Paid</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="payments-body">
+    <!-- Filled dynamically by JS -->
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div id="payment-modal" class="modal hidden">
+  <div class="modal-content">
+    <h3>Mark Order as Paid</h3>
+    <form id="payment-form">
+      <input type="hidden" id="modal-order-id">
+      <label>Payment Amount:</label>
+      <input type="number" id="modal-amount-paid" step="0.01" required>
+
+      <label>Payment Date:</label>
+      <input type="date" id="modal-payment-date" required>
+
+      <button type="submit">Confirm Payment</button>
+      <button type="button" id="modal-cancel">Cancel</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/static/js/payments_overview.js"></script>
+{% endblock %}
