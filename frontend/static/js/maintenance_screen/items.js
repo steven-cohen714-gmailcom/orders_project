@@ -1,4 +1,5 @@
 // /frontend/static/js/maintenance_screen/items.js
+
 export function initItems() {
   console.log("initItems loaded");
 
@@ -52,18 +53,52 @@ export function initItems() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ item_code, item_description })
       });
-      if (res.ok) fetchItems();
+
+      if (res.ok) {
+        showToast("✅ Item saved successfully");
+        fetchItems();
+      } else {
+        const errMsg = await res.text();
+        showToast(`❌ Failed to save item: ${errMsg}`, false);
+      }
     } catch (err) {
       console.error("Failed to add item:", err);
+      showToast("❌ Network or server error", false);
     }
   }
 
   async function deleteItem(id) {
     try {
       const res = await fetch(`/lookups/items/${id}`, { method: "DELETE" });
-      if (res.ok) fetchItems();
+      if (res.ok) {
+        showToast("🗑️ Item deleted");
+        fetchItems();
+      } else {
+        const errMsg = await res.text();
+        showToast(`❌ Failed to delete: ${errMsg}`, false);
+      }
     } catch (err) {
       console.error("Failed to delete item:", err);
+      showToast("❌ Network or server error", false);
     }
+  }
+
+  function showToast(message, success = true) {
+    const toast = document.createElement("div");
+    toast.textContent = message;
+    toast.className = success ? "toast toast-success" : "toast toast-error";
+    toast.style.position = "fixed";
+    toast.style.bottom = "20px";
+    toast.style.right = "20px";
+    toast.style.background = success ? "#28a745" : "#c01c1c";
+    toast.style.color = "white";
+    toast.style.padding = "10px 16px";
+    toast.style.borderRadius = "6px";
+    toast.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
+    toast.style.zIndex = "9999";
+    toast.style.fontWeight = "bold";
+
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
   }
 }

@@ -9,9 +9,9 @@
 /home
 /orders/new
 /orders/pending_orders
+/orders/cod_orders
 /orders/received_orders
 /orders/audit_trail
-/cod_payments_screen
 /maintenance
 /orders/partially_delivered
 /favicon.ico
@@ -109,6 +109,7 @@
 /orders/api/last_audit_action/{order_id}
 /orders/api/order_summary
 /orders/api/cod_orders
+/orders/api/mark_cod_paid/{order_id}
 /orders/api/preview_pdf_new_order
 /
 /login
@@ -147,8 +148,6 @@
 /maintenance/projects
 /maintenance/projects/{project_id}
 /maintenance/import_projects_csv
-/orders/api/cod_orders
-/orders/api/mark_cod_paid
 /requisitions
 /lookups/lookups/requisitioners
 ⚠️ Suspicious duplicate segment in: /lookups/lookups/requisitioners

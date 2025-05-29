@@ -1,392 +1,65 @@
-  body {
-    font-family: Arial, sans-serif;
-    margin: 2rem;
-    background-color: #f4f6f8;
-  }
 
-  h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-    color: #1a3c5e;
-  }
-
-  /* ------------------ TABLE ------------------ */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    background-color: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  th {
-    background-color: #e8eef4;
-    font-weight: 600;
-    color: #1a3c5e;
-    text-transform: none;
-    font-size: 0.95rem;
-    height: 48px;
-  }
-
-  td {
-    border: 1px solid #e0e4e8;
-    padding: 0.75rem;
-    text-align: center;
-    font-size: 0.95rem;
-    color: #333;
-  }
-
-  /* Add spacing between buttons in table cells */
-  td button {
-    margin-right: 0.5rem;
-  }
-
-  td button:last-child {
-    margin-right: 0;
-  }
-
-  /* Left-align all cells in maintenance screen tables */
-  #users-table td,
-  #requesters-table td,
-  #items-table td,
-  #suppliers-table td,
-  #projects-table td {
-    text-align: left;
-  }
-
-  /* ------------------ FILTERS ------------------ */
-  .filters {
-    margin-bottom: 1.5rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    align-items: center;
-    background-color: #fff;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-
-  .filters label {
-    font-weight: 600;
-    color: #1a3c5e;
-    margin-right: 0.5rem;
-    font-size: 0.95rem;
-  }
-
-  input[type="date"],
-  input[type="text"],
-  input[type="number"],
-  select,
-  textarea {
-    padding: 0.6rem;
-    font-size: 0.95rem;
-    font-family: Arial, sans-serif;
-    border: 1px solid #c7d0d9;
-    border-radius: 6px;
-    background-color: #fff;
-    min-width: 180px;
-    max-width: 240px;
-    transition: border-color 0.2s;
-  }
-
-  input[type="date"]:focus,
-  select:focus,
-  input[type="text"]:focus,
-  textarea:focus {
-    outline: none;
-    border-color: #0066cc;
-    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
-  }
-
-  /* ------------------ BUTTONS ------------------ */
-  button {
-    padding: 0.6rem 1.5rem;
-    cursor: pointer;
-    background-color: #0066cc;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    transition: background-color 0.2s;
-  }
-
-  button:hover {
-    background-color: #0055aa;
-  }
-
-  /* ------------------ ICONS ------------------ */
-  .expand-icon,
-  .clip-icon,
-  .eye-icon,
-  .note-icon,
-  .supplier-note-icon,
-  .receive-icon,
-  .pdf-icon {
-    cursor: pointer;
-    font-size: 1.2rem;
-    margin: 0 0.4rem;
-    display: inline-block;
-    color: #0066cc;
-    transition: color 0.2s;
-  }
-
-  .expand-icon:hover,
-  .clip-icon:hover,
-  .eye-icon:hover,
-  .note-icon:hover,
-  .supplier-note-icon:hover,
-  .receive-icon:hover {
-    color: #003366;
-  }
-
-  .eye-icon.disabled {
-    opacity: 0.3;
-    cursor: default;
-  }
-
-  /* ------------------ LOGIN ------------------ */
-  .login-box {
-    background: white;
-    padding: 2rem 3rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    margin: 5rem auto;
-  }
-
-  .login-box h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-    color: #333;
-  }
-
-  .login-box input {
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1.2rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-  }
-
-  .login-box button {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: #0056b3;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-
-  .login-box button:hover {
-    background-color: #004a99;
-  }
-
-  #login-error {
-    margin-top: 0.5rem;
-    color: red;
-    font-size: 0.9rem;
-  }
-
-  /* ------------------ MAINTENANCE ------------------ */
-  .tabs {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .tab {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    background: #ddd;
-    border-radius: 4px 4px 0 0;
-  }
-
-  .tab.active {
-    background: #007BFF;
-    color: white;
-  }
-
-  .tab-content {
-    display: none;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 0 4px 4px 4px;
-    background-color: white;
-  }
-
-  .tab-content.active {
-    display: block;
-  }
-
-  .form-group {
-    margin-bottom: 1rem;
-  }
-
-  .form-group label {
-    display: block;
-    font-weight: bold;
-  }
-
-  /* ------------------ NEW ORDER SCREEN ONLY ------------------ */
-  .order-header {
-    margin-bottom: 2rem;
-  }
-
-  .order-header label span {
-    font-weight: bold;
-    font-size: 1.05rem;
-    margin-left: 0.5rem;
-  }
-
-  .form-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .column {
-    flex: 1 1 240px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  #note_to_supplier {
-    min-height: 100px;
-  }
-
-  .delivery-block {
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .add-item-block {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .summary {
-    margin-bottom: 2rem;
-  }
-
-  .button-group {
-    margin-top: 2rem;
-  }
-
-  /* Reusable table styling for modals */
-  .receive-modal table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    font-size: 14px;
-  }
-
-  .receive-modal th,
-  .receive-modal td {
-    border: 1px solid #ccc;
-    padding: 8px;
-    text-align: left;
-  }
-
-  .receive-modal input[type="number"] {
-    width: 80px;
-  }
-  i:hover {
-    cursor: pointer;
-  }
-  .note-icon:hover,
-  .clip-icon:hover,
-  .expand-icon:hover,
-  .receive-icon:hover,
-  .supplier-note-icon:hover {
-    cursor: pointer;
-  }
-  .email-icon {
-    cursor: pointer;
-    margin-left: 5px;
-    font-size: 1.2em;
-  }
-  .email-icon:hover {
-    color: #007bff;
-  }
-
-  /* ------------------ FORM FIELD SPACING (MAINTENANCE) ------------------ */
-
-  #settings .form-group label,
-  #settings .form-group input {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  #settings .form-group input {
-    width: 250px;
-    padding: 0.5rem;
-  }
-
-  #settings .form-group {
-    margin-bottom: 1.2rem;
-  }
-
-  /* ------------------ BUSINESS DETAILS FORM SPACING ------------------ */
-
-  #business_details .form-group label,
-  #business_details .form-group input {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  #business_details .form-group input {
-    width: 280px;
-    padding: 0.5rem;
-  }
-
-  #business_details .form-group {
-    margin-bottom: 1.2rem;
-  }
-
-  /* ------------------ USERS TAB FORM SPACING ------------------ */
-
-  #users .form-group label,
-  #users .form-group input,
-  #users .form-group select {
-    display: block;
-    margin-bottom: 0.5rem;
-  }
-
-  #users .form-group input,
-  #users .form-group select {
-    width: 280px;
-    padding: 0.5rem;
-  }
-
-  #users .form-group {
-    margin-bottom: 1.2rem;
-  }
-
-  .receive-icon.disabled {
-  opacity: 0.4;
-  pointer-events: none;
-  cursor: not-allowed;
+/* ------------------ COD PAYMENT MODAL ------------------ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
 }
 
-.cod-toast {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: #c01c1c;
-  color: white;
-  padding: 12px 16px;
+.modal {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.modal label {
+  display: block;
+  margin: 0.5rem 0 0.25rem;
+}
+
+.modal input {
+  width: 100%;
+  padding: 0.4rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
   border-radius: 6px;
-  font-weight: bold;
-  z-index: 9999;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.modal-buttons button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-buttons #cod-cancel {
+  background-color: #bbb;
+  color: white;
+}
+
+.modal-buttons #cod-save {
+  background-color: #28a745;
+  color: white;
 }
