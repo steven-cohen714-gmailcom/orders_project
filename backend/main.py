@@ -6,8 +6,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.routing import APIRouter
 from backend.endpoints import html_routes
-from backend.endpoints.cod_orders import cod_orders_api
-from backend.endpoints.cod_orders import mark_cod_paid_api
+#from backend.endpoints.cod_orders import cod_orders_api
+#from backend.endpoints.cod_orders import mark_cod_paid_api
 from backend.endpoints import requisitions
 
 from pathlib import Path
@@ -173,18 +173,18 @@ async def audit_trail_page(request: Request):
         return login_redirect
     return templates.TemplateResponse("audit_trail.html", {"request": request})
 
-@static_router.get("/cod_payments_screen", response_class=HTMLResponse)
-async def cod_payments_screen(request: Request):
-    login_redirect = require_login(request)
-    if login_redirect:
-        return login_redirect
+#@static_router.get("/cod_payments_screen", response_class=HTMLResponse)
+#async def cod_payments_screen(request: Request):
+#    login_redirect = require_login(request)
+#    if login_redirect:
+#        return login_redirect
 
     roles = request.session.get("roles", "")
     role_set = {r.strip() for r in roles.split(",")}
     if "admin" not in role_set and "payment" not in role_set:
         return templates.TemplateResponse("access_denied.html", {"request": request})
 
-    return templates.TemplateResponse("cod_payments_screen.html", {"request": request})
+#    return templates.TemplateResponse("cod_payments_screen.html", {"request": request})
 
 @static_router.get("/maintenance", response_class=HTMLResponse)
 async def maintenance_page(request: Request):
@@ -237,8 +237,8 @@ app.include_router(order_notes_router)
 app.include_router(items_router.router, prefix="/lookups")
 app.include_router(suppliers_router.router, prefix="/maintenance")
 app.include_router(projects_router.router, prefix="/maintenance")
-app.include_router(cod_orders_api.router, prefix="/orders")
-app.include_router(mark_cod_paid_api.router, prefix="/orders")
+#app.include_router(cod_orders_api.router, prefix="/orders")
+#app.include_router(mark_cod_paid_api.router, prefix="/orders")
 app.include_router(requisitions.router)
 app.include_router(requisitioners_router.router, prefix="/lookups")
 

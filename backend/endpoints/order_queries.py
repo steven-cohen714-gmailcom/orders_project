@@ -359,12 +359,12 @@ def get_order_summary():
         log_event("new_orders_log.txt", {"error": str(e), "type": "order_summary"})
         raise HTTPException(status_code=500, detail=f"Failed to load order summary: {e}")
 
-@router.get("/cod_orders")
-def get_cod_orders(
-    start_date: Optional[str] = Query(None),
-    end_date: Optional[str] = Query(None),
-    supplier: Optional[str] = Query(None)
-):
+#@router.get("/cod_orders")
+#def get_cod_orders(
+#    start_date: Optional[str] = Query(None),
+#    end_date: Optional[str] = Query(None),
+#    supplier: Optional[str] = Query(None)
+#):
     try:
         filters = ["o.payment_terms = 'COD'"]
         params = []

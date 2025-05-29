@@ -866,3 +866,33 @@
 2025-05-28 06:37:24,427 | INFO | Requesters fetched: 7 items
 2025-05-28 06:37:24,429 | INFO | Suppliers fetched: 795 items
 2025-05-28 06:47:32,769 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 205
+2025-05-28 15:31:28,890 | INFO | Database initialized successfully.
+2025-05-28 15:31:28,891 | INFO | ✅ Database initialized successfully.
+2025-05-28 15:31:30,570 | INFO | Requesters fetched: 7 items
+2025-05-28 15:31:30,571 | INFO | Suppliers fetched: 795 items
+2025-05-28 15:31:56,589 | INFO | Database initialized successfully.
+2025-05-28 15:31:56,589 | INFO | ✅ Database initialized successfully.
+2025-05-28 15:32:00,136 | INFO | Requesters fetched: 7 items
+2025-05-28 15:32:00,138 | INFO | Suppliers fetched: 795 items
+2025-05-28 15:38:08,338 | INFO | Database initialized successfully.
+2025-05-28 15:38:08,338 | INFO | ✅ Database initialized successfully.
+2025-05-28 15:38:42,547 | INFO | Database initialized successfully.
+2025-05-28 15:38:42,547 | INFO | ✅ Database initialized successfully.
+2025-05-28 15:38:53,604 | INFO | Requesters fetched: 7 items
+2025-05-28 15:38:53,607 | INFO | Suppliers fetched: 795 items
+2025-05-28 15:38:55,292 | INFO | Requesters fetched: 7 items
+2025-05-28 15:38:55,296 | INFO | Suppliers fetched: 795 items
+2025-05-28 15:38:55,963 | INFO | Requesters fetched: 7 items
+2025-05-28 15:38:55,966 | INFO | Suppliers fetched: 795 items
+2025-05-28 15:38:56,974 | INFO | Requesters fetched: 7 items
+2025-05-28 15:38:56,979 | INFO | Suppliers fetched: 795 items
+2025-05-28 15:38:56,991 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-05-28 15:38:57,640 | INFO | Requesters fetched: 7 items
+2025-05-28 15:38:57,643 | INFO | Suppliers fetched: 795 items
+2025-05-28 15:41:57,285 | INFO | Starting to render new order page
+2025-05-28 15:41:57,348 | INFO | Requesters fetched: 7 items
+2025-05-28 15:41:57,354 | INFO | Suppliers fetched: 795 items
+2025-05-28 15:41:57,371 | INFO | Items fetched: 9978 items
+2025-05-28 15:41:57,401 | INFO | Projects fetched: 206 items
+2025-05-28 15:45:13,833 | INFO | Requesters fetched: 7 items
+2025-05-28 15:45:13,836 | INFO | Suppliers fetched: 795 items
