@@ -59,7 +59,15 @@ async function loadOrders() {
             <span class="clip-icon" data-order-id="${order.id}" data-order-number="${order.order_number}">📎</span>
             <span class="note-icon" data-order-id="${order.id}" data-order-note="${escapeHTML(order.order_note || "")}">📝</span>
             <span class="supplier-note-icon" data-note="${escapeHTML(order.note_to_supplier || "")}">📦</span>
+            <span 
+              class="receive-icon" 
+              style="color: green; cursor: pointer;" 
+              title="Mark COD as Paid" 
+              data-order-id="${order.id}" 
+              data-order-number="${escapeHTML(order.order_number || "")}"
+            >✅</span>
             <span class="pdf-icon" data-order-id="${order.id}">📄</span>
+
           </td>
         `;
 
