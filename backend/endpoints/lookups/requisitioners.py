@@ -4,7 +4,7 @@ from typing import List
 import sqlite3
 from pathlib import Path
 
-router = APIRouter(prefix="/lookups", tags=["requisitioners"])
+router = APIRouter(tags=["requisitioners"])
 
 DB_PATH = Path("data/orders.db")
 

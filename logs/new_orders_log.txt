@@ -113,3 +113,14 @@
 [2025-05-30T09:06:43.201206] {"action": "fetch_items_for_order", "order_id": 207, "count": 1}
 [2025-05-30T09:15:38.152204] {"action": "fetch_cod_orders", "count": 3}
 [2025-05-30T09:16:31.997351] {"action": "fetch_items_for_order", "order_id": 207, "count": 1}
+[2025-05-30T09:48:58.299645] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-30T09:56:19.964874] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-30T09:56:48.538262] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-30T10:26:39.960173] {"action": "fetch_received_orders", "count": 1}
+[2025-05-30T10:26:42.104656] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-30T10:26:45.002291] {"action": "fetch_items_for_order", "order_id": 205, "count": 1}
+[2025-05-30T10:32:33.138894] {"action": "fetch_cod_orders", "count": 3}
+[2025-05-30T10:34:10.285418] {"action": "fetch_cod_orders", "count": 3}
+[2025-05-30T10:34:20.719770] {"action": "fetch_received_orders", "count": 1}
+[2025-05-30T10:34:22.314694] {"action": "fetch_pending_orders", "count": 1}
+[2025-05-30T10:35:14.596415] {"action": "fetch_pending_orders", "count": 1}

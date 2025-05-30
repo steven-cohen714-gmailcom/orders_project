@@ -17,6 +17,7 @@
     <div class="tab" data-tab="items">Items</div>
     <div class="tab" data-tab="suppliers">Suppliers</div>
     <div class="tab" data-tab="projects">Projects</div>
+    <div class="tab" data-tab="requisitioners">Requisitioners</div>
     <div class="tab" data-tab="settings">Settings</div>
     <div class="tab" data-tab="business_details">Business Details</div>
   </div>
@@ -130,6 +131,19 @@
       <tbody id="projects-table"></tbody>
     </table>
   </div>
+
+  <!-- Requisitioners -->
+<div id="requisitioners" class="tab-content">
+  <div class="form-group">
+    <label for="requisitioner-name">Name:</label>
+    <input type="text" id="requisitioner-name" />
+    <button id="add-requisitioner-button">Add Requisitioner</button>
+  </div>
+  <table>
+    <thead><tr><th>Name</th><th>Actions</th></tr></thead>
+    <tbody id="requisitioners-table"></tbody>
+  </table>
+</div>
 
   <!-- Settings -->
   <div id="settings" class="tab-content">

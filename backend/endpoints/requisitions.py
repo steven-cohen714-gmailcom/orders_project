@@ -75,3 +75,48 @@ async def submit_requisition(payload: RequisitionPayload):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error submitting requisition: {str(e)}")
+
+
+@router.get("/api/pending_requisitions", response_model=dict)
+def get_pending_requisitions():
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            cursor.execute("""
+                SELECT
+                    r.id,
+                    r.requisition_number,
+                    r.requisition_date,
+                    r.requisition_note,
+                    r.status,
+                    rq.name AS requisitioner,
+                    (
+                        SELECT GROUP_CONCAT(ri.description, ', ')
+                        FROM requisition_items ri
+                        WHERE ri.requisition_id = r.id
+                    ) AS description,
+                    (
+                        SELECT GROUP_CONCAT(ri.project, ', ')
+                        FROM requisition_items ri
+                        WHERE ri.requisition_id = r.id
+                    ) AS project,
+                    (
+                        SELECT SUM(ri.quantity)
+                        FROM requisition_items ri
+                        WHERE ri.requisition_id = r.id
+                    ) AS total_quantity,
+                    r.converted_order_id
+                FROM requisitions r
+                LEFT JOIN requisitioners rq ON r.requisitioner_id = rq.id
+                WHERE r.status = 'submitted'
+                ORDER BY r.requisition_date DESC
+            """)
+
+            rows = cursor.fetchall()
+            requisitions = [dict(row) for row in rows]
+
+            return {"requisitions": requisitions}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching requisitions: {str(e)}")

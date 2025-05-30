@@ -14,6 +14,7 @@
 /orders/audit_trail
 /maintenance
 /orders/partially_delivered
+/requisitions/pending_requisitions
 /favicon.ico
 /mobile/get_user_info
 /orders/api/awaiting_authorisation
@@ -149,10 +150,8 @@
 /maintenance/projects/{project_id}
 /maintenance/import_projects_csv
 /requisitions
-/lookups/lookups/requisitioners
-⚠️ Suspicious duplicate segment in: /lookups/lookups/requisitioners
-/lookups/lookups/requisitioners
-⚠️ Suspicious duplicate segment in: /lookups/lookups/requisitioners
-/lookups/lookups/requisitioners/{id}
-⚠️ Suspicious duplicate segment in: /lookups/lookups/requisitioners/{id}
+/api/pending_requisitions
+/lookups/requisitioners
+/lookups/requisitioners
+/lookups/requisitioners/{id}
 /orders/mark_cod_paid/{order_id}

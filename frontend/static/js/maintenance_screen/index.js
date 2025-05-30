@@ -3,6 +3,7 @@ import { initRequesters } from "./requesters.js";
 import { initItems } from "./items.js";
 import { initSuppliers } from "./suppliers.js";
 import { initProjects } from "./projects.js";
+import { initRequisitioners } from "./requisitioners.js";
 import { initSettings } from "./settings.js";
 import { initBusinessDetails } from "./business_details.js";
 
@@ -68,6 +69,7 @@ export function initMaintenanceScreen() {
   initProjects();
   initSettings();
   initBusinessDetails();
+  initRequisitioners();
 
   // ✅ CSV import handlers
   handleCsvImport("import-items-button", "items-csv-upload", "/maintenance/import_items_csv", "items");

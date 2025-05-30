@@ -5,18 +5,18 @@ import subprocess
 
 # --- Setup ---
 os.chdir("/Users/stevencohen/Projects/universal_recycling/orders_project")
-output_file = Path("scripts_for_each_screen/output_cod_screen.txt")
+output_file = Path("scripts_for_each_screen/output_requisitions_screen.txt")
 output_file.parent.mkdir(parents=True, exist_ok=True)
 
-# --- All relevant files impacting COD payments ---
-cod_feature_files = [
+# --- All relevant files impacting Requisitions ---
+requisition_feature_files = [
     # 🔧 Backend entry & DB
     "backend/main.py",
     "backend/database.py",
 
-    # 📦 COD-related API logic
+    # 📦 Requisition-related API logic
     "backend/endpoints/orders/order_queries.py",
-    "backend/endpoints/orders/mark_cod_paid_api.py",
+    "backend/endpoints/requisitions.py",  # assumed file
 
     # 🔐 Auth & Permissions enforcement
     "backend/endpoints/auth.py",
@@ -27,10 +27,10 @@ cod_feature_files = [
     "backend/endpoints/lookups/users.py",
     "frontend/templates/access_denied.html",
 
-    # 🖥️ COD Screen
-    "frontend/templates/cod_payments_screen.html",
-    "frontend/static/js/cod_orders.js",
-    "frontend/static/js/payments_modal.js",
+    # 🖥️ Requisition Screen
+    "frontend/templates/pending_requisitions.html",
+    "frontend/static/js/pending_requisitions.js",
+    "frontend/static/js/requisition_modal.js",  # optional
 
     # 🌐 Shared UI/UX dependencies
     "frontend/static/js/components/shared_filters.js",
@@ -40,7 +40,7 @@ cod_feature_files = [
     # 📐 Styling
     "frontend/static/css/style.css",
 
-    # 🧪 Other affected screens (role-based)
+    # 🧪 Other affected screens
     "frontend/static/js/maintenance.js",
     "frontend/templates/maintenance.html",
     "frontend/static/js/authorisations_per_user.js",
@@ -48,7 +48,7 @@ cod_feature_files = [
 
 # --- Output all relevant file contents ---
 with open(output_file, 'w', encoding='utf-8') as f:
-    for rel_path in cod_feature_files:
+    for rel_path in requisition_feature_files:
         f.write(f"📄 {rel_path}\n" + "-"*60 + "\n")
         try:
             with open(Path(rel_path), 'r', encoding='utf-8') as src:

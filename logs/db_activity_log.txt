@@ -1155,3 +1155,89 @@
 2025-05-30 09:16:27,643 | INFO | Suppliers fetched: 795 items
 2025-05-30 09:16:27,659 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 4 total orders for audit trail
 2025-05-30 09:16:31,995 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 207
+2025-05-30 09:48:24,680 | INFO | Database initialized successfully.
+2025-05-30 09:48:24,680 | INFO | ✅ Database initialized successfully.
+2025-05-30 09:48:25,242 | INFO | Database initialized successfully.
+2025-05-30 09:48:25,242 | INFO | ✅ Database initialized successfully.
+2025-05-30 09:48:58,287 | INFO | Requesters fetched: 7 items
+2025-05-30 09:48:58,290 | INFO | Suppliers fetched: 795 items
+2025-05-30 09:49:38,812 | INFO | Database initialized successfully.
+2025-05-30 09:49:38,812 | INFO | ✅ Database initialized successfully.
+2025-05-30 09:50:04,712 | INFO | Database initialized successfully.
+2025-05-30 09:50:04,712 | INFO | ✅ Database initialized successfully.
+2025-05-30 09:50:05,281 | INFO | Database initialized successfully.
+2025-05-30 09:50:05,281 | INFO | ✅ Database initialized successfully.
+2025-05-30 09:52:09,419 | INFO | Database initialized successfully.
+2025-05-30 09:52:09,420 | INFO | ✅ Database initialized successfully.
+2025-05-30 09:52:09,924 | INFO | Database initialized successfully.
+2025-05-30 09:52:09,924 | INFO | ✅ Database initialized successfully.
+2025-05-30 09:56:19,951 | INFO | Requesters fetched: 7 items
+2025-05-30 09:56:19,954 | INFO | Suppliers fetched: 795 items
+2025-05-30 09:56:48,528 | INFO | Requesters fetched: 7 items
+2025-05-30 09:56:48,531 | INFO | Suppliers fetched: 795 items
+2025-05-30 09:57:28,334 | INFO | Database initialized successfully.
+2025-05-30 09:57:28,334 | INFO | ✅ Database initialized successfully.
+2025-05-30 09:57:28,857 | INFO | Database initialized successfully.
+2025-05-30 09:57:28,857 | INFO | ✅ Database initialized successfully.
+2025-05-30 10:09:24,509 | INFO | Database initialized successfully.
+2025-05-30 10:09:24,510 | INFO | ✅ Database initialized successfully.
+2025-05-30 10:09:42,310 | INFO | Database initialized successfully.
+2025-05-30 10:09:42,310 | INFO | ✅ Database initialized successfully.
+2025-05-30 10:09:42,888 | INFO | Database initialized successfully.
+2025-05-30 10:09:42,888 | INFO | ✅ Database initialized successfully.
+2025-05-30 10:15:38,540 | INFO | Database initialized successfully.
+2025-05-30 10:15:38,540 | INFO | ✅ Database initialized successfully.
+2025-05-30 10:15:50,459 | INFO | Database initialized successfully.
+2025-05-30 10:15:50,459 | INFO | ✅ Database initialized successfully.
+2025-05-30 10:15:51,017 | INFO | Database initialized successfully.
+2025-05-30 10:15:51,017 | INFO | ✅ Database initialized successfully.
+2025-05-30 10:26:37,530 | INFO | Requesters fetched: 7 items
+2025-05-30 10:26:37,532 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:26:39,936 | INFO | Requesters fetched: 7 items
+2025-05-30 10:26:39,940 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:26:42,080 | INFO | Requesters fetched: 7 items
+2025-05-30 10:26:42,092 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:26:44,997 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 205
+2025-05-30 10:26:47,756 | INFO | Requesters fetched: 7 items
+2025-05-30 10:26:47,760 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:26:47,783 | INFO | Items fetched: 9980 items
+2025-05-30 10:26:47,821 | INFO | Projects fetched: 206 items
+2025-05-30 10:26:47,823 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-30 10:32:33,123 | INFO | Requesters fetched: 7 items
+2025-05-30 10:32:33,126 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:34:08,262 | INFO | Starting to render new order page
+2025-05-30 10:34:08,333 | INFO | Requesters fetched: 7 items
+2025-05-30 10:34:08,346 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:34:08,367 | INFO | Items fetched: 9980 items
+2025-05-30 10:34:08,402 | INFO | Projects fetched: 206 items
+2025-05-30 10:34:10,267 | INFO | Requesters fetched: 7 items
+2025-05-30 10:34:10,271 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:34:17,820 | INFO | Requesters fetched: 7 items
+2025-05-30 10:34:17,823 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:34:20,702 | INFO | Requesters fetched: 7 items
+2025-05-30 10:34:20,706 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:34:22,299 | INFO | Requesters fetched: 7 items
+2025-05-30 10:34:22,301 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:35:14,587 | INFO | Requesters fetched: 7 items
+2025-05-30 10:35:14,588 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:35:21,286 | INFO | Rendering home page
+2025-05-30 10:35:24,481 | INFO | Starting to render new order page
+2025-05-30 10:35:24,528 | INFO | Requesters fetched: 7 items
+2025-05-30 10:35:24,545 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:35:24,567 | INFO | Items fetched: 9980 items
+2025-05-30 10:35:24,606 | INFO | Projects fetched: 206 items
+2025-05-30 10:35:45,820 | INFO | Requesters fetched: 7 items
+2025-05-30 10:35:45,857 | INFO | Items fetched: 9980 items
+2025-05-30 10:35:45,897 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:35:45,900 | INFO | Projects fetched: 206 items
+2025-05-30 10:35:45,902 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-30 10:50:17,486 | INFO | Requesters fetched: 7 items
+2025-05-30 10:50:17,487 | INFO | Projects fetched: 206 items
+2025-05-30 10:50:17,499 | INFO | Items fetched: 9980 items
+2025-05-30 10:50:17,529 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:50:17,532 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-30 10:53:25,046 | INFO | Requesters fetched: 7 items
+2025-05-30 10:53:25,055 | INFO | Items fetched: 9980 items
+2025-05-30 10:53:25,086 | INFO | Suppliers fetched: 795 items
+2025-05-30 10:53:25,089 | INFO | Projects fetched: 206 items
+2025-05-30 10:53:25,091 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved

@@ -193,6 +193,13 @@ async def partially_delivered_page(request: Request):
         return login_redirect
     return templates.TemplateResponse("partially_delivered.html", {"request": request})
 
+@static_router.get("/requisitions/pending_requisitions", response_class=HTMLResponse)
+async def pending_requisitions_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("pending_requisitions.html", {"request": request})
+
 @static_router.get("/favicon.ico")
 async def favicon():
     favicon_path = Path("frontend/static/favicon.ico")
