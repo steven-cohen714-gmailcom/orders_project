@@ -155,3 +155,4 @@
 ⚠️ Suspicious duplicate segment in: /lookups/lookups/requisitioners
 /lookups/lookups/requisitioners/{id}
 ⚠️ Suspicious duplicate segment in: /lookups/lookups/requisitioners/{id}
+/orders/mark_cod_paid/{order_id}

@@ -62,3 +62,11 @@
 2025-05-28 05:40:38,312 | INFO | INFO | Preview PDF displayed (no DB write) | {}
 2025-05-28 05:40:42,807 | INFO | INFO | submitOrder started | {}
 2025-05-28 05:40:42,828 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3008", "orderId": 205}
+2025-05-30 06:09:32,292 | INFO | INFO | previewOrder started | {}
+2025-05-30 06:09:32,518 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-05-30 06:09:36,624 | INFO | INFO | submitOrder started | {}
+2025-05-30 06:09:36,648 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3009", "orderId": 206}
+2025-05-30 07:23:44,808 | INFO | INFO | submitOrder started | {}
+2025-05-30 07:23:44,832 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3010", "orderId": 207}
+2025-05-30 08:39:09,833 | INFO | INFO | submitOrder started | {}
+2025-05-30 08:39:09,862 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "3011", "orderId": 208}

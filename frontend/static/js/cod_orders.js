@@ -5,6 +5,7 @@ import { expandLineItems } from "./components/expand_line_items.js";
 import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from "./components/attachment_modal.js";
 import { showOrderNoteModal, showSupplierNoteModal } from "./components/order_note_modal.js";
 import { showPDFModal } from "./components/pdf_modal.js";
+import { showCodPaymentModal } from "./components/payments_modal.js"; // ✅ REQUIRED
 
 console.log("✅ cod_orders.js loaded");
 
@@ -96,6 +97,10 @@ async function loadOrders() {
         row.querySelector(".supplier-note-icon").addEventListener("click", (e) => {
           const note = e.target.getAttribute("data-note");
           showSupplierNoteModal(note);
+        });
+
+        row.querySelector(".receive-icon").addEventListener("click", () => {
+          showCodPaymentModal(order.id, parseFloat(order.total || 0), new Date().toISOString().split("T")[0]);
         });
 
         row.querySelector(".pdf-icon").addEventListener("click", async () => {

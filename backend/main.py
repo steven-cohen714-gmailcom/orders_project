@@ -7,6 +7,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.routing import APIRouter
 from backend.endpoints import html_routes
 from backend.endpoints import requisitions
+from backend.endpoints.lookups import mark_cod_paid_api as mark_cod_paid_api_module
 
 from pathlib import Path
 import logging
@@ -231,6 +232,7 @@ app.include_router(suppliers_router.router, prefix="/maintenance")
 app.include_router(projects_router.router, prefix="/maintenance")
 app.include_router(requisitions.router)
 app.include_router(requisitioners_router.router, prefix="/lookups")
+app.include_router(mark_cod_paid_api_module.router, prefix="/orders")
 
 # --- Dev CLI ---
 if __name__ == "__main__":

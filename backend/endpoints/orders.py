@@ -26,8 +26,9 @@ class OrderCreate(BaseModel):
     note_to_supplier: Optional[str] = None
     supplier_id: int
     requester_id: int
+    payment_terms: Optional[str] = None  # ✅ Add this
     items: List[OrderItemCreate]
-    auth_band_required: Optional[int] = None  # NEW FIELD
+    auth_band_required: Optional[int] = None
 
 class OrderUpdate(BaseModel):
     status: Optional[str] = None
@@ -51,13 +52,14 @@ async def create_new_order(order: OrderCreate):
         total = calculate_order_total([item.dict() for item in order.items])
         order_data = {
             "order_number": order.order_number,
-            "status": order.status,
+             "status": order.status,
             "total": total,
             "order_note": order.order_note,
             "note_to_supplier": order.note_to_supplier,
             "supplier_id": order.supplier_id,
             "requester_id": order.requester_id,
-            "auth_band_required": order.auth_band_required  # NEW FIELD
+            "payment_terms": order.payment_terms,  # ✅ Add this
+            "auth_band_required": order.auth_band_required
         }
         items = [item.dict() for item in order.items]
         result = create_order(order_data, items)

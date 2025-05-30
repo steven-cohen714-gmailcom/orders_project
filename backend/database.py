@@ -223,8 +223,8 @@ def create_order(order_data: dict, items: list) -> dict:
         cursor.execute("""
             INSERT INTO orders (
                 order_number, status, total, order_note, note_to_supplier,
-                supplier_id, requester_id, required_auth_band
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                supplier_id, requester_id, required_auth_band, payment_terms
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             order_data["order_number"],
             status,
@@ -233,7 +233,8 @@ def create_order(order_data: dict, items: list) -> dict:
             order_data["note_to_supplier"],
             order_data["supplier_id"],
             order_data["requester_id"],
-            required_band
+            required_band,
+            order_data.get("payment_terms", "On account")
         ))
         order_id = cursor.lastrowid
         for item in items:
