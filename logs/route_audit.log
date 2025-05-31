@@ -15,6 +15,7 @@
 /maintenance
 /orders/partially_delivered
 /requisitions/pending_requisitions
+/requisitions/new
 /favicon.ico
 /mobile/get_user_info
 /orders/api/awaiting_authorisation
@@ -37,6 +38,7 @@
 /lookups/settings
 /lookups/settings
 /lookups/order_number
+/lookups/requisition_number
 /lookups/business_details
 /lookups/business_details
 /lookups/users
@@ -61,6 +63,7 @@
 /lookups/settings
 /lookups/settings
 /lookups/order_number
+/lookups/requisition_number
 /lookups/business_details
 /lookups/business_details
 /lookups/users
@@ -96,6 +99,7 @@
 /admin/settings
 /admin/settings
 /admin/order_number
+/admin/requisition_number
 /admin/business_details
 /admin/business_details
 /admin/users
@@ -151,7 +155,12 @@
 /maintenance/import_projects_csv
 /requisitions
 /api/pending_requisitions
+/requisitions/api/generate_pdf/{requisition_id}
 /lookups/requisitioners
 /lookups/requisitioners
 /lookups/requisitioners/{id}
 /orders/mark_cod_paid/{order_id}
+/requisitions/upload_attachment
+/requisitions/attachments/{requisition_id}
+/requisitions/uploads/{filename}
+/requisitions/submit_requisition

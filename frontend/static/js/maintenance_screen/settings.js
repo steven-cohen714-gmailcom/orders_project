@@ -14,6 +14,7 @@ export function initSettings() {
       const data = await res.json();
 
       document.getElementById("order-number-start").value = data.order_number_start || "";
+      document.getElementById("requisition-number-start").value = data.requisition_number_start || "";
       document.getElementById("auth-threshold-1").value = data.auth_threshold_1 || "";
       document.getElementById("auth-threshold-2").value = data.auth_threshold_2 || "";
       document.getElementById("auth-threshold-3").value = data.auth_threshold_3 || "";
@@ -25,6 +26,7 @@ export function initSettings() {
 
   async function updateSettings() {
     const order_number_start = document.getElementById("order-number-start").value;
+    const requisition_number_start = document.getElementById("requisition-number-start").value;
     const auth_threshold_1 = parseInt(document.getElementById("auth-threshold-1").value) || 0;
     const auth_threshold_2 = parseInt(document.getElementById("auth-threshold-2").value) || 0;
     const auth_threshold_3 = parseInt(document.getElementById("auth-threshold-3").value) || 0;
@@ -36,6 +38,7 @@ export function initSettings() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           order_number_start,
+          requisition_number_start,
           auth_threshold_1,
           auth_threshold_2,
           auth_threshold_3,

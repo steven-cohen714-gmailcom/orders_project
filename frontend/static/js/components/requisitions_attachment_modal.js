@@ -1,8 +1,5 @@
-export function showViewAttachmentsModal(orderId, orderNumber, onUploadComplete = null) {
-  const isRequisition = typeof orderNumber === "string" && orderNumber.startsWith("REQ");
-  const fetchUrl = isRequisition
-    ? `/requisitions/attachments/${orderId}`
-    : `/orders/attachments/${orderId}`;
+export function showViewAttachmentsModal(requisitionId, requisitionNumber, onUploadComplete = null) {
+  const fetchUrl = `/requisitions/attachments/${requisitionId}`;
 
   fetch(fetchUrl)
     .then(res => res.json())
@@ -10,7 +7,7 @@ export function showViewAttachmentsModal(orderId, orderNumber, onUploadComplete 
       const files = data.attachments || [];
       const modal = createBaseModal();
       const title = document.createElement("h3");
-      title.textContent = `Attachments for ${orderNumber}`;
+      title.textContent = `Attachments for ${requisitionNumber}`;
       modal.inner.appendChild(title);
 
       if (files.length > 0) {
@@ -32,7 +29,7 @@ export function showViewAttachmentsModal(orderId, orderNumber, onUploadComplete 
           link.onclick = async (e) => {
             e.preventDefault();
             try {
-              window.currentOrderNumberForPDF = `${orderNumber}_${f.filename}`;
+              window.currentOrderNumberForPDF = `${requisitionNumber}_${f.filename}`;
               const res = await fetch(`/${f.file_path}`);
               if (!res.ok) throw new Error(`HTTP ${res.status}`);
               const blob = await res.blob();
@@ -64,7 +61,7 @@ export function showViewAttachmentsModal(orderId, orderNumber, onUploadComplete 
         const input = document.createElement("input");
         input.type = "file";
         input.multiple = true;
-        input.onchange = () => handleFiles(input.files, orderId, orderNumber, modal.inner, onUploadComplete);
+        input.onchange = () => handleFiles(input.files, requisitionId, requisitionNumber, modal.inner, onUploadComplete);
         input.click();
       };
 
@@ -78,7 +75,7 @@ export function showViewAttachmentsModal(orderId, orderNumber, onUploadComplete 
       dropzone.ondrop = e => {
         e.preventDefault();
         dropzone.style.background = "#fafafa";
-        handleFiles(e.dataTransfer.files, orderId, orderNumber, modal.inner, onUploadComplete);
+        handleFiles(e.dataTransfer.files, requisitionId, requisitionNumber, modal.inner, onUploadComplete);
       };
 
       modal.inner.appendChild(dropzone);
@@ -101,38 +98,33 @@ export function showViewAttachmentsModal(orderId, orderNumber, onUploadComplete 
     });
 }
 
-export function showUploadAttachmentsModal(orderId, orderNumber, onUploadComplete = null) {
-  showViewAttachmentsModal(orderId, orderNumber, onUploadComplete);
+export function showUploadAttachmentsModal(requisitionId, requisitionNumber, onUploadComplete = null) {
+  showViewAttachmentsModal(requisitionId, requisitionNumber, onUploadComplete);
 }
 
-export async function checkAttachments(orderId, orderNumber) {
-  const isRequisition = typeof orderNumber === "string" && orderNumber.startsWith("REQ");
-  const url = isRequisition
-    ? `/requisitions/attachments/${orderId}`
-    : `/orders/attachments/${orderId}`;
+export async function checkAttachments(requisitionId) {
+  const url = `/requisitions/attachments/${requisitionId}`;
   try {
     const res = await fetch(url);
     const data = await res.json();
-    return data.attachments && data.attachments.length > 0;
+    return Array.isArray(data.attachments) && data.attachments.length > 0;
   } catch (err) {
     console.error("Failed to check attachments:", err);
     return false;
   }
 }
 
-function handleFiles(fileList, orderId, orderNumber, modalInner, onUploadComplete = null) {
+function handleFiles(fileList, requisitionId, requisitionNumber, modalInner, onUploadComplete = null) {
   Array.from(fileList).forEach(file => {
     const formData = new FormData();
     formData.append("file", file);
+    if (requisitionId) {
+      formData.append("requisition_id", requisitionId);
+    } else if (requisitionNumber) {
+      formData.append("requisition_number", requisitionNumber);
+    }
 
-    const isRequisition = typeof orderNumber === "string" && orderNumber.startsWith("REQ");
-    const endpoint = isRequisition
-      ? "/requisitions/upload_attachment"
-      : "/orders/upload_attachment";
-
-    formData.append(isRequisition ? "requisition_id" : "order_id", orderId);
-
-    fetch(endpoint, {
+    fetch("/requisitions/upload_attachment", {
       method: "POST",
       body: formData,
     })

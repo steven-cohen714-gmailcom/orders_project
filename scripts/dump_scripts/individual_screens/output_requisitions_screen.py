@@ -16,7 +16,7 @@ requisition_feature_files = [
 
     # 📦 Requisition-related API logic
     "backend/endpoints/orders/order_queries.py",
-    "backend/endpoints/requisitions.py",  # assumed file
+    "backend/endpoints/requisitions.py",
 
     # 🔐 Auth & Permissions enforcement
     "backend/endpoints/auth.py",
@@ -25,12 +25,16 @@ requisition_feature_files = [
 
     # 🧑‍💼 Users / Role DB mapping
     "backend/endpoints/lookups/users.py",
+    "backend/endpoints/lookups/requisitioners.py",  # newly added
     "frontend/templates/access_denied.html",
 
-    # 🖥️ Requisition Screen
+    # 🖥️ Requisition Maintenance + Entry Screens
     "frontend/templates/pending_requisitions.html",
     "frontend/static/js/pending_requisitions.js",
-    "frontend/static/js/requisition_modal.js",  # optional
+    "frontend/static/js/requisition_modal.js",  # optional modal logic
+
+    "frontend/templates/new_requisition.html",          # newly added
+    "frontend/static/js/new_requisition_main.js",       # newly added
 
     # 🌐 Shared UI/UX dependencies
     "frontend/static/js/components/shared_filters.js",
@@ -44,6 +48,11 @@ requisition_feature_files = [
     "frontend/static/js/maintenance.js",
     "frontend/templates/maintenance.html",
     "frontend/static/js/authorisations_per_user.js",
+    "frontend/static/js/new_requisitions_pdf_generator.py",
+    "frontend/static/js/components/requisitions_attachment_modal.js",
+
+    # 🧭 Tab navigation
+    "frontend/templates/_tab_nav.html",  # required for correct menu
 ]
 
 # --- Output all relevant file contents ---

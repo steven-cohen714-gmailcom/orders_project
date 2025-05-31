@@ -1,18 +1,46 @@
-// File: frontend/static/js/new_requisition_main.js
-
 import { logToServer, populateDropdown } from "./components/utils.js";
+import { showUploadAttachmentsModal } from "./components/requisitions_attachment_modal.js";
 
 let rowCount = 0;
+let currentRequisitionId = null;
+let currentRequisitionNumber = null;
 
-// Load requisitioners and projects on page load
 document.addEventListener("DOMContentLoaded", async () => {
   await populateDropdown("/lookups/requisitioners", "requisitioner");
-  await populateDropdown("/lookups/projects", "project-template", true); // hidden <select> for cloning
-  addLineItem(); // Start with one row
+  addLineItem();
+
+  try {
+    const settings = await fetch("/lookups/settings").then(res => res.json());
+    const nextReqNum = settings.requisition_number_start || "REQ1000";
+    const today = new Date().toISOString().split("T")[0];
+
+    currentRequisitionNumber = nextReqNum;
+    document.getElementById("requisition-number").value = nextReqNum;
+    document.getElementById("requisition-date").value = today;
+  } catch (err) {
+    console.error("❌ Failed to load settings:", err);
+  }
 
   document.getElementById("add-line").addEventListener("click", addLineItem);
   document.getElementById("submit-requisition").addEventListener("click", submitRequisition);
-  document.getElementById("preview-pdf").addEventListener("click", previewPDF); // placeholder
+  document.getElementById("preview-pdf").addEventListener("click", previewPDF);
+
+  const uploadBtn = document.createElement("button");
+  uploadBtn.id = "upload-attachments";
+  uploadBtn.textContent = "📎 Upload Attachments";
+  uploadBtn.type = "button";
+  uploadBtn.style.marginLeft = "1rem";
+
+  uploadBtn.addEventListener("click", () => {
+    if (!currentRequisitionNumber) {
+      alert("❗ Cannot upload without a requisition number.");
+      return;
+    }
+    // ✅ FIXED: use requisition number first, null as placeholder for ID
+    showUploadAttachmentsModal(currentRequisitionNumber, null);
+  });
+
+  document.querySelector(".form-actions").appendChild(uploadBtn);
 });
 
 function addLineItem() {
@@ -22,7 +50,6 @@ function addLineItem() {
 
   row.innerHTML = `
     <td><input type="text" class="description" required placeholder="Enter item description"></td>
-    <td>${getProjectDropdown()}</td>
     <td><input type="number" class="quantity" required min="0" step="1" value="1"></td>
     <td><button type="button" onclick="this.closest('tr').remove()">🗑️</button></td>
   `;
@@ -31,18 +58,14 @@ function addLineItem() {
   rowCount++;
 }
 
-function getProjectDropdown() {
-  const template = document.getElementById("project-template");
-  if (!template) return '<input type="text" placeholder="Missing project list">';
-  return template.outerHTML.replace('id="project-template"', '').replace("display:none;", "");
-}
-
 async function submitRequisition() {
   const log = document.getElementById("requisition-log");
   log.textContent = "";
 
   const requisitionerId = document.getElementById("requisitioner").value;
   const note = document.getElementById("requisition-note").value;
+  const date = document.getElementById("requisition-date").value;
+
   if (!requisitionerId) {
     log.textContent = "⚠️ Please select a requisitioner.";
     return;
@@ -52,10 +75,9 @@ async function submitRequisition() {
   document.querySelectorAll("#line-items-body tr").forEach(row => {
     const desc = row.querySelector(".description").value.trim();
     const qty = parseFloat(row.querySelector(".quantity").value);
-    const project = row.querySelector("select")?.value || "";
 
     if (desc && qty > 0) {
-      items.push({ description: desc, project, quantity: qty });
+      items.push({ description: desc, quantity: qty });
     }
   });
 
@@ -65,13 +87,11 @@ async function submitRequisition() {
   }
 
   try {
-    const settings = await fetch("/lookups/settings").then(res => res.json());
-    const nextReqNum = settings.requisition_number_start || "REQ1000";
-
     const payload = {
-      requisition_number: nextReqNum,
+      requisition_number: currentRequisitionNumber,
       requisitioner_id: parseInt(requisitionerId),
       requisition_note: note,
+      requisition_date: date,
       items
     };
 
@@ -84,6 +104,7 @@ async function submitRequisition() {
     const data = await res.json();
     if (res.ok) {
       log.textContent = `✅ Requisition submitted (ID: ${data.requisition_id})`;
+      currentRequisitionId = data.requisition_id;
     } else {
       log.textContent = `❌ Submission failed: ${data.detail}`;
     }
@@ -94,5 +115,5 @@ async function submitRequisition() {
 }
 
 function previewPDF() {
-  alert("📄 PDF preview not yet implemented."); // will hook into WeasyPrint route later
+  alert("📄 PDF preview not yet implemented.");
 }

@@ -1,9 +1,13 @@
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import List
 from datetime import datetime
 import sqlite3
 from pathlib import Path
+import traceback
+
+from frontend.static.js.new_requisitions_pdf_generator import generate_requisition_pdf
 
 router = APIRouter(tags=["requisitions"])
 
@@ -18,7 +22,6 @@ def get_db_connection():
 
 class RequisitionItem(BaseModel):
     description: str
-    project: str
     quantity: float
 
 class RequisitionPayload(BaseModel):
@@ -35,7 +38,15 @@ async def submit_requisition(payload: RequisitionPayload):
         with get_db_connection() as conn:
             cursor = conn.cursor()
 
-            # Insert into requisitions table
+            # Step 1: check if requisition_number already exists
+            cursor.execute(
+                "SELECT 1 FROM requisitions WHERE requisition_number = ?",
+                (payload.requisition_number,)
+            )
+            if cursor.fetchone():
+                raise HTTPException(status_code=400, detail="Requisition number already exists")
+
+            # Step 2: insert new requisition
             cursor.execute("""
                 INSERT INTO requisitions (
                     requisition_number,
@@ -54,28 +65,48 @@ async def submit_requisition(payload: RequisitionPayload):
 
             requisition_id = cursor.lastrowid
 
-            # Insert each line item
             for item in payload.items:
                 cursor.execute("""
                     INSERT INTO requisition_items (
                         requisition_id,
                         description,
-                        project,
                         quantity
-                    ) VALUES (?, ?, ?, ?)
+                    ) VALUES (?, ?, ?)
                 """, (
                     requisition_id,
                     item.description,
-                    item.project,
                     item.quantity
                 ))
+
+            # Step 3: update settings to bump requisition_number_start
+            prefix = ''.join(filter(str.isalpha, payload.requisition_number))
+            number = int(''.join(filter(str.isdigit, payload.requisition_number)))
+            next_number = f"{prefix}{number + 1}"
+
+            cursor.execute("""
+                UPDATE settings
+                SET requisition_number_start = ?
+            """, (next_number,))
+
+            # ✅ Step 4: relink temporary attachments
+            cursor.execute("""
+                UPDATE attachments
+                SET requisition_id = ?, requisition_number = NULL
+                WHERE requisition_id IS NULL AND requisition_number = ?
+            """, (
+                requisition_id,
+                payload.requisition_number
+            ))
 
             conn.commit()
             return {"status": "success", "requisition_id": requisition_id}
 
+    except HTTPException as he:
+        raise he  # Preserve intentional 400 errors
     except Exception as e:
+        print("🔥 Backend crash:")
+        print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Error submitting requisition: {str(e)}")
-
 
 @router.get("/api/pending_requisitions", response_model=dict)
 def get_pending_requisitions():
@@ -97,11 +128,6 @@ def get_pending_requisitions():
                         WHERE ri.requisition_id = r.id
                     ) AS description,
                     (
-                        SELECT GROUP_CONCAT(ri.project, ', ')
-                        FROM requisition_items ri
-                        WHERE ri.requisition_id = r.id
-                    ) AS project,
-                    (
                         SELECT SUM(ri.quantity)
                         FROM requisition_items ri
                         WHERE ri.requisition_id = r.id
@@ -115,8 +141,19 @@ def get_pending_requisitions():
 
             rows = cursor.fetchall()
             requisitions = [dict(row) for row in rows]
-
             return {"requisitions": requisitions}
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching requisitions: {str(e)}")
+
+@router.get("/requisitions/api/generate_pdf/{requisition_id}")
+def requisition_pdf(requisition_id: int):
+    try:
+        pdf_path = generate_requisition_pdf(requisition_id)
+        return FileResponse(
+            pdf_path,
+            media_type="application/pdf",
+            filename=f"Requisition_{requisition_id}.pdf"
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"PDF generation failed: {str(e)}")

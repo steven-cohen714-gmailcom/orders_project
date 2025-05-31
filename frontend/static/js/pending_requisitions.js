@@ -1,5 +1,5 @@
 import { loadRequisitioners } from "./components/shared_filters.js";
-import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from "./components/attachment_modal.js";
+import { showUploadAttachmentsModal, showViewAttachmentsModal, checkAttachments } from "./components/requisitions_attachment_modal.js";
 import { showOrderNoteModal } from "./components/order_note_modal.js";
 import { showPDFModal } from "./components/pdf_modal.js";
 
@@ -71,7 +71,9 @@ async function loadRequisitions() {
           const target = e.target;
           const id = target.getAttribute("data-id");
           const number = target.getAttribute("data-number");
-          const has = await checkAttachments(id, "requisition");
+
+          const has = await checkAttachments(number, "requisition"); // ✅ FIXED LINE
+
           if (has) {
             showViewAttachmentsModal(id, number, null, null, "requisition");
           } else {
@@ -101,8 +103,10 @@ async function loadRequisitions() {
 }
 
 function escapeHTML(str) {
-  if (!str) return "";
-  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  if (typeof str !== "string") return "";
+  return str.replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
 }
 
 function clearFilters() {

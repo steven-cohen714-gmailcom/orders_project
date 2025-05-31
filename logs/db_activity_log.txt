@@ -1241,3 +1241,305 @@
 2025-05-30 10:53:25,086 | INFO | Suppliers fetched: 795 items
 2025-05-30 10:53:25,089 | INFO | Projects fetched: 206 items
 2025-05-30 10:53:25,091 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-30 10:58:59,345 | INFO | Database initialized successfully.
+2025-05-30 10:58:59,345 | INFO | ✅ Database initialized successfully.
+2025-05-30 10:58:59,913 | INFO | Database initialized successfully.
+2025-05-30 10:58:59,913 | INFO | ✅ Database initialized successfully.
+2025-05-30 11:00:05,069 | INFO | Database initialized successfully.
+2025-05-30 11:00:05,069 | INFO | ✅ Database initialized successfully.
+2025-05-30 11:00:15,652 | INFO | Database initialized successfully.
+2025-05-30 11:00:15,652 | INFO | ✅ Database initialized successfully.
+2025-05-30 11:00:16,207 | INFO | Database initialized successfully.
+2025-05-30 11:00:16,207 | INFO | ✅ Database initialized successfully.
+2025-05-30 11:05:27,656 | INFO | Projects fetched: 206 items
+2025-05-30 11:08:13,448 | INFO | Projects fetched: 206 items
+2025-05-30 11:09:12,576 | INFO | Projects fetched: 206 items
+2025-05-30 11:09:15,760 | INFO | Projects fetched: 206 items
+2025-05-30 11:10:33,408 | INFO | Projects fetched: 206 items
+2025-05-30 11:28:08,221 | INFO | Database initialized successfully.
+2025-05-30 11:28:08,221 | INFO | ✅ Database initialized successfully.
+2025-05-30 11:28:08,757 | INFO | Database initialized successfully.
+2025-05-30 11:28:08,757 | INFO | ✅ Database initialized successfully.
+2025-05-30 11:58:35,179 | INFO | Database initialized successfully.
+2025-05-30 11:58:35,179 | INFO | ✅ Database initialized successfully.
+2025-05-30 11:58:46,345 | INFO | Database initialized successfully.
+2025-05-30 11:58:46,345 | INFO | ✅ Database initialized successfully.
+2025-05-30 11:58:46,918 | INFO | Database initialized successfully.
+2025-05-30 11:58:46,918 | INFO | ✅ Database initialized successfully.
+2025-05-30 11:59:40,700 | INFO | Requesters fetched: 7 items
+2025-05-30 11:59:40,704 | INFO | Suppliers fetched: 795 items
+2025-05-30 12:06:31,469 | INFO | Database initialized successfully.
+2025-05-30 12:06:31,469 | INFO | ✅ Database initialized successfully.
+2025-05-30 12:08:47,993 | INFO | Database initialized successfully.
+2025-05-30 12:08:47,993 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:11:24,090 | INFO | Requesters fetched: 7 items
+2025-05-30 14:11:24,091 | INFO | Suppliers fetched: 795 items
+2025-05-30 14:28:22,226 | INFO | Database initialized successfully.
+2025-05-30 14:28:22,227 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:31:27,450 | INFO | Database initialized successfully.
+2025-05-30 14:31:27,450 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:31:27,996 | INFO | Database initialized successfully.
+2025-05-30 14:31:27,996 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:33:46,059 | INFO | Database initialized successfully.
+2025-05-30 14:33:46,059 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:33:58,545 | INFO | Database initialized successfully.
+2025-05-30 14:33:58,545 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:33:59,088 | INFO | Database initialized successfully.
+2025-05-30 14:33:59,088 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:46:43,355 | INFO | Database initialized successfully.
+2025-05-30 14:46:43,355 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:51:14,199 | INFO | Database initialized successfully.
+2025-05-30 14:51:14,200 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:51:14,770 | INFO | Database initialized successfully.
+2025-05-30 14:51:14,770 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:51:31,342 | INFO | Requesters fetched: 7 items
+2025-05-30 14:51:31,345 | INFO | Suppliers fetched: 795 items
+2025-05-30 14:55:23,249 | INFO | Database initialized successfully.
+2025-05-30 14:55:23,249 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:55:23,775 | INFO | Database initialized successfully.
+2025-05-30 14:55:23,775 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:59:07,250 | INFO | Database initialized successfully.
+2025-05-30 14:59:07,250 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:59:42,733 | INFO | Database initialized successfully.
+2025-05-30 14:59:42,733 | INFO | ✅ Database initialized successfully.
+2025-05-30 14:59:43,262 | INFO | Database initialized successfully.
+2025-05-30 14:59:43,262 | INFO | ✅ Database initialized successfully.
+2025-05-30 15:04:23,825 | INFO | Database initialized successfully.
+2025-05-30 15:04:23,825 | INFO | ✅ Database initialized successfully.
+2025-05-30 15:08:57,665 | INFO | Database initialized successfully.
+2025-05-30 15:08:57,665 | INFO | ✅ Database initialized successfully.
+2025-05-30 15:09:07,927 | INFO | Database initialized successfully.
+2025-05-30 15:09:07,927 | INFO | ✅ Database initialized successfully.
+2025-05-30 15:09:15,766 | INFO | Database initialized successfully.
+2025-05-30 15:09:15,766 | INFO | ✅ Database initialized successfully.
+2025-05-30 15:09:16,297 | INFO | Database initialized successfully.
+2025-05-30 15:09:16,297 | INFO | ✅ Database initialized successfully.
+2025-05-30 15:09:49,069 | INFO | Projects fetched: 206 items
+2025-05-30 15:11:43,736 | INFO | Requesters fetched: 7 items
+2025-05-30 15:11:43,739 | INFO | Suppliers fetched: 795 items
+2025-05-30 15:11:43,753 | INFO | Items fetched: 9980 items
+2025-05-30 15:11:43,790 | INFO | Projects fetched: 206 items
+2025-05-30 15:11:43,794 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-30 15:12:02,013 | INFO | New requester added: xc df bdf
+2025-05-30 15:12:02,017 | INFO | Requesters fetched: 8 items
+2025-05-30 15:25:31,718 | INFO | Requesters fetched: 8 items
+2025-05-30 15:25:31,720 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-30 15:25:31,730 | INFO | Items fetched: 9980 items
+2025-05-30 15:25:31,761 | INFO | Suppliers fetched: 795 items
+2025-05-30 15:25:31,764 | INFO | Projects fetched: 206 items
+2025-05-30 15:28:57,509 | INFO | Database initialized successfully.
+2025-05-30 15:28:57,510 | INFO | ✅ Database initialized successfully.
+2025-05-30 15:32:46,769 | INFO | Database initialized successfully.
+2025-05-30 15:32:46,769 | INFO | ✅ Database initialized successfully.
+2025-05-30 15:32:47,293 | INFO | Database initialized successfully.
+2025-05-30 15:32:47,293 | INFO | ✅ Database initialized successfully.
+2025-05-30 15:32:54,773 | INFO | Requesters fetched: 8 items
+2025-05-30 15:32:54,786 | INFO | Items fetched: 9980 items
+2025-05-30 15:32:54,815 | INFO | Projects fetched: 206 items
+2025-05-30 15:32:54,817 | INFO | Suppliers fetched: 795 items
+2025-05-30 15:32:54,820 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-30 15:33:01,771 | INFO | Projects fetched: 206 items
+2025-05-31 06:31:25,685 | INFO | Database initialized successfully.
+2025-05-31 06:31:25,686 | INFO | ✅ Database initialized successfully.
+2025-05-31 06:32:58,359 | INFO | Database initialized successfully.
+2025-05-31 06:32:58,359 | INFO | ✅ Database initialized successfully.
+2025-05-31 06:32:58,880 | INFO | Database initialized successfully.
+2025-05-31 06:32:58,880 | INFO | ✅ Database initialized successfully.
+2025-05-31 06:40:59,322 | INFO | Database initialized successfully.
+2025-05-31 06:40:59,322 | INFO | ✅ Database initialized successfully.
+2025-05-31 06:42:37,012 | INFO | Database initialized successfully.
+2025-05-31 06:42:37,012 | INFO | ✅ Database initialized successfully.
+2025-05-31 06:57:46,865 | INFO | Database initialized successfully.
+2025-05-31 06:57:46,865 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:00:49,391 | INFO | Database initialized successfully.
+2025-05-31 07:00:49,391 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:12:37,615 | INFO | Database initialized successfully.
+2025-05-31 07:12:37,615 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:12:38,168 | INFO | Database initialized successfully.
+2025-05-31 07:12:38,168 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:24:38,709 | INFO | Database initialized successfully.
+2025-05-31 07:24:38,709 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:24:39,254 | INFO | Database initialized successfully.
+2025-05-31 07:24:39,254 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:27:37,443 | INFO | Requesters fetched: 8 items
+2025-05-31 07:27:37,445 | INFO | Suppliers fetched: 795 items
+2025-05-31 07:34:06,642 | INFO | Database initialized successfully.
+2025-05-31 07:34:06,643 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:34:12,876 | INFO | Database initialized successfully.
+2025-05-31 07:34:12,876 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:34:13,424 | INFO | Database initialized successfully.
+2025-05-31 07:34:13,424 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:41:55,764 | INFO | Database initialized successfully.
+2025-05-31 07:41:55,765 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:42:41,951 | INFO | Database initialized successfully.
+2025-05-31 07:42:41,951 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:42:42,517 | INFO | Database initialized successfully.
+2025-05-31 07:42:42,517 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:45:39,589 | INFO | Database initialized successfully.
+2025-05-31 07:45:39,589 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:45:53,034 | INFO | Database initialized successfully.
+2025-05-31 07:45:53,034 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:45:53,584 | INFO | Database initialized successfully.
+2025-05-31 07:45:53,584 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:48:08,382 | INFO | Database initialized successfully.
+2025-05-31 07:48:08,382 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:48:19,316 | INFO | Database initialized successfully.
+2025-05-31 07:48:19,316 | INFO | ✅ Database initialized successfully.
+2025-05-31 07:48:19,890 | INFO | Database initialized successfully.
+2025-05-31 07:48:19,890 | INFO | ✅ Database initialized successfully.
+2025-05-31 09:27:09,610 | INFO | Suppliers fetched: 795 items
+2025-05-31 09:27:09,613 | INFO | Projects fetched: 206 items
+2025-05-31 09:27:09,615 | INFO | Requesters fetched: 8 items
+2025-05-31 09:27:09,628 | INFO | Items fetched: 9980 items
+2025-05-31 09:27:09,659 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-31 09:33:33,637 | INFO | Database initialized successfully.
+2025-05-31 09:33:33,637 | INFO | ✅ Database initialized successfully.
+2025-05-31 09:38:13,954 | INFO | Starting to render new order page
+2025-05-31 09:38:14,024 | INFO | Requesters fetched: 8 items
+2025-05-31 09:38:14,028 | INFO | Suppliers fetched: 795 items
+2025-05-31 09:38:14,046 | INFO | Items fetched: 9980 items
+2025-05-31 09:38:14,085 | INFO | Projects fetched: 206 items
+2025-05-31 09:42:43,526 | INFO | Starting to render new order page
+2025-05-31 09:42:43,580 | INFO | Requesters fetched: 8 items
+2025-05-31 09:42:43,587 | INFO | Suppliers fetched: 795 items
+2025-05-31 09:42:43,609 | INFO | Items fetched: 9980 items
+2025-05-31 09:42:43,649 | INFO | Projects fetched: 206 items
+2025-05-31 09:57:32,989 | INFO | Database initialized successfully.
+2025-05-31 09:57:32,989 | INFO | ✅ Database initialized successfully.
+2025-05-31 09:57:33,531 | INFO | Database initialized successfully.
+2025-05-31 09:57:33,531 | INFO | ✅ Database initialized successfully.
+2025-05-31 09:57:43,019 | INFO | Starting to render new order page
+2025-05-31 09:57:43,135 | INFO | Requesters fetched: 8 items
+2025-05-31 09:57:43,137 | INFO | Suppliers fetched: 795 items
+2025-05-31 09:57:43,161 | INFO | Items fetched: 9980 items
+2025-05-31 09:57:43,196 | INFO | Projects fetched: 206 items
+2025-05-31 11:00:58,695 | INFO | Requesters fetched: 8 items
+2025-05-31 11:00:58,700 | INFO | Suppliers fetched: 795 items
+2025-05-31 11:25:46,990 | INFO | Database initialized successfully.
+2025-05-31 11:25:46,990 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:25:59,941 | INFO | Database initialized successfully.
+2025-05-31 11:25:59,941 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:26:00,478 | INFO | Database initialized successfully.
+2025-05-31 11:26:00,478 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:31:38,735 | ERROR | ❌ DB init failed: database is locked
+2025-05-31 11:31:38,735 | ERROR | ❌ Failed to initialize database
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 60, in <module>
+    init_db()
+    ~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/database.py", line 153, in init_db
+    cursor.execute("""
+    ~~~~~~~~~~~~~~^^^^
+        INSERT OR IGNORE INTO business_details (
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        )
+        ^
+    """)
+    ^^^^
+sqlite3.OperationalError: database is locked
+2025-05-31 11:31:44,551 | ERROR | ❌ DB init failed: database is locked
+2025-05-31 11:31:44,552 | ERROR | ❌ Failed to initialize database
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 60, in <module>
+    init_db()
+    ~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/database.py", line 153, in init_db
+    cursor.execute("""
+    ~~~~~~~~~~~~~~^^^^
+        INSERT OR IGNORE INTO business_details (
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        )
+        ^
+    """)
+    ^^^^
+sqlite3.OperationalError: database is locked
+2025-05-31 11:32:10,773 | ERROR | ❌ DB init failed: database is locked
+2025-05-31 11:32:10,773 | ERROR | ❌ Failed to initialize database
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 60, in <module>
+    init_db()
+    ~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/database.py", line 153, in init_db
+    cursor.execute("""
+    ~~~~~~~~~~~~~~^^^^
+        INSERT OR IGNORE INTO business_details (
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        )
+        ^
+    """)
+    ^^^^
+sqlite3.OperationalError: database is locked
+2025-05-31 11:32:16,556 | ERROR | ❌ DB init failed: database is locked
+2025-05-31 11:32:16,556 | ERROR | ❌ Failed to initialize database
+Traceback (most recent call last):
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/main.py", line 60, in <module>
+    init_db()
+    ~~~~~~~^^
+  File "/Users/stevencohen/Projects/universal_recycling/orders_project/backend/database.py", line 153, in init_db
+    cursor.execute("""
+    ~~~~~~~~~~~~~~^^^^
+        INSERT OR IGNORE INTO business_details (
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        )
+        ^
+    """)
+    ^^^^
+sqlite3.OperationalError: database is locked
+2025-05-31 11:32:46,178 | INFO | Database initialized successfully.
+2025-05-31 11:32:46,178 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:32:46,739 | INFO | Database initialized successfully.
+2025-05-31 11:32:46,739 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:33:33,796 | INFO | Requesters fetched: 8 items
+2025-05-31 11:33:33,799 | INFO | Projects fetched: 206 items
+2025-05-31 11:33:33,802 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-31 11:33:33,813 | INFO | Items fetched: 9980 items
+2025-05-31 11:33:33,855 | INFO | Suppliers fetched: 795 items
+2025-05-31 11:38:48,832 | INFO | Database initialized successfully.
+2025-05-31 11:38:48,832 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:44:07,920 | INFO | Database initialized successfully.
+2025-05-31 11:44:07,920 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:44:18,756 | INFO | Database initialized successfully.
+2025-05-31 11:44:18,756 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:44:19,298 | INFO | Database initialized successfully.
+2025-05-31 11:44:19,298 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:44:33,528 | INFO | Requesters fetched: 8 items
+2025-05-31 11:44:33,532 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-31 11:44:33,550 | INFO | Items fetched: 9980 items
+2025-05-31 11:44:33,585 | INFO | Suppliers fetched: 795 items
+2025-05-31 11:44:33,588 | INFO | Projects fetched: 206 items
+2025-05-31 11:45:13,983 | INFO | Requesters fetched: 8 items
+2025-05-31 11:45:13,995 | INFO | Items fetched: 9980 items
+2025-05-31 11:45:14,035 | INFO | Suppliers fetched: 795 items
+2025-05-31 11:45:14,040 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-31 11:45:14,042 | INFO | Projects fetched: 206 items
+2025-05-31 11:56:26,227 | INFO | Database initialized successfully.
+2025-05-31 11:56:26,228 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:56:58,990 | INFO | Database initialized successfully.
+2025-05-31 11:56:58,990 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:56:59,519 | INFO | Database initialized successfully.
+2025-05-31 11:56:59,519 | INFO | ✅ Database initialized successfully.
+2025-05-31 11:57:10,209 | INFO | Requesters fetched: 8 items
+2025-05-31 11:57:10,230 | INFO | Items fetched: 9980 items
+2025-05-31 11:57:10,264 | INFO | Suppliers fetched: 795 items
+2025-05-31 11:57:10,268 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-31 11:57:10,270 | INFO | Projects fetched: 206 items
+2025-05-31 12:07:59,179 | INFO | Database initialized successfully.
+2025-05-31 12:07:59,180 | INFO | ✅ Database initialized successfully.
+2025-05-31 12:07:59,698 | INFO | Database initialized successfully.
+2025-05-31 12:07:59,698 | INFO | ✅ Database initialized successfully.
+2025-05-31 12:08:18,055 | INFO | Requesters fetched: 8 items
+2025-05-31 12:08:18,057 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-31 12:08:18,071 | INFO | Items fetched: 9980 items
+2025-05-31 12:08:18,109 | INFO | Suppliers fetched: 795 items
+2025-05-31 12:08:18,113 | INFO | Projects fetched: 206 items
+2025-05-31 12:13:20,205 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-05-31 12:13:20,207 | INFO | Requesters fetched: 8 items
+2025-05-31 12:13:20,218 | INFO | Items fetched: 9980 items
+2025-05-31 12:13:20,253 | INFO | Suppliers fetched: 795 items
+2025-05-31 12:13:20,257 | INFO | Projects fetched: 206 items
+2025-05-31 12:20:33,102 | INFO | Database initialized successfully.
+2025-05-31 12:20:33,102 | INFO | ✅ Database initialized successfully.

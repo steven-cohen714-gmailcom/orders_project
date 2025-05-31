@@ -51,3 +51,31 @@ export function enableFuzzySearch(selectId) {
     input.dispatchEvent(new Event("input"));
   });
 }
+
+export async function populateDropdown(endpoint, selectId, hideDefault = false) {
+  try {
+    const res = await fetch(endpoint);
+    const data = await res.json();
+    const select = document.getElementById(selectId);
+    if (!select) return;
+
+    if (!hideDefault) {
+      select.innerHTML = '<option value="">Select...</option>';
+    } else {
+      select.innerHTML = "";
+    }
+
+    const key = Object.keys(data)[0];
+    const items = Array.isArray(data[key]) ? data[key] : data;
+
+    items.forEach(item => {
+      const opt = document.createElement("option");
+      opt.value = item.id;
+      opt.textContent = item.name;
+      select.appendChild(opt);
+    });
+  } catch (err) {
+    console.error(`❌ Failed to load dropdown from ${endpoint}:`, err);
+  }
+}
+

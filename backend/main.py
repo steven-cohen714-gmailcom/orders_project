@@ -7,6 +7,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.routing import APIRouter
 from backend.endpoints import html_routes
 from backend.endpoints import requisitions
+from backend.endpoints import requisition_attachments
 from backend.endpoints.lookups import mark_cod_paid_api as mark_cod_paid_api_module
 
 from pathlib import Path
@@ -200,6 +201,13 @@ async def pending_requisitions_page(request: Request):
         return login_redirect
     return templates.TemplateResponse("pending_requisitions.html", {"request": request})
 
+@static_router.get("/requisitions/new", response_class=HTMLResponse)
+async def new_requisition_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("new_requisition.html", {"request": request})
+
 @static_router.get("/favicon.ico")
 async def favicon():
     favicon_path = Path("frontend/static/favicon.ico")
@@ -240,6 +248,7 @@ app.include_router(projects_router.router, prefix="/maintenance")
 app.include_router(requisitions.router)
 app.include_router(requisitioners_router.router, prefix="/lookups")
 app.include_router(mark_cod_paid_api_module.router, prefix="/orders")
+app.include_router(requisition_attachments.router, prefix="/requisitions")
 
 # --- Dev CLI ---
 if __name__ == "__main__":
