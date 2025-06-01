@@ -13,12 +13,12 @@ Preserved tables:
 - items
 - projects
 - suppliers
+- requisitioners
 
 Cleared tables:
 - orders, order_items, audit_trail, attachments
+- requisitions, requisition_items, requisition_attachments
 - received_item_logs
-
-Before wiping any data, a timestamped backup is created.
 """
 
 import sqlite3
@@ -26,13 +26,13 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
-# --- Config: path to your live database ---
+# --- Config: update DB path if needed ---
 DB_PATH = Path("/Users/stevencohen/Projects/universal_recycling/orders_project/data/orders.db")
 BACKUP_DIR = DB_PATH.parent
 TIMESTAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
 BACKUP_PATH = BACKUP_DIR / f"orders_backup_before_clear_dynamic_{TIMESTAMP}.db"
 
-# Tables to retain
+# Tables to preserve
 STATIC_TABLES = {
     "users",
     "settings",
@@ -40,7 +40,8 @@ STATIC_TABLES = {
     "business_details",
     "items",
     "projects",
-    "suppliers"
+    "suppliers",
+    "requisitioners"
 }
 
 def get_all_tables(conn):
@@ -66,7 +67,7 @@ def clear_dynamic_tables(conn, all_tables):
 
     cursor.execute("PRAGMA foreign_keys = ON;")
     conn.commit()
-    print(f"\n✅ Cleanup complete: {cleared} tables cleared, {skipped} preserved.")
+    print(f"\n✅ Dynamic clear complete: {cleared} tables cleared, {skipped} preserved.")
 
 def main():
     if not DB_PATH.exists():

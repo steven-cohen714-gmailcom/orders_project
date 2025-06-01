@@ -1558,3 +1558,130 @@ sqlite3.OperationalError: database is locked
 2025-06-01 05:48:14,161 | INFO | ✅ Database initialized successfully.
 2025-06-01 05:48:14,696 | INFO | Database initialized successfully.
 2025-06-01 05:48:14,696 | INFO | ✅ Database initialized successfully.
+2025-06-01 06:04:57,172 | INFO | Starting to render new order page
+2025-06-01 06:04:57,233 | INFO | Requesters fetched: 8 items
+2025-06-01 06:04:57,242 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:04:57,270 | INFO | Items fetched: 9980 items
+2025-06-01 06:04:57,309 | INFO | Projects fetched: 206 items
+2025-06-01 06:04:58,255 | INFO | Requesters fetched: 8 items
+2025-06-01 06:04:58,257 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:04:59,465 | INFO | Requesters fetched: 8 items
+2025-06-01 06:04:59,474 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:05:01,419 | INFO | Requesters fetched: 8 items
+2025-06-01 06:05:01,422 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:05:03,156 | INFO | Requesters fetched: 8 items
+2025-06-01 06:05:03,163 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:05:03,175 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 0 total orders for audit trail
+2025-06-01 06:06:12,300 | INFO | Database initialized successfully.
+2025-06-01 06:06:12,301 | INFO | ✅ Database initialized successfully.
+2025-06-01 06:06:12,823 | INFO | Database initialized successfully.
+2025-06-01 06:06:12,823 | INFO | ✅ Database initialized successfully.
+2025-06-01 06:06:32,209 | INFO | Requesters fetched: 8 items
+2025-06-01 06:06:32,211 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 06:06:32,242 | INFO | Items fetched: 9980 items
+2025-06-01 06:06:32,279 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:06:32,282 | INFO | Projects fetched: 206 items
+2025-06-01 06:35:00,074 | INFO | Items fetched: 9980 items
+2025-06-01 06:35:00,105 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:35:00,107 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 06:35:00,108 | INFO | Requesters fetched: 8 items
+2025-06-01 06:35:00,109 | INFO | Projects fetched: 206 items
+2025-06-01 06:35:02,276 | INFO | Requesters fetched: 8 items
+2025-06-01 06:35:02,279 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:36:21,264 | INFO | Requesters fetched: 8 items
+2025-06-01 06:36:21,266 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:39:00,987 | INFO | Requesters fetched: 8 items
+2025-06-01 06:39:00,989 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 06:39:01,001 | INFO | Items fetched: 9980 items
+2025-06-01 06:39:01,039 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:39:01,043 | INFO | Projects fetched: 206 items
+2025-06-01 06:42:09,638 | INFO | Requesters fetched: 8 items
+2025-06-01 06:42:09,644 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:42:09,655 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 0 total orders for audit trail
+2025-06-01 06:51:01,390 | INFO | Starting to render new order page
+2025-06-01 06:51:01,470 | INFO | Requesters fetched: 8 items
+2025-06-01 06:51:01,474 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:51:01,491 | INFO | Items fetched: 9980 items
+2025-06-01 06:51:01,551 | INFO | Projects fetched: 206 items
+2025-06-01 06:55:47,433 | INFO | INFO | previewOrder started | {}
+2025-06-01 06:55:47,645 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-06-01 06:55:55,885 | INFO | INFO | submitOrder started | {}
+2025-06-01 06:55:55,893 | INFO | 🔍 Incoming order: order_number='1000' status='Awaiting Authorisation' order_note='Order Note 1000' note_to_supplier='Supplier note 1000' supplier_id=19 requester_id=5 payment_terms='COD' items=[OrderItemCreate(item_code='BEAR016', item_description='BEARING HUB REPAIR', project='IN10M', qty_ordered=10.0, price=1200.0)] auth_band_required=1
+2025-06-01 06:55:55,896 | INFO | ✅ [ORDER] Success created: Order 1000 with total R12000.0
+2025-06-01 06:55:55,904 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "1001", "orderId": 209}
+2025-06-01 06:56:02,504 | INFO | Requesters fetched: 8 items
+2025-06-01 06:56:02,507 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:56:07,671 | INFO | Requesters fetched: 8 items
+2025-06-01 06:56:07,679 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:56:09,330 | INFO | Requesters fetched: 8 items
+2025-06-01 06:56:09,333 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:56:11,447 | INFO | Requesters fetched: 8 items
+2025-06-01 06:56:11,454 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:56:11,468 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-06-01 06:56:22,460 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 209
+2025-06-01 06:56:45,299 | INFO | Requesters fetched: 8 items
+2025-06-01 06:56:45,301 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:57:44,315 | INFO | Requesters fetched: 8 items
+2025-06-01 06:57:44,323 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:57:44,335 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-06-01 06:59:10,874 | INFO | Requesters fetched: 8 items
+2025-06-01 06:59:10,878 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:59:14,479 | INFO | Requesters fetched: 8 items
+2025-06-01 06:59:14,488 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:59:19,235 | INFO | Generating PDF for order_id=209, order_number=1000
+2025-06-01 06:59:29,726 | INFO | Requesters fetched: 8 items
+2025-06-01 06:59:29,739 | INFO | Suppliers fetched: 795 items
+2025-06-01 06:59:33,729 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 209
+2025-06-01 07:03:59,923 | INFO | Requesters fetched: 8 items
+2025-06-01 07:03:59,926 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:04:13,903 | INFO | Requesters fetched: 8 items
+2025-06-01 07:04:13,906 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:04:16,136 | INFO | Requesters fetched: 8 items
+2025-06-01 07:04:16,139 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:04:19,880 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 209
+2025-06-01 07:04:29,819 | INFO | Requesters fetched: 8 items
+2025-06-01 07:04:29,821 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:04:31,168 | INFO | Requesters fetched: 8 items
+2025-06-01 07:04:31,171 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:04:33,034 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 209
+2025-06-01 07:04:44,687 | INFO | Requesters fetched: 8 items
+2025-06-01 07:04:44,690 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:04:47,491 | INFO | Requesters fetched: 8 items
+2025-06-01 07:04:47,495 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:04:49,505 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 2 logs for order 209
+2025-06-01 07:08:47,829 | INFO | Requesters fetched: 8 items
+2025-06-01 07:08:47,834 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:08:47,847 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-06-01 07:08:52,370 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 2 logs for order 209
+2025-06-01 07:11:12,043 | INFO | Requesters fetched: 8 items
+2025-06-01 07:11:12,045 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:11:33,366 | INFO | Requesters fetched: 8 items
+2025-06-01 07:11:33,369 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:11:41,671 | INFO | Requesters fetched: 8 items
+2025-06-01 07:11:41,673 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:11:51,008 | INFO | Requesters fetched: 8 items
+2025-06-01 07:11:51,014 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:11:51,027 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-06-01 07:11:53,784 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 2 logs for order 209
+2025-06-01 07:40:38,672 | INFO | Requesters fetched: 8 items
+2025-06-01 07:40:38,675 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:40:38,682 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-06-01 07:41:12,164 | INFO | Requesters fetched: 8 items
+2025-06-01 07:41:12,169 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:41:12,178 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-06-01 07:42:01,099 | INFO | Requesters fetched: 8 items
+2025-06-01 07:42:01,103 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:42:01,112 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-06-01 07:42:31,919 | INFO | Requesters fetched: 8 items
+2025-06-01 07:42:31,921 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 07:42:31,936 | INFO | Items fetched: 9980 items
+2025-06-01 07:42:31,967 | INFO | Suppliers fetched: 795 items
+2025-06-01 07:42:31,970 | INFO | Projects fetched: 206 items
+2025-06-01 07:46:00,131 | INFO | New item added: Test Item Code - 10 - Test Item Description - 10
+2025-06-01 07:46:00,158 | INFO | Items fetched: 9981 items
+2025-06-01 07:47:54,065 | INFO | New requester added: Test Requester - 2
+2025-06-01 07:47:54,068 | INFO | Requesters fetched: 9 items
+2025-06-01 07:48:47,573 | INFO | New project added: Project Code - 15 - Project Name - 15
+2025-06-01 07:48:47,579 | INFO | Projects fetched: 207 items
+2025-06-01 08:13:58,463 | INFO | Database initialized successfully.
+2025-06-01 08:13:58,463 | INFO | ✅ Database initialized successfully.

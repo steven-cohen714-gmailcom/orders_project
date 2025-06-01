@@ -138,3 +138,26 @@
 [2025-05-31T11:01:04.954506] {"action": "attachment_uploaded", "order_id": 206, "filename": "Screenshot_2025-05-31_at_10.53.46.png", "path": "data/uploads/206_Screenshot_2025-05-31_at_10.53.46.png", "size_bytes": 41295}
 [2025-05-31T11:05:50.765664] {"error": "400: Invalid order_id", "type": "upload"}
 [2025-05-31T11:06:03.306813] {"error": "400: Invalid order_id", "type": "upload"}
+[2025-06-01T06:04:58.274508] {"action": "fetch_pending_orders", "count": 0}
+[2025-06-01T06:04:59.487133] {"action": "fetch_received_orders", "count": 0}
+[2025-06-01T06:36:21.278001] {"action": "fetch_pending_orders", "count": 0}
+[2025-06-01T06:56:02.521339] {"action": "fetch_pending_orders", "count": 1}
+[2025-06-01T06:56:07.693667] {"action": "fetch_received_orders", "count": 0}
+[2025-06-01T06:56:22.461989] {"action": "fetch_items_for_order", "order_id": 209, "count": 1}
+[2025-06-01T06:56:40.836518] {"action": "attachment_uploaded", "order_id": 209, "filename": "Screenshot_2.png", "path": "data/uploads/209_Screenshot_2.png", "size_bytes": 82798}
+[2025-06-01T06:56:45.318565] {"action": "fetch_pending_orders", "count": 1}
+[2025-06-01T06:59:10.895831] {"action": "fetch_pending_orders", "count": 1}
+[2025-06-01T06:59:29.754402] {"action": "fetch_pending_orders", "count": 1}
+[2025-06-01T06:59:33.731806] {"action": "fetch_items_for_order", "order_id": 209, "count": 1}
+[2025-06-01T07:03:59.940339] {"action": "fetch_pending_orders", "count": 1}
+[2025-06-01T07:04:02.374031] {"action": "fetch_items_for_order", "order_id": 209, "count": 1}
+[2025-06-01T07:04:13.917736] {"action": "fetch_pending_orders", "count": 0}
+[2025-06-01T07:04:19.881578] {"action": "fetch_items_for_order", "order_id": 209, "count": 1}
+[2025-06-01T07:04:33.036301] {"action": "fetch_items_for_order", "order_id": 209, "count": 1}
+[2025-06-01T07:04:36.273316] {"action": "fetch_items_for_order", "order_id": 209, "count": 1}
+[2025-06-01T07:04:49.506746] {"action": "fetch_items_for_order", "order_id": 209, "count": 1}
+[2025-06-01T07:08:52.372060] {"action": "fetch_items_for_order", "order_id": 209, "count": 1}
+[2025-06-01T07:11:12.059570] {"action": "fetch_cod_orders", "count": 1}
+[2025-06-01T07:11:33.382169] {"action": "fetch_cod_orders", "count": 1}
+[2025-06-01T07:11:41.684908] {"action": "fetch_cod_orders", "count": 1}
+[2025-06-01T07:11:53.786107] {"action": "fetch_items_for_order", "order_id": 209, "count": 1}

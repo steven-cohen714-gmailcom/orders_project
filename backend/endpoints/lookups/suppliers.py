@@ -53,17 +53,8 @@ async def add_supplier(payload: dict):
 
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO suppliers (
-                account_number, name, telephone, vat_number, registration_number,
-                email, contact_name, contact_telephone,
-                address_line1, address_line2, address_line3, postal_code
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (
-            account_number, name, telephone, vat_number, registration_number,
-            email, contact_name, contact_telephone,
-            address_line1, address_line2, address_line3, postal_code
-        ))
+
+        cursor.execute("INSERT INTO suppliers (name) VALUES (?)", (name,))
 
         conn.commit()
         logging.info(f"New supplier added: {name}")

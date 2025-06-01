@@ -73,6 +73,7 @@ export function initSuppliers() {
       if (res.ok) {
         fetchSuppliers();
         cancelSupplierEdit();
+        alert("✅ Supplier saved successfully.");
       }
     } catch (err) {
       console.error("Failed to save supplier:", err);

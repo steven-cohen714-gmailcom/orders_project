@@ -1,27 +1,8 @@
-INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
-INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [25731] using StatReload
-INFO:     Started server process [25800]
+WARNING:  StatReload detected changes in 'backend/endpoints/lookups/suppliers.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27381]
+INFO:     Started server process [30011]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:51692 - "GET /requisitions/pending_requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51692 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:51693 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51695 - "GET /static/js/pending_requisitions.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51695 - "GET /static/js/components/requisitions_attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51692 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51693 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51697 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51697 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51697 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51697 - "GET /api/pending_requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51697 - "GET /requisitions/attachments/2011 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51697 - "GET /requisitions/attachments/12 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51697 - "POST /requisitions/upload_attachment HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51697 - "GET /requisitions/attachments/2011 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51697 - "GET /requisitions/attachments/12 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51697 - "GET /data/uploads/20250601054831_Screenshot%202025-05-31%20at%2012.09.01.png HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51778 - "POST /requisitions/upload_attachment HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51778 - "GET /requisitions/attachments/2011 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51778 - "GET /requisitions/attachments/12 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51778 - "GET /data/uploads/20250601054842_Intimisso.pdf HTTP/1.1" 200 OK
