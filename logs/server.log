@@ -1,129 +1,27 @@
 INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
 INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [12363] using StatReload
-INFO:     Started server process [12432]
+INFO:     Started reloader process [25731] using StatReload
+INFO:     Started server process [25800]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:55290 - "GET /requisitions/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55290 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:55291 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55290 - "GET /static/js/new_requisition_main.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55291 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55290 - "GET /static/js/components/requisitions_attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55290 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55290 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55290 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55329 - "GET /requisitions/pending_requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55329 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:55329 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55329 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55331 - "GET /api/pending_requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55331 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55331 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:55331 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55329 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55331 - "GET /lookups/business_details HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55329 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55341 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55345 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55346 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55347 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55331 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55377 - "PUT /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55377 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55377 - "GET /requisitions/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55377 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:55383 - "GET /static/js/new_requisition_main.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:55383 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55383 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55383 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55417 - "GET /requisitions/attachments/null HTTP/1.1" 422 Unprocessable Content
-INFO:     127.0.0.1:55448 - "GET /requisitions/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55448 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:55449 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55451 - "GET /static/js/new_requisition_main.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55449 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55451 - "GET /static/js/components/requisitions_attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55451 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55451 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55451 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55451 - "GET /requisitions/attachments/null HTTP/1.1" 422 Unprocessable Content
-INFO:     127.0.0.1:56475 - "GET /requisitions/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56476 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56475 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56478 - "GET /static/js/new_requisition_main.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56475 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56478 - "GET /static/js/components/requisitions_attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56478 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56475 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56475 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56505 - "GET /requisitions/attachments/2009 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56505 - "POST /requisitions/upload_attachment HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56572 - "POST /requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56605 - "GET /requisitions/pending_requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56605 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56607 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56609 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56609 - "GET /api/pending_requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56609 - "GET /requisitions/attachments/10 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56609 - "GET /requisitions/attachments/10 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56658 - "GET /requisitions/attachments/10 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56658 - "GET /requisitions/attachments/10 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56658 - "POST /requisitions/upload_attachment HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56658 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56658 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56686 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56658 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56686 - "GET /lookups/business_details HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56690 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56692 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56693 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56694 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56658 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56686 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56692 - "GET /requisitions/pending_requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56692 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56686 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56686 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56692 - "GET /api/pending_requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56692 - "GET /requisitions/attachments/10 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56692 - "GET /requisitions/attachments/10 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56818 - "GET /requisitions/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56818 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56820 - "GET /static/js/new_requisition_main.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:56820 - "GET /static/js/components/requisitions_attachment_modal.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:56820 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56818 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56818 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56887 - "GET /requisitions/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56887 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:56888 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56887 - "GET /static/js/new_requisition_main.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /static/js/components/requisitions_attachment_modal.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56887 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56888 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56887 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56887 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56958 - "GET /requisitions/attachments/2010 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56958 - "POST /requisitions/upload_attachment HTTP/1.1" 200 OK
-INFO:     127.0.0.1:56958 - "GET /requisitions/attachments/2010 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57016 - "GET /requisitions/attachments/2010 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57016 - "POST /requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57016 - "GET /requisitions/pending_requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57016 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:57016 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57034 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57034 - "GET /api/pending_requisitions HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57034 - "GET /requisitions/api/generate_pdf/11 HTTP/1.1" 500 Internal Server Error
-INFO:     127.0.0.1:57068 - "GET /requisitions/attachments/11 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57068 - "GET /requisitions/attachments/11 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57182 - "GET /requisitions/attachments/11 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57182 - "GET /requisitions/attachments/11 HTTP/1.1" 200 OK
-WARNING:  StatReload detected changes in 'backend/endpoints/requisition_attachments.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [12432]
-INFO:     Started server process [12626]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
+INFO:     127.0.0.1:51692 - "GET /requisitions/pending_requisitions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51692 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51693 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51695 - "GET /static/js/pending_requisitions.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51695 - "GET /static/js/components/requisitions_attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51692 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51693 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51697 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51697 - "GET /lookups/requisitioners HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51697 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51697 - "GET /api/pending_requisitions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51697 - "GET /requisitions/attachments/2011 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51697 - "GET /requisitions/attachments/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51697 - "POST /requisitions/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51697 - "GET /requisitions/attachments/2011 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51697 - "GET /requisitions/attachments/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51697 - "GET /data/uploads/20250601054831_Screenshot%202025-05-31%20at%2012.09.01.png HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51778 - "POST /requisitions/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51778 - "GET /requisitions/attachments/2011 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51778 - "GET /requisitions/attachments/12 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51778 - "GET /data/uploads/20250601054842_Intimisso.pdf HTTP/1.1" 200 OK

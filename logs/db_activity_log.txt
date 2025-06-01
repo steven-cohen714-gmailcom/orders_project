@@ -1543,3 +1543,18 @@ sqlite3.OperationalError: database is locked
 2025-05-31 12:13:20,257 | INFO | Projects fetched: 206 items
 2025-05-31 12:20:33,102 | INFO | Database initialized successfully.
 2025-05-31 12:20:33,102 | INFO | ✅ Database initialized successfully.
+2025-06-01 04:59:38,815 | INFO | Database initialized successfully.
+2025-06-01 04:59:38,815 | INFO | ✅ Database initialized successfully.
+2025-06-01 04:59:39,354 | INFO | Database initialized successfully.
+2025-06-01 04:59:39,354 | INFO | ✅ Database initialized successfully.
+2025-06-01 05:22:15,754 | INFO | Requesters fetched: 8 items
+2025-06-01 05:22:15,769 | INFO | Items fetched: 9980 items
+2025-06-01 05:22:15,804 | INFO | Suppliers fetched: 795 items
+2025-06-01 05:22:15,808 | INFO | Projects fetched: 206 items
+2025-06-01 05:22:15,809 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 05:47:54,523 | INFO | Database initialized successfully.
+2025-06-01 05:47:54,523 | INFO | ✅ Database initialized successfully.
+2025-06-01 05:48:14,161 | INFO | Database initialized successfully.
+2025-06-01 05:48:14,161 | INFO | ✅ Database initialized successfully.
+2025-06-01 05:48:14,696 | INFO | Database initialized successfully.
+2025-06-01 05:48:14,696 | INFO | ✅ Database initialized successfully.

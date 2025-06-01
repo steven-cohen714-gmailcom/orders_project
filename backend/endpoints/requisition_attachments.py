@@ -20,10 +20,10 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
-# --- Upload attachment using number (ID may be null) ---
+# --- Upload attachment using requisition_id only ---
 @router.post("/upload_attachment")
 async def upload_requisition_attachment(
-    requisition_number: str = Form(...),
+    requisition_id: int = Form(...),
     file: UploadFile = File(...)
 ):
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
@@ -39,11 +39,11 @@ async def upload_requisition_attachment(
             conn.execute(
                 """
                 INSERT INTO requisition_attachments 
-                (requisition_id, requisition_number, filename, file_path, upload_date)
-                VALUES (NULL, ?, ?, ?, ?)
+                (requisition_id, filename, file_path, upload_date)
+                VALUES (?, ?, ?, ?)
                 """,
                 (
-                    requisition_number,
+                    requisition_id,
                     file.filename,
                     str(stored_path),
                     datetime.now().isoformat()
@@ -54,26 +54,19 @@ async def upload_requisition_attachment(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
 
-# --- Get attachments by ID or Number ---
-@router.get("/attachments/{identifier}")
-def get_requisition_attachments(identifier: str):
+# --- Get attachments by requisition_id ---
+@router.get("/attachments/{requisition_id}")
+def get_requisition_attachments(requisition_id: int):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        # Determine if ID or number
-        if identifier.isdigit():
-            cursor.execute(
-                "SELECT filename, file_path FROM requisition_attachments WHERE requisition_id = ?",
-                (int(identifier),)
-            )
-        else:
-            cursor.execute(
-                "SELECT filename, file_path FROM requisition_attachments WHERE requisition_number = ?",
-                (identifier,)
-            )
-
+        cursor.execute(
+            "SELECT filename, file_path FROM requisition_attachments WHERE requisition_id = ?",
+            (requisition_id,)
+        )
         results = cursor.fetchall()
+
         return {
             "attachments": [
                 {"filename": row["filename"], "file_path": row["file_path"]}
@@ -83,6 +76,7 @@ def get_requisition_attachments(identifier: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving attachments: {str(e)}")
 
+# --- Serve uploaded file ---
 @router.get("/uploads/{filename}")
 def serve_uploaded_file(filename: str):
     file_path = UPLOADS_DIR / filename
@@ -90,7 +84,7 @@ def serve_uploaded_file(filename: str):
         raise HTTPException(status_code=404, detail="File not found")
     return FileResponse(file_path)
 
-# --- Submission models (unchanged) ---
+# --- Models ---
 class RequisitionItem(BaseModel):
     description: str
     quantity: int
@@ -102,10 +96,11 @@ class RequisitionPayload(BaseModel):
     requisition_note: str
     items: List[RequisitionItem]
 
+# --- Submit requisition and relink orphaned attachments ---
 @router.post("/submit_requisition")
 async def submit_requisition(data: RequisitionPayload, request: Request):
+    conn = get_db_connection()
     try:
-        conn = get_db_connection()
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -126,12 +121,7 @@ async def submit_requisition(data: RequisitionPayload, request: Request):
                 VALUES (?, ?, ?)
             """, (requisition_id, item.description, item.quantity))
 
-        # Relink orphaned attachments
-        cursor.execute("""
-            UPDATE requisition_attachments
-            SET requisition_id = ?, requisition_number = NULL
-            WHERE requisition_id IS NULL AND requisition_number = ?
-        """, (requisition_id, data.requisition_number))
+        # No more relinking by number — IDs only from now on
 
         conn.commit()
         return {"message": "Requisition submitted successfully", "id": requisition_id}

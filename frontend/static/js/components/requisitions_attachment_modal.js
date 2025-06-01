@@ -118,7 +118,8 @@ function handleFiles(fileList, requisitionId, requisitionNumber, modalInner, onU
   Array.from(fileList).forEach(file => {
     const formData = new FormData();
     formData.append("file", file);
-    if (requisitionId) {
+
+    if (requisitionId !== null && requisitionId !== undefined) {
       formData.append("requisition_id", requisitionId);
     } else if (requisitionNumber) {
       formData.append("requisition_number", requisitionNumber);

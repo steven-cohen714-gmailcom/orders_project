@@ -69,10 +69,9 @@ async function loadRequisitions() {
 
         row.querySelector(".clip-icon").addEventListener("click", async (e) => {
           const target = e.target;
-          const id = target.getAttribute("data-id");
+          const id = parseInt(target.getAttribute("data-id"));
           const number = target.getAttribute("data-number");
-
-          const has = await checkAttachments(number, "requisition"); // ✅ FIXED LINE
+          const has = await checkAttachments(number, "requisition");
 
           if (has) {
             showViewAttachmentsModal(id, number, null, null, "requisition");

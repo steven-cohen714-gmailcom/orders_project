@@ -1,5 +1,4 @@
 import { logToServer, populateDropdown } from "./components/utils.js";
-import { showUploadAttachmentsModal } from "./components/requisitions_attachment_modal.js";
 
 let rowCount = 0;
 let currentRequisitionId = null;
@@ -24,23 +23,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("add-line").addEventListener("click", addLineItem);
   document.getElementById("submit-requisition").addEventListener("click", submitRequisition);
   document.getElementById("preview-pdf").addEventListener("click", previewPDF);
-
-  const uploadBtn = document.createElement("button");
-  uploadBtn.id = "upload-attachments";
-  uploadBtn.textContent = "📎 Upload Attachments";
-  uploadBtn.type = "button";
-  uploadBtn.style.marginLeft = "1rem";
-
-  uploadBtn.addEventListener("click", () => {
-    if (!currentRequisitionNumber) {
-      alert("❗ Cannot upload without a requisition number.");
-      return;
-    }
-    // ✅ FIXED: use requisition number first, null as placeholder for ID
-    showUploadAttachmentsModal(currentRequisitionNumber, null);
-  });
-
-  document.querySelector(".form-actions").appendChild(uploadBtn);
 });
 
 function addLineItem() {

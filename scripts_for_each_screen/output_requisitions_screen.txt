@@ -1,0 +1,3406 @@
+📄 backend/main.py
+------------------------------------------------------------
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi.routing import APIRouter
+from backend.endpoints import html_routes
+from backend.endpoints import requisitions
+from backend.endpoints import requisition_attachments
+from backend.endpoints.lookups import mark_cod_paid_api as mark_cod_paid_api_module
+
+from pathlib import Path
+import logging
+import sys
+import os
+
+# --- Database ---
+from backend.database import init_db, get_db_connection
+
+# --- Login Check Helper ---
+def require_login(request: Request):
+    if not request.session.get("user"):
+        return RedirectResponse("/", status_code=302)
+    return None
+
+# --- Routers ---
+from backend.endpoints import routers
+from backend.endpoints.mobile import mobile_auth
+from backend.endpoints.admin import admin_router
+from backend.endpoints.auth import router as auth_router
+from backend.endpoints.orders import router as orders_router
+from backend.endpoints.new_order_pdf_generator import router as new_order_pdf_router
+from backend.endpoints.pending_order_pdf_generator import router as pending_order_pdf_router
+from backend.endpoints.order_queries import router as order_queries_router
+from backend.endpoints.order_receiving import router as order_receiving_router
+from backend.endpoints.order_attachments import router as attachments_router
+from backend.endpoints.order_email import router as order_email_router
+from backend.endpoints.utils import router as utils_router
+from backend.endpoints.mobile.mobile_awaiting_authorisation import router as mobile_auth_router
+from backend.endpoints.lookups import items as items_router
+from backend.endpoints.lookups import suppliers as suppliers_router
+from backend.endpoints.lookups import projects as projects_router
+from backend.endpoints.order_notes import router as order_notes_router
+from backend.endpoints.lookups import requisitioners as requisitioners_router
+
+# Allow scripts to import from parent
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from scripts.add_debug_validation_handler import install_validation_handler
+
+# Setup logging
+Path("logs").mkdir(exist_ok=True)
+logging.basicConfig(
+    filename="logs/server_startup.log",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+)
+
+try:
+    init_db()
+    logging.info("✅ Database initialized successfully.")
+except Exception as e:
+    logging.exception("❌ Failed to initialize database")
+    raise
+
+# --- FastAPI App Init ---
+app = FastAPI(
+    debug=True,
+    title="Universal Recycling Purchase Order System",
+    description="Purchase Order management system for Universal Recycling"
+)
+
+install_validation_handler(app)
+
+# --- Static and Upload Directories ---
+app.mount("/static", StaticFiles(directory="frontend/static"), name="static")
+app.mount("/data/uploads", StaticFiles(directory="data/uploads"), name="uploads")
+
+# --- Middleware ---
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+app.add_middleware(SessionMiddleware, secret_key="your-new-secure-key", same_site="lax", https_only=False)
+
+templates = Jinja2Templates(directory="frontend/templates")
+
+# --- Static Routes Router ---
+static_router = APIRouter()
+
+@static_router.get("/mobile/authorisations", response_class=HTMLResponse)
+async def mobile_authorisations_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("mobile/mobile_authorisations.html", {"request": request})
+
+@static_router.get("/home", response_class=HTMLResponse)
+async def home(request: Request):
+    if not request.session.get("user"):
+        return RedirectResponse("/")
+    logging.info("Rendering home page")
+    return templates.TemplateResponse("home.html", {"request": request})
+
+@static_router.get("/orders/new", response_class=HTMLResponse)
+async def new_order_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+
+    logging.info("Starting to render new order page")
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, name FROM requesters ORDER BY name")
+            requesters = [dict(row) for row in cursor.fetchall()]
+            cursor.execute("SELECT id, name FROM suppliers ORDER BY name")
+            suppliers = [dict(row) for row in cursor.fetchall()]
+            cursor.execute("SELECT item_code, item_description FROM items ORDER BY item_code")
+            items = [dict(row) for row in cursor.fetchall()]
+            cursor.execute("SELECT project_code, project_name FROM projects ORDER BY project_code")
+            projects = [dict(row) for row in cursor.fetchall()]
+            cursor.execute("""
+                SELECT company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number
+                FROM business_details WHERE id = 1
+            """)
+            row = cursor.fetchone()
+            business_details = dict(row) if row else {
+                "company_name": "Default Company",
+                "address_line1": "N/A",
+                "address_line2": "",
+                "city": "N/A",
+                "province": "N/A",
+                "postal_code": "N/A",
+                "telephone": "N/A",
+                "vat_number": "N/A"
+            }
+
+        return templates.TemplateResponse("new_order.html", {
+            "request": request,
+            "requesters": requesters,
+            "suppliers": suppliers,
+            "items": items,
+            "projects": projects,
+            "business_details": business_details
+        })
+
+    except Exception as e:
+        logging.error(f"Error rendering new order page: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Error rendering new order page: {str(e)}")
+
+@static_router.get("/orders/pending_orders", response_class=HTMLResponse)
+async def pending_orders_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("pending_orders.html", {"request": request})
+
+@static_router.get("/orders/cod_orders", response_class=HTMLResponse)
+async def cod_orders_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("cod_orders.html", {"request": request})
+
+@static_router.get("/orders/received_orders", response_class=HTMLResponse)
+async def received_orders_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("received_orders.html", {"request": request})
+
+@static_router.get("/orders/audit_trail", response_class=HTMLResponse)
+async def audit_trail_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("audit_trail.html", {"request": request})
+
+@static_router.get("/maintenance", response_class=HTMLResponse)
+async def maintenance_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("maintenance.html", {"request": request})
+
+@static_router.get("/orders/partially_delivered", response_class=HTMLResponse)
+async def partially_delivered_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("partially_delivered.html", {"request": request})
+
+@static_router.get("/requisitions/pending_requisitions", response_class=HTMLResponse)
+async def pending_requisitions_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("pending_requisitions.html", {"request": request})
+
+@static_router.get("/requisitions/new", response_class=HTMLResponse)
+async def new_requisition_page(request: Request):
+    login_redirect = require_login(request)
+    if login_redirect:
+        return login_redirect
+    return templates.TemplateResponse("new_requisition.html", {"request": request})
+
+@static_router.get("/favicon.ico")
+async def favicon():
+    favicon_path = Path("frontend/static/favicon.ico")
+    if not favicon_path.exists():
+        return {"error": "Favicon not found"}, 404
+    try:
+        with open(favicon_path, "rb") as f:
+            content = f.read()
+        return Response(content=content, media_type="image/x-icon")
+    except Exception as e:
+        logging.error(f"Error serving favicon: {str(e)}", exc_info=True)
+        return {"error": "Failed to serve favicon"}, 500
+
+# --- Include Routers ---
+app.include_router(static_router)
+app.include_router(mobile_auth_router)
+
+for router in routers:
+    if router is not order_queries_router and router is not orders_router and router is not attachments_router and router is not order_receiving_router:
+        app.include_router(router, prefix="/lookups")
+
+app.include_router(html_routes.router)
+app.include_router(admin_router, prefix="/admin")
+app.include_router(order_queries_router, prefix="/orders/api")
+app.include_router(new_order_pdf_router, prefix="/orders/api")
+app.include_router(auth_router)
+app.include_router(mobile_auth.router)
+app.include_router(orders_router, prefix="/orders")
+app.include_router(attachments_router, prefix="/orders")
+app.include_router(order_receiving_router, prefix="/orders")
+app.include_router(utils_router)
+app.include_router(order_email_router, prefix="/orders")
+app.include_router(pending_order_pdf_router, prefix="/orders/api")
+app.include_router(order_notes_router)
+app.include_router(items_router.router, prefix="/lookups")
+app.include_router(suppliers_router.router, prefix="/maintenance")
+app.include_router(projects_router.router, prefix="/maintenance")
+app.include_router(requisitions.router)
+app.include_router(requisitioners_router.router, prefix="/lookups")
+app.include_router(mark_cod_paid_api_module.router, prefix="/orders")
+app.include_router(requisition_attachments.router, prefix="/requisitions")
+
+# --- Dev CLI ---
+if __name__ == "__main__":
+    import uvicorn
+    try:
+        logging.info("🚀 Starting Uvicorn server...")
+        uvicorn.run(app, host="0.0.0.0", port=8004)
+    except Exception as e:
+        logging.exception("❌ Server failed to start")
+        raise
+
+
+📄 backend/database.py
+------------------------------------------------------------
+import sqlite3
+from pathlib import Path
+import logging
+
+# Logging setup
+logging.basicConfig(
+    filename="logs/db_activity_log.txt",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+)
+
+DB_PATH = Path("data/orders.db")
+
+def get_db_connection():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def init_db():
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # -- Core Tables --
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS requesters (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT UNIQUE
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS suppliers (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    account_number TEXT,
+                    name TEXT,
+                    telephone TEXT,
+                    vat_number TEXT,
+                    registration_number TEXT,
+                    email TEXT,
+                    contact_name TEXT,
+                    contact_telephone TEXT,
+                    address_line1 TEXT,
+                    address_line2 TEXT,
+                    address_line3 TEXT,
+                    postal_code TEXT
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS orders (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    order_number TEXT,
+                    status TEXT,
+                    created_date TEXT DEFAULT CURRENT_TIMESTAMP,
+                    received_date TEXT,
+                    total REAL,
+                    order_note TEXT,
+                    note_to_supplier TEXT,
+                    supplier_id INTEGER,
+                    requester_id INTEGER,
+                    required_auth_band INTEGER,
+                    payment_terms TEXT DEFAULT 'On account',
+                    payment_date TEXT,
+                    amount_paid REAL,
+                    FOREIGN KEY (supplier_id) REFERENCES suppliers(id),
+                    FOREIGN KEY (requester_id) REFERENCES requesters(id)
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS order_items (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    order_id INTEGER,
+                    item_code TEXT,
+                    item_description TEXT,
+                    project TEXT,
+                    qty_ordered REAL,
+                    qty_received REAL,
+                    received_date TEXT,
+                    price REAL,
+                    total REAL,
+                    FOREIGN KEY (order_id) REFERENCES orders(id)
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS attachments (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    order_id INTEGER,
+                    filename TEXT NOT NULL,
+                    file_path TEXT NOT NULL,
+                    upload_date TEXT NOT NULL,
+                    FOREIGN KEY (order_id) REFERENCES orders(id)
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS audit_trail (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    order_id INTEGER,
+                    action TEXT,
+                    details TEXT,
+                    action_date TEXT DEFAULT CURRENT_TIMESTAMP,
+                    user_id INTEGER,
+                    FOREIGN KEY (order_id) REFERENCES orders(id)
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS settings (
+                    id INTEGER PRIMARY KEY CHECK (id = 1),
+                    order_number_start TEXT,
+                    auth_threshold_1 INTEGER,
+                    auth_threshold_2 INTEGER,
+                    auth_threshold_3 INTEGER,
+                    auth_threshold_4 INTEGER,
+                    requisition_number_start TEXT DEFAULT 'REQ1000'
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS users (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT UNIQUE NOT NULL,
+                    password_hash TEXT NOT NULL,
+                    rights TEXT NOT NULL,
+                    auth_threshold_band INTEGER CHECK (auth_threshold_band IN (1, 2, 3, 4)),
+                    roles TEXT
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS projects (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    project_code TEXT UNIQUE,
+                    project_name TEXT
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS items (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    item_code TEXT UNIQUE,
+                    item_description TEXT
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS business_details (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    company_name TEXT NOT NULL,
+                    address_line1 TEXT,
+                    address_line2 TEXT,
+                    city TEXT,
+                    province TEXT,
+                    postal_code TEXT,
+                    telephone TEXT,
+                    vat_number TEXT
+                )
+            """)
+            cursor.execute("""
+                INSERT OR IGNORE INTO business_details (
+                    id, company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number
+                ) VALUES (
+                    1, 'Universal Recycling Company Pty Ltd', '123 Industrial Road', 'Unit 4', 'Cape Town', 'Western Cape', '8001', '+27 21 555 1234', 'VAT123456789'
+                )
+            """)
+
+            # -- New: Requisitions --
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS requisitioners (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT UNIQUE NOT NULL
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS requisitions (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    requisition_number TEXT UNIQUE,
+                    requisitioner_id INTEGER NOT NULL,
+                    requisition_date TEXT DEFAULT CURRENT_TIMESTAMP,
+                    requisition_note TEXT,
+                    status TEXT DEFAULT 'submitted',
+                    converted_order_id INTEGER DEFAULT NULL,
+                    FOREIGN KEY (requisitioner_id) REFERENCES requisitioners(id)
+                )
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS requisition_items (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    requisition_id INTEGER NOT NULL,
+                    description TEXT NOT NULL,
+                    project TEXT,
+                    quantity REAL,
+                    FOREIGN KEY (requisition_id) REFERENCES requisitions(id)
+                )
+            """)
+
+            conn.commit()
+            logging.info("Database initialized successfully.")
+    except sqlite3.Error as e:
+        logging.error(f"❌ DB init failed: {e}")
+        raise
+
+def determine_status_and_band(total: float) -> tuple[str, int]:
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4 FROM settings WHERE id = 1")
+        row = cursor.fetchone()
+        if not row:
+            raise ValueError("Authorization thresholds not configured.")
+        thresholds = [row["auth_threshold_1"], row["auth_threshold_2"], row["auth_threshold_3"], row["auth_threshold_4"]]
+        status = "Pending"
+        required_band = 0
+        if total > thresholds[0]:
+            status = "Awaiting Authorisation"
+            if total <= thresholds[1]:
+                required_band = 1
+            elif total <= thresholds[2]:
+                required_band = 2
+            elif total <= thresholds[3]:
+                required_band = 3
+            else:
+                required_band = 4
+        return status, required_band
+
+def create_order(order_data: dict, items: list) -> dict:
+    status, required_band = determine_status_and_band(order_data["total"])
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO orders (
+                order_number, status, total, order_note, note_to_supplier,
+                supplier_id, requester_id, required_auth_band, payment_terms
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (
+            order_data["order_number"],
+            status,
+            order_data["total"],
+            order_data["order_note"],
+            order_data["note_to_supplier"],
+            order_data["supplier_id"],
+            order_data["requester_id"],
+            required_band,
+            order_data.get("payment_terms", "On account")
+        ))
+        order_id = cursor.lastrowid
+        for item in items:
+            cursor.execute("""
+                INSERT INTO order_items (
+                    order_id, item_code, item_description, project,
+                    qty_ordered, price, total
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                order_id,
+                item["item_code"],
+                item["item_description"],
+                item["project"],
+                item["qty_ordered"],
+                item["price"],
+                item["qty_ordered"] * item["price"]
+            ))
+        cursor.execute("""
+            INSERT INTO audit_trail (order_id, action, details, user_id)
+            VALUES (?, 'Created', ?, ?)
+        """, (order_id, f"Order {order_data['order_number']} created", 0))
+        conn.commit()
+        cursor.execute("""
+            SELECT * FROM orders WHERE id = ?
+        """, (order_id,))
+        return dict(cursor.fetchone())
+
+def get_settings() -> dict:
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT order_number_start, auth_threshold_1, auth_threshold_2,
+                   auth_threshold_3, auth_threshold_4, requisition_number_start
+            FROM settings WHERE id = 1
+        """)
+        row = cursor.fetchone()
+        return dict(row) if row else {}
+
+def update_settings(payload: dict):
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO settings (
+                id, order_number_start, auth_threshold_1, auth_threshold_2,
+                auth_threshold_3, auth_threshold_4, requisition_number_start
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(id) DO UPDATE SET
+                order_number_start = excluded.order_number_start,
+                auth_threshold_1 = excluded.auth_threshold_1,
+                auth_threshold_2 = excluded.auth_threshold_2,
+                auth_threshold_3 = excluded.auth_threshold_3,
+                auth_threshold_4 = excluded.auth_threshold_4,
+                requisition_number_start = excluded.requisition_number_start
+        """, (
+            1,
+            payload["order_number_start"],
+            payload["auth_threshold_1"],
+            payload["auth_threshold_2"],
+            payload["auth_threshold_3"],
+            payload["auth_threshold_4"],
+            payload.get("requisition_number_start", "REQ1000")
+        ))
+        conn.commit()
+
+def get_business_details() -> dict:
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT company_name, address_line1, address_line2, city, province,
+                   postal_code, telephone, vat_number
+            FROM business_details WHERE id = 1
+        """)
+        row = cursor.fetchone()
+        return dict(row) if row else {}
+
+
+📄 backend/endpoints/orders/order_queries.py
+------------------------------------------------------------
+[ERROR] Could not read file: [Errno 2] No such file or directory: 'backend/endpoints/orders/order_queries.py'
+
+
+📄 backend/endpoints/requisitions.py
+------------------------------------------------------------
+from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
+from pydantic import BaseModel
+from typing import List
+from datetime import datetime
+import sqlite3
+from pathlib import Path
+import traceback
+
+from frontend.static.js.new_requisitions_pdf_generator import generate_requisition_pdf
+
+router = APIRouter(tags=["requisitions"])
+
+DB_PATH = Path("data/orders.db")
+
+def get_db_connection():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+# ---------------- Models ---------------- #
+
+class RequisitionItem(BaseModel):
+    description: str
+    quantity: float
+
+class RequisitionPayload(BaseModel):
+    requisition_number: str
+    requisitioner_id: int
+    requisition_note: str
+    items: List[RequisitionItem]
+
+# ---------------- Endpoint ---------------- #
+
+@router.post("/requisitions", response_model=dict)
+async def submit_requisition(payload: RequisitionPayload):
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # Step 1: check if requisition_number already exists
+            cursor.execute(
+                "SELECT 1 FROM requisitions WHERE requisition_number = ?",
+                (payload.requisition_number,)
+            )
+            if cursor.fetchone():
+                raise HTTPException(status_code=400, detail="Requisition number already exists")
+
+            # Step 2: insert new requisition
+            cursor.execute("""
+                INSERT INTO requisitions (
+                    requisition_number,
+                    requisitioner_id,
+                    requisition_note,
+                    requisition_date,
+                    status
+                ) VALUES (?, ?, ?, ?, ?)
+            """, (
+                payload.requisition_number,
+                payload.requisitioner_id,
+                payload.requisition_note,
+                datetime.now().isoformat(),
+                "submitted"
+            ))
+
+            requisition_id = cursor.lastrowid
+
+            for item in payload.items:
+                cursor.execute("""
+                    INSERT INTO requisition_items (
+                        requisition_id,
+                        description,
+                        quantity
+                    ) VALUES (?, ?, ?)
+                """, (
+                    requisition_id,
+                    item.description,
+                    item.quantity
+                ))
+
+            # Step 3: update settings to bump requisition_number_start
+            prefix = ''.join(filter(str.isalpha, payload.requisition_number))
+            number = int(''.join(filter(str.isdigit, payload.requisition_number)))
+            next_number = f"{prefix}{number + 1}"
+
+            cursor.execute("""
+                UPDATE settings
+                SET requisition_number_start = ?
+            """, (next_number,))
+
+            # ✅ Step 4: relink temporary attachments
+            cursor.execute("""
+                UPDATE attachments
+                SET requisition_id = ?, requisition_number = NULL
+                WHERE requisition_id IS NULL AND requisition_number = ?
+            """, (
+                requisition_id,
+                payload.requisition_number
+            ))
+
+            conn.commit()
+            return {"status": "success", "requisition_id": requisition_id}
+
+    except HTTPException as he:
+        raise he  # Preserve intentional 400 errors
+    except Exception as e:
+        print("🔥 Backend crash:")
+        print(traceback.format_exc())
+        raise HTTPException(status_code=500, detail=f"Error submitting requisition: {str(e)}")
+
+@router.get("/api/pending_requisitions", response_model=dict)
+def get_pending_requisitions():
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            cursor.execute("""
+                SELECT
+                    r.id,
+                    r.requisition_number,
+                    r.requisition_date,
+                    r.requisition_note,
+                    r.status,
+                    rq.name AS requisitioner,
+                    (
+                        SELECT GROUP_CONCAT(ri.description, ', ')
+                        FROM requisition_items ri
+                        WHERE ri.requisition_id = r.id
+                    ) AS description,
+                    (
+                        SELECT SUM(ri.quantity)
+                        FROM requisition_items ri
+                        WHERE ri.requisition_id = r.id
+                    ) AS total_quantity,
+                    r.converted_order_id
+                FROM requisitions r
+                LEFT JOIN requisitioners rq ON r.requisitioner_id = rq.id
+                WHERE r.status = 'submitted'
+                ORDER BY r.requisition_date DESC
+            """)
+
+            rows = cursor.fetchall()
+            requisitions = [dict(row) for row in rows]
+            return {"requisitions": requisitions}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching requisitions: {str(e)}")
+
+@router.get("/requisitions/api/generate_pdf/{requisition_id}")
+def requisition_pdf(requisition_id: int):
+    try:
+        pdf_path = generate_requisition_pdf(requisition_id)
+        return FileResponse(
+            pdf_path,
+            media_type="application/pdf",
+            filename=f"Requisition_{requisition_id}.pdf"
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"PDF generation failed: {str(e)}")
+
+
+📄 backend/endpoints/auth.py
+------------------------------------------------------------
+from fastapi import APIRouter, Request, HTTPException
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.templating import Jinja2Templates
+from backend.database import get_db_connection
+import bcrypt
+import json
+
+router = APIRouter()
+templates = Jinja2Templates(directory="frontend/templates")
+
+@router.get("/", response_class=HTMLResponse)
+async def login_page(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
+
+@router.post("/login")
+async def login(request: Request):
+    try:
+        data = await request.json()
+    except Exception:
+        return JSONResponse(status_code=400, content={"error": "Invalid JSON payload"})
+
+    username = data.get("username", "").strip().lower()
+    password = data.get("password", "")
+
+    if not username or not password:
+        return JSONResponse(status_code=400, content={"error": "Username and password are required"})
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT id, username, password_hash, rights, auth_threshold_band FROM users WHERE username = ?",
+            (username,)
+        )
+        user = cursor.fetchone()
+        conn.close()
+
+        if not user:
+            return JSONResponse(status_code=401, content={"error": "Invalid username or password"})
+
+        stored_hash = user["password_hash"]
+        if not bcrypt.checkpw(password.encode("utf-8"), stored_hash.encode("utf-8")):
+            return JSONResponse(status_code=401, content={"error": "Invalid username or password"})
+
+        user_roles = user["rights"] or "view"
+
+        request.session["user"] = {
+            "id": user["id"],
+            "username": user["username"],
+            "rights": user_roles,
+            "auth_threshold_band": user["auth_threshold_band"]
+        }
+
+        # Assign session roles from DB
+        request.session["roles"] = user_roles
+
+        return JSONResponse(status_code=200, content={"success": True})
+
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": f"Login failed due to server error: {str(e)}"})
+
+@router.get("/logout")
+async def logout(request: Request):
+    request.session.clear()
+    return JSONResponse(status_code=200, content={"message": "Logged out successfully"})
+
+@router.get("/session_debug")
+async def session_debug(request: Request):
+    return JSONResponse(content={
+        "user": request.session.get("user"),
+        "roles": request.session.get("roles")
+    })
+
+
+📄 backend/endpoints/html_routes.py
+------------------------------------------------------------
+from fastapi import APIRouter, Request, HTTPException
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from backend.database import get_db_connection
+import logging
+
+# Logging setup
+logging.basicConfig(
+    filename="logs/server.log",
+    level=logging.INFO,
+    format="%(asctime)s | %(levelname)s | %(message)s",
+)
+
+router = APIRouter()
+templates = Jinja2Templates(directory="frontend/templates")
+
+
+@router.get("/orders/new", response_class=HTMLResponse)
+async def new_order_page(request: Request):
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # Fetch requesters
+            cursor.execute("SELECT id, name FROM requesters ORDER BY name")
+            requesters = [dict(row) for row in cursor.fetchall()]
+
+            # Fetch suppliers
+            cursor.execute("SELECT id, name FROM suppliers ORDER BY name")
+            suppliers = [dict(row) for row in cursor.fetchall()]
+
+            # Fetch items
+            cursor.execute("SELECT item_code, item_description FROM items ORDER BY item_code")
+            items = [dict(row) for row in cursor.fetchall()]
+
+            # Fetch projects
+            cursor.execute("SELECT project_code, project_name FROM projects ORDER BY project_code")
+            projects = [dict(row) for row in cursor.fetchall()]
+
+            # Fetch business details
+            cursor.execute("""
+                SELECT company_name, address_line1, address_line2, city, province, postal_code, telephone, vat_number
+                FROM business_details WHERE id = 1
+            """)
+            row = cursor.fetchone()
+            if not row:
+                logging.error("No business details found in database")
+                raise HTTPException(status_code=500, detail="No business details found in database")
+
+            business_details = dict(row)
+            logging.info(f"Business details fetched: {business_details}")
+
+        return templates.TemplateResponse(
+            "new_order.html",
+            {
+                "request": request,
+                "requesters": requesters,
+                "suppliers": suppliers,
+                "items": items,
+                "projects": projects,
+                "business_details": business_details
+            }
+        )
+    except Exception as e:
+        logging.error(f"Error rendering new order page: {str(e)}")
+        raise
+
+
+@router.get("/orders/pending_orders", response_class=HTMLResponse)
+async def pending_orders_page(request: Request):
+    try:
+        return templates.TemplateResponse("pending_orders.html", {"request": request})
+    except Exception as e:
+        logging.error(f"Error rendering pending orders page: {str(e)}")
+        raise
+
+
+@router.get("/mobile/mobile_authorisations", response_class=HTMLResponse)
+async def mobile_authorisations_screen(request: Request):
+    try:
+        return templates.TemplateResponse("mobile/mobile_authorisations.html", {"request": request})
+    except Exception as e:
+        logging.error(f"Error rendering mobile authorisations screen: {str(e)}")
+        raise
+
+
+@router.get("/orders/authorisations_per_user", response_class=HTMLResponse)
+async def authorisations_per_user_screen(request: Request):
+    try:
+        return templates.TemplateResponse("authorisations_per_user.html", {"request": request})
+    except Exception as e:
+        logging.error(f"Error rendering authorisations_per_user screen: {str(e)}")
+        raise
+
+
+@router.get("/orders/{order_id}", response_class=HTMLResponse)
+async def view_order_by_id(order_id: int, request: Request):
+    try:
+        return templates.TemplateResponse("order_detail.html", {"request": request, "order_id": order_id})
+    except Exception as e:
+        logging.error(f"Error rendering order detail page: {str(e)}")
+        raise
+
+
+📄 backend/utils/permissions_utils.py
+------------------------------------------------------------
+# File: backend/utils/permissions_utils.py
+
+from fastapi import Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+
+templates = Jinja2Templates(directory="frontend/templates")
+
+def enforce_roles(request: Request, allowed_roles: list):
+    """
+    Checks if the user has at least one of the allowed roles.
+    Returns None if allowed. Returns access_denied TemplateResponse if not.
+    """
+    roles = request.session.get("roles", "")
+    role_set = {r.strip().lower() for r in roles.split(",")}
+
+    if not any(role in role_set for role in allowed_roles):
+        return templates.TemplateResponse("access_denied.html", {"request": request})
+
+    return None
+
+
+📄 backend/endpoints/lookups/users.py
+------------------------------------------------------------
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel, constr
+from typing import Optional
+from backend.database import get_db_connection
+import bcrypt
+
+router = APIRouter()
+
+# ----------------------------
+# Pydantic Models
+# ----------------------------
+
+class UserCreate(BaseModel):
+    username: constr(strip_whitespace=True, min_length=1)
+    password: constr(strip_whitespace=True, min_length=4)
+    rights: str
+    auth_threshold_band: Optional[int] = None
+
+class UserUpdate(BaseModel):
+    username: constr(strip_whitespace=True, min_length=1)
+    password: Optional[constr(strip_whitespace=True, min_length=4)] = None
+    rights: str
+    auth_threshold_band: Optional[int] = None
+
+# ----------------------------
+# GET all users
+# ----------------------------
+
+@router.get("/users")
+async def get_users():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, username, rights, auth_threshold_band FROM users")
+    users = cursor.fetchall()
+    conn.close()
+    return {
+        "users": [
+            {
+                "id": u[0],
+                "username": u[1],
+                "rights": u[2],
+                "auth_threshold_band": u[3]
+            } for u in users
+        ]
+    }
+
+# ----------------------------
+# POST: Add a new user
+# ----------------------------
+
+@router.post("/users")
+async def add_user(payload: UserCreate):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    password_hash = bcrypt.hashpw(payload.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+    try:
+        cursor.execute(
+            "INSERT INTO users (username, password_hash, rights, auth_threshold_band) VALUES (?, ?, ?, ?)",
+            (payload.username, password_hash, payload.rights, payload.auth_threshold_band)
+        )
+        conn.commit()
+        return {"status": "User added successfully"}
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+    finally:
+        conn.close()
+
+# ----------------------------
+# PUT: Update an existing user
+# ----------------------------
+
+@router.put("/users/{user_id}")
+async def update_user(user_id: int, payload: UserUpdate):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("SELECT id FROM users WHERE id = ?", (user_id,))
+        if not cursor.fetchone():
+            raise HTTPException(status_code=404, detail="User not found")
+
+        fields_to_update = {
+            "username": payload.username,
+            "rights": payload.rights,
+            "auth_threshold_band": payload.auth_threshold_band
+        }
+
+        if payload.password and payload.password.strip():
+            password_hash = bcrypt.hashpw(payload.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            fields_to_update["password_hash"] = password_hash
+
+        set_clause = ", ".join([f"{key} = ?" for key in fields_to_update])
+        values = list(fields_to_update.values()) + [user_id]
+
+        cursor.execute(f"UPDATE users SET {set_clause} WHERE id = ?", values)
+        conn.commit()
+        return {"status": "User updated successfully"}
+
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+    finally:
+        conn.close()
+
+# ----------------------------
+# DELETE: Remove a user
+# ----------------------------
+
+@router.delete("/users/{user_id}")
+async def delete_user(user_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute("DELETE FROM users WHERE id = ?", (user_id,))
+        if cursor.rowcount == 0:
+            raise HTTPException(status_code=404, detail="User not found")
+        conn.commit()
+        return {"status": "User deleted successfully"}
+    except Exception as e:
+        conn.rollback()
+        raise HTTPException(status_code=400, detail=str(e))
+    finally:
+        conn.close()
+
+
+📄 backend/endpoints/lookups/requisitioners.py
+------------------------------------------------------------
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from typing import List
+import sqlite3
+from pathlib import Path
+
+router = APIRouter(tags=["requisitioners"])
+
+DB_PATH = Path("data/orders.db")
+
+def get_db_connection():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+# ------------------- Models ------------------- #
+
+class Requisitioner(BaseModel):
+    id: int
+    name: str
+
+class NewRequisitioner(BaseModel):
+    name: str
+
+# ------------------- Endpoints ------------------- #
+
+@router.get("/requisitioners", response_model=List[Requisitioner])
+async def get_requisitioners():
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT id, name FROM requisitioners ORDER BY name")
+            rows = cursor.fetchall()
+            return [dict(row) for row in rows]
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching requisitioners: {str(e)}")
+
+@router.post("/requisitioners", response_model=dict)
+async def add_requisitioner(payload: NewRequisitioner):
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("INSERT INTO requisitioners (name) VALUES (?)", (payload.name,))
+            conn.commit()
+            return {"status": "success", "id": cursor.lastrowid}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Requisitioner already exists.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error adding requisitioner: {str(e)}")
+
+@router.delete("/requisitioners/{id}", response_model=dict)
+async def delete_requisitioner(id: int):
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("DELETE FROM requisitioners WHERE id = ?", (id,))
+            conn.commit()
+            return {"status": "deleted", "id": id}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error deleting requisitioner: {str(e)}")
+
+
+📄 frontend/templates/access_denied.html
+------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Access Denied</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #333;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #b30000;
+    }
+    p {
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚫 Access Denied</h1>
+  <p>You do not have permission to view this page.</p>
+</body>
+</html>
+
+
+📄 frontend/templates/pending_requisitions.html
+------------------------------------------------------------
+{% extends "base.html" %}
+{% block title %}Pending Requisitions{% endblock %}
+
+{% block content %}
+<h2>Pending Requisitions</h2>
+
+<div class="filters" style="margin-bottom: 1.5rem;">
+  <div class="filter-group">
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date">
+  </div>
+  <div class="filter-group">
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date">
+  </div>
+  <div class="filter-group">
+    <label for="filter-requisitioner">Requisitioner:</label>
+    <select id="filter-requisitioner">
+      <option value="All">All</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <label for="filter-status">Status:</label>
+    <select id="filter-status">
+      <option value="All">All</option>
+      <option value="submitted">Submitted</option>
+      <option value="ordered">Ordered</option>
+      <option value="archived">Archived</option>
+    </select>
+  </div>
+  <div class="filter-actions">
+    <button id="run-btn">Run</button>
+    <button id="clear-btn">Clear</button>
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Requisition #</th>
+      <th>Requisitioner</th>
+      <th>Project</th>
+      <th>Quantity</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody id="pending-requisition-body">
+    <tr><td colspan="7">Loading...</td></tr>
+  </tbody>
+</table>
+
+<script type="module" src="/static/js/pending_requisitions.js"></script>
+{% endblock %}
+
+
+📄 frontend/static/js/pending_requisitions.js
+------------------------------------------------------------
+import { loadRequisitioners } from "./components/shared_filters.js";
+import { showUploadAttachmentsModal, showViewAttachmentsModal, checkAttachments } from "./components/requisitions_attachment_modal.js";
+import { showOrderNoteModal } from "./components/order_note_modal.js";
+import { showPDFModal } from "./components/pdf_modal.js";
+
+console.log("📦 pending_requisitions.js loaded");
+
+async function loadFiltersAndRequisitions() {
+  try {
+    await loadRequisitioners("filter-requisitioner");
+    await loadRequisitions();
+  } catch (err) {
+    console.error("❌ Error loading filters:", err);
+    document.getElementById("pending-requisition-body").innerHTML = `<tr><td colspan="7">Error loading filters: ${err.message}</td></tr>`;
+  }
+}
+
+async function loadRequisitions() {
+  const startDate = document.getElementById("start-date").value;
+  const endDate = document.getElementById("end-date").value;
+  const requisitioner = document.getElementById("filter-requisitioner").value;
+  const status = document.getElementById("filter-status").value;
+
+  const params = new URLSearchParams();
+  if (startDate) params.append("start_date", startDate);
+  if (endDate) params.append("end_date", endDate);
+  if (requisitioner && requisitioner !== "All") params.append("requisitioner", requisitioner);
+  if (status && status !== "All") params.append("status", status);
+
+  try {
+    const res = await fetch(`/api/pending_requisitions?${params.toString()}`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+    const data = await res.json();
+
+    const tbody = document.getElementById("pending-requisition-body");
+    tbody.innerHTML = "";
+
+    if (data.requisitions && Array.isArray(data.requisitions) && data.requisitions.length > 0) {
+      data.requisitions.forEach((req, index) => {
+        const row = document.createElement("tr");
+
+        const formattedDate = new Date(req.requisition_date).toLocaleDateString("en-ZA");
+        const sanitizedNote = escapeHTML(req.requisition_note || "");
+        const converted = req.converted_order_id ? "✅" : "";
+
+        row.innerHTML = `
+          <td>${formattedDate}</td>
+          <td>${escapeHTML(req.requisition_number)}</td>
+          <td>${escapeHTML(req.requisitioner)}</td>
+          <td>${escapeHTML(req.project || "")}</td>
+          <td>${escapeHTML(req.total_quantity || "")}</td>
+          <td>${escapeHTML(req.description || "")}</td>
+          <td>
+            ${converted}
+            <span class="pdf-icon" title="View PDF" data-id="${req.id}">📄</span>
+            <span class="note-icon" title="Edit Note" data-id="${req.id}" data-note="${sanitizedNote}" id="note-${index}">📝</span>
+            <span class="clip-icon" title="View/Upload Attachments" data-id="${req.id}" data-number="${req.requisition_number}">📎</span>
+          </td>
+        `;
+
+        tbody.appendChild(row);
+
+        row.querySelector(`#note-${index}`).addEventListener("click", (e) => {
+          const target = e.target;
+          showOrderNoteModal(sanitizedNote, req.id, (newNote) => {
+            target.setAttribute("data-note", escapeHTML(newNote));
+          });
+        });
+
+        row.querySelector(".clip-icon").addEventListener("click", async (e) => {
+          const target = e.target;
+          const id = parseInt(target.getAttribute("data-id"));
+          const number = target.getAttribute("data-number");
+          const has = await checkAttachments(number, "requisition");
+
+          if (has) {
+            showViewAttachmentsModal(id, number, null, null, "requisition");
+          } else {
+            showUploadAttachmentsModal(id, number, () => {}, "requisition");
+          }
+        });
+
+        row.querySelector(".pdf-icon").addEventListener("click", async () => {
+          try {
+            const response = await fetch(`/requisitions/api/generate_pdf/${req.id}`);
+            if (!response.ok) throw new Error(`PDF generation failed with status ${response.status}`);
+            const blob = await response.blob();
+            showPDFModal(blob);
+          } catch (err) {
+            alert("❌ Could not generate PDF");
+            console.error(err);
+          }
+        });
+      });
+    } else {
+      tbody.innerHTML = `<tr><td colspan="7">No requisitions found.</td></tr>`;
+    }
+  } catch (err) {
+    console.error("❌ Error loading requisitions:", err);
+    document.getElementById("pending-requisition-body").innerHTML = `<tr><td colspan="7">Error loading requisitions: ${err.message}</td></tr>`;
+  }
+}
+
+function escapeHTML(str) {
+  if (typeof str !== "string") return "";
+  return str.replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+}
+
+function clearFilters() {
+  document.getElementById("start-date").value = "";
+  document.getElementById("end-date").value = "";
+  document.getElementById("filter-requisitioner").value = "All";
+  document.getElementById("filter-status").value = "All";
+  loadRequisitions();
+}
+
+document.getElementById("run-btn").addEventListener("click", loadRequisitions);
+document.getElementById("clear-btn").addEventListener("click", clearFilters);
+document.addEventListener("DOMContentLoaded", loadFiltersAndRequisitions);
+
+window.showOrderNoteModal = showOrderNoteModal;
+window.showUploadAttachmentsModal = showUploadAttachmentsModal;
+window.checkAttachments = checkAttachments;
+window.showViewAttachmentsModal = showViewAttachmentsModal;
+window.showPDFModal = showPDFModal;
+
+
+📄 frontend/static/js/requisition_modal.js
+------------------------------------------------------------
+[ERROR] Could not read file: [Errno 2] No such file or directory: 'frontend/static/js/requisition_modal.js'
+
+
+📄 frontend/templates/new_requisition.html
+------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Requisition</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script type="module" src="/static/js/new_requisition_main.js" defer></script>
+</head>
+
+<body>
+  {% include "_tab_nav.html" %}
+
+  <div class="container">
+    <h2>📦 New Requisition</h2>
+
+    <!-- Requisition Header -->
+    <div class="form-group">
+      <label for="requisitioner">Requisitioner:</label>
+      <select id="requisitioner" required></select>
+    </div>
+
+    <div class="form-group">
+      <label for="requisition-date">Date of Requisition:</label>
+      <input type="date" id="requisition-date" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="requisition-number">Requisition Number:</label>
+      <input type="text" id="requisition-number" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="requisition-note">Requisition Note:</label>
+      <textarea id="requisition-note" rows="3" placeholder="Optional note..."></textarea>
+    </div>
+
+    <!-- Line Items Table -->
+    <table id="requisition-table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="line-items-body">
+        <!-- JS will populate rows -->
+      </tbody>
+    </table>
+
+    <!-- Aligned Buttons -->
+    <div class="form-actions" style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+      <button id="add-line" type="button">➕ Add Line</button>
+      <button id="preview-pdf" type="button">📄 View PDF</button>
+      <button id="submit-requisition" type="button">✅ Submit Requisition</button>
+    </div>
+
+    <!-- Message Log -->
+    <div id="requisition-log" class="message-log" style="margin-top: 1rem;"></div>
+  </div>
+</body>
+</html>
+
+
+📄 frontend/static/js/new_requisition_main.js
+------------------------------------------------------------
+import { logToServer, populateDropdown } from "./components/utils.js";
+
+let rowCount = 0;
+let currentRequisitionId = null;
+let currentRequisitionNumber = null;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await populateDropdown("/lookups/requisitioners", "requisitioner");
+  addLineItem();
+
+  try {
+    const settings = await fetch("/lookups/settings").then(res => res.json());
+    const nextReqNum = settings.requisition_number_start || "REQ1000";
+    const today = new Date().toISOString().split("T")[0];
+
+    currentRequisitionNumber = nextReqNum;
+    document.getElementById("requisition-number").value = nextReqNum;
+    document.getElementById("requisition-date").value = today;
+  } catch (err) {
+    console.error("❌ Failed to load settings:", err);
+  }
+
+  document.getElementById("add-line").addEventListener("click", addLineItem);
+  document.getElementById("submit-requisition").addEventListener("click", submitRequisition);
+  document.getElementById("preview-pdf").addEventListener("click", previewPDF);
+});
+
+function addLineItem() {
+  const tbody = document.getElementById("line-items-body");
+  const row = document.createElement("tr");
+  row.dataset.row = rowCount;
+
+  row.innerHTML = `
+    <td><input type="text" class="description" required placeholder="Enter item description"></td>
+    <td><input type="number" class="quantity" required min="0" step="1" value="1"></td>
+    <td><button type="button" onclick="this.closest('tr').remove()">🗑️</button></td>
+  `;
+
+  tbody.appendChild(row);
+  rowCount++;
+}
+
+async function submitRequisition() {
+  const log = document.getElementById("requisition-log");
+  log.textContent = "";
+
+  const requisitionerId = document.getElementById("requisitioner").value;
+  const note = document.getElementById("requisition-note").value;
+  const date = document.getElementById("requisition-date").value;
+
+  if (!requisitionerId) {
+    log.textContent = "⚠️ Please select a requisitioner.";
+    return;
+  }
+
+  const items = [];
+  document.querySelectorAll("#line-items-body tr").forEach(row => {
+    const desc = row.querySelector(".description").value.trim();
+    const qty = parseFloat(row.querySelector(".quantity").value);
+
+    if (desc && qty > 0) {
+      items.push({ description: desc, quantity: qty });
+    }
+  });
+
+  if (items.length === 0) {
+    log.textContent = "⚠️ Please add at least one valid line item.";
+    return;
+  }
+
+  try {
+    const payload = {
+      requisition_number: currentRequisitionNumber,
+      requisitioner_id: parseInt(requisitionerId),
+      requisition_note: note,
+      requisition_date: date,
+      items
+    };
+
+    const res = await fetch("/requisitions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      log.textContent = `✅ Requisition submitted (ID: ${data.requisition_id})`;
+      currentRequisitionId = data.requisition_id;
+    } else {
+      log.textContent = `❌ Submission failed: ${data.detail}`;
+    }
+
+  } catch (err) {
+    log.textContent = `❌ Error: ${err.message}`;
+  }
+}
+
+function previewPDF() {
+  alert("📄 PDF preview not yet implemented.");
+}
+
+
+📄 frontend/static/js/components/shared_filters.js
+------------------------------------------------------------
+export async function loadRequesters(selectId) {
+  try {
+    const res = await fetch("/lookups/requesters");
+    const data = await res.json();
+    const select = document.getElementById(selectId);
+    if (!select) return;
+
+    select.innerHTML = '<option value="All">All</option>';
+    data.requesters.forEach(r => {
+      const opt = document.createElement("option");
+      opt.value = r.name;
+      opt.textContent = r.name;
+      select.appendChild(opt);
+    });
+  } catch (err) {
+    console.error(`❌ Failed to load requesters for ${selectId}:`, err);
+  }
+}
+
+export async function loadSuppliers(selectId) {
+  try {
+    const res = await fetch("/lookups/suppliers");
+    const data = await res.json();
+    const select = document.getElementById(selectId);
+    if (!select) return;
+
+    select.innerHTML = '<option value="All">All</option>';
+    data.suppliers.forEach(s => {
+      const opt = document.createElement("option");
+      opt.value = s.name;
+      opt.textContent = s.name;
+      select.appendChild(opt);
+    });
+  } catch (err) {
+    console.error(`❌ Failed to load suppliers for ${selectId}:`, err);
+  }
+}
+
+export async function loadRequisitioners(selectId) {
+  try {
+    const res = await fetch("/lookups/requisitioners");
+    const data = await res.json();
+    const select = document.getElementById(selectId);
+    if (!select) return;
+
+    select.innerHTML = '<option value="All">All</option>';
+    data.forEach(r => {
+      const opt = document.createElement("option");
+      opt.value = r.name;
+      opt.textContent = r.name;
+      select.appendChild(opt);
+    });
+  } catch (err) {
+    console.error(`❌ Failed to load requisitioners for ${selectId}:`, err);
+  }
+}
+
+
+📄 frontend/static/js/components/pdf_modal.js
+------------------------------------------------------------
+// File: frontend/static/js/components/pdf_modal.js
+
+export function showPDFModal(blob) {
+    const modal = document.createElement("div");
+    modal.style.position = "fixed";
+    modal.style.top = 0;
+    modal.style.left = 0;
+    modal.style.width = "100%";
+    modal.style.height = "100%";
+    modal.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+    modal.style.display = "flex";
+    modal.style.alignItems = "center";
+    modal.style.justifyContent = "center";
+    modal.style.zIndex = 10000;
+
+    const contentWrapper = document.createElement("div");
+    contentWrapper.style.width = "80%";
+    contentWrapper.style.height = "80%";
+    contentWrapper.style.display = "flex";
+    contentWrapper.style.flexDirection = "column";
+    contentWrapper.style.backgroundColor = "white";
+    contentWrapper.style.borderRadius = "8px";
+    contentWrapper.style.boxShadow = "0 0 10px #fff";
+    contentWrapper.style.overflow = "hidden";
+
+    const headerBar = document.createElement("div");
+    headerBar.style.display = "flex";
+    headerBar.style.justifyContent = "flex-end";
+    headerBar.style.alignItems = "center";
+    headerBar.style.backgroundColor = "#f0f0f0";
+    headerBar.style.padding = "8px 12px";
+
+    const pdfURL = URL.createObjectURL(blob);
+    const iframe = document.createElement("iframe");
+    iframe.src = pdfURL;
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none";
+
+    // === 📧 Email Button ===
+    const emailBtn = document.createElement("button");
+    emailBtn.textContent = "📧 Email PDF";
+    emailBtn.style.background = "#28a745";
+    emailBtn.style.color = "#fff";
+    emailBtn.style.border = "none";
+    emailBtn.style.padding = "6px 12px";
+    emailBtn.style.borderRadius = "4px";
+    emailBtn.style.cursor = "pointer";
+    emailBtn.style.marginRight = "8px";
+    emailBtn.onclick = async () => {
+        const orderId = window.currentOrderIdForPDF;
+        if (!orderId) return alert("Order ID not available");
+
+        try {
+            const response = await fetch(`/orders/email_purchase_order/${orderId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include"
+            });
+
+            if (!response.ok) {
+                const error = await response.text();
+                throw new Error(error);
+            }
+
+            alert("✅ Purchase order emailed successfully.");
+        } catch (err) {
+            console.error("Email failed:", err);
+            alert("❌ Failed to send email. See console for details.");
+        }
+    };
+
+    // === Download Button ===
+    const downloadBtn = document.createElement("button");
+    downloadBtn.textContent = "Download PDF";
+    downloadBtn.style.background = "#007bff";
+    downloadBtn.style.color = "#fff";
+    downloadBtn.style.border = "none";
+    downloadBtn.style.padding = "6px 12px";
+    downloadBtn.style.borderRadius = "4px";
+    downloadBtn.style.cursor = "pointer";
+    downloadBtn.onclick = () => {
+        const link = document.createElement("a");
+        link.href = pdfURL;
+        const filename = window.currentOrderNumberForPDF || "PurchaseOrder.pdf";
+        link.download = filename;
+        link.click();
+    };
+
+    const buttonGroup = document.createElement("div");
+    buttonGroup.style.display = "flex";
+    buttonGroup.style.alignItems = "center";
+    buttonGroup.style.gap = "10px"; // ← KEY: adds spacing between buttons
+
+    buttonGroup.appendChild(emailBtn);
+    buttonGroup.appendChild(downloadBtn);
+
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "✖";
+    closeBtn.style.background = "transparent";
+    closeBtn.style.border = "none";
+    closeBtn.style.color = "#333";
+    closeBtn.style.fontSize = "20px";
+    closeBtn.style.cursor = "pointer";
+    closeBtn.onclick = () => {
+        document.body.removeChild(modal);
+        URL.revokeObjectURL(pdfURL);
+    };
+
+    headerBar.appendChild(buttonGroup);
+    headerBar.appendChild(closeBtn);
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+            URL.revokeObjectURL(pdfURL);
+        }
+    });
+
+    contentWrapper.appendChild(headerBar);
+    contentWrapper.appendChild(iframe);
+    modal.appendChild(contentWrapper);
+    document.body.appendChild(modal);
+}
+
+
+📄 frontend/static/js/components/utils.js
+------------------------------------------------------------
+// Logs messages to the server
+export async function logToServer(level, message, details = {}) {
+  try {
+    await fetch("/log", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ level, message, details })
+    });
+  } catch (error) {
+    console.error("Failed to log to server:", error);
+  }
+}
+
+/**
+ * Enables fuzzy search on the description part of a select element.
+ * Assumes each <option> includes `data-description` for filtering.
+ * 
+ * @param {string} selectId - The ID of the <select> element.
+ */
+export function enableFuzzySearch(selectId) {
+  const selectEl = document.getElementById(selectId);
+  if (!selectEl || selectEl.tagName !== "SELECT") return;
+
+  const originalOptions = Array.from(selectEl.options);
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.placeholder = "Search description...";
+  input.style.marginBottom = "0.5rem";
+  input.style.width = "100%";
+  input.style.padding = "0.25rem";
+  input.style.fontSize = "0.9rem";
+
+  selectEl.parentNode.insertBefore(input, selectEl);
+
+  input.addEventListener("input", () => {
+    const query = input.value.toLowerCase();
+    selectEl.innerHTML = "";
+
+    const matched = originalOptions.filter(opt => {
+      const desc = opt.dataset.description || opt.textContent;
+      return desc.toLowerCase().includes(query);
+    });
+
+    matched.forEach(opt => selectEl.appendChild(opt));
+  });
+
+  selectEl.addEventListener("change", () => {
+    input.value = "";
+    input.dispatchEvent(new Event("input"));
+  });
+}
+
+export async function populateDropdown(endpoint, selectId, hideDefault = false) {
+  try {
+    const res = await fetch(endpoint);
+    const data = await res.json();
+    const select = document.getElementById(selectId);
+    if (!select) return;
+
+    if (!hideDefault) {
+      select.innerHTML = '<option value="">Select...</option>';
+    } else {
+      select.innerHTML = "";
+    }
+
+    const key = Object.keys(data)[0];
+    const items = Array.isArray(data[key]) ? data[key] : data;
+
+    items.forEach(item => {
+      const opt = document.createElement("option");
+      opt.value = item.id;
+      opt.textContent = item.name;
+      select.appendChild(opt);
+    });
+  } catch (err) {
+    console.error(`❌ Failed to load dropdown from ${endpoint}:`, err);
+  }
+}
+
+
+
+📄 frontend/static/css/style.css
+------------------------------------------------------------
+  body {
+    font-family: Arial, sans-serif;
+    margin: 2rem;
+    background-color: #f4f6f8;
+  }
+
+  h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: #1a3c5e;
+  }
+
+  /* ------------------ TABLE ------------------ */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  th {
+    background-color: #e8eef4;
+    font-weight: 600;
+    color: #1a3c5e;
+    text-transform: none;
+    font-size: 0.95rem;
+    height: 48px;
+  }
+
+  td {
+    border: 1px solid #e0e4e8;
+    padding: 0.75rem;
+    text-align: center;
+    font-size: 0.95rem;
+    color: #333;
+  }
+
+  /* Add spacing between buttons in table cells */
+  td button {
+    margin-right: 0.5rem;
+  }
+
+  td button:last-child {
+    margin-right: 0;
+  }
+
+  /* Left-align all cells in maintenance screen tables */
+  #users-table td,
+  #requesters-table td,
+  #items-table td,
+  #suppliers-table td,
+  #projects-table td {
+    text-align: left;
+  }
+
+  /* ------------------ FILTERS ------------------ */
+  .filters {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .filters label {
+    font-weight: 600;
+    color: #1a3c5e;
+    margin-right: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  input[type="date"],
+  input[type="text"],
+  input[type="number"],
+  select,
+  textarea {
+    padding: 0.6rem;
+    font-size: 0.95rem;
+    font-family: Arial, sans-serif;
+    border: 1px solid #c7d0d9;
+    border-radius: 6px;
+    background-color: #fff;
+    min-width: 180px;
+    max-width: 240px;
+    transition: border-color 0.2s;
+  }
+
+  input[type="date"]:focus,
+  select:focus,
+  input[type="text"]:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+  }
+
+  /* ------------------ BUTTONS ------------------ */
+  button {
+    padding: 0.6rem 1.5rem;
+    cursor: pointer;
+    background-color: #0066cc;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+
+  button:hover {
+    background-color: #0055aa;
+  }
+
+  /* ------------------ ICONS ------------------ */
+  .expand-icon,
+  .clip-icon,
+  .eye-icon,
+  .note-icon,
+  .supplier-note-icon,
+  .receive-icon,
+  .pdf-icon {
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin: 0 0.4rem;
+    display: inline-block;
+    color: #0066cc;
+    transition: color 0.2s;
+  }
+
+  .expand-icon:hover,
+  .clip-icon:hover,
+  .eye-icon:hover,
+  .note-icon:hover,
+  .supplier-note-icon:hover,
+  .receive-icon:hover {
+    color: #003366;
+  }
+
+  .eye-icon.disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  /* ------------------ LOGIN ------------------ */
+  .login-box {
+    background: white;
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    margin: 5rem auto;
+  }
+
+  .login-box h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  .login-box input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+
+  .login-box button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #0056b3;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .login-box button:hover {
+    background-color: #004a99;
+  }
+
+  #login-error {
+    margin-top: 0.5rem;
+    color: red;
+    font-size: 0.9rem;
+  }
+
+  /* ------------------ MAINTENANCE ------------------ */
+  .tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .tab {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    background: #ddd;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .tab.active {
+    background: #007BFF;
+    color: white;
+  }
+
+  .tab-content {
+    display: none;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0 4px 4px 4px;
+    background-color: white;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: bold;
+  }
+
+  /* ------------------ NEW ORDER SCREEN ONLY ------------------ */
+  .order-header {
+    margin-bottom: 2rem;
+  }
+
+  .order-header label span {
+    font-weight: bold;
+    font-size: 1.05rem;
+    margin-left: 0.5rem;
+  }
+
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .column {
+    flex: 1 1 240px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #note_to_supplier {
+    min-height: 100px;
+  }
+
+  .delivery-block {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .add-item-block {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .summary {
+    margin-bottom: 2rem;
+  }
+
+  .button-group {
+    margin-top: 2rem;
+  }
+
+  /* Reusable table styling for modals */
+  .receive-modal table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 14px;
+  }
+
+  .receive-modal th,
+  .receive-modal td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .receive-modal input[type="number"] {
+    width: 80px;
+  }
+  i:hover {
+    cursor: pointer;
+  }
+  .note-icon:hover,
+  .clip-icon:hover,
+  .expand-icon:hover,
+  .receive-icon:hover,
+  .supplier-note-icon:hover {
+    cursor: pointer;
+  }
+  .email-icon {
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 1.2em;
+  }
+  .email-icon:hover {
+    color: #007bff;
+  }
+
+  /* ------------------ FORM FIELD SPACING (MAINTENANCE) ------------------ */
+
+  #settings .form-group label,
+  #settings .form-group input {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  #settings .form-group input {
+    width: 250px;
+    padding: 0.5rem;
+  }
+
+  #settings .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  /* ------------------ BUSINESS DETAILS FORM SPACING ------------------ */
+
+  #business_details .form-group label,
+  #business_details .form-group input {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  #business_details .form-group input {
+    width: 280px;
+    padding: 0.5rem;
+  }
+
+  #business_details .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  /* ------------------ USERS TAB FORM SPACING ------------------ */
+
+  #users .form-group label,
+  #users .form-group input,
+  #users .form-group select {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  #users .form-group input,
+  #users .form-group select {
+    width: 280px;
+    padding: 0.5rem;
+  }
+
+  #users .form-group {
+    margin-bottom: 1.2rem;
+  }
+
+  .receive-icon.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+/* ------------------ TOP TAB NAV ------------------ */
+.tab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: 1.5rem 0 2rem 0;
+}
+
+.tab-nav a {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.tab-nav a:hover {
+  background-color: #005fa3;
+}
+
+
+📄 frontend/static/js/maintenance.js
+------------------------------------------------------------
+// File: /frontend/static/js/maintenance.js
+
+import { initMaintenanceScreen } from './maintenance_screen/index.js';
+
+document.addEventListener("DOMContentLoaded", () => {
+  initMaintenanceScreen();
+});
+
+
+📄 frontend/templates/maintenance.html
+------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Maintenance - Universal Recycling</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  {% include "_tab_nav.html" %}
+
+  <h2>Maintenance</h2>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="users">Users</div>
+    <div class="tab" data-tab="requesters">Requesters</div>
+    <div class="tab" data-tab="items">Items</div>
+    <div class="tab" data-tab="suppliers">Suppliers</div>
+    <div class="tab" data-tab="projects">Projects</div>
+    <div class="tab" data-tab="requisitioners">Requisitioners</div>
+    <div class="tab" data-tab="settings">Settings</div>
+    <div class="tab" data-tab="business_details">Business Details</div>
+  </div>
+
+  <!-- Users -->
+  <div id="users" class="tab-content active">
+    <form class="form-group" onsubmit="event.preventDefault();">
+      <input type="hidden" id="user-id" />
+      <label for="user-username">Username:</label>
+      <input type="text" id="user-username" autocomplete="username" />
+      <label for="user-password">Password:</label>
+      <input type="password" id="user-password" autocomplete="current-password" />
+      <label for="user-rights">Rights:</label>
+      <select id="user-rights">
+        <option value="edit">Edit</option>
+        <option value="view">View Only</option>
+        <option value="admin">Admin</option>
+      </select>
+      <label for="user-auth-threshold-band">Authorization Threshold Band:</label>
+      <select id="user-auth-threshold-band">
+        <option value="">Not Set</option>
+        <option value="1">Band 1</option>
+        <option value="2">Band 2</option>
+        <option value="3">Band 3</option>
+        <option value="4">Band 4</option>
+      </select>
+      <button type="submit">Add User</button>
+      <button type="button" id="cancel-user-edit" style="display: none;">Cancel</button>
+    </form>
+    <table>
+      <thead><tr><th>Username</th><th>Rights</th><th>Threshold Band</th><th>Actions</th></tr></thead>
+      <tbody id="users-table"></tbody>
+    </table>
+  </div>
+
+  <!-- Requesters -->
+  <div id="requesters" class="tab-content">
+    <div class="form-group">
+      <label for="requester-name">Name:</label>
+      <input type="text" id="requester-name" />
+      <button id="add-requester-button">Add Requester</button>
+    </div>
+    <table>
+      <thead><tr><th>Name</th><th>Actions</th></tr></thead>
+      <tbody id="requesters-table"></tbody>
+    </table>
+  </div>
+
+  <!-- Items -->
+  <div id="items" class="tab-content">
+    <div class="form-group">
+      <label for="item-code">Item Code:</label>
+      <input type="text" id="item-code" />
+      <label for="item-description">Description:</label>
+      <input type="text" id="item-description" />
+      <button id="add-item-button">Add Item</button>
+    </div>
+    <div class="form-group">
+      <hr style="margin-top: 1.5rem; margin-bottom: 1rem;" />
+      <label for="items-csv-upload">Import Items CSV:</label>
+      <input type="file" id="items-csv-upload" accept=".csv" />
+      <button id="import-items-button">Import CSV</button>
+    </div>
+    <table>
+      <thead><tr><th>Item Code</th><th>Description</th><th>Actions</th></tr></thead>
+      <tbody id="items-table"></tbody>
+    </table>
+  </div>
+
+  <!-- Suppliers -->
+  <div id="suppliers" class="tab-content">
+    <div class="form-group">
+      <h4>Add/Edit Supplier</h4>
+      <form id="supplier-form" onsubmit="event.preventDefault();">
+        <input type="hidden" id="supplier-id" />
+        <label for="supplier-name">Supplier Name:</label>
+        <input type="text" id="supplier-name" required />
+        <button type="submit">Add Supplier</button>
+        <button type="button" id="cancel-supplier-edit" style="display: none;">Cancel</button>
+      </form>
+    </div>
+    <div class="form-group">
+      <hr style="margin-top: 1.5rem; margin-bottom: 1rem;" />
+      <label for="suppliers-csv-upload">Import Suppliers CSV:</label>
+      <input type="file" id="suppliers-csv-upload" accept=".csv" />
+      <button id="import-suppliers-button">Import CSV</button>
+    </div>
+    <table>
+      <thead><tr><th>Supplier Name</th><th>Actions</th></tr></thead>
+      <tbody id="suppliers-table"></tbody>
+    </table>
+  </div>
+
+  <!-- Projects -->
+  <div id="projects" class="tab-content">
+    <div class="form-group">
+      <label for="project-code">Project Code:</label>
+      <input type="text" id="project-code" />
+      <label for="project-name">Project Name:</label>
+      <input type="text" id="project-name" />
+      <button id="add-project-button">Add Project</button>
+    </div>
+    <div class="form-group">
+      <hr style="margin-top: 1.5rem; margin-bottom: 1rem;" />
+      <label for="projects-csv-upload">Import Projects CSV:</label>
+      <input type="file" id="projects-csv-upload" accept=".csv" />
+      <button id="import-projects-button">Import CSV</button>
+    </div>
+    <table>
+      <thead><tr><th>Project Code</th><th>Project Name</th><th>Actions</th></tr></thead>
+      <tbody id="projects-table"></tbody>
+    </table>
+  </div>
+
+  <!-- Requisitioners -->
+<div id="requisitioners" class="tab-content">
+  <div class="form-group">
+    <label for="requisitioner-name">Name:</label>
+    <input type="text" id="requisitioner-name" />
+    <button id="add-requisitioner-button">Add Requisitioner</button>
+  </div>
+  <table>
+    <thead><tr><th>Name</th><th>Actions</th></tr></thead>
+    <tbody id="requisitioners-table"></tbody>
+  </table>
+</div>
+
+  <!-- Settings -->
+  <div id="settings" class="tab-content">
+    <div class="form-group">
+      <label for="order-number-start">Start Order Number:</label>
+      <input type="text" id="order-number-start" />
+      <label for="requisition-number-start">Start Requisition Number:</label>
+      <input type="text" id="requisition-number-start" placeholder="e.g. REQ1000" />
+      <label for="auth-threshold-1">Authorization Threshold 1 (R):</label>
+      <input type="number" id="auth-threshold-1" step="0.01" />
+      <label for="auth-threshold-2">Authorization Threshold 2 (R):</label>
+      <input type="number" id="auth-threshold-2" step="0.01" />
+      <label for="auth-threshold-3">Authorization Threshold 3 (R):</label>
+      <input type="number" id="auth-threshold-3" step="0.01" />
+      <label for="auth-threshold-4">Authorization Threshold 4 (R):</label>
+      <input type="number" id="auth-threshold-4" step="0.01" />
+      <button id="update-settings-button">Update</button>
+    </div>
+  </div>
+
+  <!-- Business Details -->
+  <div id="business_details" class="tab-content">
+    <div class="form-group">
+      <label for="company-name">Company Name:</label>
+      <input type="text" id="company-name" />
+      <label for="address-line1">Address Line 1:</label>
+      <input type="text" id="address-line1" />
+      <label for="address-line2">Address Line 2:</label>
+      <input type="text" id="address-line2" />
+      <label for="city">City:</label>
+      <input type="text" id="city" />
+      <label for="province">Province:</label>
+      <input type="text" id="province" />
+      <label for="postal-code">Postal Code:</label>
+      <input type="text" id="postal-code" />
+      <label for="telephone">Telephone:</label>
+      <input type="text" id="telephone" />
+      <label for="vat-number">VAT Number:</label>
+      <input type="text" id="vat-number" />
+      <button id="update-business-details-button">Update</button>
+    </div>
+  </div>
+
+  <script type="module" src="/static/js/maintenance.js"></script>
+</body>
+</html>
+
+
+📄 frontend/static/js/authorisations_per_user.js
+------------------------------------------------------------
+// File: frontend/static/js/authorisations_per_user.js
+
+import { loadRequesters, loadSuppliers } from "./components/shared_filters.js";
+
+export async function setupAuthorisationUI({
+  user,
+  mountPointId,
+  showPDF,
+  onAuthorised = () => {},
+  onError = () => {}
+}) {
+  console.log("🔐 My Authorisations screen (desktop) loaded");
+
+  const tableBody = document.getElementById(mountPointId);
+  if (!tableBody) {
+    console.error(`❌ Mount point '${mountPointId}' not found.`);
+    return;
+  }
+
+  await loadRequesters("filter-requester");
+  await loadSuppliers("filter-supplier");
+
+  await loadOrdersForUser(user);
+
+  async function loadOrdersForUser(user) {
+    tableBody.innerHTML = "<tr><td colspan='7'>Loading orders...</td></tr>";
+
+    try {
+      const res = await fetch("/orders/api/awaiting_authorisation");
+      const orders = await res.json();
+
+      const userBand = parseInt(user.auth_threshold_band);
+      const eligibleOrders = orders.filter(
+        order => parseInt(order.required_auth_band) === userBand
+      );
+
+      if (eligibleOrders.length === 0) {
+        tableBody.innerHTML = "<tr><td colspan='7'>✅ No orders awaiting your authorisation.</td></tr>";
+        return;
+      }
+
+      tableBody.innerHTML = "";
+
+      for (const order of eligibleOrders) {
+        const row = document.createElement("tr");
+        const created = new Date(order.created_date);
+        const formattedDate = `${created.getDate()} ${created.toLocaleString("default", {
+          month: "short"
+        })} ${created.getFullYear()}`;
+
+        row.innerHTML = `
+          <td>${formattedDate}</td>
+          <td>${order.order_number}</td>
+          <td>${order.requester_name}</td>
+          <td>${order.supplier_name}</td>
+          <td>R${order.total}</td>
+          <td>${order.status}</td>
+          <td>
+            <button class="view-btn">View</button>
+            <button class="auth-btn">Authorise</button>
+          </td>
+        `;
+
+        row.querySelector(".view-btn").addEventListener("click", () => {
+          try {
+            showPDF(order.id);  // ✅ delegate to external handler
+          } catch (err) {
+            console.error("❌ Error triggering PDF display:", err);
+            onError("❌ Could not open PDF preview.");
+          }
+        });
+
+        row.querySelector(".auth-btn").addEventListener("click", async () => {
+          try {
+            const res = await fetch(`/orders/api/authorise_order/${order.id}`, { method: "POST" });
+            const result = await res.json();
+
+            if (result.message === "Order authorised") {
+              console.log(`✅ Authorised order ${order.order_number}`);
+              onAuthorised(order);
+              row.remove();
+            } else {
+              onError("❌ Failed to authorise: " + result.message);
+            }
+          } catch (err) {
+            console.error("❌ Error during authorisation:", err);
+            onError("❌ Network or server error while authorising.");
+          }
+        });
+
+        tableBody.appendChild(row);
+      }
+    } catch (err) {
+      console.error("❌ Could not load orders:", err);
+      tableBody.innerHTML = "<tr><td colspan='7'>❌ Error loading orders.</td></tr>";
+    }
+  }
+}
+
+
+📄 frontend/static/js/new_requisitions_pdf_generator.py
+------------------------------------------------------------
+from pathlib import Path
+import sqlite3
+from datetime import datetime
+from weasyprint import HTML
+
+DB_PATH = Path("data/orders.db")
+OUTPUT_DIR = Path("generated_pdfs")
+OUTPUT_DIR.mkdir(exist_ok=True)
+
+def generate_requisition_pdf(requisition_id: int) -> Path:
+    # --- Step 1: Get data from DB ---
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT r.requisition_number, r.requisition_note, r.requisition_date, rq.name AS requisitioner
+        FROM requisitions r
+        LEFT JOIN requisitioners rq ON r.requisitioner_id = rq.id
+        WHERE r.id = ?
+    """, (requisition_id,))
+    header = cursor.fetchone()
+
+    if not header:
+        raise ValueError("Requisition not found")
+
+    cursor.execute("""
+        SELECT description, project, quantity
+        FROM requisition_items
+        WHERE requisition_id = ?
+    """, (requisition_id,))
+    items = cursor.fetchall()
+    conn.close()
+
+    # --- Step 2: Build HTML ---
+    html = f"""
+    <html>
+    <head>
+        <style>
+            body {{
+                font-family: Arial, sans-serif;
+                margin: 2rem;
+            }}
+            h2 {{
+                color: #2a2a2a;
+            }}
+            table {{
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 1rem;
+            }}
+            th, td {{
+                border: 1px solid #ccc;
+                padding: 8px;
+                text-align: left;
+            }}
+            th {{
+                background-color: #f2f2f2;
+            }}
+        </style>
+    </head>
+    <body>
+        <h2>📦 Requisition PDF</h2>
+        <p><strong>Requisition Number:</strong> {header['requisition_number']}</p>
+        <p><strong>Requisitioner:</strong> {header['requisitioner']}</p>
+        <p><strong>Date:</strong> {datetime.fromisoformat(header['requisition_date']).strftime("%d %b %Y")}</p>
+        <p><strong>Note:</strong> {header['requisition_note'] or "—"}</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Project</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+    """
+
+    for item in items:
+        html += f"""
+        <tr>
+            <td>{item['description']}</td>
+            <td>{item['project']}</td>
+            <td>{item['quantity']}</td>
+        </tr>
+        """
+
+    html += """
+            </tbody>
+        </table>
+        <p style="margin-top: 2rem; font-size: 0.9rem;">Generated by Universal Recycling system</p>
+    </body>
+    </html>
+    """
+
+    # --- Step 3: Generate PDF ---
+    pdf_path = OUTPUT_DIR / f"requisition_{requisition_id}.pdf"
+    HTML(string=html).write_pdf(str(pdf_path))
+
+    return pdf_path
+
+
+📄 frontend/static/js/components/requisitions_attachment_modal.js
+------------------------------------------------------------
+export function showViewAttachmentsModal(requisitionId, requisitionNumber, onUploadComplete = null) {
+  const fetchUrl = `/requisitions/attachments/${requisitionId}`;
+
+  fetch(fetchUrl)
+    .then(res => res.json())
+    .then(data => {
+      const files = data.attachments || [];
+      const modal = createBaseModal();
+      const title = document.createElement("h3");
+      title.textContent = `Attachments for ${requisitionNumber}`;
+      modal.inner.appendChild(title);
+
+      if (files.length > 0) {
+        const list = document.createElement("ul");
+        list.style.listStyle = "none";
+        list.style.padding = "0";
+
+        files.forEach(f => {
+          const li = document.createElement("li");
+          const link = document.createElement("a");
+          link.href = "#";
+          link.textContent = f.filename;
+          link.style.display = "block";
+          link.style.marginBottom = "0.5rem";
+          link.style.color = "green";
+          link.style.textDecoration = "underline";
+          link.style.cursor = "pointer";
+
+          link.onclick = async (e) => {
+            e.preventDefault();
+            try {
+              window.currentOrderNumberForPDF = `${requisitionNumber}_${f.filename}`;
+              const res = await fetch(`/${f.file_path}`);
+              if (!res.ok) throw new Error(`HTTP ${res.status}`);
+              const blob = await res.blob();
+              const module = await import('./pdf_modal.js');
+              module.showPDFModal(blob);
+            } catch (err) {
+              alert("❌ Failed to preview PDF");
+              console.error("PDF preview failed:", err);
+            }
+          };
+
+          li.appendChild(link);
+          list.appendChild(li);
+        });
+
+        modal.inner.appendChild(list);
+      }
+
+      const dropzone = document.createElement("div");
+      dropzone.textContent = "Drag and drop files here or click to select";
+      dropzone.style.border = "2px dashed #aaa";
+      dropzone.style.padding = "2rem";
+      dropzone.style.textAlign = "center";
+      dropzone.style.cursor = "pointer";
+      dropzone.style.marginTop = "1rem";
+      dropzone.style.background = "#fafafa";
+
+      dropzone.onclick = () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.multiple = true;
+        input.onchange = () => handleFiles(input.files, requisitionId, requisitionNumber, modal.inner, onUploadComplete);
+        input.click();
+      };
+
+      dropzone.ondragover = e => {
+        e.preventDefault();
+        dropzone.style.background = "#eee";
+      };
+      dropzone.ondragleave = () => {
+        dropzone.style.background = "#fafafa";
+      };
+      dropzone.ondrop = e => {
+        e.preventDefault();
+        dropzone.style.background = "#fafafa";
+        handleFiles(e.dataTransfer.files, requisitionId, requisitionNumber, modal.inner, onUploadComplete);
+      };
+
+      modal.inner.appendChild(dropzone);
+
+      const closeBtn = document.createElement("button");
+      closeBtn.textContent = "Close";
+      closeBtn.style.marginTop = "1.5rem";
+      closeBtn.style.padding = "0.5rem 1rem";
+      closeBtn.style.border = "none";
+      closeBtn.style.cursor = "pointer";
+      closeBtn.style.background = "#ccc";
+      closeBtn.onclick = () => document.body.removeChild(modal.container);
+
+      modal.inner.appendChild(closeBtn);
+      document.body.appendChild(modal.container);
+    })
+    .catch(err => {
+      alert("❌ Failed to load attachments");
+      console.error(err);
+    });
+}
+
+export function showUploadAttachmentsModal(requisitionId, requisitionNumber, onUploadComplete = null) {
+  showViewAttachmentsModal(requisitionId, requisitionNumber, onUploadComplete);
+}
+
+export async function checkAttachments(requisitionId) {
+  const url = `/requisitions/attachments/${requisitionId}`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return Array.isArray(data.attachments) && data.attachments.length > 0;
+  } catch (err) {
+    console.error("Failed to check attachments:", err);
+    return false;
+  }
+}
+
+function handleFiles(fileList, requisitionId, requisitionNumber, modalInner, onUploadComplete = null) {
+  Array.from(fileList).forEach(file => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    if (requisitionId !== null && requisitionId !== undefined) {
+      formData.append("requisition_id", requisitionId);
+    } else if (requisitionNumber) {
+      formData.append("requisition_number", requisitionNumber);
+    }
+
+    fetch("/requisitions/upload_attachment", {
+      method: "POST",
+      body: formData,
+    })
+      .then(res => res.json())
+      .then(data => {
+        const msg = document.createElement("p");
+        msg.textContent = data.message;
+        msg.style.color = "green";
+        modalInner.appendChild(msg);
+        if (onUploadComplete) onUploadComplete();
+      })
+      .catch(err => {
+        const msg = document.createElement("p");
+        msg.textContent = `❌ Failed to upload: ${file.name}`;
+        msg.style.color = "red";
+        modalInner.appendChild(msg);
+        console.error(err);
+      });
+  });
+}
+
+function createBaseModal() {
+  const container = document.createElement("div");
+  container.style.position = "fixed";
+  container.style.top = "0";
+  container.style.left = "0";
+  container.style.width = "100vw";
+  container.style.height = "100vh";
+  container.style.backgroundColor = "rgba(0,0,0,0.5)";
+  container.style.display = "flex";
+  container.style.alignItems = "center";
+  container.style.justifyContent = "center";
+  container.style.zIndex = "9999";
+
+  const inner = document.createElement("div");
+  inner.style.backgroundColor = "white";
+  inner.style.padding = "1.5rem";
+  inner.style.borderRadius = "8px";
+  inner.style.width = "90%";
+  inner.style.maxWidth = "500px";
+  inner.style.maxHeight = "80vh";
+  inner.style.overflowY = "auto";
+  inner.style.fontFamily = "Arial, sans-serif";
+  inner.style.position = "relative";
+
+  const close = document.createElement("button");
+  close.textContent = "✖";
+  close.style.position = "absolute";
+  close.style.top = "10px";
+  close.style.right = "10px";
+  close.style.background = "none";
+  close.style.border = "none";
+  close.style.fontSize = "1.2rem";
+  close.style.cursor = "pointer";
+  close.onclick = () => document.body.removeChild(container);
+
+  inner.appendChild(close);
+  container.appendChild(inner);
+
+  return { container, inner };
+}
+
+
+📄 frontend/templates/_tab_nav.html
+------------------------------------------------------------
+<div class="tab-nav">
+  <a href="/home">Home</a>
+  <a href="/requisitions/new">New Requisition</a>
+  <a href="/orders/new">New Order</a>
+  <a href="/orders/pending_orders">Pending Orders</a>
+  <a href="/orders/received_orders">Received Orders</a>
+  <a href="/orders/partially_delivered">Partially Delivered Orders</a>
+  <a href="/orders/audit_trail">Audit Trail</a>
+  <a href="/mobile/authorisations">My Authorisations</a>
+  <a href="/requisitions/pending_requisitions">Pending Requisitions</a>
+  <a href="/orders/cod_orders">COD Orders</a>
+  <a href="/maintenance">Maintenance</a>
+  <a href="/logout">Logout</a>
+  
+</div>
+
+
+📦 DATABASE SCHEMA: data/orders.db
+============================================================
+
+🔸 Table: requesters
+  id (INTEGER)
+  name (TEXT)
+
+🔸 Table: sqlite_sequence
+  name ()
+  seq ()
+
+🔸 Table: suppliers
+  id (INTEGER)
+  account_number (TEXT)
+  name (TEXT)
+  telephone (TEXT)
+  vat_number (TEXT)
+  registration_number (TEXT)
+  email (TEXT)
+  contact_name (TEXT)
+  contact_telephone (TEXT)
+  address_line1 (TEXT)
+  address_line2 (TEXT)
+  address_line3 (TEXT)
+  postal_code (TEXT)
+
+🔸 Table: orders
+  id (INTEGER)
+  order_number (TEXT)
+  status (TEXT)
+  created_date (TEXT)
+  received_date (TEXT)
+  total (REAL)
+  order_note (TEXT)
+  note_to_supplier (TEXT)
+  supplier_id (INTEGER)
+  requester_id (INTEGER)
+  required_auth_band (INTEGER)
+  payment_terms (TEXT)
+  payment_date (TEXT)
+  amount_paid (REAL)
+
+🔸 Table: order_items
+  id (INTEGER)
+  order_id (INTEGER)
+  item_code (TEXT)
+  item_description (TEXT)
+  project (TEXT)
+  qty_ordered (REAL)
+  qty_received (REAL)
+  received_date (TEXT)
+  price (REAL)
+  total (REAL)
+
+🔸 Table: attachments
+  id (INTEGER)
+  order_id (INTEGER)
+  filename (TEXT)
+  file_path (TEXT)
+  upload_date (TEXT)
+  requisition_id (INTEGER)
+  requisition_number (TEXT)
+
+🔸 Table: audit_trail
+  id (INTEGER)
+  order_id (INTEGER)
+  action (TEXT)
+  details (TEXT)
+  action_date (TEXT)
+  user_id (INTEGER)
+  timestamp (TEXT)
+
+🔸 Table: projects
+  id (INTEGER)
+  project_code (TEXT)
+  project_name (TEXT)
+
+🔸 Table: items
+  id (INTEGER)
+  item_code (TEXT)
+  item_description (TEXT)
+
+🔸 Table: business_details
+  id (INTEGER)
+  company_name (TEXT)
+  address_line1 (TEXT)
+  address_line2 (TEXT)
+  city (TEXT)
+  province (TEXT)
+  postal_code (TEXT)
+  telephone (TEXT)
+  vat_number (TEXT)
+
+🔸 Table: received_item_logs
+  id (INTEGER)
+  order_item_id (INTEGER)
+  qty_received (REAL)
+  received_by_user_id (INTEGER)
+  received_date (TEXT)
+
+🔸 Table: settings
+  id (INTEGER)
+  order_number_start (TEXT)
+  auth_threshold_1 (INTEGER)
+  auth_threshold_2 (INTEGER)
+  auth_threshold_3 (INTEGER)
+  auth_threshold_4 (INTEGER)
+  requisition_number_start (TEXT)
+
+🔸 Table: users
+  id (INTEGER)
+  username (TEXT)
+  password_hash (TEXT)
+  rights (TEXT)
+  auth_threshold_band (INTEGER)
+  roles (TEXT)
+
+🔸 Table: requisitions
+  id (INTEGER)
+  requisition_number (TEXT)
+  requisitioner_id (INTEGER)
+  requisition_date (TEXT)
+  requisition_note (TEXT)
+  status (TEXT)
+  converted_order_id (INTEGER)
+
+🔸 Table: requisitioners
+  id (INTEGER)
+  name (TEXT)
+
+🔸 Table: requisition_attachments
+  id (INTEGER)
+  requisition_id (INTEGER)
+  filename (TEXT)
+  file_path (TEXT)
+  upload_date (TEXT)
+
+🔸 Table: requisition_items
+  id (INTEGER)
+  requisition_id (INTEGER)
+  description (TEXT)
+  quantity (REAL)
+
+🌲 PROJECT TREE (depth=5)
+============================================================
+.
+├── backend
+│   ├── __pycache__
+│   │   ├── database.cpython-313.pyc
+│   │   └── main.cpython-313.pyc
+│   ├── database.py
+│   ├── endpoints
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-313.pyc
+│   │   │   ├── admin.cpython-313.pyc
+│   │   │   ├── auth.cpython-313.pyc
+│   │   │   ├── html_routes.cpython-313.pyc
+│   │   │   ├── new_order_pdf_generator.cpython-313.pyc
+│   │   │   ├── order_attachments.cpython-313.pyc
+│   │   │   ├── order_email.cpython-313.pyc
+│   │   │   ├── order_notes.cpython-313.pyc
+│   │   │   ├── order_queries.cpython-313.pyc
+│   │   │   ├── order_receiving.cpython-313.pyc
+│   │   │   ├── orders.cpython-313.pyc
+│   │   │   ├── pending_order_pdf_generator.cpython-313.pyc
+│   │   │   ├── requisition_attachments.cpython-313.pyc
+│   │   │   ├── requisitions.cpython-313.pyc
+│   │   │   └── utils.cpython-313.pyc
+│   │   ├── admin.py
+│   │   ├── auth.py
+│   │   ├── html_routes.py
+│   │   ├── lookups
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   │   ├── __init__.cpython-313.pyc
+│   │   │   │   ├── business_details.cpython-313.pyc
+│   │   │   │   ├── items.cpython-313.pyc
+│   │   │   │   ├── mark_cod_paid_api.cpython-313.pyc
+│   │   │   │   ├── projects.cpython-313.pyc
+│   │   │   │   ├── requesters.cpython-313.pyc
+│   │   │   │   ├── requisitioners.cpython-313.pyc
+│   │   │   │   ├── settings.cpython-313.pyc
+│   │   │   │   ├── suppliers.cpython-313.pyc
+│   │   │   │   └── users.cpython-313.pyc
+│   │   │   ├── business_details.py
+│   │   │   ├── items.py
+│   │   │   ├── mark_cod_paid_api.py
+│   │   │   ├── projects.py
+│   │   │   ├── requesters.py
+│   │   │   ├── requisitioners.py
+│   │   │   ├── settings.py
+│   │   │   ├── suppliers.py
+│   │   │   └── users.py
+│   │   ├── mobile
+│   │   │   ├── __pycache__
+│   │   │   │   ├── mobile_auth.cpython-313.pyc
+│   │   │   │   └── mobile_awaiting_authorisation.cpython-313.pyc
+│   │   │   ├── mobile_auth.py
+│   │   │   └── mobile_awaiting_authorisation.py
+│   │   ├── new_order_pdf_generator.py
+│   │   ├── order_attachments.py
+│   │   ├── order_email.py
+│   │   ├── order_notes.py
+│   │   ├── order_queries.py
+│   │   ├── order_receiving.py
+│   │   ├── orders.py
+│   │   ├── pending_order_pdf_generator.py
+│   │   ├── requisition_attachments.py
+│   │   ├── requisitions.py
+│   │   ├── users.py
+│   │   ├── utils.py
+│   │   └── whatsapp.py
+│   ├── main.py
+│   ├── scrapers
+│   ├── twilio
+│   │   ├── __init__.py
+│   │   └── twilio_utils.py
+│   ├── utils
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-313.pyc
+│   │   │   ├── db_utils.cpython-313.pyc
+│   │   │   ├── order_utils.cpython-313.pyc
+│   │   │   └── send_email.cpython-313.pyc
+│   │   ├── db_utils.py
+│   │   ├── order_utils.py
+│   │   ├── permissions_utils.py
+│   │   └── send_email.py
+│   └── utils.py
+├── bootstrap_admin_user.py
+├── cookies.txt
+├── data
+│   ├── orders_backup_20250509_081210.db
+│   ├── orders_backup_20250509_081218.db
+│   ├── orders_backup_before_clear_dynamic_20250526_073429.db
+│   ├── orders_backup_before_reset_20250519_105625.db
+│   ├── orders_backup_before_reset_20250521_062017.db
+│   ├── orders_backup_before_reset_20250525_103031.db
+│   ├── orders.db
+│   ├── pdfs
+│   │   ├── order_URC1200.pdf
+│   │   ├── order_URC1201.pdf
+│   │   └── order_URC1203.pdf
+│   ├── printouts
+│   │   ├── order_1.txt
+│   │   ├── order_3.txt
+│   │   └── order_7.txt
+│   ├── test_orders.db
+│   └── uploads
+│       ├── 101_2025-05-07_11-05.pdf
+│       ├── 101_Screenshot_2025-05-07_at_13.34.24.png
+│       ├── 13_Screenshot_2025-04-23_at_05.19.18.png
+│       ├── 14_Screenshot_2025-04-23_at_05.19.18.png
+│       ├── 153_Intimisso.pdf
+│       ├── 155_Investment_Made_-_12_May_2025.jpg
+│       ├── 17_Intimisso.pdf
+│       ├── 18_Hydehurst RC- Proof of submission.pdf
+│       ├── 19_Fidessa Consulting.PDF
+│       ├── 20_test_invoice.pdf
+│       ├── 20250530141159_Intimisso.pdf
+│       ├── 20250530150935_Intimisso.pdf
+│       ├── 20250531111129_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 20250531111608_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 20250531111656_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 20250531111720_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 20250531111949_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 20250531112017_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 20250531112627_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 20250531113406_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 20250531114549_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 20250531114726_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 20250531121244_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 20250531121316_Screenshot 2025-05-31 at 12.09.01.png
+│       ├── 20250531121421_Screenshot 2025-05-31 at 07.25.57.png
+│       ├── 205_Intimisso.pdf
+│       ├── 206_Screenshot_2025-05-31_at_10.53.46.png
+│       ├── 21_Fidessa Consulting.PDF
+│       ├── 21_test_invoice.pdf
+│       ├── 22_Hydehurst RC- Proof of submission.pdf
+│       ├── 24_Fidessa Consulting.PDF
+│       ├── 25_Screenshot 2025-04-20 at 17.12.14.png
+│       ├── 26_Intimisso.pdf
+│       ├── 27_test_invoice.pdf
+│       ├── 28_Deposit - 2.pdf
+│       ├── 28_test_invoice.pdf
+│       ├── 30_2025-04-22_18-29.pdf
+│       ├── 30_2025-04-22_18-44_1.pdf
+│       ├── 30_2025-04-22_18-44.pdf
+│       ├── 30_Intimisso.pdf
+│       ├── 31_Screenshot_2025-04-23_at_05.19.18.png
+│       ├── 42_Intimisso.pdf
+│       ├── 43_Intimisso.pdf
+│       ├── 44_order_URC1201.pdf
+│       └── test_invoice.pdf
+├── frontend
+│   ├── static
+│   │   ├── audio
+│   │   │   └── Alert.wav
+│   │   ├── css
+│   │   │   └── style.css
+│   │   ├── images
+│   │   │   └── universal_logo.jpg
+│   │   ├── js
+│   │   │   ├── __pycache__
+│   │   │   │   └── new_requisitions_pdf_generator.cpython-313.pyc
+│   │   │   ├── audit_trail.js
+│   │   │   ├── authorisations_per_user.js
+│   │   │   ├── cod_orders.js
+│   │   │   ├── components
+│   │   │   │   ├── attachment_modal.js
+│   │   │   │   ├── expand_line_items.js
+│   │   │   │   ├── mobile_pdf_modal.js
+│   │   │   │   ├── order_note_modal.js
+│   │   │   │   ├── payments_modal.js
+│   │   │   │   ├── pdf_modal.js
+│   │   │   │   ├── receive_modal.js
+│   │   │   │   ├── requisitions_attachment_modal.js
+│   │   │   │   ├── shared_filters.js
+│   │   │   │   └── utils.js
+│   │   │   ├── login.js
+│   │   │   ├── maintenance_screen
+│   │   │   │   ├── business_details.js
+│   │   │   │   ├── index.js
+│   │   │   │   ├── items.js
+│   │   │   │   ├── projects.js
+│   │   │   │   ├── requesters.js
+│   │   │   │   ├── requisitioners.js
+│   │   │   │   ├── settings.js
+│   │   │   │   ├── suppliers.js
+│   │   │   │   └── users.js
+│   │   │   ├── maintenance.js
+│   │   │   ├── new_order_main.js
+│   │   │   ├── new_order_modals.js
+│   │   │   ├── new_order_screen
+│   │   │   │   ├── pdf_utils.js
+│   │   │   │   └── submit_utils.js
+│   │   │   ├── new_requisition_main.js
+│   │   │   ├── new_requisitions_pdf_generator.py
+│   │   │   ├── partially_delivered.js
+│   │   │   ├── pending_orders.js
+│   │   │   ├── pending_requisitions.js
+│   │   │   ├── received_orders.js
+│   │   │   └── send_email.js
+│   │   └── mobile
+│   │       ├── css
+│   │       │   └── mobile_authorisations.css
+│   │       ├── js
+│   │       │   └── authorisations_screen
+│   │       ├── manifest.json
+│   │       └── service-worker.js
+│   └── templates
+│       ├── _tab_nav.html
+│       ├── access_denied.html
+│       ├── audit_trail.html
+│       ├── authorisations_per_user.html
+│       ├── base.html
+│       ├── cod_orders.html
+│       ├── home.html
+│       ├── index.html
+│       ├── login.html
+│       ├── maintenance.html
+│       ├── mobile
+│       │   ├── mobile_authorisations.html
+│       │   └── mobile_login.html
+│       ├── new_order.html
+│       ├── new_requisition.html
+│       ├── partially_delivered.html
+│       ├── pdf_template.html
+│       ├── pending_orders.html
+│       ├── pending_requisitions.html
+│       ├── print_template.html
+│       └── received_orders.html
+├── generated_pdfs
+│   └── requisition_1.pdf
+├── logs
+│   ├── client.log
+│   ├── cod_payments.log
+│   ├── db_activity_log.txt
+│   ├── new_orders_log.txt
+│   ├── order_receiving_log.txt
+│   ├── route_audit.log
+│   └── server.log
+├── requirements.txt
+├── scripts
+│   ├── __pycache__
+│   │   └── add_debug_validation_handler.cpython-313.pyc
+│   ├── add_debug_validation_handler.py
+│   ├── database_scripts
+│   │   ├── clear_all_database_tables.py
+│   │   ├── clear_dynamic_database_tables.py
+│   │   ├── print_all_data.py
+│   │   ├── push_database_to_vm.py
+│   │   └── seed_static_data.py
+│   ├── dump_scripts
+│   │   ├── individual_screens
+│   │   │   ├── output_all_mobile_scripts.py
+│   │   │   ├── output_all_pdf_scripts.py
+│   │   │   ├── output_all_receiving_scripts.py
+│   │   │   ├── output_audit_trail_screen_files.py
+│   │   │   ├── output_authorisations_per_user.py
+│   │   │   ├── output_cod_screen.py
+│   │   │   ├── output_login_screen_files.py
+│   │   │   ├── output_maintenance_screen_files.py
+│   │   │   ├── output_new_order_screen.py
+│   │   │   ├── output_requisitions_screen.py
+│   │   │   └── tree_dependencies_database.py
+│   │   └── mother_output_all_files_code_to_text.py
+│   ├── git_scripts
+│   │   ├── google_vm_pull_and_start.py
+│   │   ├── google_vm_push_and_leave.py
+│   │   ├── pull_and_start.py
+│   │   ├── pull_database_from_google_vm.py
+│   │   ├── push_and_leave.py
+│   │   └── push_database_to_vm.py
+│   ├── start_server.py
+│   └── stop_server.py
+├── scripts_for_each_screen
+│   └── output_requisitions_screen.txt
+├── setup_env.py
+└── venv
+    ├── bin
+    │   ├── activate
+    │   ├── activate.csh
+    │   ├── activate.fish
+    │   ├── Activate.ps1
+    │   ├── dotenv
+    │   ├── fastapi
+    │   ├── fonttools
+    │   ├── normalizer
+    │   ├── pip
+    │   ├── pip3
+    │   ├── pip3.13
+    │   ├── pyftmerge
+    │   ├── pyftsubset
+    │   ├── python -> python3.13
+    │   ├── python3 -> python3.13
+    │   ├── python3.13 -> /opt/homebrew/opt/python@3.13/bin/python3.13
+    │   ├── ttx
+    │   ├── uvicorn
+    │   └── weasyprint
+    ├── include
+    │   └── python3.13
+    ├── lib
+    │   └── python3.13
+    │       └── site-packages
+    │           ├── __pycache__
+    │           ├── _brotli.cpython-313-darwin.so
+    │           ├── _cffi_backend.cpython-313-darwin.so
+    │           ├── aiohappyeyeballs
+    │           ├── aiohappyeyeballs-2.6.1.dist-info
+    │           ├── aiohttp
+    │           ├── aiohttp_retry
+    │           ├── aiohttp_retry-2.9.1.dist-info
+    │           ├── aiohttp-3.11.18.dist-info
+    │           ├── aiosignal
+    │           ├── aiosignal-1.3.2.dist-info
+    │           ├── annotated_types
+    │           ├── annotated_types-0.7.0.dist-info
+    │           ├── anyio
+    │           ├── anyio-4.9.0.dist-info
+    │           ├── attr
+    │           ├── attrs
+    │           ├── attrs-25.3.0.dist-info
+    │           ├── bcrypt
+    │           ├── bcrypt-4.3.0.dist-info
+    │           ├── Brotli-1.1.0.dist-info
+    │           ├── brotli.py
+    │           ├── certifi
+    │           ├── certifi-2025.4.26.dist-info
+    │           ├── cffi
+    │           ├── cffi-1.17.1.dist-info
+    │           ├── charset_normalizer
+    │           ├── charset_normalizer-3.4.2.dist-info
+    │           ├── click
+    │           ├── click-8.2.1.dist-info
+    │           ├── cssselect2
+    │           ├── cssselect2-0.8.0.dist-info
+    │           ├── dotenv
+    │           ├── fastapi
+    │           ├── fastapi-0.115.12.dist-info
+    │           ├── fontTools
+    │           ├── fonttools-4.58.0.dist-info
+    │           ├── frozenlist
+    │           ├── frozenlist-1.6.0.dist-info
+    │           ├── h11
+    │           ├── h11-0.16.0.dist-info
+    │           ├── idna
+    │           ├── idna-3.10.dist-info
+    │           ├── itsdangerous
+    │           ├── itsdangerous-2.2.0.dist-info
+    │           ├── jinja2
+    │           ├── jinja2-3.1.6.dist-info
+    │           ├── jwt
+    │           ├── markupsafe
+    │           ├── MarkupSafe-3.0.2.dist-info
+    │           ├── multidict
+    │           ├── multidict-6.4.4.dist-info
+    │           ├── multipart
+    │           ├── PIL
+    │           ├── pillow-11.2.1.dist-info
+    │           ├── pip
+    │           ├── pip-25.1.1.dist-info
+    │           ├── propcache
+    │           ├── propcache-0.3.1.dist-info
+    │           ├── pycparser
+    │           ├── pycparser-2.22.dist-info
+    │           ├── pydantic
+    │           ├── pydantic_core
+    │           ├── pydantic_core-2.33.2.dist-info
+    │           ├── pydantic-2.11.5.dist-info
+    │           ├── pydyf
+    │           ├── pydyf-0.11.0.dist-info
+    │           ├── PyJWT-2.10.1.dist-info
+    │           ├── pyphen
+    │           ├── pyphen-0.17.2.dist-info
+    │           ├── python_dotenv-1.1.0.dist-info
+    │           ├── python_multipart
+    │           ├── python_multipart-0.0.20.dist-info
+    │           ├── requests
+    │           ├── requests-2.32.3.dist-info
+    │           ├── sniffio
+    │           ├── sniffio-1.3.1.dist-info
+    │           ├── starlette
+    │           ├── starlette-0.46.2.dist-info
+    │           ├── tinycss2
+    │           ├── tinycss2-1.4.0.dist-info
+    │           ├── tinyhtml5
+    │           ├── tinyhtml5-2.0.0.dist-info
+    │           ├── twilio
+    │           ├── twilio-9.6.1.dist-info
+    │           ├── typing_extensions-4.13.2.dist-info
+    │           ├── typing_extensions.py
+    │           ├── typing_inspection
+    │           ├── typing_inspection-0.4.1.dist-info
+    │           ├── urllib3
+    │           ├── urllib3-2.4.0.dist-info
+    │           ├── uvicorn
+    │           ├── uvicorn-0.34.2.dist-info
+    │           ├── weasyprint
+    │           ├── weasyprint-65.1.dist-info
+    │           ├── webencodings
+    │           ├── webencodings-0.5.1.dist-info
+    │           ├── yarl
+    │           ├── yarl-1.20.0.dist-info
+    │           ├── zopfli
+    │           └── zopfli-0.2.3.post1.dist-info
+    ├── pyvenv.cfg
+    └── share
+        └── man
+            └── man1
+                └── ttx.1
+
+149 directories, 258 files
