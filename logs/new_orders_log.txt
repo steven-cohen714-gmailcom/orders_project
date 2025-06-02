@@ -161,3 +161,5 @@
 [2025-06-01T07:11:33.382169] {"action": "fetch_cod_orders", "count": 1}
 [2025-06-01T07:11:41.684908] {"action": "fetch_cod_orders", "count": 1}
 [2025-06-01T07:11:53.786107] {"action": "fetch_items_for_order", "order_id": 209, "count": 1}
+[2025-06-01T08:57:03.246574] {"action": "fetch_pending_orders", "count": 0}
+[2025-06-01T09:12:43.443201] {"action": "fetch_pending_orders", "count": 0}

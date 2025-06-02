@@ -1685,3 +1685,79 @@ sqlite3.OperationalError: database is locked
 2025-06-01 07:48:47,579 | INFO | Projects fetched: 207 items
 2025-06-01 08:13:58,463 | INFO | Database initialized successfully.
 2025-06-01 08:13:58,463 | INFO | ✅ Database initialized successfully.
+2025-06-01 08:32:32,240 | INFO | Database initialized successfully.
+2025-06-01 08:32:32,240 | INFO | ✅ Database initialized successfully.
+2025-06-01 08:32:32,814 | INFO | Database initialized successfully.
+2025-06-01 08:32:32,814 | INFO | ✅ Database initialized successfully.
+2025-06-01 08:45:54,098 | INFO | Database initialized successfully.
+2025-06-01 08:45:54,098 | INFO | ✅ Database initialized successfully.
+2025-06-01 08:45:54,626 | INFO | Database initialized successfully.
+2025-06-01 08:45:54,626 | INFO | ✅ Database initialized successfully.
+2025-06-01 08:46:00,411 | INFO | Requesters fetched: 9 items
+2025-06-01 08:46:00,422 | INFO | Items fetched: 9981 items
+2025-06-01 08:46:00,452 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 08:46:00,453 | INFO | Projects fetched: 207 items
+2025-06-01 08:46:00,456 | INFO | Suppliers fetched: 795 items
+2025-06-01 08:46:03,851 | INFO | Requesters fetched: 9 items
+2025-06-01 08:46:03,864 | INFO | Items fetched: 9981 items
+2025-06-01 08:46:03,900 | INFO | Suppliers fetched: 795 items
+2025-06-01 08:46:03,904 | INFO | Projects fetched: 207 items
+2025-06-01 08:46:03,906 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 08:56:06,954 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 08:56:06,957 | INFO | Requesters fetched: 9 items
+2025-06-01 08:56:06,964 | INFO | Items fetched: 9981 items
+2025-06-01 08:56:06,995 | INFO | Suppliers fetched: 795 items
+2025-06-01 08:56:06,999 | INFO | Projects fetched: 207 items
+2025-06-01 08:56:14,910 | INFO | New supplier added: Test Supplier - 10
+2025-06-01 08:56:14,916 | INFO | Suppliers fetched: 796 items
+2025-06-01 08:56:54,245 | INFO | Starting to render new order page
+2025-06-01 08:56:54,312 | INFO | Requesters fetched: 9 items
+2025-06-01 08:56:54,317 | INFO | Suppliers fetched: 796 items
+2025-06-01 08:56:54,334 | INFO | Items fetched: 9981 items
+2025-06-01 08:56:54,389 | INFO | Projects fetched: 207 items
+2025-06-01 08:57:03,225 | INFO | Requesters fetched: 9 items
+2025-06-01 08:57:03,228 | INFO | Suppliers fetched: 796 items
+2025-06-01 08:59:59,155 | INFO | Requesters fetched: 9 items
+2025-06-01 08:59:59,159 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 08:59:59,182 | INFO | Items fetched: 9981 items
+2025-06-01 08:59:59,214 | INFO | Suppliers fetched: 796 items
+2025-06-01 08:59:59,217 | INFO | Projects fetched: 207 items
+2025-06-01 09:06:39,016 | INFO | Requesters fetched: 9 items
+2025-06-01 09:06:39,025 | INFO | Items fetched: 9981 items
+2025-06-01 09:06:39,056 | INFO | Suppliers fetched: 796 items
+2025-06-01 09:06:39,059 | INFO | Projects fetched: 207 items
+2025-06-01 09:06:39,061 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 09:09:46,249 | INFO | New item added: Test Code - 58 - Test Item 58
+2025-06-01 09:09:46,267 | INFO | Items fetched: 9982 items
+2025-06-01 09:09:57,871 | INFO | Requesters fetched: 9 items
+2025-06-01 09:09:57,879 | INFO | Items fetched: 9982 items
+2025-06-01 09:09:57,931 | INFO | Suppliers fetched: 796 items
+2025-06-01 09:09:57,934 | INFO | Projects fetched: 207 items
+2025-06-01 09:09:57,936 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 09:12:46,005 | INFO | Requesters fetched: 9 items
+2025-06-01 09:12:46,040 | INFO | Items fetched: 9982 items
+2025-06-01 09:12:46,072 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-06-01 09:12:46,074 | INFO | Suppliers fetched: 796 items
+2025-06-01 09:12:46,077 | INFO | Projects fetched: 207 items
+2025-06-01 09:16:42,700 | INFO | Items fetched: 9982 items
+2025-06-01 09:16:57,048 | INFO | New item added: Item Code - 89 - Item 89
+2025-06-01 09:17:22,138 | INFO | Items fetched: 9983 items
+2025-06-01 09:17:41,440 | INFO | Suppliers fetched: 796 items
+2025-06-01 09:18:10,241 | INFO | New supplier added: wwefwrfrwf
+2025-06-01 09:18:10,256 | INFO | Suppliers fetched: 797 items
+2025-06-01 09:20:53,304 | INFO | Items fetched: 9983 items
+2025-06-01 09:21:08,915 | INFO | New item added: Item code - 856 - Item 856
+2025-06-01 09:21:42,741 | INFO | Suppliers fetched: 797 items
+2025-06-01 09:21:59,710 | INFO | Items fetched: 9984 items
+2025-06-01 09:26:29,855 | INFO | Suppliers fetched: 797 items
+2025-06-01 09:36:06,393 | INFO | Database initialized successfully.
+2025-06-01 09:36:06,393 | INFO | ✅ Database initialized successfully.
+2025-06-01 09:36:12,773 | INFO | Database initialized successfully.
+2025-06-01 09:36:12,773 | INFO | ✅ Database initialized successfully.
+2025-06-01 09:36:13,345 | INFO | Database initialized successfully.
+2025-06-01 09:36:13,345 | INFO | ✅ Database initialized successfully.
+2025-06-01 09:36:26,157 | INFO | Suppliers fetched: 797 items
+2025-06-01 09:37:47,222 | INFO | Suppliers fetched: 797 items
+2025-06-01 09:40:37,302 | INFO | Suppliers fetched: 797 items
+2025-06-01 09:40:54,930 | INFO | New supplier added: Test 9998
+2025-06-01 09:40:54,935 | INFO | Suppliers fetched: 798 items
