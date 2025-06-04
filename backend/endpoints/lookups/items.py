@@ -1,3 +1,5 @@
+# File: backend/endpoints/lookups/items.py
+
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from backend.database import get_db_connection
 import logging
@@ -18,11 +20,17 @@ async def get_items():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT id, item_code, item_description FROM items")
+        cursor.execute("SELECT id, item_code, item_description FROM items ORDER BY id DESC")
         items = cursor.fetchall()
-        result = [{"id": i[0], "description": f"{i[1]} - {i[2]}"} for i in items]
+        result = [
+            {
+                "id": i[0],
+                "item_code": i[1],
+                "item_description": i[2]
+            } for i in items
+        ]
         logging.info(f"Items fetched: {len(result)} items")
-        return result
+        return { "items": result }
     except sqlite3.Error as e:
         logging.error(f"Database error fetching items: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
@@ -49,8 +57,13 @@ async def add_item(payload: dict):
             (item_code, item_description)
         )
         conn.commit()
+        new_id = cursor.lastrowid
         logging.info(f"New item added: {item_code} - {item_description}")
-        return {"message": "Item added successfully"}
+        return {
+            "id": new_id,
+            "item_code": item_code,
+            "item_description": item_description
+        }
     except sqlite3.IntegrityError as e:
         logging.error(f"Integrity error adding item: {str(e)}")
         raise HTTPException(status_code=400, detail="Item code might already exist.")
@@ -133,4 +146,3 @@ async def import_items_csv(file: UploadFile = File(...)):
     except Exception as e:
         logging.error(f"❌ Error importing items CSV: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Import failed: {str(e)}")
-

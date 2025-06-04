@@ -1,3 +1,5 @@
+# File: backend/endpoints/lookups/projects.py
+
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from backend.database import get_db_connection
 import logging
@@ -18,12 +20,12 @@ async def get_projects():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT id, project_code, project_name FROM projects")
+        cursor.execute("SELECT id, project_code, project_name FROM projects ORDER BY id DESC")
         projects = cursor.fetchall()
-        result = [{"id": p[0], "description": f"{p[1]} - {p[2]}"} for p in projects]
+        result = [{"id": p[0], "project_code": p[1], "project_name": p[2]} for p in projects]
 
         logging.info(f"Projects fetched: {len(result)} items")
-        return result
+        return { "projects": result }
     except sqlite3.Error as e:
         logging.error(f"Database error fetching projects: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
@@ -50,8 +52,13 @@ async def add_project(payload: dict):
             (project_code, project_name)
         )
         conn.commit()
+        new_id = cursor.lastrowid
         logging.info(f"New project added: {project_code} - {project_name}")
-        return {"message": "Project added successfully"}
+        return {
+            "id": new_id,
+            "project_code": project_code,
+            "project_name": project_name
+        }
     except sqlite3.IntegrityError as e:
         logging.error(f"Integrity error adding project: {str(e)}")
         raise HTTPException(status_code=400, detail="Project code might already exist.")
@@ -134,4 +141,3 @@ async def import_projects_csv(file: UploadFile = File(...)):
     except Exception as e:
         logging.error(f"❌ Error importing projects CSV: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Import failed: {str(e)}")
-

@@ -1,7 +1,7 @@
 import { loadRequisitioners } from "./components/shared_filters.js";
 import { showUploadAttachmentsModal, showViewAttachmentsModal, checkAttachments } from "./components/requisitions_attachment_modal.js";
 import { showOrderNoteModal } from "./components/order_note_modal.js";
-import { showPDFModal } from "./components/pdf_modal.js";
+import { expandRequisitionItems } from "./components/expand_requisition_items.js";
 
 console.log("📦 pending_requisitions.js loaded");
 
@@ -41,7 +41,13 @@ async function loadRequisitions() {
 
         const formattedDate = new Date(req.requisition_date).toLocaleDateString("en-ZA");
         const sanitizedNote = escapeHTML(req.requisition_note || "");
-        const converted = req.converted_order_id ? "✅" : "";
+
+        const isConverted = !!req.converted_order_id;
+        const convertedTick = `<span class="converted-icon ${isConverted ? 'disabled' : ''}" 
+                                  title="${isConverted ? 'Already converted' : 'Mark as Converted'}" 
+                                  data-id="${req.id}" 
+                                  data-number="${req.requisition_number}"
+                                  style="cursor: ${isConverted ? 'default' : 'pointer'};">✅</span>`;
 
         row.innerHTML = `
           <td>${formattedDate}</td>
@@ -51,8 +57,8 @@ async function loadRequisitions() {
           <td>${escapeHTML(req.total_quantity || "")}</td>
           <td>${escapeHTML(req.description || "")}</td>
           <td>
-            ${converted}
-            <span class="pdf-icon" title="View PDF" data-id="${req.id}">📄</span>
+            <span class="expand-icon" data-id="${req.id}">⬇️</span>
+            ${convertedTick}
             <span class="note-icon" title="Edit Note" data-id="${req.id}" data-note="${sanitizedNote}" id="note-${index}">📝</span>
             <span class="clip-icon" title="View/Upload Attachments" data-id="${req.id}" data-number="${req.requisition_number}">📎</span>
           </td>
@@ -80,14 +86,21 @@ async function loadRequisitions() {
           }
         });
 
-        row.querySelector(".pdf-icon").addEventListener("click", async () => {
+        row.querySelector(".expand-icon").addEventListener("click", (e) => {
+          expandRequisitionItems(row, req.id);
+        });
+
+        row.querySelector(".converted-icon").addEventListener("click", async (e) => {
+          if (isConverted) return;
+          const confirmConvert = confirm(`Convert requisition ${req.requisition_number} to an order?`);
+          if (!confirmConvert) return;
           try {
-            const response = await fetch(`/requisitions/api/generate_pdf/${req.id}`);
-            if (!response.ok) throw new Error(`PDF generation failed with status ${response.status}`);
-            const blob = await response.blob();
-            showPDFModal(blob);
+            const res = await fetch(`/requisitions/api/mark_converted/${req.id}`, { method: "PUT" });
+            if (!res.ok) throw new Error(`Status ${res.status}`);
+            alert(`Requisition ${req.requisition_number} marked as converted.`);
+            loadRequisitions();
           } catch (err) {
-            alert("❌ Could not generate PDF");
+            alert("❌ Failed to convert requisition.");
             console.error(err);
           }
         });
@@ -124,4 +137,3 @@ window.showOrderNoteModal = showOrderNoteModal;
 window.showUploadAttachmentsModal = showUploadAttachmentsModal;
 window.checkAttachments = checkAttachments;
 window.showViewAttachmentsModal = showViewAttachmentsModal;
-window.showPDFModal = showPDFModal;

@@ -44,11 +44,11 @@ export function initItems() {
       });
 
       if (res.ok) {
-        const newItem = await res.json(); // <- get the actual item with ID
+        const newItem = await res.json(); // Should return: { id, item_code, item_description }
         const row = createRow(newItem);
 
         const tbody = document.getElementById("items-table");
-        tbody.insertBefore(row, tbody.firstChild); // <- add at top
+        tbody.insertBefore(row, tbody.firstChild); // Add new item at top
 
         alert("✅ Item added successfully.");
 

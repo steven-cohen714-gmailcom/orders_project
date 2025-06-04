@@ -146,6 +146,28 @@ def get_pending_requisitions():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching requisitions: {str(e)}")
 
+@router.get("/api/requisition_items/{requisition_id}")
+def get_requisition_items(requisition_id: int):
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT
+                    id,
+                    description AS item_description,
+                    quantity AS qty_ordered,
+                    '-' AS item_code,
+                    '-' AS project,
+                    0 AS price,
+                    0 AS total
+                FROM requisition_items
+                WHERE requisition_id = ?
+            """, (requisition_id,))
+            items = [dict(row) for row in cursor.fetchall()]
+        return {"items": items}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to fetch requisition items: {str(e)}")
+
 @router.get("/requisitions/api/generate_pdf/{requisition_id}")
 def requisition_pdf(requisition_id: int):
     try:
@@ -157,3 +179,27 @@ def requisition_pdf(requisition_id: int):
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"PDF generation failed: {str(e)}")
+    
+@router.put("/requisitions/api/mark_converted/{requisition_id}") 
+def mark_requisition_converted(requisition_id: int):
+    try:
+        with get_db_connection() as conn:
+            cursor = conn.cursor()
+
+            # Safety: check if requisition exists
+            cursor.execute("SELECT id FROM requisitions WHERE id = ?", (requisition_id,))
+            if not cursor.fetchone():
+                raise HTTPException(status_code=404, detail="Requisition not found")
+
+            # Update with dummy order ID (just mark it as converted)
+            cursor.execute("""
+                UPDATE requisitions
+                SET converted_order_id = 'ORDER-CONVERTED'
+                WHERE id = ?
+            """, (requisition_id,))
+            conn.commit()
+
+        return {"success": True}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to mark converted: {str(e)}")
+

@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("add-line").addEventListener("click", addLineItem);
   document.getElementById("submit-requisition").addEventListener("click", submitRequisition);
-  document.getElementById("preview-pdf").addEventListener("click", previewPDF);
 });
 
 function addLineItem() {

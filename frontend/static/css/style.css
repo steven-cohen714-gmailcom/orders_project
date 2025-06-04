@@ -430,3 +430,8 @@ tbody,
 .fuzzy-fix-scope {
   z-index: auto !important;
 }
+
+.converted-icon.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
