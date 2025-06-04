@@ -18,7 +18,9 @@ table {
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visible !important;
+  position: relative;
+  z-index: 3;
 }
 
 th {
@@ -38,6 +40,7 @@ td {
   color: #333;
   overflow: visible;
   position: relative;
+  z-index: 3;
 }
 
 td button {
@@ -192,201 +195,15 @@ button:hover {
   font-size: 0.9rem;
 }
 
-.tabs {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-.tab {
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  background: #ddd;
-  border-radius: 4px 4px 0 0;
-}
-
-.tab.active {
-  background: #007BFF;
-  color: white;
-}
-
-.tab-content {
-  display: none;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 0 4px 4px 4px;
-  background-color: white;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-}
-
-.order-header {
-  margin-bottom: 2rem;
-}
-
-.order-header label span {
-  font-weight: bold;
-  font-size: 1.05rem;
-  margin-left: 0.5rem;
-}
-
-.form-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-.column {
-  flex: 1 1 240px;
-  display: flex;
-  flex-direction: column;
-}
-
-#note_to_supplier {
-  min-height: 100px;
-}
-
-.delivery-block {
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
-}
-
-.add-item-block {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  overflow: visible;
-  position: relative;
-  min-height: 300px;
-  z-index: 1; /* <-- ADD THIS */
-
-}
-
-.summary {
-  margin-bottom: 2rem;
-}
-
-.button-group {
-  margin-top: 2rem;
-}
-
-.receive-modal table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  font-size: 14px;
-}
-
-.receive-modal th,
-.receive-modal td {
-  border: 1px solid #ccc;
-  padding: 8px;
-  text-align: left;
-}
-
-.receive-modal input[type="number"] {
-  width: 80px;
-}
-
-i:hover {
-  cursor: pointer;
-}
-
-.note-icon:hover,
-.clip-icon:hover,
-.expand-icon:hover,
-.receive-icon:hover,
-.supplier-note-icon:hover {
-  cursor: pointer;
-}
-
-.email-icon {
-  cursor: pointer;
-  margin-left: 5px;
-  font-size: 1.2em;
-}
-
-.email-icon:hover {
-  color: #007bff;
-}
-
-#settings .form-group label,
-#settings .form-group input {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-#settings .form-group input {
-  width: 250px;
-  padding: 0.5rem;
-}
-
-#settings .form-group {
-  margin-bottom: 1.2rem;
-}
-
-#business_details .form-group label,
-#business_details .form-group input {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-#business_details .form-group input {
-  width: 280px;
-  padding: 0.5rem;
-}
-
-#business_details .form-group {
-  margin-bottom: 1.2rem;
-}
-
-#users .form-group label,
-#users .form-group input,
-#users .form-group select {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-#users .form-group input,
-#users .form-group select {
-  width: 280px;
-  padding: 0.5rem;
-}
-
-#users .form-group {
-  margin-bottom: 1.2rem;
-}
-
-.receive-icon.disabled {
-  opacity: 0.4;
-  pointer-events: none;
-  cursor: not-allowed;
-}
-
-/* --- FIX CLIPPED DROPDOWNS --- */
+/* Preserve your previous dropdown visibility fixes */
+.add-item-block,
+#items,
+#items-body,
+#items-table-container,
 td,
 tr,
-tbody,
-#items-body,
-#items {
+tbody {
   overflow: visible !important;
-  position: relative;
-  z-index: 1;
-}
-
-#items-table-container {
-  overflow: visible;
   position: relative;
   z-index: 2;
 }
@@ -395,7 +212,7 @@ tbody,
   position: relative;
 }
 
-/* --- CUSTOM FIELD WIDTHS --- */
+/* Field widths */
 .wide-select {
   min-width: 280px;
   max-width: 360px;
@@ -413,20 +230,30 @@ tbody,
   text-align: right;
 }
 
-/* Force TomSelect dropdown to appear on top of everything else */
-.ts-dropdown {
+.button-group {
+  position: relative;
+  z-index: 10;
+}
+
+.summary {
+  position: relative;
+  z-index: 10;
+}
+
+/* Scoped overflow fix for fuzzy dropdown inside new order table */
+.fuzzy-fix-scope,
+.fuzzy-fix-scope td,
+.fuzzy-fix-scope tr,
+.fuzzy-fix-scope tbody,
+.fuzzy-fix-scope #items-table,
+.fuzzy-fix-scope .add-item-block {
+  overflow: visible !important;
+  position: relative;
+  z-index: 3;
+}
+
+.tom-select.dropdown-active {
   z-index: 9999 !important;
 }
 
-.ts-dropdown {
-  z-index: 9999 !important;
-  position: absolute !important;
-}
 
-.add-item-block {
-  z-index: auto !important;
-}
-
-.fuzzy-fix-scope {
-  z-index: auto !important;
-}

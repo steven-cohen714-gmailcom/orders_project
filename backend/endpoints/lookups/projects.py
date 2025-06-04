@@ -20,9 +20,10 @@ async def get_projects():
         cursor = conn.cursor()
         cursor.execute("SELECT id, project_code, project_name FROM projects")
         projects = cursor.fetchall()
-        result = [{"id": p[0], "project_code": p[1], "project_name": p[2]} for p in projects]
+        result = [{"id": p[0], "description": f"{p[1]} - {p[2]}"} for p in projects]
+
         logging.info(f"Projects fetched: {len(result)} items")
-        return {"projects": result}
+        return result
     except sqlite3.Error as e:
         logging.error(f"Database error fetching projects: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
@@ -31,7 +32,6 @@ async def get_projects():
         raise HTTPException(status_code=500, detail=f"Error fetching projects: {str(e)}")
     finally:
         conn.close()
-
 
 @router.post("/projects")
 async def add_project(payload: dict):
@@ -63,7 +63,6 @@ async def add_project(payload: dict):
         raise HTTPException(status_code=500, detail=f"Error adding project: {str(e)}")
     finally:
         conn.close()
-
 
 @router.put("/projects/{project_id}")
 async def update_project(project_id: int, payload: dict):
@@ -98,7 +97,6 @@ async def update_project(project_id: int, payload: dict):
         raise HTTPException(status_code=500, detail=f"Error updating project: {str(e)}")
     finally:
         conn.close()
-
 
 @router.post("/import_projects_csv")
 async def import_projects_csv(file: UploadFile = File(...)):
@@ -136,3 +134,4 @@ async def import_projects_csv(file: UploadFile = File(...)):
     except Exception as e:
         logging.error(f"❌ Error importing projects CSV: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Import failed: {str(e)}")
+

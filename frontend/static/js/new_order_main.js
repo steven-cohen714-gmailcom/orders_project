@@ -3,7 +3,7 @@
 import { previewOrder } from "./new_order_screen/pdf_utils.js";
 import { submitOrder } from "./new_order_screen/submit_utils.js";
 import { logToServer } from "./components/utils.js";
-import { enableFuzzySearch } from "./components/utils.js";
+import { createFuzzyDropdown } from "./components/fuzzy_dropdown.js";
 
 let itemsList = [];
 let projectsList = [];
@@ -30,15 +30,11 @@ async function loadDropdowns() {
   try {
       const requestersData = await fetchData("/lookups/requesters");
       populateDropdown("requester_id", requestersData?.requesters, "name");
-      const suppliersData = await fetchData("/lookups/suppliers");
-      populateDropdown("supplier_id", suppliersData?.suppliers, "name");
-      enableFuzzySearch("supplier_id");
-      const itemsData = await fetchData("/lookups/items");
-      itemsList = itemsData?.items || [];
-      enableFuzzySearch("item_code_1");
-      const projectsData = await fetchData("/lookups/projects");
-      projectsList = projectsData?.projects || [];
-      enableFuzzySearch("project_1");
+      await createFuzzyDropdown("supplier_id", "/lookups/suppliers");
+
+      await createFuzzyDropdown("item-template", "/lookups/items");
+      await createFuzzyDropdown("project-template", "/lookups/projects"); 
+
   } catch (error) {
       console.error("Error loading dropdowns:", error);
       throw error;
@@ -93,11 +89,7 @@ async function incrementOrderNumber(currentOrderNumber) {
 // Add a row to the table
 function addRow() {
   // Check if itemsList and projectsList are populated
-  if (itemsList.length === 0 || projectsList.length === 0) {
-      alert('Cannot add items: Failed to load items or projects. Please refresh the page.');
-      return;
-  }
-
+  
   const tbody = document.getElementById("items-body");
   const row = document.createElement("tr");
   row.id = `row_${rowCount++}`;
@@ -105,32 +97,22 @@ function addRow() {
   // Item Code dropdown (show code + description)
   const itemCell = document.createElement("td");
   const itemSelect = document.createElement("select");
-  itemSelect.className = "item-code";
+  itemSelect.className = "item-code wide-select";
+  itemCell.classList.add("position-relative");
   itemSelect.id = `item_code_${rowCount}`;
   itemSelect.innerHTML = '<option value="">Select Item</option>';
-  itemsList.forEach(item => {
-      const option = document.createElement("option");
-      option.value = item.item_code;
-      option.textContent = `${item.item_code} - ${item.item_description}`;
-      option.dataset.description = item.item_description?.toLowerCase() || "";
-      itemSelect.appendChild(option);
-  });
+    
   itemCell.appendChild(itemSelect);
   row.appendChild(itemCell);
 
   // Project dropdown (show code + name)
   const projectCell = document.createElement("td");
   const projectSelect = document.createElement("select");
-  projectSelect.className = "project";
+  projectSelect.className = "project wide-select";
+  projectCell.classList.add("position-relative");
   projectSelect.id = `project_${rowCount}`;
   projectSelect.innerHTML = '<option value="">Select Project</option>';
-  projectsList.forEach(project => {
-      const option = document.createElement("option");
-      option.value = project.project_code;
-      option.textContent = `${project.project_code} - ${project.project_name}`;
-      option.dataset.description = project.project_name?.toLowerCase() || "";
-      projectSelect.appendChild(option);
-  });
+  
   projectCell.appendChild(projectSelect);
   row.appendChild(projectCell);
 
@@ -138,7 +120,7 @@ function addRow() {
   const qtyCell = document.createElement("td");
   const qtyInput = document.createElement("input");
   qtyInput.type = "number";
-  qtyInput.className = "qty-ordered";
+  qtyInput.className = "qty-ordered narrow-input";
   qtyInput.id = `qty_${rowCount}`;
   qtyInput.value = "1";
   qtyInput.min = "1";
@@ -149,7 +131,7 @@ function addRow() {
   const priceCell = document.createElement("td");
   const priceInput = document.createElement("input");
   priceInput.type = "number";
-  priceInput.className = "price";
+  priceInput.className = "price narrow-input";
   priceInput.id = `price_${rowCount}`;
   priceInput.value = "0.00";
   priceInput.step = "0.01";
@@ -160,7 +142,7 @@ function addRow() {
   const totalCell = document.createElement("td");
   const totalInput = document.createElement("input");
   totalInput.type = "text";
-  totalInput.className = "total";
+  totalInput.className = "total medium-input";
   totalInput.id = `total_${rowCount}`;
   totalInput.value = "0.00";
   totalInput.readOnly = true;
@@ -176,8 +158,9 @@ function addRow() {
   row.appendChild(actionsCell);
 
   tbody.appendChild(row);
-  enableFuzzySearch(itemSelect.id);
-  enableFuzzySearch(projectSelect.id);
+
+  createFuzzyDropdown(itemSelect.id, "/lookups/items");
+  createFuzzyDropdown(projectSelect.id, "/lookups/projects");
   updateTotal(itemSelect);
 }
 
@@ -413,3 +396,5 @@ function setupEventListeners() {
       alert(`Error: ${err.message}`);
     }
   });
+
+  

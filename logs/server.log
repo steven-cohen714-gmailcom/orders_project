@@ -1,34 +1,171 @@
-INFO:     127.0.0.1:61689 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61689 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:61690 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61689 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61689 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61690 - "GET /static/js/maintenance_screen/requesters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61689 - "GET /static/js/maintenance_screen/users.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61693 - "GET /static/js/maintenance_screen/items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61698 - "GET /static/js/maintenance_screen/requisitioners.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61695 - "GET /static/js/maintenance_screen/suppliers.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61696 - "GET /static/js/maintenance_screen/projects.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61690 - "GET /static/js/maintenance_screen/settings.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61689 - "GET /static/js/maintenance_screen/business_details.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61689 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61689 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:61689 - "GET /maintenance/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62426 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62426 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:62427 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62426 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62426 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62427 - "GET /static/js/maintenance_screen/requesters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62426 - "GET /static/js/maintenance_screen/users.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62438 - "GET /static/js/maintenance_screen/projects.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62436 - "GET /static/js/maintenance_screen/suppliers.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62439 - "GET /static/js/maintenance_screen/requisitioners.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62434 - "GET /static/js/maintenance_screen/items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62427 - "GET /static/js/maintenance_screen/settings.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62434 - "GET /static/js/maintenance_screen/business_details.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62434 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62434 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62434 - "GET /maintenance/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62522 - "POST /maintenance/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:62522 - "GET /maintenance/suppliers HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [12808] using StatReload
+INFO:     Started server process [12877]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57723 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57724 - "GET /static/css/fuzzy_dropdown_fix.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57723 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57726 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57724 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57726 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57723 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57730 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57726 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57726 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57726 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57726 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57726 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57726 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57726 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57730 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [13366] using StatReload
+INFO:     Started server process [13435]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57812 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57812 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57817 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57814 - "GET /static/css/fuzzy_dropdown_fix.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57814 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57812 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57817 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57821 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57821 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57821 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57821 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57821 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57821 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57821 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57821 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57817 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58436 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58436 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58438 - "GET /static/css/fuzzy_dropdown_fix.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58440 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58440 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58438 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58436 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58442 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58438 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58438 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58438 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58438 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58438 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58438 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58445 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58446 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58504 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59184 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59184 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59184 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59185 - "GET /static/css/fuzzy_dropdown_fix.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59187 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59184 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59187 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59185 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59189 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59187 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59187 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59187 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59187 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59187 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59187 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59187 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59185 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61153 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61153 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61153 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61154 - "GET /static/css/fuzzy_dropdown_fix.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61158 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61158 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61154 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61153 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61162 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61162 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61162 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61162 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61162 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61162 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61162 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61162 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61153 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61298 - "GET /static/css/fuzzy_dropdown_fix.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61300 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61300 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61298 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61303 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61297 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61298 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62081 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62081 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62081 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62083 - "GET /static/css/fuzzy_dropdown_fix.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62085 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62085 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62083 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62081 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62087 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62087 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62087 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62087 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62087 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62087 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62087 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62087 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62083 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62571 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62571 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62571 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62573 - "GET /static/css/fuzzy_dropdown_fix.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62575 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62573 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62575 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62571 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62577 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62575 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62575 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62575 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62575 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62575 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62575 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62575 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62577 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62672 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62672 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62672 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62673 - "GET /static/css/fuzzy_dropdown_fix.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62675 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62675 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62672 - "GET /static/js/components/utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62673 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62677 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62673 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62673 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62673 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62673 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62673 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62673 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62673 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62677 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63173 - "GET /orders/cod_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63175 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63173 - "GET /static/css/style.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:63177 - "GET /static/js/cod_orders.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:63177 - "GET /static/js/components/payments_modal.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:63177 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63173 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63173 - "GET /orders/api/cod_orders HTTP/1.1" 200 OK

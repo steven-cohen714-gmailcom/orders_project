@@ -163,3 +163,12 @@
 [2025-06-01T07:11:53.786107] {"action": "fetch_items_for_order", "order_id": 209, "count": 1}
 [2025-06-01T08:57:03.246574] {"action": "fetch_pending_orders", "count": 0}
 [2025-06-01T09:12:43.443201] {"action": "fetch_pending_orders", "count": 0}
+[2025-06-02T09:11:43.182212] {"action": "fetch_pending_orders", "count": 0}
+[2025-06-04T05:44:46.578875] {"action": "fetch_pending_orders", "count": 0}
+[2025-06-04T05:46:19.487508] {"action": "fetch_pending_orders", "count": 1}
+[2025-06-04T05:46:25.227108] {"action": "fetch_pending_orders", "count": 1}
+[2025-06-04T05:46:27.689585] {"action": "fetch_received_orders", "count": 0}
+[2025-06-04T05:46:29.355202] {"action": "fetch_pending_orders", "count": 1}
+[2025-06-04T05:46:39.537397] {"action": "attachment_uploaded", "order_id": 210, "filename": "Screenshot_2.png", "path": "data/uploads/210_Screenshot_2.png", "size_bytes": 82798}
+[2025-06-04T05:47:08.358973] {"action": "attachment_uploaded", "order_id": 210, "filename": "Screenshot_1.png", "path": "data/uploads/210_Screenshot_1.png", "size_bytes": 52708}
+[2025-06-04T07:38:04.263926] {"action": "fetch_cod_orders", "count": 2}

@@ -20,9 +20,9 @@ async def get_items():
         cursor = conn.cursor()
         cursor.execute("SELECT id, item_code, item_description FROM items")
         items = cursor.fetchall()
-        result = [{"item_code": i[1], "item_description": i[2]} for i in items]
+        result = [{"id": i[0], "description": f"{i[1]} - {i[2]}"} for i in items]
         logging.info(f"Items fetched: {len(result)} items")
-        return {"items": result}
+        return result
     except sqlite3.Error as e:
         logging.error(f"Database error fetching items: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
@@ -31,7 +31,6 @@ async def get_items():
         raise HTTPException(status_code=500, detail=f"Error fetching items: {str(e)}")
     finally:
         conn.close()
-
 
 @router.post("/items")
 async def add_item(payload: dict):
@@ -63,7 +62,6 @@ async def add_item(payload: dict):
         raise HTTPException(status_code=500, detail=f"Error adding item: {str(e)}")
     finally:
         conn.close()
-
 
 @router.put("/items/{item_id}")
 async def update_item(item_id: int, payload: dict):
@@ -99,7 +97,6 @@ async def update_item(item_id: int, payload: dict):
     finally:
         conn.close()
 
-
 @router.post("/maintenance/import_items_csv")
 async def import_items_csv(file: UploadFile = File(...)):
     if not file.filename.endswith(".csv"):
@@ -112,7 +109,6 @@ async def import_items_csv(file: UploadFile = File(...)):
 
         items = []
         for row in reader:
-            # Expect lowercase column headers: "code", "description"
             item_code = row.get("code", "").strip()
             description = row.get("description", "").strip()
             if item_code and description:
@@ -137,3 +133,4 @@ async def import_items_csv(file: UploadFile = File(...)):
     except Exception as e:
         logging.error(f"❌ Error importing items CSV: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Import failed: {str(e)}")
+
