@@ -19,15 +19,23 @@ export async function previewOrder({ itemsList, updateGrandTotal, logToServer })
   }
 
   const items = Array.from(document.querySelectorAll('#items-body tr')).map(row => {
-    const itemCode = row.querySelector('.item-code')?.value;
-    const itemDescription = itemsList.find(i => i.item_code === itemCode)?.item_description || '';
-    const project = row.querySelector('.project')?.value;
+    const itemCode = row.querySelector('.item-code')?.tomselect?.getValue() || '';
+    const project = row.querySelector('.project')?.tomselect?.getValue() || '';
     const qtyOrdered = parseFloat(row.querySelector('.qty-ordered')?.value) || 0;
     const price = parseFloat(row.querySelector('.price')?.value) || 0;
+    const itemDescription = itemsList.find(i => i.item_code === itemCode)?.item_description || '';
+
     if (!itemCode || !project || qtyOrdered <= 0 || price <= 0) {
       throw new Error('Each item must have a valid code, project, quantity, and price');
     }
-    return { item_code: itemCode, item_description: itemDescription, project, qty_ordered: qtyOrdered, price };
+
+    return {
+      item_code: itemCode,
+      item_description: itemDescription,
+      project,
+      qty_ordered: qtyOrdered,
+      price
+    };
   });
 
   if (!items.length) {
@@ -40,7 +48,7 @@ export async function previewOrder({ itemsList, updateGrandTotal, logToServer })
     created_date: createdDate,
     supplier_name: document.getElementById("supplier_id").selectedOptions[0]?.text || "",
     requester_name: document.getElementById("requester_id").selectedOptions[0]?.text || "",
-    total: total,
+    total,
     order_note: "",
     note_to_supplier: noteToSupplier,
     requester_id: parseInt(requesterId),

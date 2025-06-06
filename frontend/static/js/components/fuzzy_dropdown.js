@@ -2,7 +2,7 @@
 
 /**
  * Create a fuzzy searchable dropdown using a single <select> tag and Tom Select.
- * Falls back to `name` if `description` is missing.
+ * Supports item_code/item_description, project_code/project_name, or name fallback.
  *
  * @param {string} selectId - ID of the <select> element (e.g., "supplier_id")
  * @param {string} endpoint - API endpoint to fetch items (e.g., "/lookups/suppliers")
@@ -19,26 +19,34 @@ export async function createFuzzyDropdown(selectId, endpoint) {
 
     const select = document.getElementById(selectId);
     if (!select) throw new Error(`Element with ID '${selectId}' not found`);
-
-    // Clear existing options
     select.innerHTML = "";
 
-    // Insert default blank option
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
     defaultOption.textContent = "Select...";
     select.appendChild(defaultOption);
 
-    // Populate options using description fallback
     items.forEach((item) => {
-      const label = item.description || item.name || "(no label)";
+      let label = "(no label)";
+      let value = item.id;
+
+      if ("item_code" in item && "item_description" in item) {
+        label = `${item.item_code} - ${item.item_description}`;
+        value = item.item_code;
+      } else if ("project_code" in item && "project_name" in item) {
+        label = `${item.project_code} - ${item.project_name}`;
+        value = item.project_code;
+      } else if ("name" in item) {
+        label = item.name;
+        value = item.id;
+      }
+
       const option = document.createElement("option");
-      option.value = item.id;
+      option.value = value;
       option.textContent = label;
       select.appendChild(option);
     });
 
-    // Initialize Tom Select
     new TomSelect(`#${selectId}`, {
       valueField: "value",
       labelField: "text",

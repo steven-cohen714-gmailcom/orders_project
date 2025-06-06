@@ -79,3 +79,14 @@
 2025-06-04 05:45:58,215 | INFO | INFO | Preview PDF displayed (no DB write) | {}
 2025-06-04 05:46:04,397 | INFO | INFO | submitOrder started | {}
 2025-06-04 05:46:04,429 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "1002", "orderId": 210}
+2025-06-06 10:11:50,047 | INFO | INFO | submitOrder started | {}
+2025-06-06 10:11:50,052 | ERROR | ERROR | Missing required fields | {"requesterId": "", "supplierId": ""}
+2025-06-06 10:12:02,897 | INFO | INFO | submitOrder started | {}
+2025-06-06 10:12:13,389 | INFO | INFO | previewOrder started | {}
+2025-06-06 10:12:15,143 | INFO | INFO | previewOrder started | {}
+2025-06-06 10:12:16,912 | INFO | INFO | submitOrder started | {}
+2025-06-06 10:21:21,285 | INFO | INFO | previewOrder started | {}
+2025-06-06 10:21:46,424 | INFO | INFO | previewOrder started | {}
+2025-06-06 10:21:46,624 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-06-06 10:21:52,720 | INFO | INFO | submitOrder started | {}
+2025-06-06 10:21:52,756 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "1003", "orderId": 211}

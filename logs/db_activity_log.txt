@@ -2432,3 +2432,50 @@ sqlite3.OperationalError: database is locked
 2025-06-04 12:21:44,954 | INFO | ✅ Database initialized successfully.
 2025-06-04 12:22:00,895 | INFO | Items fetched: 9984 items
 2025-06-04 12:22:11,907 | INFO | New item added: Shannon - Shannon
+2025-06-06 10:08:24,091 | INFO | Database initialized successfully.
+2025-06-06 10:08:24,091 | INFO | ✅ Database initialized successfully.
+2025-06-06 10:08:43,687 | INFO | Database initialized successfully.
+2025-06-06 10:08:43,687 | INFO | ✅ Database initialized successfully.
+2025-06-06 10:08:55,131 | INFO | Starting to render new order page
+2025-06-06 10:08:55,289 | INFO | Requesters fetched: 9 items
+2025-06-06 10:08:55,295 | INFO | Suppliers fetched: 798 items
+2025-06-06 10:08:55,316 | INFO | Items fetched: 9985 items
+2025-06-06 10:08:55,423 | INFO | Projects fetched: 208 items
+2025-06-06 10:09:11,843 | INFO | Items fetched: 9985 items
+2025-06-06 10:09:11,890 | INFO | Projects fetched: 208 items
+2025-06-06 10:11:27,549 | INFO | Starting to render new order page
+2025-06-06 10:11:28,099 | INFO | Requesters fetched: 9 items
+2025-06-06 10:11:28,105 | INFO | Suppliers fetched: 798 items
+2025-06-06 10:11:28,141 | INFO | Items fetched: 9985 items
+2025-06-06 10:11:28,297 | INFO | Projects fetched: 208 items
+2025-06-06 10:11:32,184 | INFO | Items fetched: 9985 items
+2025-06-06 10:11:32,216 | INFO | Projects fetched: 208 items
+2025-06-06 10:11:47,082 | INFO | Items fetched: 9985 items
+2025-06-06 10:11:47,127 | INFO | Projects fetched: 208 items
+2025-06-06 10:11:50,047 | INFO | INFO | submitOrder started | {}
+2025-06-06 10:11:50,052 | ERROR | ERROR | Missing required fields | {"requesterId": "", "supplierId": ""}
+2025-06-06 10:12:02,897 | INFO | INFO | submitOrder started | {}
+2025-06-06 10:12:13,389 | INFO | INFO | previewOrder started | {}
+2025-06-06 10:12:15,143 | INFO | INFO | previewOrder started | {}
+2025-06-06 10:12:16,912 | INFO | INFO | submitOrder started | {}
+2025-06-06 10:19:52,956 | INFO | Database initialized successfully.
+2025-06-06 10:19:52,957 | INFO | ✅ Database initialized successfully.
+2025-06-06 10:21:10,406 | INFO | Database initialized successfully.
+2025-06-06 10:21:10,406 | INFO | ✅ Database initialized successfully.
+2025-06-06 10:21:15,821 | INFO | Starting to render new order page
+2025-06-06 10:21:16,271 | INFO | Requesters fetched: 9 items
+2025-06-06 10:21:16,280 | INFO | Suppliers fetched: 798 items
+2025-06-06 10:21:16,311 | INFO | Items fetched: 9985 items
+2025-06-06 10:21:16,464 | INFO | Projects fetched: 208 items
+2025-06-06 10:21:21,285 | INFO | INFO | previewOrder started | {}
+2025-06-06 10:21:32,077 | INFO | Items fetched: 9985 items
+2025-06-06 10:21:32,121 | INFO | Projects fetched: 208 items
+2025-06-06 10:21:46,424 | INFO | INFO | previewOrder started | {}
+2025-06-06 10:21:46,624 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-06-06 10:21:52,720 | INFO | INFO | submitOrder started | {}
+2025-06-06 10:21:52,745 | INFO | 🔍 Incoming order: order_number='1002' status='Pending' order_note='' note_to_supplier='' supplier_id=14 requester_id=3 payment_terms='On account' items=[OrderItemCreate(item_code='RUBB009', item_description='', project='AD01O', qty_ordered=1.0, price=400.0)] auth_band_required=None
+2025-06-06 10:21:52,748 | INFO | ✅ [ORDER] Success created: Order 1002 with total R400.0
+2025-06-06 10:21:52,756 | INFO | INFO | Order submitted and order number incremented | {"orderNumber": "1003", "orderId": 211}
+2025-06-06 10:22:00,034 | INFO | Requesters fetched: 9 items
+2025-06-06 10:22:00,036 | INFO | Suppliers fetched: 798 items
+2025-06-06 10:22:11,416 | INFO | Generating PDF for order_id=211, order_number=1002
