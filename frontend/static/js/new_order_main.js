@@ -327,6 +327,12 @@ function setupEventListeners() {
       console.log('Submit button exists:', !!submitBtn);
       submitBtn.addEventListener('click', () => {
   console.log('Submit button clicked');
+  const orderType = document.getElementById("order_type")?.value;
+    if (!orderType) {
+      alert("Please select an Order Type: Normal or Draft");
+      return;
+  }
+  const isDraft = orderType === "Draft";
   const paymentTerms = document.getElementById("payment_terms")?.value || "On account";
 
   debounce(() => submitOrder({
@@ -338,8 +344,11 @@ function setupEventListeners() {
     logToServer,
     setCurrentOrderId: (id) => currentOrderId = id,
     setCurrentOrderNumber: (newNum) => currentOrderNumber = newNum,
-    paymentTerms
+    paymentTerms,
+    orderType: orderType, // "Normal" or "Draft"
+    isDraft: isDraft
   }), 500)();
+
 });
 
     } else {

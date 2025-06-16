@@ -217,7 +217,12 @@ def determine_status_and_band(total: float) -> tuple[str, int]:
         return status, required_band
 
 def create_order(order_data: dict, items: list) -> dict:
-    status, required_band = determine_status_and_band(order_data["total"])
+    if order_data.get("status") == "Draft":
+        status = "Draft"
+        required_band = None
+    else:
+        status, required_band = determine_status_and_band(order_data["total"])
+
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""

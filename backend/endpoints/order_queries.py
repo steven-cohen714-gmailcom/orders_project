@@ -37,7 +37,7 @@ def get_pending_orders(
             except ValueError:
                 raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use yyyy-mm-dd.")
 
-        filters.append("o.status IN ('Pending', 'Waiting for Approval', 'Awaiting Authorisation', 'Authorised')")
+        filters.append("o.status IN ('Pending', 'Waiting for Approval', 'Awaiting Authorisation', 'Authorised', 'Draft')")
 
         if start_date:
             start_date = validate_date(start_date)

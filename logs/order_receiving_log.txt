@@ -1,3 +1,1 @@
-[2025-05-30T09:04:20.468376] {"action": "receive", "order_id": 206, "items": [{"item_id": 239, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-05-30"}
-[2025-06-01T07:04:10.178359] {"action": "receive", "order_id": 209, "items": [{"item_id": 242, "received_qty": 8.0}], "status": "Partially Received", "receipt_date": "2025-06-01"}
-[2025-06-01T07:04:42.786103] {"action": "receive", "order_id": 209, "items": [{"item_id": 242, "received_qty": 1.0}], "status": "Partially Received", "receipt_date": "2025-06-01"}
+[2025-06-16T14:20:55.453290] {"action": "receive", "order_id": 217, "items": [{"item_id": 251, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-06-16"}

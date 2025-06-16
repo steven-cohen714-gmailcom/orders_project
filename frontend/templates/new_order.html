@@ -78,6 +78,15 @@
       </div>
 
       <div class="column">
+        <label for="order_type">Order Type *</label>
+        <select id="order_type" name="order_type" required>
+          <option value="">Select...</option>
+          <option value="Pending">Normal Order</option>
+          <option value="Draft">Draft</option>
+        </select>
+      </div>
+
+      <div class="column">
         <label for="note_to_supplier">Note to Supplier</label>
         <textarea id="note_to_supplier" name="note_to_supplier" rows="3" placeholder="Note to your supplier about this order..."></textarea>
       </div>

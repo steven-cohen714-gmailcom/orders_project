@@ -49,22 +49,33 @@ class ReceivePayload(BaseModel):
 async def create_new_order(order: OrderCreate):
     try:
         logging.info(f"🔍 Incoming order: {order}")
-        total = calculate_order_total([item.dict() for item in order.items])
+
+        # --- Allow relaxed validation for drafts ---
+        if order.status != "Draft":
+            for item in order.items:
+                if not item.item_code or not item.project or item.qty_ordered <= 0 or item.price <= 0:
+                    raise HTTPException(status_code=400, detail="Invalid item: all fields required for non-draft orders")
+            total = calculate_order_total([item.dict() for item in order.items])
+        else:
+            total = 0.0  # Safe default for Drafts
+
         order_data = {
             "order_number": order.order_number,
-             "status": order.status,
+            "status": order.status,
             "total": total,
             "order_note": order.order_note,
             "note_to_supplier": order.note_to_supplier,
             "supplier_id": order.supplier_id,
             "requester_id": order.requester_id,
-            "payment_terms": order.payment_terms,  # ✅ Add this
+            "payment_terms": order.payment_terms,
             "auth_band_required": order.auth_band_required
         }
+
         items = [item.dict() for item in order.items]
         result = create_order(order_data, items)
-        log_success("order", "created", f"Order {order.order_number} with total R{total}")
+        log_success("order", "created", f"Order {order.order_number} with status {order.status} and total R{total}")
         return {"message": "Order created successfully", "order_id": result["id"]}
+
     except Exception as e:
         logging.exception("❌ Order creation failed")
         raise HTTPException(status_code=500, detail=str(e))
@@ -144,22 +155,72 @@ async def update_order(order_id: int, order: OrderUpdate):
     log_success("order", "updated", f"Order {order_id} updated with fields {list(updates.keys())}")
     return {"message": "Order updated successfully"}
 
-@router.get("/api/items_for_order/{order_id}")
+@router.put("/update_draft/{order_id}")
+@handle_db_errors(entity="draft_order", action="updating")
+async def update_draft_order(order_id: int, payload: dict):
+    items = payload.get("items", [])
+    if not items:
+        raise HTTPException(status_code=400, detail="No items provided")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    for item in items:
+        item_id = item.get("item_id")
+        try:
+            qty = float(item.get("quantity", 0))
+            price = float(item.get("unit_price", 0))
+        except (TypeError, ValueError):
+            raise HTTPException(status_code=400, detail="Invalid quantity or price format")
+
+        if item_id is None:
+            raise HTTPException(status_code=400, detail="Missing item_id")
+
+        total = qty * price
+
+        cursor.execute("""
+            UPDATE order_items
+            SET qty_ordered = ?, price = ?, total = ?
+            WHERE id = ? AND order_id = ?
+        """, (qty, price, total, item_id, order_id))
+
+    # ✅ Recalculate and update order total and status
+    cursor.execute("""
+        UPDATE orders
+        SET total = (SELECT SUM(qty_ordered * price) FROM order_items WHERE order_id = ?),
+            status = 'Pending'
+        WHERE id = ? AND status = 'Draft'
+    """, (order_id, order_id))
+
+    # ✅ Optional: Return new total
+    cursor.execute("SELECT total FROM orders WHERE id = ?", (order_id,))
+    row = cursor.fetchone()
+    new_total = row["total"] if row else 0.0
+
+    conn.commit()
+    conn.close()
+    log_success("draft_order", "updated", f"Draft order {order_id} submitted as Pending")
+
+    return {"message": "Draft order updated and submitted", "new_total": new_total}
+
+@router.get("/api/order_items/{order_id}")
 @handle_db_errors(entity="order_items", action="fetching")
 async def get_items_for_order(order_id: int):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT id, item_code, item_description, project, qty_ordered, qty_received,
-               received_date, price, total
+        SELECT id, item_code, item_description, project,
+                qty_ordered AS quantity,
+                price AS unit_price
         FROM order_items
         WHERE order_id = ?
+
     """, (order_id,))
     rows = cursor.fetchall()
     conn.close()
     result = [dict(row) for row in rows]
     log_success("order_items", "fetched", f"{len(result)} items for order {order_id}")
-    return {"items": result}
+    return result  # frontend expects raw array
 
 @router.post("/orders/receive/{order_id}")
 @handle_db_errors(entity="receive", action="processing")

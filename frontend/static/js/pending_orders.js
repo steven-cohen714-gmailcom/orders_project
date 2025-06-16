@@ -4,6 +4,7 @@ import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal 
 import { showOrderNoteModal, showSupplierNoteModal } from './components/order_note_modal.js';
 import { showReceiveModal } from './components/receive_modal.js';
 import { showPDFModal } from './components/pdf_modal.js';
+import { showEditDraftModal } from './components/edit_draft_modal.js';
 
 console.log("Loading pending_orders.js");
 
@@ -79,22 +80,28 @@ async function loadOrders() {
                           ? `<span class="receive-icon disabled" style="color: grey; cursor: not-allowed;" title="Cannot receive until authorised">✅</span>`
                         : "");
 
+                const editDraftIconHTML = (rawStatus === "Draft")
+                    ? `<span class="edit-draft-icon" style="color: orange; cursor: pointer;" title="Edit Draft Order" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">✏️</span>`
+                    : "";
+
                 row.innerHTML = `
-                    <td>${sanitizedDate}</td>
-                    <td>${sanitizedOrderNumber}</td>
-                    <td>${sanitizedRequester}</td>
-                    <td>${sanitizedSupplier}</td>
-                    <td>${sanitizedTotal}</td>
-                    <td><span class="status">${sanitizedStatus}</span></td>
-                    <td>
-                        <span class="expand-icon" data-order-id="${order.id || ''}">⬇️</span>
-                        <span class="clip-icon" title="View/Upload Attachments" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📎</span>
-                        <span class="note-icon" title="Edit Order Note" data-order-id="${order.id || ''}" data-order-note="${sanitizedOrderNote}" id="order-note-${index}">📝</span>
-                        <span class="supplier-note-icon" title="View Note to Supplier" data-supplier-note="${sanitizedSupplierNote}" data-order-number="${sanitizedOrderNumber}" id="supplier-note-${index}">📦</span>
-                        ${receiveIconHTML}
-                        <span class="pdf-icon" title="View Purchase Order PDF" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📄</span>
-                    </td>
-                `;
+                <td>${sanitizedDate}</td>
+                <td>${sanitizedOrderNumber}</td>
+                <td>${sanitizedRequester}</td>
+                <td>${sanitizedSupplier}</td>
+                <td>${sanitizedTotal}</td>
+                <td><span class="status">${sanitizedStatus}</span></td>
+                <td>
+                    <span class="expand-icon" data-order-id="${order.id || ''}">⬇️</span>
+                    <span class="clip-icon" title="View/Upload Attachments" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📎</span>
+                    <span class="note-icon" title="Edit Order Note" data-order-id="${order.id || ''}" data-order-note="${sanitizedOrderNote}" id="order-note-${index}">📝</span>
+                    <span class="supplier-note-icon" title="View Note to Supplier" data-supplier-note="${sanitizedSupplierNote}" data-order-number="${sanitizedOrderNumber}" id="supplier-note-${index}">📦</span>
+                    ${receiveIconHTML}
+                    ${editDraftIconHTML}
+                    <span class="pdf-icon" title="View Purchase Order PDF" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📄</span>
+                </td>
+            `;
+
                 tbody.appendChild(row);
 
                 row.querySelector(`#supplier-note-${index}`).addEventListener("click", () => {
@@ -135,6 +142,17 @@ async function loadOrders() {
                         }
                     });
                 });
+
+                if (rawStatus === "Draft") {
+                    row.querySelector(".edit-draft-icon")?.addEventListener("click", () => {
+                        try {
+                            window.showEditDraftModal(order.id, sanitizedOrderNumber);
+                        } catch (err) {
+                            console.error("Failed to show edit draft modal:", err);
+                        }
+                    });
+                }
+
                 if (["Pending", "Authorised", "Partially Received"].includes(rawStatus)) {
                     row.querySelector(".receive-icon").addEventListener("click", () => window.showReceiveModal(order.id || '', sanitizedOrderNumber));
                 }
@@ -189,3 +207,5 @@ window.showViewAttachmentsModal = showViewAttachmentsModal;
 window.showOrderNoteModal = showOrderNoteModal;
 window.showSupplierNoteModal = showSupplierNoteModal;
 window.showReceiveModal = showReceiveModal;
+window.showEditDraftModal = showEditDraftModal;
+window.loadOrders = loadOrders;
