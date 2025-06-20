@@ -1,74 +1,64 @@
+<!-- audit_trail.html (revamped to mirror pending_orders layout) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Audit Trail - Universal Recycling</title>
-  <link rel="icon" href="data:,">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audit Trail</title>
   <link rel="stylesheet" href="/static/css/style.css" />
+  <!-- keep logic in a separate module -->
+  <script type="module" src="/static/js/audit_trail.js"></script>
 </head>
 <body>
-
   {% include "_tab_nav.html" %}
 
   <h2>Audit Trail</h2>
 
+  <!-- Shared filter bar (copied from pending screen) -->
   <div class="filters">
-    <label for="start-date">Start Date:</label>
-    <input type="date" id="start-date">
-    <label for="end-date">End Date:</label>
-    <input type="date" id="end-date">
     <label for="filter-requester">Requester:</label>
-    <select id="filter-requester">
-      <option value="All">All</option>
-    </select>
+    <select id="filter-requester"><option>All</option></select>
+
     <label for="filter-supplier">Supplier:</label>
-    <select id="filter-supplier">
-      <option value="All">All</option>
-    </select>
+    <select id="filter-supplier"><option>All</option></select>
+
     <label for="filter-status">Status:</label>
     <select id="filter-status">
-      <option value="All">All</option>
-      <option value="Pending">Pending</option>
-      <option value="Awaiting Authorisation">Awaiting Authorisation</option>
-      <option value="Authorised">Authorised</option>
-      <option value="Received">Received</option>
-      <option value="Partially Received">Partially Received</option>
-      <option value="Cancelled">Cancelled</option>
+      <option>All</option>
+      <option>Pending</option>
+      <option>Awaiting Authorisation</option>
+      <option>Authorised</option>
+      <option>Draft</option>
+      <option>Received</option>
+      <option>Partially Received</option>
+      <option>Partially Delivered</option>
+      <option>COD</option>
     </select>
+
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date" />
+
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date" />
+
     <button id="run-btn">Run</button>
     <button id="clear-btn">Clear</button>
   </div>
 
-  <table>
+  <table id="audit-table">
     <thead>
       <tr>
-        <th>Created Date</th>
+        <th>Request Date</th>
         <th>Order Number</th>
         <th>Requester</th>
         <th>Supplier</th>
         <th>Total</th>
         <th>Status</th>
-        <th>Last Action</th>
+        <th>User</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody id="audit-body"></tbody>
   </table>
-
-  <script type="module" src="/static/js/audit_trail.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const path = window.location.pathname;
-      const tabButtons = document.querySelectorAll(".tab-buttons button");
-      tabButtons.forEach(btn => {
-        const target = btn.getAttribute("onclick").match(/location\.href='([^']+)'/)[1];
-        if (path.startsWith(target)) {
-          btn.classList.add("active");
-        }
-      });
-    });
-  </script>
-
 </body>
 </html>

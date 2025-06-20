@@ -63,7 +63,7 @@ export async function setupAuthorisationUI({
 
         row.querySelector(".view-btn").addEventListener("click", () => {
           try {
-            showPDF(order.id);  // ✅ delegate to external handler
+            showPDF(order.id);
           } catch (err) {
             console.error("❌ Error triggering PDF display:", err);
             onError("❌ Could not open PDF preview.");
@@ -72,16 +72,21 @@ export async function setupAuthorisationUI({
 
         row.querySelector(".auth-btn").addEventListener("click", async () => {
           try {
-            const res = await fetch(`/orders/api/authorise_order/${order.id}`, { method: "POST" });
+            const res = await fetch(`/orders/api/authorise_order/${order.id}`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username: localStorage.getItem("username") })
+            });
             const result = await res.json();
 
             if (result.message === "Order authorised") {
-              console.log(`✅ Authorised order ${order.order_number}`);
+              const msg = `✅ Order ${order.order_number} was successfully authorised.`;
+              console.log(msg);
+              alert(msg);  // or use a nicer toast if you have one
               onAuthorised(order);
               row.remove();
-            } else {
-              onError("❌ Failed to authorise: " + result.message);
             }
+
           } catch (err) {
             console.error("❌ Error during authorisation:", err);
             onError("❌ Network or server error while authorising.");

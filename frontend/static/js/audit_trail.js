@@ -1,163 +1,150 @@
-import { expandLineItemsWithReceipts } from "/static/js/components/expand_line_items.js";
-import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from "/static/js/components/attachment_modal.js";
-import { showOrderNoteModal, showSupplierNoteModal } from "/static/js/components/order_note_modal.js";
-import { loadRequesters, loadSuppliers } from "/static/js/components/shared_filters.js";
-import { showPDFModal } from "/static/js/components/pdf_modal.js";
+// /static/js/audit_trail.js
+import { loadRequesters, loadSuppliers } from "./components/shared_filters.js";
+import { expandLineItemsWithReceipts } from "./components/expand_line_items.js";
+import {
+  showUploadAttachmentsModal,
+  checkAttachments,
+  showViewAttachmentsModal,
+} from "./components/attachment_modal.js";
+import {
+  showOrderNoteModal,
+  showSupplierNoteModal,
+} from "./components/order_note_modal.js";
+import { showPDFModal } from "./components/pdf_modal.js";
 
-function escapeHTML(str) {
-  if (!str) return "";
+console.log("Loading audit_trail.js");
+
+function escapeHTML(str = "") {
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
+    .replace(/\"/g, "&quot;")
+    .replace(/\'/g, "&#39;");
 }
 
-async function loadFiltersAndOrders() {
-  try {
-    await loadRequesters("filter-requester");
-    await loadSuppliers("filter-supplier");
-    await loadOrders();
-  } catch (err) {
-    console.error("❌ Failed to load filters or orders:", err);
-    document.getElementById("audit-body").innerHTML = `<tr><td colspan="8">Error loading filters: ${escapeHTML(err.message)}</td></tr>`;
-  }
-}
-
-async function loadOrders() {
-  const startDate = document.getElementById("start-date").value;
-  const endDate = document.getElementById("end-date").value;
-  const requester = document.getElementById("filter-requester").value;
-  const supplier = document.getElementById("filter-supplier").value;
-  const status = document.getElementById("filter-status").value;
+async function loadAuditOrders() {
+  const startDate  = document.getElementById("start-date").value;
+  const endDate    = document.getElementById("end-date").value;
+  const requester  = document.getElementById("filter-requester").value;
+  const supplier   = document.getElementById("filter-supplier").value;
+  const status     = document.getElementById("filter-status").value;
 
   const params = new URLSearchParams();
   if (startDate) params.append("start_date", startDate);
-  if (endDate) params.append("end_date", endDate);
+  if (endDate)   params.append("end_date", endDate);
   if (requester && requester !== "All") params.append("requester", requester);
-  if (supplier && supplier !== "All") params.append("supplier", supplier);
-  if (status && status !== "All") params.append("status", status);
+  if (supplier  && supplier  !== "All") params.append("supplier", supplier);
+  if (status    && status    !== "All") params.append("status", status);
 
   try {
     const res = await fetch(`/orders/api/audit_trail_orders?${params.toString()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
-    const data = await res.json();
+    const { orders = [] } = await res.json();
 
     const tbody = document.getElementById("audit-body");
     tbody.innerHTML = "";
 
-    if (data.orders && Array.isArray(data.orders) && data.orders.length > 0) {
-      for (const order of data.orders) {
-        const row = document.createElement("tr");
-        const sanitizedOrderNote = escapeHTML(order.order_note || "");
-        const sanitizedSupplierNote = escapeHTML(order.note_to_supplier || "");
-        const sanitizedOrderNumber = escapeHTML(order.order_number);
-        const sanitizedSupplier = escapeHTML(order.supplier || "N/A");
-        const sanitizedRequester = escapeHTML(order.requester);
-        const sanitizedDate = escapeHTML(order.created_date || "");
-        const sanitizedTotal = order.total != null ? `R${parseFloat(order.total).toFixed(2)}` : "R0.00";
-        const sanitizedStatus = escapeHTML(order.status || "");
-
-        row.innerHTML = `
-          <td>${sanitizedDate}</td>
-          <td>${sanitizedOrderNumber}</td>
-          <td>${sanitizedRequester}</td>
-          <td>${sanitizedSupplier}</td>
-          <td>${sanitizedTotal}</td>
-          <td><span class="status">${sanitizedStatus}</span></td>
-          <td class="last-action-cell">Loading...</td>
-          <td>
-            <span class="expand-icon" style="cursor:pointer" title="View Line Items">⬇️</span>
-            <span class="clip-icon" style="cursor:pointer" title="View/Upload Attachments">📎</span>
-            <span class="note-icon" style="cursor:pointer" title="Edit Order Note">📝</span>
-            <span class="supplier-note-icon" style="cursor:pointer" title="View Note to Supplier">📦</span>
-            <span class="pdf-icon" style="cursor:pointer" title="View Purchase Order PDF">📄</span>
-          </td>`;
-
-        tbody.appendChild(row);
-
-        // Fetch and inject latest audit action
-        try {
-          const actionRes = await fetch(`/orders/api/last_audit_action/${order.id}`);
-          const actionData = await actionRes.json();
-          const lastActionCell = row.querySelector(".last-action-cell");
-          lastActionCell.textContent = actionData.details || "No actions yet";
-        } catch (err) {
-          console.error(`❌ Error fetching last action for order ${order.order_number}:`, err);
-        }
-
-        row.querySelector(".expand-icon").addEventListener("click", (e) => {
-          expandLineItemsWithReceipts(order.id, e.target);
-        });
-
-        row.querySelector(".clip-icon").addEventListener("click", async (e) => {
-          const target = e.target;
-          const has = await checkAttachments(order.id);
-          if (has) {
-            showViewAttachmentsModal(order.id, sanitizedOrderNumber);
-          } else {
-            showUploadAttachmentsModal(order.id, sanitizedOrderNumber, async () => {
-              const newHas = await checkAttachments(order.id);
-              target.classList.toggle("eye-icon", newHas);
-            });
-          }
-        });
-
-        row.querySelector(".pdf-icon").addEventListener("click", async () => {
-          try {
-            const response = await fetch(`/orders/api/generate_pdf_for_order/${order.id}`);
-            if (!response.ok) throw new Error(`PDF generation failed with status ${response.status}`);
-
-            const contentType = response.headers.get('content-type');
-            if (contentType && contentType.includes('application/pdf')) {
-              const blob = await response.blob();
-              if (blob.size === 0) throw new Error('Received empty PDF file');
-              showPDFModal(blob);
-            } else {
-              const data = await response.json();
-              throw new Error(`Unexpected response: ${JSON.stringify(data)}`);
-            }
-          } catch (err) {
-            console.error(`❌ Failed to show PDF for order ${sanitizedOrderNumber}:`, err);
-            alert("❌ Could not load purchase order PDF.");
-          }
-        });
-
-        row.querySelector(".note-icon").addEventListener("click", (e) => {
-          const target = e.target;
-          showOrderNoteModal(sanitizedOrderNote, order.id, (newNote) => {
-            target.setAttribute("data-order-note", escapeHTML(newNote));
-          });
-        });
-
-        row.querySelector(".supplier-note-icon").addEventListener("click", () => {
-          try {
-            showSupplierNoteModal(sanitizedSupplierNote);
-          } catch (e) {
-            console.error(`Failed to show supplier note for order ${sanitizedOrderNumber}:`, e);
-            alert(`Error displaying supplier note: ${e.message}`);
-          }
-        });
-      }
-    } else {
-      tbody.innerHTML = '<tr><td colspan="8">No audit trail orders found.</td></tr>';
+    if (orders.length === 0) {
+      tbody.innerHTML = "<tr><td colspan='8'>No orders found.</td></tr>";
+      return;
     }
+
+    orders.forEach((order, idx) => {
+      const sanitizedDate = escapeHTML((order.created_date || "").split(" ")[0]); // date-only
+      const sanitizedNumber = escapeHTML(order.order_number || "");
+      const sanitizedRequester = escapeHTML(order.requester || "N/A");
+      const sanitizedSupplier  = escapeHTML(order.supplier  || "N/A");
+      const sanitizedStatus    = escapeHTML(order.status    || "");
+      const sanitizedUser      = escapeHTML(order.audit_user || "N/A");
+      const sanitizedTotal     = order.total != null ? `R${parseFloat(order.total).toFixed(2)}` : "R0.00";
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${sanitizedDate}</td>
+        <td>${sanitizedNumber}</td>
+        <td>${sanitizedRequester}</td>
+        <td>${sanitizedSupplier}</td>
+        <td>${sanitizedTotal}</td>
+        <td><span class="status">${sanitizedStatus}</span></td>
+        <td>${sanitizedUser}</td>
+        <td>
+          <span class="expand-icon"  title="Show line-items"        data-id="${order.id}">⬇️</span>
+          <span class="clip-icon"    title="View / add attachments" data-id="${order.id}" data-number="${sanitizedNumber}">📎</span>
+          <span class="note-icon"    title="Edit order note"        data-id="${order.id}" data-note="${escapeHTML(order.order_note || "")}" id="order-note-${idx}">📝</span>
+          <span class="supplier-note-icon" title="View note to supplier" data-note="${escapeHTML(order.note_to_supplier || "")}">📦</span>
+          <span class="pdf-icon"     title="View purchase-order PDF" data-id="${order.id}" data-number="${sanitizedNumber}">📄</span>
+        </td>`;
+
+      tbody.appendChild(row);
+
+      /* --- per-row handlers --- */
+      row.querySelector(".expand-icon").onclick = (e) =>
+        expandLineItemsWithReceipts(order.id, e.target);
+
+      row.querySelector(".clip-icon").onclick = async (e) => {
+        const tgt = e.target, id = order.id, num = sanitizedNumber;
+        const has = await checkAttachments(id);
+        if (has) {
+          showViewAttachmentsModal(id, num);
+        } else {
+          showUploadAttachmentsModal(id, num, async () => {
+            if (await checkAttachments(id)) tgt.classList.toggle("eye-icon", true);
+          });
+        }
+      };
+
+      row.querySelector(".note-icon").onclick = (e) =>
+        showOrderNoteModal(order.order_note || "", order.id, (newNote) =>
+          e.target.setAttribute("data-note", escapeHTML(newNote))
+        );
+
+      row.querySelector(".supplier-note-icon").onclick = () =>
+        showSupplierNoteModal(order.note_to_supplier || "");
+
+      row.querySelector(".pdf-icon").onclick = async () => {
+        try {
+          const resp = await fetch(`/orders/api/generate_pdf_for_order/${order.id}`);
+          if (!resp.ok) throw new Error(`PDF failed: ${resp.status}`);
+          const blob = await resp.blob();
+          if (!blob.size) throw new Error("Received empty PDF");
+          showPDFModal(blob);
+        } catch (err) {
+          alert(`❌ Could not generate PDF (${err.message})`);
+        }
+      };
+    });
   } catch (err) {
-    console.error("❌ Error loading audit trail orders:", err);
-    document.getElementById("audit-body").innerHTML = `<tr><td colspan="8">Error loading orders: ${escapeHTML(err.message)}</td></tr>`;
+    console.error("❌ Error loading audit trail:", err);
+    alert(`Failed to load orders: ${err.message}`);
   }
 }
 
 function clearFilters() {
-  document.getElementById("start-date").value = "";
-  document.getElementById("end-date").value = "";
-  document.getElementById("filter-requester").value = "All";
-  document.getElementById("filter-supplier").value = "All";
-  document.getElementById("filter-status").value = "All";
-  loadOrders();
+  ["start-date", "end-date"].forEach((id) => (document.getElementById(id).value = ""));
+  ["filter-requester", "filter-supplier", "filter-status"].forEach(
+    (id) => (document.getElementById(id).value = "All")
+  );
+  loadAuditOrders();
 }
 
-document.getElementById("run-btn").addEventListener("click", loadOrders);
-document.getElementById("clear-btn").addEventListener("click", clearFilters);
-document.addEventListener("DOMContentLoaded", loadFiltersAndOrders);
+/* ---------- bootstrap ---------- */
+window.addEventListener("DOMContentLoaded", async () => {
+  await Promise.all([
+    loadRequesters("filter-requester"),
+    loadSuppliers("filter-supplier"),
+  ]);
+
+  document.getElementById("run-btn").onclick   = loadAuditOrders;
+  document.getElementById("clear-btn").onclick = clearFilters;
+
+  loadAuditOrders(); // initial fill
+});
+
+/* expose for other modules if needed */
+window.expandLineItemsWithReceipts = expandLineItemsWithReceipts;
+window.showUploadAttachmentsModal  = showUploadAttachmentsModal;
+window.checkAttachments            = checkAttachments;
+window.showViewAttachmentsModal    = showViewAttachmentsModal;
+window.showOrderNoteModal          = showOrderNoteModal;
+window.showSupplierNoteModal       = showSupplierNoteModal;

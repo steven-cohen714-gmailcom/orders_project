@@ -1,105 +1,262 @@
-2025-06-14 18:59:33,005 | INFO | Database initialized successfully.
-2025-06-14 18:59:33,005 | INFO | ✅ Database initialized successfully.
-2025-06-14 18:59:43,608 | INFO | Requesters fetched: 9 items
-2025-06-14 18:59:43,610 | INFO | Suppliers fetched: 798 items
-2025-06-14 18:59:49,367 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 215
-2025-06-14 19:00:03,018 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 213
-2025-06-14 19:00:33,802 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 215
-2025-06-14 19:16:13,079 | INFO | Database initialized successfully.
-2025-06-14 19:16:13,079 | INFO | ✅ Database initialized successfully.
-2025-06-14 19:16:21,788 | INFO | Database initialized successfully.
-2025-06-14 19:16:21,789 | INFO | ✅ Database initialized successfully.
-2025-06-14 19:16:30,573 | INFO | Requesters fetched: 9 items
-2025-06-14 19:16:30,575 | INFO | Suppliers fetched: 798 items
-2025-06-14 19:16:36,821 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 215
-2025-06-14 19:16:43,318 | INFO | ✅ [DRAFT_ORDER] Success updated: Draft order 215 submitted as Pending
-2025-06-15 12:00:12,608 | INFO | Requesters fetched: 9 items
-2025-06-15 12:00:12,611 | INFO | Suppliers fetched: 798 items
-2025-06-16 11:18:21,149 | INFO | Database initialized successfully.
-2025-06-16 11:18:21,150 | INFO | ✅ Database initialized successfully.
-2025-06-16 11:18:40,303 | INFO | Requesters fetched: 9 items
-2025-06-16 11:18:40,306 | INFO | Suppliers fetched: 798 items
-2025-06-16 11:18:43,608 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 213
-2025-06-16 11:18:46,626 | INFO | Requesters fetched: 9 items
-2025-06-16 11:18:46,636 | INFO | Suppliers fetched: 798 items
-2025-06-16 11:18:46,647 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 7 total orders for audit trail
-2025-06-16 11:18:50,304 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 2 logs for order 214
-2025-06-16 13:51:14,026 | INFO | Requesters fetched: 9 items
-2025-06-16 13:51:14,029 | INFO | Suppliers fetched: 798 items
-2025-06-16 13:51:20,603 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 212
-2025-06-16 13:51:28,434 | INFO | ✅ [DRAFT_ORDER] Success updated: Draft order 212 submitted as Pending
-2025-06-16 13:58:50,650 | INFO | Requesters fetched: 9 items
-2025-06-16 13:58:50,652 | INFO | Suppliers fetched: 798 items
-2025-06-16 13:59:01,064 | INFO | Requesters fetched: 9 items
-2025-06-16 13:59:01,066 | INFO | Suppliers fetched: 798 items
-2025-06-16 13:59:37,630 | INFO | Requesters fetched: 9 items
-2025-06-16 13:59:37,632 | INFO | Suppliers fetched: 798 items
-2025-06-16 13:59:49,890 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 215
-2025-06-16 13:59:57,171 | INFO | Starting to render new order page
-2025-06-16 13:59:57,513 | INFO | Requesters fetched: 9 items
-2025-06-16 13:59:57,532 | INFO | Suppliers fetched: 798 items
-2025-06-16 13:59:57,561 | INFO | Items fetched: 9985 items
-2025-06-16 13:59:57,683 | INFO | Projects fetched: 208 items
-2025-06-16 14:00:05,457 | INFO | Items fetched: 9985 items
-2025-06-16 14:00:05,504 | INFO | Projects fetched: 208 items
-2025-06-16 14:00:20,123 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
-2025-06-16 14:00:20,139 | INFO | 🔍 Incoming order: order_number='1004' status='Draft' order_note='' note_to_supplier='' supplier_id=255 requester_id=3 payment_terms='On account' items=[OrderItemCreate(item_code='ABRA002', item_description='', project='AD01O', qty_ordered=1.0, price=0.0)] auth_band_required=None
-2025-06-16 14:00:20,142 | INFO | ✅ [ORDER] Success created: Order 1004 with status Draft and total R0.0
-2025-06-16 14:00:20,145 | INFO | INFO | Draft order submitted (no number increment) | {"orderNumber": "1004", "orderId": 216}
-2025-06-16 14:00:28,380 | INFO | Requesters fetched: 9 items
-2025-06-16 14:00:28,383 | INFO | Suppliers fetched: 798 items
-2025-06-16 14:00:32,563 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 216
-2025-06-16 14:00:37,993 | INFO | ✅ [DRAFT_ORDER] Success updated: Draft order 216 submitted as Pending
-2025-06-16 14:00:49,856 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 216
-2025-06-16 14:01:37,025 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 213
-2025-06-16 14:07:00,672 | INFO | Starting to render new order page
-2025-06-16 14:07:00,867 | INFO | Requesters fetched: 9 items
-2025-06-16 14:07:00,882 | INFO | Suppliers fetched: 798 items
-2025-06-16 14:07:00,912 | INFO | Items fetched: 9985 items
-2025-06-16 14:07:01,043 | INFO | Projects fetched: 208 items
-2025-06-16 14:07:02,519 | INFO | Items fetched: 9985 items
-2025-06-16 14:07:02,551 | INFO | Projects fetched: 208 items
-2025-06-16 14:07:32,397 | INFO | Items fetched: 9985 items
-2025-06-16 14:07:55,073 | INFO | Projects fetched: 208 items
-2025-06-16 14:13:21,202 | INFO | Starting to render new order page
-2025-06-16 14:13:21,247 | INFO | Requesters fetched: 9 items
-2025-06-16 14:13:21,253 | INFO | Suppliers fetched: 798 items
-2025-06-16 14:13:21,279 | INFO | Items fetched: 9985 items
-2025-06-16 14:13:21,370 | INFO | Projects fetched: 208 items
-2025-06-16 14:13:29,660 | INFO | Items fetched: 9985 items
-2025-06-16 14:13:29,707 | INFO | Projects fetched: 208 items
-2025-06-16 14:13:37,775 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
-2025-06-16 14:13:37,793 | INFO | 🔍 Incoming order: order_number='1004' status='Draft' order_note='' note_to_supplier='' supplier_id=15 requester_id=3 payment_terms='On account' items=[OrderItemCreate(item_code='ABRA001', item_description='', project='AD01M', qty_ordered=1.0, price=0.0)] auth_band_required=None
-2025-06-16 14:13:37,794 | INFO | ✅ [ORDER] Success created: Order 1004 with status Draft and total R0.0
-2025-06-16 14:13:37,797 | INFO | INFO | Draft order submitted (no number increment) | {"orderNumber": "1004", "orderId": 217}
-2025-06-16 14:13:41,590 | INFO | Requesters fetched: 9 items
-2025-06-16 14:13:41,592 | INFO | Suppliers fetched: 798 items
-2025-06-16 14:13:53,689 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 217
-2025-06-16 14:14:09,628 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 216
-2025-06-16 14:15:53,950 | INFO | Suppliers fetched: 798 items
-2025-06-16 14:15:53,956 | INFO | Requesters fetched: 9 items
-2025-06-16 14:15:56,204 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 217
-2025-06-16 14:20:08,776 | INFO | Requesters fetched: 9 items
-2025-06-16 14:20:08,778 | INFO | Suppliers fetched: 798 items
-2025-06-16 14:20:12,344 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 217
-2025-06-16 14:20:35,069 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 217
-2025-06-16 14:20:42,086 | INFO | ✅ [DRAFT_ORDER] Success updated: Draft order 217 submitted as Pending
-2025-06-16 14:20:48,962 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 217
-2025-06-16 14:20:56,998 | INFO | Requesters fetched: 9 items
-2025-06-16 14:20:57,000 | INFO | Suppliers fetched: 798 items
-2025-06-16 14:20:58,143 | INFO | Requesters fetched: 9 items
-2025-06-16 14:20:58,150 | INFO | Suppliers fetched: 798 items
-2025-06-16 18:38:36,413 | INFO | Requesters fetched: 9 items
-2025-06-16 18:38:36,420 | INFO | Suppliers fetched: 798 items
-2025-06-16 18:38:38,588 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 217
-2025-06-16 18:38:51,054 | INFO | Requesters fetched: 9 items
-2025-06-16 18:38:51,056 | INFO | Suppliers fetched: 798 items
-2025-06-16 18:38:56,017 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 2 logs for order 214
-2025-06-16 18:39:13,554 | INFO | Requesters fetched: 9 items
-2025-06-16 18:39:13,561 | INFO | Suppliers fetched: 798 items
-2025-06-16 18:39:13,572 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 9 total orders for audit trail
-2025-06-16 18:45:27,418 | INFO | Requesters fetched: 9 items
-2025-06-16 18:45:27,420 | INFO | Suppliers fetched: 798 items
-2025-06-16 18:48:50,609 | INFO | Requesters fetched: 9 items
-2025-06-16 18:48:50,615 | INFO | Suppliers fetched: 798 items
-2025-06-16 18:48:50,624 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 9 total orders for audit trail
+2025-06-19 11:25:22,872 | INFO | Database initialized successfully.
+2025-06-19 11:25:22,872 | INFO | ✅ Database initialized successfully.
+2025-06-19 11:28:27,138 | INFO | Database initialized successfully.
+2025-06-19 11:28:27,138 | INFO | ✅ Database initialized successfully.
+2025-06-19 11:28:34,867 | INFO | Requesters fetched: 9 items
+2025-06-19 11:28:34,870 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:28:34,884 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 6 total orders for audit trail
+2025-06-19 11:28:39,695 | INFO | Starting to render new order page
+2025-06-19 11:28:40,030 | INFO | Requesters fetched: 9 items
+2025-06-19 11:28:40,052 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:28:40,081 | INFO | Items fetched: 9985 items
+2025-06-19 11:28:40,201 | INFO | Projects fetched: 208 items
+2025-06-19 11:28:48,524 | INFO | Items fetched: 9985 items
+2025-06-19 11:28:48,571 | INFO | Projects fetched: 208 items
+2025-06-19 11:28:59,619 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-06-19 11:28:59,642 | INFO | 🔍 Incoming order: order_number='1009' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=14 requester_id=3 payment_terms='On account' items=[OrderItemCreate(item_code='ABRA003', item_description='', project='AD01P', qty_ordered=1.0, price=15000.0)] auth_band_required=1
+2025-06-19 11:28:59,645 | INFO | ✅ [ORDER] Success created: Order 1009 with status Awaiting Authorisation and total R15000.0
+2025-06-19 11:28:59,654 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1010", "orderId": 224}
+2025-06-19 11:29:07,825 | INFO | Requesters fetched: 9 items
+2025-06-19 11:29:07,829 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:29:16,721 | INFO | Requesters fetched: 9 items
+2025-06-19 11:29:16,724 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:29:16,740 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 7 total orders for audit trail
+2025-06-19 11:47:18,687 | INFO | Database initialized successfully.
+2025-06-19 11:47:18,687 | INFO | ✅ Database initialized successfully.
+2025-06-19 11:47:24,448 | INFO | Requesters fetched: 9 items
+2025-06-19 11:47:24,451 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:47:24,464 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 7 total orders for audit trail
+2025-06-19 11:47:27,892 | INFO | Starting to render new order page
+2025-06-19 11:49:49,374 | INFO | Starting to render new order page
+2025-06-19 11:51:26,410 | INFO | Starting to render new order page
+2025-06-19 11:51:26,607 | INFO | Requesters fetched: 9 items
+2025-06-19 11:51:26,608 | INFO | Requesters fetched: 9 items
+2025-06-19 11:51:26,625 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:51:26,631 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:51:26,651 | INFO | Items fetched: 9985 items
+2025-06-19 11:51:53,529 | INFO | Items fetched: 9985 items
+2025-06-19 11:51:53,611 | INFO | Projects fetched: 208 items
+2025-06-19 11:51:55,279 | INFO | Projects fetched: 208 items
+2025-06-19 11:58:36,747 | INFO | Starting to render new order page
+2025-06-19 11:58:36,966 | INFO | Requesters fetched: 9 items
+2025-06-19 11:58:36,967 | INFO | Requesters fetched: 9 items
+2025-06-19 11:58:36,984 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:58:36,990 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:58:37,057 | INFO | Items fetched: 9985 items
+2025-06-19 11:58:38,797 | INFO | Items fetched: 9985 items
+2025-06-19 11:58:38,886 | INFO | Projects fetched: 208 items
+2025-06-19 11:58:40,414 | INFO | Projects fetched: 208 items
+2025-06-19 11:59:02,736 | INFO | Starting to render new order page
+2025-06-19 11:59:02,871 | INFO | Requesters fetched: 9 items
+2025-06-19 11:59:02,873 | INFO | Requesters fetched: 9 items
+2025-06-19 11:59:02,891 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:59:02,897 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:59:02,916 | INFO | Items fetched: 9985 items
+2025-06-19 11:59:04,459 | INFO | Items fetched: 9985 items
+2025-06-19 11:59:04,552 | INFO | Projects fetched: 208 items
+2025-06-19 11:59:05,472 | INFO | Projects fetched: 208 items
+2025-06-19 11:59:39,432 | INFO | Starting to render new order page
+2025-06-19 11:59:39,605 | INFO | Requesters fetched: 9 items
+2025-06-19 11:59:39,607 | INFO | Requesters fetched: 9 items
+2025-06-19 11:59:39,622 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:59:39,629 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:59:39,644 | INFO | Items fetched: 9985 items
+2025-06-19 11:59:41,039 | INFO | Items fetched: 9985 items
+2025-06-19 11:59:41,120 | INFO | Projects fetched: 208 items
+2025-06-19 11:59:42,316 | INFO | Projects fetched: 208 items
+2025-06-19 11:59:50,591 | INFO | Starting to render new order page
+2025-06-19 11:59:50,739 | INFO | Requesters fetched: 9 items
+2025-06-19 11:59:50,741 | INFO | Requesters fetched: 9 items
+2025-06-19 11:59:50,756 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:59:50,763 | INFO | Suppliers fetched: 798 items
+2025-06-19 11:59:50,798 | INFO | Items fetched: 9985 items
+2025-06-19 11:59:52,216 | INFO | Items fetched: 9985 items
+2025-06-19 11:59:52,299 | INFO | Projects fetched: 208 items
+2025-06-19 11:59:54,030 | INFO | Projects fetched: 208 items
+2025-06-19 12:04:22,866 | INFO | Starting to render new order page
+2025-06-19 12:04:23,124 | INFO | Requesters fetched: 9 items
+2025-06-19 12:04:23,126 | INFO | Requesters fetched: 9 items
+2025-06-19 12:04:23,142 | INFO | Suppliers fetched: 798 items
+2025-06-19 12:04:23,149 | INFO | Suppliers fetched: 798 items
+2025-06-19 12:04:23,166 | INFO | Items fetched: 9985 items
+2025-06-19 12:04:23,238 | INFO | Items fetched: 9985 items
+2025-06-19 12:04:23,315 | INFO | Projects fetched: 208 items
+2025-06-19 12:04:23,361 | INFO | Projects fetched: 208 items
+2025-06-19 12:04:52,420 | INFO | Items fetched: 9985 items
+2025-06-19 12:04:52,467 | INFO | Projects fetched: 208 items
+2025-06-19 12:04:52,476 | INFO | Items fetched: 9985 items
+2025-06-19 12:04:52,513 | INFO | Projects fetched: 208 items
+2025-06-19 12:05:22,903 | INFO | Starting to render new order page
+2025-06-19 12:05:23,078 | INFO | Requesters fetched: 9 items
+2025-06-19 12:05:23,080 | INFO | Requesters fetched: 9 items
+2025-06-19 12:05:23,096 | INFO | Suppliers fetched: 798 items
+2025-06-19 12:05:23,103 | INFO | Suppliers fetched: 798 items
+2025-06-19 12:05:23,144 | INFO | Items fetched: 9985 items
+2025-06-19 12:05:23,184 | INFO | Items fetched: 9985 items
+2025-06-19 12:05:23,257 | INFO | Projects fetched: 208 items
+2025-06-19 12:05:23,305 | INFO | Projects fetched: 208 items
+2025-06-19 12:05:32,903 | INFO | Items fetched: 9985 items
+2025-06-19 12:05:32,950 | INFO | Projects fetched: 208 items
+2025-06-19 12:05:32,959 | INFO | Items fetched: 9985 items
+2025-06-19 12:05:32,989 | INFO | Projects fetched: 208 items
+2025-06-19 12:07:18,517 | INFO | Items fetched: 9985 items
+2025-06-19 12:07:18,563 | INFO | Projects fetched: 208 items
+2025-06-19 12:07:18,572 | INFO | Items fetched: 9985 items
+2025-06-19 12:07:18,612 | INFO | Projects fetched: 208 items
+2025-06-20 12:18:29,980 | INFO | Requesters fetched: 9 items
+2025-06-20 12:18:29,984 | INFO | Suppliers fetched: 798 items
+2025-06-20 12:18:34,056 | INFO | Starting to render new order page
+2025-06-20 12:18:34,120 | INFO | Requesters fetched: 9 items
+2025-06-20 12:18:34,123 | INFO | Requesters fetched: 9 items
+2025-06-20 12:18:34,125 | INFO | Suppliers fetched: 798 items
+2025-06-20 12:18:34,134 | INFO | Suppliers fetched: 798 items
+2025-06-20 12:18:34,150 | INFO | Items fetched: 9985 items
+2025-06-20 12:18:34,194 | INFO | Items fetched: 9985 items
+2025-06-20 12:18:34,246 | INFO | Projects fetched: 208 items
+2025-06-20 12:18:34,317 | INFO | Projects fetched: 208 items
+2025-06-20 12:18:54,563 | INFO | Starting to render new order page
+2025-06-20 12:18:54,698 | INFO | Requesters fetched: 9 items
+2025-06-20 12:18:54,699 | INFO | Requesters fetched: 9 items
+2025-06-20 12:18:54,714 | INFO | Suppliers fetched: 798 items
+2025-06-20 12:18:54,721 | INFO | Suppliers fetched: 798 items
+2025-06-20 12:18:54,741 | INFO | Items fetched: 9985 items
+2025-06-20 12:18:54,782 | INFO | Items fetched: 9985 items
+2025-06-20 12:18:54,854 | INFO | Projects fetched: 208 items
+2025-06-20 12:18:54,933 | INFO | Projects fetched: 208 items
+2025-06-20 12:19:09,603 | INFO | Items fetched: 9985 items
+2025-06-20 12:19:09,648 | INFO | Projects fetched: 208 items
+2025-06-20 12:19:09,657 | INFO | Items fetched: 9985 items
+2025-06-20 12:19:09,693 | INFO | Projects fetched: 208 items
+2025-06-20 12:23:59,258 | INFO | Starting to render new order page
+2025-06-20 12:23:59,567 | INFO | Requesters fetched: 9 items
+2025-06-20 12:23:59,568 | INFO | Requesters fetched: 9 items
+2025-06-20 12:23:59,587 | INFO | Suppliers fetched: 798 items
+2025-06-20 12:23:59,596 | INFO | Suppliers fetched: 798 items
+2025-06-20 12:23:59,624 | INFO | Items fetched: 9985 items
+2025-06-20 12:23:59,701 | INFO | Items fetched: 9985 items
+2025-06-20 12:23:59,746 | INFO | Projects fetched: 208 items
+2025-06-20 12:23:59,817 | INFO | Projects fetched: 208 items
+2025-06-20 12:24:06,225 | INFO | Items fetched: 9985 items
+2025-06-20 12:24:06,257 | INFO | Projects fetched: 208 items
+2025-06-20 12:24:06,264 | INFO | Items fetched: 9985 items
+2025-06-20 12:24:06,291 | INFO | Projects fetched: 208 items
+2025-06-20 12:34:59,179 | INFO | Starting to render new order page
+2025-06-20 12:34:59,430 | INFO | Requesters fetched: 9 items
+2025-06-20 12:34:59,431 | INFO | Requesters fetched: 9 items
+2025-06-20 12:34:59,445 | INFO | Suppliers fetched: 798 items
+2025-06-20 12:34:59,452 | INFO | Suppliers fetched: 798 items
+2025-06-20 12:35:01,581 | INFO | Items fetched: 9985 items
+2025-06-20 12:35:01,629 | INFO | Items fetched: 9985 items
+2025-06-20 12:35:01,657 | INFO | Projects fetched: 208 items
+2025-06-20 12:35:01,658 | INFO | Projects fetched: 208 items
+2025-06-20 12:38:26,914 | INFO | Starting to render new order page
+2025-06-20 12:38:27,128 | INFO | Requesters fetched: 9 items
+2025-06-20 12:38:27,130 | INFO | Requesters fetched: 9 items
+2025-06-20 12:38:27,145 | INFO | Suppliers fetched: 798 items
+2025-06-20 12:38:27,151 | INFO | Suppliers fetched: 798 items
+2025-06-20 12:38:29,320 | INFO | Items fetched: 9985 items
+2025-06-20 12:38:29,370 | INFO | Items fetched: 9985 items
+2025-06-20 12:38:29,397 | INFO | Projects fetched: 208 items
+2025-06-20 12:38:29,399 | INFO | Projects fetched: 208 items
+2025-06-20 13:10:39,734 | INFO | Starting to render new order page
+2025-06-20 13:10:39,914 | INFO | Requesters fetched: 9 items
+2025-06-20 13:10:39,916 | INFO | Requesters fetched: 9 items
+2025-06-20 13:10:39,937 | INFO | Suppliers fetched: 798 items
+2025-06-20 13:10:39,944 | INFO | Suppliers fetched: 798 items
+2025-06-20 13:10:42,036 | INFO | Items fetched: 9985 items
+2025-06-20 13:10:42,086 | INFO | Items fetched: 9985 items
+2025-06-20 13:10:42,114 | INFO | Projects fetched: 208 items
+2025-06-20 13:10:42,115 | INFO | Projects fetched: 208 items
+2025-06-20 13:11:18,766 | INFO | Starting to render new order page
+2025-06-20 13:11:18,939 | INFO | Requesters fetched: 9 items
+2025-06-20 13:11:18,941 | INFO | Requesters fetched: 9 items
+2025-06-20 13:11:18,957 | INFO | Suppliers fetched: 798 items
+2025-06-20 13:11:18,966 | INFO | Suppliers fetched: 798 items
+2025-06-20 13:11:29,281 | INFO | Items fetched: 9985 items
+2025-06-20 13:11:29,331 | INFO | Items fetched: 9985 items
+2025-06-20 13:11:29,360 | INFO | Projects fetched: 208 items
+2025-06-20 13:11:29,360 | INFO | Projects fetched: 208 items
+2025-06-20 13:11:41,870 | INFO | Items fetched: 9985 items
+2025-06-20 13:11:41,914 | INFO | Projects fetched: 208 items
+2025-06-20 13:11:41,954 | INFO | Items fetched: 9985 items
+2025-06-20 13:11:41,983 | INFO | Projects fetched: 208 items
+2025-06-20 13:19:26,920 | INFO | Starting to render new order page
+2025-06-20 13:19:27,127 | INFO | Requesters fetched: 9 items
+2025-06-20 13:19:27,128 | INFO | Requesters fetched: 9 items
+2025-06-20 13:19:27,146 | INFO | Suppliers fetched: 798 items
+2025-06-20 13:19:27,153 | INFO | Suppliers fetched: 798 items
+2025-06-20 13:19:29,633 | INFO | Items fetched: 9985 items
+2025-06-20 13:19:29,684 | INFO | Items fetched: 9985 items
+2025-06-20 13:19:29,712 | INFO | Projects fetched: 208 items
+2025-06-20 13:19:29,713 | INFO | Projects fetched: 208 items
+2025-06-20 13:20:59,414 | INFO | Starting to render new order page
+2025-06-20 13:22:37,323 | INFO | Starting to render new order page
+2025-06-20 13:25:25,025 | INFO | Starting to render new order page
+2025-06-20 13:25:25,218 | INFO | Requesters fetched: 9 items
+2025-06-20 13:25:25,239 | INFO | Suppliers fetched: 798 items
+2025-06-20 13:25:25,270 | INFO | Items fetched: 9985 items
+2025-06-20 13:25:25,387 | INFO | Projects fetched: 208 items
+2025-06-20 13:25:28,257 | INFO | Items fetched: 9985 items
+2025-06-20 13:25:28,301 | INFO | Projects fetched: 208 items
+2025-06-20 20:21:03,631 | INFO | Requesters fetched: 9 items
+2025-06-20 20:21:03,636 | INFO | Suppliers fetched: 798 items
+2025-06-20 20:21:06,062 | INFO | Starting to render new order page
+2025-06-20 20:21:06,112 | INFO | Requesters fetched: 9 items
+2025-06-20 20:21:06,122 | INFO | Suppliers fetched: 798 items
+2025-06-20 20:21:06,143 | INFO | Items fetched: 9985 items
+2025-06-20 20:21:06,238 | INFO | Projects fetched: 208 items
+2025-06-20 20:21:14,176 | INFO | Items fetched: 9985 items
+2025-06-20 20:21:14,221 | INFO | Projects fetched: 208 items
+2025-06-20 20:21:27,296 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-06-20 20:21:27,326 | INFO | 🔍 Incoming order: order_number='1010' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=15 requester_id=3 payment_terms='On account' items=[OrderItemCreate(item_code='ABRA002', item_description='', project='AD01O', qty_ordered=1.0, price=12000.0)] auth_band_required=1
+2025-06-20 20:21:27,329 | INFO | ✅ [ORDER] Success created: Order 1010 with status Awaiting Authorisation and total R12000.0
+2025-06-20 20:21:27,337 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1011", "orderId": 225}
+2025-06-20 20:21:38,798 | INFO | Requesters fetched: 9 items
+2025-06-20 20:21:38,800 | INFO | Suppliers fetched: 798 items
+2025-06-20 20:21:43,011 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 225
+2025-06-20 20:21:49,430 | INFO | Requesters fetched: 9 items
+2025-06-20 20:21:49,432 | INFO | Suppliers fetched: 798 items
+2025-06-20 20:21:49,442 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 8 total orders for audit trail
+2025-06-20 20:21:53,444 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 225
+2025-06-20 20:22:03,511 | INFO | Requesters fetched: 9 items
+2025-06-20 20:22:03,517 | INFO | Suppliers fetched: 798 items
+2025-06-20 20:22:08,703 | INFO | Requesters fetched: 9 items
+2025-06-20 20:22:08,706 | INFO | Suppliers fetched: 798 items
+2025-06-20 20:22:08,715 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 8 total orders for audit trail
+2025-06-20 20:22:12,915 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 225
+2025-06-20 20:57:31,789 | INFO | Starting to render new order page
+2025-06-20 20:57:31,836 | INFO | Requesters fetched: 9 items
+2025-06-20 20:57:31,843 | INFO | Suppliers fetched: 798 items
+2025-06-20 20:57:31,865 | INFO | Items fetched: 9985 items
+2025-06-20 20:57:31,958 | INFO | Projects fetched: 208 items
+2025-06-20 20:58:00,822 | INFO | Items fetched: 9985 items
+2025-06-20 20:58:00,867 | INFO | Projects fetched: 208 items
+2025-06-20 20:58:14,853 | INFO | Items fetched: 9985 items
+2025-06-20 20:58:14,898 | INFO | Projects fetched: 208 items
+2025-06-20 20:58:20,708 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
+2025-06-20 20:58:20,733 | INFO | 🔍 Incoming order: order_number='1011' status='Draft' order_note='draft order note' note_to_supplier='draft supplier note' supplier_id=255 requester_id=3 payment_terms='On account' items=[OrderItemCreate(item_code='ABRA002', item_description='', project='AD01P', qty_ordered=3.0, price=0.0)] auth_band_required=None
+2025-06-20 20:58:20,736 | INFO | ✅ [ORDER] Success created: Order 1011 with status Draft and total R0.0
+2025-06-20 20:58:20,754 | INFO | INFO | Draft order submitted (no number increment) | {"orderNumber": "1011", "orderId": 226}
+2025-06-20 20:58:46,375 | INFO | Requesters fetched: 9 items
+2025-06-20 20:58:46,378 | INFO | Suppliers fetched: 798 items
+2025-06-20 20:58:50,853 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 226
+2025-06-20 20:58:59,730 | INFO | ✅ [DRAFT_ORDER] Success updated: Draft order 226 submitted as Pending
+2025-06-20 20:59:16,005 | INFO | Generating PDF for order_id=226, order_number=1011
+2025-06-20 20:59:40,981 | INFO | Requesters fetched: 9 items
+2025-06-20 20:59:40,983 | INFO | Suppliers fetched: 798 items
+2025-06-20 20:59:43,402 | INFO | Requesters fetched: 9 items
+2025-06-20 20:59:43,407 | INFO | Suppliers fetched: 798 items
+2025-06-20 21:00:38,026 | INFO | Requesters fetched: 9 items
+2025-06-20 21:00:38,028 | INFO | Suppliers fetched: 798 items
+2025-06-20 21:00:38,038 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 9 total orders for audit trail
+2025-06-20 21:00:49,823 | INFO | Starting to render new order page
+2025-06-20 21:00:49,865 | INFO | Requesters fetched: 9 items
+2025-06-20 21:00:49,874 | INFO | Suppliers fetched: 798 items
+2025-06-20 21:00:49,919 | INFO | Items fetched: 9985 items
+2025-06-20 21:00:50,011 | INFO | Projects fetched: 208 items
+2025-06-20 21:01:00,304 | INFO | Items fetched: 9985 items
+2025-06-20 21:01:00,350 | INFO | Projects fetched: 208 items
+2025-06-20 21:01:53,777 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-06-20 21:01:53,803 | INFO | 🔍 Incoming order: order_number='1011' status='Pending' order_note='Order note' note_to_supplier='Note to supplier' supplier_id=26 requester_id=3 payment_terms='On account' items=[OrderItemCreate(item_code='ABRA004', item_description='', project='AD01P', qty_ordered=1.0, price=3000.0)] auth_band_required=None
+2025-06-20 21:01:53,806 | INFO | ✅ [ORDER] Success created: Order 1011 with status Pending and total R3000.0
+2025-06-20 21:01:53,814 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1012", "orderId": 227}

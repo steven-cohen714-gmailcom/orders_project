@@ -246,25 +246,35 @@ async def mark_items_as_received(order_id: int, payload: ReceivePayload):
     log_success("receive", "processed", f"Marked {len(payload.items)} items as received")
     return {"message": "Items marked as received"}
 
-@router.get("/api/received_orders")
-@handle_db_errors(entity="orders", action="fetching received")
-async def get_received_orders():
+@router.get("/api/audit_trail_orders")
+@handle_db_errors(entity="orders", action="fetching all")
+async def get_audit_trail_orders():
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT o.id, o.order_number, o.status, o.created_date, o.received_date, o.total,
-               o.order_note, o.note_to_supplier, o.supplier_id, o.requester_id,
-               s.name as supplier, r.name as requester
+        SELECT 
+            o.id, o.order_number, o.status, o.created_date, o.received_date, o.total,
+            o.order_note, o.note_to_supplier, o.supplier_id, o.requester_id,
+            s.name AS supplier,
+            r.name AS requester,
+            u.username AS audit_user
         FROM orders o
         LEFT JOIN suppliers s ON o.supplier_id = s.id
         LEFT JOIN requesters r ON o.requester_id = r.id
-        WHERE o.status IN ('Received', 'Partially Received')
-        ORDER BY o.order_number ASC
+        LEFT JOIN (
+            SELECT order_id, MAX(action_date) AS latest_action_date
+            FROM audit_trail
+            WHERE action = 'Authorised'
+            GROUP BY order_id
+        ) latest_auth ON latest_auth.order_id = o.id
+        LEFT JOIN audit_trail at ON at.order_id = o.id AND at.action_date = latest_auth.latest_action_date
+        LEFT JOIN users u ON at.user_id = u.id
+        ORDER BY o.created_date DESC
     """)
     rows = cursor.fetchall()
     conn.close()
     result = [dict(row) for row in rows]
-    log_success("received_orders", "fetched", f"{len(result)} received/partial orders")
+    log_success("audit_trail_orders", "fetched", f"{len(result)} total orders for audit trail")
     return {"orders": result}
 
 @router.get("/api/receipt_logs/{order_id}")
@@ -287,23 +297,3 @@ async def get_receipt_logs(order_id: int):
     result = [dict(row) for row in rows]
     log_success("receipt_logs", "fetched", f"{len(result)} logs for order {order_id}")
     return {"logs": result}
-
-@router.get("/api/audit_trail_orders")
-@handle_db_errors(entity="orders", action="fetching all")
-async def get_audit_trail_orders():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
-        SELECT o.id, o.order_number, o.status, o.created_date, o.received_date, o.total,
-               o.order_note, o.note_to_supplier, o.supplier_id, o.requester_id,
-               s.name as supplier, r.name as requester
-        FROM orders o
-        LEFT JOIN suppliers s ON o.supplier_id = s.id
-        LEFT JOIN requesters r ON o.requester_id = r.id
-        ORDER BY o.created_date DESC
-    """)
-    rows = cursor.fetchall()
-    conn.close()
-    result = [dict(row) for row in rows]
-    log_success("audit_trail_orders", "fetched", f"{len(result)} total orders for audit trail")
-    return {"orders": result}

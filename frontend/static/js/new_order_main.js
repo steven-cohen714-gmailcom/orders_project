@@ -405,5 +405,3 @@ function setupEventListeners() {
       alert(`Error: ${err.message}`);
     }
   });
-
-  
