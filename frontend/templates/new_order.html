@@ -71,7 +71,8 @@
 
       <div class="column">
         <label for="payment_terms">Payment Terms</label>
-        <select id="payment_terms" name="payment_terms">
+        <select id="payment_terms" name="payment_terms" required>
+          <option value="" disabled selected>Select Payment Terms</option>
           <option value="On account">On account</option>
           <option value="COD">COD</option>
         </select>
@@ -80,9 +81,9 @@
       <div class="column">
         <label for="order_type">Order Type *</label>
         <select id="order_type" name="order_type" required>
-          <option value="">Select...</option>
+          <option value="" disabled selected>Select Order Type</option>
           <option value="Pending">Normal Order</option>
-          <option value="Draft">Draft</option>
+          <option value="Draft">Draft Order</option>
         </select>
       </div>
 

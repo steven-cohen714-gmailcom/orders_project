@@ -343,7 +343,11 @@ function setupEventListeners() {
     incrementOrderNumber,
     logToServer,
     setCurrentOrderId: (id) => currentOrderId = id,
-    setCurrentOrderNumber: (newNum) => currentOrderNumber = newNum,
+    setCurrentOrderNumber: (newNum) => {
+      currentOrderNumber = newNum;
+      resetForm();
+    },
+
     paymentTerms,
     orderType: orderType, // "Normal" or "Draft"
     isDraft: isDraft
@@ -405,3 +409,20 @@ function setupEventListeners() {
       alert(`Error: ${err.message}`);
     }
   });
+
+ function resetForm() {
+  document.getElementById("requester_id").value = "";
+  document.getElementById("payment_terms").value = "";
+  document.getElementById("order_type").value = "";
+  document.getElementById("note_to_supplier").value = "";
+  document.getElementById("order_note").value = "";
+
+  const supplierDropdown = document.getElementById("supplier_id");
+  if (supplierDropdown && supplierDropdown.tomselect) {
+    supplierDropdown.tomselect.clear(true); // ✅ Clear TomSelect without touching fuzzy_dropdown.js
+  } else {
+    supplierDropdown.value = "";
+  }
+
+  document.querySelector("#items-body").innerHTML = "";
+}

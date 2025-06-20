@@ -22,3 +22,9 @@
 2025-06-20 20:58:20,754 | INFO | INFO | Draft order submitted (no number increment) | {"orderNumber": "1011", "orderId": 226}
 2025-06-20 21:01:53,777 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
 2025-06-20 21:01:53,814 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1012", "orderId": 227}
+2025-06-20 21:57:35,312 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-06-20 21:57:35,341 | ERROR | ERROR | Order submission failed | {"err": "Cannot set properties of null (setting 'value')"}
+2025-06-20 22:01:19,062 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-06-20 22:01:19,115 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1014", "orderId": 229}
+2025-06-20 22:06:18,791 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-06-20 22:06:18,842 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1015", "orderId": 230}

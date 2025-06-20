@@ -260,3 +260,38 @@
 2025-06-20 21:01:53,803 | INFO | 🔍 Incoming order: order_number='1011' status='Pending' order_note='Order note' note_to_supplier='Note to supplier' supplier_id=26 requester_id=3 payment_terms='On account' items=[OrderItemCreate(item_code='ABRA004', item_description='', project='AD01P', qty_ordered=1.0, price=3000.0)] auth_band_required=None
 2025-06-20 21:01:53,806 | INFO | ✅ [ORDER] Success created: Order 1011 with status Pending and total R3000.0
 2025-06-20 21:01:53,814 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1012", "orderId": 227}
+2025-06-20 21:56:39,337 | INFO | Starting to render new order page
+2025-06-20 21:56:39,540 | INFO | Requesters fetched: 9 items
+2025-06-20 21:56:39,546 | INFO | Suppliers fetched: 798 items
+2025-06-20 21:56:39,575 | INFO | Items fetched: 9985 items
+2025-06-20 21:56:39,677 | INFO | Projects fetched: 208 items
+2025-06-20 21:57:22,270 | INFO | Items fetched: 9985 items
+2025-06-20 21:57:22,315 | INFO | Projects fetched: 208 items
+2025-06-20 21:57:35,312 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-06-20 21:57:35,332 | INFO | 🔍 Incoming order: order_number='1012' status='Pending' order_note='Normal order note' note_to_supplier='Normal note to supplier' supplier_id=14 requester_id=3 payment_terms='On account' items=[OrderItemCreate(item_code='ABRA002', item_description='', project='AD01P', qty_ordered=1.0, price=500.0)] auth_band_required=None
+2025-06-20 21:57:35,334 | INFO | ✅ [ORDER] Success created: Order 1012 with status Pending and total R500.0
+2025-06-20 21:57:35,341 | ERROR | ERROR | Order submission failed | {"err": "Cannot set properties of null (setting 'value')"}
+2025-06-20 22:00:42,673 | INFO | Starting to render new order page
+2025-06-20 22:00:43,053 | INFO | Requesters fetched: 9 items
+2025-06-20 22:00:43,075 | INFO | Suppliers fetched: 798 items
+2025-06-20 22:00:43,110 | INFO | Items fetched: 9985 items
+2025-06-20 22:00:43,232 | INFO | Projects fetched: 208 items
+2025-06-20 22:01:08,881 | INFO | Items fetched: 9985 items
+2025-06-20 22:01:08,925 | INFO | Projects fetched: 208 items
+2025-06-20 22:01:19,062 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-06-20 22:01:19,081 | INFO | 🔍 Incoming order: order_number='1013' status='Pending' order_note='order note' note_to_supplier='supplier note' supplier_id=15 requester_id=3 payment_terms='On account' items=[OrderItemCreate(item_code='ABRA003', item_description='', project='AD01O', qty_ordered=1.0, price=500.0)] auth_band_required=None
+2025-06-20 22:01:19,083 | INFO | ✅ [ORDER] Success created: Order 1013 with status Pending and total R500.0
+2025-06-20 22:01:19,115 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1014", "orderId": 229}
+2025-06-20 22:02:03,469 | INFO | Items fetched: 9985 items
+2025-06-20 22:02:03,513 | INFO | Projects fetched: 208 items
+2025-06-20 22:05:48,430 | INFO | Starting to render new order page
+2025-06-20 22:05:48,692 | INFO | Requesters fetched: 9 items
+2025-06-20 22:05:48,709 | INFO | Suppliers fetched: 798 items
+2025-06-20 22:05:48,739 | INFO | Items fetched: 9985 items
+2025-06-20 22:05:48,861 | INFO | Projects fetched: 208 items
+2025-06-20 22:06:07,499 | INFO | Items fetched: 9985 items
+2025-06-20 22:06:07,544 | INFO | Projects fetched: 208 items
+2025-06-20 22:06:18,791 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-06-20 22:06:18,809 | INFO | 🔍 Incoming order: order_number='1014' status='Pending' order_note='order note' note_to_supplier='supplier note' supplier_id=255 requester_id=3 payment_terms='On account' items=[OrderItemCreate(item_code='ABRA002', item_description='', project='AD01O', qty_ordered=1.0, price=300.0)] auth_band_required=None
+2025-06-20 22:06:18,811 | INFO | ✅ [ORDER] Success created: Order 1014 with status Pending and total R300.0
+2025-06-20 22:06:18,842 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1015", "orderId": 230}
