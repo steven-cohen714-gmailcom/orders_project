@@ -9,6 +9,7 @@ from backend.endpoints import html_routes
 from backend.endpoints import requisitions
 from backend.endpoints import requisition_attachments
 from backend.endpoints.lookups import mark_cod_paid_api as mark_cod_paid_api_module
+from backend.endpoints.mobile import mobile_requisition_auth
 
 from pathlib import Path
 import logging
@@ -27,6 +28,8 @@ def require_login(request: Request):
 # --- Routers ---
 from backend.endpoints import routers
 from backend.endpoints.mobile import mobile_auth
+from backend.endpoints.mobile import mobile_requisition_auth
+from backend.endpoints.mobile import mobile_requisition
 from backend.endpoints.admin import admin_router
 from backend.endpoints.auth import router as auth_router
 from backend.endpoints.orders import router as orders_router
@@ -97,6 +100,10 @@ async def mobile_authorisations_page(request: Request):
     if login_redirect:
         return login_redirect
     return templates.TemplateResponse("mobile/mobile_authorisations.html", {"request": request})
+
+@static_router.get("/mobile/requisition_login", response_class=HTMLResponse)
+async def mobile_requisition_login_page(request: Request):
+    return templates.TemplateResponse("mobile/mobile_requisition_login.html", {"request": request})
 
 @static_router.get("/home", response_class=HTMLResponse)
 async def home(request: Request):
@@ -220,6 +227,10 @@ async def favicon():
     except Exception as e:
         logging.error(f"Error serving favicon: {str(e)}", exc_info=True)
         return {"error": "Failed to serve favicon"}, 500
+    
+@static_router.get("/mobile/requisition", response_class=HTMLResponse)
+async def mobile_requisition_form(request: Request):
+    return templates.TemplateResponse("mobile/mobile_requisition.html", {"request": request})
 
 # --- Include Routers ---
 app.include_router(static_router)
@@ -249,6 +260,9 @@ app.include_router(requisitions.router)
 app.include_router(requisitioners_router.router, prefix="/lookups")
 app.include_router(mark_cod_paid_api_module.router, prefix="/orders")
 app.include_router(requisition_attachments.router, prefix="/requisitions")
+app.include_router(mobile_requisition_auth.router)
+app.include_router(mobile_requisition.router)
+
 
 # --- Dev CLI ---
 if __name__ == "__main__":

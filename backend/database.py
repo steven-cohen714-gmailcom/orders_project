@@ -314,3 +314,21 @@ def get_business_details() -> dict:
         """)
         row = cursor.fetchone()
         return dict(row) if row else {}
+
+def get_next_requisition_number():
+    with get_db_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT requisition_number_start FROM settings WHERE id = 1")
+        row = cursor.fetchone()
+        if not row:
+            raise ValueError("Missing settings row for requisition_number_start")
+
+        current_number = row["requisition_number_start"]
+        prefix = ''.join(filter(str.isalpha, current_number)) or "REQ"
+        numeric = ''.join(filter(str.isdigit, current_number))
+        next_number = int(numeric) + 1 if numeric else 1000
+        new_number = f"{prefix}{next_number}"
+
+        cursor.execute("UPDATE settings SET requisition_number_start = ? WHERE id = 1", (new_number,))
+        conn.commit()
+        return new_number

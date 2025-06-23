@@ -46,7 +46,11 @@ export function initBusinessDetails() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-      if (res.ok) fetchBusinessDetails();
+      if (res.ok) {
+        fetchBusinessDetails();
+        alert("✅ Business details updated successfully.");
+      }
+
     } catch (err) {
       console.error("Failed to update business details:", err);
     }

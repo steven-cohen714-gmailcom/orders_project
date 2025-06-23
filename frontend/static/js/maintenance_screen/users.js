@@ -119,6 +119,8 @@ async function addOrUpdateUser() {
 
     fetchUsers();
     cancelUserEdit();
+    alert("✅ User added/updated successfully.");
+
   } catch (err) {
     console.error("Failed to save user:", err);
     alert("Failed to save user. " + err.message);
@@ -154,6 +156,7 @@ async function deleteUser(id) {
     const res = await fetch(`/lookups/users/${id}`, { method: "DELETE" });
     if (res.ok) {
       fetchUsers();
+      alert("🗑️ User deleted.");
     } else {
       const err = await res.json();
       throw new Error(err.detail || "Delete failed");

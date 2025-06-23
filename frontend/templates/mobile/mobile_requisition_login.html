@@ -1,0 +1,97 @@
+<!-- File: frontend/templates/mobile/mobile_requisition_login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Requisition</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1.5rem;
+      background-color: #f0f0f0;
+    }
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    select, button {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+    }
+    .message {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Login to Submit Requisition</h1>
+
+  <label for="name">Select your name</label>
+  <select id="name">
+    <option value="">-- Choose your name --</option>
+  </select>
+
+  <button id="login-btn">Login</button>
+  <div class="message" id="message"></div>
+
+  <script>
+    async function loadNames() {
+      try {
+        const res = await fetch("/lookups/requisitioners");
+        const data = await res.json();
+        const select = document.getElementById("name");
+        data.forEach(r => {
+          const opt = document.createElement("option");
+          opt.value = r.name;
+          opt.textContent = r.name;
+          select.appendChild(opt);
+        });
+      } catch (err) {
+        document.getElementById("message").textContent = "Failed to load names.";
+      }
+    }
+
+    document.getElementById("login-btn").addEventListener("click", async () => {
+      const name = document.getElementById("name").value;
+      if (!name) {
+        document.getElementById("message").textContent = "Please select your name.";
+        return;
+      }
+
+      try {
+        const res = await fetch("/mobile_requisition_auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ name })
+        });
+
+        if (!res.ok) {
+          const error = await res.json();
+          throw new Error(error.detail || "Login failed");
+        }
+
+        window.location.href = "/mobile/requisition";
+      } catch (err) {
+        document.getElementById("message").textContent = err.message;
+      }
+    });
+
+    loadNames();
+  </script>
+</body>
+</html>

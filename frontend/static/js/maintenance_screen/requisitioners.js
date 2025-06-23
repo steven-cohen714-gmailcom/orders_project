@@ -1,42 +1,39 @@
 // File: frontend/static/js/maintenance_screen/requisitioners.js
 
 export function initRequisitioners() {
-  const nameInput = document.getElementById("requisitioner-name");
-  const addButton = document.getElementById("add-requisitioner-button");
-  const tableBody = document.getElementById("requisitioners-table");
+  console.log("initRequisitioners loaded");
 
-  if (!nameInput || !addButton || !tableBody) return;
+  fetchRequisitioners();
 
-  async function loadRequisitioners() {
+  const addBtn = document.getElementById("add-requisitioner-button");
+  if (addBtn) addBtn.addEventListener("click", saveRequisitioner);
+
+  /* -------------------------------------------------- */
+  async function fetchRequisitioners() {
     try {
       const res = await fetch("/lookups/requisitioners");
       const data = await res.json();
-      tableBody.innerHTML = "";
+      const tbody = document.getElementById("requisitioners-table");
+      if (!tbody) return;
 
-      data.forEach(r => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td>${r.name}</td>
-          <td><button data-id="${r.id}" class="delete-btn">Delete</button></td>
-        `;
-        tableBody.appendChild(row);
-      });
-
-      document.querySelectorAll(".delete-btn").forEach(btn => {
-        btn.addEventListener("click", async () => {
-          const id = btn.getAttribute("data-id");
-          await fetch(`/lookups/requisitioners/${id}`, { method: "DELETE" });
-          loadRequisitioners();
-        });
-      });
+      tbody.innerHTML = "";
+      data.forEach(r => tbody.prepend(createRow(r)));
     } catch (err) {
-      console.error("Failed to load requisitioners", err);
+      console.error("Failed to fetch requisitioners:", err);
+      alert("❌ Failed to fetch requisitioners from server.");
     }
   }
 
-  addButton.addEventListener("click", async () => {
-    const name = nameInput.value.trim();
-    if (!name) return;
+  /* -------------------------------------------------- */
+  async function saveRequisitioner() {
+    const nameField = document.getElementById("requisitioner-name");
+    if (!nameField) return;
+
+    const name = nameField.value.trim();
+    if (!name) {
+      alert("❌ Requisitioner name is required.");
+      return;
+    }
 
     try {
       const res = await fetch("/lookups/requisitioners", {
@@ -46,17 +43,48 @@ export function initRequisitioners() {
       });
 
       if (res.ok) {
-        nameInput.value = "";
-        await loadRequisitioners();
-        alert("✅ Added successfully.");
+        nameField.value = "";
+        await fetchRequisitioners();
+        alert("✅ Requisitioner added successfully.");
       } else {
-        const err = await res.json();
-        alert(`❌ Failed: ${err.detail}`);
+        const msg = await res.text();
+        alert(`❌ Error: ${msg}`);
       }
     } catch (err) {
-      console.error("Add requisitioner error", err);
+      console.error("Failed to save requisitioner:", err);
+      alert("❌ Network or server error.");
     }
-  });
+  }
 
-  loadRequisitioners();
+  /* -------------------------------------------------- */
+  function createRow(r) {
+    const tr = document.createElement("tr");
+    tr.dataset.id = r.id;
+
+    tr.innerHTML = `
+      <td>${r.name || ""}</td>
+      <td><button class="delete-btn">Delete</button></td>
+    `;
+
+    tr.querySelector(".delete-btn").onclick = () => deleteRequisitioner(r.id);
+    return tr;
+  }
+
+  /* -------------------------------------------------- */
+  async function deleteRequisitioner(id) {
+    try {
+      if (!confirm("Are you sure you want to delete this requisitioner?")) return;
+
+      const res = await fetch(`/lookups/requisitioners/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        await fetchRequisitioners();
+        alert("🗑️ Requisitioner deleted.");
+      } else {
+        alert(`❌ Failed to delete requisitioner: ${await res.text()}`);
+      }
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("❌ Network or server error while deleting requisitioner.");
+    }
+  }
 }

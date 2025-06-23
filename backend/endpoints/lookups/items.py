@@ -146,3 +146,23 @@ async def import_items_csv(file: UploadFile = File(...)):
     except Exception as e:
         logging.error(f"❌ Error importing items CSV: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Import failed: {str(e)}")
+
+@router.delete("/items/{item_id}")
+async def delete_item(item_id: int):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM items WHERE id = ?", (item_id,))
+        if cursor.rowcount == 0:
+            raise HTTPException(status_code=404, detail="Item not found")
+        conn.commit()
+        logging.info(f"Item {item_id} deleted successfully.")
+        return {"message": "Item deleted successfully"}
+    except sqlite3.Error as e:
+        logging.error(f"Database error deleting item {item_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        logging.error(f"Error deleting item {item_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error deleting item: {str(e)}")
+    finally:
+        conn.close()

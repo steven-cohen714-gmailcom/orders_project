@@ -1,103 +1,96 @@
 // File: /frontend/static/js/maintenance_screen/projects.js
 
 export function initProjects() {
-  console.log("initProjects loaded");
+  console.log("✅ initProjects loaded");
 
   fetchProjects();
 
-  const addBtn = document.getElementById("add-project-button");
-  if (addBtn) {
-    addBtn.addEventListener("click", addProject);
+  const addBtn = document.getElementById("save-project-button");
+  const cancelBtn = document.getElementById("cancel-project-edit");
+
+  if (addBtn) addBtn.addEventListener("click", saveProject);
+  if (cancelBtn) cancelBtn.addEventListener("click", clearForm);
+}
+
+async function fetchProjects() {
+  try {
+    const res = await fetch("/lookups/projects");
+    const data = await res.json();
+
+    const tbody = document.getElementById("projects-table");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+
+    data.projects.forEach(project => {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${project.project_code}</td>
+        <td>${project.project_name}</td>
+        <td><button onclick="deleteProject(${project.id})">Delete</button></td>
+      `;
+
+      tbody.appendChild(row);
+    });
+  } catch (err) {
+    console.error("❌ Failed to load projects", err);
+    alert("❌ Failed to load projects");
+  }
+}
+
+async function saveProject() {
+  const code = document.getElementById("project-code")?.value.trim();
+  const name = document.getElementById("project-name")?.value.trim();
+
+  const errorDiv = document.getElementById("project-form-error");
+  if (!code || !name) {
+    if (errorDiv) errorDiv.style.display = "block";
+    return;
+  } else {
+    if (errorDiv) errorDiv.style.display = "none";
   }
 
-  async function fetchProjects() {
-    try {
-      const res = await fetch("/lookups/projects");
-      const data = await res.json();
-      const tbody = document.getElementById("projects-table");
-      if (!tbody) return;
+  try {
+    const res = await fetch("/lookups/projects", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ project_code: code, project_name: name }),
+    });
 
-      tbody.innerHTML = "";
-      data.projects.forEach(project => {
-        const row = createRow(project);
-        tbody.appendChild(row);
-      });
-    } catch (err) {
-      console.error("Failed to fetch projects:", err);
+    if (res.ok) {
+      clearForm();
+      fetchProjects();
+      alert("✅ Project added");
+    } else {
+      const msg = await res.text();
+      alert(`❌ ${msg}`);
     }
+  } catch (err) {
+    console.error("❌ Network/server error", err);
+    alert("❌ Network/server error");
   }
+}
 
-  async function addProject() {
-    const project_code = document.getElementById("project-code")?.value.trim();
-    const project_name = document.getElementById("project-name")?.value.trim();
-
-    if (!project_code || !project_name) {
-      alert("❌ Please enter both project code and name.");
-      return;
+window.deleteProject = async function (id) {
+  try {
+    const res = await fetch(`/lookups/projects/${id}`, { method: "DELETE" });
+    if (res.ok) {
+      fetchProjects();
+      alert("🗑️ Project deleted");
+    } else {
+      const msg = await res.text();
+      alert(`❌ ${msg}`);
     }
-
-    try {
-      const res = await fetch("/lookups/projects", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ project_code, project_name })
-      });
-
-      if (res.ok) {
-        const newProject = await res.json(); // Should return { id, project_code, project_name }
-        const row = createRow(newProject);
-
-        const tbody = document.getElementById("projects-table");
-        tbody.insertBefore(row, tbody.firstChild); // Add new project at top
-
-        alert("✅ Project added successfully.");
-
-        document.getElementById("project-code").value = "";
-        document.getElementById("project-name").value = "";
-      } else {
-        const errMsg = await res.text();
-        alert(`❌ Failed to save project: ${errMsg}`);
-      }
-    } catch (err) {
-      console.error("Failed to add project:", err);
-      alert("❌ Network or server error");
-    }
+  } catch (err) {
+    console.error("❌ Network/server error", err);
+    alert("❌ Network/server error");
   }
+};
 
-  async function deleteProject(id) {
-    try {
-      const res = await fetch(`/lookups/projects/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        alert("🗑️ Project deleted");
-        fetchProjects();
-      } else {
-        const errMsg = await res.text();
-        alert(`❌ Failed to delete: ${errMsg}`);
-      }
-    } catch (err) {
-      console.error("Failed to delete project:", err);
-      alert("❌ Network or server error");
-    }
-  }
-
-  function createRow(project) {
-    const row = document.createElement("tr");
-
-    const codeCell = document.createElement("td");
-    codeCell.textContent = project.project_code;
-    row.appendChild(codeCell);
-
-    const nameCell = document.createElement("td");
-    nameCell.textContent = project.project_name;
-    row.appendChild(nameCell);
-
-    const actionsCell = document.createElement("td");
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
-    deleteButton.onclick = () => deleteProject(project.id);
-    actionsCell.appendChild(deleteButton);
-
-    row.appendChild(actionsCell);
-    return row;
-  }
+function clearForm() {
+  document.getElementById("project-id").value = "";
+  document.getElementById("project-code").value = "";
+  document.getElementById("project-name").value = "";
+  const err = document.getElementById("project-form-error");
+  if (err) err.style.display = "none";
 }

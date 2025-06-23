@@ -45,7 +45,11 @@ export function initSettings() {
           auth_threshold_4
         })
       });
-      if (res.ok) fetchSettings();
+      if (res.ok) {
+        fetchSettings();
+        alert("✅ Settings updated successfully.");
+      }
+
     } catch (err) {
       console.error("Failed to update settings:", err);
     }

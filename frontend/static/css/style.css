@@ -435,3 +435,7 @@ tbody,
   opacity: 0.4;
   pointer-events: none;
 }
+
+th {
+  text-align: left;
+}

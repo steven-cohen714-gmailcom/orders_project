@@ -1,5 +1,3 @@
-# backend/endpoints/lookups/requesters.py
-
 from fastapi import APIRouter, HTTPException
 from backend.database import get_db_connection
 import logging
@@ -11,15 +9,14 @@ router = APIRouter()
 logging.basicConfig(filename="logs/server.log", level=logging.INFO,
                     format="%(asctime)s | %(levelname)s | %(message)s")
 
-
 @router.get("/requesters")
 async def get_requesters():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT id, name FROM requesters")
-        requesters = cursor.fetchall()
-        result = [{"id": r[0], "name": r[1]} for r in requesters]
+        cursor.execute("SELECT id, name FROM requesters ORDER BY id DESC")
+        rows = cursor.fetchall()
+        result = [{"id": row[0], "name": row[1]} for row in rows]
         logging.info(f"Requesters fetched: {len(result)} items")
         return {"requesters": result}
     except sqlite3.Error as e:
@@ -45,7 +42,9 @@ async def add_requester(payload: dict):
         cursor.execute("INSERT INTO requesters (name) VALUES (?)", (name,))
         conn.commit()
         logging.info(f"New requester added: {name}")
-        return {"message": "Requester added successfully"}
+        return {"message": "Requester added successfully", "id": cursor.lastrowid}
+    except sqlite3.IntegrityError:
+        raise HTTPException(status_code=400, detail="Requester already exists.")
     except sqlite3.Error as e:
         logging.error(f"Database error adding requester: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
@@ -79,5 +78,26 @@ async def update_requester(requester_id: int, payload: dict):
     except Exception as e:
         logging.error(f"Error updating requester {requester_id}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error updating requester: {str(e)}")
+    finally:
+        conn.close()
+
+
+@router.delete("/requesters/{requester_id}")
+async def delete_requester(requester_id: int):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM requesters WHERE id = ?", (requester_id,))
+        conn.commit()
+        if cursor.rowcount == 0:
+            raise HTTPException(status_code=404, detail="Requester not found")
+        logging.info(f"Requester deleted: {requester_id}")
+        return {"message": "Requester deleted", "id": requester_id}
+    except sqlite3.Error as e:
+        logging.error(f"Database error deleting requester {requester_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        logging.error(f"Error deleting requester {requester_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error deleting requester: {str(e)}")
     finally:
         conn.close()

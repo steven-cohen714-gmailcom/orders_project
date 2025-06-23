@@ -18,9 +18,9 @@ async def get_suppliers():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT id, name FROM suppliers")
+        cursor.execute("SELECT id, name, account_number FROM suppliers")
         suppliers = cursor.fetchall()
-        result = [{"id": s[0], "name": s[1]} for s in suppliers]
+        result = [{"id": s[0], "name": s[1], "account_number": s[2] or ""} for s in suppliers]
         logging.info(f"Suppliers fetched: {len(result)} items")
         return {"suppliers": result}
     except sqlite3.Error as e:
@@ -81,6 +81,8 @@ async def add_supplier(payload: dict):
 @router.put("/suppliers/{supplier_id}")
 async def update_supplier(supplier_id: int, payload: dict):
     new_name = payload.get("name")
+    new_account_number = payload.get("account_number", "")
+
     if not new_name:
         logging.error("Missing name in update_supplier request")
         raise HTTPException(status_code=400, detail="Missing supplier name")
@@ -88,7 +90,10 @@ async def update_supplier(supplier_id: int, payload: dict):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("UPDATE suppliers SET name = ? WHERE id = ?", (new_name, supplier_id))
+        cursor.execute(
+            "UPDATE suppliers SET name = ?, account_number = ? WHERE id = ?",
+            (new_name, new_account_number, supplier_id)
+        )
         if cursor.rowcount == 0:
             logging.warning(f"No supplier found with id {supplier_id}")
             raise HTTPException(status_code=404, detail="Supplier not found")
@@ -140,3 +145,23 @@ async def import_suppliers_csv(file: UploadFile = File(...)):
     except Exception as e:
         logging.error(f"❌ Error importing suppliers CSV: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Import failed: {str(e)}")
+
+@router.delete("/suppliers/{supplier_id}")
+async def delete_supplier(supplier_id: int):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM suppliers WHERE id = ?", (supplier_id,))
+        if cursor.rowcount == 0:
+            raise HTTPException(status_code=404, detail="Supplier not found")
+        conn.commit()
+        logging.info(f"Supplier {supplier_id} deleted")
+        return {"message": "Supplier deleted successfully"}
+    except sqlite3.Error as e:
+        logging.error(f"Database error deleting supplier {supplier_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
+    except Exception as e:
+        logging.error(f"Error deleting supplier {supplier_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error deleting supplier: {str(e)}")
+    finally:
+        conn.close()

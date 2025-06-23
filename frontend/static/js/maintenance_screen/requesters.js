@@ -1,4 +1,4 @@
-// /frontend/static/js/maintenance_screen/requesters.js
+// File: /frontend/static/js/maintenance_screen/requesters.js
 
 export function initRequesters() {
   console.log("initRequesters loaded");
@@ -10,6 +10,7 @@ export function initRequesters() {
     addBtn.addEventListener("click", addRequester);
   }
 
+  /* ----------------------------------------------- */
   async function fetchRequesters() {
     try {
       const res = await fetch("/lookups/requesters");
@@ -19,31 +20,34 @@ export function initRequesters() {
       if (!tbody) return;
 
       tbody.innerHTML = "";
-      data.requesters.forEach(requester => {
-        const row = document.createElement("tr");
+        data.requesters.forEach(r => {
+          const tr = document.createElement("tr");
+          tr.dataset.id = r.id;
 
-        const nameCell = document.createElement("td");
-        nameCell.textContent = requester.name;
-        row.appendChild(nameCell);
+          tr.innerHTML = `
+            <td>${r.name}</td>
+            <td><button class="delete-btn">Delete</button></td>
+          `;
 
-        const actionsCell = document.createElement("td");
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.addEventListener("click", () => deleteRequester(requester.id));
-        actionsCell.appendChild(deleteButton);
+          tr.querySelector(".delete-btn").onclick = () => deleteRequester(r.id);
+          tbody.appendChild(tr);
+        });
 
-        row.appendChild(actionsCell);
-        tbody.appendChild(row);
-      });
     } catch (err) {
-      console.error("Failed to fetch requesters:", err);
+      console.error("❌ Failed to fetch requesters:", err);
+      alert("❌ Failed to fetch requesters.");
     }
   }
 
+  /* ----------------------------------------------- */
   async function addRequester() {
     const input = document.getElementById("requester-name");
     if (!input) return;
-    const name = input.value;
+    const name = input.value.trim();
+    if (!name) {
+      alert("❌ Please enter a requester name.");
+      return;
+    }
 
     try {
       const res = await fetch("/lookups/requesters", {
@@ -51,18 +55,40 @@ export function initRequesters() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name })
       });
-      if (res.ok) fetchRequesters();
+
+      if (res.ok) {
+        input.value = "";
+        await fetchRequesters();
+        alert("✅ Requester added successfully.");
+      } else {
+        const msg = await res.text();
+        alert(`❌ Failed to add requester: ${msg}`);
+      }
     } catch (err) {
-      console.error("Failed to add requester:", err);
+      console.error("❌ Failed to add requester:", err);
+      alert("❌ Network or server error.");
     }
   }
 
+  /* ----------------------------------------------- */
   async function deleteRequester(id) {
     try {
-      const res = await fetch(`/lookups/requesters/${id}`, { method: "DELETE" });
-      if (res.ok) fetchRequesters();
+      if (!confirm("Are you sure you want to delete this requester?")) return;
+
+      const res = await fetch(`/lookups/requesters/${id}`, {
+        method: "DELETE"
+      });
+
+      if (res.ok) {
+        await fetchRequesters();
+        alert("🗑️ Requester deleted.");
+      } else {
+        const msg = await res.text();
+        alert(`❌ Failed to delete requester: ${msg}`);
+      }
     } catch (err) {
-      console.error("Failed to delete requester:", err);
+      console.error("❌ Failed to delete requester:", err);
+      alert("❌ Network or server error.");
     }
   }
 }

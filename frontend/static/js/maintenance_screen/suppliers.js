@@ -3,17 +3,13 @@ export function initSuppliers() {
 
   fetchSuppliers();
 
-  const saveBtn = document.getElementById("save-supplier-button");
-  if (saveBtn) {
-    saveBtn.textContent = "Add Supplier";
-    saveBtn.addEventListener("click", saveSupplier);
-  }
-
+  const saveBtn   = document.getElementById("save-supplier-button");
   const cancelBtn = document.getElementById("cancel-supplier-edit");
-  if (cancelBtn) {
-    cancelBtn.addEventListener("click", cancelSupplierEdit);
-  }
 
+  if (saveBtn)   saveBtn.addEventListener("click", saveSupplier);
+  if (cancelBtn) cancelBtn.addEventListener("click", cancelSupplierEdit);
+
+  /* -------------------------------------------------- */
   async function fetchSuppliers() {
     try {
       const res = await fetch("/maintenance/suppliers");
@@ -22,45 +18,62 @@ export function initSuppliers() {
       if (!tbody) return;
 
       tbody.innerHTML = "";
-      data.suppliers.forEach(supplier => {
-        const row = createRow(supplier);
-        tbody.insertBefore(row, tbody.firstChild);
-      });
+      data.suppliers.forEach(s => tbody.prepend(createRow(s)));
     } catch (err) {
       console.error("Failed to fetch suppliers:", err);
+      alert("❌ Failed to fetch suppliers from server.");
     }
   }
 
+  /* -------------------------------------------------- */
   async function saveSupplier() {
-    const idField = document.getElementById("supplier-id");
+    const idField   = document.getElementById("supplier-id");
     const nameField = document.getElementById("supplier-name");
-    const accNumField = document.getElementById("supplier-account-number");
+    const accField  = document.getElementById("supplier-account-number");
 
-    if (!idField || !nameField || !accNumField) return;
+    if (!idField || !nameField || !accField) return;
 
-    const id = idField.value;
-    const name = nameField.value.trim();
-    const account_number = accNumField.value.trim();
+    const id      = idField.value.trim();
+    const name    = nameField.value.trim();
+    const account = accField.value.trim();
 
-    if (!name) {
-      alert("❌ Supplier name is required.");
+    /* ---- validation ---- */
+    if (!name || !account) {
+      alert("❌ Supplier name and account number are required.");
+      return;
+    }
+
+    /* ---- duplicate check (name + account) ---- */
+    const isDuplicate = Array.from(document.querySelectorAll("#suppliers-table tr")).some(tr => {
+      const [n, a] = tr.querySelectorAll("td");
+      return (
+        n.textContent.trim().toLowerCase() === name.toLowerCase() &&
+        a.textContent.trim()               === account            &&
+        (!id || tr.dataset.id !== id)      // allow update of SAME row
+      );
+    });
+    if (isDuplicate) {
+      alert("❌ This supplier (name & account) already exists.");
       return;
     }
 
     try {
       const method = id ? "PUT" : "POST";
-      const url = id ? `/maintenance/suppliers/${id}` : "/maintenance/suppliers";
+      const url    = id
+        ? `/maintenance/suppliers/${id}`
+        : "/maintenance/suppliers";
 
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, account_number })
+        body: JSON.stringify({ name, account_number: account })
       });
 
       if (res.ok) {
-        fetchSuppliers();
-        cancelSupplierEdit();
-        alert(id ? "✅ Supplier updated successfully." : "✅ Supplier added successfully.");
+        await fetchSuppliers();
+        cancelSupplierEdit();          // clear + reset form
+        alert(id ? "✅ Supplier updated successfully."
+                 : "✅ Supplier added successfully.");
       } else {
         const msg = await res.text();
         alert(`❌ Error: ${msg}`);
@@ -71,77 +84,62 @@ export function initSuppliers() {
     }
   }
 
-  function createRow(supplier) {
-    const row = document.createElement("tr");
+  /* -------------------------------------------------- */
+  function createRow(s) {
+    const tr = document.createElement("tr");
+    tr.dataset.id = s.id; // used for duplicate check on edit
 
-    const nameCell = document.createElement("td");
-    nameCell.textContent = supplier.name || "";
-    row.appendChild(nameCell);
+    tr.innerHTML = `
+      <td>${s.name || ""}</td>
+      <td>${s.account_number || ""}</td>
+      <td>
+        <button class="edit-btn">Edit</button>
+        <button class="delete-btn" style="margin-left:8px;">Delete</button>
+      </td>
+    `;
 
-    const accNumCell = document.createElement("td");
-    accNumCell.textContent = supplier.account_number || "";
-    row.appendChild(accNumCell);
-
-    const actionsCell = document.createElement("td");
-
-    const editBtn = document.createElement("button");
-    editBtn.textContent = "Edit";
-    editBtn.addEventListener("click", () =>
-      editSupplier(supplier.id, supplier.name, supplier.account_number)
-    );
-    actionsCell.appendChild(editBtn);
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
-    deleteBtn.style.marginLeft = "8px";
-    deleteBtn.addEventListener("click", () => deleteSupplier(supplier.id));
-    actionsCell.appendChild(deleteBtn);
-
-    row.appendChild(actionsCell);
-    return row;
+    tr.querySelector(".edit-btn").onclick   = () => editSupplier(s.id, s.name, s.account_number);
+    tr.querySelector(".delete-btn").onclick = () => deleteSupplier(s.id);
+    return tr;
   }
 
-  function editSupplier(id, name, account_number) {
-    const idField = document.getElementById("supplier-id");
+  /* -------------------------------------------------- */
+  function editSupplier(id, name, account) {
+    const idField   = document.getElementById("supplier-id");
     const nameField = document.getElementById("supplier-name");
-    const accNumField = document.getElementById("supplier-account-number");
-    const cancelBtn = document.getElementById("cancel-supplier-edit");
-    const saveBtn = document.getElementById("save-supplier-button");
+    const accField  = document.getElementById("supplier-account-number");
 
-    if (!idField || !nameField || !accNumField || !cancelBtn || !saveBtn) return;
-
-    idField.value = id;
-    nameField.value = name;
-    accNumField.value = account_number || "";
+    idField.value         = id;
+    nameField.value       = name;
+    accField.value        = account || "";
     cancelBtn.style.display = "inline";
-    saveBtn.textContent = "Update Supplier";
+    saveBtn.textContent     = "Update Supplier";
   }
 
+  /* -------------------------------------------------- */
   function cancelSupplierEdit() {
-    const idField = document.getElementById("supplier-id");
-    const nameField = document.getElementById("supplier-name");
-    const accNumField = document.getElementById("supplier-account-number");
-    const cancelBtn = document.getElementById("cancel-supplier-edit");
-    const saveBtn = document.getElementById("save-supplier-button");
-
-    if (!idField || !nameField || !accNumField || !cancelBtn || !saveBtn) return;
-
-    idField.value = "";
-    nameField.value = "";
-    accNumField.value = "";
+    document.getElementById("supplier-id").value              = "";
+    document.getElementById("supplier-name").value            = "";
+    document.getElementById("supplier-account-number").value  = "";
     cancelBtn.style.display = "none";
-    saveBtn.textContent = "Add Supplier";
+    saveBtn.textContent     = "Add Supplier";
   }
 
+  /* -------------------------------------------------- */
   async function deleteSupplier(id) {
     try {
+      if (!confirm("Are you sure you want to delete this supplier?")) return;
+
       const res = await fetch(`/maintenance/suppliers/${id}`, { method: "DELETE" });
       if (res.ok) {
-        fetchSuppliers();
+        await fetchSuppliers();
         alert("🗑️ Supplier deleted.");
+      } else {
+        alert(`❌ Failed to delete supplier: ${await res.text()}`);
       }
     } catch (err) {
-      console.error("Failed to delete supplier:", err);
+      console.error("Delete error:", err);
+      alert("❌ Network or server error while deleting supplier.");
     }
   }
 }
