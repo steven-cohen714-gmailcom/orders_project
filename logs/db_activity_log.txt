@@ -1,8 +1,91 @@
-2025-06-23 21:22:45,007 | INFO | Database initialized successfully.
-2025-06-23 21:22:45,007 | INFO | ✅ Database initialized successfully.
-2025-06-23 21:43:11,507 | INFO | Database initialized successfully.
-2025-06-23 21:43:11,507 | INFO | ✅ Database initialized successfully.
-2025-06-23 21:43:42,832 | INFO | Database initialized successfully.
-2025-06-23 21:43:42,832 | INFO | ✅ Database initialized successfully.
-2025-06-23 21:47:56,599 | INFO | Requesters fetched: 8 items
-2025-06-23 21:47:56,603 | INFO | Suppliers fetched: 805 items
+2025-06-24 10:23:12,046 | INFO | Database initialized successfully.
+2025-06-24 10:23:12,046 | INFO | ✅ Database initialized successfully.
+2025-06-24 10:23:23,581 | INFO | Requesters fetched: 8 items
+2025-06-24 10:23:23,583 | INFO | Suppliers fetched: 805 items
+2025-06-24 10:23:30,863 | INFO | Requesters fetched: 8 items
+2025-06-24 10:23:30,866 | INFO | Suppliers fetched: 805 items
+2025-06-24 10:23:35,622 | INFO | Generating PDF for order_id=230, order_number=1014
+2025-06-24 10:23:40,951 | INFO | Requesters fetched: 8 items
+2025-06-24 10:23:40,954 | INFO | Suppliers fetched: 805 items
+2025-06-24 10:27:48,112 | INFO | Requesters fetched: 8 items
+2025-06-24 10:27:48,115 | INFO | Suppliers fetched: 805 items
+2025-06-24 10:33:51,403 | INFO | Suppliers fetched: 805 items
+2025-06-24 10:33:51,410 | INFO | Requesters fetched: 8 items
+2025-06-24 10:34:11,688 | INFO | Requesters fetched: 8 items
+2025-06-24 10:34:11,691 | INFO | Suppliers fetched: 805 items
+2025-06-24 10:34:40,355 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 230
+2025-06-24 10:38:09,307 | INFO | Database initialized successfully.
+2025-06-24 10:38:09,307 | INFO | ✅ Database initialized successfully.
+2025-06-24 10:38:12,915 | INFO | ✅ [ORDER] Success deleted: Order 230 marked as Deleted
+2025-06-24 10:38:50,536 | INFO | Database initialized successfully.
+2025-06-24 10:38:50,536 | INFO | ✅ Database initialized successfully.
+2025-06-24 10:38:56,569 | INFO | Requesters fetched: 8 items
+2025-06-24 10:38:56,572 | INFO | Suppliers fetched: 805 items
+2025-06-24 10:39:00,255 | INFO | ✅ [ORDER] Success deleted: Order 229 marked as Deleted
+2025-06-24 10:39:04,056 | INFO | Requesters fetched: 8 items
+2025-06-24 10:39:04,059 | INFO | Suppliers fetched: 805 items
+2025-06-24 10:39:04,076 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 14 total orders for audit trail
+2025-06-24 10:39:12,457 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 230
+2025-06-24 12:54:59,530 | INFO | Requesters fetched: 8 items
+2025-06-24 12:54:59,533 | INFO | Suppliers fetched: 805 items
+2025-06-24 12:55:07,066 | INFO | Suppliers fetched: 805 items
+2025-06-24 12:55:10,894 | INFO | Items fetched: 9985 items
+2025-06-24 13:06:08,579 | INFO | Items fetched: 9985 items
+2025-06-24 13:06:25,956 | INFO | Item 10022 updated: code -> sdcd, description -> dcvdvs
+2025-06-24 13:06:51,923 | INFO | Suppliers fetched: 805 items
+2025-06-24 13:10:16,244 | INFO | Items fetched: 9985 items
+2025-06-24 13:10:37,800 | INFO | Item 35 updated: code -> ABRA001, description -> CUTTING DISC STEEL  28
+2025-06-24 13:10:37,815 | INFO | Items fetched: 9985 items
+2025-06-24 13:12:27,290 | INFO | Items fetched: 9985 items
+2025-06-24 13:12:33,411 | INFO | Item 35 deleted successfully.
+2025-06-24 13:12:33,481 | INFO | Items fetched: 9984 items
+2025-06-24 13:12:49,692 | INFO | New item added: peterf - peter f
+2025-06-24 13:12:49,708 | INFO | Items fetched: 9985 items
+2025-06-24 13:13:42,897 | INFO | New item added: dada - dadadxa
+2025-06-24 13:13:42,914 | INFO | Items fetched: 9986 items
+2025-06-24 13:13:58,814 | ERROR | Integrity error updating item 36: UNIQUE constraint failed: items.item_code
+2025-06-24 13:14:01,733 | ERROR | Integrity error updating item 36: UNIQUE constraint failed: items.item_code
+2025-06-24 13:16:11,292 | INFO | Items fetched: 9986 items
+2025-06-24 13:16:19,068 | INFO | New item added: wefewf - fedvdevde
+2025-06-24 13:16:19,086 | INFO | Items fetched: 9987 items
+2025-06-24 13:16:29,029 | INFO | Item 10025 updated: code -> wefewfdddd, description -> fedvdevde
+2025-06-24 13:16:29,047 | INFO | Items fetched: 9987 items
+2025-06-24 13:16:38,481 | INFO | Item 10025 deleted successfully.
+2025-06-24 13:16:42,883 | ERROR | Error deleting item 10025: 404: Item not found
+2025-06-24 13:16:46,504 | ERROR | Error deleting item 10025: 404: Item not found
+2025-06-24 13:16:51,934 | INFO | Item 10024 deleted successfully.
+2025-06-24 13:19:38,549 | INFO | Items fetched: 9985 items
+2025-06-24 13:20:02,045 | INFO | Item 36 updated: code -> ABRA0024, description -> CUTTING DISC STONE 115 MM
+2025-06-24 13:20:02,073 | INFO | Items fetched: 9985 items
+2025-06-24 13:20:13,232 | INFO | Item 36 deleted successfully.
+2025-06-24 13:20:13,296 | INFO | Items fetched: 9984 items
+2025-06-24 13:20:28,692 | INFO | New item added: frfff - fffff
+2025-06-24 13:20:28,714 | INFO | Items fetched: 9985 items
+2025-06-24 13:27:21,908 | INFO | Items fetched: 9985 items
+2025-06-24 13:29:18,804 | INFO | Suppliers fetched: 805 items
+2025-06-24 13:29:24,400 | INFO | New supplier added: cacscscs
+2025-06-24 13:29:24,409 | INFO | Suppliers fetched: 806 items
+2025-06-24 13:30:19,617 | INFO | Items fetched: 9985 items
+2025-06-24 13:30:34,066 | INFO | New item added: sdcvascas - csacsacsacsac
+2025-06-24 13:30:34,089 | INFO | Items fetched: 9986 items
+2025-06-24 13:30:41,932 | INFO | Item 37 updated: code -> ABRA003acssa, description -> GRINDING DISC STEEL 115 MM
+2025-06-24 13:30:41,996 | INFO | Items fetched: 9986 items
+2025-06-24 13:30:50,435 | INFO | Item 37 deleted successfully.
+2025-06-24 13:30:50,504 | INFO | Items fetched: 9985 items
+2025-06-24 13:31:21,316 | INFO | Items fetched: 9985 items
+2025-06-24 13:35:22,985 | INFO | Database initialized successfully.
+2025-06-24 13:35:22,985 | INFO | ✅ Database initialized successfully.
+2025-06-24 13:35:42,593 | INFO | Database initialized successfully.
+2025-06-24 13:35:42,593 | INFO | ✅ Database initialized successfully.
+2025-06-24 13:35:49,733 | INFO | Items fetched: 9985 items
+2025-06-24 13:35:58,815 | INFO | New item added: acvdvcadsv - adsvdsvavdv
+2025-06-24 13:35:58,830 | INFO | Items fetched: 9986 items
+2025-06-24 13:36:10,063 | INFO | Item 10028 updated: code -> acvdvcadsvccccc, description -> adsvdsvavdv
+2025-06-24 13:36:10,083 | INFO | Items fetched: 9986 items
+2025-06-24 13:36:16,434 | INFO | Item 10028 deleted successfully.
+2025-06-24 13:36:16,494 | INFO | Items fetched: 9985 items
+2025-06-24 13:38:58,757 | INFO | Requesters fetched: 8 items
+2025-06-24 13:38:58,760 | INFO | Suppliers fetched: 806 items
+2025-06-24 13:41:13,041 | INFO | Suppliers fetched: 806 items
+2025-06-24 13:42:16,145 | INFO | Requesters fetched: 8 items
+2025-06-24 13:42:17,945 | INFO | Items fetched: 9985 items

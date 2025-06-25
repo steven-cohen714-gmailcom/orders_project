@@ -96,6 +96,7 @@ async function loadOrders() {
                     <span class="clip-icon" title="View/Upload Attachments" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📎</span>
                     <span class="note-icon" title="Edit Order Note" data-order-id="${order.id || ''}" data-order-note="${sanitizedOrderNote}" id="order-note-${index}">📝</span>
                     <span class="supplier-note-icon" title="View Note to Supplier" data-supplier-note="${sanitizedSupplierNote}" data-order-number="${sanitizedOrderNumber}" id="supplier-note-${index}">📦</span>
+                    <span class="delete-icon" style="color: red; cursor: pointer;" title="Delete Order" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">🗑️</span>
                     ${receiveIconHTML}
                     ${editDraftIconHTML}
                     <span class="pdf-icon" title="View Purchase Order PDF" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📄</span>
@@ -142,6 +143,21 @@ async function loadOrders() {
                         }
                     });
                 });
+                row.querySelector(".delete-icon")?.addEventListener("click", async () => {
+                const confirmed = confirm(`Are you sure you want to delete Order ${sanitizedOrderNumber}?`);
+                if (!confirmed) return;
+
+                try {
+                    const res = await fetch(`/orders/delete/${order.id}`, { method: "DELETE" });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.detail || "Delete failed");
+                    alert(data.message || "Order deleted");
+                    await loadOrders();
+                } catch (err) {
+                    console.error("❌ Failed to delete order:", err);
+                    alert("Error deleting order: " + err.message);
+                }
+            });
 
                 if (rawStatus === "Draft") {
                     row.querySelector(".edit-draft-icon")?.addEventListener("click", () => {

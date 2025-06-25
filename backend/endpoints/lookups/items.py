@@ -20,7 +20,7 @@ async def get_items():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT id, item_code, item_description FROM items ORDER BY id DESC")
+        cursor.execute("SELECT id, item_code, item_description FROM items ORDER BY id ASC")
         items = cursor.fetchall()
         result = [
             {

@@ -99,6 +99,19 @@ async def get_orders():
     log_success("orders", "fetched", f"{len(result)} items")
     return {"orders": result}
 
+@handle_db_errors(entity="order", action="deleting")
+@router.delete("/delete/{order_id}")
+async def delete_order(order_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE orders SET status = 'Deleted' WHERE id = ?", (order_id,))
+    if cursor.rowcount == 0:
+        raise HTTPException(status_code=404, detail="Order not found or already deleted")
+    conn.commit()
+    conn.close()
+    log_success("order", "deleted", f"Order {order_id} marked as Deleted")
+    return {"message": "Order deleted and moved to audit trail"}
+
 @router.get("/{order_id}")
 @handle_db_errors(entity="order", action="fetching")
 async def get_order(order_id: int):

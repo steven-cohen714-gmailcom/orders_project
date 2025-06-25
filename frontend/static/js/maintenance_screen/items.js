@@ -1,15 +1,15 @@
-// File: /frontend/static/js/maintenance_screen/items.js
-
 export function initItems() {
   console.log("initItems loaded");
 
   fetchItems();
 
-  const addBtn = document.getElementById("add-item-button");
-  if (addBtn) {
-    addBtn.addEventListener("click", addItem);
-  }
+  const saveBtn   = document.getElementById("add-item-button");
+  const cancelBtn = document.getElementById("cancel-item-edit");
 
+  if (saveBtn)   saveBtn.addEventListener("click", saveItem);
+  if (cancelBtn) cancelBtn.addEventListener("click", cancelItemEdit);
+
+  /* -------------------------------------------------- */
   async function fetchItems() {
     try {
       const res = await fetch("/lookups/items");
@@ -18,86 +18,127 @@ export function initItems() {
       if (!tbody) return;
 
       tbody.innerHTML = "";
-      data.items.forEach(item => {
-        const row = createRow(item);
-        tbody.appendChild(row);
-      });
+      data.items.forEach(i => tbody.prepend(createRow(i)));
     } catch (err) {
       console.error("Failed to fetch items:", err);
+      alert("❌ Failed to fetch items from server.");
     }
   }
 
-  async function addItem() {
-    const item_code = document.getElementById("item-code")?.value.trim();
-    const item_description = document.getElementById("item-description")?.value.trim();
+  /* -------------------------------------------------- */
+  async function saveItem() {
+    const idField   = document.getElementById("item-id");
+    const codeField = document.getElementById("item-code");
+    const descField = document.getElementById("item-description");
 
-    if (!item_code || !item_description) {
-      alert("❌ Please enter both item code and description.");
+    if (!idField || !codeField || !descField) return;
+
+    const id    = idField.value.trim();
+    const code  = codeField.value.trim();
+    const desc  = descField.value.trim();
+
+    /* ---- validation ---- */
+    if (!code || !desc) {
+      alert("❌ Item code and description are required.");
+      return;
+    }
+
+    /* ---- duplicate check (code + description) ---- */
+    const isDuplicate = Array.from(document.querySelectorAll("#items-table tr")).some(tr => {
+      const [c, d] = tr.querySelectorAll("td");
+      return (
+        c.textContent.trim().toLowerCase() === code.toLowerCase() &&
+        d.textContent.trim().toLowerCase() === desc.toLowerCase() &&
+        (!id || tr.dataset.id !== id)
+      );
+    });
+    if (isDuplicate) {
+      alert("❌ This item (code & description) already exists.");
       return;
     }
 
     try {
-      const res = await fetch("/lookups/items", {
-        method: "POST",
+      const method = id ? "PUT" : "POST";
+      const url    = id
+        ? `/lookups/items/${id}`
+        : "/lookups/items";
+
+      const res = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ item_code, item_description })
+        body: JSON.stringify({ item_code: code, item_description: desc })
       });
 
       if (res.ok) {
-        const newItem = await res.json(); // Should return: { id, item_code, item_description }
-        const row = createRow(newItem);
-
-        const tbody = document.getElementById("items-table");
-        tbody.insertBefore(row, tbody.firstChild); // Add new item at top
-
-        alert("✅ Item added successfully.");
-
-        document.getElementById("item-code").value = "";
-        document.getElementById("item-description").value = "";
+        await fetchItems();
+        cancelItemEdit();
+        alert(id ? "✅ Item updated successfully." : "✅ Item added successfully.");
       } else {
-        const errMsg = await res.text();
-        alert(`❌ Failed to save item: ${errMsg}`);
+        const msg = await res.text();
+        alert(`❌ Error: ${msg}`);
       }
     } catch (err) {
-      console.error("Failed to add item:", err);
-      alert("❌ Network or server error");
+      console.error("Failed to save item:", err);
+      alert("❌ Network or server error.");
     }
   }
 
+  /* -------------------------------------------------- */
+  function createRow(i) {
+    const tr = document.createElement("tr");
+    tr.dataset.id = i.id;
+
+    tr.innerHTML = `
+      <td>${i.item_code || ""}</td>
+      <td>${i.item_description || ""}</td>
+      <td>
+        <button class="edit-btn">Edit</button>
+        <button class="delete-btn" style="margin-left:8px;">Delete</button>
+      </td>
+    `;
+
+    tr.querySelector(".edit-btn").onclick   = () => editItem(i.id, i.item_code, i.item_description);
+    tr.querySelector(".delete-btn").onclick = () => deleteItem(i.id);
+    return tr;
+  }
+
+  /* -------------------------------------------------- */
+  function editItem(id, code, desc) {
+    const idField   = document.getElementById("item-id");
+    const codeField = document.getElementById("item-code");
+    const descField = document.getElementById("item-description");
+
+    idField.value           = id;
+    codeField.value         = code;
+    descField.value         = desc;
+    cancelBtn.style.display = "inline";
+    saveBtn.textContent     = "Update Item";
+  }
+
+  /* -------------------------------------------------- */
+  function cancelItemEdit() {
+    document.getElementById("item-id").value           = "";
+    document.getElementById("item-code").value         = "";
+    document.getElementById("item-description").value  = "";
+    cancelBtn.style.display = "none";
+    saveBtn.textContent     = "Add Item";
+  }
+
+  /* -------------------------------------------------- */
   async function deleteItem(id) {
     try {
+      if (!confirm("Are you sure you want to delete this item?")) return;
+
       const res = await fetch(`/lookups/items/${id}`, { method: "DELETE" });
       if (res.ok) {
-        alert("🗑️ Item deleted");
-        fetchItems();
+        await fetchItems();
+        alert("🗑️ Item deleted.");
       } else {
-        const errMsg = await res.text();
-        alert(`❌ Failed to delete: ${errMsg}`);
+        alert(`❌ Failed to delete item: ${await res.text()}`);
       }
     } catch (err) {
-      console.error("Failed to delete item:", err);
-      alert("❌ Network or server error");
+      console.error("Delete error:", err);
+      alert("❌ Network or server error while deleting item.");
     }
-  }
-
-  function createRow(item) {
-    const row = document.createElement("tr");
-
-    const codeCell = document.createElement("td");
-    codeCell.textContent = item.item_code;
-    row.appendChild(codeCell);
-
-    const descCell = document.createElement("td");
-    descCell.textContent = item.item_description;
-    row.appendChild(descCell);
-
-    const actionsCell = document.createElement("td");
-    const deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
-    deleteButton.onclick = () => deleteItem(item.id);
-    actionsCell.appendChild(deleteButton);
-
-    row.appendChild(actionsCell);
-    return row;
   }
 }
