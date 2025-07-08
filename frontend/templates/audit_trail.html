@@ -1,51 +1,49 @@
-<!-- audit_trail.html (revamped to mirror pending_orders layout) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Audit Trail</title>
+  <title>Audit Trail - Universal Recycling</title>
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="/static/css/style.css" />
-  <!-- keep logic in a separate module -->
   <script type="module" src="/static/js/audit_trail.js"></script>
-</head>
+  </head>
 <body>
+
   {% include "_tab_nav.html" %}
 
   <h2>Audit Trail</h2>
 
-  <!-- Shared filter bar (copied from pending screen) -->
   <div class="filters">
-    <label for="filter-requester">Requester:</label>
-    <select id="filter-requester"><option>All</option></select>
-
-    <label for="filter-supplier">Supplier:</label>
-    <select id="filter-supplier"><option>All</option></select>
-
-    <label for="filter-status">Status:</label>
-    <select id="filter-status">
-      <option>All</option>
-      <option>Pending</option>
-      <option>Awaiting Authorisation</option>
-      <option>Authorised</option>
-      <option>Draft</option>
-      <option>Received</option>
-      <option>Partially Received</option>
-      <option>Partially Delivered</option>
-      <option>COD</option>
+    <label for="start-date-filter-test">Start Date:</label>
+    <input type="date" id="start-date-filter-test">
+    <label for="end-date-filter-test">End Date:</label>
+    <input type="date" id="end-date-filter-test">
+    <label for="requester-filter-test">Requester:</label>
+    <select id="requester-filter-test">
+      <option value="All">All</option>
     </select>
-
-    <label for="start-date">Start Date:</label>
-    <input type="date" id="start-date" />
-
-    <label for="end-date">End Date:</label>
-    <input type="date" id="end-date" />
-
-    <button id="run-btn">Run</button>
-    <button id="clear-btn">Clear</button>
+    <label for="supplier-filter-test">Supplier:</label>
+    <select id="supplier-filter-test">
+      <option value="All">All</option>
+    </select>
+    <label for="status-filter-test">Status:</label>
+    <select id="status-filter-test">
+      <option value="All">All</option>
+      <option value="Pending">Pending</option>
+      <option value="COD">COD</option>
+      <option value="Authorised">Authorised</option>
+      <option value="Awaiting Authorisation">Awaiting Authorisation</option>
+      <option value="Received">Received</option>
+      <option value="Deleted">Deleted</option>
+      <option value="Partially Received">Partially Received</option>
+      <option value="Draft">Draft</option>
+    </select>
+    <button id="run-filter-btn-test">Run</button>
+    <button id="clear-filter-btn-test">Clear</button>
   </div>
 
-  <table id="audit-table">
+  <table id="audit-table-test">
     <thead>
       <tr>
         <th>Request Date</th>
@@ -58,7 +56,10 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody id="audit-body"></tbody>
+    <tbody id="audit-body-test">
+      <tr><td colspan='8'>Loading orders...</td></tr>
+    </tbody>
   </table>
+
 </body>
 </html>

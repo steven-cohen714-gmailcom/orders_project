@@ -1,7 +1,7 @@
 import logging
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional # Ensure Optional is imported
 import sqlite3
 from datetime import datetime
 
@@ -27,6 +27,7 @@ class OrderCreate(BaseModel):
     supplier_id: int
     requester_id: int
     payment_terms: Optional[str] = None  # ✅ Add this
+    created_date: Optional[str] = None # <--- THIS IS THE ONLY NEW LINE IN THE MODEL
     items: List[OrderItemCreate]
     auth_band_required: Optional[int] = None
 
@@ -72,7 +73,9 @@ async def create_new_order(order: OrderCreate):
         }
 
         items = [item.dict() for item in order.items]
-        result = create_order(order_data, items)
+        
+        # <--- THIS IS THE ONLY MODIFIED LINE IN THE FUNCTION
+        result = create_order(order_data, items, created_date=order.created_date)
         log_success("order", "created", f"Order {order.order_number} with status {order.status} and total R{total}")
         return {"message": "Order created successfully", "order_id": result["id"]}
 

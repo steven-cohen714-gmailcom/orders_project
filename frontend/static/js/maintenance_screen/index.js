@@ -1,4 +1,5 @@
 // File: /frontend/static/js/maintenance_screen/index.js
+console.log("💥 index.js loaded");
 
 import { initUsers } from "./users.js";
 import { initRequesters } from "./requesters.js";
@@ -46,6 +47,7 @@ function initTabs() {
   const defaultTab = document.querySelector(".tab.active");
   if (defaultTab) {
     const defaultId = defaultTab.dataset.tab;
+    console.log("🔥 Default active tab:", defaultId);  // ← INSERT THIS LINE
     if (initFunctions[defaultId]) {
       initFunctions[defaultId]();
       defaultTab.dataset.initialized = "true";

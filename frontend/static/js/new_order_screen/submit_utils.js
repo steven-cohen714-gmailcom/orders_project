@@ -1,4 +1,4 @@
-// frontend/static/js/new_order_screen/submit_utils.js
+// File: frontend/static/js/new_order_screen/submit_utils.js
 
 export async function submitOrder({
   currentOrderNumber,
@@ -22,6 +22,7 @@ export async function submitOrder({
   const noteToSupplier = document.getElementById("note_to_supplier").value;
   const payTermsDom    = document.getElementById("payment_terms").value;
   const payTerms       = payTermsDom || paymentTerms || "On account";
+  const requestDate    = document.getElementById("request_date").value;
 
   if (!requesterId || !supplierId) {
     await logToServer("ERROR", "Missing requester or supplier", { requesterId, supplierId });
@@ -88,6 +89,7 @@ export async function submitOrder({
     requester_id: parseInt(requesterId),
     supplier_id: parseInt(supplierId),
     status,
+    created_date: requestDate,
     ...(authBandRequired && !isDraft ? { auth_band_required: authBandRequired } : {}),
     items,
   };
@@ -114,21 +116,23 @@ export async function submitOrder({
     // --- Success handling --------------------------------------------------
     setCurrentOrderId(data.order_id);
 
-    if (!isDraft) {
-      const newOrderNumber = await incrementOrderNumber(currentOrderNumber);
-      setCurrentOrderNumber(newOrderNumber);
-      document.getElementById("order-number").textContent = newOrderNumber;
+    // MODIFIED: Increment order number for ALL successful submissions (Draft or Normal)
+    const newOrderNumber = await incrementOrderNumber(currentOrderNumber);
+    setCurrentOrderNumber(newOrderNumber);
+    document.getElementById("order-number").textContent = newOrderNumber;
 
-      await logToServer("INFO", "Order submitted & number incremented", {
-        orderNumber: newOrderNumber,
-        orderId: data.order_id,
-      });
-    } else {
-      await logToServer("INFO", "Draft order submitted (no number increment)", {
-        orderNumber: currentOrderNumber,
-        orderId: data.order_id,
-      });
-    }
+    await logToServer("INFO", "Order submitted & number incremented", {
+      orderNumber: newOrderNumber,
+      orderId: data.order_id,
+      orderType: orderType // Log the type of order submitted
+    });
+    // REMOVED: The old 'else' block for draft orders, as increment is now universal
+    // else {
+    //   await logToServer("INFO", "Draft order submitted (no number increment)", {
+    //     orderNumber: currentOrderNumber,
+    //     orderId: data.order_id,
+    //   });
+    // }
 
     alert("✅ Order submitted successfully!");
 

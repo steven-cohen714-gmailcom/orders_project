@@ -1,0 +1,126 @@
+# File: backend/endpoints/audit_trail_filters.py
+# For audit trail test only
+
+from fastapi import APIRouter, HTTPException, Query, Depends
+from typing import Optional, List, Dict
+from datetime import datetime
+import sqlite3
+from pathlib import Path
+import json
+
+from backend.database import get_db_connection
+from backend.utils.permissions_utils import require_login
+
+router = APIRouter()
+
+def log_event(filename: str, data: dict):
+    """Logs an event to a file."""
+    log_path = Path(f"logs/{filename}")
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with log_path.open("a", encoding="utf-8") as f:
+        timestamp = datetime.now().isoformat()
+        f.write(f"[{timestamp}] {json.dumps(data, ensure_ascii=False)}\n")
+
+def validate_date(date_str: Optional[str]) -> Optional[str]:
+    """Helper function to validate date strings."""
+    if not date_str:
+        return None
+    try:
+        # Simplistic parsing for YYYY-MM-DD, extend if other formats are expected
+        dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
+        return dt_obj.strftime("%Y-%m-%d")
+    except ValueError:
+        raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use YYYY-MM-DD.")
+
+
+@router.get("/audit_trail_test_orders")
+async def get_audit_trail_test_orders(
+    status: Optional[str] = Query(None, description="Filter by order status"),
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    requester: Optional[str] = Query(None),
+    supplier: Optional[str] = Query(None),
+    user: Dict = Depends(require_login) # Ensure user is logged in
+):
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    try:
+        filters = []
+        params = []
+
+        # Apply status filter if provided and not "All"
+        if status and status.lower() != "all":
+            filters.append("UPPER(o.status) = UPPER(?)")
+            params.append(status)
+
+        # Apply date filters
+        if start_date:
+            valid_start_date = validate_date(start_date)
+            filters.append("DATE(o.created_date) >= DATE(?)")
+            params.append(valid_start_date)
+
+        if end_date:
+            valid_end_date = validate_date(end_date)
+            filters.append("DATE(o.created_date) <= DATE(?)")
+            params.append(valid_end_date)
+
+        # Apply requester filter
+        if requester and requester.lower() != "all":
+            filters.append("UPPER(r.name) LIKE UPPER(?)")
+            params.append(f"%{requester}%")
+
+        # Apply supplier filter
+        if supplier and supplier.lower() != "all":
+            filters.append("UPPER(s.name) LIKE UPPER(?)")
+            params.append(f"%{supplier}%")
+
+        where_clause = " AND ".join(filters) if filters else "1=1"
+
+        # Simplified SQL query: No complex audit_user join for now.
+        # This focuses solely on getting the basic filters working.
+        cursor = conn.execute(f"""
+            SELECT
+                o.id, o.created_date, o.received_date, o.order_number,
+                r.name AS requester, s.name AS supplier,
+                o.order_note, o.note_to_supplier, o.total, o.status,
+                'N/A' AS audit_user_for_test_only -- Placeholder for audit_user
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE {where_clause}
+            ORDER BY o.created_date DESC, o.order_number DESC
+        """, params)
+
+        orders = [dict(row) for row in cursor.fetchall()]
+
+        # Format dates for display
+        for order in orders:
+            if order["created_date"]:
+                try:
+                    order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
+                except ValueError:
+                    order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d").strftime("%Y-%m-%d")
+            else:
+                order["created_date"] = "N/A"
+
+            if order["received_date"]:
+                try:
+                    order["received_date"] = datetime.strptime(order["received_date"], "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
+                except ValueError:
+                    order["received_date"] = datetime.strptime(order["received_date"], "%Y-%m-%d").strftime("%Y-%m-%d")
+            else:
+                order["received_date"] = "N/A"
+        
+        # Log the activity
+        log_event("audit_trail_test_log.txt", {
+            "action": "fetch_audit_trail_test_orders",
+            "count": len(orders),
+            "filters": {"status": status, "start_date": start_date, "end_date": end_date, "requester": requester, "supplier": supplier}
+        })
+        return {"orders": orders}
+
+    except Exception as e:
+        log_event("audit_trail_test_log.txt", {"error": str(e), "type": "audit_trail_test_orders"})
+        raise HTTPException(status_code=500, detail=f"Failed to load audit trail test orders: {e}")
+    finally:
+        conn.close()

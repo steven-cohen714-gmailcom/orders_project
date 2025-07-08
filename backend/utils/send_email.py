@@ -1,3 +1,5 @@
+# File: backend/utils/send_email.py
+
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -6,15 +8,23 @@ from email import encoders
 import os
 from dotenv import load_dotenv
 import logging
+from typing import Optional
 
 load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 
-async def send_email(recipient: str, subject: str, body: str, attachment_path: str = None):
+async def send_email(
+    recipient: str,
+    subject: str,
+    body: str,
+    attachment_bytes: Optional[bytes] = None,
+    attachment_filename: Optional[str] = None,
+    reply_to_email: Optional[str] = None
+):
     try:
         msg = MIMEMultipart()
-        sender = os.getenv("EMAIL_FROM")
+        sender = os.getenv("EMAIL_FROM") # This should be your system's "from" email
         if not sender:
             raise ValueError("EMAIL_FROM is not defined in .env")
 
@@ -22,29 +32,33 @@ async def send_email(recipient: str, subject: str, body: str, attachment_path: s
         msg['To'] = recipient
         msg['Subject'] = subject
 
+        if reply_to_email:
+            msg['Reply-To'] = reply_to_email
+            logging.info(f"Email Reply-To set to: {reply_to_email}")
+
         msg.attach(MIMEText(body, 'plain'))
 
-        if attachment_path:
-            if not os.path.exists(attachment_path):
-                raise FileNotFoundError(f"Attachment not found: {attachment_path}")
-            with open(attachment_path, "rb") as attachment:
-                part = MIMEBase("application", "octet-stream")
-                part.set_payload(attachment.read())
+        if attachment_bytes and attachment_filename:
+            part = MIMEBase("application", "octet-stream")
+            part.set_payload(attachment_bytes)
             encoders.encode_base64(part)
-            filename = os.path.basename(attachment_path)
-            part.add_header("Content-Disposition", f"attachment; filename= {filename}")
+            part.add_header("Content-Disposition", f"attachment; filename= {attachment_filename}")
             msg.attach(part)
-
-        host = os.getenv("MAILTRAP_HOST")
-        port = int(os.getenv("MAILTRAP_PORT", 0))
-        username = os.getenv("MAILTRAP_USERNAME")
-        password = os.getenv("MAILTRAP_PASSWORD")
+        elif attachment_bytes and not attachment_filename:
+            logging.warning("Attachment bytes provided but no filename. Attachment will not be sent.")
+        
+        # MODIFIED: Use generic SMTP variables
+        host = os.getenv("SMTP_HOST")
+        port = int(os.getenv("SMTP_PORT", 0))
+        username = os.getenv("SMTP_USERNAME")
+        password = os.getenv("SMTP_PASSWORD")
 
         if not all([host, port, username, password]):
-            raise ValueError("One or more Mailtrap environment variables are missing")
+            raise ValueError("One or more SMTP environment variables are missing (SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD)")
 
         with smtplib.SMTP(host, port) as server:
-            server.starttls()
+            server.starttls() # Use starttls for port 587
+            # If using port 465 (SSL), you might use smtplib.SMTP_SSL instead of SMTP and starttls()
             server.login(username, password)
             server.send_message(msg)
 

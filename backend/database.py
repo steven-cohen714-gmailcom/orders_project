@@ -1,6 +1,7 @@
 import sqlite3
 from pathlib import Path
 import logging
+from typing import Optional # ADDED: Import Optional
 
 # Logging setup
 logging.basicConfig(
@@ -216,7 +217,8 @@ def determine_status_and_band(total: float) -> tuple[str, int]:
                 required_band = 4
         return status, required_band
 
-def create_order(order_data: dict, items: list) -> dict:
+# MODIFIED: Added created_date: Optional[str] = None to function signature
+def create_order(order_data: dict, items: list, created_date: Optional[str] = None) -> dict:
     if order_data.get("status") == "Draft":
         status = "Draft"
         required_band = None
@@ -225,22 +227,44 @@ def create_order(order_data: dict, items: list) -> dict:
 
     with get_db_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO orders (
-                order_number, status, total, order_note, note_to_supplier,
-                supplier_id, requester_id, required_auth_band, payment_terms
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (
-            order_data["order_number"],
-            status,
-            order_data["total"],
-            order_data["order_note"],
-            order_data["note_to_supplier"],
-            order_data["supplier_id"],
-            order_data["requester_id"],
-            required_band,
-            order_data.get("payment_terms", "On account")
-        ))
+        
+        # MODIFIED: Use provided created_date if available, otherwise use CURRENT_TIMESTAMP
+        if created_date:
+            cursor.execute("""
+                INSERT INTO orders (
+                    order_number, status, created_date, total, order_note, note_to_supplier,
+                    supplier_id, requester_id, required_auth_band, payment_terms
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                order_data["order_number"],
+                status,
+                created_date, # Use the provided date
+                order_data["total"],
+                order_data["order_note"],
+                order_data["note_to_supplier"],
+                order_data["supplier_id"],
+                order_data["requester_id"],
+                required_band,
+                order_data.get("payment_terms", "On account")
+            ))
+        else:
+            cursor.execute("""
+                INSERT INTO orders (
+                    order_number, status, total, order_note, note_to_supplier,
+                    supplier_id, requester_id, required_auth_band, payment_terms
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                order_data["order_number"],
+                status,
+                order_data["total"],
+                order_data["order_note"],
+                order_data["note_to_supplier"],
+                order_data["supplier_id"],
+                order_data["requester_id"],
+                required_band,
+                order_data.get("payment_terms", "On account")
+            ))
+
         order_id = cursor.lastrowid
         for item in items:
             cursor.execute("""

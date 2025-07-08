@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from backend.database import get_db_connection
 import bcrypt
 import json
+import sqlite3
 
 router = APIRouter()
 templates = Jinja2Templates(directory="frontend/templates")
@@ -27,36 +28,51 @@ async def login(request: Request):
 
     try:
         conn = get_db_connection()
+        conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
+        
         cursor.execute(
             "SELECT id, username, password_hash, rights, auth_threshold_band FROM users WHERE username = ?",
             (username,)
         )
         user = cursor.fetchone()
-        conn.close()
 
         if not user:
+            conn.close()
             return JSONResponse(status_code=401, content={"error": "Invalid username or password"})
 
         stored_hash = user["password_hash"]
         if not bcrypt.checkpw(password.encode("utf-8"), stored_hash.encode("utf-8")):
+            conn.close()
             return JSONResponse(status_code=401, content={"error": "Invalid username or password"})
 
-        user_roles = user["rights"] or "view"
+        user_id = user["id"]
+        cursor.execute("SELECT screen_code FROM screen_permissions WHERE user_id = ?", (user_id,))
+        screen_permissions = [row["screen_code"] for row in cursor.fetchall()]
+        
+        conn.close()
 
         request.session["user"] = {
             "id": user["id"],
             "username": user["username"],
-            "rights": user_roles,
+            "rights": user["rights"] or "view",
             "auth_threshold_band": user["auth_threshold_band"]
         }
+        request.session["screen_permissions"] = screen_permissions 
 
-        # Assign session roles from DB
-        request.session["roles"] = user_roles
+        request.session["roles"] = user["rights"] or "view"
 
-        return JSONResponse(status_code=200, content={"success": True})
+        # --- MODIFIED: Return screen_permissions in the JSON response ---
+        return JSONResponse(
+            status_code=200, 
+            content={
+                "success": True,
+                "authorized_screens": screen_permissions # ADDED THIS LINE
+            }
+        )
 
     except Exception as e:
+        print(f"Login error: {e}")
         return JSONResponse(status_code=500, content={"error": f"Login failed due to server error: {str(e)}"})
 
 @router.get("/logout")
@@ -68,5 +84,6 @@ async def logout(request: Request):
 async def session_debug(request: Request):
     return JSONResponse(content={
         "user": request.session.get("user"),
-        "roles": request.session.get("roles")
+        "roles": request.session.get("roles"),
+        "screen_permissions": request.session.get("screen_permissions")
     })

@@ -1,9 +1,9 @@
-// frontend/static/js/new_order_main.js
+// File: frontend/static/js/new_order_main.js
 
 import { previewOrder } from "./new_order_screen/pdf_utils.js";
 import { submitOrder } from "./new_order_screen/submit_utils.js";
 import { logToServer } from "./components/utils.js";
-import { createFuzzyDropdown } from "./components/fuzzy_dropdown.js";
+import { createFuzzyDropdown } from "./components/fuzzy_dropdown.js"; // UNCOMMENTED
 
 let itemsList = [];
 let projectsList = [];
@@ -30,10 +30,23 @@ async function loadDropdowns() {
   try {
       const requestersData = await fetchData("/lookups/requesters");
       populateDropdown("requester_id", requestersData?.requesters, "name");
+      
+      // UNCOMMENTED: Re-enable fuzzy dropdown calls
       await createFuzzyDropdown("supplier_id", "/lookups/suppliers");
 
-      await createFuzzyDropdown("item-template", "/lookups/items");
-      await createFuzzyDropdown("project-template", "/lookups/projects"); 
+      const itemsData = await fetchData("/lookups/items");
+      itemsList = itemsData?.items || [];
+      await createFuzzyDropdown("item-template", "/lookups/items"); // Use item-template for fuzzy search
+
+      const projectsData = await fetchData("/lookups/projects");
+      projectsList = projectsData?.projects || [];
+      await createFuzzyDropdown("project-template", "/lookups/projects"); // Use project-template for fuzzy search
+
+      // REMOVED: Old temporary populateDropdown fallbacks
+      // const suppliersData = await fetchData("/lookups/suppliers");
+      // populateDropdown("supplier_id", suppliersData?.suppliers, "name");
+      // populateDropdown("item-template", itemsList, "item_description", "item_code");
+      // populateDropdown("project-template", projectsList, "project_name", "project_code");
 
   } catch (error) {
       console.error("Error loading dropdowns:", error);
@@ -88,31 +101,27 @@ async function incrementOrderNumber(currentOrderNumber) {
 
 // Add a row to the table
 function addRow() {
-  // Check if itemsList and projectsList are populated
-  
   const tbody = document.getElementById("items-body");
   const row = document.createElement("tr");
   row.id = `row_${rowCount++}`;
 
-  // Item Code dropdown (show code + description)
+  // Item Code dropdown
   const itemCell = document.createElement("td");
   const itemSelect = document.createElement("select");
   itemSelect.className = "item-code wide-select";
-  itemCell.classList.add("position-relative");
   itemSelect.id = `item_code_${rowCount}`;
   itemSelect.innerHTML = '<option value="">Select Item</option>';
-    
+  // MODIFIED: No direct population here, TomSelect will handle it
   itemCell.appendChild(itemSelect);
   row.appendChild(itemCell);
 
-  // Project dropdown (show code + name)
+  // Project dropdown
   const projectCell = document.createElement("td");
   const projectSelect = document.createElement("select");
   projectSelect.className = "project wide-select";
-  projectCell.classList.add("position-relative");
   projectSelect.id = `project_${rowCount}`;
   projectSelect.innerHTML = '<option value="">Select Project</option>';
-  
+  // MODIFIED: No direct population here, TomSelect will handle it
   projectCell.appendChild(projectSelect);
   row.appendChild(projectCell);
 
@@ -159,8 +168,14 @@ function addRow() {
 
   tbody.appendChild(row);
 
+  // UNCOMMENTED: Re-enable fuzzy dropdown calls for dynamically added rows
   createFuzzyDropdown(itemSelect.id, "/lookups/items");
   createFuzzyDropdown(projectSelect.id, "/lookups/projects");
+
+  // REMOVED: Old temporary populateDropdown fallbacks
+  // populateDropdown(`/lookups/items`, itemSelect.id, "item_description", "item_code");
+  // populateDropdown(`/lookups/projects`, projectSelect.id, "project_name", "project_code");
+
   updateTotal(itemSelect);
 }
 
@@ -263,6 +278,20 @@ function updateTotal(itemSelect) {
     inner.style.maxWidth = "500px";
     inner.style.maxHeight = "80vh";
     inner.style.overflowY = "auto";
+    container.appendChild(inner);
+  
+    const close = document.createElement("button");
+    close.textContent = "✖";
+    close.style.position = "absolute";
+    close.style.top = "10px";
+    close.style.right = "10px";
+    close.style.background = "none";
+    close.style.border = "none";
+    close.style.fontSize = "1.2rem";
+    close.style.cursor = "pointer";
+    close.onclick = () => document.body.removeChild(container);
+  
+    inner.appendChild(close);
     container.appendChild(inner);
   
     return { container, inner };

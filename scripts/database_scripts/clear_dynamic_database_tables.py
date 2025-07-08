@@ -14,6 +14,7 @@ Preserved tables:
 - projects
 - suppliers
 - requisitioners
+- screen_permissions (NEWLY ADDED TO PRESERVED LIST)
 
 Cleared tables:
 - orders, order_items, audit_trail, attachments
@@ -41,7 +42,8 @@ STATIC_TABLES = {
     "items",
     "projects",
     "suppliers",
-    "requisitioners"
+    "requisitioners",
+    "screen_permissions" # ADDED THIS LINE
 }
 
 def get_all_tables(conn):

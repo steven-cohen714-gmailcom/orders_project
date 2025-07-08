@@ -183,7 +183,8 @@ async function loadOrders() {
                             if (blob.size === 0) {
                                 throw new Error('Received empty PDF file');
                             }
-                            showPDFModal(blob);
+                            // MODIFIED: Pass order.id and sanitizedOrderNumber to showPDFModal
+                            showPDFModal(blob, order.id, sanitizedOrderNumber); 
                         } else {
                             const data = await response.json();
                             throw new Error(`Unexpected response: ${JSON.stringify(data)}`);

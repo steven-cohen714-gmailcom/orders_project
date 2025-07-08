@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audit Trail Test Screen</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <script type="module" src="/static/js/audit_trail_test.js"></script>
+  <style>
+    /* New CSS for column alignment and filter section (copied from original audit_trail.html style) */
+    .filter-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        align-items: flex-end;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+        min-width: 150px;
+    }
+
+    .filter-group label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .filter-group select,
+    .filter-group input[type="date"] {
+        padding: 8px 10px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 1rem;
+        min-height: 38px;
+    }
+
+    .filter-group button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-top: auto;
+    }
+
+    .button-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .button-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .button-secondary {
+        background-color: #6c757d;
+        color: white;
+        margin-left: 10px;
+    }
+
+    .button-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    /* Table header alignment (copied from original audit_trail.html style) */
+    #audit-table-test thead th:nth-child(1) { width: 10%; text-align: left; } /* Request Date */
+    #audit-table-test thead th:nth-child(2) { width: 10%; text-align: left; } /* Order Number */
+    #audit-table-test thead th:nth-child(3) { width: 15%; text-align: left; } /* Requester */
+    #audit-table-test thead th:nth-child(4) { width: 20%; text-align: left; } /* Supplier */
+    #audit-table-test thead th:nth-child(5) { width: 8%; text-align: right; } /* Total */
+    #audit-table-test thead th:nth-child(6) { width: 12%; text-align: left; } /* Status */
+    #audit-table-test thead th:nth-child(7) { width: 10%; text-align: left; } /* User */
+    #audit-table-test thead th:nth-child(8) { width: 15%; text-align: center; } /* Actions */
+
+    /* Table body alignment (to match headers) (copied from original audit_trail.html style) */
+    #audit-table-test tbody td:nth-child(1) { text-align: left; }
+    #audit-table-test tbody td:nth-child(2) { text-align: left; }
+    #audit-table-test tbody td:nth-child(3) { text-align: left; }
+    #audit-table-test tbody td:nth-child(4) { text-align: left; }
+    #audit-table-test tbody td:nth-child(5) { text-align: right; }
+    #audit-table-test tbody td:nth-child(6) { text-align: left; }
+    #audit-table-test tbody td:nth-child(7) { text-align: left; }
+    #audit-table-test tbody td:nth-child(8) { text-align: center; }
+  </style>
+</head>
+<body>
+  <div style="padding: 1rem; background-color: #eee; border-bottom: 1px solid #ccc;">
+    <h2>Audit Trail Test Screen</h2>
+    <p>This is a test screen to verify audit trail filtering. It does not use the main navigation menu.</p>
+    <a href="/home" style="margin-right: 15px;">Go to Home</a>
+    <a href="/logout">Logout</a>
+  </div>
+
+  <div style="padding: 20px;">
+    <h3>Test Filters</h3>
+
+    <div class="filter-section">
+      <div class="filter-group">
+          <label for="status-filter-test">Status:</label>
+          <select id="status-filter-test">
+              <option value="All">All</option>
+              <option value="Pending">Pending</option>
+              <option value="COD">COD</option>
+              <option value="Authorised">Authorised</option>
+              <option value="Awaiting Authorisation">Awaiting Authorisation</option>
+              <option value="Received">Received</option>
+              <option value="Deleted">Deleted</option>
+              <option value="Partially Received">Partially Received</option>
+              <option value="Draft">Draft</option>
+          </select>
+      </div>
+      <div class="filter-group">
+          <label for="requester-filter-test">Requester:</label>
+          <select id="requester-filter-test">
+              <option value="All">All</option>
+          </select>
+      </div>
+      <div class="filter-group">
+          <label for="supplier-filter-test">Supplier:</label>
+          <select id="supplier-filter-test">
+              <option value="All">All</option>
+          </select>
+      </div>
+      <div class="filter-group">
+          <label for="start-date-filter-test">Start Date:</label>
+          <input type="date" id="start-date-filter-test">
+      </div>
+      <div class="filter-group">
+          <label for="end-date-filter-test">End Date:</label>
+          <input type="date" id="end-date-filter-test">
+      </div>
+      <div class="filter-group button-group">
+          <button id="run-filter-btn-test" class="button-primary">Run</button>
+          <button id="clear-filter-btn-test" class="button-secondary">Clear</button>
+      </div>
+    </div>
+
+    <table id="audit-table-test">
+      <thead>
+        <tr>
+          <th>Request Date</th>
+          <th>Order Number</th>
+          <th>Requester</th>
+          <th>Supplier</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th>User</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="audit-body-test">
+        <tr><td colspan='8'>Loading orders...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

@@ -19,10 +19,17 @@ export async function previewOrder({ itemsList, updateGrandTotal, logToServer })
   }
 
   const items = Array.from(document.querySelectorAll('#items-body tr')).map(row => {
-    const itemCode = row.querySelector('.item-code')?.tomselect?.getValue() || '';
-    const project = row.querySelector('.project')?.tomselect?.getValue() || '';
+    // MODIFIED: Read value directly from the select element, as TomSelect is temporarily disabled
+    const itemCodeElement = row.querySelector('.item-code');
+    const itemCode = itemCodeElement ? itemCodeElement.value : '';
+
+    const projectElement = row.querySelector('.project');
+    const project = projectElement ? projectElement.value : '';
+    
     const qtyOrdered = parseFloat(row.querySelector('.qty-ordered')?.value) || 0;
     const price = parseFloat(row.querySelector('.price')?.value) || 0;
+    
+    // MODIFIED: Find itemDescription using the itemCode (which is now the value of the select)
     const itemDescription = itemsList.find(i => i.item_code === itemCode)?.item_description || '';
 
     if (!itemCode || !project || qtyOrdered <= 0 || price <= 0) {
@@ -46,8 +53,9 @@ export async function previewOrder({ itemsList, updateGrandTotal, logToServer })
   const payload = {
     order_number: orderNumber,
     created_date: createdDate,
-    supplier_name: document.getElementById("supplier_id").selectedOptions[0]?.text || "",
-    requester_name: document.getElementById("requester_id").selectedOptions[0]?.text || "",
+    // MODIFIED: Get supplier and requester names from selected option text
+    supplier_name: document.getElementById("supplier_id").selectedOptions[0]?.textContent || "",
+    requester_name: document.getElementById("requester_id").selectedOptions[0]?.textContent || "",
     total,
     order_note: "",
     note_to_supplier: noteToSupplier,
@@ -71,6 +79,8 @@ export async function previewOrder({ itemsList, updateGrandTotal, logToServer })
     const blob = await pdfRes.blob();
     if (!blob.size) throw new Error("Empty PDF file");
 
+    // MODIFIED: Store the order number for the PDF download filename
+    window.currentOrderNumberForPDF = orderNumber; 
     showPDFModal(blob);
     await logToServer('INFO', 'Preview PDF displayed (no DB write)');
   } catch (error) {

@@ -1,0 +1,49 @@
+2025-07-07 03:55:46,146 | INFO | INFO | previewOrder started | {}
+2025-07-07 03:56:04,803 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-07 03:56:04,866 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1019", "orderId": 235}
+2025-07-07 04:02:54,396 | INFO | INFO | previewOrder started | {}
+2025-07-07 04:02:54,572 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-07 04:03:11,132 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-07 04:03:11,192 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1020", "orderId": 236}
+2025-07-07 04:03:51,828 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-07 04:03:51,887 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1021", "orderId": 237}
+2025-07-07 04:06:15,283 | INFO | INFO | previewOrder started | {}
+2025-07-07 04:06:15,398 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-07 04:07:05,090 | INFO | INFO | previewOrder started | {}
+2025-07-07 04:07:05,200 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-07 04:07:09,826 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-07 04:07:09,892 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1022", "orderId": 238}
+2025-07-07 08:41:16,307 | INFO | INFO | previewOrder started | {}
+2025-07-07 08:41:16,487 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-07 08:42:19,833 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-07 08:42:19,900 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1001", "orderId": 239}
+2025-07-07 13:23:00,312 | INFO | INFO | previewOrder started | {}
+2025-07-07 13:23:00,441 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-07 13:23:07,648 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
+2025-07-07 13:23:07,673 | INFO | INFO | Draft order submitted (no number increment) | {"orderNumber": "1001", "orderId": 240}
+2025-07-07 13:25:41,535 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-07 13:25:41,582 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1002", "orderId": 241}
+2025-07-07 13:27:11,461 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
+2025-07-07 13:27:11,467 | ERROR | ERROR | Missing requester or supplier | {"requesterId": "", "supplierId": "15"}
+2025-07-07 13:27:23,108 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
+2025-07-07 13:27:23,132 | INFO | INFO | Draft order submitted (no number increment) | {"orderNumber": "1002", "orderId": 242}
+2025-07-07 13:28:45,092 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-07 13:28:45,140 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1003", "orderId": 243}
+2025-07-07 13:29:53,760 | INFO | INFO | previewOrder started | {}
+2025-07-07 13:29:53,876 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-07 13:29:59,336 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-07 13:29:59,381 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1004", "orderId": 244}
+2025-07-07 13:30:59,849 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
+2025-07-07 13:30:59,880 | INFO | INFO | Draft order submitted (no number increment) | {"orderNumber": "1004", "orderId": 245}
+2025-07-07 13:33:57,186 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-07 13:33:57,232 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1005", "orderId": 246}
+2025-07-07 13:36:41,849 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-07 13:36:41,887 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1006", "orderId": 247}
+2025-07-07 14:11:06,883 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
+2025-07-07 14:11:06,914 | INFO | INFO | Draft order submitted (no number increment) | {"orderNumber": "1006", "orderId": 248}
+2025-07-07 14:12:18,864 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
+2025-07-07 14:12:18,926 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1007", "orderId": 249, "orderType": "Draft"}
+2025-07-07 14:13:40,050 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
+2025-07-07 14:13:40,109 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1008", "orderId": 250, "orderType": "Draft"}
+2025-07-07 17:04:55,151 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-07 17:04:55,214 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1009", "orderId": 251, "orderType": "Pending"}

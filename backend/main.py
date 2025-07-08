@@ -1,4 +1,6 @@
-from fastapi import FastAPI, Request, HTTPException
+# File: backend/main.py
+
+from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
@@ -10,6 +12,7 @@ from backend.endpoints import requisitions
 from backend.endpoints import requisition_attachments
 from backend.endpoints.lookups import mark_cod_paid_api as mark_cod_paid_api_module
 from backend.endpoints.mobile import mobile_requisition_auth
+from backend.endpoints.email_service import router as email_service_router 
 
 from pathlib import Path
 import logging
@@ -19,11 +22,8 @@ import os
 # --- Database ---
 from backend.database import init_db, get_db_connection
 
-# --- Login Check Helper ---
-def require_login(request: Request):
-    if not request.session.get("user"):
-        return RedirectResponse("/", status_code=302)
-    return None
+# --- MODIFIED: Import permissions from backend.utils.permissions_utils ---
+from backend.utils.permissions_utils import require_login, require_screen_permission 
 
 # --- Routers ---
 from backend.endpoints import routers
@@ -38,7 +38,6 @@ from backend.endpoints.pending_order_pdf_generator import router as pending_orde
 from backend.endpoints.order_queries import router as order_queries_router
 from backend.endpoints.order_receiving import router as order_receiving_router
 from backend.endpoints.order_attachments import router as attachments_router
-from backend.endpoints.order_email import router as order_email_router
 from backend.endpoints.utils import router as utils_router
 from backend.endpoints.mobile.mobile_awaiting_authorisation import router as mobile_auth_router
 from backend.endpoints.lookups import items as items_router
@@ -46,6 +45,9 @@ from backend.endpoints.lookups import suppliers as suppliers_router
 from backend.endpoints.lookups import projects as projects_router
 from backend.endpoints.order_notes import router as order_notes_router
 from backend.endpoints.lookups import requisitioners as requisitioners_router
+
+# For audit trail test only: Import the new audit trail filters router
+from backend.endpoints.audit_trail_filters import router as audit_trail_filters_router # for audit trail test only
 
 # Allow scripts to import from parent
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -94,30 +96,46 @@ templates = Jinja2Templates(directory="frontend/templates")
 # --- Static Routes Router ---
 static_router = APIRouter()
 
-@static_router.get("/mobile/authorisations", response_class=HTMLResponse)
+# For audit trail test only: New route for the test screen, bypassing permissions
+@static_router.get("/audit_trail_test", response_class=HTMLResponse) # for audit trail test only
+async def audit_trail_test_page(request: Request): # for audit trail test only
+    return templates.TemplateResponse( # for audit trail test only
+        "audit_trail_test.html", # for audit trail test only
+        {"request": request} # for audit trail test only
+    ) # for audit trail test only
+
+@static_router.get("/mobile/authorisations", response_class=HTMLResponse, 
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("my_authorisations"))]) 
 async def mobile_authorisations_page(request: Request):
-    login_redirect = require_login(request)
-    if login_redirect:
-        return login_redirect
-    return templates.TemplateResponse("mobile/mobile_authorisations.html", {"request": request})
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "mobile/mobile_authorisations.html",
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions
+        }
+    )
 
 @static_router.get("/mobile/requisition_login", response_class=HTMLResponse)
 async def mobile_requisition_login_page(request: Request):
     return templates.TemplateResponse("mobile/mobile_requisition_login.html", {"request": request})
 
-@static_router.get("/home", response_class=HTMLResponse)
+@static_router.get("/home", response_class=HTMLResponse, 
+                   dependencies=[Depends(require_login)]) 
 async def home(request: Request):
-    if not request.session.get("user"):
-        return RedirectResponse("/")
     logging.info("Rendering home page")
-    return templates.TemplateResponse("home.html", {"request": request})
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "home.html", 
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions 
+        }
+    )
 
-@static_router.get("/orders/new", response_class=HTMLResponse)
+@static_router.get("/orders/new", response_class=HTMLResponse, 
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("new_order"))])
 async def new_order_page(request: Request):
-    login_redirect = require_login(request)
-    if login_redirect:
-        return login_redirect
-
     logging.info("Starting to render new order page")
     try:
         with get_db_connection() as conn:
@@ -145,75 +163,117 @@ async def new_order_page(request: Request):
                 "telephone": "N/A",
                 "vat_number": "N/A"
             }
-
+        user_screen_permissions = request.session.get("screen_permissions", [])
         return templates.TemplateResponse("new_order.html", {
             "request": request,
             "requesters": requesters,
             "suppliers": suppliers,
             "items": items,
             "projects": projects,
-            "business_details": business_details
+            "business_details": business_details,
+            "user_screen_permissions": user_screen_permissions 
         })
 
     except Exception as e:
         logging.error(f"Error rendering new order page: {str(e)}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error rendering new order page: {str(e)}")
 
-@static_router.get("/orders/pending_orders", response_class=HTMLResponse)
+@static_router.get("/orders/pending_orders", response_class=HTMLResponse,
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("pending_orders"))])
 async def pending_orders_page(request: Request):
-    login_redirect = require_login(request)
-    if login_redirect:
-        return login_redirect
-    return templates.TemplateResponse("pending_orders.html", {"request": request})
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "pending_orders.html",
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions 
+        }
+    )
 
-@static_router.get("/orders/cod_orders", response_class=HTMLResponse)
+@static_router.get("/orders/cod_orders", response_class=HTMLResponse,
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("cod_orders"))])
 async def cod_orders_page(request: Request):
-    login_redirect = require_login(request)
-    if login_redirect:
-        return login_redirect
-    return templates.TemplateResponse("cod_orders.html", {"request": request})
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "cod_orders.html",
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions 
+        }
+    )
 
-@static_router.get("/orders/received_orders", response_class=HTMLResponse)
+@static_router.get("/orders/received_orders", response_class=HTMLResponse,
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("received_orders"))])
 async def received_orders_page(request: Request):
-    login_redirect = require_login(request)
-    if login_redirect:
-        return login_redirect
-    return templates.TemplateResponse("received_orders.html", {"request": request})
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "received_orders.html",
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions 
+        }
+    )
 
-@static_router.get("/orders/audit_trail", response_class=HTMLResponse)
+@static_router.get("/orders/audit_trail", response_class=HTMLResponse,
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("audit_trail"))])
 async def audit_trail_page(request: Request):
-    login_redirect = require_login(request)
-    if login_redirect:
-        return login_redirect
-    return templates.TemplateResponse("audit_trail.html", {"request": request})
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "audit_trail.html",
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions 
+        }
+    )
 
-@static_router.get("/maintenance", response_class=HTMLResponse)
+@static_router.get("/maintenance", response_class=HTMLResponse,
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("maintenance"))])
 async def maintenance_page(request: Request):
-    login_redirect = require_login(request)
-    if login_redirect:
-        return login_redirect
-    return templates.TemplateResponse("maintenance.html", {"request": request})
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "maintenance.html",
+        {
 
-@static_router.get("/orders/partially_delivered", response_class=HTMLResponse)
+            "request": request,
+            "user_screen_permissions": user_screen_permissions 
+        }
+    )
+
+@static_router.get("/orders/partially_delivered", response_class=HTMLResponse,
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("partially_delivered_orders"))])
 async def partially_delivered_page(request: Request):
-    login_redirect = require_login(request)
-    if login_redirect:
-        return login_redirect
-    return templates.TemplateResponse("partially_delivered.html", {"request": request})
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "partially_delivered.html",
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions 
+        }
+    )
 
-@static_router.get("/requisitions/pending_requisitions", response_class=HTMLResponse)
+@static_router.get("/requisitions/pending_requisitions", response_class=HTMLResponse,
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("pending_requisitions"))])
 async def pending_requisitions_page(request: Request):
-    login_redirect = require_login(request)
-    if login_redirect:
-        return login_redirect
-    return templates.TemplateResponse("pending_requisitions.html", {"request": request})
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "pending_requisitions.html",
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions 
+        }
+    )
 
-@static_router.get("/requisitions/new", response_class=HTMLResponse)
+@static_router.get("/requisitions/new", response_class=HTMLResponse,
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("new_requisition"))])
 async def new_requisition_page(request: Request):
-    login_redirect = require_login(request)
-    if login_redirect:
-        return login_redirect
-    return templates.TemplateResponse("new_requisition.html", {"request": request})
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "new_requisition.html",
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions 
+        }
+    )
 
 @static_router.get("/favicon.ico")
 async def favicon():
@@ -228,13 +288,35 @@ async def favicon():
         logging.error(f"Error serving favicon: {str(e)}", exc_info=True)
         return {"error": "Failed to serve favicon"}, 500
     
-@static_router.get("/mobile/requisition", response_class=HTMLResponse)
+@static_router.get("/orders/authorisations_per_user", response_class=HTMLResponse,
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("my_authorisations"))])
+async def authorisations_per_user_page(request: Request):
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "authorisations_per_user.html",
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions 
+        }
+    )
+
+@static_router.get("/mobile/requisition", response_class=HTMLResponse) 
 async def mobile_requisition_form(request: Request):
-    return templates.TemplateResponse("mobile/mobile_requisition.html", {"request": request})
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "mobile/mobile_requisition.html",
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions
+        }
+    )
 
 # --- Include Routers ---
 app.include_router(static_router)
 app.include_router(mobile_auth_router)
+
+# For audit trail test only: Include the new audit trail filters router
+app.include_router(audit_trail_filters_router, prefix="/api") # for audit trail test only
 
 for router in routers:
     if router is not order_queries_router and router is not orders_router and router is not attachments_router and router is not order_receiving_router:
@@ -250,7 +332,6 @@ app.include_router(orders_router, prefix="/orders")
 app.include_router(attachments_router, prefix="/orders")
 app.include_router(order_receiving_router, prefix="/orders")
 app.include_router(utils_router)
-app.include_router(order_email_router, prefix="/orders")
 app.include_router(pending_order_pdf_router, prefix="/orders/api")
 app.include_router(order_notes_router)
 app.include_router(items_router.router, prefix="/lookups")
@@ -262,6 +343,7 @@ app.include_router(mark_cod_paid_api_module.router, prefix="/orders")
 app.include_router(requisition_attachments.router, prefix="/requisitions")
 app.include_router(mobile_requisition_auth.router)
 app.include_router(mobile_requisition.router)
+app.include_router(email_service_router)
 
 
 # --- Dev CLI ---
@@ -272,4 +354,4 @@ if __name__ == "__main__":
         uvicorn.run(app, host="0.0.0.0", port=8004)
     except Exception as e:
         logging.exception("❌ Server failed to start")
-        raise
+        ra

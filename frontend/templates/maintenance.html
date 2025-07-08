@@ -22,36 +22,53 @@
     <div class="tab" data-tab="business_details">Business Details</div>
   </div>
 
-  <!-- Users -->
-  <div id="users" class="tab-content active">
-    <form class="form-group" onsubmit="event.preventDefault();">
-      <input type="hidden" id="user-id" />
-      <label for="user-username">Username:</label>
-      <input type="text" id="user-username" autocomplete="username" />
-      <label for="user-password">Password:</label>
-      <input type="password" id="user-password" autocomplete="current-password" />
-      <label for="user-rights">Rights:</label>
-      <select id="user-rights">
-        <option value="edit">Edit</option>
-        <option value="view">View Only</option>
-        <option value="admin">Admin</option>
-      </select>
-      <label for="user-auth-threshold-band">Authorization Threshold Band:</label>
-      <select id="user-auth-threshold-band">
-        <option value="">Not Set</option>
-        <option value="1">Band 1</option>
-        <option value="2">Band 2</option>
-        <option value="3">Band 3</option>
-        <option value="4">Band 4</option>
-      </select>
-      <button type="submit">Add User</button>
-      <button type="button" id="cancel-user-edit" style="display: none;">Cancel</button>
-    </form>
-    <table>
-      <thead><tr><th>Username</th><th>Rights</th><th>Threshold Band</th><th>Actions</th></tr></thead>
-      <tbody id="users-table"></tbody>
-    </table>
-  </div>
+<!-- Users -->
+<div id="users" class="tab-content active">
+  <form class="form-group" onsubmit="event.preventDefault();">
+    <input type="hidden" id="user-id" />
+
+    <!-- single row layout -->
+    <div style="display:flex; gap:1rem; max-width:800px;">
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="user-username" style="margin-bottom:6px;">Username:</label>
+        <input type="text" id="user-username" autocomplete="username" />
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="user-password" style="margin-bottom:6px;">Password:</label>
+        <input type="password" id="user-password" autocomplete="current-password" />
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="user-auth-threshold-band" style="margin-bottom:6px;">Threshold Band:</label>
+        <select id="user-auth-threshold-band">
+          <option value="">Not Set</option>
+          <option value="1">Band 1</option>
+          <option value="2">Band 2</option>
+          <option value="3">Band 3</option>
+          <option value="4">Band 4</option>
+        </select>
+      </div>
+
+      <div style="display:flex; flex-direction:column; justify-content:flex-end;">
+        <button type="submit" style="margin-bottom:6px;">Add User</button>
+        <button type="button" id="cancel-user-edit" style="display: none;">Cancel</button>
+      </div>
+    </div>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Rights</th>
+        <th>Threshold Band</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="users-table"></tbody>
+  </table>
+</div>
 
 <!-- Requesters -->
 <div id="requesters" class="tab-content">
@@ -324,5 +341,6 @@
   </div>
 
   <script type="module" src="/static/js/maintenance.js"></script>
+  {% include 'edit_user_modal.html' %}
 </body>
 </html>
