@@ -1,4 +1,4 @@
-# File: backend/endpoints/order_queries.py
+# File: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/order_queries.py
 
 from pydantic import BaseModel
 from backend.database import get_db_connection
@@ -99,7 +99,9 @@ async def get_pending_orders(
             LEFT JOIN requesters r ON o.requester_id = r.id
             LEFT JOIN suppliers s ON o.supplier_id = s.id
             WHERE {where_clause}
-            ORDER BY o.created_date DESC
+            ORDER BY
+                CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
+                o.created_date DESC
         """, params)
         orders = [dict(row) for row in cursor.fetchall()]
         for order in orders:
@@ -168,7 +170,9 @@ async def get_received_orders(
             LEFT JOIN requesters r ON o.requester_id = r.id
             LEFT JOIN suppliers s ON o.supplier_id = s.id
             WHERE {where_clause}
-            ORDER BY o.created_date DESC
+            ORDER BY
+                CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
+                o.created_date DESC
         """, params)
         orders = [dict(row) for row in cursor.fetchall()]
         for order in orders:
@@ -210,7 +214,9 @@ async def get_partially_delivered_orders(
             JOIN order_items oi ON o.id = oi.order_id
             WHERE oi.qty_received < oi.qty_ordered
             AND UPPER(o.status) != 'CANCELLED'
-            ORDER BY o.created_date DESC
+            ORDER BY
+                CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
+                o.created_date DESC
         """)
         orders = [dict(row) for row in cursor.fetchall()]
         for order in orders:
@@ -312,7 +318,7 @@ async def get_audit_trail_orders(
                 -- We're explicitly selecting audit_user here to make it available for the frontend.
                 -- You'll need to ensure your audit_trail table and join logic support this if it's
                 -- not just a placeholder. For now, it will return NULL if not found via a join.
-                au.username AS audit_user 
+                au.username AS audit_user
             FROM orders o
             LEFT JOIN requesters r ON o.requester_id = r.id
             LEFT JOIN suppliers s ON o.supplier_id = s.id
@@ -320,7 +326,9 @@ async def get_audit_trail_orders(
             LEFT JOIN users au ON at.user_id = au.id -- Join with users to get username
             WHERE {where_clause}
             GROUP BY o.id -- Group by order ID to avoid duplicate rows from audit_trail join
-            ORDER BY o.created_date DESC, o.order_number DESC
+            ORDER BY
+                CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
+                o.created_date DESC
         """, params)
 
         orders = [dict(row) for row in cursor.fetchall()]
@@ -485,7 +493,9 @@ async def get_cod_orders(
             LEFT JOIN requesters r ON o.requester_id = r.id
             LEFT JOIN suppliers s ON o.supplier_id = s.id
             WHERE {where_clause}
-            ORDER BY o.created_date DESC
+            ORDER BY
+                CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
+                o.created_date DESC
         """, params)
         orders = [dict(row) for row in cursor.fetchall()]
         for order in orders:

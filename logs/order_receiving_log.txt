@@ -2,3 +2,5 @@
 [2025-07-07T13:20:56.935137] {"action": "receive", "order_id": 239, "items": [{"item_id": 273, "received_qty": 2.0}], "status": "Partially Received", "receipt_date": "2025-07-07"}
 [2025-07-07T13:21:20.004855] {"action": "receive", "order_id": 239, "items": [{"item_id": 273, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-07-07"}
 [2025-07-07T13:38:51.285330] {"action": "receive", "order_id": 243, "items": [{"item_id": 277, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-07-07"}
+[2025-07-09T12:19:21.618771] {"action": "receive", "order_id": 253, "items": [{"item_id": 287, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-07-09"}
+[2025-07-09T16:08:12.071604] {"action": "receive", "order_id": 251, "items": [{"item_id": 285, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-07-09"}

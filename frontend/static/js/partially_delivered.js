@@ -1,9 +1,17 @@
+// File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/partially_delivered.js
+
 import { loadRequesters, loadSuppliers } from './components/shared_filters.js';
 import { expandLineItems } from './components/expand_line_items.js';
 import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from './components/attachment_modal.js';
 import { showOrderNoteModal, showSupplierNoteModal } from './components/order_note_modal.js';
 import { showReceiveModal } from './components/receive_modal.js';
 import { showPDFModal } from './components/pdf_modal.js';
+
+// New function to format currency with thousand separators and 2 decimal places
+function formatCurrency(amount) {
+  if (amount == null) return "R0.00";
+  return `R${parseFloat(amount).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
 
 console.log("Loading partially_delivered.js");
 

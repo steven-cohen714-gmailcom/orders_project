@@ -1,5 +1,4 @@
-// File: frontend/static/js/audit_trail_test.js
-// For audit trail test only
+// File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/audit_trail.js
 
 import { expandLineItemsWithReceipts } from "./components/expand_line_items.js";
 import {
@@ -13,7 +12,13 @@ import {
 } from "./components/order_note_modal.js";
 import { showPDFModal } from "./components/pdf_modal.js";
 // Re-using shared filter functions from existing components
-import { loadRequesters, loadSuppliers } from "./components/shared_filters.js"; 
+import { loadRequesters, loadSuppliers } from "./components/shared_filters.js";
+
+// New function to format currency with thousand separators and 2 decimal places
+function formatCurrency(amount) {
+  if (amount == null) return "R0.00";
+  return `R${parseFloat(amount).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
 
 console.log("Loading audit_trail_test.js (for audit trail test only)");
 
@@ -75,7 +80,7 @@ async function loadAuditTestOrders() {
       const sanitizedSupplier  = escapeHTML(order.supplier  || "N/A");
       const sanitizedStatus    = escapeHTML(order.status    || "");
       const sanitizedUser      = escapeHTML(order.audit_user_for_test_only || "N/A"); // Using placeholder from backend
-      const sanitizedTotal     = order.total != null ? `R${parseFloat(order.total).toFixed(2)}` : "R0.00";
+      const sanitizedTotal = formatCurrency(order.total);
       const row = document.createElement("tr");
       row.innerHTML = `
         <td>${sanitizedDate}</td>

@@ -4,6 +4,12 @@ import { showOrderNoteModal, showSupplierNoteModal } from "/static/js/components
 import { loadRequesters, loadSuppliers } from "/static/js/components/shared_filters.js";
 import { showPDFModal } from "/static/js/components/pdf_modal.js";
 
+// New function to format currency with thousand separators and 2 decimal places
+function formatCurrency(amount) {
+  if (amount == null) return "R0.00";
+  return `R${parseFloat(amount).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
 function escapeHTML(str) {
   if (!str) return "";
   return str
@@ -56,7 +62,7 @@ async function loadOrders() {
         const sanitizedSupplier = escapeHTML(order.supplier || "N/A");
         const sanitizedRequester = escapeHTML(order.requester);
         const sanitizedDate = escapeHTML(order.created_date || "");
-        const sanitizedTotal = order.total != null ? `R${parseFloat(order.total).toFixed(2)}` : "R0.00";
+        const sanitizedTotal = formatCurrency(order.total);
         const sanitizedStatus = escapeHTML(order.status || "");
 
         row.innerHTML = `

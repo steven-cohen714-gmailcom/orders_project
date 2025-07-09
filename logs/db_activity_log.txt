@@ -1002,3 +1002,286 @@
 2025-07-08 17:11:21,584 | INFO | Suppliers fetched: 806 items
 2025-07-08 17:11:58,649 | INFO | Requesters fetched: 8 items
 2025-07-08 17:11:58,652 | INFO | Suppliers fetched: 806 items
+2025-07-09 11:51:22,206 | INFO | Database initialized successfully.
+2025-07-09 11:51:22,206 | INFO | ✅ Database initialized successfully.
+2025-07-09 11:51:39,560 | INFO | Database initialized successfully.
+2025-07-09 11:51:39,560 | INFO | ✅ Database initialized successfully.
+2025-07-09 11:51:39,994 | INFO | Database initialized successfully.
+2025-07-09 11:51:39,994 | INFO | ✅ Database initialized successfully.
+2025-07-09 11:51:48,909 | INFO | Requesters fetched: 8 items
+2025-07-09 11:51:48,911 | INFO | Suppliers fetched: 806 items
+2025-07-09 11:51:54,777 | INFO | ✅ [ORDER] Success deleted: Order 241 marked as Deleted
+2025-07-09 11:53:12,283 | INFO | Requesters fetched: 8 items
+2025-07-09 11:53:12,287 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:16:56,279 | INFO | Database initialized successfully.
+2025-07-09 12:16:56,280 | INFO | ✅ Database initialized successfully.
+2025-07-09 12:17:13,824 | INFO | Requesters fetched: 8 items
+2025-07-09 12:17:13,825 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:17:19,849 | INFO | Starting to render new order page
+2025-07-09 12:17:19,889 | INFO | Requesters fetched: 8 items
+2025-07-09 12:17:19,894 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:17:19,910 | INFO | Items fetched: 9986 items
+2025-07-09 12:17:19,958 | INFO | Items fetched: 9986 items
+2025-07-09 12:17:35,197 | INFO | Items fetched: 9986 items
+2025-07-09 12:17:46,957 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-09 12:17:46,984 | INFO | 🔍 Incoming order: order_number='1009' status='Pending' order_note='' note_to_supplier='' supplier_id=255 requester_id=7 payment_terms='COD' created_date='2025-07-09' items=[OrderItemCreate(item_code='ABRA007', item_description='CUTTING DISC STONE 230 MM', project='AD02M', qty_ordered=1.0, price=500.0)] auth_band_required=None
+2025-07-09 12:17:46,987 | INFO | ✅ [ORDER] Success created: Order 1009 with status Pending and total R500.0
+2025-07-09 12:17:47,006 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1010", "orderId": 252, "orderType": "Pending"}
+2025-07-09 12:17:50,928 | INFO | Requesters fetched: 8 items
+2025-07-09 12:17:50,930 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:17:57,114 | INFO | Requesters fetched: 8 items
+2025-07-09 12:17:57,116 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:17:59,945 | INFO | Requesters fetched: 8 items
+2025-07-09 12:17:59,949 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:18:04,276 | INFO | ✅ [ORDER] Success deleted: Order 252 marked as Deleted
+2025-07-09 12:18:09,820 | INFO | Requesters fetched: 8 items
+2025-07-09 12:18:09,824 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:18:16,260 | INFO | Requesters fetched: 8 items
+2025-07-09 12:18:16,263 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:18:25,527 | INFO | Starting to render new order page
+2025-07-09 12:18:25,596 | INFO | Requesters fetched: 8 items
+2025-07-09 12:18:25,601 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:18:25,619 | INFO | Items fetched: 9986 items
+2025-07-09 12:18:25,661 | INFO | Items fetched: 9986 items
+2025-07-09 12:18:35,074 | INFO | Items fetched: 9986 items
+2025-07-09 12:18:45,019 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-09 12:18:45,041 | INFO | 🔍 Incoming order: order_number='1010' status='Pending' order_note='' note_to_supplier='' supplier_id=255 requester_id=6 payment_terms='COD' created_date='2025-07-09' items=[OrderItemCreate(item_code='ABRA006', item_description='CUTTING DISC STEEL 230 MM', project='AD01P', qty_ordered=1.0, price=600.0)] auth_band_required=None
+2025-07-09 12:18:45,044 | INFO | ✅ [ORDER] Success created: Order 1010 with status Pending and total R600.0
+2025-07-09 12:18:45,064 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1011", "orderId": 253, "orderType": "Pending"}
+2025-07-09 12:18:49,466 | INFO | Requesters fetched: 8 items
+2025-07-09 12:18:49,469 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:19:03,819 | INFO | Requesters fetched: 8 items
+2025-07-09 12:19:03,822 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:19:09,877 | INFO | Requesters fetched: 8 items
+2025-07-09 12:19:09,880 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:19:23,239 | INFO | Requesters fetched: 8 items
+2025-07-09 12:19:23,242 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:19:28,101 | INFO | Requesters fetched: 8 items
+2025-07-09 12:19:28,105 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:19:35,569 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 252
+2025-07-09 12:19:42,626 | INFO | Starting to render new order page
+2025-07-09 12:19:42,657 | INFO | Requesters fetched: 8 items
+2025-07-09 12:19:42,663 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:19:42,681 | INFO | Items fetched: 9986 items
+2025-07-09 12:19:42,730 | INFO | Items fetched: 9986 items
+2025-07-09 12:19:55,405 | INFO | Items fetched: 9986 items
+2025-07-09 12:20:04,125 | INFO | Items fetched: 9986 items
+2025-07-09 12:20:26,666 | INFO | Requesters fetched: 8 items
+2025-07-09 12:20:26,670 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:20:31,356 | INFO | Starting to render new order page
+2025-07-09 12:20:31,390 | INFO | Requesters fetched: 8 items
+2025-07-09 12:20:31,395 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:20:31,423 | INFO | Items fetched: 9986 items
+2025-07-09 12:20:31,474 | INFO | Items fetched: 9986 items
+2025-07-09 12:20:38,551 | INFO | Requesters fetched: 8 items
+2025-07-09 12:20:38,562 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:20:43,664 | INFO | Starting to render new order page
+2025-07-09 12:20:43,696 | INFO | Requesters fetched: 8 items
+2025-07-09 12:20:43,703 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:20:43,725 | INFO | Items fetched: 9986 items
+2025-07-09 12:20:43,775 | INFO | Items fetched: 9986 items
+2025-07-09 12:20:54,443 | INFO | Items fetched: 9986 items
+2025-07-09 12:21:04,608 | INFO | Items fetched: 9986 items
+2025-07-09 12:21:10,899 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-09 12:21:10,921 | INFO | 🔍 Incoming order: order_number='1011' status='Pending' order_note='' note_to_supplier='' supplier_id=14 requester_id=6 payment_terms='COD' created_date='2025-07-09' items=[OrderItemCreate(item_code='ABRA006', item_description='CUTTING DISC STEEL 230 MM', project='AD01P', qty_ordered=1.0, price=456.0)] auth_band_required=None
+2025-07-09 12:21:10,924 | INFO | ✅ [ORDER] Success created: Order 1011 with status Pending and total R456.0
+2025-07-09 12:21:10,953 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1012", "orderId": 254, "orderType": "Pending"}
+2025-07-09 12:21:17,603 | INFO | Requesters fetched: 8 items
+2025-07-09 12:21:17,605 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:21:25,033 | INFO | Requesters fetched: 8 items
+2025-07-09 12:21:25,039 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:21:35,640 | INFO | Requesters fetched: 8 items
+2025-07-09 12:21:35,642 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:21:39,005 | INFO | Requesters fetched: 8 items
+2025-07-09 12:21:39,008 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:21:58,289 | INFO | Requesters fetched: 8 items
+2025-07-09 12:21:58,291 | INFO | Suppliers fetched: 806 items
+2025-07-09 12:22:14,383 | INFO | Requesters fetched: 8 items
+2025-07-09 12:22:14,399 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:24:22,206 | INFO | Requesters fetched: 8 items
+2025-07-09 14:24:22,209 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:27:38,951 | INFO | Requesters fetched: 8 items
+2025-07-09 14:27:38,955 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:27:43,473 | INFO | Requesters fetched: 8 items
+2025-07-09 14:27:43,475 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:27:45,695 | INFO | Requesters fetched: 8 items
+2025-07-09 14:27:45,700 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:27:46,664 | INFO | Requesters fetched: 8 items
+2025-07-09 14:27:46,666 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:27:52,093 | INFO | Requesters fetched: 8 items
+2025-07-09 14:27:52,095 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:27:55,289 | INFO | Requesters fetched: 8 items
+2025-07-09 14:27:55,294 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:27:59,791 | INFO | Requesters fetched: 8 items
+2025-07-09 14:27:59,794 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:28:01,989 | INFO | Requesters fetched: 8 items
+2025-07-09 14:28:01,994 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:28:03,966 | INFO | Requesters fetched: 8 items
+2025-07-09 14:28:03,969 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:28:07,461 | INFO | Requesters fetched: 8 items
+2025-07-09 14:28:07,466 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:28:10,266 | INFO | Requesters fetched: 8 items
+2025-07-09 14:28:10,269 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:28:12,853 | INFO | Requesters fetched: 8 items
+2025-07-09 14:28:12,858 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:28:16,690 | INFO | Requesters fetched: 8 items
+2025-07-09 14:28:16,693 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:28:19,292 | INFO | Requesters fetched: 8 items
+2025-07-09 14:28:19,297 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:28:22,713 | INFO | Requesters fetched: 8 items
+2025-07-09 14:28:22,717 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:28:27,340 | INFO | Requesters fetched: 8 items
+2025-07-09 14:28:27,342 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:38:20,280 | INFO | Database initialized successfully.
+2025-07-09 14:38:20,280 | INFO | ✅ Database initialized successfully.
+2025-07-09 14:51:18,692 | INFO | Database initialized successfully.
+2025-07-09 14:51:18,692 | INFO | ✅ Database initialized successfully.
+2025-07-09 14:51:45,766 | INFO | Database initialized successfully.
+2025-07-09 14:51:45,766 | INFO | ✅ Database initialized successfully.
+2025-07-09 14:51:46,215 | INFO | Database initialized successfully.
+2025-07-09 14:51:46,215 | INFO | ✅ Database initialized successfully.
+2025-07-09 14:51:54,767 | INFO | Requesters fetched: 8 items
+2025-07-09 14:51:54,769 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:55:25,419 | INFO | Requesters fetched: 8 items
+2025-07-09 14:55:25,421 | INFO | Suppliers fetched: 806 items
+2025-07-09 14:59:34,078 | INFO | Database initialized successfully.
+2025-07-09 14:59:34,078 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:02:09,321 | INFO | Database initialized successfully.
+2025-07-09 15:02:09,321 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:02:09,761 | INFO | Database initialized successfully.
+2025-07-09 15:02:09,761 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:02:17,507 | INFO | Requesters fetched: 8 items
+2025-07-09 15:02:17,509 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:02:29,508 | INFO | Requesters fetched: 8 items
+2025-07-09 15:02:29,510 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:04:01,321 | INFO | Requesters fetched: 8 items
+2025-07-09 15:04:01,323 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:04:19,372 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:04:19,380 | INFO | Requesters fetched: 8 items
+2025-07-09 15:05:45,388 | INFO | Requesters fetched: 8 items
+2025-07-09 15:05:45,393 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:05:49,907 | INFO | Requesters fetched: 8 items
+2025-07-09 15:05:49,911 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:08:04,477 | INFO | Database initialized successfully.
+2025-07-09 15:08:04,477 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:12:04,187 | INFO | Database initialized successfully.
+2025-07-09 15:12:04,187 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:12:04,613 | INFO | Database initialized successfully.
+2025-07-09 15:12:04,613 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:12:08,745 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:08,750 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:11,989 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:11,993 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:18,374 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:18,376 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:19,852 | INFO | Starting to render new order page
+2025-07-09 15:12:19,893 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:19,902 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:19,921 | INFO | Items fetched: 9986 items
+2025-07-09 15:12:19,971 | INFO | Items fetched: 9986 items
+2025-07-09 15:12:20,843 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:20,845 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:21,973 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:21,977 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:22,819 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:22,820 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:23,762 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:23,771 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:26,566 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:26,569 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:27,794 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:27,798 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:28,921 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:28,923 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:36,146 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:12:36,154 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:36,836 | INFO | Requesters fetched: 8 items
+2025-07-09 15:12:36,838 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:13:55,664 | INFO | Requesters fetched: 8 items
+2025-07-09 15:13:55,667 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:21:34,159 | INFO | Database initialized successfully.
+2025-07-09 15:21:34,159 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:21:38,491 | INFO | Database initialized successfully.
+2025-07-09 15:21:38,491 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:21:38,945 | INFO | Database initialized successfully.
+2025-07-09 15:21:38,945 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:21:50,362 | INFO | Requesters fetched: 8 items
+2025-07-09 15:21:50,365 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:22:00,870 | INFO | Requesters fetched: 8 items
+2025-07-09 15:22:00,878 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:22:05,929 | INFO | Requesters fetched: 8 items
+2025-07-09 15:22:05,931 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:22:08,062 | INFO | Requesters fetched: 8 items
+2025-07-09 15:22:08,067 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:22:10,249 | INFO | Requesters fetched: 8 items
+2025-07-09 15:22:10,252 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:22:14,934 | INFO | Requesters fetched: 8 items
+2025-07-09 15:22:14,939 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:25:30,971 | INFO | Database initialized successfully.
+2025-07-09 15:25:30,971 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:25:31,402 | INFO | Database initialized successfully.
+2025-07-09 15:25:31,402 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:25:37,292 | INFO | Requesters fetched: 8 items
+2025-07-09 15:25:37,295 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:26:01,293 | INFO | Requesters fetched: 8 items
+2025-07-09 15:26:01,295 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:27:19,897 | INFO | Requesters fetched: 8 items
+2025-07-09 15:27:19,899 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:27:32,766 | INFO | Requesters fetched: 8 items
+2025-07-09 15:27:32,771 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:27:35,745 | INFO | Requesters fetched: 8 items
+2025-07-09 15:27:35,751 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:29:59,440 | INFO | Requesters fetched: 8 items
+2025-07-09 15:29:59,443 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:30:11,806 | INFO | Requesters fetched: 8 items
+2025-07-09 15:30:11,810 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:30:13,528 | INFO | Requesters fetched: 8 items
+2025-07-09 15:30:13,533 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:30:14,276 | INFO | Requesters fetched: 8 items
+2025-07-09 15:30:14,280 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:30:38,548 | INFO | Database initialized successfully.
+2025-07-09 15:30:38,548 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:30:38,994 | INFO | Database initialized successfully.
+2025-07-09 15:30:38,994 | INFO | ✅ Database initialized successfully.
+2025-07-09 15:30:43,641 | INFO | Requesters fetched: 8 items
+2025-07-09 15:30:43,643 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:30:44,851 | INFO | Requesters fetched: 8 items
+2025-07-09 15:30:44,856 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:30:45,537 | INFO | Requesters fetched: 8 items
+2025-07-09 15:30:45,540 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:30:46,297 | INFO | Requesters fetched: 8 items
+2025-07-09 15:30:46,301 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:30:46,967 | INFO | Requesters fetched: 8 items
+2025-07-09 15:30:46,971 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:32:22,172 | INFO | Requesters fetched: 8 items
+2025-07-09 15:32:22,175 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:34:11,433 | INFO | Requesters fetched: 8 items
+2025-07-09 15:34:11,437 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:34:13,739 | INFO | Requesters fetched: 8 items
+2025-07-09 15:34:13,743 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:34:15,256 | INFO | Requesters fetched: 8 items
+2025-07-09 15:34:15,259 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:35:18,093 | INFO | Requesters fetched: 8 items
+2025-07-09 15:35:18,096 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:35:30,674 | INFO | Requesters fetched: 8 items
+2025-07-09 15:35:30,676 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:37:10,533 | INFO | Requesters fetched: 8 items
+2025-07-09 15:37:10,536 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:37:13,295 | INFO | Requesters fetched: 8 items
+2025-07-09 15:37:13,298 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:39:22,577 | INFO | Requesters fetched: 8 items
+2025-07-09 15:39:22,580 | INFO | Suppliers fetched: 806 items
+2025-07-09 15:39:29,108 | INFO | Requesters fetched: 8 items
+2025-07-09 15:39:29,113 | INFO | Suppliers fetched: 806 items
+2025-07-09 16:07:28,569 | INFO | Requesters fetched: 8 items
+2025-07-09 16:07:28,573 | INFO | Suppliers fetched: 806 items
+2025-07-09 16:07:35,119 | INFO | Requesters fetched: 8 items
+2025-07-09 16:07:35,123 | INFO | Suppliers fetched: 806 items
+2025-07-09 16:07:41,703 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 251
+2025-07-09 16:08:03,042 | INFO | Requesters fetched: 8 items
+2025-07-09 16:08:03,045 | INFO | Suppliers fetched: 806 items
+2025-07-09 16:08:13,856 | INFO | Requesters fetched: 8 items
+2025-07-09 16:08:13,859 | INFO | Suppliers fetched: 806 items
+2025-07-09 16:08:16,781 | INFO | Requesters fetched: 8 items
+2025-07-09 16:08:16,786 | INFO | Suppliers fetched: 806 items
+2025-07-09 16:08:20,018 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 251

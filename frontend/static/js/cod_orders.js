@@ -7,6 +7,12 @@ import { showOrderNoteModal, showSupplierNoteModal } from "./components/order_no
 import { showPDFModal } from "./components/pdf_modal.js";
 import { showCodPaymentModal } from "./components/payments_modal.js"; // ✅ REQUIRED
 
+// New function to format currency with thousand separators and 2 decimal places
+function formatCurrency(amount) {
+  if (amount == null) return "R0.00";
+  return `R${parseFloat(amount).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
 console.log("✅ cod_orders.js loaded");
 
 async function loadFiltersAndOrders() {
@@ -53,7 +59,7 @@ async function loadOrders() {
           <td>${escapeHTML(order.order_number || "")}</td>
           <td>${escapeHTML(order.requester || "")}</td>
           <td>${escapeHTML(order.supplier || "")}</td>
-          <td>R${parseFloat(order.total || 0).toFixed(2)}</td>
+          <td>${formatCurrency(order.total)}</td>
           <td>${escapeHTML(order.status || "")}</td>
           <td>
             <span class="expand-icon" data-order-id="${order.id}">⬇️</span>

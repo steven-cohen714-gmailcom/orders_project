@@ -142,3 +142,69 @@
 [2025-07-08T17:07:38.225023] {"action": "fetch_pending_orders", "count": 7}
 [2025-07-08T17:11:18.494834] {"action": "fetch_pending_orders", "count": 7}
 [2025-07-08T17:11:58.662483] {"action": "fetch_pending_orders", "count": 7}
+[2025-07-09T11:51:48.919420] {"action": "fetch_pending_orders", "count": 7}
+[2025-07-09T11:51:56.718792] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T12:17:50.942532] {"action": "fetch_pending_orders", "count": 7}
+[2025-07-09T12:17:57.131638] {"action": "fetch_cod_orders", "count": 5}
+[2025-07-09T12:17:59.961797] {"action": "fetch_pending_orders", "count": 7}
+[2025-07-09T12:18:05.405701] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T12:18:09.836592] {"action": "fetch_cod_orders", "count": 5}
+[2025-07-09T12:18:16.274511] {"action": "fetch_cod_orders", "count": 5}
+[2025-07-09T12:18:49.481439] {"action": "fetch_pending_orders", "count": 7}
+[2025-07-09T12:19:03.832591] {"action": "fetch_cod_orders", "count": 6}
+[2025-07-09T12:19:09.892833] {"action": "fetch_pending_orders", "count": 7}
+[2025-07-09T12:19:18.793077] {"action": "fetch_items_for_order", "order_id": 253, "count": 1}
+[2025-07-09T12:19:23.253645] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T12:19:35.571340] {"action": "fetch_items_for_order", "order_id": 252, "count": 1}
+[2025-07-09T12:20:26.683771] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T12:21:17.618849] {"action": "fetch_pending_orders", "count": 7}
+[2025-07-09T12:21:25.057534] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T12:21:35.654904] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T12:21:39.019258] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T12:21:58.302209] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T14:24:22.217682] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T14:27:38.968267] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T14:27:43.487145] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T14:27:45.713024] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T14:27:52.106976] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T14:27:55.305730] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T14:28:02.008987] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T14:28:07.480896] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T14:28:12.871193] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T14:28:27.355207] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T14:51:54.777464] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T14:55:25.432032] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T15:02:17.517833] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T15:02:29.523976] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T15:04:01.335040] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T15:04:19.384942] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T15:05:45.404530] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T15:05:49.924462] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T15:12:08.760000] {"error": "near \"[cite_start]\": syntax error", "type": "sqlite_query", "query": "received_orders"}
+[2025-07-09T15:12:12.005585] {"error": "near \"[cite_start]\": syntax error", "type": "sqlite_query", "query": "received_orders"}
+[2025-07-09T15:12:18.389614] {"error": "near \"[cite_start]\": syntax error", "type": "sqlite_query", "query": "pending_orders"}
+[2025-07-09T15:12:20.859691] {"error": "near \"[cite_start]\": syntax error", "type": "sqlite_query", "query": "pending_orders"}
+[2025-07-09T15:12:21.989426] {"error": "near \"[cite_start]\": syntax error", "type": "sqlite_query", "query": "received_orders"}
+[2025-07-09T15:12:22.834759] {"error": "near \"[cite_start]\": syntax error", "type": "partially_delivered"}
+[2025-07-09T15:12:26.581476] {"error": "near \"[cite_start]\": syntax error", "type": "partially_delivered"}
+[2025-07-09T15:12:27.814267] {"error": "near \"[cite_start]\": syntax error", "type": "sqlite_query", "query": "received_orders"}
+[2025-07-09T15:12:28.938796] {"error": "near \"[cite_start]\": syntax error", "type": "sqlite_query", "query": "pending_orders"}
+[2025-07-09T15:12:36.157917] {"error": "near \"[cite_start]\": syntax error", "type": "sqlite_query", "query": "pending_orders"}
+[2025-07-09T15:12:36.850842] {"error": "near \"[cite_start]\": syntax error", "type": "sqlite_query", "query": "pending_orders"}
+[2025-07-09T15:13:55.678061] {"error": "near \"[cite_start]\": syntax error", "type": "sqlite_query", "query": "pending_orders"}
+[2025-07-09T15:13:59.318116] {"error": "near \"[cite_start]\": syntax error", "type": "sqlite_query", "query": "pending_orders"}
+[2025-07-09T15:21:43.042425] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T15:21:50.382284] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T15:22:00.889929] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T15:22:14.951923] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T15:25:37.304635] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T15:35:30.689905] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T15:37:10.547384] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T15:37:13.309619] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T15:39:22.591311] {"action": "fetch_cod_orders", "count": 7}
+[2025-07-09T15:39:29.126652] {"action": "fetch_received_orders", "count": 3}
+[2025-07-09T16:07:41.700176] {"action": "fetch_items_for_order", "order_id": 251, "count": 1}
+[2025-07-09T16:08:03.057475] {"action": "fetch_pending_orders", "count": 6}
+[2025-07-09T16:08:08.915200] {"action": "fetch_items_for_order", "order_id": 251, "count": 1}
+[2025-07-09T16:08:13.871617] {"action": "fetch_pending_orders", "count": 5}
+[2025-07-09T16:08:20.020107] {"action": "fetch_items_for_order", "order_id": 251, "count": 1}

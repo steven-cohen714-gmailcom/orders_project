@@ -33,7 +33,7 @@ th {
 td {
   border: 1px solid #e0e4e8;
   padding: 0.75rem;
-  text-align: center;
+  text-align: left; /* CHANGED FROM CENTER */
   font-size: 0.95rem;
   color: #333;
   overflow: visible;
@@ -438,4 +438,36 @@ tbody,
 
 th {
   text-align: left;
+}
+
+/* File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/css/style.css */
+
+/* Custom Alignment for Table Columns */
+/* Total column should be right-aligned */
+table th:nth-child(5) { /* Targets the 5th header column (Total) */
+    text-align: right;
+    padding-right: 7mm; /* ADDED: Moves the heading text slightly left */
+}
+table td:nth-child(5) { /* Targets the 5th data cell column (Total) */
+    text-align: right;
+}
+
+/* Actions column should be left-aligned (overriding any default center alignment) */
+table th:nth-child(7), /* Targets the 7th header column (Actions) */
+table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
+    text-align: left;
+}
+
+/* Ensure icons within the action column are aligned to the left of their cell */
+.expand-icon,
+.clip-icon,
+.eye-icon,
+.note-icon,
+.supplier-note-icon,
+.receive-icon,
+.pdf-icon,
+.delete-icon,
+.edit-draft-icon {
+    display: inline-block;
+    margin-right: 0.4rem;
 }

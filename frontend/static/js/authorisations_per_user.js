@@ -2,6 +2,12 @@
 
 import { loadRequesters, loadSuppliers } from "./components/shared_filters.js";
 
+// New function to format currency with thousand separators and 2 decimal places
+function formatCurrency(amount) {
+  if (amount == null) return "R0.00";
+  return `R${parseFloat(amount).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
 export async function setupAuthorisationUI({
   user,
   mountPointId,
@@ -53,7 +59,7 @@ export async function setupAuthorisationUI({
           <td>${order.order_number}</td>
           <td>${order.requester_name}</td>
           <td>${order.supplier_name}</td>
-          <td>R${order.total}</td>
+          <td>${formatCurrency(order.total)}</td>
           <td>${order.status}</td>
           <td>
             <button class="view-btn">View</button>

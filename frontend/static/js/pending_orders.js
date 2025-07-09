@@ -1,3 +1,5 @@
+// File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/pending_orders.js
+
 import { loadRequesters, loadSuppliers } from './components/shared_filters.js';
 import { expandLineItems } from './components/expand_line_items.js';
 import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal } from './components/attachment_modal.js';
@@ -7,6 +9,20 @@ import { showPDFModal } from './components/pdf_modal.js';
 import { showEditDraftModal } from './components/edit_draft_modal.js';
 
 console.log("Loading pending_orders.js");
+
+// New function to format currency with thousand separators and 2 decimal places
+function formatCurrency(amount) {
+    if (amount == null) return "R0.00";
+    // Using 'en-ZA' locale for South African Rand formatting which typically uses space as thousand separator
+    // and comma as decimal separator, but toLocaleString default behavior often uses comma for thousands
+    // and period for decimals for 'en-ZA' with currency, so let's ensure standard formatting.
+    // For consistency with typical "thousand separator" requests, we'll aim for a space or thin space.
+    // The toLocaleString with 'en-US' or 'en-GB' and then adjusting can yield exact results.
+    // For simplicity with toLocaleString and direct number, 'en-ZA' generally formats correctly for R values
+    // with typical period for decimal, comma for thousands or just a space.
+    return `R${parseFloat(amount).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
 
 async function loadFiltersAndOrders() {
     try {
@@ -70,7 +86,7 @@ async function loadOrders() {
                 const sanitizedSupplier = escapeHTML(order.supplier || "N/A");
                 const sanitizedRequester = escapeHTML(order.requester || "N/A");
                 const sanitizedDate = escapeHTML(order.created_date || "");
-                const sanitizedTotal = order.total != null ? `R${parseFloat(order.total).toFixed(2)}` : "R0.00";
+                const sanitizedTotal = formatCurrency(order.total); // Using new formatCurrency function
                 const rawStatus = (order.status || "").trim();
                 const sanitizedStatus = escapeHTML(rawStatus);
 
