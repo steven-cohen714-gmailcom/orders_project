@@ -145,6 +145,7 @@
 /orders
 /orders/delete/{order_id}
 /orders/{order_id}
+/orders/api/order_details_for_audit/{order_id}
 /orders/{order_id}
 /orders/update_draft/{order_id}
 /orders/api/order_items/{order_id}

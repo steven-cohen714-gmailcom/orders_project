@@ -1,34 +1,41 @@
+// File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/components/expand_line_items.js
+
 // Remove the 'export' keyword here
-async function expandLineItemsWithReceipts(orderId, iconElement) {
+// MODIFIED: Added detailContainer and orderHeaderData to parameters
+async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer, orderHeaderData) {
   console.log(`Expanding with receipts for order ID: ${orderId}`);
 
-  const currentRow = iconElement.closest("tr");
-  if (!currentRow) throw new Error("Could not find parent table row for icon element.");
+  // Toggle if content already exists and is visible/hidden
+  const isHidden = detailContainer.style.display === "none";
+  detailContainer.style.display = isHidden ? "block" : "none"; // Use 'block' for div visibility
+  iconElement.textContent = isHidden ? "⬆️" : "⬇️"; // Toggle icon immediately
 
-  // Toggle if row already exists
-  const existingDetailRow = document.getElementById(`receipt-items-row-${orderId}`);
-  if (existingDetailRow) {
-    const isHidden = existingDetailRow.style.display === "none";
-    existingDetailRow.style.display = isHidden ? "table-row" : "none";
-    iconElement.textContent = isHidden ? "⬆️" : "⬇️";
-    return;
+  // If we're hiding, or if content already exists, just toggle and return
+  if (!isHidden && detailContainer.innerHTML !== '') {
+      return;
+  }
+  if (isHidden && detailContainer.innerHTML !== '') {
+      return;
   }
 
   try {
-    // ── Fetch items + receipt logs in parallel ───────────────────────────────
-    const [itemsRes, logsRes] = await Promise.all([
-      fetch(`/orders/api/items_for_order/${orderId}`),
-      fetch(`/orders/api/receipt_logs/${orderId}`)
+    // ── Fetch items, receipt logs, AND main order details in parallel ───────────────────────────────
+    const [itemsRes, logsRes, orderDetailsRes] = await Promise.all([
+      fetch(`/orders/api/order_items/${orderId}`),
+      fetch(`/orders/api/receipt_logs/${orderId}`),
+      fetch(`/orders/api/order_details_for_audit/${orderId}`)
     ]);
 
-    if (!itemsRes.ok || !logsRes.ok) {
+    if (!itemsRes.ok || !logsRes.ok || !orderDetailsRes.ok) {
       const itemsErr = itemsRes.ok ? "" : await itemsRes.text();
       const logsErr  = logsRes.ok  ? "" : await logsRes.text();
-      throw new Error(`Fetch error: items ${itemsRes.status} (${itemsErr}), logs ${logsRes.status} (${logsErr})`);
+      const orderDetailsErr = orderDetailsRes.ok ? "" : await orderDetailsRes.text();
+      throw new Error(`Fetch error: items ${itemsRes.status} (${itemsErr}), logs ${logsRes.status} (${logsErr}), order details ${orderDetailsRes.status} (${orderDetailsErr})`);
     }
 
-    const itemsData = await itemsRes.json();
+    const items = await itemsRes.json();
     const logsData  = await logsRes.json();
+    const orderData = await orderDetailsRes.json(); // This is the object containing 'total', 'supplier_name', 'paid_by_user'
     const receiptLogs = logsData.logs || [];
 
     // ── Group logs by order_item_id for quick look-up ────────────────────────
@@ -39,105 +46,142 @@ async function expandLineItemsWithReceipts(orderId, iconElement) {
       logMap[log.order_item_id].push(log);
     }
 
-    // ── Build expandable row ────────────────────────────────────────────────
-    const newRow = document.createElement("tr");
-    newRow.id = `receipt-items-row-${orderId}`;
-    const cell = document.createElement("td");
-    cell.colSpan = currentRow.children.length;
-    cell.style.padding = "1rem";
+    let contentHTML = '';
 
-    if (!itemsData.items || itemsData.items.length === 0) {
-      cell.innerHTML = "<em>No items found.</em>";
+    // MODIFIED: Re-structure Payment Details as a table section with robust data handling
+    // Check if amount_paid is a valid number, otherwise default to 0 for formatting
+    const rawPaidAmount = parseFloat(orderData.amount_paid);
+    if (!isNaN(rawPaidAmount) && orderData.payment_date) { // Only display if valid amount and date exist
+        const formattedPaidAmount = `R${rawPaidAmount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        const formattedPaymentDate = new Date(orderData.payment_date).toLocaleDateString('en-ZA');
+        
+        // --- FIX START: Use orderData for values fetched from backend ---
+        const paidByUser = orderData.paid_by_user || ''; // Corrected: Reading from orderData
+        const rawOriginalTotal = parseFloat(orderData.total); // Corrected: Reading from orderData
+        const originalTotal = !isNaN(rawOriginalTotal) ? `R${rawOriginalTotal.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '';
+        const supplierName = orderData.supplier_name || ''; // Corrected: Reading from orderData and using 'supplier_name'
+        // --- FIX END ---
+
+
+        contentHTML += `
+            <div class="expanded-section payment-table-section">
+                <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
+                    <thead>
+                        <tr style="background:#e6f7ff;font-weight:bold;">
+                            <td style="text-align:left;">Date Paid</td>
+                            <td style="text-align:right;">Original Amount</td>
+                            <td style="text-align:left;">Supplier</td>
+                            <td style="text-align:right;">Paid Amount</td>
+                            <td style="text-align:left;">User</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align:left;">${formattedPaymentDate}</td>
+                            <td style="text-align:right;">${originalTotal}</td>
+                            <td style="text-align:left;">${supplierName}</td>
+                            <td style="text-align:right;">${formattedPaidAmount}</td>
+                            <td style="text-align:left;">${paidByUser}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="height: 1rem;"></div> `;
+    }
+
+    if (!items || items.length === 0) {
+      contentHTML += `<div class="expanded-section"><em>No items found.</em></div>`;
     } else {
-      const table = document.createElement("table");
-      Object.assign(table.style, {
-        width: "100%",
-        borderCollapse: "collapse",
-        marginTop: "0.5rem",
-        tableLayout: "fixed"
-      });
+      let tableHTML = `
+        <div class="expanded-section items-table-section">
+            <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
+              <thead>
+                <tr style="background:#f0f0f0;font-weight:bold">
+                  <td style="text-align:left;">Item</td>
+                  <td style="text-align:left;">Project</td>
+                  <td style="text-align:right;">Qty</td>
+                  <td style="text-align:right;">Price</td>
+                  <td style="text-align:right;">Total</td>
+                  <td style="text-align:left;">Receipts</td>
+                </tr>
+              </thead>
+              <tbody>
+          `;
 
-      // ── Header row ────────────────────────────────────────────────────────
-      const header = document.createElement("tr");
-      header.style.cssText = "background:#f0f0f0;font-weight:bold";
-      ["Item", "Project", "Qty", "Price", "Total", "Receipts"].forEach(text => {
-        const th = document.createElement("td");
-        th.textContent = text;
-        header.appendChild(th);
-      });
-      table.appendChild(header);
-
-      // ── Data rows ─────────────────────────────────────────────────────────
-      itemsData.items.forEach(item => {
-        const row = document.createElement("tr");
-
-        // Build joined labels
+      items.forEach(item => {
         const itemLabel = item.item_description
           ? `${item.item_code} – ${item.item_description}`
           : item.item_code || "N/A";
+
+        const quantity = item.quantity || 0;
+        const unitPrice = item.unit_price || 0;
+        const total = quantity * unitPrice;
 
         const projectLabel = item.project_name
           ? `${item.project} – ${item.project_name}`
           : item.project || "N/A";
 
-        const cells = [
-          itemLabel,
-          projectLabel,
-          item.qty_ordered || 0,
-          typeof item.price === "number" ? `R${item.price.toFixed(2)}`   : "R0.00",
-          typeof item.total === "number" ? `R${item.total.toFixed(2)}`   : "R0.00"
-        ];
+        const formattedPrice = `R${parseFloat(unitPrice).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        const formattedTotal = `R${parseFloat(total).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-        cells.forEach(text => {
-          const td = document.createElement("td");
-          td.textContent = text;
-          row.appendChild(td);
-        });
 
-        // ── Receipt sub-table ───────────────────────────────────────────────
-        const logCell = document.createElement("td");
         const logs = logMap[item.id] || [];
-        if (logs.length === 0) {
-          logCell.textContent = "-";
-        } else {
-          const subTable = document.createElement("table");
-          Object.assign(subTable.style, { width: "100%", borderCollapse: "collapse" });
-
-          const subHeader = document.createElement("tr");
-          ["Qty", "Date", "User"].forEach(label => {
-            const sh = document.createElement("td");
-            sh.style.fontWeight = "bold";
-            sh.textContent = label;
-            subHeader.appendChild(sh);
-          });
-          subTable.appendChild(subHeader);
-
+        let receiptLogHTML = '-';
+        if (logs.length > 0) {
+          receiptLogHTML = `
+            <table style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="font-weight:bold">
+                  <td style="text-align:right;">Qty</td>
+                  <td style="text-align:left;">Date</td>
+                  <td style="text-align:left;">User</td>
+                </tr>
+              </thead>
+              <tbody>
+          `;
           logs.forEach(log => {
-            const logRow = document.createElement("tr");
-            [log.qty_received, log.received_date, log.username || "N/A"].forEach(val => {
-              const td = document.createElement("td");
-              td.textContent = val || "N/A";
-              logRow.appendChild(td);
-            });
-            subTable.appendChild(logRow);
+            receiptLogHTML += `
+              <tr>
+                <td style="text-align:right;">${log.qty_received || "N/A"}</td>
+                <td style="text-align:left;">${log.received_date || "N/A"}</td>
+                <td>${log.username || "N/A"}</td>
+              </tr>
+            `;
           });
-
-          logCell.appendChild(subTable);
+          receiptLogHTML += `
+              </tbody>
+            </table>
+          `;
         }
 
-        row.appendChild(logCell);
-        table.appendChild(row);
+        tableHTML += `
+          <tr>
+            <td style="text-align:left;">${itemLabel}</td>
+            <td style="text-align:left;">${projectLabel}</td>
+            <td style="text-align:right;">${quantity}</td>
+            <td style="text-align:right;">${formattedPrice}</td>
+            <td style="text-align:right;">${formattedTotal}</td>
+            <td style="text-align:left;">${receiptLogHTML}</td>
+          </tr>
+        `;
       });
 
-      cell.appendChild(table);
+      tableHTML += `
+              </tbody>
+            </table>
+        </div>
+      `;
+      contentHTML += tableHTML;
     }
 
-    newRow.appendChild(cell);
-    currentRow.parentNode.insertBefore(newRow, currentRow.nextSibling);
-    iconElement.textContent = "⬆️";
+    detailContainer.innerHTML = contentHTML;
+
   } catch (err) {
-    console.error("❌ Error expanding received order:", err);
-    alert(`❌ Could not expand received order: ${err.message}`);
+    console.error("❌ Error expanding order details:", err);
+    alert(`❌ Could not expand order details: ${err.message}`);
+    detailContainer.innerHTML = `<div class="expanded-section" style="color:red;">Error loading details: ${err.message}</div>`;
+    detailContainer.style.display = "block";
+    iconElement.textContent = "⬇️";
   }
 }
 

@@ -90,7 +90,7 @@ async function loadOrders() {
                 const rawStatus = (order.status || "").trim();
                 const sanitizedStatus = escapeHTML(rawStatus);
 
-                const receiveIconHTML = (["Pending", "Authorised", "Partially Received"].includes(rawStatus))
+                const receiveIconHTML = (["Pending", "Authorised", "Paid", "Partially Received"].includes(rawStatus))
                     ? `<span class="receive-icon" style="color: green; cursor: pointer;" title="Mark as Received" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">✅</span>`
                     : (rawStatus === "Awaiting Authorisation"
                           ? `<span class="receive-icon disabled" style="color: grey; cursor: not-allowed;" title="Cannot receive until authorised">✅</span>`
@@ -185,7 +185,7 @@ async function loadOrders() {
                     });
                 }
 
-                if (["Pending", "Authorised", "Partially Received"].includes(rawStatus)) {
+                if (["Pending", "Authorised", "Paid","Partially Received"].includes(rawStatus)) {
                     row.querySelector(".receive-icon").addEventListener("click", () => window.showReceiveModal(order.id || '', sanitizedOrderNumber));
                 }
                 row.querySelector(".pdf-icon").addEventListener("click", async () => {

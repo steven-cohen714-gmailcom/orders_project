@@ -64,7 +64,11 @@ async def get_pending_orders(
         filters = []
         params = []
 
-        filters.append("UPPER(o.status) IN ('PENDING', 'WAITING FOR APPROVAL', 'AWAITING AUTHORISATION', 'AUTHORISED', 'DRAFT')")
+        # MODIFIED: Include 'PAID' in the statuses for Pending Orders screen
+        filters.append("UPPER(o.status) IN ('PENDING', 'WAITING FOR APPROVAL', 'AWAITING AUTHORISATION', 'AUTHORISED', 'DRAFT', 'PAID', 'PARTIALLY RECEIVED')")
+        # Ensure 'DELETED' orders are NOT shown on this screen
+        filters.append("UPPER(o.status) != 'DELETED'")
+
 
         if start_date:
             valid_start_date = validate_date(start_date)
@@ -138,7 +142,8 @@ async def get_received_orders(
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
     try:
-        filters = ["UPPER(o.status) = 'RECEIVED'"]
+        # MODIFIED: Ensure 'DELETED' orders are NOT shown on this screen
+        filters = ["UPPER(o.status) = 'RECEIVED'", "UPPER(o.status) != 'DELETED'"]
         params = []
 
         if start_date:
@@ -214,6 +219,7 @@ async def get_partially_delivered_orders(
             JOIN order_items oi ON o.id = oi.order_id
             WHERE oi.qty_received < oi.qty_ordered
             AND UPPER(o.status) != 'CANCELLED'
+            AND UPPER(o.status) != 'DELETED' -- MODIFIED: Ensure 'DELETED' orders are NOT shown on this screen
             ORDER BY
                 CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
                 o.created_date DESC
@@ -315,17 +321,33 @@ async def get_audit_trail_orders(
                 o.id, o.created_date, o.received_date, o.order_number,
                 r.name AS requester, s.name AS supplier,
                 o.order_note, o.note_to_supplier, o.total, o.status,
-                -- We're explicitly selecting audit_user here to make it available for the frontend.
-                -- You'll need to ensure your audit_trail table and join logic support this if it's
-                -- not just a placeholder. For now, it will return NULL if not found via a join.
-                au.username AS audit_user
+                -- Existing audit_user select
+                u_auth.username AS audit_user,
+                -- NEW: Select payment-related audit details
+                ap.action_date AS paid_date,
+                ap.details AS paid_details,
+                u_paid.username AS paid_by_user
             FROM orders o
             LEFT JOIN requesters r ON o.requester_id = r.id
             LEFT JOIN suppliers s ON o.supplier_id = s.id
-            LEFT JOIN audit_trail at ON o.id = at.order_id -- Join with audit_trail
-            LEFT JOIN users au ON at.user_id = au.id -- Join with users to get username
+            -- Join for the primary audit user (often the authoriser)
+            LEFT JOIN (
+                SELECT order_id, MAX(action_date) AS latest_action_date, user_id
+                FROM audit_trail
+                WHERE action = 'Authorised'
+                GROUP BY order_id
+            ) latest_auth ON latest_auth.order_id = o.id
+            LEFT JOIN users u_auth ON latest_auth.user_id = u_auth.id
+            -- NEW: Join for the 'Marked COD Paid' user
+            LEFT JOIN (
+                SELECT order_id, MAX(action_date) AS action_date, details, user_id
+                FROM audit_trail
+                WHERE action = 'Marked COD Paid'
+                GROUP BY order_id
+            ) ap ON ap.order_id = o.id
+            LEFT JOIN users u_paid ON ap.user_id = u_paid.id
             WHERE {where_clause}
-            GROUP BY o.id -- Group by order ID to avoid duplicate rows from audit_trail join
+            GROUP BY o.id
             ORDER BY
                 CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
                 o.created_date DESC
@@ -358,6 +380,15 @@ async def get_audit_trail_orders(
                         order["received_date"] = "N/A"
             else:
                 order["received_date"] = "N/A"
+
+            # NEW: Format paid_date if exists
+            if order["paid_date"]:
+                try:
+                    order["paid_date"] = datetime.strptime(order["paid_date"], "%Y-%m-%d %H:%M:%S.%f").strftime("%Y-%m-%d %H:%M")
+                except ValueError:
+                    # Fallback for other potential formats if necessary
+                    order["paid_date"] = "N/A"
+
 
         # Log the activity (standard log, not debug log)
         log_event("audit_trail_log.txt", {
@@ -493,6 +524,7 @@ async def get_cod_orders(
             LEFT JOIN requesters r ON o.requester_id = r.id
             LEFT JOIN suppliers s ON o.supplier_id = s.id
             WHERE {where_clause}
+            AND UPPER(o.status) != 'DELETED' -- MODIFIED: Ensure 'DELETED' orders are NOT shown on this screen
             ORDER BY
                 CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
                 o.created_date DESC

@@ -20,7 +20,7 @@ function formatCurrency(amount) {
   return `R${parseFloat(amount).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
-console.log("Loading audit_trail_test.js (for audit trail test only)");
+console.log("Loading audit_trail.js for improved display"); // MODIFIED: Updated console log
 
 function escapeHTML(str = "") {
   return str
@@ -34,14 +34,12 @@ function escapeHTML(str = "") {
 async function loadAuditTestOrders() {
   const params = new URLSearchParams();
 
-  // Get filter values from the HTML elements (using the new test IDs)
   const statusFilter = document.getElementById("status-filter-test").value;
   const requesterFilter = document.getElementById("requester-filter-test").value;
   const supplierFilter = document.getElementById("supplier-filter-test").value;
   const startDateFilter = document.getElementById("start-date-filter-test").value;
   const endDateFilter = document.getElementById("end-date-filter-test").value;
 
-  // Append parameters if they are not "All" or empty
   if (statusFilter && statusFilter.toLowerCase() !== "all") {
     params.append("status", statusFilter);
   }
@@ -59,12 +57,11 @@ async function loadAuditTestOrders() {
   }
 
   try {
-    // Call the new dedicated backend endpoint for the test
-    const res = await fetch(`/api/audit_trail_test_orders?${params.toString()}`);
+    const res = await fetch(`/orders/api/audit_trail_orders?${params.toString()}`); // MODIFIED: Changed endpoint to the main audit_trail_orders API
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
     const { orders = [] } = await res.json();
 
-    const tbody = document.getElementById("audit-body-test"); // Using new test ID
+    const tbody = document.getElementById("audit-body-test");
     tbody.innerHTML = "";
 
     if (orders.length === 0) {
@@ -79,30 +76,53 @@ async function loadAuditTestOrders() {
       const sanitizedRequester = escapeHTML(order.requester || "N/A");
       const sanitizedSupplier  = escapeHTML(order.supplier  || "N/A");
       const sanitizedStatus    = escapeHTML(order.status    || "");
-      const sanitizedUser      = escapeHTML(order.audit_user_for_test_only || "N/A"); // Using placeholder from backend
+      const sanitizedUser      = escapeHTML(order.audit_user || "N/A"); // MODIFIED: Use audit_user from the backend
       const sanitizedTotal = formatCurrency(order.total);
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${sanitizedDate}</td>
-        <td>${sanitizedNumber}</td>
-        <td>${sanitizedRequester}</td>
-        <td>${sanitizedSupplier}</td>
-        <td>${sanitizedTotal}</td>
-        <td><span class="status">${sanitizedStatus}</span></td>
-        <td>${sanitizedUser}</td>
-        <td>
+
+      // --- START NEW STRUCTURE FOR BLUE RECTANGLE EFFECT ---
+      // Create a logical 'order-block' div to hold both header and expanded content
+      const orderBlock = document.createElement("div");
+      orderBlock.classList.add("order-block"); // This will be our blue rectangle container
+      orderBlock.dataset.orderId = order.id; // Store order ID on the block for easy lookup
+
+      // Create the header row (looks like a table row)
+      const headerRowDiv = document.createElement("div");
+      headerRowDiv.classList.add("order-block-header-row"); // For header styling
+      headerRowDiv.innerHTML = `
+        <div class="order-cell">${sanitizedDate}</div>
+        <div class="order-cell">${sanitizedNumber}</div>
+        <div class="order-cell">${sanitizedRequester}</div>
+        <div class="order-cell">${sanitizedSupplier}</div>
+        <div class="order-cell order-cell-total">${sanitizedTotal}</div> <div class="order-cell"><span class="status">${sanitizedStatus}</span></div>
+        <div class="order-cell">${sanitizedUser}</div>
+        <div class="order-cell order-cell-actions">
           <span class="expand-icon"  title="Show line-items"        data-id="${order.id}">⬇️</span>
           <span class="clip-icon"    title="View / add attachments" data-id="${order.id}" data-number="${sanitizedNumber}">📎</span>
           <span class="note-icon"    title="Edit order note"        data-id="${order.id}" data-note="${escapeHTML(order.order_note || "")}" id="order-note-test-${idx}">📝</span>
           <span class="supplier-note-icon" title="View note to supplier" data-note="${escapeHTML(order.note_to_supplier || "")}">📦</span>
           <span class="pdf-icon"     title="View purchase-order PDF" data-id="${order.id}" data-number="${sanitizedNumber}">📄</span>
-        </td>`;
-      tbody.appendChild(row);
+        </div>`;
+      
+      orderBlock.appendChild(headerRowDiv);
+
+      // Create the expandable detail row container (initially hidden)
+      const detailRowDiv = document.createElement("div");
+      detailRowDiv.id = `receipt-items-row-${order.id}`; // Keep ID for expandLineItemsWithReceipts
+      detailRowDiv.classList.add("order-block-detail-row");
+      detailRowDiv.style.display = "none"; // Initially hidden
+      orderBlock.appendChild(detailRowDiv);
+
+      // Append the entire order block to the tbody (which now acts as a container for these blocks)
+      tbody.appendChild(orderBlock);
 
       /* --- per-row handlers (re-using existing modal functions) --- */
-      row.querySelector(".expand-icon").onclick = (e) =>
-        expandLineItemsWithReceipts(order.id, e.target);
-      row.querySelector(".clip-icon").onclick = async (e) => {
+      // These listeners are now on the icons within headerRowDiv
+      headerRowDiv.querySelector(".expand-icon").onclick = async (e) => {
+          // Pass the detailRowDiv and the orderBlock for expandLineItemsWithReceipts to manipulate
+          await expandLineItemsWithReceipts(order.id, e.target, detailRowDiv, orderBlock);
+      };
+
+      headerRowDiv.querySelector(".clip-icon").onclick = async (e) => {
         const tgt = e.target, id = order.id, num = sanitizedNumber;
         const has = await checkAttachments(id);
         if (has) {
@@ -114,19 +134,18 @@ async function loadAuditTestOrders() {
         }
       };
 
-      // Note icon uses a unique ID to avoid conflict with main audit_trail.js
-      row.querySelector(`#order-note-test-${idx}`).onclick = (e) => 
+      headerRowDiv.querySelector(`#order-note-test-${idx}`).onclick = (e) =>
         showOrderNoteModal(order.order_note || "", order.id, (newNote) =>
           e.target.setAttribute("data-note", escapeHTML(newNote))
         );
 
-      row.querySelector(".supplier-note-icon").onclick = () =>
+      headerRowDiv.querySelector(".supplier-note-icon").onclick = () =>
         showSupplierNoteModal(order.note_to_supplier || "");
 
       const currentOrderId = order.id;
       const currentOrderNumber = sanitizedNumber;
 
-      row.querySelector(".pdf-icon").addEventListener("click", async () => {
+      headerRowDiv.querySelector(".pdf-icon").addEventListener("click", async () => {
         try {
           const resp = await fetch(`/orders/api/generate_pdf_for_order/${currentOrderId}`);
           if (!resp.ok) throw new Error(`PDF generation failed with status ${resp.status}`);
@@ -147,10 +166,11 @@ async function loadAuditTestOrders() {
           console.error(err);
         }
       });
+      // --- END NEW STRUCTURE FOR BLUE RECTANGLE EFFECT ---
     });
   } catch (err) {
-    console.error("❌ Error loading audit trail test orders:", err);
-    alert(`Failed to load audit trail test orders: ${err.message}`);
+    console.error("❌ Error loading audit trail orders:", err); // MODIFIED: Changed console log message
+    alert(`Failed to load audit trail orders: ${err.message}`);
   }
 }
 

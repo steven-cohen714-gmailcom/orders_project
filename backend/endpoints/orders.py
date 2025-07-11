@@ -1,11 +1,14 @@
+# File: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py
+
 import logging
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import List, Optional # Ensure Optional is imported
+from typing import List, Optional
 import sqlite3
 from datetime import datetime
 
-from backend.utils.db_utils import handle_db_errors, log_success, log_warning
+# --- IMPORTANT FIX: Added log_error to the import ---
+from backend.utils.db_utils import handle_db_errors, log_success, log_warning, log_error
 from backend.utils.order_utils import calculate_order_total
 from backend.database import create_order, get_db_connection
 
@@ -26,8 +29,8 @@ class OrderCreate(BaseModel):
     note_to_supplier: Optional[str] = None
     supplier_id: int
     requester_id: int
-    payment_terms: Optional[str] = None  # ✅ Add this
-    created_date: Optional[str] = None # <--- THIS IS THE ONLY NEW LINE IN THE MODEL
+    payment_terms: Optional[str] = None
+    created_date: Optional[str] = None
     items: List[OrderItemCreate]
     auth_band_required: Optional[int] = None
 
@@ -38,12 +41,16 @@ class OrderUpdate(BaseModel):
     supplier_id: Optional[int] = None
     requester_id: Optional[int] = None
 
-class ReceiveItem(BaseModel):
+# --- FIX START: Retaining only the first definition of these models ---
+# These models were duplicated further down, which caused the NameError.
+# They are now correctly defined ONLY ONCE here at the top.
+class ReceivedItem(BaseModel):
     item_id: int
-    qty_received: float
+    received_qty: float
 
 class ReceivePayload(BaseModel):
-    items: List[ReceiveItem]
+    items: List[ReceivedItem]
+# --- FIX END ---
 
 # --- Routes ---
 @router.post("")
@@ -74,7 +81,6 @@ async def create_new_order(order: OrderCreate):
 
         items = [item.dict() for item in order.items]
         
-        # <--- THIS IS THE ONLY MODIFIED LINE IN THE FUNCTION
         result = create_order(order_data, items, created_date=order.created_date)
         log_success("order", "created", f"Order {order.order_number} with status {order.status} and total R{total}")
         return {"message": "Order created successfully", "order_id": result["id"]}
@@ -123,7 +129,8 @@ async def get_order(order_id: int):
     cursor.execute("""
         SELECT o.id, o.order_number, o.status, o.created_date, o.received_date, o.total,
                o.order_note, o.note_to_supplier, o.supplier_id, o.requester_id,
-               s.name as supplier_name, r.name as requester_name
+               s.name as supplier_name, r.name as requester_name,
+               o.payment_date, o.amount_paid
         FROM orders o
         LEFT JOIN suppliers s ON o.supplier_id = s.id
         LEFT JOIN requesters r ON o.requester_id = r.id
@@ -136,6 +143,45 @@ async def get_order(order_id: int):
         raise HTTPException(status_code=404, detail="Order not found")
     log_success("order", "fetched", f"Order {row['order_number']}")
     return dict(row)
+
+# NEW ENDPOINT: To fetch specific order details for expanded view on audit trail
+@router.get("/api/order_details_for_audit/{order_id}")
+@handle_db_errors(entity="order_details", action="fetching for audit")
+async def get_order_details_for_audit(order_id: int):
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT
+                o.id,
+                o.status,
+                o.amount_paid,
+                o.payment_date,
+                o.order_note,
+                o.note_to_supplier,
+                o.total,               -- This maps to "Original Amount"
+                s.name AS supplier_name, -- This maps to "Supplier"
+                u_paid.username AS paid_by_user -- This maps to "User (who paid)"
+            FROM orders o
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            LEFT JOIN (
+                SELECT order_id, user_id, action_date
+                FROM audit_trail
+                WHERE action = 'Marked COD Paid'
+                ORDER BY action_date DESC LIMIT 1
+            ) ap ON ap.order_id = o.id
+            LEFT JOIN users u_paid ON ap.user_id = u_paid.id
+            WHERE o.id = ?
+        """, (order_id,))
+        order_details = cursor.fetchone()
+        conn.close()
+        if not order_details:
+            raise HTTPException(status_code=404, detail="Order not found for audit details.")
+        return dict(order_details)
+    except Exception as e:
+        log_error("order_details", "fetching for audit", e)
+        raise HTTPException(status_code=500, detail=f"Failed to fetch order details for audit: {str(e)}")
 
 @router.put("/{order_id}")
 @handle_db_errors(entity="order", action="updating")
@@ -200,7 +246,7 @@ async def update_draft_order(order_id: int, payload: dict):
             WHERE id = ? AND order_id = ?
         """, (qty, price, total, item_id, order_id))
 
-    # ✅ Recalculate and update order total and status
+    # Recalculate and update order total and status
     cursor.execute("""
         UPDATE orders
         SET total = (SELECT SUM(qty_ordered * price) FROM order_items WHERE order_id = ?),
@@ -208,7 +254,7 @@ async def update_draft_order(order_id: int, payload: dict):
         WHERE id = ? AND status = 'Draft'
     """, (order_id, order_id))
 
-    # ✅ Optional: Return new total
+    # Optional: Return new total
     cursor.execute("SELECT total FROM orders WHERE id = ?", (order_id,))
     row = cursor.fetchone()
     new_total = row["total"] if row else 0.0
@@ -249,7 +295,7 @@ async def mark_items_as_received(order_id: int, payload: ReceivePayload):
             UPDATE order_items
             SET qty_received = ?, received_date = ?
             WHERE id = ? AND order_id = ?
-        """, (item.qty_received, datetime.now().strftime("%Y-%m-%d"), item.item_id, order_id))
+        """, (item.received_qty, datetime.now().strftime("%Y-%m-%d"), item.item_id, order_id))
 
     cursor.execute("""
         UPDATE orders
@@ -266,6 +312,7 @@ async def mark_items_as_received(order_id: int, payload: ReceivePayload):
 @handle_db_errors(entity="orders", action="fetching all")
 async def get_audit_trail_orders():
     conn = get_db_connection()
+    conn.row_factory = sqlite3.Row # Ensure row_factory is set for this connection
     cursor = conn.cursor()
     cursor.execute("""
         SELECT 
@@ -273,19 +320,21 @@ async def get_audit_trail_orders():
             o.order_note, o.note_to_supplier, o.supplier_id, o.requester_id,
             s.name AS supplier,
             r.name AS requester,
-            u.username AS audit_user
+            auditor.username AS audit_user
         FROM orders o
         LEFT JOIN suppliers s ON o.supplier_id = s.id
         LEFT JOIN requesters r ON o.requester_id = r.id
         LEFT JOIN (
-            SELECT order_id, MAX(action_date) AS latest_action_date
-            FROM audit_trail
-            WHERE action = 'Authorised'
-            GROUP BY order_id
-        ) latest_auth ON latest_auth.order_id = o.id
-        LEFT JOIN audit_trail at ON at.order_id = o.id AND at.action_date = latest_auth.latest_action_date
-        LEFT JOIN users u ON at.user_id = u.id
-        ORDER BY o.created_date DESC
+            SELECT
+                at_inner.order_id,
+                at_inner.user_id,
+                MAX(at_inner.action_date) AS latest_action_date
+            FROM audit_trail at_inner
+            WHERE at_inner.action = 'Authorised'
+            GROUP BY at_inner.order_id
+        ) latest_auth_record ON latest_auth_record.order_id = o.id
+        LEFT JOIN users auditor ON latest_auth_record.user_id = auditor.id
+        ORDER BY o.order_number DESC -- FIX: Changed sorting to order_number descending
     """)
     rows = cursor.fetchall()
     conn.close()

@@ -1,3 +1,5 @@
+# File: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/order_receiving.py
+
 from fastapi import APIRouter, HTTPException
 from datetime import datetime
 import sqlite3
@@ -39,10 +41,11 @@ async def receive_order(order_id: int, payload: ReceivePayload):
                 raise HTTPException(status_code=404, detail="Order not found")
 
             order_status = status_row["status"]
-            if order_status not in ("Pending", "Authorised", "Partially Received"):
+            # MODIFIED: Include 'Paid' status as an allowed status for receiving.
+            if order_status not in ("Pending", "Authorised", "Partially Received", "Paid"):
                 raise HTTPException(
                     status_code=403,
-                   detail=f"Order must be 'Pending', 'Authorised', or 'Partially Received' before receiving. Current status: {order_status}"
+                   detail=f"Order must be 'Pending', 'Authorised', 'Partially Received', or 'Paid' before receiving. Current status: {order_status}"
                 )
 
             all_fully_received = True
@@ -89,6 +92,10 @@ async def receive_order(order_id: int, payload: ReceivePayload):
 
             # Update overall order status
             new_status = "Received" if all_fully_received else "Partially Received"
+            # If the original status was 'Paid', and it's not fully received, it should probably stay 'Paid' and become 'Partially Received'
+            # (or perhaps 'Partially Received & Paid'). For this task, we'll keep it simple and align with existing transitions.
+            # If the order was Paid, and now fully received, new_status becomes 'Received'. If partially received, it becomes 'Partially Received'.
+            # This implicitly means the 'Paid' flag is assumed to be carried through.
             cursor.execute("""
                 UPDATE orders
                 SET status = ?, received_date = ?

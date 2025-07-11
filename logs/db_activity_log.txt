@@ -1285,3 +1285,472 @@
 2025-07-09 16:08:16,781 | INFO | Requesters fetched: 8 items
 2025-07-09 16:08:16,786 | INFO | Suppliers fetched: 806 items
 2025-07-09 16:08:20,018 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 251
+2025-07-09 17:57:02,151 | INFO | Database initialized successfully.
+2025-07-09 17:57:02,151 | INFO | ✅ Database initialized successfully.
+2025-07-09 17:57:56,421 | INFO | Database initialized successfully.
+2025-07-09 17:57:56,421 | INFO | ✅ Database initialized successfully.
+2025-07-09 17:57:56,840 | INFO | Database initialized successfully.
+2025-07-09 17:57:56,840 | INFO | ✅ Database initialized successfully.
+2025-07-09 17:58:02,735 | INFO | Requesters fetched: 8 items
+2025-07-09 17:58:02,738 | INFO | Suppliers fetched: 806 items
+2025-07-09 17:58:32,351 | INFO | ✅ [BUSINESS_DETAILS] Success fetched: Company info retrieved
+2025-07-09 18:01:54,926 | INFO | Requesters fetched: 8 items
+2025-07-09 18:01:54,933 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:01:57,849 | INFO | Starting to render new order page
+2025-07-09 18:01:57,907 | INFO | Requesters fetched: 8 items
+2025-07-09 18:01:57,912 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:01:57,933 | INFO | Items fetched: 9986 items
+2025-07-09 18:01:57,984 | INFO | Items fetched: 9986 items
+2025-07-09 18:02:13,856 | INFO | Requesters fetched: 8 items
+2025-07-09 18:02:17,370 | INFO | Requester deleted: 22
+2025-07-09 18:02:17,374 | INFO | Requesters fetched: 7 items
+2025-07-09 18:02:22,551 | INFO | Requester deleted: 19
+2025-07-09 18:02:22,575 | INFO | Requesters fetched: 6 items
+2025-07-09 18:02:28,295 | INFO | Items fetched: 9986 items
+2025-07-09 18:02:45,994 | INFO | New item added: ffffff - gggggg
+2025-07-09 18:02:46,035 | INFO | Items fetched: 9987 items
+2025-07-09 18:02:58,638 | INFO | Starting to render new order page
+2025-07-09 18:02:58,676 | INFO | Requesters fetched: 6 items
+2025-07-09 18:02:58,681 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:02:58,701 | INFO | Items fetched: 9987 items
+2025-07-09 18:02:58,744 | INFO | Items fetched: 9987 items
+2025-07-09 18:03:12,654 | INFO | Items fetched: 9987 items
+2025-07-09 18:03:32,362 | INFO | INFO | previewOrder started | {}
+2025-07-09 18:03:32,570 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-09 18:04:05,574 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-09 18:04:05,594 | INFO | 🔍 Incoming order: order_number='1001' status='Pending' order_note='' note_to_supplier='' supplier_id=255 requester_id=6 payment_terms='COD' created_date='2025-07-09' items=[OrderItemCreate(item_code='ABRA006', item_description='CUTTING DISC STEEL 230 MM', project='AD01P', qty_ordered=1.0, price=1001.0)] auth_band_required=None
+2025-07-09 18:04:05,597 | INFO | ✅ [ORDER] Success created: Order 1001 with status Pending and total R1001.0
+2025-07-09 18:04:05,629 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1002", "orderId": 255, "orderType": "Pending"}
+2025-07-09 18:04:12,287 | INFO | Requesters fetched: 6 items
+2025-07-09 18:04:12,297 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:04:16,269 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 255
+2025-07-09 18:04:49,549 | INFO | Requesters fetched: 6 items
+2025-07-09 18:04:49,551 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:17:39,841 | INFO | Requesters fetched: 6 items
+2025-07-09 18:17:39,843 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:17:43,051 | INFO | Requesters fetched: 6 items
+2025-07-09 18:17:43,055 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:17:43,893 | INFO | Requesters fetched: 6 items
+2025-07-09 18:17:43,896 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:17:45,155 | INFO | Requesters fetched: 6 items
+2025-07-09 18:17:45,160 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:17:46,571 | INFO | Requesters fetched: 6 items
+2025-07-09 18:17:46,574 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:19:21,022 | INFO | Requesters fetched: 6 items
+2025-07-09 18:19:21,024 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:19:36,791 | INFO | Requesters fetched: 6 items
+2025-07-09 18:19:36,794 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:19:39,779 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 255
+2025-07-09 18:22:48,234 | INFO | Requesters fetched: 6 items
+2025-07-09 18:22:48,237 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:22:59,978 | INFO | Requesters fetched: 6 items
+2025-07-09 18:22:59,980 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:23:04,407 | INFO | Requesters fetched: 6 items
+2025-07-09 18:23:04,410 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:28:06,143 | INFO | Database initialized successfully.
+2025-07-09 18:28:06,143 | INFO | ✅ Database initialized successfully.
+2025-07-09 18:28:17,129 | INFO | Database initialized successfully.
+2025-07-09 18:28:17,129 | INFO | ✅ Database initialized successfully.
+2025-07-09 18:28:17,556 | INFO | Database initialized successfully.
+2025-07-09 18:28:17,556 | INFO | ✅ Database initialized successfully.
+2025-07-09 18:28:26,840 | INFO | Requesters fetched: 6 items
+2025-07-09 18:28:26,842 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:28:38,876 | INFO | Requesters fetched: 6 items
+2025-07-09 18:28:38,880 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:28:42,500 | INFO | Requesters fetched: 6 items
+2025-07-09 18:28:42,503 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:28:44,495 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 255
+2025-07-09 18:29:17,760 | INFO | Requesters fetched: 6 items
+2025-07-09 18:29:17,762 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:29:23,121 | INFO | Requesters fetched: 6 items
+2025-07-09 18:29:23,123 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:29:31,269 | INFO | Requesters fetched: 6 items
+2025-07-09 18:29:31,272 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:29:32,267 | INFO | Requesters fetched: 6 items
+2025-07-09 18:29:32,269 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:29:33,291 | INFO | Requesters fetched: 6 items
+2025-07-09 18:29:33,295 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:29:34,740 | INFO | Requesters fetched: 6 items
+2025-07-09 18:29:34,743 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:29:37,115 | INFO | Requesters fetched: 6 items
+2025-07-09 18:29:37,118 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:37:10,047 | INFO | Requesters fetched: 6 items
+2025-07-09 18:37:10,050 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:37:32,162 | INFO | Generating PDF for order_id=255, order_number=1001
+2025-07-09 18:38:28,376 | INFO | Requesters fetched: 6 items
+2025-07-09 18:38:28,378 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:41:14,065 | INFO | Requesters fetched: 6 items
+2025-07-09 18:41:14,068 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:46:29,706 | INFO | Database initialized successfully.
+2025-07-09 18:46:29,706 | INFO | ✅ Database initialized successfully.
+2025-07-09 18:46:31,489 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:46:31,495 | INFO | Requesters fetched: 6 items
+2025-07-09 18:46:32,973 | INFO | Database initialized successfully.
+2025-07-09 18:46:32,973 | INFO | ✅ Database initialized successfully.
+2025-07-09 18:46:33,397 | INFO | Database initialized successfully.
+2025-07-09 18:46:33,397 | INFO | ✅ Database initialized successfully.
+2025-07-09 18:46:38,038 | INFO | Requesters fetched: 6 items
+2025-07-09 18:46:38,040 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:46:50,739 | INFO | Requesters fetched: 6 items
+2025-07-09 18:46:50,741 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:46:53,192 | INFO | Requesters fetched: 6 items
+2025-07-09 18:46:53,195 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:46:57,303 | INFO | Requesters fetched: 6 items
+2025-07-09 18:46:57,311 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:46:59,603 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 18:53:50,993 | INFO | Requesters fetched: 6 items
+2025-07-09 18:53:50,996 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:53:53,075 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 18:53:53,079 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 18:53:53,080 | ERROR | Error rendering order detail page: 'order_detail.html' not found in search path: 'frontend/templates'
+2025-07-09 18:57:56,637 | INFO | Database initialized successfully.
+2025-07-09 18:57:56,637 | INFO | ✅ Database initialized successfully.
+2025-07-09 18:58:01,278 | INFO | Database initialized successfully.
+2025-07-09 18:58:01,278 | INFO | ✅ Database initialized successfully.
+2025-07-09 18:58:01,707 | INFO | Database initialized successfully.
+2025-07-09 18:58:01,707 | INFO | ✅ Database initialized successfully.
+2025-07-09 18:58:13,167 | INFO | Requesters fetched: 6 items
+2025-07-09 18:58:13,171 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:58:17,822 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 18:58:17,824 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 18:58:17,826 | ERROR | Error rendering order detail page: 'order_detail.html' not found in search path: 'frontend/templates'
+2025-07-09 18:58:22,560 | INFO | Requesters fetched: 6 items
+2025-07-09 18:58:22,564 | INFO | Suppliers fetched: 806 items
+2025-07-09 18:58:24,906 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 18:58:24,908 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 18:58:24,909 | ERROR | Error rendering order detail page: 'order_detail.html' not found in search path: 'frontend/templates'
+2025-07-09 18:59:17,734 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 18:59:17,738 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 18:59:17,739 | ERROR | Error rendering order detail page: 'order_detail.html' not found in search path: 'frontend/templates'
+2025-07-09 18:59:25,356 | ERROR | Error rendering order detail page: 'order_detail.html' not found in search path: 'frontend/templates'
+2025-07-09 19:03:10,351 | INFO | Database initialized successfully.
+2025-07-09 19:03:10,352 | INFO | ✅ Database initialized successfully.
+2025-07-09 19:03:10,786 | INFO | Database initialized successfully.
+2025-07-09 19:03:10,786 | INFO | ✅ Database initialized successfully.
+2025-07-09 19:03:20,191 | INFO | Requesters fetched: 6 items
+2025-07-09 19:03:20,197 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:03:22,656 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:03:22,658 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 19:03:31,876 | INFO | Requesters fetched: 6 items
+2025-07-09 19:03:31,881 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:03:34,041 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:03:34,044 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 19:06:11,437 | INFO | Requesters fetched: 6 items
+2025-07-09 19:06:11,440 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:06:13,223 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:06:13,226 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 19:06:20,583 | INFO | Requesters fetched: 6 items
+2025-07-09 19:06:20,586 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:06:21,888 | INFO | Requesters fetched: 6 items
+2025-07-09 19:06:21,892 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:06:23,659 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:06:23,662 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 19:06:36,350 | INFO | Requesters fetched: 6 items
+2025-07-09 19:06:36,354 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:06:37,687 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:06:37,691 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 19:11:22,951 | INFO | Requesters fetched: 6 items
+2025-07-09 19:11:22,954 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:11:25,462 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:11:25,464 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 19:11:28,560 | INFO | Requesters fetched: 6 items
+2025-07-09 19:11:28,562 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:11:37,533 | INFO | Requesters fetched: 6 items
+2025-07-09 19:11:37,536 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:11:39,128 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:11:39,131 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 19:11:42,991 | INFO | Requesters fetched: 6 items
+2025-07-09 19:11:42,994 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:11:44,521 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:11:44,523 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 19:17:24,038 | INFO | Database initialized successfully.
+2025-07-09 19:17:24,039 | INFO | ✅ Database initialized successfully.
+2025-07-09 19:17:42,779 | INFO | Database initialized successfully.
+2025-07-09 19:17:42,779 | INFO | ✅ Database initialized successfully.
+2025-07-09 19:17:43,214 | INFO | Database initialized successfully.
+2025-07-09 19:17:43,214 | INFO | ✅ Database initialized successfully.
+2025-07-09 19:17:51,112 | INFO | Requesters fetched: 6 items
+2025-07-09 19:17:51,114 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:17:53,554 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:17:53,556 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 19:18:01,525 | INFO | Requesters fetched: 6 items
+2025-07-09 19:18:01,529 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:18:03,244 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:18:03,247 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 19:18:05,581 | INFO | Requesters fetched: 6 items
+2025-07-09 19:18:05,583 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:18:09,439 | INFO | Requesters fetched: 6 items
+2025-07-09 19:18:09,445 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:18:11,379 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:18:11,382 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-09 19:18:15,834 | INFO | Starting to render new order page
+2025-07-09 19:18:15,876 | INFO | Requesters fetched: 6 items
+2025-07-09 19:18:15,885 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:18:15,906 | INFO | Items fetched: 9987 items
+2025-07-09 19:18:15,957 | INFO | Items fetched: 9987 items
+2025-07-09 19:18:26,434 | INFO | Items fetched: 9987 items
+2025-07-09 19:18:45,907 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-09 19:18:45,924 | INFO | 🔍 Incoming order: order_number='1002' status='Pending' order_note='' note_to_supplier='' supplier_id=39 requester_id=5 payment_terms='COD' created_date='2025-07-09' items=[OrderItemCreate(item_code='ABRA006', item_description='CUTTING DISC STEEL 230 MM', project='AD01O', qty_ordered=1.0, price=1002.0)] auth_band_required=None
+2025-07-09 19:18:45,927 | INFO | ✅ [ORDER] Success created: Order 1002 with status Pending and total R1002.0
+2025-07-09 19:18:45,952 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1003", "orderId": 256, "orderType": "Pending"}
+2025-07-09 19:18:50,911 | INFO | Requesters fetched: 6 items
+2025-07-09 19:18:50,913 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:18:54,490 | INFO | Requesters fetched: 6 items
+2025-07-09 19:18:54,492 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:19:09,372 | INFO | Requesters fetched: 6 items
+2025-07-09 19:19:09,374 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:19:14,387 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 256
+2025-07-09 19:19:14,389 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 256
+2025-07-09 19:19:27,529 | INFO | Requesters fetched: 6 items
+2025-07-09 19:19:27,534 | INFO | Suppliers fetched: 806 items
+2025-07-09 19:19:29,736 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 256
+2025-07-09 19:19:29,738 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 256
+2025-07-09 19:19:35,656 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-09 19:19:35,658 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 07:08:39,056 | INFO | Requesters fetched: 6 items
+2025-07-10 07:08:39,059 | INFO | Suppliers fetched: 806 items
+2025-07-10 07:08:45,827 | INFO | Requesters fetched: 6 items
+2025-07-10 07:08:45,830 | INFO | Suppliers fetched: 806 items
+2025-07-10 07:08:48,182 | INFO | Requesters fetched: 6 items
+2025-07-10 07:08:48,186 | INFO | Suppliers fetched: 806 items
+2025-07-10 07:08:51,193 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 256
+2025-07-10 07:08:51,196 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 256
+2025-07-10 07:09:03,872 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-10 07:09:03,874 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 07:09:13,427 | INFO | Requesters fetched: 6 items
+2025-07-10 07:09:13,430 | INFO | Suppliers fetched: 806 items
+2025-07-10 07:09:21,623 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-10 07:09:21,625 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 07:09:23,738 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 256
+2025-07-10 07:09:23,741 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 256
+2025-07-10 07:16:26,187 | INFO | Requesters fetched: 6 items
+2025-07-10 07:16:26,191 | INFO | Suppliers fetched: 806 items
+2025-07-10 07:16:28,544 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 256
+2025-07-10 07:16:28,546 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 256
+2025-07-10 07:16:30,518 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-10 07:16:30,521 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 07:25:06,444 | INFO | Requesters fetched: 6 items
+2025-07-10 07:25:06,448 | INFO | Suppliers fetched: 806 items
+2025-07-10 07:25:09,156 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 256
+2025-07-10 07:25:09,158 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 256
+2025-07-10 14:13:54,873 | INFO | Items fetched: 9987 items
+2025-07-10 14:14:10,839 | INFO | Item 10030 updated: code -> ffffffabc, description -> ggggggabc
+2025-07-10 14:14:10,854 | INFO | Items fetched: 9987 items
+2025-07-10 14:14:38,341 | INFO | Requesters fetched: 6 items
+2025-07-10 14:14:38,343 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:14:51,643 | INFO | Starting to render new order page
+2025-07-10 14:14:51,694 | INFO | Requesters fetched: 6 items
+2025-07-10 14:14:51,700 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:14:51,717 | INFO | Items fetched: 9987 items
+2025-07-10 14:14:51,766 | INFO | Items fetched: 9987 items
+2025-07-10 14:15:02,642 | INFO | Items fetched: 9987 items
+2025-07-10 14:15:17,195 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-10 14:15:17,221 | INFO | 🔍 Incoming order: order_number='1003' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=26 requester_id=5 payment_terms='COD' created_date='2025-07-10' items=[OrderItemCreate(item_code='ABRA006', item_description='CUTTING DISC STEEL 230 MM', project='AD01O', qty_ordered=1.0, price=12000.0)] auth_band_required=1
+2025-07-10 14:15:17,227 | INFO | ✅ [ORDER] Success created: Order 1003 with status Awaiting Authorisation and total R12000.0
+2025-07-10 14:15:17,259 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1004", "orderId": 257, "orderType": "Pending"}
+2025-07-10 14:15:22,450 | INFO | Requesters fetched: 6 items
+2025-07-10 14:15:22,453 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:15:25,377 | INFO | Requesters fetched: 6 items
+2025-07-10 14:15:25,380 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:15:31,447 | INFO | Requesters fetched: 6 items
+2025-07-10 14:15:31,449 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:15:37,001 | INFO | ✅ [ORDER] Success deleted: Order 257 marked as Deleted
+2025-07-10 14:15:40,731 | INFO | Requesters fetched: 6 items
+2025-07-10 14:15:40,734 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:15:45,547 | INFO | Requesters fetched: 6 items
+2025-07-10 14:15:45,550 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:16:00,181 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 257
+2025-07-10 14:16:00,184 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 257
+2025-07-10 14:16:18,531 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 256
+2025-07-10 14:16:18,533 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 256
+2025-07-10 14:41:58,084 | INFO | Requesters fetched: 6 items
+2025-07-10 14:41:58,089 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:41:58,102 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 14:42:13,516 | INFO | Requesters fetched: 6 items
+2025-07-10 14:42:13,521 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:42:16,510 | INFO | Requesters fetched: 6 items
+2025-07-10 14:42:16,512 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:42:18,272 | INFO | Requesters fetched: 6 items
+2025-07-10 14:42:18,280 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:42:18,962 | INFO | Requesters fetched: 6 items
+2025-07-10 14:42:18,964 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:42:19,991 | INFO | Requesters fetched: 6 items
+2025-07-10 14:42:19,996 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:42:20,948 | INFO | Requesters fetched: 6 items
+2025-07-10 14:42:20,950 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:42:22,154 | INFO | Requesters fetched: 6 items
+2025-07-10 14:42:22,161 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:42:22,172 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 14:42:25,453 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-10 14:42:25,457 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 14:46:28,576 | INFO | Requesters fetched: 6 items
+2025-07-10 14:46:28,579 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:46:28,590 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 14:46:39,554 | INFO | Requesters fetched: 6 items
+2025-07-10 14:46:39,558 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:46:39,570 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 14:46:40,329 | INFO | Requesters fetched: 6 items
+2025-07-10 14:46:40,332 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:46:40,345 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 14:52:33,078 | INFO | Requesters fetched: 6 items
+2025-07-10 14:52:33,081 | INFO | Suppliers fetched: 806 items
+2025-07-10 14:52:33,093 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 14:52:37,396 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 257
+2025-07-10 14:52:37,399 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 257
+2025-07-10 14:52:41,416 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-10 14:52:41,418 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 14:52:50,787 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 256
+2025-07-10 14:52:50,790 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 256
+2025-07-10 15:07:22,760 | INFO | Requesters fetched: 6 items
+2025-07-10 15:07:22,764 | INFO | Suppliers fetched: 806 items
+2025-07-10 15:07:22,774 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 15:07:25,264 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-10 15:07:25,267 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 15:18:49,442 | INFO | Requesters fetched: 6 items
+2025-07-10 15:18:49,446 | INFO | Suppliers fetched: 806 items
+2025-07-10 15:18:49,457 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 15:18:51,378 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-10 15:18:51,381 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 15:19:03,291 | INFO | Requesters fetched: 6 items
+2025-07-10 15:19:03,295 | INFO | Suppliers fetched: 806 items
+2025-07-10 15:19:03,307 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 15:19:05,993 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-10 15:19:05,996 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 15:22:42,556 | INFO | Database initialized successfully.
+2025-07-10 15:22:42,556 | INFO | ✅ Database initialized successfully.
+2025-07-10 15:22:50,396 | INFO | Database initialized successfully.
+2025-07-10 15:22:50,396 | INFO | ✅ Database initialized successfully.
+2025-07-10 15:22:50,849 | INFO | Database initialized successfully.
+2025-07-10 15:22:50,849 | INFO | ✅ Database initialized successfully.
+2025-07-10 15:23:12,984 | INFO | Requesters fetched: 6 items
+2025-07-10 15:23:12,987 | INFO | Suppliers fetched: 806 items
+2025-07-10 15:23:12,992 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 15:23:15,130 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-10 15:23:15,133 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 15:23:20,386 | INFO | Requesters fetched: 6 items
+2025-07-10 15:23:20,389 | INFO | Suppliers fetched: 806 items
+2025-07-10 15:23:20,400 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 15:23:24,972 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-10 15:23:24,975 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 15:46:17,580 | INFO | Database initialized successfully.
+2025-07-10 15:46:17,580 | INFO | ✅ Database initialized successfully.
+2025-07-10 15:46:23,223 | INFO | Database initialized successfully.
+2025-07-10 15:46:23,223 | INFO | ✅ Database initialized successfully.
+2025-07-10 15:46:23,687 | INFO | Database initialized successfully.
+2025-07-10 15:46:23,687 | INFO | ✅ Database initialized successfully.
+2025-07-10 15:46:33,780 | INFO | Requesters fetched: 6 items
+2025-07-10 15:46:33,785 | INFO | Suppliers fetched: 806 items
+2025-07-10 15:46:33,794 | ERROR | ❌ [ORDERS] Failed fetching all: no such column: at.user_id
+2025-07-10 15:46:41,374 | INFO | Requesters fetched: 6 items
+2025-07-10 15:46:41,379 | INFO | Suppliers fetched: 806 items
+2025-07-10 15:46:41,393 | ERROR | ❌ [ORDERS] Failed fetching all: no such column: at.user_id
+2025-07-10 15:47:36,012 | ERROR | ❌ [ORDERS] Failed fetching all: no such column: at.user_id
+2025-07-10 17:30:45,642 | INFO | Database initialized successfully.
+2025-07-10 17:30:45,643 | INFO | ✅ Database initialized successfully.
+2025-07-10 17:30:56,274 | INFO | Database initialized successfully.
+2025-07-10 17:30:56,274 | INFO | ✅ Database initialized successfully.
+2025-07-10 17:31:07,770 | INFO | Database initialized successfully.
+2025-07-10 17:31:07,771 | INFO | ✅ Database initialized successfully.
+2025-07-10 17:31:08,227 | INFO | Database initialized successfully.
+2025-07-10 17:31:08,227 | INFO | ✅ Database initialized successfully.
+2025-07-10 17:31:17,396 | INFO | Requesters fetched: 6 items
+2025-07-10 17:31:17,400 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:31:17,411 | ERROR | ❌ [ORDERS] Failed fetching all: no such column: at.user_id
+2025-07-10 17:31:32,541 | INFO | Requesters fetched: 6 items
+2025-07-10 17:31:32,545 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:31:32,555 | ERROR | ❌ [ORDERS] Failed fetching all: no such column: at.user_id
+2025-07-10 17:31:35,550 | INFO | Requesters fetched: 6 items
+2025-07-10 17:31:35,552 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:31:37,648 | INFO | Starting to render new order page
+2025-07-10 17:31:37,686 | INFO | Requesters fetched: 6 items
+2025-07-10 17:31:37,693 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:31:37,711 | INFO | Items fetched: 9987 items
+2025-07-10 17:31:37,759 | INFO | Items fetched: 9987 items
+2025-07-10 17:31:39,065 | INFO | Requesters fetched: 6 items
+2025-07-10 17:31:39,069 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:31:40,358 | INFO | Requesters fetched: 6 items
+2025-07-10 17:31:40,361 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:31:41,640 | INFO | Requesters fetched: 6 items
+2025-07-10 17:31:41,646 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:31:42,960 | INFO | Requesters fetched: 6 items
+2025-07-10 17:31:42,963 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:31:44,129 | INFO | Requesters fetched: 6 items
+2025-07-10 17:31:44,137 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:31:44,149 | ERROR | ❌ [ORDERS] Failed fetching all: no such column: at.user_id
+2025-07-10 17:43:26,195 | INFO | Database initialized successfully.
+2025-07-10 17:43:26,195 | INFO | ✅ Database initialized successfully.
+2025-07-10 17:44:40,131 | INFO | Database initialized successfully.
+2025-07-10 17:44:40,131 | INFO | ✅ Database initialized successfully.
+2025-07-10 17:44:51,788 | INFO | Database initialized successfully.
+2025-07-10 17:44:51,788 | INFO | ✅ Database initialized successfully.
+2025-07-10 17:44:52,231 | INFO | Database initialized successfully.
+2025-07-10 17:44:52,232 | INFO | ✅ Database initialized successfully.
+2025-07-10 17:45:01,932 | INFO | Requesters fetched: 6 items
+2025-07-10 17:45:01,937 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:45:01,945 | ERROR | ❌ [ORDERS] Failed fetching all: no such column: at.user_id
+2025-07-10 17:45:07,800 | INFO | Requesters fetched: 6 items
+2025-07-10 17:45:07,807 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:45:07,818 | ERROR | ❌ [ORDERS] Failed fetching all: no such column: at.user_id
+2025-07-10 17:48:11,071 | INFO | Database initialized successfully.
+2025-07-10 17:48:11,071 | INFO | ✅ Database initialized successfully.
+2025-07-10 17:48:15,280 | INFO | Database initialized successfully.
+2025-07-10 17:48:15,280 | INFO | ✅ Database initialized successfully.
+2025-07-10 17:48:15,732 | INFO | Database initialized successfully.
+2025-07-10 17:48:15,732 | INFO | ✅ Database initialized successfully.
+2025-07-10 17:48:23,291 | INFO | Requesters fetched: 6 items
+2025-07-10 17:48:23,295 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:48:23,303 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 3 total orders for audit trail
+2025-07-10 17:48:28,325 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 255
+2025-07-10 17:48:28,327 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 255
+2025-07-10 17:48:51,751 | INFO | Starting to render new order page
+2025-07-10 17:48:51,790 | INFO | Requesters fetched: 6 items
+2025-07-10 17:48:51,795 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:48:51,814 | INFO | Items fetched: 9987 items
+2025-07-10 17:48:51,863 | INFO | Items fetched: 9987 items
+2025-07-10 17:49:04,215 | INFO | Items fetched: 9987 items
+2025-07-10 17:49:16,705 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-10 17:49:16,732 | INFO | 🔍 Incoming order: order_number='1004' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=15 requester_id=6 payment_terms='COD' created_date='2025-07-10' items=[OrderItemCreate(item_code='ABRA006', item_description='CUTTING DISC STEEL 230 MM', project='AD01R', qty_ordered=1.0, price=15000.0)] auth_band_required=1
+2025-07-10 17:49:16,735 | INFO | ✅ [ORDER] Success created: Order 1004 with status Awaiting Authorisation and total R15000.0
+2025-07-10 17:49:16,764 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1005", "orderId": 258, "orderType": "Pending"}
+2025-07-10 17:49:24,464 | INFO | Requesters fetched: 6 items
+2025-07-10 17:49:24,467 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:49:32,111 | INFO | Requesters fetched: 6 items
+2025-07-10 17:49:32,113 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:49:37,531 | INFO | Requesters fetched: 6 items
+2025-07-10 17:49:37,533 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:49:46,056 | INFO | Requesters fetched: 6 items
+2025-07-10 17:49:46,059 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:49:48,447 | INFO | Requesters fetched: 6 items
+2025-07-10 17:49:48,451 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:49:48,464 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 4 total orders for audit trail
+2025-07-10 17:49:54,763 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 257
+2025-07-10 17:49:54,766 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 257
+2025-07-10 17:50:02,154 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 258
+2025-07-10 17:50:02,156 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 258
+2025-07-10 17:52:28,990 | INFO | Requesters fetched: 6 items
+2025-07-10 17:52:28,997 | INFO | Suppliers fetched: 806 items
+2025-07-10 17:52:29,012 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 4 total orders for audit trail
+2025-07-10 17:52:47,831 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 258
+2025-07-10 17:52:47,833 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 258
+2025-07-10 18:16:44,262 | INFO | Requesters fetched: 6 items
+2025-07-10 18:16:44,266 | INFO | Suppliers fetched: 806 items
+2025-07-10 18:16:44,301 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 4 total orders for audit trail
+2025-07-10 18:16:47,296 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 258
+2025-07-10 18:16:47,298 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 258
+2025-07-11 06:33:54,220 | INFO | Database initialized successfully.
+2025-07-11 06:33:54,220 | INFO | ✅ Database initialized successfully.
+2025-07-11 06:34:05,117 | INFO | Database initialized successfully.
+2025-07-11 06:34:05,117 | INFO | ✅ Database initialized successfully.
+2025-07-11 06:34:13,010 | INFO | Database initialized successfully.
+2025-07-11 06:34:13,010 | INFO | ✅ Database initialized successfully.
+2025-07-11 06:34:13,445 | INFO | Database initialized successfully.
+2025-07-11 06:34:13,445 | INFO | ✅ Database initialized successfully.
+2025-07-11 06:34:28,557 | INFO | Requesters fetched: 6 items
+2025-07-11 06:34:28,560 | INFO | Suppliers fetched: 806 items
+2025-07-11 06:34:28,566 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 4 total orders for audit trail
+2025-07-11 06:34:35,783 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 258
+2025-07-11 06:34:35,784 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 258
+2025-07-11 06:34:41,828 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 257
+2025-07-11 06:34:41,830 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 257
+2025-07-11 06:34:50,506 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 256
+2025-07-11 06:34:50,508 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 256

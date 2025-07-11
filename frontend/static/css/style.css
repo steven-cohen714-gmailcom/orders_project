@@ -471,3 +471,149 @@ table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
     display: inline-block;
     margin-right: 0.4rem;
 }
+
+/* File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/css/style.css */
+
+/* New styles for the Audit Trail "blue rectangle" grouping effect */
+
+/* Container for each full order block (header row + details) */
+.order-block {
+    border: 1px solid #007bff; /* Blue border */
+    background-color: #f0f8ff; /* Light blue background */
+    margin-bottom: 1rem; /* Space between order blocks */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Ensures content stays within rounded corners */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle shadow */
+}
+
+/* Style for the header row within the order-block */
+.order-block-header-row {
+    display: flex; /* Use flexbox for column layout within the row */
+    align-items: center; /* Vertically align content */
+    background-color: #e8eef4; /* Light grey background for the header area */
+    padding: 0.75rem 1rem; /* Padding inside the header row */
+    font-size: 0.95rem;
+    font-weight: bold; /* Make header text bold */
+    color: #1a3c5e; /* Darker text */
+    border-bottom: 1px solid #cceeff; /* Light blue border at the bottom of the header */
+}
+
+/* Style for individual "cells" within the header row */
+.order-cell {
+    padding: 0 0.5rem; /* Horizontal padding for spacing */
+    text-align: left; /* Default left alignment */
+    flex-basis: 0; /* Allow flex items to grow from 0 */
+    flex-grow: 1; /* Allow flex items to grow to fill space */
+    min-width: 50px; /* Minimum width for very small columns */
+    /* Set specific flex-grow values to mimic column widths */
+}
+
+/* Adjust flex-grow for specific columns to match approximate table widths */
+/* These flex-grow values are approximations; you might need to fine-tune them */
+.order-block-header-row .order-cell:nth-child(1) { flex-grow: 1; min-width: 100px; } /* Request Date */
+.order-block-header-row .order-cell:nth-child(2) { flex-grow: 1.2; min-width: 100px; } /* Order Number */
+.order-block-header-row .order-cell:nth-child(3) { flex-grow: 1.5; min-width: 120px; } /* Requester */
+.order-block-header-row .order-cell:nth-child(4) { flex-grow: 2; min-width: 150px; } /* Supplier */
+.order-block-header-row .order-cell:nth-child(5) { flex-grow: 0.8; text-align: right; padding-right: 7mm; min-width: 80px; } /* Total (right aligned, with padding) */
+.order-block-header-row .order-cell:nth-child(6) { flex-grow: 1; min-width: 80px; } /* Status */
+.order-block-header-row .order-cell:nth-child(7) { flex-grow: 0.8; min-width: 80px; } /* User */
+.order-block-header-row .order-cell:nth-child(8) { flex-grow: 2; text-align: left; min-width: 150px; } /* Actions (left aligned) */
+
+
+/* Styling for the expanded detail section */
+.order-block-detail-row {
+    padding: 1rem; /* Internal padding */
+    background-color: #f8f8ff; /* Slightly different background for details */
+    border-top: 1px dashed #cceeff; /* Subtle dashed line above details */
+}
+
+/* Styling for sections within the expanded detail row (Payment, Items, etc.) */
+.expanded-section {
+    margin-bottom: 1rem; /* Space between sections */
+}
+.expanded-section:last-child {
+    margin-bottom: 0; /* No margin after the last section */
+}
+
+/* Specific style for payment details section */
+.payment-details-section {
+    background-color: #e6f7ff; /* Light blue background as in your original snippet */
+    border-left: 4px solid #007bff; /* Blue left border */
+    padding: 0.8rem;
+    font-size: 0.95rem;
+}
+
+/* Style for tables within the expanded detail section (items, receipts) */
+.items-table-section table,
+.items-table-section table th, /* Ensure inner table headers are also styled */
+.items-table-section table td {
+    border: 1px solid #ddd; /* Lighter border for inner tables */
+    padding: 6px;
+    font-size: 0.9rem;
+}
+
+.items-table-section table th {
+    background-color: #f2f2f2; /* Light grey for inner table headers */
+    font-weight: bold;
+}
+
+/* Specific alignment for columns within expanded items table */
+.items-table-section table td:nth-child(3), /* Qty */
+.items-table-section table td:nth-child(4), /* Price */
+.items-table-section table td:nth-child(5) { /* Total */
+    text-align: right;
+}
+
+/* Specific alignment for columns within receipts sub-table */
+.items-table-section table table td:nth-child(1) { /* Qty in Receipts */
+    text-align: right;
+}
+.items-table-section table table td:nth-child(2), /* Date in Receipts */
+.items-table-section table table td:nth-child(3) { /* User in Receipts */
+    text-align: left;
+}
+/* Add padding/margin to separate receipt sub-table from its header if needed */
+.items-table-section table td table {
+    margin-top: 5px; /* Small top margin for receipts table */
+    border: none; /* No border around the receipts sub-table itself */
+    box-shadow: none; /* No shadow for inner tables */
+}
+.items-table-section table td table td {
+    padding: 3px; /* Smaller padding for receipt details */
+    background-color: #fcfcff; /* Very light background for receipts */
+}
+.items-table-section table td table thead tr {
+    background-color: #eef; /* Slightly darker header for receipts sub-table */
+}
+
+/* File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/css/style.css */
+
+/* New styles for the Audit Trail header (replacing the old thead) */
+.audit-header-row {
+    display: flex; /* Makes it a flex container to align columns */
+    align-items: center; /* Vertically centers text */
+    background-color: #e8eef4; /* Same background as old th */
+    padding: 0.75rem 1rem; /* Same padding as .order-block-header-row */
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #1a3c5e;
+    border-bottom: 1px solid #cceeff; /* Visual separator */
+    border-radius: 8px 8px 0 0; /* Rounded top corners matching order-block */
+    margin-bottom: 0.5rem; /* Small space between header and first order block */
+}
+
+/* Styles for the container of all audit trail order blocks */
+.audit-body-blocks {
+    /* This div now essentially replaces the <tbody> element visually */
+    /* No specific flex/grid here, just a container */
+}
+
+/* These rules ensure the widths of the header cells match the content cells */
+.audit-header-row .order-cell:nth-child(1) { flex-grow: 1; min-width: 100px; } /* Request Date */
+.audit-header-row .order-cell:nth-child(2) { flex-grow: 1.2; min-width: 100px; } /* Order Number */
+.audit-header-row .order-cell:nth-child(3) { flex-grow: 1.5; min-width: 120px; } /* Requester */
+.audit-header-row .order-cell:nth-child(4) { flex-grow: 2; min-width: 150px; } /* Supplier */
+.audit-header-row .order-cell:nth-child(5) { flex-grow: 0.8; text-align: right; padding-right: 7mm; min-width: 80px; } /* Total */
+.audit-header-row .order-cell:nth-child(6) { flex-grow: 1; min-width: 80px; } /* Status */
+.audit-header-row .order-cell:nth-child(7) { flex-grow: 0.8; min-width: 80px; } /* User */
+.audit-header-row .order-cell:nth-child(8) { flex-grow: 2; text-align: left; min-width: 150px; } /* Actions */

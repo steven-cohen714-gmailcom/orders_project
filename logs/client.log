@@ -53,3 +53,13 @@
 2025-07-09 12:18:45,064 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1011", "orderId": 253, "orderType": "Pending"}
 2025-07-09 12:21:10,899 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
 2025-07-09 12:21:10,953 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1012", "orderId": 254, "orderType": "Pending"}
+2025-07-09 18:03:32,362 | INFO | INFO | previewOrder started | {}
+2025-07-09 18:03:32,570 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-09 18:04:05,574 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-09 18:04:05,629 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1002", "orderId": 255, "orderType": "Pending"}
+2025-07-09 19:18:45,907 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-09 19:18:45,952 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1003", "orderId": 256, "orderType": "Pending"}
+2025-07-10 14:15:17,195 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-10 14:15:17,259 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1004", "orderId": 257, "orderType": "Pending"}
+2025-07-10 17:49:16,705 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-10 17:49:16,764 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1005", "orderId": 258, "orderType": "Pending"}
