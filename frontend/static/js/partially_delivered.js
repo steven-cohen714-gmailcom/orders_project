@@ -94,11 +94,24 @@ async function loadOrders() {
                         <span class="note-icon" title="Edit Order Note" data-order-id="${order.id || ''}" data-order-note="${sanitizedOrderNote}" id="order-note-${index}">📝</span>
                         <span class="supplier-note-icon" title="View Note to Supplier" data-supplier-note="${sanitizedSupplierNote}" data-order-number="${sanitizedOrderNumber}" id="supplier-note-${index}">📦</span>
                         ${receiveIconHTML}
-                        <span class="complete-icon" title="Mark as Complete" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">✔️</span>
                         <span class="pdf-icon" title="View Purchase Order PDF" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📄</span>
                     </td>
                 `;
                 tbody.appendChild(row);
+
+                // --- FIX START: Create the detailRow and detailContainer ---
+                const detailRow = document.createElement('tr');
+                detailRow.className = 'expanded-details-row'; // Add a class for styling if needed
+                const detailCell = document.createElement('td');
+                // IMPORTANT: Set colSpan correctly for this table (7 columns in this case)
+                detailCell.colSpan = 7; // Created Date, Order Number, Requester, Supplier, Total, Status, Actions
+                const detailContainer = document.createElement('div');
+                detailContainer.id = `detail-container-${order.id}`; // Unique ID for this container
+                detailContainer.style.display = 'none'; // Initially hidden
+                detailCell.appendChild(detailContainer);
+                detailRow.appendChild(detailCell);
+                tbody.appendChild(detailRow); // Append the detail row immediately after the main row
+                // --- FIX END ---
 
                 if (["Pending", "Authorised", "Partially Received"].includes(rawStatus)) {
                     const receiveIcon = row.querySelector(".receive-icon");
@@ -131,7 +144,9 @@ async function loadOrders() {
                         alert("Cannot expand line items: No order ID available");
                         return;
                     }
-                    window.expandLineItems(order.id, e.target);
+                    // --- FIX START: Pass all 4 parameters ---
+                    window.expandLineItems(order.id, e.target, detailContainer, order);
+                    // --- FIX END ---
                 });
 
                 row.querySelector(".clip-icon").addEventListener("click", async (e) => {
@@ -147,25 +162,26 @@ async function loadOrders() {
                     }
                 });
 
-                row.querySelector(".complete-icon").addEventListener("click", async () => {
-                    if (confirm(`Are you sure you want to mark order ${sanitizedOrderNumber} as complete with partial delivery?`)) {
-                        try {
-                            const res = await fetch(`/orders/mark_complete/${order.id}`, {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                            });
-                            if (!res.ok) {
-                                const errorText = await res.text();
-                                throw new Error(`Failed to mark order as complete: ${res.status} - ${errorText}`);
-                            }
-                            alert(`Order ${sanitizedOrderNumber} marked as complete.`);
-                            loadOrders();
-                        } catch (error) {
-                            console.error("Error marking order as complete:", error);
-                            alert(`Failed to mark order as complete: ${error.message}`);
-                        }
-                    }
-                });
+                // --- Removed the complete-icon event listener ---
+                // row.querySelector(".complete-icon").addEventListener("click", async () => {
+                //     if (confirm(`Are you sure you want to mark order ${sanitizedOrderNumber} as complete with partial delivery?`)) {
+                //         try {
+                //             const res = await fetch(`/orders/mark_complete/${order.id}`, {
+                //                 method: "POST",
+                //                 headers: { "Content-Type": "application/json" },
+                //             });
+                //             if (!res.ok) {
+                //                 const errorText = await res.text();
+                //                 throw new Error(`Failed to mark order as complete: ${res.status} - ${errorText}`);
+                //             }
+                //             alert(`Order ${sanitizedOrderNumber} marked as complete.`);
+                //             loadOrders();
+                //         } catch (error) {
+                //             console.error("Error marking order as complete:", error);
+                //             alert(`Failed to mark order as complete: ${error.message}`);
+                //         }
+                //     }
+                // });
 
                 row.querySelector(".pdf-icon").addEventListener("click", async () => {
                     try {
@@ -178,7 +194,9 @@ async function loadOrders() {
                             if (blob.size === 0) {
                                 throw new Error('Received empty PDF file');
                             }
-                            showPDFModal(blob);
+                            // --- FIX START: Pass order.id and order.order_number ---
+                            showPDFModal(blob, order.id, sanitizedOrderNumber);
+                            // --- FIX END ---
                         } else {
                             const data = await response.json();
                             throw new Error(`Unexpected response: ${JSON.stringify(data)}`);

@@ -1,9 +1,22 @@
 // File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/components/expand_line_items.js
 
 // Remove the 'export' keyword here
-// MODIFIED: Added detailContainer and orderHeaderData to parameters
+// MODIFIED: Make detailContainer and orderHeaderData optional with default values or checks
 async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer, orderHeaderData) {
   console.log(`Expanding with receipts for order ID: ${orderId}`);
+
+  // FIX START: Safely check if detailContainer exists before accessing its properties
+  // If detailContainer is not provided, we need to create one or assume it's for a different display method.
+  // Given the error, it's expected to be provided, but if not, this will prevent crash.
+  if (!detailContainer) {
+    // This scenario means the calling code is not providing the container.
+    // This function likely expects a container to exist for toggling.
+    // For now, let's log an error and return to prevent further issues.
+    console.error("expandLineItemsWithReceipts: detailContainer is undefined. Cannot proceed.");
+    // You might need a more sophisticated fallback here, depending on how other screens work.
+    // For a quick fix to stop the crash:
+    return; // Stop execution if critical parameter is missing
+  }
 
   // Toggle if content already exists and is visible/hidden
   const isHidden = detailContainer.style.display === "none";
@@ -17,6 +30,7 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
   if (isHidden && detailContainer.innerHTML !== '') {
       return;
   }
+  // FIX END
 
   try {
     // ── Fetch items, receipt logs, AND main order details in parallel ───────────────────────────────
@@ -51,17 +65,16 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
     // MODIFIED: Re-structure Payment Details as a table section with robust data handling
     // Check if amount_paid is a valid number, otherwise default to 0 for formatting
     const rawPaidAmount = parseFloat(orderData.amount_paid);
+    // FIX START: Ensure orderData.payment_date exists as well
     if (!isNaN(rawPaidAmount) && orderData.payment_date) { // Only display if valid amount and date exist
         const formattedPaidAmount = `R${rawPaidAmount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         const formattedPaymentDate = new Date(orderData.payment_date).toLocaleDateString('en-ZA');
         
-        // --- FIX START: Use orderData for values fetched from backend ---
-        const paidByUser = orderData.paid_by_user || ''; // Corrected: Reading from orderData
-        const rawOriginalTotal = parseFloat(orderData.total); // Corrected: Reading from orderData
+        // Use orderData for values fetched from backend
+        const paidByUser = orderData.paid_by_user || '';
+        const rawOriginalTotal = parseFloat(orderData.total);
         const originalTotal = !isNaN(rawOriginalTotal) ? `R${rawOriginalTotal.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '';
-        const supplierName = orderData.supplier_name || ''; // Corrected: Reading from orderData and using 'supplier_name'
-        // --- FIX END ---
-
+        const supplierName = orderData.supplier_name || '';
 
         contentHTML += `
             <div class="expanded-section payment-table-section">
@@ -87,7 +100,18 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
                 </table>
             </div>
             <div style="height: 1rem;"></div> `;
+    } else {
+        // FIX: Add a fallback if payment details are not available or invalid
+        // This ensures the section is not completely missing, but informs the user.
+        contentHTML += `
+            <div class="expanded-section payment-table-section">
+                <p>No valid payment details available for this order.</p>
+            </div>
+            <div style="height: 1rem;"></div>
+        `;
     }
+    // FIX END
+
 
     if (!items || items.length === 0) {
       contentHTML += `<div class="expanded-section"><em>No items found.</em></div>`;
@@ -179,8 +203,12 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
   } catch (err) {
     console.error("❌ Error expanding order details:", err);
     alert(`❌ Could not expand order details: ${err.message}`);
-    detailContainer.innerHTML = `<div class="expanded-section" style="color:red;">Error loading details: ${err.message}</div>`;
-    detailContainer.style.display = "block";
+    // FIX START: Ensure detailContainer is not undefined before manipulating
+    if (detailContainer) {
+        detailContainer.innerHTML = `<div class="expanded-section" style="color:red;">Error loading details: ${err.message}</div>`;
+        detailContainer.style.display = "block";
+    }
+    // FIX END
     iconElement.textContent = "⬇️";
   }
 }

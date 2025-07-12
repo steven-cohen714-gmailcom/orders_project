@@ -13,13 +13,6 @@ console.log("Loading pending_orders.js");
 // New function to format currency with thousand separators and 2 decimal places
 function formatCurrency(amount) {
     if (amount == null) return "R0.00";
-    // Using 'en-ZA' locale for South African Rand formatting which typically uses space as thousand separator
-    // and comma as decimal separator, but toLocaleString default behavior often uses comma for thousands
-    // and period for decimals for 'en-ZA' with currency, so let's ensure standard formatting.
-    // For consistency with typical "thousand separator" requests, we'll aim for a space or thin space.
-    // The toLocaleString with 'en-US' or 'en-GB' and then adjusting can yield exact results.
-    // For simplicity with toLocaleString and direct number, 'en-ZA' generally formats correctly for R values
-    // with typical period for decimal, comma for thousands or just a space.
     return `R${parseFloat(amount).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
@@ -121,6 +114,20 @@ async function loadOrders() {
 
                 tbody.appendChild(row);
 
+                // --- FIX START: Create the detailRow and detailContainer ---
+                const detailRow = document.createElement('tr');
+                detailRow.className = 'expanded-details-row'; // Add a class for styling if needed
+                const detailCell = document.createElement('td');
+                detailCell.colSpan = 7; // Ensure this spans all columns of your main table
+                const detailContainer = document.createElement('div');
+                detailContainer.id = `detail-container-${order.id}`; // Unique ID for this container
+                detailContainer.style.display = 'none'; // Initially hidden
+                detailCell.appendChild(detailContainer);
+                detailRow.appendChild(detailCell);
+                tbody.appendChild(detailRow); // Append the detail row immediately after the main row
+                // --- FIX END ---
+
+
                 row.querySelector(`#supplier-note-${index}`).addEventListener("click", () => {
                     try {
                         window.showSupplierNoteModal(sanitizedSupplierNote);
@@ -145,7 +152,9 @@ async function loadOrders() {
                         alert("Cannot expand line items: No order ID available");
                         return;
                     }
-                    window.expandLineItems(order.id, e.target);
+                    // --- FIX START: Pass all 4 parameters ---
+                    window.expandLineItems(order.id, e.target, detailContainer, order);
+                    // --- FIX END ---
                 });
                 row.querySelector(".clip-icon").addEventListener("click", (e) => {
                     const target = e.target;

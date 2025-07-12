@@ -80,8 +80,24 @@ async function loadOrders() {
 
         tbody.appendChild(row);
 
+        // --- FIX START: Create the detailRow and detailContainer ---
+        const detailRow = document.createElement('tr');
+        detailRow.className = 'expanded-details-row';
+        const detailCell = document.createElement('td');
+        // IMPORTANT: Set colSpan correctly for this table (7 columns in this case)
+        detailCell.colSpan = 7; // Created Date, Order Number, Requester, Supplier, Total, Status, Actions
+        const detailContainer = document.createElement('div');
+        detailContainer.id = `detail-container-${order.id}`;
+        detailContainer.style.display = 'none'; // Initially hidden
+        detailCell.appendChild(detailContainer);
+        detailRow.appendChild(detailCell);
+        tbody.appendChild(detailRow); // Append right after the main order row
+        // --- FIX END ---
+
         row.querySelector(".expand-icon").addEventListener("click", (e) =>
-          expandLineItems(order.id, e.target)
+          // --- FIX START: Pass all 4 parameters ---
+          expandLineItems(order.id, e.target, detailContainer, order)
+          // --- FIX END ---
         );
 
         row.querySelector(".clip-icon").addEventListener("click", async (e) => {
@@ -115,7 +131,9 @@ async function loadOrders() {
             if (!res.ok) throw new Error(`PDF failed (${res.status})`);
             const blob = await res.blob();
             if (!blob.size) throw new Error("Empty PDF");
-            showPDFModal(blob);
+            // --- FIX START: Pass order.id and order.order_number ---
+            showPDFModal(blob, order.id, order.order_number);
+            // --- FIX END ---
           } catch (err) {
             alert("❌ Could not generate PDF");
             console.error(err);

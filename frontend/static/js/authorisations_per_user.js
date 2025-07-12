@@ -1,6 +1,7 @@
 // File: frontend/static/js/authorisations_per_user.js
 
 import { loadRequesters, loadSuppliers } from "./components/shared_filters.js";
+import { expandLineItemsWithReceipts } from "./components/expand_line_items.js"; // Ensure this is imported if you're using it
 
 // New function to format currency with thousand separators and 2 decimal places
 function formatCurrency(amount) {
@@ -35,9 +36,30 @@ export async function setupAuthorisationUI({
       const res = await fetch("/orders/api/awaiting_authorisation");
       const orders = await res.json();
 
-      const userBand = parseInt(user.auth_threshold_band);
+      const userBand = parseInt(user.auth_threshold_band); // User's threshold band (e.g., 1, 2, 3, 4)
+      
       const eligibleOrders = orders.filter(
-        order => parseInt(order.required_auth_band) === userBand
+        order => {
+          // Double check status, though API /awaiting_authorisation should handle this.
+          // This check is mainly defensive.
+          if (order.status !== 'Awaiting Authorisation') {
+              return false;
+          }
+
+          const orderRequiredBand = order.required_auth_band; // Value is NULL or INTEGER from DB
+
+          // FIX START: Handle NULL or 0 for required_auth_band - THIS IS THE CRUCIAL CHANGE
+          if (orderRequiredBand === null || orderRequiredBand === 0) {
+              // If an order has no specific required band (NULL or 0), it should be visible
+              // to users with the lowest authorization level.
+              // Assuming auth_threshold_band of 1 is the lowest level.
+              return userBand === 1;
+          }
+          // FIX END
+
+          // If order has a specific required_auth_band, it must strictly match the user's band
+          return parseInt(orderRequiredBand) === userBand;
+        }
       );
 
       if (eligibleOrders.length === 0) {
@@ -54,6 +76,7 @@ export async function setupAuthorisationUI({
           month: "short"
         })} ${created.getFullYear()}`;
 
+        // Added expand-icon span and an extra column for it if needed
         row.innerHTML = `
           <td>${formattedDate}</td>
           <td>${order.order_number}</td>
@@ -62,10 +85,37 @@ export async function setupAuthorisationUI({
           <td>${formatCurrency(order.total)}</td>
           <td>${order.status}</td>
           <td>
+            <span class="expand-icon" style="cursor:pointer" title="View Line Items">⬇️</span>
             <button class="view-btn">View</button>
             <button class="auth-btn">Authorise</button>
           </td>
         `;
+
+        tableBody.appendChild(row);
+
+        // ADDED: Create the detailRow and detailContainer, similar to pending/received orders
+        const detailRow = document.createElement('tr');
+        detailRow.className = 'expanded-details-row';
+        const detailCell = document.createElement('td');
+        detailCell.colSpan = 7; // Assuming 7 columns (Date, Order Number, Requester, Supplier, Total, Status, Actions)
+        const detailContainer = document.createElement('div');
+        detailContainer.id = `detail-container-${order.id}`;
+        detailContainer.style.display = 'none';
+        detailCell.appendChild(detailContainer);
+        detailRow.appendChild(detailCell);
+        tableBody.appendChild(detailRow); // Append right after the main order row
+
+        // ADDED: Event listener for the expand icon
+        row.querySelector(".expand-icon").addEventListener("click", (e) => {
+          if (!order.id) {
+            console.error("No order ID provided for expanding line items");
+            alert("Cannot expand line items: No order ID available");
+            return;
+          }
+          // IMPORTANT: ensure expandLineItemsWithReceipts is correctly imported if you are using this
+          expandLineItemsWithReceipts(order.id, e.target, detailContainer, order);
+        });
+
 
         row.querySelector(".view-btn").addEventListener("click", () => {
           try {
@@ -90,7 +140,8 @@ export async function setupAuthorisationUI({
               console.log(msg);
               alert(msg);  // or use a nicer toast if you have one
               onAuthorised(order);
-              row.remove();
+              // FIX: Refresh the orders list after authorization to remove the authorized order
+              await loadOrdersForUser(user); 
             }
 
           } catch (err) {
@@ -98,12 +149,11 @@ export async function setupAuthorisationUI({
             onError("❌ Network or server error while authorising.");
           }
         });
-
-        tableBody.appendChild(row);
       }
     } catch (err) {
       console.error("❌ Could not load orders:", err);
       tableBody.innerHTML = "<tr><td colspan='7'>❌ Error loading orders.</td></tr>";
+      onError("❌ Error loading orders for authorisation.");
     }
   }
 }

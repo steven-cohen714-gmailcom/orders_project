@@ -82,8 +82,23 @@ async function loadOrders() {
 
         tbody.appendChild(row);
 
+        // --- FIX START: Create the detailRow and detailContainer ---
+        const detailRow = document.createElement('tr');
+        detailRow.className = 'expanded-details-row'; // Add a class for styling if needed
+        const detailCell = document.createElement('td');
+        detailCell.colSpan = 7; // Ensure this spans all columns of your main table
+        const detailContainer = document.createElement('div');
+        detailContainer.id = `detail-container-${order.id}`; // Unique ID for this container
+        detailContainer.style.display = 'none'; // Initially hidden
+        detailCell.appendChild(detailContainer);
+        detailRow.appendChild(detailCell);
+        tbody.appendChild(detailRow); // Append the detail row immediately after the main row
+        // --- FIX END ---
+
         row.querySelector(".expand-icon").addEventListener("click", (e) => {
-          expandLineItemsWithReceipts(order.id, e.target);
+          // --- FIX START: Pass all 4 parameters ---
+          expandLineItemsWithReceipts(order.id, e.target, detailContainer, order);
+          // --- FIX END ---
         });
 
         row.querySelector(".clip-icon").addEventListener("click", async (e) => {
@@ -126,7 +141,7 @@ async function loadOrders() {
               if (blob.size === 0) {
                 throw new Error('Received empty PDF file');
               }
-              showPDFModal(blob);
+              showPDFModal(blob, order.id, sanitizedOrderNumber); // Added order.id and orderNumber to PDF modal
             } else {
               const data = await response.json();
               throw new Error(`Unexpected response: ${JSON.stringify(data)}`);
@@ -164,3 +179,4 @@ window.checkAttachments = checkAttachments;
 window.showViewAttachmentsModal = showViewAttachmentsModal;
 window.showOrderNoteModal = showOrderNoteModal;
 window.showSupplierNoteModal = showSupplierNoteModal;
+// window.expandLineItemsWithReceipts = expandLineItemsWithReceipts; // Not needed if expanded using function directly

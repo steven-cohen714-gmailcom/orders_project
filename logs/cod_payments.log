@@ -1,4 +1,0 @@
-[2025-07-09T12:21:55.587965] {"order_id": 254, "amount_paid": 456.0, "payment_date": "2025-07-09", "marked_by_user_id": 14}
-[2025-07-09T18:19:19.211703] {"order_id": 255, "amount_paid": 900.0, "payment_date": "2025-07-09", "marked_by_user_id": 14}
-[2025-07-09T19:19:07.866160] {"order_id": 256, "amount_paid": 790.0, "payment_date": "2025-07-09", "marked_by_user_id": 14}
-[2025-07-10T17:49:43.557350] {"order_id": 258, "amount_paid": 15000.0, "payment_date": "2025-07-10", "marked_by_user_id": 14}

@@ -31,8 +31,8 @@ class OrderCreate(BaseModel):
     requester_id: int
     payment_terms: Optional[str] = None
     created_date: Optional[str] = None
+    auth_band_required: Optional[int] = None # This is the band ID from settings
     items: List[OrderItemCreate]
-    auth_band_required: Optional[int] = None
 
 class OrderUpdate(BaseModel):
     status: Optional[str] = None
@@ -67,16 +67,24 @@ async def create_new_order(order: OrderCreate):
         else:
             total = 0.0  # Safe default for Drafts
 
+        # Determine initial status for new orders (not drafts) based on auth_band_required
+        initial_status_for_new_order = order.status # Keep original status for drafts or if status explicitly set
+        if order.status != "Draft" and order.auth_band_required is not None:
+            # Need to get threshold from settings here too if creating directly to Pending/Auth
+            # For now, let's assume this path handles status separately or only for drafts.
+            pass # Keep logic as is for non-drafts for now, focus on update_draft_order
+
+
         order_data = {
             "order_number": order.order_number,
-            "status": order.status,
+            "status": initial_status_for_new_order, # Use the determined status
             "total": total,
             "order_note": order.order_note,
             "note_to_supplier": order.note_to_supplier,
             "supplier_id": order.supplier_id,
             "requester_id": order.requester_id,
             "payment_terms": order.payment_terms,
-            "auth_band_required": order.auth_band_required
+            "required_auth_band": order.auth_band_required # Corrected column name here for creation!
         }
 
         items = [item.dict() for item in order.items]
@@ -220,50 +228,105 @@ async def update_order(order_id: int, order: OrderUpdate):
 @router.put("/update_draft/{order_id}")
 @handle_db_errors(entity="draft_order", action="updating")
 async def update_draft_order(order_id: int, payload: dict):
+    logging.info(f"🔄 Attempting to update draft order ID: {order_id}")
     items = payload.get("items", [])
     if not items:
-        raise HTTPException(status_code=400, detail="No items provided")
+        logging.warning(f"Draft update for order {order_id}: No items provided in payload. Proceeding with total 0.")
+        pass
 
     conn = get_db_connection()
     cursor = conn.cursor()
 
-    for item in items:
-        item_id = item.get("item_id")
-        try:
-            qty = float(item.get("quantity", 0))
-            price = float(item.get("unit_price", 0))
-        except (TypeError, ValueError):
-            raise HTTPException(status_code=400, detail="Invalid quantity or price format")
+    try:
+        # 1. Update order_items with new quantities and prices
+        for item in items:
+            item_id = item.get("item_id")
+            logging.info(f"   - Processing item ID: {item_id} for order {order_id}")
+            try:
+                qty = float(item.get("quantity", 0))
+                price = float(item.get("unit_price", 0))
+            except (TypeError, ValueError) as e:
+                raise HTTPException(status_code=400, detail=f"Invalid quantity or price format for item ID: {item_id}. Error: {e}")
 
-        if item_id is None:
-            raise HTTPException(status_code=400, detail="Missing item_id")
+            if item_id is None:
+                raise HTTPException(status_code=400, detail="Missing item_id for an item in draft update payload")
 
-        total = qty * price
+            cursor.execute("""
+                UPDATE order_items
+                SET qty_ordered = ?, price = ?
+                WHERE id = ? AND order_id = ?
+            """, (qty, price, item_id, order_id))
+            logging.info(f"     - Updated item {item_id}: qty={qty}, price={price}")
 
+        # 2. Get the new calculated total of the order
         cursor.execute("""
-            UPDATE order_items
-            SET qty_ordered = ?, price = ?, total = ?
-            WHERE id = ? AND order_id = ?
-        """, (qty, price, total, item_id, order_id))
+            SELECT SUM(oi.qty_ordered * oi.price) AS calculated_total
+            FROM order_items oi
+            WHERE oi.order_id = ?
+        """, (order_id,))
+        order_total_result = cursor.fetchone()
+        
+        new_order_total = order_total_result["calculated_total"] if order_total_result and order_total_result["calculated_total"] is not None else 0.0
+        logging.info(f"   - Calculated new_order_total: {new_order_total}")
 
-    # Recalculate and update order total and status
-    cursor.execute("""
-        UPDATE orders
-        SET total = (SELECT SUM(qty_ordered * price) FROM order_items WHERE order_id = ?),
-            status = 'Pending'
-        WHERE id = ? AND status = 'Draft'
-    """, (order_id, order_id))
 
-    # Optional: Return new total
-    cursor.execute("SELECT total FROM orders WHERE id = ?", (order_id,))
-    row = cursor.fetchone()
-    new_total = row["total"] if row else 0.0
+        # 3. Determine the required_auth_band_id and new status based on the new total and settings thresholds
+        new_status = 'Pending' # Default status
+        assigned_auth_band_id = None # Default assigned band if no authorization required by amount
 
-    conn.commit()
-    conn.close()
-    log_success("draft_order", "updated", f"Draft order {order_id} submitted as Pending")
+        # Fetch all authorization thresholds from settings
+        cursor.execute("SELECT auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4 FROM settings WHERE id = 1")
+        settings_thresholds = cursor.fetchone()
+        logging.info(f"   - Settings thresholds fetched: {settings_thresholds}")
 
-    return {"message": "Draft order updated and submitted", "new_total": new_total}
+        if settings_thresholds:
+            # Convert thresholds to float, use 0.0 if NULL or not set for comparison
+            thresh1 = float(settings_thresholds['auth_threshold_1']) if settings_thresholds and settings_thresholds['auth_threshold_1'] is not None else 0.0
+            thresh2 = float(settings_thresholds['auth_threshold_2']) if settings_thresholds and settings_thresholds['auth_threshold_2'] is not None else 0.0
+            thresh3 = float(settings_thresholds['auth_threshold_3']) if settings_thresholds and settings_thresholds['auth_threshold_3'] is not None else 0.0
+            thresh4 = float(settings_thresholds['auth_threshold_4']) if settings_thresholds and settings_thresholds['auth_threshold_4'] is not None else 0.0
+
+            # Determine the highest band that the new_order_total falls into
+            if new_order_total > thresh4:
+                assigned_auth_band_id = 4
+            elif new_order_total > thresh3:
+                assigned_auth_band_id = 3
+            elif new_order_total > thresh2:
+                assigned_auth_band_id = 2
+            elif new_order_total > thresh1:
+                assigned_auth_band_id = 1
+            # If new_order_total is <= thresh1, assigned_auth_band_id remains None (no amount-based authorization needed)
+
+            # If an authorization band is determined, set status to Awaiting Authorisation
+            if assigned_auth_band_id is not None:
+                new_status = 'Awaiting Authorisation'
+        else:
+            logging.warning("   - No settings thresholds found. Order will default to Pending status.")
+
+        logging.info(f"   - Determined new_status: {new_status}, Assigned auth band ID: {assigned_auth_band_id}")
+
+        # 4. Update the order with the new total, determined status, AND assigned_auth_band_id
+        cursor.execute("""
+            UPDATE orders
+            SET total = ?, status = ?, required_auth_band = ? -- ADDED required_auth_band update
+            WHERE id = ? AND status = 'Draft' -- Ensure we only update if it's still a draft
+        """, (new_order_total, new_status, assigned_auth_band_id, order_id))
+
+        if cursor.rowcount == 0:
+            logging.warning(f"   - Order {order_id} not found or not in 'Draft' status for final update.")
+            raise HTTPException(status_code=404, detail="Draft order not found or its status has already changed from 'Draft'.")
+
+        conn.commit()
+        log_success("draft_order", "updated", f"Draft order {order_id} submitted as {new_status} with total R{new_order_total} (Band: {assigned_auth_band_id})")
+
+        return {"message": f"Draft order updated and submitted as {new_status}", "new_total": new_order_total}
+
+    except Exception as e:
+        conn.rollback() # Rollback any changes on error
+        logging.exception(f"❌ Error updating draft order {order_id} (caught in function's handler): {e}")
+        raise HTTPException(status_code=500, detail="Failed to update draft: A server error occurred.")
+    finally:
+        conn.close()
 
 @router.get("/api/order_items/{order_id}")
 @handle_db_errors(entity="order_items", action="fetching")
@@ -295,7 +358,7 @@ async def mark_items_as_received(order_id: int, payload: ReceivePayload):
             UPDATE order_items
             SET qty_received = ?, received_date = ?
             WHERE id = ? AND order_id = ?
-        """, (item.received_qty, datetime.now().strftime("%Y-%m-%d"), item.item_id, order_id))
+        """, (item.qty_received, datetime.now().strftime("%Y-%m-%d"), item.item_id, order_id))
 
     cursor.execute("""
         UPDATE orders
@@ -315,26 +378,28 @@ async def get_audit_trail_orders():
     conn.row_factory = sqlite3.Row # Ensure row_factory is set for this connection
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT 
+        SELECT
             o.id, o.order_number, o.status, o.created_date, o.received_date, o.total,
             o.order_note, o.note_to_supplier, o.supplier_id, o.requester_id,
             s.name AS supplier,
             r.name AS requester,
-            auditor.username AS audit_user
+            -- FIX START: Get the user for the LATEST general audit action for the order
+            latest_audit_user.username AS audit_user
         FROM orders o
         LEFT JOIN suppliers s ON o.supplier_id = s.id
         LEFT JOIN requesters r ON o.requester_id = r.id
         LEFT JOIN (
+            -- Subquery to find the user_id for the *absolute latest* audit_trail entry for each order
             SELECT
                 at_inner.order_id,
                 at_inner.user_id,
                 MAX(at_inner.action_date) AS latest_action_date
             FROM audit_trail at_inner
-            WHERE at_inner.action = 'Authorised'
             GROUP BY at_inner.order_id
-        ) latest_auth_record ON latest_auth_record.order_id = o.id
-        LEFT JOIN users auditor ON latest_auth_record.user_id = auditor.id
-        ORDER BY o.order_number DESC -- FIX: Changed sorting to order_number descending
+        ) latest_audit_record ON latest_audit_record.order_id = o.id
+        LEFT JOIN users latest_audit_user ON latest_audit_record.user_id = latest_audit_user.id
+        -- FIX END
+        ORDER BY o.order_number DESC
     """)
     rows = cursor.fetchall()
     conn.close()
