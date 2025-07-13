@@ -18,7 +18,7 @@ RELOAD_DIR = "backend"
 
 print("🟢 Starting FastAPI server...")
 
-# 1. Ensure working directory and import paths
+# 1. Set working directory and sys.path
 try:
     os.chdir(PROJECT_ROOT)
     if str(PROJECT_ROOT) not in sys.path:
@@ -28,13 +28,13 @@ except Exception as e:
     print(f"❌ Failed to set project root: {e}")
     sys.exit(1)
 
-# 2. Ensure uvicorn binary exists
+# 2. Check for uvicorn
 if not VENV_UVICORN.exists():
     print(f"❌ Uvicorn not found at {VENV_UVICORN}")
     print("💡 Did you forget to create or activate your virtual environment?")
     sys.exit(1)
 
-# 3. Kill any process using the port
+# 3. Kill processes on port
 print(f"🔪 Killing processes on port {PORT}...")
 try:
     subprocess.run(f"lsof -ti:{PORT} | xargs kill -9", shell=True,
@@ -43,28 +43,38 @@ try:
 except Exception as e:
     print(f"⚠️ Could not clear port {PORT}: {e}")
 
-# 4. Remove all __pycache__ directories
-print("🧹 Removing __pycache__ directories...")
+# 4. Remove __pycache__ (but skip venv/)
+print("🧹 Removing __pycache__ directories (excluding venv)...")
 try:
     for path in PROJECT_ROOT.rglob("__pycache__"):
+        try:
+            path.relative_to(PROJECT_ROOT / "venv")
+            continue  # Skip venv caches
+        except ValueError:
+            pass  # Safe to remove
+
         shutil.rmtree(path)
         print(f"   • Removed {path}")
     print("✅ Bytecode caches cleared.")
 except Exception as e:
-    print(f"⚠️ Failed to clean __pycache__ directories: {e}")
+    print(f"⚠️ Failed to clean __pycache__: {e}")
 
-# 5. Ensure logs directory exists
+# 5. Ensure logs directory
 try:
     os.makedirs("logs", exist_ok=True)
     print("✅ Logs directory ready.")
 except Exception as e:
     print(f"⚠️ Could not create logs directory: {e}")
 
-# 6. Audit FastAPI routes
+# 6. Audit routes
 print("🧠 Auditing registered routes...")
 try:
     from importlib import import_module
-    app = import_module(APP_MODULE.split(":")[0]).__dict__[APP_MODULE.split(":")[1]]
+
+    module_name, app_name = APP_MODULE.split(":")
+    app_module = import_module(module_name)
+    app = getattr(app_module, app_name)
+
     with open(ROUTE_AUDIT_FILE, "w") as f:
         f.write("🔍 Registered Routes:\n")
         for route in app.routes:
@@ -75,12 +85,19 @@ try:
             if re.search(r"/\b(\w+)\b(?:/.*)?/\1\b", path):
                 f.write(f"⚠️ Suspicious duplicate segment in: {path}\n")
     print(f"✅ Route audit complete. Output → {ROUTE_AUDIT_FILE}")
+
+except ModuleNotFoundError as e:
+    print(f"⚠️ Route audit skipped: Missing module → {e.name}")
+    print("💡 Run 'pip install pydantic[email]' if this relates to EmailStr usage.")
 except Exception as e:
     print(f"⚠️ Route audit skipped: {e}")
 
-# 7. Start the server
+# 7. Launch Uvicorn
 print(f"🚀 Launching Uvicorn: {APP_MODULE} on port {PORT}...")
 try:
+    # Ensure file-watcher is consistent on Mac
+    os.environ["PYTHONWATCHDOG"] = "watchdog"
+
     subprocess.Popen(
         f"{VENV_UVICORN} {APP_MODULE} --host 0.0.0.0 --port {PORT} --reload --reload-dir {RELOAD_DIR} >> {LOG_FILE} 2>&1",
         shell=True

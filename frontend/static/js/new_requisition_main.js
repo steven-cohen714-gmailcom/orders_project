@@ -1,3 +1,4 @@
+// File: frontend/static/js/new_requisition_main.js
 import { logToServer, populateDropdown } from "./components/utils.js";
 
 let rowCount = 0;
@@ -49,6 +50,7 @@ async function submitRequisition() {
 
   if (!requisitionerId) {
     log.textContent = "⚠️ Please select a requisitioner.";
+    alert("⚠️ Please select a requisitioner."); // Added alert 
     return;
   }
 
@@ -64,6 +66,7 @@ async function submitRequisition() {
 
   if (items.length === 0) {
     log.textContent = "⚠️ Please add at least one valid line item.";
+    alert("⚠️ Please add at least one valid line item."); // Added alert 
     return;
   }
 
@@ -85,13 +88,26 @@ async function submitRequisition() {
     const data = await res.json();
     if (res.ok) {
       log.textContent = `✅ Requisition submitted (ID: ${data.requisition_id})`;
+      alert(`✅ Requisition ${currentRequisitionNumber} submitted successfully!`); // Added prominent alert 
       currentRequisitionId = data.requisition_id;
+      // Optional: Clear form after successful submission
+      document.getElementById("requisitioner").value = "";
+      document.getElementById("requisition-note").value = "";
+      document.getElementById("line-items-body").innerHTML = ""; // Clear line items
+      addLineItem(); // Add one empty line item for next requisition
+      // Reload order number (if it increments on backend)
+      const settings = await fetch("/lookups/settings").then(res => res.json()); // Fetch updated settings
+      const nextReqNum = settings.requisition_number_start; // Use updated number from settings 
+      currentRequisitionNumber = nextReqNum;
+      document.getElementById("requisition-number").value = nextReqNum;
     } else {
       log.textContent = `❌ Submission failed: ${data.detail}`;
+      alert(`❌ Submission failed: ${data.detail}`); // Added alert 
     }
 
   } catch (err) {
     log.textContent = `❌ Error: ${err.message}`;
+    alert(`❌ Error: ${err.message}`); // Added alert 
   }
 }
 

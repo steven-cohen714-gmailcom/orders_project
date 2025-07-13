@@ -1,8 +1,0 @@
-2025-07-11 18:46:05,486 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
-2025-07-11 18:46:08,652 | ERROR | ERROR | Item validation failed | {"err": "Each item needs item, project, qty>0 & price>0 (unless Draft)"}
-2025-07-11 18:46:13,076 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
-2025-07-11 18:46:13,139 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1011", "orderId": 264, "orderType": "Draft"}
-2025-07-11 18:48:51,382 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
-2025-07-11 18:48:51,442 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1012", "orderId": 265, "orderType": "Pending"}
-2025-07-11 22:09:28,478 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
-2025-07-11 22:09:28,535 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1013", "orderId": 266, "orderType": "Draft"}

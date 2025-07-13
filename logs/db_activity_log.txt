@@ -1,185 +1,35 @@
-2025-07-11 18:33:28,068 | INFO | Database initialized successfully.
-2025-07-11 18:33:28,069 | INFO | ✅ Database initialized successfully.
-2025-07-11 18:33:28,492 | INFO | Database initialized successfully.
-2025-07-11 18:33:28,492 | INFO | ✅ Database initialized successfully.
-2025-07-11 18:33:34,297 | INFO | Requesters fetched: 6 items
-2025-07-11 18:33:34,301 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:33:38,148 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 263
-2025-07-11 18:33:39,329 | INFO | 🔄 Attempting to update draft order ID: 263
-2025-07-11 18:33:39,329 | INFO |    - Processing item ID: 297 for order 263
-2025-07-11 18:33:39,329 | INFO |      - Updated item 297: qty=3.0, price=4000.0
-2025-07-11 18:33:39,330 | INFO |    - Query for total and required_auth_band result: <sqlite3.Row object at 0x11475e560>
-2025-07-11 18:33:39,330 | INFO |    - Determined new_order_total: 12000.0, required_auth_band_id: None
-2025-07-11 18:33:39,330 | INFO |    - Order has no required_auth_band or invalid band ID (None). Assuming no amount-based authorization needed.
-2025-07-11 18:33:39,330 | INFO |    - Actual threshold for comparison: 0.0
-2025-07-11 18:33:39,330 | INFO |    - Determined new_status: Awaiting Authorisation
-2025-07-11 18:33:39,331 | INFO | ✅ [DRAFT_ORDER] Success updated: Draft order 263 submitted as Awaiting Authorisation with total R12000.0
-2025-07-11 18:33:45,972 | INFO | Requesters fetched: 6 items
-2025-07-11 18:33:45,977 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:33:48,499 | INFO | Starting to render new order page
-2025-07-11 18:33:48,740 | INFO | Requesters fetched: 6 items
-2025-07-11 18:33:48,744 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:33:48,781 | INFO | Items fetched: 9987 items
-2025-07-11 18:33:48,834 | INFO | Items fetched: 9987 items
-2025-07-11 18:33:49,448 | INFO | Requesters fetched: 6 items
-2025-07-11 18:33:49,450 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:33:58,935 | INFO | Requesters fetched: 6 items
-2025-07-11 18:33:58,940 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:33:58,953 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 9 total orders for audit trail
-2025-07-11 18:34:06,582 | INFO | Requesters fetched: 6 items
-2025-07-11 18:34:06,588 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:34:08,768 | INFO | Requesters fetched: 6 items
-2025-07-11 18:34:08,773 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:34:09,470 | INFO | Requesters fetched: 6 items
-2025-07-11 18:34:09,474 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:34:12,251 | INFO | Starting to render new order page
-2025-07-11 18:34:12,447 | INFO | Requesters fetched: 6 items
-2025-07-11 18:34:12,458 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:34:12,490 | INFO | Items fetched: 9987 items
-2025-07-11 18:34:12,562 | INFO | Items fetched: 9987 items
-2025-07-11 18:34:13,893 | INFO | Requesters fetched: 6 items
-2025-07-11 18:34:13,896 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:36:55,006 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 262
-2025-07-11 18:36:56,524 | INFO | 🔄 Attempting to update draft order ID: 262
-2025-07-11 18:36:56,525 | INFO |    - Processing item ID: 296 for order 262
-2025-07-11 18:36:56,525 | INFO |      - Updated item 296: qty=2.0, price=6200.0
-2025-07-11 18:36:56,525 | INFO |    - Query for total and required_auth_band result: <sqlite3.Row object at 0x11492d150>
-2025-07-11 18:36:56,526 | INFO |    - Determined new_order_total: 12400.0, required_auth_band_id: None
-2025-07-11 18:36:56,526 | INFO |    - Order has no required_auth_band or invalid band ID (None). Assuming no amount-based authorization needed.
-2025-07-11 18:36:56,526 | INFO |    - Actual threshold for comparison: 0.0
-2025-07-11 18:36:56,526 | INFO |    - Determined new_status: Awaiting Authorisation
-2025-07-11 18:36:56,527 | INFO | ✅ [DRAFT_ORDER] Success updated: Draft order 262 submitted as Awaiting Authorisation with total R12400.0
-2025-07-11 18:40:03,205 | INFO | Requesters fetched: 6 items
-2025-07-11 18:40:03,210 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:40:06,692 | INFO | Requesters fetched: 6 items
-2025-07-11 18:40:06,696 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:43:06,446 | INFO | Requesters fetched: 6 items
-2025-07-11 18:43:06,453 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:43:14,040 | INFO | Requesters fetched: 6 items
-2025-07-11 18:43:14,043 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:43:24,257 | INFO | Requesters fetched: 6 items
-2025-07-11 18:43:24,261 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:43:29,510 | INFO | Requesters fetched: 6 items
-2025-07-11 18:43:29,513 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:43:30,278 | INFO | Requesters fetched: 6 items
-2025-07-11 18:43:30,281 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:43:33,959 | INFO | Requesters fetched: 6 items
-2025-07-11 18:43:33,960 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:44:51,921 | INFO | Requesters fetched: 6 items
-2025-07-11 18:44:51,924 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:45:27,561 | INFO | Starting to render new order page
-2025-07-11 18:45:27,608 | INFO | Requesters fetched: 6 items
-2025-07-11 18:45:27,612 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:45:27,634 | INFO | Items fetched: 9987 items
-2025-07-11 18:45:27,677 | INFO | Items fetched: 9987 items
-2025-07-11 18:45:43,676 | INFO | Items fetched: 9987 items
-2025-07-11 18:46:02,300 | INFO | Items fetched: 9987 items
-2025-07-11 18:46:05,486 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
-2025-07-11 18:46:08,652 | ERROR | ERROR | Item validation failed | {"err": "Each item needs item, project, qty>0 & price>0 (unless Draft)"}
-2025-07-11 18:46:13,076 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
-2025-07-11 18:46:13,104 | INFO | 🔍 Incoming order: order_number='1010' status='Draft' order_note='' note_to_supplier='' supplier_id=15 requester_id=4 payment_terms='On account' created_date='2025-07-11' auth_band_required=None items=[OrderItemCreate(item_code='ABRA006', item_description='CUTTING DISC STEEL 230 MM', project='AD01P', qty_ordered=3.0, price=3598.0)]
-2025-07-11 18:46:13,106 | INFO | ✅ [ORDER] Success created: Order 1010 with status Draft and total R0.0
-2025-07-11 18:46:13,139 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1011", "orderId": 264, "orderType": "Draft"}
-2025-07-11 18:46:19,179 | INFO | Requesters fetched: 6 items
-2025-07-11 18:46:19,181 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:46:27,011 | INFO | Requesters fetched: 6 items
-2025-07-11 18:46:27,016 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:46:27,033 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 10 total orders for audit trail
-2025-07-11 18:46:30,929 | INFO | Requesters fetched: 6 items
-2025-07-11 18:46:30,931 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:46:52,890 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 264
-2025-07-11 18:46:54,938 | INFO | 🔄 Attempting to update draft order ID: 264
-2025-07-11 18:46:54,938 | INFO |    - Processing item ID: 298 for order 264
-2025-07-11 18:46:54,939 | INFO |      - Updated item 298: qty=3.0, price=3598.0
-2025-07-11 18:46:54,939 | INFO |    - Query for total and required_auth_band result: <sqlite3.Row object at 0x114c99f00>
-2025-07-11 18:46:54,939 | INFO |    - Determined new_order_total: 10794.0, required_auth_band_id: None
-2025-07-11 18:46:54,939 | INFO |    - Order has no required_auth_band or invalid band ID (None). Assuming no amount-based authorization needed.
-2025-07-11 18:46:54,939 | INFO |    - Actual threshold for comparison: 0.0
-2025-07-11 18:46:54,939 | INFO |    - Determined new_status: Awaiting Authorisation
-2025-07-11 18:46:54,941 | INFO | ✅ [DRAFT_ORDER] Success updated: Draft order 264 submitted as Awaiting Authorisation with total R10794.0
-2025-07-11 18:46:59,089 | INFO | Requesters fetched: 6 items
-2025-07-11 18:46:59,092 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:48:28,453 | INFO | Starting to render new order page
-2025-07-11 18:48:28,496 | INFO | Requesters fetched: 6 items
-2025-07-11 18:48:28,500 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:48:28,520 | INFO | Items fetched: 9987 items
-2025-07-11 18:48:28,564 | INFO | Items fetched: 9987 items
-2025-07-11 18:48:42,158 | INFO | Items fetched: 9987 items
-2025-07-11 18:48:51,382 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
-2025-07-11 18:48:51,407 | INFO | 🔍 Incoming order: order_number='1011' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=255 requester_id=4 payment_terms='On account' created_date='2025-07-11' auth_band_required=1 items=[OrderItemCreate(item_code='ABRA007', item_description='CUTTING DISC STONE 230 MM', project='AD01P', qty_ordered=1.0, price=11000.0)]
-2025-07-11 18:48:51,409 | INFO | ✅ [ORDER] Success created: Order 1011 with status Awaiting Authorisation and total R11000.0
-2025-07-11 18:48:51,442 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1012", "orderId": 265, "orderType": "Pending"}
-2025-07-11 18:48:55,899 | INFO | Starting to render new order page
-2025-07-11 18:48:55,940 | INFO | Requesters fetched: 6 items
-2025-07-11 18:48:55,944 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:48:55,961 | INFO | Items fetched: 9987 items
-2025-07-11 18:48:56,010 | INFO | Items fetched: 9987 items
-2025-07-11 18:48:57,349 | INFO | Requesters fetched: 6 items
-2025-07-11 18:48:57,351 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:49:02,167 | INFO | Requesters fetched: 6 items
-2025-07-11 18:49:02,171 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:51:49,760 | INFO | Requesters fetched: 6 items
-2025-07-11 18:51:49,764 | INFO | Suppliers fetched: 806 items
-2025-07-11 18:52:05,170 | INFO | Requesters fetched: 6 items
-2025-07-11 18:52:05,174 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:07:35,740 | INFO | Database initialized successfully.
-2025-07-11 22:07:35,741 | INFO | ✅ Database initialized successfully.
-2025-07-11 22:07:40,903 | INFO | Database initialized successfully.
-2025-07-11 22:07:40,903 | INFO | ✅ Database initialized successfully.
-2025-07-11 22:07:41,332 | INFO | Database initialized successfully.
-2025-07-11 22:07:41,332 | INFO | ✅ Database initialized successfully.
-2025-07-11 22:07:57,449 | INFO | Requesters fetched: 6 items
-2025-07-11 22:07:57,456 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:08:04,478 | INFO | Requesters fetched: 6 items
-2025-07-11 22:08:04,482 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:08:13,073 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 265
-2025-07-11 22:08:13,076 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 265
-2025-07-11 22:08:20,244 | INFO | Requesters fetched: 6 items
-2025-07-11 22:08:20,246 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:08:26,754 | INFO | Requesters fetched: 6 items
-2025-07-11 22:08:26,758 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:08:26,771 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 11 total orders for audit trail
-2025-07-11 22:08:29,855 | INFO | Requesters fetched: 6 items
-2025-07-11 22:08:29,858 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:08:37,235 | INFO | Requesters fetched: 6 items
-2025-07-11 22:08:37,237 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:08:46,456 | INFO | Requesters fetched: 6 items
-2025-07-11 22:08:46,460 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:08:49,644 | INFO | Starting to render new order page
-2025-07-11 22:08:49,688 | INFO | Requesters fetched: 6 items
-2025-07-11 22:08:49,694 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:08:49,713 | INFO | Items fetched: 9987 items
-2025-07-11 22:08:49,763 | INFO | Items fetched: 9987 items
-2025-07-11 22:09:08,446 | INFO | Items fetched: 9987 items
-2025-07-11 22:09:28,478 | INFO | INFO | submitOrder started | {"orderType": "Draft"}
-2025-07-11 22:09:28,506 | INFO | 🔍 Incoming order: order_number='1012' status='Draft' order_note='' note_to_supplier='' supplier_id=15 requester_id=6 payment_terms='On account' created_date='2025-07-11' auth_band_required=None items=[OrderItemCreate(item_code='ABRA006', item_description='CUTTING DISC STEEL 230 MM', project='AD01P', qty_ordered=1.0, price=14000.0)]
-2025-07-11 22:09:28,508 | INFO | ✅ [ORDER] Success created: Order 1012 with status Draft and total R0.0
-2025-07-11 22:09:28,535 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "1013", "orderId": 266, "orderType": "Draft"}
-2025-07-11 22:09:34,310 | INFO | Requesters fetched: 6 items
-2025-07-11 22:09:34,313 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:09:36,371 | INFO | Requesters fetched: 6 items
-2025-07-11 22:09:36,374 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:09:41,788 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 266
-2025-07-11 22:09:43,896 | INFO | 🔄 Attempting to update draft order ID: 266
-2025-07-11 22:09:43,897 | INFO |    - Processing item ID: 300 for order 266
-2025-07-11 22:09:43,897 | INFO |      - Updated item 300: qty=1.0, price=14000.0
-2025-07-11 22:09:43,897 | INFO |    - Calculated new_order_total: 14000.0
-2025-07-11 22:09:43,897 | INFO |    - Settings thresholds fetched: <sqlite3.Row object at 0x10a897ac0>
-2025-07-11 22:09:43,898 | INFO |    - Determined new_status: Awaiting Authorisation, Assigned auth band ID: 1
-2025-07-11 22:09:43,899 | INFO | ✅ [DRAFT_ORDER] Success updated: Draft order 266 submitted as Awaiting Authorisation with total R14000.0 (Band: 1)
-2025-07-11 22:09:51,470 | INFO | Requesters fetched: 6 items
-2025-07-11 22:09:51,473 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:09:59,479 | INFO | Generating PDF for order_id=266, order_number=1012
-2025-07-11 22:10:19,546 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 266
-2025-07-11 22:10:19,549 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 266
-2025-07-11 22:10:32,061 | INFO | Requesters fetched: 6 items
-2025-07-11 22:10:32,063 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:10:38,987 | INFO | Requesters fetched: 6 items
-2025-07-11 22:10:38,991 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:10:43,836 | INFO | Requesters fetched: 6 items
-2025-07-11 22:10:43,842 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:10:51,011 | INFO | Requesters fetched: 6 items
-2025-07-11 22:10:51,021 | INFO | Suppliers fetched: 806 items
-2025-07-11 22:10:51,033 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 12 total orders for audit trail
-2025-07-11 22:10:53,820 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 266
-2025-07-11 22:10:53,823 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 266
+2025-07-13 14:54:06,452 | INFO | Database initialized successfully.
+2025-07-13 14:54:06,452 | INFO | ✅ Database initialized successfully.
+2025-07-13 14:54:06,975 | INFO | Database initialized successfully.
+2025-07-13 14:54:06,975 | INFO | ✅ Database initialized successfully.
+2025-07-13 15:06:10,148 | INFO | Starting to render new order page
+2025-07-13 15:06:10,204 | INFO | Requesters fetched: 6 items
+2025-07-13 15:06:10,207 | INFO | Suppliers fetched: 806 items
+2025-07-13 15:06:10,230 | INFO | Items fetched: 9987 items
+2025-07-13 15:06:10,294 | INFO | Items fetched: 9987 items
+2025-07-13 15:08:33,577 | INFO | Database initialized successfully.
+2025-07-13 15:08:33,577 | INFO | ✅ Database initialized successfully.
+2025-07-13 15:08:40,234 | INFO | Database initialized successfully.
+2025-07-13 15:08:40,234 | INFO | ✅ Database initialized successfully.
+2025-07-13 15:08:40,748 | INFO | Database initialized successfully.
+2025-07-13 15:08:40,748 | INFO | ✅ Database initialized successfully.
+2025-07-13 15:10:09,670 | INFO | Database initialized successfully.
+2025-07-13 15:10:09,670 | INFO | ✅ Database initialized successfully.
+2025-07-13 15:10:14,685 | INFO | Database initialized successfully.
+2025-07-13 15:10:14,685 | INFO | ✅ Database initialized successfully.
+2025-07-13 15:10:15,184 | INFO | Database initialized successfully.
+2025-07-13 15:10:15,184 | INFO | ✅ Database initialized successfully.
+2025-07-13 15:10:34,302 | INFO | Requesters fetched: 6 items
+2025-07-13 15:10:34,305 | INFO | Suppliers fetched: 806 items
+2025-07-13 15:10:49,315 | INFO | Requesters fetched: 6 items
+2025-07-13 15:10:49,322 | INFO | Suppliers fetched: 806 items
+2025-07-13 15:10:49,334 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+2025-07-13 15:15:56,400 | INFO | Requesters fetched: 6 items
+2025-07-13 15:15:56,408 | INFO | Suppliers fetched: 806 items
+2025-07-13 15:16:16,936 | INFO | Starting to render new order page
+2025-07-13 15:16:16,996 | INFO | Requesters fetched: 6 items
+2025-07-13 15:16:16,999 | INFO | Suppliers fetched: 806 items
+2025-07-13 15:16:17,018 | INFO | Items fetched: 9987 items
+2025-07-13 15:16:17,081 | INFO | Items fetched: 9987 items
+2025-07-13 15:16:24,707 | INFO | Requesters fetched: 6 items
+2025-07-13 15:16:24,709 | INFO | Suppliers fetched: 806 items

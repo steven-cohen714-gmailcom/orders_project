@@ -458,6 +458,9 @@ table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
     text-align: left;
 }
 
+
+
+
 /* Ensure icons within the action column are aligned to the left of their cell */
 .expand-icon,
 .clip-icon,
@@ -586,8 +589,6 @@ table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
     background-color: #eef; /* Slightly darker header for receipts sub-table */
 }
 
-/* File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/css/style.css */
-
 /* New styles for the Audit Trail header (replacing the old thead) */
 .audit-header-row {
     display: flex; /* Makes it a flex container to align columns */
@@ -617,3 +618,12 @@ table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
 .audit-header-row .order-cell:nth-child(6) { flex-grow: 1; min-width: 80px; } /* Status */
 .audit-header-row .order-cell:nth-child(7) { flex-grow: 0.8; min-width: 80px; } /* User */
 .audit-header-row .order-cell:nth-child(8) { flex-grow: 2; text-align: left; min-width: 150px; } /* Actions */
+
+/* Specific alignment for Pending Requisitions Actions column (5th column) */
+#pending-requisitions-table th:nth-child(5),
+#pending-requisitions-table td:nth-child(5) {
+    text-align: left;
+    /* This padding matches the margin-right on your icons (0.4rem)
+       to ensure visual alignment from the leftmost edge of the cell. */
+    padding-left: 0.4rem;
+}

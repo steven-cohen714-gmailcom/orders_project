@@ -1,12 +1,19 @@
-from fastapi import APIRouter, HTTPException
+# File: backend/endpoints/requisitions.py
+from fastapi import APIRouter, HTTPException, Query
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 from datetime import datetime
 import sqlite3
 from pathlib import Path
 import traceback
 
+# This import path might be incorrect if generate_requisition_pdf is a Python file
+# that is not directly importable from frontend/static/js.
+# Assuming it is a Python file that *can* be imported if it's placed correctly
+# in the Python path or a backend utility. If this causes an error,
+# we might need to move generate_requisition_pdf to a backend utils folder.
+# It is important to confirm generate_requisition_pdf exists and is accessible.
 from frontend.static.js.new_requisitions_pdf_generator import generate_requisition_pdf
 
 router = APIRouter(tags=["requisitions"])
@@ -59,7 +66,7 @@ async def submit_requisition(payload: RequisitionPayload):
                 payload.requisition_number,
                 payload.requisitioner_id,
                 payload.requisition_note,
-                datetime.now().isoformat(),
+                datetime.now().isoformat(), # Use ISO format for consistency (includes microseconds if any)
                 "submitted"
             ))
 
@@ -109,18 +116,60 @@ async def submit_requisition(payload: RequisitionPayload):
         raise HTTPException(status_code=500, detail=f"Error submitting requisition: {str(e)}")
 
 @router.get("/api/pending_requisitions", response_model=dict)
-def get_pending_requisitions():
+async def get_pending_requisitions(
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    requisitioner: Optional[str] = Query(None),
+    status: Optional[str] = Query(None)
+):
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
 
-            cursor.execute("""
+            filters = []
+            params = []
+
+            valid_statuses = ["submitted", "ordered"]
+            if status and status.lower() != "all":
+                if status.lower() in valid_statuses:
+                    filters.append("LOWER(r.status) = LOWER(?)")
+                    params.append(status)
+                else:
+                    filters.append("LOWER(r.status) = LOWER(?)")
+                    params.append(status)
+            else:
+                filters.append("LOWER(r.status) IN ('submitted', 'ordered')")
+
+            if start_date:
+                try:
+                    datetime.strptime(start_date, "%Y-%m-%d")
+                    filters.append("DATE(r.requisition_date) >= DATE(?)")
+                    params.append(start_date)
+                except ValueError:
+                    raise HTTPException(status_code=400, detail="Invalid start_date format. Use YYYY-MM-DD.")
+
+            if end_date:
+                try:
+                    datetime.strptime(end_date, "%Y-%m-%d")
+                    filters.append("DATE(r.requisition_date) <= DATE(?)")
+                    params.append(end_date)
+                except ValueError:
+                    raise HTTPException(status_code=400, detail="Invalid end_date format. Use YYYY-MM-DD.")
+
+            if requisitioner and requisitioner.lower() != "all":
+                filters.append("LOWER(rq.name) LIKE LOWER(?)")
+                params.append(f"%{requisitioner}%")
+            
+            where_clause = " AND ".join(filters) if filters else "1=1"
+
+            cursor.execute(f"""
                 SELECT
                     r.id,
                     r.requisition_number,
                     r.requisition_date,
                     r.requisition_note,
                     r.status,
+                    r.converted_order_id,
                     rq.name AS requisitioner,
                     (
                         SELECT GROUP_CONCAT(ri.description, ', ')
@@ -131,19 +180,43 @@ def get_pending_requisitions():
                         SELECT SUM(ri.quantity)
                         FROM requisition_items ri
                         WHERE ri.requisition_id = r.id
-                    ) AS total_quantity,
-                    r.converted_order_id
+                    ) AS total_quantity
                 FROM requisitions r
                 LEFT JOIN requisitioners rq ON r.requisitioner_id = rq.id
-                WHERE r.status = 'submitted'
+                WHERE {where_clause}
                 ORDER BY r.requisition_date DESC
-            """)
+            """, params)
 
             rows = cursor.fetchall()
             requisitions = [dict(row) for row in rows]
+
+            # MODIFIED: More robust date parsing for display on frontend
+            for req in requisitions:
+                if req["requisition_date"]:
+                    date_str = req["requisition_date"]
+                    formatted_date = "N/A"
+                    # Try parsing the full ISO format first, then simpler ones
+                    try:
+                        formatted_date = datetime.fromisoformat(date_str).strftime("%Y-%m-%d")
+                    except ValueError:
+                        try:
+                            # Fallback for formats without microseconds, but with time
+                            formatted_date = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
+                        except ValueError:
+                            # Fallback for date-only format
+                            try:
+                                formatted_date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%Y-%m-%d")
+                            except ValueError:
+                                # Log problematic date string, keep "N/A"
+                                print(f"Warning: Could not parse date for requisition {req['id']}: {date_str}")
+                    req["requisition_date"] = formatted_date
+                else:
+                    req["requisition_date"] = "N/A"
+
             return {"requisitions": requisitions}
 
     except Exception as e:
+        print(f"Error fetching requisitions: {e}") # Keep print for immediate visibility during testing
         raise HTTPException(status_code=500, detail=f"Error fetching requisitions: {str(e)}")
 
 @router.get("/api/requisition_items/{requisition_id}")
@@ -171,6 +244,10 @@ def get_requisition_items(requisition_id: int):
 @router.get("/requisitions/api/generate_pdf/{requisition_id}")
 def requisition_pdf(requisition_id: int):
     try:
+        # Check if generate_requisition_pdf actually exists in the imported module
+        if 'generate_requisition_pdf' not in globals() and 'generate_requisition_pdf' not in dir(sys.modules[__name__]):
+            raise ImportError("generate_requisition_pdf is not available. Ensure it's correctly placed and imported.")
+        
         pdf_path = generate_requisition_pdf(requisition_id)
         return FileResponse(
             pdf_path,
@@ -178,6 +255,7 @@ def requisition_pdf(requisition_id: int):
             filename=f"Requisition_{requisition_id}.pdf"
         )
     except Exception as e:
+        print(f"PDF generation failed: {e}") # Added print for immediate visibility
         raise HTTPException(status_code=500, detail=f"PDF generation failed: {str(e)}")
     
 @router.put("/requisitions/api/mark_converted/{requisition_id}") 
@@ -186,20 +264,18 @@ def mark_requisition_converted(requisition_id: int):
         with get_db_connection() as conn:
             cursor = conn.cursor()
 
-            # Safety: check if requisition exists
             cursor.execute("SELECT id FROM requisitions WHERE id = ?", (requisition_id,))
             if not cursor.fetchone():
                 raise HTTPException(status_code=404, detail="Requisition not found")
 
-            # Update with dummy order ID (just mark it as converted)
             cursor.execute("""
                 UPDATE requisitions
-                SET converted_order_id = 'ORDER-CONVERTED'
+                SET converted_order_id = 'ORDER-CONVERTED', status = 'ordered'
                 WHERE id = ?
             """, (requisition_id,))
             conn.commit()
 
-        return {"success": True}
+        return {"success": True, "message": "Requisition marked as converted and status updated to 'ordered'."}
     except Exception as e:
+        print(f"Error marking requisition converted: {e}") # Added print for immediate visibility
         raise HTTPException(status_code=500, detail=f"Failed to mark converted: {str(e)}")
-
