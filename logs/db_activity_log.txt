@@ -1,35 +1,40 @@
-2025-07-13 14:54:06,452 | INFO | Database initialized successfully.
-2025-07-13 14:54:06,452 | INFO | ✅ Database initialized successfully.
-2025-07-13 14:54:06,975 | INFO | Database initialized successfully.
-2025-07-13 14:54:06,975 | INFO | ✅ Database initialized successfully.
-2025-07-13 15:06:10,148 | INFO | Starting to render new order page
-2025-07-13 15:06:10,204 | INFO | Requesters fetched: 6 items
-2025-07-13 15:06:10,207 | INFO | Suppliers fetched: 806 items
-2025-07-13 15:06:10,230 | INFO | Items fetched: 9987 items
-2025-07-13 15:06:10,294 | INFO | Items fetched: 9987 items
-2025-07-13 15:08:33,577 | INFO | Database initialized successfully.
-2025-07-13 15:08:33,577 | INFO | ✅ Database initialized successfully.
-2025-07-13 15:08:40,234 | INFO | Database initialized successfully.
-2025-07-13 15:08:40,234 | INFO | ✅ Database initialized successfully.
-2025-07-13 15:08:40,748 | INFO | Database initialized successfully.
-2025-07-13 15:08:40,748 | INFO | ✅ Database initialized successfully.
-2025-07-13 15:10:09,670 | INFO | Database initialized successfully.
-2025-07-13 15:10:09,670 | INFO | ✅ Database initialized successfully.
-2025-07-13 15:10:14,685 | INFO | Database initialized successfully.
-2025-07-13 15:10:14,685 | INFO | ✅ Database initialized successfully.
-2025-07-13 15:10:15,184 | INFO | Database initialized successfully.
-2025-07-13 15:10:15,184 | INFO | ✅ Database initialized successfully.
-2025-07-13 15:10:34,302 | INFO | Requesters fetched: 6 items
-2025-07-13 15:10:34,305 | INFO | Suppliers fetched: 806 items
-2025-07-13 15:10:49,315 | INFO | Requesters fetched: 6 items
-2025-07-13 15:10:49,322 | INFO | Suppliers fetched: 806 items
-2025-07-13 15:10:49,334 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
-2025-07-13 15:15:56,400 | INFO | Requesters fetched: 6 items
-2025-07-13 15:15:56,408 | INFO | Suppliers fetched: 806 items
-2025-07-13 15:16:16,936 | INFO | Starting to render new order page
-2025-07-13 15:16:16,996 | INFO | Requesters fetched: 6 items
-2025-07-13 15:16:16,999 | INFO | Suppliers fetched: 806 items
-2025-07-13 15:16:17,018 | INFO | Items fetched: 9987 items
-2025-07-13 15:16:17,081 | INFO | Items fetched: 9987 items
-2025-07-13 15:16:24,707 | INFO | Requesters fetched: 6 items
-2025-07-13 15:16:24,709 | INFO | Suppliers fetched: 806 items
+2025-07-15 16:19:29,090 | INFO | Database initialized successfully.
+2025-07-15 16:19:29,090 | INFO | ✅ Database initialized successfully.
+2025-07-15 16:19:43,917 | INFO | Database initialized successfully.
+2025-07-15 16:19:43,917 | INFO | ✅ Database initialized successfully.
+2025-07-15 16:19:44,301 | INFO | Database initialized successfully.
+2025-07-15 16:19:44,301 | INFO | ✅ Database initialized successfully.
+2025-07-15 16:19:48,629 | INFO | Requesters fetched: 15 items
+2025-07-15 16:19:48,636 | INFO | Suppliers fetched: 803 items
+2025-07-15 16:19:51,746 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
+2025-07-15 16:19:51,750 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 393
+2025-07-15 16:19:58,300 | INFO | Requesters fetched: 15 items
+2025-07-15 16:19:58,302 | INFO | Suppliers fetched: 803 items
+2025-07-15 16:20:07,377 | INFO | Requesters fetched: 15 items
+2025-07-15 16:20:07,380 | INFO | Suppliers fetched: 803 items
+2025-07-15 16:21:45,710 | INFO | Database initialized successfully.
+2025-07-15 16:21:45,710 | INFO | ✅ Database initialized successfully.
+2025-07-15 16:25:15,829 | INFO | Database initialized successfully.
+2025-07-15 16:25:15,829 | INFO | ✅ Database initialized successfully.
+2025-07-15 16:25:16,228 | INFO | Database initialized successfully.
+2025-07-15 16:25:16,228 | INFO | ✅ Database initialized successfully.
+2025-07-15 16:25:22,910 | INFO | Requesters fetched: 15 items
+2025-07-15 16:25:22,917 | INFO | Suppliers fetched: 803 items
+2025-07-15 16:25:31,814 | INFO | Requesters fetched: 15 items
+2025-07-15 16:25:31,817 | INFO | Suppliers fetched: 803 items
+2025-07-15 16:28:05,956 | INFO | Requesters fetched: 15 items
+2025-07-15 16:28:05,961 | INFO | Suppliers fetched: 803 items
+2025-07-15 16:29:35,795 | INFO | Database initialized successfully.
+2025-07-15 16:29:35,795 | INFO | ✅ Database initialized successfully.
+2025-07-15 16:29:43,644 | INFO | Database initialized successfully.
+2025-07-15 16:29:43,644 | INFO | ✅ Database initialized successfully.
+2025-07-15 16:29:44,039 | INFO | Database initialized successfully.
+2025-07-15 16:29:44,039 | INFO | ✅ Database initialized successfully.
+2025-07-15 16:29:49,412 | INFO | Requesters fetched: 15 items
+2025-07-15 16:29:49,422 | INFO | Suppliers fetched: 803 items
+2025-07-15 16:29:54,582 | INFO | Requesters fetched: 15 items
+2025-07-15 16:29:54,585 | INFO | Suppliers fetched: 803 items
+2025-07-15 16:29:58,428 | INFO | Requesters fetched: 15 items
+2025-07-15 16:29:58,433 | INFO | Suppliers fetched: 803 items
+2025-07-15 16:30:00,366 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 393
+2025-07-15 16:30:00,370 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393

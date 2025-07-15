@@ -20,18 +20,18 @@ function formatCurrency(amount) {
   return `R${parseFloat(amount).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
-console.log("Loading audit_trail.js for improved display"); // MODIFIED: Updated console log
+console.log("Loading audit_trail.js for improved display");
 
 function escapeHTML(str = "") {
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
-    .replace(/\"/g, "&quot;")
+    .replace(/"/g, "&quot;")
     .replace(/\'/g, "&#39;");
 }
 
-async function loadAuditTestOrders() {
+async function loadAuditOrders() { // Renamed from loadAuditTestOrders for clarity
   const params = new URLSearchParams();
 
   const statusFilter = document.getElementById("status-filter-test").value;
@@ -57,7 +57,8 @@ async function loadAuditTestOrders() {
   }
 
   try {
-    const res = await fetch(`/orders/api/audit_trail_orders?${params.toString()}`); // MODIFIED: Changed endpoint to the main audit_trail_orders API
+    // CORRECTED: Updated endpoint path to match the backend
+    const res = await fetch(`/orders/api/audit_trail_orders?${params.toString()}`); 
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
     const { orders = [] } = await res.json();
 
@@ -65,7 +66,7 @@ async function loadAuditTestOrders() {
     tbody.innerHTML = "";
 
     if (orders.length === 0) {
-      tbody.innerHTML = "<tr><td colspan='8'>No orders found.</td></tr>";
+      tbody.innerHTML = "<div class='order-block' style='padding: 1rem; text-align: center; border: none; box-shadow: none;'>No orders found.</div>";
       return;
     }
 
@@ -76,18 +77,16 @@ async function loadAuditTestOrders() {
       const sanitizedRequester = escapeHTML(order.requester || "N/A");
       const sanitizedSupplier  = escapeHTML(order.supplier  || "N/A");
       const sanitizedStatus    = escapeHTML(order.status    || "");
-      const sanitizedUser      = escapeHTML(order.audit_user || "N/A"); // MODIFIED: Use audit_user from the backend
+      const sanitizedUser      = escapeHTML(order.audit_user || "N/A");
       const sanitizedTotal = formatCurrency(order.total);
 
       // --- START NEW STRUCTURE FOR BLUE RECTANGLE EFFECT ---
-      // Create a logical 'order-block' div to hold both header and expanded content
       const orderBlock = document.createElement("div");
-      orderBlock.classList.add("order-block"); // This will be our blue rectangle container
-      orderBlock.dataset.orderId = order.id; // Store order ID on the block for easy lookup
+      orderBlock.classList.add("order-block");
+      orderBlock.dataset.orderId = order.id;
 
-      // Create the header row (looks like a table row)
       const headerRowDiv = document.createElement("div");
-      headerRowDiv.classList.add("order-block-header-row"); // For header styling
+      headerRowDiv.classList.add("order-block-header-row");
       headerRowDiv.innerHTML = `
         <div class="order-cell">${sanitizedDate}</div>
         <div class="order-cell">${sanitizedNumber}</div>
@@ -105,20 +104,16 @@ async function loadAuditTestOrders() {
       
       orderBlock.appendChild(headerRowDiv);
 
-      // Create the expandable detail row container (initially hidden)
       const detailRowDiv = document.createElement("div");
-      detailRowDiv.id = `receipt-items-row-${order.id}`; // Keep ID for expandLineItemsWithReceipts
+      detailRowDiv.id = `receipt-items-row-${order.id}`;
       detailRowDiv.classList.add("order-block-detail-row");
-      detailRowDiv.style.display = "none"; // Initially hidden
+      detailRowDiv.style.display = "none";
       orderBlock.appendChild(detailRowDiv);
 
-      // Append the entire order block to the tbody (which now acts as a container for these blocks)
       tbody.appendChild(orderBlock);
 
       /* --- per-row handlers (re-using existing modal functions) --- */
-      // These listeners are now on the icons within headerRowDiv
       headerRowDiv.querySelector(".expand-icon").onclick = async (e) => {
-          // Pass the detailRowDiv and the orderBlock for expandLineItemsWithReceipts to manipulate
           await expandLineItemsWithReceipts(order.id, e.target, detailRowDiv, orderBlock);
       };
 
@@ -166,38 +161,37 @@ async function loadAuditTestOrders() {
           console.error(err);
         }
       });
-      // --- END NEW STRUCTURE FOR BLUE RECTANGLE EFFECT ---
     });
   } catch (err) {
-    console.error("❌ Error loading audit trail orders:", err); // MODIFIED: Changed console log message
+    console.error("❌ Error loading audit trail orders:", err);
     alert(`Failed to load audit trail orders: ${err.message}`);
   }
 }
 
-/* ---------- bootstrap for test screen ---------- */
+/* ---------- bootstrap for audit trail screen ---------- */
 window.addEventListener("DOMContentLoaded", async () => {
-  // Populate filter dropdowns using existing functions (new IDs)
+  // Populate filter dropdowns
   await loadRequesters("requester-filter-test"); 
   await loadSuppliers("supplier-filter-test");   
   
-  loadAuditTestOrders(); // Initial load
+  loadAuditOrders(); // Initial load of orders (renamed function call)
 
-  // Add event listeners for filter buttons (new IDs)
+  // Add event listeners for filter buttons
   const runButton = document.getElementById("run-filter-btn-test");
   if (runButton) {
-    runButton.addEventListener("click", loadAuditTestOrders);
+    runButton.addEventListener("click", loadAuditOrders); // Renamed function call
   }
 
   const clearButton = document.getElementById("clear-filter-btn-test");
   if (clearButton) {
     clearButton.addEventListener("click", () => {
-      // Reset all filter dropdowns and date inputs to "All" or empty (new IDs)
+      // Reset all filter dropdowns and date inputs to "All" or empty
       document.getElementById("status-filter-test").value = "All";
       document.getElementById("requester-filter-test").value = "All";
       document.getElementById("supplier-filter-test").value = "All";
       document.getElementById("start-date-filter-test").value = "";
       document.getElementById("end-date-filter-test").value = "";
-      loadAuditTestOrders(); // Reload orders with cleared filters
+      loadAuditOrders(); // Reload orders with cleared filters (renamed function call)
     });
   }
 });

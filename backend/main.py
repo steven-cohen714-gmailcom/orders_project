@@ -46,8 +46,8 @@ from backend.endpoints.lookups import projects as projects_router
 from backend.endpoints.order_notes import router as order_notes_router
 from backend.endpoints.lookups import requisitioners as requisitioners_router
 
-# For audit trail test only: Import the new audit trail filters router
-from backend.endpoints.audit_trail_filters import router as audit_trail_filters_router # for audit trail test only
+# For audit trail filtering: Import the specific audit trail filters router
+from backend.endpoints.audit_trail_filters import router as audit_trail_filters_router 
 
 # Allow scripts to import from parent
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -97,15 +97,15 @@ templates = Jinja2Templates(directory="frontend/templates")
 static_router = APIRouter()
 
 # For audit trail test only: New route for the test screen, bypassing permissions
-@static_router.get("/audit_trail_test", response_class=HTMLResponse) # for audit trail test only
-async def audit_trail_test_page(request: Request): # for audit trail test only
-    return templates.TemplateResponse( # for audit trail test only
-        "audit_trail_test.html", # for audit trail test only
-        {"request": request} # for audit trail test only
-    ) # for audit trail test only
+@static_router.get("/audit_trail_test", response_class=HTMLResponse)
+async def audit_trail_test_page(request: Request):
+    return templates.TemplateResponse(
+        "audit_trail_test.html",
+        {"request": request}
+    )
 
 @static_router.get("/mobile/authorisations", response_class=HTMLResponse, 
-                   dependencies=[Depends(require_login), Depends(require_screen_permission("my_authorisations"))]) 
+                    dependencies=[Depends(require_login), Depends(require_screen_permission("my_authorisations"))]) 
 async def mobile_authorisations_page(request: Request):
     user_screen_permissions = request.session.get("screen_permissions", [])
     return templates.TemplateResponse(
@@ -134,7 +134,7 @@ async def home(request: Request):
     )
 
 @static_router.get("/orders/new", response_class=HTMLResponse, 
-                   dependencies=[Depends(require_login), Depends(require_screen_permission("new_order"))])
+                    dependencies=[Depends(require_login), Depends(require_screen_permission("new_order"))])
 async def new_order_page(request: Request):
     logging.info("Starting to render new order page")
     try:
@@ -312,11 +312,13 @@ async def mobile_requisition_form(request: Request):
     )
 
 # --- Include Routers ---
+# IMPORTANT: Place the specific audit_trail_filters_router inclusion BEFORE order_queries_router
 app.include_router(static_router)
 app.include_router(mobile_auth_router)
 
-# For audit trail test only: Include the new audit trail filters router
-app.include_router(audit_trail_filters_router, prefix="/api") # for audit trail test only
+# Correctly include audit_trail_filters_router for /orders/api/audit_trail_orders
+# THIS IS THE CRITICAL LINE FOR AUDIT TRAIL FILTERING
+app.include_router(audit_trail_filters_router, prefix="/orders/api") 
 
 for router in routers:
     if router is not order_queries_router and router is not orders_router and router is not attachments_router and router is not order_receiving_router:
@@ -324,7 +326,7 @@ for router in routers:
 
 app.include_router(html_routes.router)
 app.include_router(admin_router, prefix="/admin")
-app.include_router(order_queries_router, prefix="/orders/api")
+app.include_router(order_queries_router, prefix="/orders/api") # This prefix is correct for other endpoints in order_queries.py
 app.include_router(new_order_pdf_router, prefix="/orders/api")
 app.include_router(auth_router)
 app.include_router(mobile_auth.router)

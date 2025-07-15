@@ -24,7 +24,7 @@
 /mobile/get_user_info
 /orders/api/awaiting_authorisation
 /orders/api/authorise_order/{order_id}
-/api/audit_trail_test_orders
+/orders/api/audit_trail_orders
 /lookups/requesters
 /lookups/requesters
 /lookups/requesters/{requester_id}
@@ -127,8 +127,6 @@
 /orders/api/received_orders
 /orders/api/partially_delivered
 /orders/api/items_for_order/{order_id}
-/orders/api/orders/api/audit_trail_orders
-⚠️ Suspicious duplicate segment in: /orders/api/orders/api/audit_trail_orders
 /orders/api/last_audit_action/{order_id}
 /orders/api/order_summary
 /orders/api/cod_orders
@@ -146,6 +144,7 @@
 /orders/delete/{order_id}
 /orders/{order_id}
 /orders/api/order_details_for_audit/{order_id}
+/orders/api/order_audit_history/{order_id}
 /orders/{order_id}
 /orders/update_draft/{order_id}
 /orders/api/order_items/{order_id}

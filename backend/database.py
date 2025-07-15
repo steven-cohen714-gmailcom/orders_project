@@ -1,3 +1,5 @@
+# File: backend/database.py
+
 import sqlite3
 from pathlib import Path
 import logging
@@ -217,8 +219,8 @@ def determine_status_and_band(total: float) -> tuple[str, int]:
                 required_band = 4
         return status, required_band
 
-# MODIFIED: Added created_date: Optional[str] = None to function signature
-def create_order(order_data: dict, items: list, created_date: Optional[str] = None) -> dict:
+# MODIFIED: Added current_user_id: int parameter
+def create_order(order_data: dict, items: list, current_user_id: int, created_date: Optional[str] = None) -> dict:
     if order_data.get("status") == "Draft":
         status = "Draft"
         required_band = None
@@ -228,7 +230,6 @@ def create_order(order_data: dict, items: list, created_date: Optional[str] = No
     with get_db_connection() as conn:
         cursor = conn.cursor()
         
-        # MODIFIED: Use provided created_date if available, otherwise use CURRENT_TIMESTAMP
         if created_date:
             cursor.execute("""
                 INSERT INTO orders (
@@ -238,7 +239,7 @@ def create_order(order_data: dict, items: list, created_date: Optional[str] = No
             """, (
                 order_data["order_number"],
                 status,
-                created_date, # Use the provided date
+                created_date,
                 order_data["total"],
                 order_data["order_note"],
                 order_data["note_to_supplier"],
@@ -284,7 +285,7 @@ def create_order(order_data: dict, items: list, created_date: Optional[str] = No
         cursor.execute("""
             INSERT INTO audit_trail (order_id, action, details, user_id)
             VALUES (?, 'Created', ?, ?)
-        """, (order_id, f"Order {order_data['order_number']} created", 0))
+        """, (order_id, f"Order {order_data['order_number']} created", current_user_id)) # CHANGED: user_id now comes from current_user_id
         conn.commit()
         cursor.execute("""
             SELECT * FROM orders WHERE id = ?

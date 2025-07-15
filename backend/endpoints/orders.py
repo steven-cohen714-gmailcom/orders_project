@@ -1,7 +1,7 @@
 # File: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py
 
 import logging
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends, Request # ADDED Request to this import
 from pydantic import BaseModel
 from typing import List, Optional
 import sqlite3
@@ -11,6 +11,7 @@ from datetime import datetime
 from backend.utils.db_utils import handle_db_errors, log_success, log_warning, log_error
 from backend.utils.order_utils import calculate_order_total
 from backend.database import create_order, get_db_connection
+from backend.utils.permissions_utils import require_login # Import require_login
 
 router = APIRouter(tags=["orders"])
 
@@ -31,7 +32,7 @@ class OrderCreate(BaseModel):
     requester_id: int
     payment_terms: Optional[str] = None
     created_date: Optional[str] = None
-    auth_band_required: Optional[int] = None # This is the band ID from settings
+    auth_band_required: Optional[int] = None 
     items: List[OrderItemCreate]
 
 class OrderUpdate(BaseModel):
@@ -41,55 +42,51 @@ class OrderUpdate(BaseModel):
     supplier_id: Optional[int] = None
     requester_id: Optional[int] = None
 
-# --- FIX START: Retaining only the first definition of these models ---
-# These models were duplicated further down, which caused the NameError.
-# They are now correctly defined ONLY ONCE here at the top.
 class ReceivedItem(BaseModel):
     item_id: int
     received_qty: float
 
 class ReceivePayload(BaseModel):
     items: List[ReceivedItem]
-# --- FIX END ---
 
 # --- Routes ---
 @router.post("")
-async def create_new_order(order: OrderCreate):
+async def create_new_order(order: OrderCreate, request: Request): # Added request
     try:
         logging.info(f"🔍 Incoming order: {order}")
+        
+        user = request.session.get("user")
+        if not user or "id" not in user:
+            raise HTTPException(status_code=401, detail="User not authenticated")
+        current_user_id = user["id"]
 
-        # --- Allow relaxed validation for drafts ---
         if order.status != "Draft":
             for item in order.items:
                 if not item.item_code or not item.project or item.qty_ordered <= 0 or item.price <= 0:
                     raise HTTPException(status_code=400, detail="Invalid item: all fields required for non-draft orders")
             total = calculate_order_total([item.dict() for item in order.items])
         else:
-            total = 0.0  # Safe default for Drafts
+            total = 0.0  
 
-        # Determine initial status for new orders (not drafts) based on auth_band_required
-        initial_status_for_new_order = order.status # Keep original status for drafts or if status explicitly set
+        initial_status_for_new_order = order.status 
         if order.status != "Draft" and order.auth_band_required is not None:
-            # Need to get threshold from settings here too if creating directly to Pending/Auth
-            # For now, let's assume this path handles status separately or only for drafts.
-            pass # Keep logic as is for non-drafts for now, focus on update_draft_order
-
+            pass 
 
         order_data = {
             "order_number": order.order_number,
-            "status": initial_status_for_new_order, # Use the determined status
+            "status": initial_status_for_new_order, 
             "total": total,
             "order_note": order.order_note,
             "note_to_supplier": order.note_to_supplier,
             "supplier_id": order.supplier_id,
             "requester_id": order.requester_id,
             "payment_terms": order.payment_terms,
-            "required_auth_band": order.auth_band_required # Corrected column name here for creation!
+            "required_auth_band": order.auth_band_required 
         }
 
         items = [item.dict() for item in order.items]
         
-        result = create_order(order_data, items, created_date=order.created_date)
+        result = create_order(order_data, items, current_user_id, created_date=order.created_date) # Pass current_user_id
         log_success("order", "created", f"Order {order.order_number} with status {order.status} and total R{total}")
         return {"message": "Order created successfully", "order_id": result["id"]}
 
@@ -152,7 +149,7 @@ async def get_order(order_id: int):
     log_success("order", "fetched", f"Order {row['order_number']}")
     return dict(row)
 
-# NEW ENDPOINT: To fetch specific order details for expanded view on audit trail
+# MODIFIED ENDPOINT: To fetch specific order details for expanded view on audit trail
 @router.get("/api/order_details_for_audit/{order_id}")
 @handle_db_errors(entity="order_details", action="fetching for audit")
 async def get_order_details_for_audit(order_id: int):
@@ -163,16 +160,22 @@ async def get_order_details_for_audit(order_id: int):
         cursor.execute("""
             SELECT
                 o.id,
+                o.order_number, 
                 o.status,
+                o.created_date, 
+                o.received_date, 
                 o.amount_paid,
                 o.payment_date,
                 o.order_note,
                 o.note_to_supplier,
-                o.total,               -- This maps to "Original Amount"
-                s.name AS supplier_name, -- This maps to "Supplier"
-                u_paid.username AS paid_by_user -- This maps to "User (who paid)"
+                o.total,               
+                s.name AS supplier_name, 
+                r.name AS requester_name, 
+                u_paid.username AS paid_by_user, 
+                u_created.username AS created_by_user
             FROM orders o
             LEFT JOIN suppliers s ON o.supplier_id = s.id
+            LEFT JOIN requesters r ON o.requester_id = r.id 
             LEFT JOIN (
                 SELECT order_id, user_id, action_date
                 FROM audit_trail
@@ -180,6 +183,13 @@ async def get_order_details_for_audit(order_id: int):
                 ORDER BY action_date DESC LIMIT 1
             ) ap ON ap.order_id = o.id
             LEFT JOIN users u_paid ON ap.user_id = u_paid.id
+            LEFT JOIN ( 
+                SELECT order_id, user_id
+                FROM audit_trail
+                WHERE action = 'Created'
+                ORDER BY action_date ASC LIMIT 1 
+            ) ac ON ac.order_id = o.id
+            LEFT JOIN users u_created ON ac.user_id = u_created.id
             WHERE o.id = ?
         """, (order_id,))
         order_details = cursor.fetchone()
@@ -190,6 +200,33 @@ async def get_order_details_for_audit(order_id: int):
     except Exception as e:
         log_error("order_details", "fetching for audit", e)
         raise HTTPException(status_code=500, detail=f"Failed to fetch order details for audit: {str(e)}")
+
+# NEW ENDPOINT: To fetch full audit history for an order
+@router.get("/api/order_audit_history/{order_id}")
+@handle_db_errors(entity="order_audit_history", action="fetching")
+async def get_order_audit_history(order_id: int):
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    try:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT
+                at.action_date,
+                at.action,
+                at.details,
+                u.username
+            FROM audit_trail at
+            LEFT JOIN users u ON at.user_id = u.id
+            WHERE at.order_id = ?
+            ORDER BY at.action_date DESC
+        """, (order_id,))
+        audit_history = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+        return audit_history
+    except Exception as e:
+        log_error("order_audit_history", "fetching", e)
+        raise HTTPException(status_code=500, detail=f"Failed to fetch order audit history: {str(e)}")
+
 
 @router.put("/{order_id}")
 @handle_db_errors(entity="order", action="updating")
@@ -317,14 +354,13 @@ async def update_draft_order(order_id: int, payload: dict):
             raise HTTPException(status_code=404, detail="Draft order not found or its status has already changed from 'Draft'.")
 
         conn.commit()
-        log_success("draft_order", "updated", f"Draft order {order_id} submitted as {new_status} with total R{new_order_total} (Band: {assigned_auth_band_id})")
-
+        log_success("draft_order", "updated", f"Draft order {order_id} submitted as {new_status}", {"user_id": current_user_id}) # Added user_id to log
         return {"message": f"Draft order updated and submitted as {new_status}", "new_total": new_order_total}
 
     except Exception as e:
         conn.rollback() # Rollback any changes on error
         logging.exception(f"❌ Error updating draft order {order_id} (caught in function's handler): {e}")
-        raise HTTPException(status_code=500, detail="Failed to update draft: A server error occurred.")
+        raise HTTPException(status_code=500, detail="Failed to update draft: A server server error occurred.")
     finally:
         conn.close()
 

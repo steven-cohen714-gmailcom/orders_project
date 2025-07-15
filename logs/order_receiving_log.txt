@@ -1,0 +1,1 @@
+[2025-07-15T16:29:52.626912] {"action": "receive", "order_id": 393, "items": [{"item_id": 690, "received_qty": 1.0}], "status": "Received", "receipt_date": "2025-07-15", "user_id": 14}

@@ -1,5 +1,4 @@
 # File: backend/endpoints/audit_trail_filters.py
-# For audit trail test only
 
 from fastapi import APIRouter, HTTPException, Query, Depends
 from typing import Optional, List, Dict
@@ -26,21 +25,20 @@ def validate_date(date_str: Optional[str]) -> Optional[str]:
     if not date_str:
         return None
     try:
-        # Simplistic parsing for YYYY-MM-DD, extend if other formats are expected
         dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
         return dt_obj.strftime("%Y-%m-%d")
     except ValueError:
         raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use YYYY-MM-DD.")
 
 
-@router.get("/audit_trail_test_orders")
-async def get_audit_trail_test_orders(
+@router.get("/audit_trail_orders") # CHANGED: Now simply "/audit_trail_orders"
+async def get_audit_trail_filtered_data(
     status: Optional[str] = Query(None, description="Filter by order status"),
     start_date: Optional[str] = Query(None),
     end_date: Optional[str] = Query(None),
     requester: Optional[str] = Query(None),
     supplier: Optional[str] = Query(None),
-    user: Dict = Depends(require_login) # Ensure user is logged in
+    user: Dict = Depends(require_login)
 ):
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
@@ -48,12 +46,10 @@ async def get_audit_trail_test_orders(
         filters = []
         params = []
 
-        # Apply status filter if provided and not "All"
         if status and status.lower() != "all":
             filters.append("UPPER(o.status) = UPPER(?)")
             params.append(status)
 
-        # Apply date filters
         if start_date:
             valid_start_date = validate_date(start_date)
             filters.append("DATE(o.created_date) >= DATE(?)")
@@ -64,36 +60,40 @@ async def get_audit_trail_test_orders(
             filters.append("DATE(o.created_date) <= DATE(?)")
             params.append(valid_end_date)
 
-        # Apply requester filter
         if requester and requester.lower() != "all":
             filters.append("UPPER(r.name) LIKE UPPER(?)")
             params.append(f"%{requester}%")
 
-        # Apply supplier filter
         if supplier and supplier.lower() != "all":
             filters.append("UPPER(s.name) LIKE UPPER(?)")
             params.append(f"%{supplier}%")
 
         where_clause = " AND ".join(filters) if filters else "1=1"
 
-        # Simplified SQL query: No complex audit_user join for now.
-        # This focuses solely on getting the basic filters working.
         cursor = conn.execute(f"""
             SELECT
                 o.id, o.created_date, o.received_date, o.order_number,
                 r.name AS requester, s.name AS supplier,
                 o.order_note, o.note_to_supplier, o.total, o.status,
-                'N/A' AS audit_user_for_test_only -- Placeholder for audit_user
+                u.username AS audit_user
             FROM orders o
             LEFT JOIN requesters r ON o.requester_id = r.id
             LEFT JOIN suppliers s ON o.supplier_id = s.id
+            LEFT JOIN (
+                SELECT
+                    at.order_id,
+                    at.user_id,
+                    MAX(at.action_date) AS latest_action_date
+                FROM audit_trail at
+                GROUP BY at.order_id
+            ) AS latest_audit ON latest_audit.order_id = o.id
+            LEFT JOIN users u ON latest_audit.user_id = u.id
             WHERE {where_clause}
             ORDER BY o.created_date DESC, o.order_number DESC
         """, params)
 
         orders = [dict(row) for row in cursor.fetchall()]
 
-        # Format dates for display
         for order in orders:
             if order["created_date"]:
                 try:
@@ -111,16 +111,15 @@ async def get_audit_trail_test_orders(
             else:
                 order["received_date"] = "N/A"
         
-        # Log the activity
-        log_event("audit_trail_test_log.txt", {
-            "action": "fetch_audit_trail_test_orders",
+        log_event("audit_trail_log.txt", {
+            "action": "fetch_audit_trail_orders_filtered",
             "count": len(orders),
             "filters": {"status": status, "start_date": start_date, "end_date": end_date, "requester": requester, "supplier": supplier}
         })
         return {"orders": orders}
 
     except Exception as e:
-        log_event("audit_trail_test_log.txt", {"error": str(e), "type": "audit_trail_test_orders"})
-        raise HTTPException(status_code=500, detail=f"Failed to load audit trail test orders: {e}")
+        log_event("audit_trail_log.txt", {"error": str(e), "type": "audit_trail_orders_filtered"})
+        raise HTTPException(status_code=500, detail=f"Failed to load audit trail orders: {e}")
     finally:
         conn.close()

@@ -64,9 +64,8 @@ async def get_pending_orders(
         filters = []
         params = []
 
-        # MODIFIED: Include 'PAID' in the statuses for Pending Orders screen
+        # Default filters for pending orders screen
         filters.append("UPPER(o.status) IN ('PENDING', 'WAITING FOR APPROVAL', 'AWAITING AUTHORISATION', 'AUTHORISED', 'DRAFT', 'PAID', 'PARTIALLY RECEIVED')")
-        # Ensure 'DELETED' orders are NOT shown on this screen
         filters.append("UPPER(o.status) != 'DELETED'")
 
 
@@ -80,17 +79,17 @@ async def get_pending_orders(
             filters.append("DATE(o.created_date) <= DATE(?)")
             params.append(valid_end_date)
 
-        if requester:
+        if requester is not None and requester.strip().lower() != "all" and requester.strip() != "":
             filters.append("UPPER(r.name) LIKE UPPER(?)")
-            params.append(f"%{requester}%")
+            params.append(f"%{requester.strip()}%")
 
-        if supplier:
+        if supplier is not None and supplier.strip().lower() != "all" and supplier.strip() != "":
             filters.append("UPPER(s.name) LIKE UPPER(?)")
-            params.append(f"%{supplier}%")
+            params.append(f"%{supplier.strip()}%")
 
-        if status and status.lower() != "all":
+        if status is not None and status.strip().lower() != "all" and status.strip() != "":
             filters.append("UPPER(o.status) = UPPER(?)")
-            params.append(status)
+            params.append(status.strip())
 
         where_clause = " AND ".join(filters) if filters else "1=1"
 
@@ -137,14 +136,24 @@ async def get_received_orders(
     end_date: Optional[str] = Query(None),
     requester: Optional[str] = Query(None),
     supplier: Optional[str] = Query(None),
+    status: Optional[str] = Query(None),
     user: Dict = Depends(require_login)
 ):
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
     try:
-        # MODIFIED: Ensure 'DELETED' orders are NOT shown on this screen
-        filters = ["UPPER(o.status) = 'RECEIVED'", "UPPER(o.status) != 'DELETED'"]
+        filters = []
         params = []
+
+        # Allow status filter to override or combine
+        if status is not None and status.strip().lower() != "all" and status.strip() != "":
+            filters.append("UPPER(o.status) = UPPER(?)")
+            params.append(status.strip())
+        else:
+            # Default to showing both 'Received' and 'Partially Received' if 'All' or no status is specified
+            filters.append("UPPER(o.status) IN ('RECEIVED', 'PARTIALLY RECEIVED')")
+
+        filters.append("UPPER(o.status) != 'DELETED'")
 
         if start_date:
             valid_start_date = validate_date(start_date)
@@ -156,13 +165,13 @@ async def get_received_orders(
             filters.append("DATE(o.created_date) <= DATE(?)")
             params.append(valid_end_date)
 
-        if requester:
+        if requester is not None and requester.strip().lower() != "all" and requester.strip() != "":
             filters.append("UPPER(r.name) LIKE UPPER(?)")
-            params.append(f"%{requester}%")
+            params.append(f"%{requester.strip()}%")
 
-        if supplier:
+        if supplier is not None and supplier.strip().lower() != "all" and supplier.strip() != "":
             filters.append("UPPER(s.name) LIKE UPPER(?)")
-            params.append(f"%{supplier}%")
+            params.append(f"%{supplier.strip()}%")
 
         where_clause = " AND ".join(filters) if filters else "1=1"
 
@@ -204,12 +213,39 @@ async def get_received_orders(
 
 @router.get("/partially_delivered")
 async def get_partially_delivered_orders(
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    requester: Optional[str] = Query(None),
+    supplier: Optional[str] = Query(None),
     user: Dict = Depends(require_login)
 ):
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
     try:
-        cursor = conn.execute("""
+        filters = ["oi.qty_received < oi.qty_ordered", "UPPER(o.status) != 'CANCELLED'", "UPPER(o.status) != 'DELETED'"]
+        params = []
+
+        if start_date:
+            valid_start_date = validate_date(start_date)
+            filters.append("DATE(o.created_date) >= DATE(?)")
+            params.append(valid_start_date)
+
+        if end_date:
+            valid_end_date = validate_date(end_date)
+            filters.append("DATE(o.created_date) <= DATE(?)")
+            params.append(valid_end_date)
+
+        if requester is not None and requester.strip().lower() != "all" and requester.strip() != "":
+            filters.append("UPPER(r.name) LIKE UPPER(?)")
+            params.append(f"%{requester.strip()}%")
+
+        if supplier is not None and supplier.strip().lower() != "all" and supplier.strip() != "":
+            filters.append("UPPER(s.name) LIKE UPPER(?)")
+            params.append(f"%{supplier.strip()}%")
+
+        where_clause = " AND ".join(filters) if filters else "1=1"
+
+        cursor = conn.execute(f"""
             SELECT DISTINCT o.id, o.created_date, o.order_number,
                 r.name AS requester, s.name AS supplier,
                 o.order_note, o.note_to_supplier, o.total, o.status
@@ -217,13 +253,11 @@ async def get_partially_delivered_orders(
             LEFT JOIN requesters r ON o.requester_id = r.id
             LEFT JOIN suppliers s ON o.supplier_id = s.id
             JOIN order_items oi ON o.id = oi.order_id
-            WHERE oi.qty_received < oi.qty_ordered
-            AND UPPER(o.status) != 'CANCELLED'
-            AND UPPER(o.status) != 'DELETED' -- MODIFIED: Ensure 'DELETED' orders are NOT shown on this screen
+            WHERE {where_clause}
             ORDER BY
                 CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
                 o.created_date DESC
-        """)
+        """, params)
         orders = [dict(row) for row in cursor.fetchall()]
         for order in orders:
             if order["created_date"]:
@@ -263,164 +297,165 @@ async def get_items_for_order(order_id: int, user: Dict = Depends(require_login)
     finally:
         conn.close()
 
-@router.get("/orders/api/audit_trail_orders")
-async def get_audit_trail_orders(
-    status: Optional[str] = Query(None, description="Filter by order status"),
-    start_date: Optional[str] = Query(None),
-    end_date: Optional[str] = Query(None),
-    requester: Optional[str] = Query(None),
-    supplier: Optional[str] = Query(None),
-    user: Dict = Depends(require_login)
-):
-    conn = get_db_connection()
-    conn.row_factory = sqlite3.Row
-    try:
-        filters = []
-        params = []
+# The following function is being REMOVED to resolve endpoint conflict
+# @router.get("/orders/api/audit_trail_orders")
+# async def get_audit_trail_orders(
+#     status: Optional[str] = Query(None, description="Filter by order status"),
+#     start_date: Optional[str] = Query(None),
+#     end_date: Optional[str] = Query(None),
+#     requester: Optional[str] = Query(None),
+#     supplier: Optional[str] = Query(None),
+#     user: Dict = Depends(require_login)
+# ):
+#     conn = get_db_connection()
+#     conn.row_factory = sqlite3.Row
+#     try:
+#         filters = []
+#         params = []
 
-        # Standardized status filtering
-        if status and status.lower() != "all":
-            filters.append("UPPER(o.status) = UPPER(?)")
-            params.append(status)
+#         # Standardized status filtering
+#         if status is not None and status.strip().lower() != "all" and status.strip() != "":
+#             filters.append("UPPER(o.status) = UPPER(?)")
+#             params.append(status.strip())
 
-        # Standardized date filters
-        if start_date:
-            valid_start_date = validate_date(start_date)
-            filters.append("DATE(o.created_date) >= DATE(?)")
-            params.append(valid_start_date)
+#         # Standardized date filters
+#         if start_date:
+#             valid_start_date = validate_date(start_date)
+#             filters.append("DATE(o.created_date) >= DATE(?)")
+#             params.append(valid_start_date)
 
-        if end_date:
-            valid_end_date = validate_date(end_date)
-            filters.append("DATE(o.created_date) <= DATE(?)")
-            params.append(valid_end_date)
+#         if end_date:
+#             valid_end_date = validate_date(end_date)
+#             filters.append("DATE(o.created_date) <= DATE(?)")
+#             params.append(valid_end_date)
 
-        # Filter by requester, ensuring "All" is skipped
-        if requester and requester.lower() != "all":
-            filters.append("UPPER(r.name) LIKE UPPER(?)")
-            params.append(f"%{requester}%")
+#         # Filter by requester, ensuring "All" is skipped
+#         if requester is not None and requester.strip().lower() != "all" and requester.strip() != "":
+#             filters.append("UPPER(r.name) LIKE UPPER(?)")
+#             params.append(f"%{requester.strip()}%")
 
-        # Filter by supplier, ensuring "All" is skipped
-        if supplier and supplier.lower() != "all":
-            filters.append("UPPER(s.name) LIKE UPPER(?)")
-            params.append(f"%{supplier}%")
+#         # Filter by supplier, ensuring "All" is skipped
+#         if supplier is not None and supplier.strip().lower() != "all" and supplier.strip() != "":
+#             filters.append("UPPER(s.name) LIKE UPPER(?)")
+#             params.append(f"%{supplier.strip()}%")
 
-        where_clause = " AND ".join(filters) if filters else "1=1"
+#         where_clause = " AND ".join(filters) if filters else "1=1"
 
-        # --- DEBUGGING LOG ENTRY ---
-        # This will write the constructed filters and parameters to a log file
-        log_event("audit_trail_debug_log.txt", {
-            "debug_point": "pre_execute_audit_query",
-            "filters_list": filters,
-            "params_list": params,
-            "final_where_clause": where_clause
-        })
-        # --- END DEBUGGING LOG ENTRY ---
+#         # --- DEBUGGING LOG ENTRY ---
+#         log_event("audit_trail_debug_log.txt", {
+#             "debug_point": "pre_execute_audit_query",
+#             "filters_list": filters,
+#             "params_list": params,
+#             "final_where_clause": where_clause
+#         })
+#         print(f"\n--- DEBUG AUDIT TRAIL QUERY CONSTRUCTION ---")
+#         print(f"Filters List: {filters}")
+#         print(f"Parameters List: {params}")
+#         print(f"Final WHERE Clause: {where_clause}")
+#         print(f"--------------------------------------------\n")
+#         # --- END DEBUGGING LOG ENTRY ---
 
-        cursor = conn.execute(f"""
-            SELECT
-                o.id, o.created_date, o.received_date, o.order_number,
-                r.name AS requester, s.name AS supplier,
-                o.order_note, o.note_to_supplier, o.total, o.status,
-                -- Existing audit_user select
-                u_auth.username AS audit_user,
-                -- NEW: Select payment-related audit details
-                ap.action_date AS paid_date,
-                ap.details AS paid_details,
-                u_paid.username AS paid_by_user
-            FROM orders o
-            LEFT JOIN requesters r ON o.requester_id = r.id
-            LEFT JOIN suppliers s ON o.supplier_id = s.id
-            -- Join for the primary audit user (often the authoriser)
-            LEFT JOIN (
-                SELECT order_id, MAX(action_date) AS latest_action_date, user_id
-                FROM audit_trail
-                WHERE action = 'Authorised'
-                GROUP BY order_id
-            ) latest_auth ON latest_auth.order_id = o.id
-            LEFT JOIN users u_auth ON latest_auth.user_id = u_auth.id
-            -- NEW: Join for the 'Marked COD Paid' user
-            LEFT JOIN (
-                SELECT order_id, MAX(action_date) AS action_date, details, user_id
-                FROM audit_trail
-                WHERE action = 'Marked COD Paid'
-                GROUP BY order_id
-            ) ap ON ap.order_id = o.id
-            LEFT JOIN users u_paid ON ap.user_id = u_paid.id
-            WHERE {where_clause}
-            GROUP BY o.id
-            ORDER BY
-                CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
-                o.created_date DESC
-        """, params)
+#         cursor = conn.execute(f"""
+#             SELECT
+#                 o.id, o.created_date, o.received_date, o.order_number,
+#                 r.name AS requester, s.name AS supplier,
+#                 o.order_note, o.note_to_supplier, o.total, o.status,
+#                 u_auth.username AS audit_user,
+#                 ap.action_date AS paid_date,
+#                 ap.details AS paid_details,
+#                 u_paid.username AS paid_by_user
+#             FROM orders o
+#             LEFT JOIN requesters r ON o.requester_id = r.id
+#             LEFT JOIN suppliers s ON o.supplier_id = s.id
+#             LEFT JOIN (
+#                 SELECT order_id, MAX(action_date) AS latest_action_date, user_id
+#                 FROM audit_trail
+#                 WHERE action = 'Authorised'
+#                 GROUP BY order_id
+#             ) latest_auth ON latest_auth.order_id = o.id
+#             LEFT JOIN users u_auth ON latest_auth.user_id = u_auth.id
+#             LEFT JOIN (
+#                 SELECT order_id, MAX(action_date) AS action_date, details, user_id
+#                 FROM audit_trail
+#                 WHERE action = 'Marked COD Paid'
+#                 GROUP BY order_id
+#             ) ap ON ap.order_id = o.id
+#             LEFT JOIN users u_paid ON ap.user_id = u_paid.id
+#             WHERE {where_clause}
+#             GROUP BY o.id
+#             ORDER BY
+#                 CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
+#                 o.created_date DESC
+#         """, params)
 
-        orders = [dict(row) for row in cursor.fetchall()]
+#         orders = [dict(row) for row in cursor.fetchall()]
 
-        # Format dates for display
-        for order in orders:
-            # Handle created_date
-            if order["created_date"]:
-                try:
-                    order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
-                except ValueError:
-                    try:
-                        order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d").strftime("%Y-%m-%d")
-                    except ValueError:
-                         order["created_date"] = "N/A"
-            else:
-                order["created_date"] = "N/A"
+#         # Format dates for display
+#         for order in orders:
+#             # Handle created_date
+#             if order["created_date"]:
+#                 try:
+#                     order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
+#                 except ValueError:
+#                     try:
+#                         order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d").strftime("%Y-%m-%d")
+#                     except ValueError:
+#                          order["created_date"] = "N/A"
+#             else:
+#                 order["created_date"] = "N/A"
 
-            # Handle received_date
-            if order["received_date"]:
-                try:
-                    order["received_date"] = datetime.strptime(order["received_date"], "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
-                except ValueError:
-                    try:
-                        order["received_date"] = datetime.strptime(order["received_date"], "%Y-%m-%d").strftime("%Y-%m-%d")
-                    except ValueError:
-                        order["received_date"] = "N/A"
-            else:
-                order["received_date"] = "N/A"
+#             # Handle received_date
+#             if order["received_date"]:
+#                 try:
+#                     order["received_date"] = datetime.strptime(order["received_date"], "%Y-%m-%d %H:%M:%M").strftime("%Y-%m-%d")
+#                 except ValueError:
+#                     try:
+#                         order["received_date"] = datetime.strptime(order["received_date"], "%Y-%m-%d").strftime("%Y-%m-%d")
+#                     except ValueError:
+#                         order["received_date"] = "N/A"
+#             else:
+#                 order["received_date"] = "N/A"
 
-            # NEW: Format paid_date if exists
-            if order["paid_date"]:
-                try:
-                    order["paid_date"] = datetime.strptime(order["paid_date"], "%Y-%m-%d %H:%M:%S.%f").strftime("%Y-%m-%d %H:%M")
-                except ValueError:
-                    # Fallback for other potential formats if necessary
-                    order["paid_date"] = "N/A"
+#             # NEW: Format paid_date if exists
+#             if order["paid_date"]:
+#                 try:
+#                     order["paid_date"] = datetime.strptime(order["paid_date"], "%Y-%m-%d %H:%M:%S.%f").strftime("%Y-%m-%d %H:%M")
+#                 except ValueError:
+#                     # Fallback for other potential formats if necessary
+#                     order["paid_date"] = "N/A"
 
 
-        # Log the activity (standard log, not debug log)
-        log_event("audit_trail_log.txt", {
-            "action": "fetch_audit_trail_orders",
-            "count": len(orders),
-            "filters": {
-                "status": status,
-                "start_date": start_date,
-                "end_date": end_date,
-                "requester": requester,
-                "supplier": supplier
-            }
-        })
-        return {"orders": orders}
+#         # Log the activity (standard log, not debug log)
+#         log_event("audit_trail_log.txt", {
+#             "action": "fetch_audit_trail_orders",
+#             "count": len(orders),
+#             "filters": {
+#                 "status": status,
+#                 "start_date": start_date,
+#                 "end_date": end_date,
+#                 "requester": requester,
+#                 "supplier": supplier
+#             }
+#         })
+#         return {"orders": orders}
 
-    except Exception as e:
-        print(f"Error in get_audit_trail_orders: {e}")
-        # Log error with received filters for better debugging
-        log_event("audit_trail_log.txt", {
-            "error": str(e),
-            "type": "audit_trail_orders",
-            "filters_received_on_error": {
-                "status": status,
-                "start_date": start_date,
-                "end_date": end_date,
-                "requester": requester,
-                "supplier": supplier
-            }
-        })
-        raise HTTPException(status_code=500, detail=f"Failed to load audit trail orders: {e}")
-    finally:
-        conn.close()
+#     except Exception as e:
+#         print(f"Error in get_audit_trail_orders: {e}")
+#         # Log error with received filters for better debugging
+#         log_event("audit_trail_log.txt", {
+#             "error": str(e),
+#             "type": "audit_trail_orders",
+#             "filters_received_on_error": {
+#                 "status": status,
+#                 "start_date": start_date,
+#                 "end_date": end_date,
+#                 "requester": requester,
+#                 "supplier": supplier
+#             }
+#         })
+#         raise HTTPException(status_code=500, detail=f"Failed to load audit trail orders: {e}")
+#     finally:
+#         conn.close()
 
 @router.get("/last_audit_action/{order_id}")
 async def get_last_audit_action(order_id: int, user: Dict = Depends(require_login)):
@@ -488,8 +523,10 @@ async def get_cod_orders(
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
     try:
-        filters = ["UPPER(o.payment_terms) = 'COD'"]
+        filters = [] # Start with an empty list
         params = []
+
+        filters.append("UPPER(o.payment_terms) = 'COD'") # Always filter for COD
 
         if start_date:
             valid_start_date = validate_date(start_date)
@@ -501,17 +538,17 @@ async def get_cod_orders(
             filters.append("DATE(o.created_date) <= DATE(?)")
             params.append(valid_end_date)
 
-        if requester:
+        if requester is not None and requester.strip().lower() != "all" and requester.strip() != "":
             filters.append("UPPER(r.name) LIKE UPPER(?)")
-            params.append(f"%{requester}%")
+            params.append(f"%{requester.strip()}%")
 
-        if supplier:
+        if supplier is not None and supplier.strip().lower() != "all" and supplier.strip() != "":
             filters.append("UPPER(s.name) LIKE UPPER(?)")
-            params.append(f"%{supplier}%")
+            params.append(f"%{supplier.strip()}%")
 
-        if status and status.lower() != "all":
+        if status is not None and status.strip().lower() != "all" and status.strip() != "":
             filters.append("UPPER(o.status) = UPPER(?)")
-            params.append(status)
+            params.append(status.strip())
 
         where_clause = " AND ".join(filters) if filters else "1=1"
 
@@ -524,7 +561,7 @@ async def get_cod_orders(
             LEFT JOIN requesters r ON o.requester_id = r.id
             LEFT JOIN suppliers s ON o.supplier_id = s.id
             WHERE {where_clause}
-            AND UPPER(o.status) != 'DELETED' -- MODIFIED: Ensure 'DELETED' orders are NOT shown on this screen
+            AND UPPER(o.status) != 'DELETED' -- This Python comment is now correctly outside the f-string
             ORDER BY
                 CAST(SUBSTR(o.order_number, INSTR(o.order_number, 'C') + 1) AS INTEGER) DESC,
                 o.created_date DESC

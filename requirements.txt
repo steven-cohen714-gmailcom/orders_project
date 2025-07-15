@@ -10,3 +10,4 @@ weasyprint
 httpx
 pydantic
 aiofiles
+email_validator

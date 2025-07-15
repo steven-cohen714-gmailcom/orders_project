@@ -5,17 +5,10 @@
 async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer, orderHeaderData) {
   console.log(`Expanding with receipts for order ID: ${orderId}`);
 
-  // FIX START: Safely check if detailContainer exists before accessing its properties
-  // If detailContainer is not provided, we need to create one or assume it's for a different display method.
-  // Given the error, it's expected to be provided, but if not, this will prevent crash.
+  // Safely check if detailContainer exists before accessing its properties
   if (!detailContainer) {
-    // This scenario means the calling code is not providing the container.
-    // This function likely expects a container to exist for toggling.
-    // For now, let's log an error and return to prevent further issues.
     console.error("expandLineItemsWithReceipts: detailContainer is undefined. Cannot proceed.");
-    // You might need a more sophisticated fallback here, depending on how other screens work.
-    // For a quick fix to stop the crash:
-    return; // Stop execution if critical parameter is missing
+    return;
   }
 
   // Toggle if content already exists and is visible/hidden
@@ -30,26 +23,28 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
   if (isHidden && detailContainer.innerHTML !== '') {
       return;
   }
-  // FIX END
 
   try {
-    // ── Fetch items, receipt logs, AND main order details in parallel ───────────────────────────────
-    const [itemsRes, logsRes, orderDetailsRes] = await Promise.all([
+    // ── Fetch all necessary data in parallel ───────────────────────────────
+    const [itemsRes, logsRes, orderDetailsRes, auditHistoryRes] = await Promise.all([
       fetch(`/orders/api/order_items/${orderId}`),
       fetch(`/orders/api/receipt_logs/${orderId}`),
-      fetch(`/orders/api/order_details_for_audit/${orderId}`)
+      fetch(`/orders/api/order_details_for_audit/${orderId}`), // Fetches summary data including created_by_user, paid_by_user
+      fetch(`/orders/api/order_audit_history/${orderId}`) // Fetches full chronological audit log
     ]);
 
-    if (!itemsRes.ok || !logsRes.ok || !orderDetailsRes.ok) {
+    if (!itemsRes.ok || !logsRes.ok || !orderDetailsRes.ok || !auditHistoryRes.ok) {
       const itemsErr = itemsRes.ok ? "" : await itemsRes.text();
       const logsErr  = logsRes.ok  ? "" : await logsRes.text();
       const orderDetailsErr = orderDetailsRes.ok ? "" : await orderDetailsRes.text();
-      throw new Error(`Fetch error: items ${itemsRes.status} (${itemsErr}), logs ${logsRes.status} (${logsErr}), order details ${orderDetailsRes.status} (${orderDetailsErr})`);
+      const auditHistoryErr = auditHistoryRes.ok ? "" : await auditHistoryRes.text();
+      throw new Error(`Fetch error: items ${itemsRes.status} (${itemsErr}), logs ${logsRes.status} (${logsErr}), order details ${orderDetailsRes.status} (${orderDetailsErr}), audit history ${auditHistoryRes.status} (${auditHistoryErr})`);
     }
 
     const items = await itemsRes.json();
     const logsData  = await logsRes.json();
-    const orderData = await orderDetailsRes.json(); // This is the object containing 'total', 'supplier_name', 'paid_by_user'
+    const orderData = await orderDetailsRes.json(); 
+    const auditHistory = await auditHistoryRes.json(); 
     const receiptLogs = logsData.logs || [];
 
     // ── Group logs by order_item_id for quick look-up ────────────────────────
@@ -62,22 +57,54 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
 
     let contentHTML = '';
 
-    // MODIFIED: Re-structure Payment Details as a table section with robust data handling
-    // Check if amount_paid is a valid number, otherwise default to 0 for formatting
+    // NEW: Order Summary Details (Order Number, Requester, Dates, Created By)
+    const formattedCreatedDate = orderData.created_date ? new Date(orderData.created_date).toLocaleDateString('en-ZA') : 'N/A';
+    const formattedReceivedDate = orderData.received_date ? new Date(orderData.received_date).toLocaleDateString('en-ZA') : 'N/A';
+    const createdByUser = orderData.created_by_user || 'N/A';
+    const requesterName = orderData.requester_name || 'N/A'; 
+    const orderNumber = orderData.order_number || 'N/A';
+
+    contentHTML += `
+        <div class="expanded-section order-summary-details" style="margin-bottom: 1rem;">
+            <h4 style="margin-bottom: 0.5rem; color: #1a3c5e;">Order Summary</h4>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
+                <thead>
+                    <tr style="background:#e6f7ff;font-weight:bold;">
+                        <td style="text-align:left;">Order Number</td>
+                        <td style="text-align:left;">Requester</td>
+                        <td style="text-align:left;">Created Date</td>
+                        <td style="text-align:left;">Created By</td>
+                        <td style="text-align:left;">Received Date</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align:left;">${orderNumber}</td>
+                        <td style="text-align:left;">${requesterName}</td>
+                        <td style="text-align:left;">${formattedCreatedDate}</td>
+                        <td style="text-align:left;">${createdByUser}</td>
+                        <td style="text-align:left;">${formattedReceivedDate}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 1rem;"></div>
+    `;
+
+    // Payment Details Section
     const rawPaidAmount = parseFloat(orderData.amount_paid);
-    // FIX START: Ensure orderData.payment_date exists as well
-    if (!isNaN(rawPaidAmount) && orderData.payment_date) { // Only display if valid amount and date exist
+    if (!isNaN(rawPaidAmount) && orderData.payment_date) { 
         const formattedPaidAmount = `R${rawPaidAmount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         const formattedPaymentDate = new Date(orderData.payment_date).toLocaleDateString('en-ZA');
         
-        // Use orderData for values fetched from backend
-        const paidByUser = orderData.paid_by_user || '';
+        const paidByUser = orderData.paid_by_user || 'N/A'; 
         const rawOriginalTotal = parseFloat(orderData.total);
-        const originalTotal = !isNaN(rawOriginalTotal) ? `R${rawOriginalTotal.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '';
-        const supplierName = orderData.supplier_name || '';
+        const originalTotal = !isNaN(rawOriginalTotal) ? `R${rawOriginalTotal.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'R0.00';
+        const supplierName = orderData.supplier_name || 'N/A';
 
         contentHTML += `
             <div class="expanded-section payment-table-section">
+                <h4 style="margin-bottom: 0.5rem; color: #1a3c5e;">Payment Details</h4>
                 <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
                     <thead>
                         <tr style="background:#e6f7ff;font-weight:bold;">
@@ -85,7 +112,7 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
                             <td style="text-align:right;">Original Amount</td>
                             <td style="text-align:left;">Supplier</td>
                             <td style="text-align:right;">Paid Amount</td>
-                            <td style="text-align:left;">User</td>
+                            <td style="text-align:left;">Paid By</td> 
                         </tr>
                     </thead>
                     <tbody>
@@ -101,8 +128,6 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
             </div>
             <div style="height: 1rem;"></div> `;
     } else {
-        // FIX: Add a fallback if payment details are not available or invalid
-        // This ensures the section is not completely missing, but informs the user.
         contentHTML += `
             <div class="expanded-section payment-table-section">
                 <p>No valid payment details available for this order.</p>
@@ -110,14 +135,14 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
             <div style="height: 1rem;"></div>
         `;
     }
-    // FIX END
 
-
+    // Order Items Section
     if (!items || items.length === 0) {
       contentHTML += `<div class="expanded-section"><em>No items found.</em></div>`;
     } else {
       let tableHTML = `
         <div class="expanded-section items-table-section">
+            <h4 style="margin-bottom: 0.5rem; color: #1a3c5e;">Order Items</h4>
             <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
               <thead>
                 <tr style="background:#f0f0f0;font-weight:bold">
@@ -137,8 +162,8 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
           ? `${item.item_code} – ${item.item_description}`
           : item.item_code || "N/A";
 
-        const quantity = item.quantity || 0;
-        const unitPrice = item.unit_price || 0;
+        const quantity = item.qty_ordered || 0; // Use qty_ordered for original quantity
+        const unitPrice = item.price || 0;
         const total = quantity * unitPrice;
 
         const projectLabel = item.project_name
@@ -167,7 +192,7 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
             receiptLogHTML += `
               <tr>
                 <td style="text-align:right;">${log.qty_received || "N/A"}</td>
-                <td style="text-align:left;">${log.received_date || "N/A"}</td>
+                <td style="text-align:left;">${log.received_date ? new Date(log.received_date).toLocaleDateString('en-ZA') : "N/A"}</td>
                 <td>${log.username || "N/A"}</td>
               </tr>
             `;
@@ -197,18 +222,52 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
       `;
       contentHTML += tableHTML;
     }
+    
+    // NEW: Full Audit History Section
+    if (auditHistory && auditHistory.length > 0) {
+        let auditHistoryHTML = `
+            <div class="expanded-section audit-history-section" style="margin-top: 1rem;">
+                <h4 style="margin-bottom: 0.5rem; color: #1a3c5e;">Full Audit History</h4>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
+                    <thead>
+                        <tr style="background:#f0f8ff;font-weight:bold;">
+                            <td style="text-align:left;">Date</td>
+                            <td style="text-align:left;">Action</td>
+                            <td style="text-align:left;">Details</td>
+                            <td style="text-align:left;">User</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        auditHistory.forEach(entry => {
+            const formattedActionDate = entry.action_date ? new Date(entry.action_date).toLocaleString('en-ZA', { dateStyle: 'short', timeStyle: 'short' }) : 'N/A';
+            auditHistoryHTML += `
+                        <tr>
+                            <td style="text-align:left;">${formattedActionDate}</td>
+                            <td style="text-align:left;">${entry.action || 'N/A'}</td>
+                            <td style="text-align:left;">${entry.details || 'N/A'}</td>
+                            <td style="text-align:left;">${entry.username || 'N/A'}</td>
+                        </tr>
+            `;
+        });
+        auditHistoryHTML += `
+                    </tbody>
+                </table>
+            </div>
+        `;
+        contentHTML += auditHistoryHTML;
+    }
+
 
     detailContainer.innerHTML = contentHTML;
 
   } catch (err) {
     console.error("❌ Error expanding order details:", err);
     alert(`❌ Could not expand order details: ${err.message}`);
-    // FIX START: Ensure detailContainer is not undefined before manipulating
     if (detailContainer) {
         detailContainer.innerHTML = `<div class="expanded-section" style="color:red;">Error loading details: ${err.message}</div>`;
         detailContainer.style.display = "block";
     }
-    // FIX END
     iconElement.textContent = "⬇️";
   }
 }

@@ -3,21 +3,23 @@
 from fastapi import Request, HTTPException, Depends # Added Depends for require_screen_permission
 from fastapi.responses import HTMLResponse, RedirectResponse # Added RedirectResponse
 from fastapi.templating import Jinja2Templates
-import logging # Added logging
+import logging 
 
 templates = Jinja2Templates(directory="frontend/templates")
 
-# Moved from main.py
+# MODIFIED: require_login now returns the user dictionary
 def require_login(request: Request):
     """
-    Dependency to ensure a user is logged in.
+    Dependency to ensure a user is logged in and provides the user session data.
     Redirects to login page if not authenticated.
     """
-    if not request.session.get("user"):
-        return RedirectResponse("/", status_code=302)
-    return None
+    user = request.session.get("user")
+    if not user:
+        # Log this redirect for debugging
+        logging.warning(f"Unauthorized access attempt. Redirecting to login.")
+        raise HTTPException(status_code=302, headers={"Location": "/"})
+    return user # <--- CRITICAL CHANGE: Return the user dictionary
 
-# Moved from main.py
 def require_screen_permission(screen_code: str):
     """
     Dependency to check if the logged-in user has permission for a specific screen.
@@ -26,7 +28,7 @@ def require_screen_permission(screen_code: str):
     def _check_permission(request: Request):
         if not request.session.get("user"):
             # If not logged in, redirect to login page (or raise 401)
-            raise HTTPException(status_code=302, headers={"Location": "/"}) # Use 302 for redirect
+            raise HTTPException(status_code=302, headers={"Location": "/"}) 
         
         user_permissions = request.session.get("screen_permissions", [])
         
@@ -36,7 +38,7 @@ def require_screen_permission(screen_code: str):
                 status_code=403, 
                 detail="Not authorized to view this page. Missing required screen permission."
             )
-        return True # Permission granted
+        return True 
     return _check_permission
 
 # Original function, kept for completeness if used elsewhere
