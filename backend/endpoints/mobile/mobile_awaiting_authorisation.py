@@ -74,11 +74,17 @@ async def get_orders_awaiting_authorisation(
 
         filters.append("o.status = 'Awaiting Authorisation'")
 
-        # Logic for required_auth_band based on user's band
+        # MODIFIED: Logic for required_auth_band based on user's band to include Band 5
         if band == 1:
+            # Band 1 can authorize orders requiring band 1, or those with no/zero required band
             filters.append("(o.required_auth_band = ? OR o.required_auth_band IS NULL OR o.required_auth_band = 0)")
             params.append(band)
+        elif band == 5:
+            # Band 5 can authorize orders requiring Band 5
+            filters.append("o.required_auth_band = ?")
+            params.append(band)
         else:
+            # Other bands (2, 3, 4) can only authorize orders specifically requiring their band
             filters.append("o.required_auth_band = ?")
             params.append(band)
 

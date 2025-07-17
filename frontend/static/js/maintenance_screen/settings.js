@@ -19,6 +19,7 @@ export function initSettings() {
       document.getElementById("auth-threshold-2").value = data.auth_threshold_2 || "";
       document.getElementById("auth-threshold-3").value = data.auth_threshold_3 || "";
       document.getElementById("auth-threshold-4").value = data.auth_threshold_4 || "";
+      document.getElementById("auth-threshold-5").value = data.auth_threshold_5 || ""; // ADDED: Fetch auth_threshold_5
     } catch (err) {
       console.error("Failed to fetch settings:", err);
     }
@@ -31,6 +32,7 @@ export function initSettings() {
     const auth_threshold_2 = parseInt(document.getElementById("auth-threshold-2").value) || 0;
     const auth_threshold_3 = parseInt(document.getElementById("auth-threshold-3").value) || 0;
     const auth_threshold_4 = parseInt(document.getElementById("auth-threshold-4").value) || 0;
+    const auth_threshold_5 = parseInt(document.getElementById("auth-threshold-5").value) || 0; // ADDED: Get auth_threshold_5 value
 
     try {
       const res = await fetch("/lookups/settings", {
@@ -42,7 +44,8 @@ export function initSettings() {
           auth_threshold_1,
           auth_threshold_2,
           auth_threshold_3,
-          auth_threshold_4
+          auth_threshold_4,
+          auth_threshold_5 // ADDED: Include auth_threshold_5 in the payload
         })
       });
       if (res.ok) {

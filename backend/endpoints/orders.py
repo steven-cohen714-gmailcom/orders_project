@@ -297,19 +297,23 @@ async def update_draft_order(order_id: int, payload: dict):
         assigned_auth_band_id = None # Default assigned band if no authorization required by amount
 
         # Fetch all authorization thresholds from settings
-        cursor.execute("SELECT auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4 FROM settings WHERE id = 1")
+        cursor.execute("SELECT auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4, auth_threshold_5 FROM settings WHERE id = 1")
         settings_thresholds = cursor.fetchone()
         logging.info(f"   - Settings thresholds fetched: {settings_thresholds}")
 
+        # Re-indented and corrected logic for authorization thresholds
         if settings_thresholds:
             # Convert thresholds to float, use 0.0 if NULL or not set for comparison
             thresh1 = float(settings_thresholds['auth_threshold_1']) if settings_thresholds and settings_thresholds['auth_threshold_1'] is not None else 0.0
             thresh2 = float(settings_thresholds['auth_threshold_2']) if settings_thresholds and settings_thresholds['auth_threshold_2'] is not None else 0.0
             thresh3 = float(settings_thresholds['auth_threshold_3']) if settings_thresholds and settings_thresholds['auth_threshold_3'] is not None else 0.0
             thresh4 = float(settings_thresholds['auth_threshold_4']) if settings_thresholds and settings_thresholds['auth_threshold_4'] is not None else 0.0
+            thresh5 = float(settings_thresholds['auth_threshold_5']) if settings_thresholds and settings_thresholds['auth_threshold_5'] is not None else 0.0 # ADDED
 
             # Determine the highest band that the new_order_total falls into
-            if new_order_total > thresh4:
+            if new_order_total > thresh5: # Check against thresh5 first for "greater than XXX"
+                assigned_auth_band_id = 5 # Assign band 5 if greater than threshold 5
+            elif new_order_total > thresh4:
                 assigned_auth_band_id = 4
             elif new_order_total > thresh3:
                 assigned_auth_band_id = 3

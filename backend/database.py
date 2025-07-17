@@ -3,7 +3,7 @@
 import sqlite3
 from pathlib import Path
 import logging
-from typing import Optional # ADDED: Import Optional
+from typing import Optional
 
 # Logging setup
 logging.basicConfig(
@@ -105,6 +105,7 @@ def init_db():
                     FOREIGN KEY (order_id) REFERENCES orders(id)
                 )
             """)
+            # MODIFIED: Added auth_threshold_5 to settings table
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS settings (
                     id INTEGER PRIMARY KEY CHECK (id = 1),
@@ -113,16 +114,18 @@ def init_db():
                     auth_threshold_2 INTEGER,
                     auth_threshold_3 INTEGER,
                     auth_threshold_4 INTEGER,
+                    auth_threshold_5 INTEGER, -- ADDED: New authorization threshold
                     requisition_number_start TEXT DEFAULT 'REQ1000'
                 )
             """)
+            # MODIFIED: Added CHECK constraint for auth_threshold_band IN (1, 2, 3, 4, 5)
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     username TEXT UNIQUE NOT NULL,
                     password_hash TEXT NOT NULL,
                     rights TEXT NOT NULL,
-                    auth_threshold_band INTEGER CHECK (auth_threshold_band IN (1, 2, 3, 4)),
+                    auth_threshold_band INTEGER CHECK (auth_threshold_band IN (1, 2, 3, 4, 5)), -- MODIFIED
                     roles TEXT
                 )
             """)
@@ -200,23 +203,31 @@ def init_db():
 def determine_status_and_band(total: float) -> tuple[str, int]:
     with get_db_connection() as conn:
         cursor = conn.cursor()
-        cursor.execute("SELECT auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4 FROM settings WHERE id = 1")
+        # MODIFIED: Select auth_threshold_5 as well
+        cursor.execute("SELECT auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4, auth_threshold_5 FROM settings WHERE id = 1")
         row = cursor.fetchone()
         if not row:
             raise ValueError("Authorization thresholds not configured.")
-        thresholds = [row["auth_threshold_1"], row["auth_threshold_2"], row["auth_threshold_3"], row["auth_threshold_4"]]
+        # MODIFIED: Include auth_threshold_5 in thresholds list
+        thresholds = [row["auth_threshold_1"], row["auth_threshold_2"], row["auth_threshold_3"], row["auth_threshold_4"], row["auth_threshold_5"]]
         status = "Pending"
         required_band = 0
-        if total > thresholds[0]:
+        if total > thresholds[4]:  # Band 5: Catch-all for totals > auth_threshold_5 (20000), ignores other thresholds
             status = "Awaiting Authorisation"
-            if total <= thresholds[1]:
-                required_band = 1
-            elif total <= thresholds[2]:
-                required_band = 2
-            elif total <= thresholds[3]:
-                required_band = 3
-            else:
-                required_band = 4
+            required_band = 5
+        elif total > thresholds[3]:  # Band 4: >40000
+            status = "Awaiting Authorisation"
+            required_band = 4
+        elif total > thresholds[2]:  # Band 3: >30000
+            status = "Awaiting Authorisation"
+            required_band = 3
+        elif total > thresholds[1]:  # Band 2: >20000
+            status = "Awaiting Authorisation"
+            required_band = 2
+        elif total > thresholds[0]:  # Band 1: >10000
+            status = "Awaiting Authorisation"
+            required_band = 1
+        # If total <= authThresholds[0], status remains "Pending" with authBandRequired = null
         return status, required_band
 
 # MODIFIED: Added current_user_id: int parameter
@@ -285,7 +296,7 @@ def create_order(order_data: dict, items: list, current_user_id: int, created_da
         cursor.execute("""
             INSERT INTO audit_trail (order_id, action, details, user_id)
             VALUES (?, 'Created', ?, ?)
-        """, (order_id, f"Order {order_data['order_number']} created", current_user_id)) # CHANGED: user_id now comes from current_user_id
+        """, (order_id, f"Order {order_data['order_number']} created", current_user_id))
         conn.commit()
         cursor.execute("""
             SELECT * FROM orders WHERE id = ?
@@ -295,9 +306,10 @@ def create_order(order_data: dict, items: list, current_user_id: int, created_da
 def get_settings() -> dict:
     with get_db_connection() as conn:
         cursor = conn.cursor()
+        # MODIFIED: Select auth_threshold_5 as well
         cursor.execute("""
             SELECT order_number_start, auth_threshold_1, auth_threshold_2,
-                   auth_threshold_3, auth_threshold_4, requisition_number_start
+                   auth_threshold_3, auth_threshold_4, auth_threshold_5, requisition_number_start
             FROM settings WHERE id = 1
         """)
         row = cursor.fetchone()
@@ -306,17 +318,19 @@ def get_settings() -> dict:
 def update_settings(payload: dict):
     with get_db_connection() as conn:
         cursor = conn.cursor()
+        # MODIFIED: Include auth_threshold_5 in INSERT and UPDATE statements
         cursor.execute("""
             INSERT INTO settings (
                 id, order_number_start, auth_threshold_1, auth_threshold_2,
-                auth_threshold_3, auth_threshold_4, requisition_number_start
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                auth_threshold_3, auth_threshold_4, auth_threshold_5, requisition_number_start
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(id) DO UPDATE SET
                 order_number_start = excluded.order_number_start,
                 auth_threshold_1 = excluded.auth_threshold_1,
                 auth_threshold_2 = excluded.auth_threshold_2,
                 auth_threshold_3 = excluded.auth_threshold_3,
                 auth_threshold_4 = excluded.auth_threshold_4,
+                auth_threshold_5 = excluded.auth_threshold_5, -- ADDED
                 requisition_number_start = excluded.requisition_number_start
         """, (
             1,
@@ -325,6 +339,7 @@ def update_settings(payload: dict):
             payload["auth_threshold_2"],
             payload["auth_threshold_3"],
             payload["auth_threshold_4"],
+            payload["auth_threshold_5"], # ADDED
             payload.get("requisition_number_start", "REQ1000")
         ))
         conn.commit()

@@ -195,7 +195,8 @@ function cancelUserEdit() {
   document.getElementById("user-id").value = "";
   document.getElementById("user-username").value = "";
   document.getElementById("user-password").value = "";
-  document.getElementById("user-auth-threshold-band").value = "";
+  // MODIFIED: Added a default for auth_threshold_band select to clear it.
+  document.getElementById("user-auth-threshold-band").value = ""; 
 
   document.getElementById("cancel-user-edit").style.display = "none";
   document.querySelector("#users button[type='submit']").textContent = "Add User";

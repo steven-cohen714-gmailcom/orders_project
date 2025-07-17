@@ -1,3 +1,5 @@
+# File: frontend/templates/maintenance.html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,12 +24,10 @@
     <div class="tab" data-tab="business_details">Business Details</div>
   </div>
 
-<!-- Users -->
 <div id="users" class="tab-content active">
   <form class="form-group" onsubmit="event.preventDefault();">
     <input type="hidden" id="user-id" />
 
-    <!-- single row layout -->
     <div style="display:flex; gap:1rem; max-width:800px;">
       <div style="flex:1; display:flex; flex-direction:column;">
         <label for="user-username" style="margin-bottom:6px;">Username:</label>
@@ -47,6 +47,7 @@
           <option value="2">Band 2</option>
           <option value="3">Band 3</option>
           <option value="4">Band 4</option>
+          <option value="5">Band 5</option>
         </select>
       </div>
 
@@ -70,14 +71,11 @@
   </table>
 </div>
 
-<!-- Requesters -->
 <div id="requesters" class="tab-content">
   <form id="requester-form" onsubmit="event.preventDefault();">
     <input type="hidden" id="requester-id" />
 
-    <!-- two columns -->
     <div style="display:flex; gap:1rem; max-width:700px;">
-      <!-- column 1: requester name + buttons -->
       <div style="flex:1; display:flex; flex-direction:column;">
         <label for="requester-name" style="margin-bottom:6px;">Name:</label>
         <input type="text" id="requester-name" />
@@ -95,7 +93,6 @@
     </div>
   </form>
 
-  <!-- table -->
   <table>
     <thead>
       <tr>
@@ -107,32 +104,26 @@
   </table>
 </div>
 
-<!-- Items -->
 <div id="items" class="tab-content">
   <form id="item-form" onsubmit="event.preventDefault();">
     <input type="hidden" id="item-id" />
 
-    <!-- two columns side-by-side -->
     <div style="display:flex; gap:1rem; max-width:700px;">
-      <!-- column 1 : item code + buttons -->
       <div style="flex:1; display:flex; flex-direction:column;">
         <label for="item-code" style="margin-bottom:6px;">Item Code:</label>
         <input type="text" id="item-code" />
 
-        <!-- buttons -->
         <button type="submit" id="add-item-button"
                 style="margin-top:12px; width:auto; align-self:flex-start;">Add Item</button>
         <button type="button" id="cancel-item-edit"
                 style="display:none; margin-top:6px;">Cancel</button>
 
-        <!-- validation error -->
         <div id="item-form-error"
              style="color:red; display:none; margin-top:6px;">
           Please enter item code and description
         </div>
       </div>
 
-      <!-- column 2 : description -->
       <div style="flex:1; display:flex; flex-direction:column;">
         <label for="item-description" style="margin-bottom:6px;">Description:</label>
         <input type="text" id="item-description" />
@@ -153,30 +144,24 @@
   </table>
 </div>
 
-  <!-- Suppliers -->
   <div id="suppliers" class="tab-content">
   <form id="supplier-form" onsubmit="event.preventDefault();">
     <input type="hidden" id="supplier-id" />
 
-    <!-- two columns side-by-side -->
     <div style="display:flex; gap:1rem; max-width:700px;">
-      <!-- column 1 : account number + buttons -->
       <div style="flex:1; display:flex; flex-direction:column;">
         <label for="supplier-account-number" style="margin-bottom:6px;">Account Number:</label>
         <input type="text" id="supplier-account-number" />
 
-        <!-- buttons -->
         <button type="submit" id="save-supplier-button" style="margin-top: 12px; width: auto; align-self: flex-start;">Add Supplier</button>
         <button type="button" id="cancel-supplier-edit" style="display:none; margin-top:6px;">Cancel</button>
 
-        <!-- validation error -->
         <div id="supplier-form-error"
              style="color:red; display:none; margin-top:6px;">
           Please enter supplier name and account number
         </div>
       </div>
 
-      <!-- column 2 : supplier name -->
       <div style="flex:1; display:flex; flex-direction:column;">
         <label for="supplier-name" style="margin-bottom:6px;">Supplier Name:</label>
         <input type="text" id="supplier-name" />
@@ -184,7 +169,6 @@
     </div>
   </form>
 
-  <!-- CSV import -->
   <div class="form-group">
     <hr style="margin:1.5rem 0;" />
     <label for="suppliers-csv-upload">Import Suppliers CSV:</label>
@@ -192,7 +176,6 @@
     <button id="import-suppliers-button">Import CSV</button>
   </div>
 
-  <!-- data table -->
   <table>
     <thead>
       <tr>
@@ -205,19 +188,15 @@
   </table>
   </div>
 
- <!-- Projects -->
-<div id="projects" class="tab-content">
+ <div id="projects" class="tab-content">
   <form id="project-form" onsubmit="event.preventDefault();">
     <input type="hidden" id="project-id" />
 
-    <!-- two columns side-by-side -->
     <div style="display:flex; gap:1rem; max-width:700px;">
-      <!-- column 1 : Project Code + buttons -->
       <div style="flex:1; display:flex; flex-direction:column;">
         <label for="project-code" style="margin-bottom:6px;">Project Code:</label>
         <input type="text" id="project-code" />
 
-        <!-- buttons -->
         <button type="submit" id="save-project-button"
                 style="margin-top:12px; width:auto; align-self:flex-start;">
           Add Project
@@ -225,14 +204,12 @@
         <button type="button" id="cancel-project-edit"
                 style="display:none; margin-top:6px;">Cancel</button>
 
-        <!-- validation error -->
         <div id="project-form-error"
              style="color:red; display:none; margin-top:6px;">
           Please enter project code and name
         </div>
       </div>
 
-      <!-- column 2 : Project Name -->
       <div style="flex:1; display:flex; flex-direction:column;">
         <label for="project-name" style="margin-bottom:6px;">Project Name:</label>
         <input type="text" id="project-name" />
@@ -240,7 +217,6 @@
     </div>
   </form>
 
-  <!-- CSV import -->
   <div class="form-group">
     <hr style="margin:1.5rem 0;" />
     <label for="projects-csv-upload">Import Projects CSV:</label>
@@ -248,7 +224,6 @@
     <button type="button" id="import-projects-button">Import CSV</button>
   </div>
 
-  <!-- data table -->
   <table>
     <thead>
       <tr>
@@ -261,14 +236,11 @@
   </table>
 </div>
 
-<!-- Requisitioners -->
 <div id="requisitioners" class="tab-content">
   <form id="requisitioner-form" onsubmit="event.preventDefault();">
     <input type="hidden" id="requisitioner-id" />
 
-    <!-- two columns -->
     <div style="display:flex; gap:1rem; max-width:700px;">
-      <!-- column 1: requisitioner name + buttons -->
       <div style="flex:1; display:flex; flex-direction:column;">
         <label for="requisitioner-name" style="margin-bottom:6px;">Name:</label>
         <input type="text" id="requisitioner-name" />
@@ -286,7 +258,6 @@
     </div>
   </form>
 
-  <!-- table -->
   <table>
     <thead>
       <tr>
@@ -298,7 +269,6 @@
   </table>
 </div>
 
-  <!-- Settings -->
   <div id="settings" class="tab-content">
     <div class="form-group">
       <label for="order-number-start">Start Order Number:</label>
@@ -313,11 +283,12 @@
       <input type="number" id="auth-threshold-3" step="0.01" />
       <label for="auth-threshold-4">Authorization Threshold 4 (R):</label>
       <input type="number" id="auth-threshold-4" step="0.01" />
+      <label for="auth-threshold-5">Authorization Threshold 5 (R):</label>
+      <input type="number" id="auth-threshold-5" step="0.01" />
       <button id="update-settings-button">Update</button>
     </div>
   </div>
 
-  <!-- Business Details -->
   <div id="business_details" class="tab-content">
     <div class="form-group">
       <label for="company-name">Company Name:</label>

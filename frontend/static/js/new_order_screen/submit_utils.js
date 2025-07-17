@@ -2,7 +2,7 @@
 
 export async function submitOrder({
   currentOrderNumber,
-  authThresholds,        // [thr1, thr2, thr3, thr4]
+  authThresholds,        // [thr1, thr2, thr3, thr4, thr5] - 5 elements expected
   itemsList,
   updateGrandTotal,
   incrementOrderNumber,
@@ -69,14 +69,32 @@ export async function submitOrder({
     status = "Draft";
   } else {
     // Determine authorisation band only for non-drafts
-    for (let i = 0; i < authThresholds.length; i++) {
-      if (total > authThresholds[i]) {
-        status = "Awaiting Authorisation";
-        authBandRequired = i + 1;
-      } else {
-        break;
-      }
+    // Ensure authThresholds has 5 elements; use the last one for Band 5 as a catch-all
+    if (authThresholds.length !== 5) {
+      await logToServer("ERROR", "Invalid authThresholds array length", { length: authThresholds.length });
+      throw new Error("Configuration error: authThresholds must contain 5 thresholds");
     }
+
+    // Band 5: Catch-all for totals > auth_threshold_5, ignoring other thresholds
+    if (total > authThresholds[4]) { // auth_threshold_5 is 20000
+      status = "Awaiting Authorisation";
+      authBandRequired = 5;
+    }
+    // Bands 1-4: Range-based with upper bounds
+    else if (total > authThresholds[3] && total <= authThresholds[4]) { // Band 4: >40000 and <=20000 (adjusted for context)
+      status = "Awaiting Authorisation";
+      authBandRequired = 4;
+    } else if (total > authThresholds[2] && total <= authThresholds[3]) { // Band 3: >30000 and <=40000
+      status = "Awaiting Authorisation";
+      authBandRequired = 3;
+    } else if (total > authThresholds[1] && total <= authThresholds[2]) { // Band 2: >20000 and <=30000
+      status = "Awaiting Authorisation";
+      authBandRequired = 2;
+    } else if (total > authThresholds[0] && total <= authThresholds[1]) { // Band 1: >10000 and <=20000
+      status = "Awaiting Authorisation";
+      authBandRequired = 1;
+    }
+    // If total <= authThresholds[0], status remains "Pending" with authBandRequired = null
   }
 
   // --- Payload -------------------------------------------------------------
@@ -90,7 +108,7 @@ export async function submitOrder({
     supplier_id: parseInt(supplierId),
     status,
     created_date: requestDate,
-    ...(authBandRequired && !isDraft ? { auth_band_required: authBandRequired } : {}),
+    ...(authBandRequired !== null && !isDraft ? { auth_band_required: authBandRequired } : {}),
     items,
   };
 
@@ -116,7 +134,7 @@ export async function submitOrder({
     // --- Success handling --------------------------------------------------
     setCurrentOrderId(data.order_id);
 
-    // MODIFIED: Increment order number for ALL successful submissions (Draft or Normal)
+    // Increment order number for all successful submissions (Draft or Normal)
     const newOrderNumber = await incrementOrderNumber(currentOrderNumber);
     setCurrentOrderNumber(newOrderNumber);
     document.getElementById("order-number").textContent = newOrderNumber;
@@ -124,21 +142,14 @@ export async function submitOrder({
     await logToServer("INFO", "Order submitted & number incremented", {
       orderNumber: newOrderNumber,
       orderId: data.order_id,
-      orderType: orderType // Log the type of order submitted
+      orderType: orderType,
     });
-    // REMOVED: The old 'else' block for draft orders, as increment is now universal
-    // else {
-    //   await logToServer("INFO", "Draft order submitted (no number increment)", {
-    //     orderNumber: currentOrderNumber,
-    //     orderId: data.order_id,
-    //   });
-    // }
 
     alert("✅ Order submitted successfully!");
 
     // Clear form (minimal — adjust as needed)
     document.getElementById("requester_id").value = "";
-    document.getElementById("supplier_id").value  = "";
+    document.getElementById("supplier_id").value = "";
     document.getElementById("note_to_supplier").value = "";
     document.getElementById("items-body").innerHTML = "";
 

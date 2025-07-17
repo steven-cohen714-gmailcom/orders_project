@@ -1,16 +1,12 @@
-<!-- Edit User Modal -->
 <div id="edit-user-modal" class="modal" style="display: none;">
   <div class="modal-content" style="width: 600px; max-width: 90%;">
-    <!-- Close button, now calling the globally exposed function -->
     <span class="close" onclick="window.closeEditUserModal()">&times;</span>
     <h2>Edit User</h2>
 
     <form id="edit-user-form">
-      <!-- Username - readonly as per original design -->
       <label for="edit-username">Username</label>
       <input type="text" id="edit-username" name="edit-username" readonly />
 
-      <!-- Threshold Band - updated options to match backend values (1, 2, 3, 4, or empty for Not Set) -->
       <label for="threshold-band">Threshold Band</label>
       <select id="threshold-band" name="threshold-band">
         <option value="">Not Set</option>
@@ -18,9 +14,8 @@
         <option value="2">Band 2</option>
         <option value="3">Band 3</option>
         <option value="4">Band 4</option>
-      </select>
+        <option value="5">Band 5</option> </select>
 
-      <!-- Screen Access -->
       <fieldset>
         <legend>Screens this user can access</legend>
         <table>
@@ -77,12 +72,10 @@
         </table>
       </fieldset>
 
-      <!-- Save button -->
       <div style="margin-top: 20px;">
         <button type="submit">Save Changes</button>
       </div>
 
-      <!-- Hidden user ID field - ID changed to avoid conflict with main form -->
       <input type="hidden" id="edit-user-id-modal" name="user-id" />
     </form>
   </div>
