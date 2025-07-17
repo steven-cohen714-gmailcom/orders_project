@@ -112,3 +112,101 @@
 2025-07-16 18:21:01,729 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 186 total orders for audit trail
 2025-07-16 18:21:03,990 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 394
 2025-07-16 18:21:03,993 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 394
+2025-07-17 05:49:08,592 | INFO | Database initialized successfully.
+2025-07-17 05:49:08,592 | INFO | ✅ Database initialized successfully.
+2025-07-17 05:49:09,111 | INFO | Database initialized successfully.
+2025-07-17 05:49:09,111 | INFO | ✅ Database initialized successfully.
+2025-07-17 05:49:18,619 | INFO | Requesters fetched: 15 items
+2025-07-17 05:49:18,624 | INFO | Suppliers fetched: 803 items
+2025-07-17 05:49:18,633 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 186 total orders for audit trail
+2025-07-17 05:49:22,545 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 394
+2025-07-17 05:49:22,548 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 394
+2025-07-17 05:49:29,042 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
+2025-07-17 05:49:29,044 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 393
+2025-07-17 05:49:49,691 | INFO | Generating PDF for order_id=394, order_number=2292
+2025-07-17 05:50:02,217 | INFO | 📩 Attempting to send PDF for order 2292 to steven.cohen714@gmail.com
+2025-07-17 05:50:02,217 | INFO | Email Reply-To set to: aaron@urc.co.za # This is for the Reply-To header in emails to suppliers
+2025-07-17 05:50:05,867 | INFO | Email sent to steven.cohen714@gmail.com with subject 'Purchase Order 2292 from Universal Recycling'
+2025-07-17 05:50:05,870 | INFO | ✅ Email sent for order 2292 to steven.cohen714@gmail.com and logged to audit trail.
+2025-07-17 05:51:12,110 | INFO | Generating PDF for order_id=394, order_number=2292
+2025-07-17 05:51:17,963 | INFO | 📩 Attempting to send PDF for order 2292 to steven.cohen714@gmail.com
+2025-07-17 05:51:17,963 | INFO | Email Reply-To set to: aaron@urc.co.za # This is for the Reply-To header in emails to suppliers
+2025-07-17 05:51:21,547 | INFO | Email sent to steven.cohen714@gmail.com with subject 'Purchase Order 2292 from Universal Recycling'
+2025-07-17 05:51:21,551 | INFO | ✅ Email sent for order 2292 to steven.cohen714@gmail.com and logged to audit trail.
+2025-07-17 05:51:31,077 | INFO | Requesters fetched: 15 items
+2025-07-17 05:51:31,082 | INFO | Suppliers fetched: 803 items
+2025-07-17 05:51:31,091 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 186 total orders for audit trail
+2025-07-17 05:51:32,510 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 394
+2025-07-17 05:51:32,512 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 394
+2025-07-17 05:52:16,390 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 392
+2025-07-17 05:52:16,392 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 392
+2025-07-17 05:52:24,836 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
+2025-07-17 05:52:24,839 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 393
+2025-07-17 05:53:26,943 | INFO | Starting to render new order page
+2025-07-17 05:53:27,007 | INFO | Requesters fetched: 15 items
+2025-07-17 05:53:27,010 | INFO | Suppliers fetched: 803 items
+2025-07-17 05:53:27,031 | INFO | Items fetched: 10056 items
+2025-07-17 05:53:27,090 | INFO | Items fetched: 10056 items
+2025-07-17 05:53:39,973 | INFO | Items fetched: 10056 items
+2025-07-17 05:53:57,032 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-17 05:53:57,049 | INFO | 🔍 Incoming order: order_number='2293' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=14 requester_id=10 payment_terms='COD' created_date='2025-07-17' auth_band_required=1 items=[OrderItemCreate(item_code='ABRA004', item_description='RUBBER BACKING PAD 115 MM', project='AD01P', qty_ordered=1.0, price=17000.0)]
+2025-07-17 05:53:57,052 | INFO | ✅ [ORDER] Success created: Order 2293 with status Awaiting Authorisation and total R17000.0
+2025-07-17 05:53:57,069 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "2294", "orderId": 395, "orderType": "Pending"}
+2025-07-17 05:54:04,525 | INFO | Requesters fetched: 15 items
+2025-07-17 05:54:04,528 | INFO | Suppliers fetched: 803 items
+2025-07-17 05:54:07,155 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 395
+2025-07-17 05:54:07,157 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 395
+2025-07-17 05:54:34,859 | INFO | Requesters fetched: 15 items
+2025-07-17 05:54:34,860 | INFO | Requesters fetched: 15 items
+2025-07-17 05:54:34,863 | INFO | Suppliers fetched: 803 items
+2025-07-17 05:54:34,871 | INFO | Suppliers fetched: 803 items
+2025-07-17 05:54:43,744 | INFO | Requesters fetched: 15 items
+2025-07-17 05:54:43,748 | INFO | Suppliers fetched: 803 items
+2025-07-17 05:54:52,771 | INFO | Requesters fetched: 15 items
+2025-07-17 05:54:52,775 | INFO | Suppliers fetched: 803 items
+2025-07-17 05:54:54,807 | INFO | Requesters fetched: 15 items
+2025-07-17 05:54:54,809 | INFO | Suppliers fetched: 803 items
+2025-07-17 05:55:01,232 | INFO | Requesters fetched: 15 items
+2025-07-17 05:55:01,236 | INFO | Suppliers fetched: 803 items
+2025-07-17 05:55:02,845 | INFO | Requesters fetched: 15 items
+2025-07-17 05:55:02,849 | INFO | Suppliers fetched: 803 items
+2025-07-17 05:55:02,861 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 187 total orders for audit trail
+2025-07-17 05:55:06,795 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 395
+2025-07-17 05:55:06,798 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 395
+2025-07-17 06:04:08,967 | INFO | Requesters fetched: 15 items
+2025-07-17 06:04:08,970 | INFO | Suppliers fetched: 803 items
+2025-07-17 06:04:08,979 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 187 total orders for audit trail
+2025-07-17 06:04:11,802 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 395
+2025-07-17 06:04:11,805 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 395
+2025-07-17 06:04:46,872 | INFO | Requesters fetched: 15 items
+2025-07-17 06:04:46,879 | INFO | Suppliers fetched: 803 items
+2025-07-17 06:04:52,468 | INFO | Requesters fetched: 15 items
+2025-07-17 06:04:52,473 | INFO | Suppliers fetched: 803 items
+2025-07-17 06:04:56,330 | INFO | Requesters fetched: 15 items
+2025-07-17 06:04:56,337 | INFO | Suppliers fetched: 803 items
+2025-07-17 06:04:56,352 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 187 total orders for audit trail
+2025-07-17 06:04:59,880 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 395
+2025-07-17 06:04:59,882 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 395
+2025-07-17 06:05:08,180 | INFO | Requesters fetched: 15 items
+2025-07-17 06:05:08,186 | INFO | Suppliers fetched: 803 items
+2025-07-17 06:05:31,581 | INFO | Requesters fetched: 15 items
+2025-07-17 06:05:31,584 | INFO | Suppliers fetched: 803 items
+2025-07-17 06:05:40,794 | INFO | Requesters fetched: 15 items
+2025-07-17 06:05:40,797 | INFO | Suppliers fetched: 803 items
+2025-07-17 06:05:48,873 | INFO | Requesters fetched: 15 items
+2025-07-17 06:05:48,876 | INFO | Suppliers fetched: 803 items
+2025-07-17 06:06:31,171 | INFO | Generating PDF for order_id=395, order_number=2293
+2025-07-17 06:06:37,551 | INFO | 📩 Attempting to send PDF for order 2293 to steven.cohen714@gmail.com
+2025-07-17 06:06:37,552 | INFO | Email Reply-To set to: aaron@urc.co.za # This is for the Reply-To header in emails to suppliers
+2025-07-17 06:06:41,167 | INFO | Email sent to steven.cohen714@gmail.com with subject 'Purchase Order 2293 from Universal Recycling'
+2025-07-17 06:06:41,171 | INFO | ✅ Email sent for order 2293 to steven.cohen714@gmail.com and logged to audit trail.
+2025-07-17 06:07:25,457 | INFO | Requesters fetched: 15 items
+2025-07-17 06:07:25,471 | INFO | Suppliers fetched: 803 items
+2025-07-17 06:07:25,482 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 187 total orders for audit trail
+2025-07-17 06:07:28,158 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 395
+2025-07-17 06:07:28,161 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 395
+2025-07-17 06:10:56,708 | INFO | Requesters fetched: 15 items
+2025-07-17 06:10:56,710 | INFO | Suppliers fetched: 803 items
+2025-07-17 06:10:56,718 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 187 total orders for audit trail
+2025-07-17 06:10:59,882 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 395
+2025-07-17 06:10:59,885 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 395

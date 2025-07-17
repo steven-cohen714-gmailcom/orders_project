@@ -170,3 +170,280 @@ INFO:     127.0.0.1:54922 - "GET /orders/api/order_items/394 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:54920 - "GET /orders/api/receipt_logs/394 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:54926 - "GET /orders/api/order_details_for_audit/394 HTTP/1.1" 200 OK
 INFO:     127.0.0.1:54927 - "GET /orders/api/order_audit_history/394 HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [43260] using StatReload
+INFO:     Started server process [43327]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:61137 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61137 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61139 - "GET /static/js/audit_trail.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61139 - "GET /static/js/audit_trail_expand.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61137 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61144 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61141 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61145 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61141 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61141 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61144 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61144 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61144 - "GET /orders/api/order_items/394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61141 - "GET /orders/api/receipt_logs/394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61145 - "GET /orders/api/order_details_for_audit/394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61137 - "GET /orders/api/order_audit_history/394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61150 - "GET /orders/api/order_items/393 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61152 - "GET /orders/api/receipt_logs/393 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61153 - "GET /orders/api/order_details_for_audit/393 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61155 - "GET /orders/api/order_audit_history/393 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61157 - "GET /orders/api/generate_pdf_for_order/394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61159 - "POST /email/send_pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61164 - "GET /orders/api/generate_pdf_for_order/394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61166 - "POST /email/send_pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61177 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61177 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61177 - "GET /static/js/audit_trail.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61177 - "GET /static/js/audit_trail_expand.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61178 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61181 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61182 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61184 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61184 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61184 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61182 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61182 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61182 - "GET /orders/api/order_items/394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61184 - "GET /orders/api/receipt_logs/394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61178 - "GET /orders/api/order_details_for_audit/394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61181 - "GET /orders/api/order_audit_history/394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61192 - "GET /orders/api/order_items/392 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61194 - "GET /orders/api/receipt_logs/392 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61196 - "GET /orders/api/order_details_for_audit/392 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61197 - "GET /orders/api/order_audit_history/392 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61200 - "GET /orders/api/order_items/393 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61202 - "GET /orders/api/receipt_logs/393 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61204 - "GET /orders/api/order_details_for_audit/393 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61205 - "GET /orders/api/order_audit_history/393 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61207 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61207 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61207 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61209 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61211 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61211 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61211 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61211 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61211 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61211 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61211 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61211 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61216 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61217 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61219 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61219 - "POST /orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61219 - "PUT /lookups/order_number HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61219 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61221 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61221 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61223 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61223 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61223 - "GET /orders/api/order_items/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61221 - "GET /orders/api/receipt_logs/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61227 - "GET /orders/api/order_details_for_audit/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61228 - "GET /orders/api/order_audit_history/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61230 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61230 - "GET /static/js/authorisations_per_user.js HTTP/1.1" 304 Not Modified
+INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
+INFO:     127.0.0.1:61230 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
+INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 1}
+INFO:     127.0.0.1:61230 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61230 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61230 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61230 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     Executing Awaiting Authorisation Query: 
+            SELECT
+                o.id,
+                o.order_number,
+                o.total,
+                o.created_date,
+                o.status,
+                o.required_auth_band,
+                o.order_note,
+                r.name AS requester_name,
+                s.name AS supplier_name
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE o.status = 'Awaiting Authorisation' AND (o.required_auth_band = ? OR o.required_auth_band IS NULL OR o.required_auth_band = 0)
+            ORDER BY o.created_date DESC
+         with params: [1]
+INFO:     127.0.0.1:61232 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:     Executing Awaiting Authorisation Query: 
+            SELECT
+                o.id,
+                o.order_number,
+                o.total,
+                o.created_date,
+                o.status,
+                o.required_auth_band,
+                o.order_note,
+                r.name AS requester_name,
+                s.name AS supplier_name
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE o.status = 'Awaiting Authorisation' AND (o.required_auth_band = ? OR o.required_auth_band IS NULL OR o.required_auth_band = 0)
+            ORDER BY o.created_date DESC
+         with params: [1]
+INFO:     127.0.0.1:61232 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "POST /orders/api/authorise_order/395 HTTP/1.1" 200 OK
+INFO:     Executing Awaiting Authorisation Query: 
+            SELECT
+                o.id,
+                o.order_number,
+                o.total,
+                o.created_date,
+                o.status,
+                o.required_auth_band,
+                o.order_note,
+                r.name AS requester_name,
+                s.name AS supplier_name
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE o.status = 'Awaiting Authorisation' AND (o.required_auth_band = ? OR o.required_auth_band IS NULL OR o.required_auth_band = 0)
+            ORDER BY o.created_date DESC
+         with params: [1]
+INFO:     127.0.0.1:61232 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /orders/api/items_for_order/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "POST /orders/receive/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61234 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61234 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61234 - "GET /orders/cod_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61234 - "GET /static/js/cod_orders.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61234 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /orders/api/cod_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "PUT /orders/mark_cod_paid/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /orders/cod_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61236 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61236 - "GET /orders/api/cod_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61236 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61236 - "GET /static/js/audit_trail.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61236 - "GET /static/js/audit_trail_expand.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61236 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61232 - "GET /orders/api/order_items/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61236 - "GET /orders/api/receipt_logs/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61239 - "GET /orders/api/order_details_for_audit/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61240 - "GET /orders/api/order_audit_history/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61453 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61453 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61454 - "GET /static/js/audit_trail.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61454 - "GET /static/js/audit_trail_expand.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61453 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61456 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61459 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61460 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61459 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61460 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61459 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61459 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61459 - "GET /orders/api/order_items/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61460 - "GET /orders/api/receipt_logs/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61456 - "GET /orders/api/order_details_for_audit/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61454 - "GET /orders/api/order_audit_history/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61466 - "GET /orders/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61466 - "GET /static/js/received_orders.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61466 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61466 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61466 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61468 - "GET /orders/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61468 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61468 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61468 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61468 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61468 - "GET /static/js/audit_trail_expand.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61468 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61470 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61470 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61470 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61470 - "GET /orders/api/order_items/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61468 - "GET /orders/api/receipt_logs/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61473 - "GET /orders/api/order_details_for_audit/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61474 - "GET /orders/api/order_audit_history/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61476 - "GET /orders/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61476 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61476 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61476 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61478 - "GET /orders/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61478 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61482 - "GET /static/js/received_orders.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61482 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61478 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61485 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61486 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61488 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61485 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61485 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61485 - "GET /orders/api/received_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61491 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61491 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61493 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61493 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61495 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61495 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61497 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61497 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61500 - "GET /orders/api/items_for_order/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61508 - "GET /orders/api/generate_pdf_for_order/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61510 - "POST /email/send_pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61513 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61513 - "GET /static/js/audit_trail.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61513 - "GET /static/js/audit_trail_expand.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61513 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61513 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61515 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61515 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61515 - "GET /orders/api/order_items/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61513 - "GET /orders/api/receipt_logs/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61520 - "GET /orders/api/order_details_for_audit/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61521 - "GET /orders/api/order_audit_history/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61541 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61541 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61543 - "GET /static/js/audit_trail.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61543 - "GET /static/js/audit_trail_expand.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61541 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61545 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61548 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61549 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61549 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61548 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61548 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61548 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61548 - "GET /orders/api/order_items/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61549 - "GET /orders/api/receipt_logs/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61543 - "GET /orders/api/order_details_for_audit/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61545 - "GET /orders/api/order_audit_history/395 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61562 - "GET /maintenance HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61562 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61562 - "GET /static/js/maintenance_screen/users.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61564 - "GET /static/js/maintenance_screen/requesters.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61566 - "GET /static/js/maintenance_screen/items.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61570 - "GET /static/js/maintenance_screen/projects.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61569 - "GET /static/js/maintenance_screen/suppliers.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61572 - "GET /static/js/maintenance_screen/settings.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61562 - "GET /static/js/maintenance_screen/requisitioners.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61564 - "GET /static/js/maintenance_screen/business_details.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:61564 - "GET /lookups/users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61564 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61574 - "GET /lookups/settings HTTP/1.1" 200 OK

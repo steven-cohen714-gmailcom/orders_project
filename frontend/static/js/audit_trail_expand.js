@@ -49,175 +49,100 @@ export async function expandAuditTrailDetails(orderId, iconElement, detailContai
       logMap[log.order_item_id].push(log);
     }
 
-    let contentHTML = '';
+    let contentHTML = `
+      <div class="audit-events" style="margin-bottom: 1rem;">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
+          <thead>
+            <tr style="background:#f0f0f0; font-weight:bold;">
+              <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">Activity</td>
+              <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">Date</td>
+              <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">User</td>
+              <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">Details</td>
+            </tr>
+          </thead>
+          <tbody>
+    `;
 
-    // --- RESTRUCTURE TO MATCH MOCKUP (image_fab87e.png) ---
+    if (auditHistory && auditHistory.length > 0) {
+      // Sort audit history chronologically (oldest first)
+      auditHistory.sort((a, b) => new Date(a.action_date) - new Date(b.action_date));
 
-    // 1. Order Items Section
-    if (items && items.length > 0) {
-      let orderItemsTableHTML = `
-        <div class="expanded-section order-items-section" style="margin-bottom: 1rem;">
-            <h4 style="margin-bottom: 0.5rem; color: #1a3c5e;">Order Items</h4>
-            <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
-              <thead>
-                <tr style="background:#f0f0f0;font-weight:bold">
-                  <td style="text-align:left;">Item</td>
-                  <td style="text-align:left;">Project</td>
-                  <td style="text-align:right;">Qty</td>
-                  <td style="text-align:right;">Price</td>
-                  <td style="text-align:right;">Total</td>
-                </tr>
-              </thead>
-              <tbody>
-          `;
+      auditHistory.forEach(entry => {
+        const formattedDate = entry.action_date ? new Date(entry.action_date).toLocaleDateString('en-ZA') : 'N/A';
+        const user = entry.username || 'Unknown';
+        const activity = entry.action;
 
-      items.forEach(item => {
-        const itemLabel = item.item_description
-          ? `${item.item_code} – ${item.item_description}`
-          : item.item_code || "N/A";
-        const quantity = item.quantity || 0; 
-        const unitPrice = item.unit_price || 0; 
-        const itemTotal = quantity * unitPrice; 
+        let details = '';
 
-        const projectLabel = item.project || "N/A"; 
+        switch (entry.action) {
+          case 'Created':
+            details = 'Order created';
+            break;
+          case 'Authorised':
+            details = 'Order authorised';
+            break;
+          case 'Received':
+            details = 'Order received';
+            // Parse details for items received
+            let receivedItems = [];
+            try {
+              const detailsContent = entry.details.replace('Order received: ', '');
+              receivedItems = JSON.parse(detailsContent) || [];
+            } catch (e) {
+              console.error('Error parsing received details:', e);
+            }
+            if (receivedItems.length > 0) {
+              details += '<ul style="margin-top: 0.5rem; padding-left: 1.5rem;">';
+              receivedItems.forEach(recItem => {
+                const itemData = items.find(i => i.id === recItem.item_id);
+                const itemLabel = itemData ? `${itemData.item_code} – ${itemData.item_description || ''}` : 'Unknown Item';
+                details += `<li>${itemLabel}: ${recItem.received_qty} qty</li>`;
+              });
+              details += '</ul>';
+            }
+            break;
+          case 'Marked COD Paid':
+            const amountMatch = entry.details.match(/Amount: R([\d.,]+)/);
+            const amount = amountMatch ? amountMatch[1] : 'Unknown';
+            const dateMatch = entry.details.match(/Date: ([\d-]+)/);
+            const payDate = dateMatch ? dateMatch[1] : 'Unknown';
+            details = `Paid: Amount R${amount}, Date: ${payDate}`;
+            break;
+          case 'Emailed':
+            const emailMatch = entry.details.match(/emailed to ([\w.@]+)/);
+            const email = emailMatch ? emailMatch[1] : 'Unknown';
+            details = `Purchase order ${orderData.order_number} emailed to ${email}`;
+            break;
+          case 'Deleted':
+            details = 'Order deleted';
+            break;
+          default:
+            details = entry.details || 'No details';
+            break;
+        }
 
-        const formattedPrice = `R${parseFloat(unitPrice).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        const formattedTotal = `R${parseFloat(itemTotal).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-
-        orderItemsTableHTML += `
+        contentHTML += `
           <tr>
-            <td style="text-align:left;">${itemLabel}</td>
-            <td style="text-align:left;">${projectLabel}</td>
-            <td style="text-align:right;">${quantity}</td>
-            <td style="text-align:right;">${formattedPrice}</td>
-            <td style="text-align:right;">${formattedTotal}</td>
+            <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${activity}</td>
+            <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${formattedDate}</td>
+            <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${user}</td>
+            <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${details}</td>
           </tr>
         `;
       });
-      orderItemsTableHTML += `
-              </tbody>
-            </table>
-        </div>
+    } else {
+      contentHTML += `
+        <tr>
+          <td colspan="4" style="text-align:center; padding: 0.5rem; border: 1px solid #ddd;">No audit trail available for this order.</td>
+        </tr>
       `;
-      contentHTML += orderItemsTableHTML;
-    } else {
-      contentHTML += `<div class="expanded-section"><em>No items found.</em></div>`;
     }
 
-
-    // 2. Receipts Section (Display only if there are logs)
-    if (receiptLogs && receiptLogs.length > 0) {
-      let receiptsTableHTML = `
-        <div class="expanded-section receipts-section" style="margin-bottom: 1rem;">
-            <h4 style="margin-bottom: 0.5rem; color: #1a3c5e;">Receipts</h4>
-            <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
-              <thead>
-                <tr style="background:#f0f0f0;font-weight:bold">
-                  <td style="text-align:left;">Item</td>
-                  <td style="text-align:left;">Receipt Date</td>
-                  <td style="text-align:right;">Qty</td>
-                  <td style="text-align:left;">User</td>
-                </tr>
-              </thead>
-              <tbody>
-          `;
-          
-          receiptLogs.forEach(log => {
-              const receivedItem = items.find(item => item.id === log.order_item_id);
-              const receivedItemLabel = receivedItem ? `${receivedItem.item_code} – ${receivedItem.item_description}` : 'N/A';
-              const formattedReceivedDate = log.received_date ? new Date(log.received_date).toLocaleDateString('en-ZA') : 'N/A';
-
-              receiptsTableHTML += `
-                <tr>
-                  <td style="text-align:left;">${receivedItemLabel}</td>
-                  <td style="text-align:left;">${formattedReceivedDate}</td>
-                  <td style="text-align:right;">${log.qty_received || 'N/A'}</td>
-                  <td>${log.username || 'N/A'}</td>
-                </tr>
-              `;
-          });
-          receiptsTableHTML += `
-              </tbody>
-            </table>
-        </div>
-      `;
-      contentHTML += receiptsTableHTML;
-    }
-
-
-    // 3. Payment Details Section
-    const rawPaidAmount = parseFloat(orderData.amount_paid);
-    const hasPayment = !isNaN(rawPaidAmount) && rawPaidAmount > 0 && orderData.payment_date;
-
-    if (hasPayment) { 
-        const formattedPaidAmount = `R${rawPaidAmount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        const formattedPaymentDate = orderData.payment_date ? new Date(orderData.payment_date).toLocaleDateString('en-ZA') : 'N/A';
-        const paidByUser = orderData.paid_by_user || 'N/A'; 
-
-        contentHTML += `
-            <div class="expanded-section payment-table-section" style="margin-bottom: 1rem;">
-                <h4 style="margin-bottom: 0.5rem; color: #1a3c5e;">Payment Details</h4>
-                <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
-                    <thead>
-                        <tr style="background:#e6f7ff;font-weight:bold;">
-                            <td style="text-align:left;">Payment Date</td>
-                            <td style="text-align:right;">Amt Paid</td>
-                            <td style="text-align:left;">User</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="text-align:left;">${formattedPaymentDate}</td>
-                            <td style="text-align:right;">${formattedPaidAmount}</td>
-                            <td style="text-align:left;">${paidByUser}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="height: 1rem;"></div> `;
-    } else {
-        contentHTML += `
-            <div class="expanded-section payment-table-section" style="margin-bottom: 1rem;">
-                <p>No valid payment details available for this order.</p>
-            </div>
-            <div style="height: 1rem;"></div>
-        `;
-    }
-
-    // 4. Authorisation Details Section
-    const authorisedEntry = auditHistory.find(entry => entry.action === 'Authorised');
-    if (authorisedEntry) {
-        const formattedAuthDate = authorisedEntry.action_date ? new Date(authorisedEntry.action_date).toLocaleDateString('en-ZA') : 'N/A';
-        const authorisedByUser = authorisedEntry.username || 'N/A';
-
-        contentHTML += `
-            <div class="expanded-section authorisation-section" style="margin-bottom: 1rem;">
-                <h4 style="margin-bottom: 0.5rem; color: #1a3c5e;">Authorisation Details</h4>
-                <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
-                    <thead>
-                        <tr style="background:#e6f7ff;font-weight:bold;">
-                            <td style="text-align:left;">Authorised Date</td>
-                            <td style="text-align:left;">User</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="text-align:left;">${formattedAuthDate}</td>
-                            <td style="text-align:left;">${authorisedByUser}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div style="height: 1rem;"></div>
-        `;
-    } else {
-         contentHTML += `
-            <div class="expanded-section authorisation-section" style="margin-bottom: 1rem;">
-                <p>No authorisation details available for this order.</p>
-            </div>
-            <div style="height: 1rem;"></div>
-        `;
-    }
+    contentHTML += `
+          </tbody>
+        </table>
+      </div>
+    `;
 
     detailContainer.innerHTML = contentHTML;
 
