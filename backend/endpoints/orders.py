@@ -1,17 +1,16 @@
 # File: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py
 
 import logging
-from fastapi import APIRouter, HTTPException, Depends, Request # ADDED Request to this import
+from fastapi import APIRouter, HTTPException, Depends, Request
 from pydantic import BaseModel
 from typing import List, Optional
 import sqlite3
 from datetime import datetime
 
-# --- IMPORTANT FIX: Added log_error to the import ---
 from backend.utils.db_utils import handle_db_errors, log_success, log_warning, log_error
 from backend.utils.order_utils import calculate_order_total
 from backend.database import create_order, get_db_connection
-from backend.utils.permissions_utils import require_login # Import require_login
+from backend.utils.permissions_utils import require_login 
 
 router = APIRouter(tags=["orders"])
 
@@ -51,7 +50,7 @@ class ReceivePayload(BaseModel):
 
 # --- Routes ---
 @router.post("")
-async def create_new_order(order: OrderCreate, request: Request): # Added request
+async def create_new_order(order: OrderCreate, request: Request):
     try:
         logging.info(f"🔍 Incoming order: {order}")
         
@@ -86,7 +85,7 @@ async def create_new_order(order: OrderCreate, request: Request): # Added reques
 
         items = [item.dict() for item in order.items]
         
-        result = create_order(order_data, items, current_user_id, created_date=order.created_date) # Pass current_user_id
+        result = create_order(order_data, items, current_user_id, created_date=order.created_date)
         log_success("order", "created", f"Order {order.order_number} with status {order.status} and total R{total}")
         return {"message": "Order created successfully", "order_id": result["id"]}
 
@@ -150,6 +149,8 @@ async def get_order(order_id: int):
     return dict(row)
 
 # MODIFIED ENDPOINT: To fetch specific order details for expanded view on audit trail
+# Simplified to only fetch core order details, as specific users (created_by, paid_by)
+# will now be looked up directly from the auditHistory array on the frontend.
 @router.get("/api/order_details_for_audit/{order_id}")
 @handle_db_errors(entity="order_details", action="fetching for audit")
 async def get_order_details_for_audit(order_id: int):
@@ -160,36 +161,20 @@ async def get_order_details_for_audit(order_id: int):
         cursor.execute("""
             SELECT
                 o.id,
-                o.order_number, 
+                o.order_number,
                 o.status,
-                o.created_date, 
-                o.received_date, 
+                o.created_date,
+                o.received_date,
                 o.amount_paid,
                 o.payment_date,
                 o.order_note,
                 o.note_to_supplier,
-                o.total,               
-                s.name AS supplier_name, 
-                r.name AS requester_name, 
-                u_paid.username AS paid_by_user, 
-                u_created.username AS created_by_user
+                o.total,
+                s.name AS supplier_name,
+                r.name AS requester_name
             FROM orders o
             LEFT JOIN suppliers s ON o.supplier_id = s.id
-            LEFT JOIN requesters r ON o.requester_id = r.id 
-            LEFT JOIN (
-                SELECT order_id, user_id, action_date
-                FROM audit_trail
-                WHERE action = 'Marked COD Paid'
-                ORDER BY action_date DESC LIMIT 1
-            ) ap ON ap.order_id = o.id
-            LEFT JOIN users u_paid ON ap.user_id = u_paid.id
-            LEFT JOIN ( 
-                SELECT order_id, user_id
-                FROM audit_trail
-                WHERE action = 'Created'
-                ORDER BY action_date ASC LIMIT 1 
-            ) ac ON ac.order_id = o.id
-            LEFT JOIN users u_created ON ac.user_id = u_created.id
+            LEFT JOIN requesters r ON o.requester_id = r.id
             WHERE o.id = ?
         """, (order_id,))
         order_details = cursor.fetchone()

@@ -1,6 +1,8 @@
+// Updated frontend/static/js/audit_trail.js
 // File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/audit_trail.js
 
-import { expandLineItemsWithReceipts } from "./components/expand_line_items.js";
+// CHANGED: Import expandAuditTrailDetails from the new dedicated file
+import { expandAuditTrailDetails } from "./audit_trail_expand.js"; 
 import {
   showUploadAttachmentsModal,
   checkAttachments,
@@ -31,7 +33,7 @@ function escapeHTML(str = "") {
     .replace(/\'/g, "&#39;");
 }
 
-async function loadAuditOrders() { // Renamed from loadAuditTestOrders for clarity
+async function loadAuditOrders() { 
   const params = new URLSearchParams();
 
   const statusFilter = document.getElementById("status-filter-test").value;
@@ -57,7 +59,6 @@ async function loadAuditOrders() { // Renamed from loadAuditTestOrders for clari
   }
 
   try {
-    // CORRECTED: Updated endpoint path to match the backend
     const res = await fetch(`/orders/api/audit_trail_orders?${params.toString()}`); 
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
     const { orders = [] } = await res.json();
@@ -71,13 +72,15 @@ async function loadAuditOrders() { // Renamed from loadAuditTestOrders for clari
     }
 
     orders.forEach((order, idx) => {
-      const sanitizedDate = escapeHTML(order.created_date ?
-        new Date(order.created_date).toLocaleDateString("en-ZA") : "N/A");
+      // Determine which date to show in the main list header
+      const displayDate = escapeHTML(order.received_date && order.status === 'Received' ?
+                                    new Date(order.received_date).toLocaleDateString("en-ZA") :
+                                    (order.created_date ? new Date(order.created_date).toLocaleDateString("en-ZA") : "N/A"));
+
       const sanitizedNumber = escapeHTML(order.order_number || "");
       const sanitizedRequester = escapeHTML(order.requester || "N/A");
       const sanitizedSupplier  = escapeHTML(order.supplier  || "N/A");
       const sanitizedStatus    = escapeHTML(order.status    || "");
-      const sanitizedUser      = escapeHTML(order.audit_user || "N/A");
       const sanitizedTotal = formatCurrency(order.total);
 
       // --- START NEW STRUCTURE FOR BLUE RECTANGLE EFFECT ---
@@ -88,14 +91,14 @@ async function loadAuditOrders() { // Renamed from loadAuditTestOrders for clari
       const headerRowDiv = document.createElement("div");
       headerRowDiv.classList.add("order-block-header-row");
       headerRowDiv.innerHTML = `
-        <div class="order-cell">${sanitizedDate}</div>
+        <div class="order-cell">${displayDate}</div>
         <div class="order-cell">${sanitizedNumber}</div>
-        <div class="order-cell">${sanitizedRequester}</div>
         <div class="order-cell">${sanitizedSupplier}</div>
-        <div class="order-cell order-cell-total">${sanitizedTotal}</div> <div class="order-cell"><span class="status">${sanitizedStatus}</span></div>
-        <div class="order-cell">${sanitizedUser}</div>
+        <div class="order-cell">${sanitizedRequester}</div>
+        <div class="order-cell order-cell-total">${sanitizedTotal}</div> 
+        <div class="order-cell"><span class="status">${sanitizedStatus}</span></div>
         <div class="order-cell order-cell-actions">
-          <span class="expand-icon"  title="Show line-items"        data-id="${order.id}">⬇️</span>
+          <span class="expand-icon"  title="Show order details"        data-id="${order.id}">⬇️</span>
           <span class="clip-icon"    title="View / add attachments" data-id="${order.id}" data-number="${sanitizedNumber}">📎</span>
           <span class="note-icon"    title="Edit order note"        data-id="${order.id}" data-note="${escapeHTML(order.order_note || "")}" id="order-note-test-${idx}">📝</span>
           <span class="supplier-note-icon" title="View note to supplier" data-note="${escapeHTML(order.note_to_supplier || "")}">📦</span>
@@ -114,7 +117,8 @@ async function loadAuditOrders() { // Renamed from loadAuditTestOrders for clari
 
       /* --- per-row handlers (re-using existing modal functions) --- */
       headerRowDiv.querySelector(".expand-icon").onclick = async (e) => {
-          await expandLineItemsWithReceipts(order.id, e.target, detailRowDiv, orderBlock);
+          // CHANGED: Call the dedicated expandAuditTrailDetails
+          await expandAuditTrailDetails(order.id, e.target, detailRowDiv);
       };
 
       headerRowDiv.querySelector(".clip-icon").onclick = async (e) => {
@@ -174,12 +178,12 @@ window.addEventListener("DOMContentLoaded", async () => {
   await loadRequesters("requester-filter-test"); 
   await loadSuppliers("supplier-filter-test");   
   
-  loadAuditOrders(); // Initial load of orders (renamed function call)
+  loadAuditOrders(); // Initial load of orders
 
   // Add event listeners for filter buttons
   const runButton = document.getElementById("run-filter-btn-test");
   if (runButton) {
-    runButton.addEventListener("click", loadAuditOrders); // Renamed function call
+    runButton.addEventListener("click", loadAuditOrders); 
   }
 
   const clearButton = document.getElementById("clear-filter-btn-test");
@@ -191,13 +195,13 @@ window.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("supplier-filter-test").value = "All";
       document.getElementById("start-date-filter-test").value = "";
       document.getElementById("end-date-filter-test").value = "";
-      loadAuditOrders(); // Reload orders with cleared filters (renamed function call)
+      loadAuditOrders(); // Reload orders with cleared filters
     });
   }
 });
 
 // Expose functions for potential debugging or future needs if modals rely on window scope
-window.expandLineItemsWithReceipts = expandLineItemsWithReceipts;
+// REMOVED: expandLineItemsWithReceipts export/assignment as it's no longer the primary expander here
 window.showUploadAttachmentsModal  = showUploadAttachmentsModal;
 window.checkAttachments            = checkAttachments;
 window.showViewAttachmentsModal    = showViewAttachmentsModal;

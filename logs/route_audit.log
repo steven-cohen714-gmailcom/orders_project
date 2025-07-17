@@ -24,7 +24,8 @@
 /mobile/get_user_info
 /orders/api/awaiting_authorisation
 /orders/api/authorise_order/{order_id}
-/orders/api/audit_trail_orders
+/orders/api/orders/api/audit_trail_orders
+⚠️ Suspicious duplicate segment in: /orders/api/orders/api/audit_trail_orders
 /lookups/requesters
 /lookups/requesters
 /lookups/requesters/{requester_id}

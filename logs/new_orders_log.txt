@@ -1,20 +1,6 @@
-[2025-07-15T16:16:45.100691] {"action": "fetch_pending_orders", "count": 73}
-[2025-07-15T16:16:56.505512] {"action": "fetch_pending_orders", "count": 73}
-[2025-07-15T16:17:00.312338] {"action": "fetch_items_for_order", "order_id": 393, "count": 1}
-[2025-07-15T16:17:27.381223] {"action": "fetch_pending_orders", "count": 73}
-[2025-07-15T16:17:37.769865] {"action": "fetch_items_for_order", "order_id": 393, "count": 1}
-[2025-07-15T16:18:03.535539] {"action": "fetch_cod_orders", "count": 3}
-[2025-07-15T16:18:13.598828] {"action": "fetch_cod_orders", "count": 3}
-[2025-07-15T16:19:58.319996] {"action": "fetch_pending_orders", "count": 73}
-[2025-07-15T16:20:00.824789] {"action": "fetch_items_for_order", "order_id": 393, "count": 1}
-[2025-07-15T16:20:07.399256] {"action": "fetch_pending_orders", "count": 73}
-[2025-07-15T16:20:09.222887] {"action": "fetch_items_for_order", "order_id": 393, "count": 1}
-[2025-07-15T16:25:22.938135] {"action": "fetch_pending_orders", "count": 73}
-[2025-07-15T16:25:24.969591] {"action": "fetch_items_for_order", "order_id": 393, "count": 1}
-[2025-07-15T16:25:31.835358] {"action": "fetch_pending_orders", "count": 73}
-[2025-07-15T16:25:33.827977] {"action": "fetch_items_for_order", "order_id": 393, "count": 1}
-[2025-07-15T16:28:05.979898] {"action": "fetch_pending_orders", "count": 73}
-[2025-07-15T16:28:07.485864] {"action": "fetch_items_for_order", "order_id": 393, "count": 1}
-[2025-07-15T16:29:49.447927] {"action": "fetch_pending_orders", "count": 73}
-[2025-07-15T16:29:51.308730] {"action": "fetch_items_for_order", "order_id": 393, "count": 1}
-[2025-07-15T16:29:54.606251] {"action": "fetch_pending_orders", "count": 72}
+[2025-07-16T12:27:52.674980] {"action": "fetch_pending_orders", "count": 72}
+[2025-07-16T12:27:58.352221] {"action": "fetch_pending_orders", "count": 72}
+[2025-07-16T15:52:11.543906] {"action": "fetch_pending_orders", "count": 72}
+[2025-07-16T18:12:28.842922] {"action": "fetch_pending_orders", "count": 72}
+[2025-07-16T18:17:35.610924] {"action": "fetch_pending_orders", "count": 72}
+[2025-07-16T18:20:53.087421] {"action": "fetch_cod_orders", "count": 4}

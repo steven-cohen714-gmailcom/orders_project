@@ -1,40 +1,114 @@
-2025-07-15 16:19:29,090 | INFO | Database initialized successfully.
-2025-07-15 16:19:29,090 | INFO | ✅ Database initialized successfully.
-2025-07-15 16:19:43,917 | INFO | Database initialized successfully.
-2025-07-15 16:19:43,917 | INFO | ✅ Database initialized successfully.
-2025-07-15 16:19:44,301 | INFO | Database initialized successfully.
-2025-07-15 16:19:44,301 | INFO | ✅ Database initialized successfully.
-2025-07-15 16:19:48,629 | INFO | Requesters fetched: 15 items
-2025-07-15 16:19:48,636 | INFO | Suppliers fetched: 803 items
-2025-07-15 16:19:51,746 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
-2025-07-15 16:19:51,750 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 393
-2025-07-15 16:19:58,300 | INFO | Requesters fetched: 15 items
-2025-07-15 16:19:58,302 | INFO | Suppliers fetched: 803 items
-2025-07-15 16:20:07,377 | INFO | Requesters fetched: 15 items
-2025-07-15 16:20:07,380 | INFO | Suppliers fetched: 803 items
-2025-07-15 16:21:45,710 | INFO | Database initialized successfully.
-2025-07-15 16:21:45,710 | INFO | ✅ Database initialized successfully.
-2025-07-15 16:25:15,829 | INFO | Database initialized successfully.
-2025-07-15 16:25:15,829 | INFO | ✅ Database initialized successfully.
-2025-07-15 16:25:16,228 | INFO | Database initialized successfully.
-2025-07-15 16:25:16,228 | INFO | ✅ Database initialized successfully.
-2025-07-15 16:25:22,910 | INFO | Requesters fetched: 15 items
-2025-07-15 16:25:22,917 | INFO | Suppliers fetched: 803 items
-2025-07-15 16:25:31,814 | INFO | Requesters fetched: 15 items
-2025-07-15 16:25:31,817 | INFO | Suppliers fetched: 803 items
-2025-07-15 16:28:05,956 | INFO | Requesters fetched: 15 items
-2025-07-15 16:28:05,961 | INFO | Suppliers fetched: 803 items
-2025-07-15 16:29:35,795 | INFO | Database initialized successfully.
-2025-07-15 16:29:35,795 | INFO | ✅ Database initialized successfully.
-2025-07-15 16:29:43,644 | INFO | Database initialized successfully.
-2025-07-15 16:29:43,644 | INFO | ✅ Database initialized successfully.
-2025-07-15 16:29:44,039 | INFO | Database initialized successfully.
-2025-07-15 16:29:44,039 | INFO | ✅ Database initialized successfully.
-2025-07-15 16:29:49,412 | INFO | Requesters fetched: 15 items
-2025-07-15 16:29:49,422 | INFO | Suppliers fetched: 803 items
-2025-07-15 16:29:54,582 | INFO | Requesters fetched: 15 items
-2025-07-15 16:29:54,585 | INFO | Suppliers fetched: 803 items
-2025-07-15 16:29:58,428 | INFO | Requesters fetched: 15 items
-2025-07-15 16:29:58,433 | INFO | Suppliers fetched: 803 items
-2025-07-15 16:30:00,366 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 393
-2025-07-15 16:30:00,370 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
+2025-07-16 11:27:59,736 | INFO | Database initialized successfully.
+2025-07-16 11:27:59,736 | INFO | ✅ Database initialized successfully.
+2025-07-16 11:28:00,127 | INFO | Database initialized successfully.
+2025-07-16 11:28:00,127 | INFO | ✅ Database initialized successfully.
+2025-07-16 11:34:57,693 | INFO | Database initialized successfully.
+2025-07-16 11:34:57,693 | INFO | ✅ Database initialized successfully.
+2025-07-16 11:34:58,086 | INFO | Database initialized successfully.
+2025-07-16 11:34:58,086 | INFO | ✅ Database initialized successfully.
+2025-07-16 12:27:52,654 | INFO | Requesters fetched: 15 items
+2025-07-16 12:27:52,661 | INFO | Suppliers fetched: 803 items
+2025-07-16 12:27:58,331 | INFO | Suppliers fetched: 803 items
+2025-07-16 12:27:58,338 | INFO | Requesters fetched: 15 items
+2025-07-16 12:42:05,988 | INFO | Requesters fetched: 15 items
+2025-07-16 12:42:05,992 | INFO | Suppliers fetched: 803 items
+2025-07-16 12:42:06,006 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 185 total orders for audit trail
+2025-07-16 12:46:12,207 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
+2025-07-16 12:46:12,212 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 393
+2025-07-16 15:09:11,041 | INFO | Database initialized successfully.
+2025-07-16 15:09:11,041 | INFO | ✅ Database initialized successfully.
+2025-07-16 15:09:41,978 | INFO | Requesters fetched: 15 items
+2025-07-16 15:09:41,983 | INFO | Suppliers fetched: 803 items
+2025-07-16 15:09:41,991 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 185 total orders for audit trail
+2025-07-16 15:09:47,528 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
+2025-07-16 15:09:47,531 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 393
+2025-07-16 15:10:19,473 | INFO | Requesters fetched: 15 items
+2025-07-16 15:10:19,477 | INFO | Suppliers fetched: 803 items
+2025-07-16 15:10:19,489 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 185 total orders for audit trail
+2025-07-16 15:10:22,387 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
+2025-07-16 15:10:22,391 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 393
+2025-07-16 15:13:31,910 | INFO | Database initialized successfully.
+2025-07-16 15:13:31,910 | INFO | ✅ Database initialized successfully.
+2025-07-16 15:13:32,320 | INFO | Database initialized successfully.
+2025-07-16 15:13:32,320 | INFO | ✅ Database initialized successfully.
+2025-07-16 15:14:03,191 | INFO | Requesters fetched: 15 items
+2025-07-16 15:14:03,201 | INFO | Suppliers fetched: 803 items
+2025-07-16 15:14:03,211 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 185 total orders for audit trail
+2025-07-16 15:14:27,186 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
+2025-07-16 15:14:27,189 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 393
+2025-07-16 15:39:22,938 | INFO | Database initialized successfully.
+2025-07-16 15:39:22,938 | INFO | ✅ Database initialized successfully.
+2025-07-16 15:39:23,334 | INFO | Database initialized successfully.
+2025-07-16 15:39:23,334 | INFO | ✅ Database initialized successfully.
+2025-07-16 15:39:29,187 | INFO | Requesters fetched: 15 items
+2025-07-16 15:39:29,194 | INFO | Suppliers fetched: 803 items
+2025-07-16 15:39:29,203 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 185 total orders for audit trail
+2025-07-16 15:39:32,604 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
+2025-07-16 15:39:32,610 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 393
+2025-07-16 15:40:34,877 | INFO | Requesters fetched: 15 items
+2025-07-16 15:40:34,878 | INFO | Requesters fetched: 15 items
+2025-07-16 15:40:34,881 | INFO | Suppliers fetched: 803 items
+2025-07-16 15:40:34,890 | INFO | Suppliers fetched: 803 items
+2025-07-16 15:48:40,135 | INFO | Generating PDF for order_id=370, order_number=2268
+2025-07-16 15:52:11,527 | INFO | Requesters fetched: 15 items
+2025-07-16 15:52:11,530 | INFO | Suppliers fetched: 803 items
+2025-07-16 15:52:16,839 | INFO | Generating PDF for order_id=392, order_number=2290
+2025-07-16 15:52:23,003 | INFO | 📩 Attempting to send PDF for order 2290 to steven.cohen714@gmail.com
+2025-07-16 15:52:23,003 | INFO | Email Reply-To set to: aaron@urc.co.za # This is for the Reply-To header in emails to suppliers
+2025-07-16 15:52:27,007 | INFO | Email sent to steven.cohen714@gmail.com with subject 'Purchase Order 2290 from Universal Recycling'
+2025-07-16 15:52:27,011 | INFO | ✅ Email sent for order 2290 to steven.cohen714@gmail.com and logged to audit trail.
+2025-07-16 15:54:23,787 | INFO | Generating PDF for order_id=392, order_number=2290
+2025-07-16 18:11:37,611 | INFO | Database initialized successfully.
+2025-07-16 18:11:37,611 | INFO | ✅ Database initialized successfully.
+2025-07-16 18:11:56,992 | INFO | Database initialized successfully.
+2025-07-16 18:11:56,992 | INFO | ✅ Database initialized successfully.
+2025-07-16 18:11:57,363 | INFO | Database initialized successfully.
+2025-07-16 18:11:57,363 | INFO | ✅ Database initialized successfully.
+2025-07-16 18:12:28,831 | INFO | Requesters fetched: 15 items
+2025-07-16 18:12:28,834 | INFO | Suppliers fetched: 803 items
+2025-07-16 18:12:31,801 | INFO | Generating PDF for order_id=392, order_number=2290
+2025-07-16 18:12:38,957 | INFO | 📩 Attempting to send PDF for order 2290 to steven.cohen714@gmail.com
+2025-07-16 18:12:38,957 | INFO | Email Reply-To set to: aaron@urc.co.za # This is for the Reply-To header in emails to suppliers
+2025-07-16 18:12:43,376 | INFO | Email sent to steven.cohen714@gmail.com with subject 'Purchase Order 2290 from Universal Recycling'
+2025-07-16 18:12:43,380 | INFO | ✅ Email sent for order 2290 to steven.cohen714@gmail.com and logged to audit trail.
+2025-07-16 18:12:51,965 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 392
+2025-07-16 18:12:51,967 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 392
+2025-07-16 18:17:35,593 | INFO | Requesters fetched: 15 items
+2025-07-16 18:17:35,597 | INFO | Suppliers fetched: 803 items
+2025-07-16 18:17:39,159 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 392
+2025-07-16 18:17:39,162 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 392
+2025-07-16 18:17:58,042 | INFO | Requesters fetched: 15 items
+2025-07-16 18:17:58,046 | INFO | Suppliers fetched: 803 items
+2025-07-16 18:17:58,059 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 185 total orders for audit trail
+2025-07-16 18:18:02,209 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 392
+2025-07-16 18:18:02,213 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 392
+2025-07-16 18:18:05,857 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
+2025-07-16 18:18:05,859 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 393
+2025-07-16 18:18:42,015 | INFO | Requesters fetched: 15 items
+2025-07-16 18:18:42,017 | INFO | Requesters fetched: 15 items
+2025-07-16 18:18:42,019 | INFO | Suppliers fetched: 803 items
+2025-07-16 18:18:42,027 | INFO | Suppliers fetched: 803 items
+2025-07-16 18:18:44,126 | INFO | Generating PDF for order_id=370, order_number=2268
+2025-07-16 18:19:51,796 | INFO | Requesters fetched: 15 items
+2025-07-16 18:19:51,801 | INFO | Suppliers fetched: 803 items
+2025-07-16 18:19:51,813 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 185 total orders for audit trail
+2025-07-16 18:19:59,884 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 393
+2025-07-16 18:19:59,887 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 393
+2025-07-16 18:20:13,575 | INFO | Starting to render new order page
+2025-07-16 18:20:13,635 | INFO | Requesters fetched: 15 items
+2025-07-16 18:20:13,640 | INFO | Suppliers fetched: 803 items
+2025-07-16 18:20:13,659 | INFO | Items fetched: 10056 items
+2025-07-16 18:20:13,705 | INFO | Items fetched: 10056 items
+2025-07-16 18:20:24,416 | INFO | Items fetched: 10056 items
+2025-07-16 18:20:35,686 | INFO | Items fetched: 10056 items
+2025-07-16 18:20:46,299 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-16 18:20:46,325 | INFO | 🔍 Incoming order: order_number='2292' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=14 requester_id=11 payment_terms='COD' created_date='2025-07-16' auth_band_required=1 items=[OrderItemCreate(item_code='ABRA003', item_description='GRINDING DISC STEEL 115 MM', project='AD01O', qty_ordered=1.0, price=13567.0)]
+2025-07-16 18:20:46,330 | INFO | ✅ [ORDER] Success created: Order 2292 with status Awaiting Authorisation and total R13567.0
+2025-07-16 18:20:46,359 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "2293", "orderId": 394, "orderType": "Pending"}
+2025-07-16 18:20:53,073 | INFO | Requesters fetched: 15 items
+2025-07-16 18:20:53,075 | INFO | Suppliers fetched: 803 items
+2025-07-16 18:21:01,710 | INFO | Requesters fetched: 15 items
+2025-07-16 18:21:01,715 | INFO | Suppliers fetched: 803 items
+2025-07-16 18:21:01,729 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 186 total orders for audit trail
+2025-07-16 18:21:03,990 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 394
+2025-07-16 18:21:03,993 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 394

@@ -6,12 +6,12 @@ from typing import Optional
 from io import BytesIO
 import base64
 import logging
-import os # Added for os.getenv
+import os  # For os.getenv
 from datetime import datetime
 
 from backend.utils.send_email import send_email
 from backend.database import get_db_connection
-from backend.utils.permissions_utils import require_login # MODIFIED: Correct import path for require_login
+from backend.utils.permissions_utils import require_login
 
 router = APIRouter(tags=["email"])
 
@@ -63,26 +63,21 @@ async def send_pdf_email(request: Request, payload: SendPdfEmailPayload):
             cursor = conn.cursor()
             if payload.order_id:
                 # For existing orders, log to audit_trail table
-                cursor.execute("""
+                details = f"Purchase order {payload.order_number} emailed to {payload.recipient_email} by {username}"
+                cursor.execute(
+                    """
                     INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
                     VALUES (?, ?, ?, ?, ?)
-                """, (
-                    payload.order_id,
-                    "Email Sent",
-                    f"Purchase Order emailed to {payload.recipient_email} by {username}",
-                    datetime.now().isoformat(),
-                    user_id
-                ))
+                    """,
+                    (payload.order_id, "Email Sent", details, datetime.now().isoformat(), user_id)
+                )
             else:
                 # For new orders (previews), return a flag to frontend to update order_note
-                # The frontend will handle updating the order_note on the form
                 logging.info(f"Email sent for new order preview {payload.order_number}. Frontend needs to update order_note.")
-                conn.close() # Close connection as we're returning early
                 return {"message": f"Purchase Order {payload.order_number} emailed successfully", "update_order_note": True}
             
             # Optional: Save manual email to supplier if flag is set and order_id is available
             if payload.save_email_to_supplier and payload.order_id:
-                # First, get the supplier_id from the order
                 cursor.execute("SELECT supplier_id FROM orders WHERE id = ?", (payload.order_id,))
                 order_supplier_id = cursor.fetchone()
                 if order_supplier_id and order_supplier_id["supplier_id"]:

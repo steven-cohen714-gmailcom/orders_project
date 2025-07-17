@@ -31,7 +31,7 @@ def validate_date(date_str: Optional[str]) -> Optional[str]:
         raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use YYYY-MM-DD.")
 
 
-@router.get("/audit_trail_orders") # CHANGED: Now simply "/audit_trail_orders"
+@router.get("/orders/api/audit_trail_orders") 
 async def get_audit_trail_filtered_data(
     status: Optional[str] = Query(None, description="Filter by order status"),
     start_date: Optional[str] = Query(None),
@@ -70,27 +70,68 @@ async def get_audit_trail_filtered_data(
 
         where_clause = " AND ".join(filters) if filters else "1=1"
 
+        # REWRITTEN SQL query for robust filtering and latest audit user retrieval
         cursor = conn.execute(f"""
             SELECT
                 o.id, o.created_date, o.received_date, o.order_number,
                 r.name AS requester, s.name AS supplier,
                 o.order_note, o.note_to_supplier, o.total, o.status,
-                u.username AS audit_user
+                latest_audit_user.username AS audit_user, -- User for the latest action
+                created_user.username AS created_by_user, -- User who created the order
+                authorised_user.username AS authorised_by_user, -- User who authorised the order
+                paid_user.username AS paid_by_user, -- User who marked COD paid
+                received_user.username AS received_by_user -- User who received the order
             FROM orders o
             LEFT JOIN requesters r ON o.requester_id = r.id
             LEFT JOIN suppliers s ON o.supplier_id = s.id
+            
+            -- Join for the user who created the order (first 'Created' entry)
             LEFT JOIN (
-                SELECT
-                    at.order_id,
-                    at.user_id,
-                    MAX(at.action_date) AS latest_action_date
-                FROM audit_trail at
-                GROUP BY at.order_id
-            ) AS latest_audit ON latest_audit.order_id = o.id
-            LEFT JOIN users u ON latest_audit.user_id = u.id
+                SELECT order_id, user_id
+                FROM audit_trail
+                WHERE action = 'Created'
+                ORDER BY action_date ASC LIMIT 1
+            ) ac ON ac.order_id = o.id
+            LEFT JOIN users created_user ON ac.user_id = created_user.id
+
+            -- Join for the user who authorised the order (latest 'Authorised' entry)
+            LEFT JOIN (
+                SELECT order_id, user_id
+                FROM audit_trail
+                WHERE action = 'Authorised'
+                ORDER BY action_date DESC LIMIT 1
+            ) aa ON aa.order_id = o.id
+            LEFT JOIN users authorised_user ON aa.user_id = authorised_user.id
+
+            -- Join for the user who marked COD Paid (latest 'Marked COD Paid' entry)
+            LEFT JOIN (
+                SELECT order_id, user_id
+                FROM audit_trail
+                WHERE action = 'Marked COD Paid'
+                ORDER BY action_date DESC LIMIT 1
+            ) ap ON ap.order_id = o.id
+            LEFT JOIN users paid_user ON ap.user_id = paid_user.id
+
+            -- Join for the user who received the order (latest 'Received' entry)
+            LEFT JOIN (
+                SELECT order_id, user_id
+                FROM audit_trail
+                WHERE action = 'Received'
+                ORDER BY action_date DESC LIMIT 1
+            ) ar ON ar.order_id = o.id
+            LEFT JOIN users received_user ON ar.user_id = received_user.id
+
+            -- Join for the user of the *absolute latest* audit_trail entry (for main display 'User' column)
+            LEFT JOIN ( 
+                SELECT at_inner.order_id, at_inner.user_id, MAX(at_inner.action_date) AS latest_action_date
+                FROM audit_trail at_inner
+                GROUP BY at_inner.order_id
+            ) AS latest_audit_record ON latest_audit_record.order_id = o.id
+            LEFT JOIN users latest_audit_user ON latest_audit_record.user_id = latest_audit_user.id
+
             WHERE {where_clause}
             ORDER BY o.created_date DESC, o.order_number DESC
-        """, params)
+        """, params) 
 
         orders = [dict(row) for row in cursor.fetchall()]
 

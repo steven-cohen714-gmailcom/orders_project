@@ -1,10 +1,10 @@
-// File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/components/expand_line_items.js
+// File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/audit_trail_expand.js
 
-async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer, orderHeaderData) {
-  console.log(`Expanding with receipts for order ID: ${orderId}`);
+export async function expandAuditTrailDetails(orderId, iconElement, detailContainer) {
+  console.log(`Expanding Audit Trail details for order ID: ${orderId}`);
 
   if (!detailContainer) {
-    console.error("expandLineItemsWithReceipts: detailContainer is undefined. Cannot proceed.");
+    console.error("expandAuditTrailDetails: detailContainer is undefined. Cannot proceed.");
     return;
   }
 
@@ -20,11 +20,12 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
   }
 
   try {
+    // ── Fetch all necessary data in parallel ───────────────────────────────
     const [itemsRes, logsRes, orderDetailsRes, auditHistoryRes] = await Promise.all([
       fetch(`/orders/api/order_items/${orderId}`),
       fetch(`/orders/api/receipt_logs/${orderId}`),
-      fetch(`/orders/api/order_details_for_audit/${orderId}`),
-      fetch(`/orders/api/order_audit_history/${orderId}`)
+      fetch(`/orders/api/order_details_for_audit/${orderId}`), // Fetches summary data including created_by_user, paid_by_user
+      fetch(`/orders/api/order_audit_history/${orderId}`) // Fetches full chronological audit log
     ]);
 
     if (!itemsRes.ok || !logsRes.ok || !orderDetailsRes.ok || !auditHistoryRes.ok) {
@@ -50,7 +51,7 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
 
     let contentHTML = '';
 
-    // --- RESTRUCTURE TO MATCH MOCKUP ---
+    // --- RESTRUCTURE TO MATCH MOCKUP (image_fab87e.png) ---
 
     // 1. Order Items Section
     if (items && items.length > 0) {
@@ -74,9 +75,9 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
         const itemLabel = item.item_description
           ? `${item.item_code} – ${item.item_description}`
           : item.item_code || "N/A";
-        const quantity = item.quantity || 0; // 'quantity' is aliased from qty_ordered in backend
-        const unitPrice = item.unit_price || 0; // 'unit_price' is aliased from price in backend
-        const itemTotal = quantity * unitPrice; // Recalculate for display consistency
+        const quantity = item.quantity || 0; 
+        const unitPrice = item.unit_price || 0; 
+        const itemTotal = quantity * unitPrice; 
 
         const projectLabel = item.project || "N/A"; 
 
@@ -122,7 +123,6 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
           `;
           
           receiptLogs.forEach(log => {
-              // Find the item description using log.order_item_id
               const receivedItem = items.find(item => item.id === log.order_item_id);
               const receivedItemLabel = receivedItem ? `${receivedItem.item_code} – ${receivedItem.item_description}` : 'N/A';
               const formattedReceivedDate = log.received_date ? new Date(log.received_date).toLocaleDateString('en-ZA') : 'N/A';
@@ -151,7 +151,7 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
 
     if (hasPayment) { 
         const formattedPaidAmount = `R${rawPaidAmount.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-        const formattedPaymentDate = new Date(orderData.payment_date).toLocaleDateString('en-ZA');
+        const formattedPaymentDate = orderData.payment_date ? new Date(orderData.payment_date).toLocaleDateString('en-ZA') : 'N/A';
         const paidByUser = orderData.paid_by_user || 'N/A'; 
 
         contentHTML += `
@@ -161,8 +161,8 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
                     <thead>
                         <tr style="background:#e6f7ff;font-weight:bold;">
                             <td style="text-align:left;">Payment Date</td>
-                            <td style="text-align:right;">Amount Paid</td>
-                            <td style="text-align:left;">Paid By</td>
+                            <td style="text-align:right;">Amt Paid</td>
+                            <td style="text-align:left;">User</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -185,7 +185,6 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
     }
 
     // 4. Authorisation Details Section
-    // Find the 'Authorised' action in the audit history
     const authorisedEntry = auditHistory.find(entry => entry.action === 'Authorised');
     if (authorisedEntry) {
         const formattedAuthDate = authorisedEntry.action_date ? new Date(authorisedEntry.action_date).toLocaleDateString('en-ZA') : 'N/A';
@@ -198,7 +197,7 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
                     <thead>
                         <tr style="background:#e6f7ff;font-weight:bold;">
                             <td style="text-align:left;">Authorised Date</td>
-                            <td style="text-align:left;">Authorised By</td>
+                            <td style="text-align:left;">User</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -220,42 +219,6 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
         `;
     }
 
-    // 5. Full Audit History Section (Remaining as is, but with styling tweaks)
-    if (auditHistory && auditHistory.length > 0) {
-        let auditHistoryHTML = `
-            <div class="expanded-section audit-history-section" style="margin-top: 1rem;">
-                <h4 style="margin-bottom: 0.5rem; color: #1a3c5e;">Full Audit History</h4>
-                <table style="width: 100%; border-collapse: collapse; margin-top: 0.5rem; table-layout: fixed;">
-                    <thead>
-                        <tr style="background:#f0f8ff;font-weight:bold;">
-                            <td style="text-align:left;">Date</td>
-                            <td style="text-align:left;">Action</td>
-                            <td style="text-align:left;">Details</td>
-                            <td style="text-align:left;">User</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-        `;
-        auditHistory.forEach(entry => {
-            const formattedActionDate = entry.action_date ? new Date(entry.action_date).toLocaleString('en-ZA', { dateStyle: 'short', timeStyle: 'short' }) : 'N/A';
-            auditHistoryHTML += `
-                        <tr>
-                            <td style="text-align:left;">${formattedActionDate}</td>
-                            <td style="text-align:left;">${entry.action || 'N/A'}</td>
-                            <td style="text-align:left;">${entry.details || 'N/A'}</td>
-                            <td style="text-align:left;">${entry.username || 'N/A'}</td>
-                        </tr>
-            `;
-        });
-        auditHistoryHTML += `
-                    </tbody>
-                </table>
-            </div>
-        `;
-        contentHTML += auditHistoryHTML;
-    }
-
-
     detailContainer.innerHTML = contentHTML;
 
   } catch (err) {
@@ -268,10 +231,3 @@ async function expandLineItemsWithReceipts(orderId, iconElement, detailContainer
     iconElement.textContent = "⬇️";
   }
 }
-
-// Export all names in a single block
-export {
-  expandLineItemsWithReceipts,
-  expandLineItemsWithReceipts as expandLineItems,
-  expandLineItemsWithReceipts as expandLineItemsForAudit
-};
