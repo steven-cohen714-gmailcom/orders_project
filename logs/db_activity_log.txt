@@ -202,3 +202,81 @@ sqlite3.OperationalError: database is locked
 2025-07-17 12:45:29,709 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 403
 2025-07-17 12:45:29,712 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 403
 2025-07-17 12:45:46,924 | INFO | Generating PDF for order_id=403, order_number=2301
+2025-07-18 06:16:05,892 | INFO | Database initialized successfully.
+2025-07-18 06:16:05,892 | INFO | ✅ Database initialized successfully.
+2025-07-18 06:16:06,418 | INFO | Database initialized successfully.
+2025-07-18 06:16:06,418 | INFO | ✅ Database initialized successfully.
+2025-07-18 06:16:18,438 | INFO | Requesters fetched: 15 items
+2025-07-18 06:16:18,441 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:16:43,984 | INFO | Requesters fetched: 15 items
+2025-07-18 06:16:43,986 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:16:47,377 | INFO | Starting to render new order page
+2025-07-18 06:16:47,434 | INFO | Requesters fetched: 15 items
+2025-07-18 06:16:47,437 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:16:47,468 | INFO | Items fetched: 10056 items
+2025-07-18 06:16:47,533 | INFO | Items fetched: 10056 items
+2025-07-18 06:17:04,694 | INFO | Items fetched: 10056 items
+2025-07-18 06:17:20,051 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-18 06:17:20,068 | INFO | 🔍 Incoming order: order_number='2302' status='Pending' order_note='' note_to_supplier='' supplier_id=255 requester_id=11 payment_terms='On account' created_date='2025-07-18' auth_band_required=None items=[OrderItemCreate(item_code='ABRA005', item_description='FIBER DISC 115 MMX 22  P36', project='AD01P', qty_ordered=1.0, price=10000.0)]
+2025-07-18 06:17:20,071 | INFO | ✅ [ORDER] Success created: Order 2302 with status Pending and total R10000.0
+2025-07-18 06:17:20,104 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "2303", "orderId": 404, "orderType": "Pending"}
+2025-07-18 06:17:34,525 | INFO | Requesters fetched: 15 items
+2025-07-18 06:17:34,527 | INFO | Requesters fetched: 15 items
+2025-07-18 06:17:34,532 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:17:34,538 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:17:38,543 | INFO | Starting to render new order page
+2025-07-18 06:17:38,592 | INFO | Requesters fetched: 15 items
+2025-07-18 06:17:38,599 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:17:38,626 | INFO | Items fetched: 10056 items
+2025-07-18 06:17:38,690 | INFO | Items fetched: 10056 items
+2025-07-18 06:17:51,496 | INFO | Items fetched: 10056 items
+2025-07-18 06:18:12,656 | INFO | INFO | submitOrder started | {"orderType": "Pending"}
+2025-07-18 06:18:12,671 | INFO | 🔍 Incoming order: order_number='2303' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=255 requester_id=12 payment_terms='COD' created_date='2025-07-18' auth_band_required=5 items=[OrderItemCreate(item_code='ABRA003', item_description='GRINDING DISC STEEL 115 MM', project='AD01M', qty_ordered=3.0, price=23000.0)]
+2025-07-18 06:18:12,675 | INFO | ✅ [ORDER] Success created: Order 2303 with status Awaiting Authorisation and total R69000.0
+2025-07-18 06:18:12,703 | INFO | INFO | Order submitted & number incremented | {"orderNumber": "2304", "orderId": 405, "orderType": "Pending"}
+2025-07-18 06:18:27,610 | INFO | Requesters fetched: 15 items
+2025-07-18 06:18:27,613 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:18:31,213 | INFO | Requesters fetched: 15 items
+2025-07-18 06:18:31,215 | INFO | Requesters fetched: 15 items
+2025-07-18 06:18:31,219 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:18:31,225 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:18:37,258 | INFO | Requesters fetched: 15 items
+2025-07-18 06:18:37,261 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:18:49,073 | INFO | Requesters fetched: 15 items
+2025-07-18 06:18:49,076 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:18:57,094 | INFO | Requesters fetched: 15 items
+2025-07-18 06:18:57,097 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:19:00,073 | INFO | Requesters fetched: 15 items
+2025-07-18 06:19:00,076 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:19:14,634 | INFO | Requesters fetched: 15 items
+2025-07-18 06:19:14,637 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:19:20,121 | INFO | Requesters fetched: 15 items
+2025-07-18 06:19:20,125 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:19:28,325 | INFO | Requesters fetched: 15 items
+2025-07-18 06:19:28,328 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:19:33,149 | INFO | Requesters fetched: 15 items
+2025-07-18 06:19:33,153 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:19:42,929 | INFO | Requesters fetched: 15 items
+2025-07-18 06:19:42,932 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:19:45,388 | INFO | Requesters fetched: 15 items
+2025-07-18 06:19:45,393 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:19:47,670 | INFO | Generating PDF for order_id=405, order_number=2303
+2025-07-18 06:19:53,737 | INFO | 📩 Attempting to send PDF for order 2303 to steven.cohen714@gmail.com
+2025-07-18 06:19:53,737 | INFO | Email Reply-To set to: aaron@urc.co.za # This is for the Reply-To header in emails to suppliers
+2025-07-18 06:19:57,484 | INFO | Email sent to steven.cohen714@gmail.com with subject 'Purchase Order 2303 from Universal Recycling'
+2025-07-18 06:19:57,488 | INFO | ✅ Email sent for order 2303 to steven.cohen714@gmail.com and logged to audit trail.
+2025-07-18 06:20:03,422 | INFO | Requesters fetched: 15 items
+2025-07-18 06:20:03,429 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:20:03,443 | INFO | ✅ [AUDIT_TRAIL_ORDERS] Success fetched: 2 total orders for audit trail
+2025-07-18 06:20:09,263 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 2 logs for order 405
+2025-07-18 06:20:09,265 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 405
+2025-07-18 06:20:21,160 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 404
+2025-07-18 06:20:21,162 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 404
+2025-07-18 06:20:33,423 | INFO | Requesters fetched: 15 items
+2025-07-18 06:20:33,429 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:20:35,191 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 404
+2025-07-18 06:20:35,193 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 404
+2025-07-18 06:21:06,929 | INFO | Requesters fetched: 15 items
+2025-07-18 06:21:06,933 | INFO | Suppliers fetched: 803 items
+2025-07-18 06:21:10,320 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 405
+2025-07-18 06:21:14,478 | INFO | ✅ [ORDER_ITEMS] Success fetched: 1 items for order 404
