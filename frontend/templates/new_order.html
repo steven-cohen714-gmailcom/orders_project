@@ -1,3 +1,5 @@
+{# File: frontend/templates/new_order.html #}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +8,6 @@
   <title>Create New Order</title>
   <link rel="icon" href="data:," />
 
-  <!-- ✅ TomSelect -->
   <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
 
@@ -78,14 +79,15 @@
         </select>
       </div>
 
-      <div class="column">
+      {# REMOVED: order_type select element #}
+      {# <div class="column">
         <label for="order_type">Order Type *</label>
         <select id="order_type" name="order_type" required>
           <option value="" disabled selected>Select Order Type</option>
           <option value="Pending">Normal Order</option>
           <option value="Draft">Draft Order</option>
         </select>
-      </div>
+      </div> #}
 
       <div class="column">
         <label for="note_to_supplier">Note to Supplier</label>
@@ -138,10 +140,14 @@
 
     <div class="button-group">
       <button type="button" id="preview-order">View Purchase Order</button>
-      <button type="button" id="submit-order">Submit Order</button>
+      <button type="button" id="submit-final-order">Submit as Final Order</button> {# RENAMED ID AND TEXT #}
+      <button type="button" id="save-draft-order">Save as Draft Order</button> {# NEW BUTTON #}
       <button type="button" id="cancel-order">Cancel</button>
     </div>
   </div>
+
+  {# NEW: Hidden input field to store draft_id when editing a draft #}
+  <input type="hidden" id="draft-order-id" value="" /> 
 
   <script type="module" src="/static/js/new_order_main.js?v=1"></script>
   <script>
@@ -160,7 +166,6 @@
     <div id="status-messages"></div>
   </div>
 
-<!-- Invisible templates required for JS fuzzy dropdown setup -->
 <select id="item-template" style="display: none;"></select>
 <select id="project-template" style="display: none;"></select>
 </body>

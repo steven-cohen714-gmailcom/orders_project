@@ -49,6 +49,10 @@ from backend.endpoints.lookups import requisitioners as requisitioners_router
 # For audit trail filtering: Import the specific audit trail filters router
 from backend.endpoints.audit_trail_filters import router as audit_trail_filters_router 
 
+# --- NEW IMPORT: Import the new draft_orders router ---
+from backend.endpoints import draft_orders
+
+
 # Allow scripts to import from parent
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from scripts.add_debug_validation_handler import install_validation_handler
@@ -190,6 +194,20 @@ async def pending_orders_page(request: Request):
         }
     )
 
+# --- NEW STATIC ROUTE: for Draft Orders page ---
+@static_router.get("/orders/draft_orders", response_class=HTMLResponse,
+                   dependencies=[Depends(require_login), Depends(require_screen_permission("draft_orders"))])
+async def draft_orders_page(request: Request):
+    user_screen_permissions = request.session.get("screen_permissions", [])
+    return templates.TemplateResponse(
+        "draft_orders.html",
+        {
+            "request": request,
+            "user_screen_permissions": user_screen_permissions 
+        }
+    )
+# --- END NEW STATIC ROUTE ---
+
 @static_router.get("/orders/cod_orders", response_class=HTMLResponse,
                    dependencies=[Depends(require_login), Depends(require_screen_permission("cod_orders"))])
 async def cod_orders_page(request: Request):
@@ -288,7 +306,8 @@ async def favicon():
         logging.error(f"Error serving favicon: {str(e)}", exc_info=True)
         return {"error": "Failed to serve favicon"}, 500
     
-@static_router.get("/orders/authorisations_per_user", response_class=HTMLResponse,
+@static_router.get("/orders/authorisations_per_user", 
+                   response_class=HTMLResponse,
                    dependencies=[Depends(require_login), Depends(require_screen_permission("my_authorisations"))])
 async def authorisations_per_user_page(request: Request):
     user_screen_permissions = request.session.get("screen_permissions", [])
@@ -319,6 +338,10 @@ app.include_router(mobile_auth_router)
 # Correctly include audit_trail_filters_router for /orders/api/audit_trail_orders
 # THIS IS THE CRITICAL LINE FOR AUDIT TRAIL FILTERING
 app.include_router(audit_trail_filters_router, prefix="/orders/api") 
+
+# --- NEW: Include the draft_orders router ---
+app.include_router(draft_orders.router, prefix="/draft_orders")
+# --- END NEW ---
 
 for router in routers:
     if router is not order_queries_router and router is not orders_router and router is not attachments_router and router is not order_receiving_router:
@@ -356,4 +379,4 @@ if __name__ == "__main__":
         uvicorn.run(app, host="0.0.0.0", port=8004)
     except Exception as e:
         logging.exception("❌ Server failed to start")
-        ra
+        raise

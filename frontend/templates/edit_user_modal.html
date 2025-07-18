@@ -14,7 +14,8 @@
         <option value="2">Band 2</option>
         <option value="3">Band 3</option>
         <option value="4">Band 4</option>
-        <option value="5">Band 5</option> </select>
+        <option value="5">Band 5</option>
+      </select>
 
       <fieldset>
         <legend>Screens this user can access</legend>
@@ -69,6 +70,17 @@
               <input type="checkbox" name="screens" value="maintenance">
             </td>
           </tr>
+          {# NEW: Add Draft Orders checkbox #}
+          <tr>
+            <td style="text-align: center;">
+              <strong>Draft Orders</strong><br>
+              <input type="checkbox" name="screens" value="draft_orders">
+            </td>
+            <td style="text-align: center;">
+              {# Placeholder if you add another screen later #}
+            </td>
+          </tr>
+          {# END NEW #}
         </table>
       </fieldset>
 

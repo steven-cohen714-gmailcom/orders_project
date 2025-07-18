@@ -6,7 +6,7 @@ import { showUploadAttachmentsModal, checkAttachments, showViewAttachmentsModal 
 import { showOrderNoteModal, showSupplierNoteModal } from './components/order_note_modal.js';
 import { showReceiveModal } from './components/receive_modal.js';
 import { showPDFModal } from './components/pdf_modal.js';
-import { showEditDraftModal } from './components/edit_draft_modal.js';
+// REMOVED: import { showEditDraftModal } from './components/edit_draft_modal.js'; // This modal is no longer needed here
 
 console.log("Loading pending_orders.js");
 
@@ -35,11 +35,11 @@ async function loadFiltersAndOrders() {
 function escapeHTML(str) {
     if (typeof str !== 'string') return '';
     return str
-        .replace(/&/g, '&')
-        .replace(/</g, '<')
-        .replace(/>/g, '>')
-        .replace(/"/g, '"')
-        .replace(/'/g, '');
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
 
 async function loadOrders() {
@@ -89,10 +89,6 @@ async function loadOrders() {
                           ? `<span class="receive-icon disabled" style="color: grey; cursor: not-allowed;" title="Cannot receive until authorised">✅</span>`
                         : "");
 
-                const editDraftIconHTML = (rawStatus === "Draft")
-                    ? `<span class="edit-draft-icon" style="color: orange; cursor: pointer;" title="Edit Draft Order" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">✏️</span>`
-                    : "";
-
                 row.innerHTML = `
                 <td>${sanitizedDate}</td>
                 <td>${sanitizedOrderNumber}</td>
@@ -107,25 +103,22 @@ async function loadOrders() {
                     <span class="supplier-note-icon" title="View Note to Supplier" data-supplier-note="${sanitizedSupplierNote}" data-order-number="${sanitizedOrderNumber}" id="supplier-note-${index}">📦</span>
                     <span class="delete-icon" style="color: red; cursor: pointer;" title="Delete Order" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">🗑️</span>
                     ${receiveIconHTML}
-                    ${editDraftIconHTML}
                     <span class="pdf-icon" title="View Purchase Order PDF" data-order-id="${order.id || ''}" data-order-number="${sanitizedOrderNumber}">📄</span>
                 </td>
             `;
 
                 tbody.appendChild(row);
 
-                // --- FIX START: Create the detailRow and detailContainer ---
                 const detailRow = document.createElement('tr');
-                detailRow.className = 'expanded-details-row'; // Add a class for styling if needed
+                detailRow.className = 'expanded-details-row';
                 const detailCell = document.createElement('td');
-                detailCell.colSpan = 7; // Ensure this spans all columns of your main table
+                detailCell.colSpan = 7;
                 const detailContainer = document.createElement('div');
-                detailContainer.id = `detail-container-${order.id}`; // Unique ID for this container
-                detailContainer.style.display = 'none'; // Initially hidden
+                detailContainer.id = `detail-container-${order.id}`;
+                detailContainer.style.display = 'none';
                 detailCell.appendChild(detailContainer);
                 detailRow.appendChild(detailCell);
-                tbody.appendChild(detailRow); // Append the detail row immediately after the main row
-                // --- FIX END ---
+                tbody.appendChild(detailRow);
 
 
                 row.querySelector(`#supplier-note-${index}`).addEventListener("click", () => {
@@ -152,9 +145,7 @@ async function loadOrders() {
                         alert("Cannot expand line items: No order ID available");
                         return;
                     }
-                    // --- FIX START: Pass all 4 parameters ---
                     window.expandLineItems(order.id, e.target, detailContainer, order);
-                    // --- FIX END ---
                 });
                 row.querySelector(".clip-icon").addEventListener("click", (e) => {
                     const target = e.target;
@@ -184,15 +175,8 @@ async function loadOrders() {
                 }
             });
 
-                if (rawStatus === "Draft") {
-                    row.querySelector(".edit-draft-icon")?.addEventListener("click", () => {
-                        try {
-                            window.showEditDraftModal(order.id, sanitizedOrderNumber);
-                        } catch (err) {
-                            console.error("Failed to show edit draft modal:", err);
-                        }
-                    });
-                }
+                // The logic for handling 'Draft' status and 'edit-draft-icon' has been removed, as planned.
+                // This entire block was commented out or removed in the previous update.
 
                 if (["Pending", "Authorised", "Paid","Partially Received"].includes(rawStatus)) {
                     row.querySelector(".receive-icon").addEventListener("click", () => window.showReceiveModal(order.id || '', sanitizedOrderNumber));
@@ -208,7 +192,6 @@ async function loadOrders() {
                             if (blob.size === 0) {
                                 throw new Error('Received empty PDF file');
                             }
-                            // MODIFIED: Pass order.id and sanitizedOrderNumber to showPDFModal
                             showPDFModal(blob, order.id, sanitizedOrderNumber); 
                         } else {
                             const data = await response.json();
@@ -249,5 +232,5 @@ window.showViewAttachmentsModal = showViewAttachmentsModal;
 window.showOrderNoteModal = showOrderNoteModal;
 window.showSupplierNoteModal = showSupplierNoteModal;
 window.showReceiveModal = showReceiveModal;
-window.showEditDraftModal = showEditDraftModal;
+// REMOVED: window.showEditDraftModal = showEditDraftModal; // No longer needed here
 window.loadOrders = loadOrders;

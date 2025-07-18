@@ -6,7 +6,6 @@
  *
  * @param {string} selectId - ID of the <select> element (e.g., "supplier_id")
  * @param {string} endpoint - API endpoint to fetch items (e.g., "/lookups/suppliers")
- * @returns {Promise<TomSelect>} A Promise that resolves with the TomSelect instance.
  */
 export async function createFuzzyDropdown(selectId, endpoint) {
   try {
@@ -48,8 +47,7 @@ export async function createFuzzyDropdown(selectId, endpoint) {
       select.appendChild(option);
     });
 
-    // Store the TomSelect instance in a variable
-    const tomSelectInstance = new TomSelect(`#${selectId}`, {
+    new TomSelect(`#${selectId}`, {
       valueField: "value",
       labelField: "text",
       searchField: ["text"],
@@ -60,14 +58,8 @@ export async function createFuzzyDropdown(selectId, endpoint) {
         direction: "asc",
       },
     });
-
-    // NEW LINE: Return the TomSelect instance so it can be used by the caller
-    return tomSelectInstance; 
-
   } catch (err) {
     console.error("Fuzzy dropdown init failed:", err);
     alert(`❌ Could not load ${selectId} dropdown. See console for details.`);
-    // Re-throw the error so the .catch() in new_order_main.js can handle it
-    throw err; 
   }
 }

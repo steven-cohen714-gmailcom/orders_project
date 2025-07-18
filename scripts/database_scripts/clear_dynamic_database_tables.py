@@ -14,12 +14,20 @@ Preserved tables:
 - projects
 - suppliers
 - requisitioners
-- screen_permissions (NEWLY ADDED TO PRESERVED LIST)
+- screen_permissions
+- sqlite_sequence (this is an internal SQLite table always preserved)
 
 Cleared tables:
-- orders, order_items, audit_trail, attachments
-- requisitions, requisition_items, requisition_attachments
+- orders
+- order_items
+- audit_trail
+- attachments
+- requisitions
+- requisition_items
+- requisition_attachments
 - received_item_logs
+- draft_orders (NEWLY ADDED TO CLEARED LIST)
+- draft_order_items (NEWLY ADDED TO CLEARED LIST)
 """
 
 import sqlite3
@@ -43,33 +51,50 @@ STATIC_TABLES = {
     "projects",
     "suppliers",
     "requisitioners",
-    "screen_permissions" # ADDED THIS LINE
+    "screen_permissions"
 }
 
 def get_all_tables(conn):
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    # Filter out internal SQLite tables and 'sqlite_sequence' which manages AUTOINCREMENT
     return [row[0] for row in cursor.fetchall() if not row[0].startswith("sqlite_")]
 
 def clear_dynamic_tables(conn, all_tables):
     cursor = conn.cursor()
-    cleared, skipped = 0, 0
-    cursor.execute("PRAGMA foreign_keys = OFF;")
+    cleared_count = 0
+    preserved_count = 0
+    
+    cursor.execute("PRAGMA foreign_keys = OFF;") # Temporarily disable foreign key checks
 
     for table in all_tables:
         if table in STATIC_TABLES:
             print(f"⏭️ Skipping static table: {table}")
-            skipped += 1
+            preserved_count += 1
             continue
-        cursor.execute(f"SELECT COUNT(*) FROM {table};")
-        row_count = cursor.fetchone()[0]
-        cursor.execute(f"DELETE FROM {table};")
-        print(f"🧹 Cleared {row_count} rows from: {table}")
-        cleared += 1
+        
+        # Ensure sqlite_sequence is also skipped, even if not explicitly in STATIC_TABLES set
+        if table == "sqlite_sequence":
+            print(f"⏭️ Skipping internal SQLite table: {table}")
+            preserved_count += 1
+            continue
 
-    cursor.execute("PRAGMA foreign_keys = ON;")
+        try:
+            cursor.execute(f"SELECT COUNT(*) FROM {table};")
+            row_count = cursor.fetchone()[0]
+            cursor.execute(f"DELETE FROM {table};")
+            print(f"🧹 Cleared {row_count} rows from: {table}")
+            cleared_count += 1
+        except sqlite3.OperationalError as e:
+            print(f"❌ Error clearing table {table}: {e}. Skipping.")
+            # This might happen if the table was newly added but the script was run on an old DB before init_db()
+            # Or if there's a typo in the table name.
+            continue
+
+
+    cursor.execute("PRAGMA foreign_keys = ON;") # Re-enable foreign key checks
     conn.commit()
-    print(f"\n✅ Dynamic clear complete: {cleared} tables cleared, {skipped} preserved.")
+    print(f"\n✅ Dynamic clear complete: {cleared_count} tables cleared, {preserved_count} preserved.")
 
 def main():
     if not DB_PATH.exists():

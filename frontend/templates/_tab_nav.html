@@ -1,3 +1,5 @@
+{# File: frontend/templates/_tab_nav.html #}
+
 <div class="tab-buttons">
   <button onclick="location.href='/home'">Home</button>
   
@@ -16,6 +18,12 @@
   {% if "pending_orders" in user_screen_permissions %}
   <button onclick="location.href='/orders/pending_orders'">Pending Orders</button>
   {% endif %}
+
+  {# NEW: Button for Draft Orders #}
+  {% if "draft_orders" in user_screen_permissions %}
+  <button onclick="location.href='/orders/draft_orders'">Draft Orders</button>
+  {% endif %}
+  {# END NEW #}
   
   {% if "received_orders" in user_screen_permissions %}
   <button onclick="location.href='/orders/received_orders'">Received Orders</button>

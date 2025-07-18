@@ -105,7 +105,6 @@ def init_db():
                     FOREIGN KEY (order_id) REFERENCES orders(id)
                 )
             """)
-            # MODIFIED: Added auth_threshold_5 to settings table
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS settings (
                     id INTEGER PRIMARY KEY CHECK (id = 1),
@@ -114,18 +113,17 @@ def init_db():
                     auth_threshold_2 INTEGER,
                     auth_threshold_3 INTEGER,
                     auth_threshold_4 INTEGER,
-                    auth_threshold_5 INTEGER, -- ADDED: New authorization threshold
+                    auth_threshold_5 INTEGER,
                     requisition_number_start TEXT DEFAULT 'REQ1000'
                 )
             """)
-            # MODIFIED: Added CHECK constraint for auth_threshold_band IN (1, 2, 3, 4, 5)
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     username TEXT UNIQUE NOT NULL,
                     password_hash TEXT NOT NULL,
                     rights TEXT NOT NULL,
-                    auth_threshold_band INTEGER CHECK (auth_threshold_band IN (1, 2, 3, 4, 5)), -- MODIFIED
+                    auth_threshold_band INTEGER CHECK (auth_threshold_band IN (1, 2, 3, 4, 5)),
                     roles TEXT
                 )
             """)
@@ -193,6 +191,52 @@ def init_db():
                     FOREIGN KEY (requisition_id) REFERENCES requisitions(id)
                 )
             """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS requisition_attachments (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    requisition_id INTEGER,
+                    filename TEXT,
+                    file_path TEXT,
+                    upload_date TEXT,
+                    FOREIGN KEY (requisition_id) REFERENCES requisitions(id)
+                )
+            """)
+
+            # --- NEW TABLES FOR DRAFT ORDERS ---
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS draft_orders (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    order_number TEXT,
+                    status TEXT DEFAULT 'Draft', -- Always 'Draft' for this table
+                    created_date TEXT DEFAULT CURRENT_TIMESTAMP,
+                    total REAL,
+                    order_note TEXT,
+                    note_to_supplier TEXT,
+                    supplier_id INTEGER,
+                    requester_id INTEGER,
+                    payment_terms TEXT DEFAULT 'On account',
+                    last_modified_by_user_id INTEGER, -- To track who last saved the draft
+                    FOREIGN KEY (supplier_id) REFERENCES suppliers(id),
+                    FOREIGN KEY (requester_id) REFERENCES requesters(id),
+                    FOREIGN KEY (last_modified_by_user_id) REFERENCES users(id)
+                )
+            """)
+
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS draft_order_items (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    draft_order_id INTEGER,
+                    item_code TEXT,
+                    item_description TEXT,
+                    project TEXT,
+                    qty_ordered REAL,
+                    price REAL,
+                    total REAL, -- Pre-calculated total for the item
+                    FOREIGN KEY (draft_order_id) REFERENCES draft_orders(id)
+                )
+            """)
+            # --- END NEW TABLES FOR DRAFT ORDERS ---
+
 
             conn.commit()
             logging.info("Database initialized successfully.")
@@ -203,34 +247,30 @@ def init_db():
 def determine_status_and_band(total: float) -> tuple[str, int]:
     with get_db_connection() as conn:
         cursor = conn.cursor()
-        # MODIFIED: Select auth_threshold_5 as well
         cursor.execute("SELECT auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4, auth_threshold_5 FROM settings WHERE id = 1")
         row = cursor.fetchone()
         if not row:
             raise ValueError("Authorization thresholds not configured.")
-        # MODIFIED: Include auth_threshold_5 in thresholds list
         thresholds = [row["auth_threshold_1"], row["auth_threshold_2"], row["auth_threshold_3"], row["auth_threshold_4"], row["auth_threshold_5"]]
         status = "Pending"
         required_band = 0
-        if total > thresholds[4]:  # Band 5: Catch-all for totals > auth_threshold_5 (20000), ignores other thresholds
+        if total > thresholds[4]:
             status = "Awaiting Authorisation"
             required_band = 5
-        elif total > thresholds[3]:  # Band 4: >40000
+        elif total > thresholds[3]:
             status = "Awaiting Authorisation"
             required_band = 4
-        elif total > thresholds[2]:  # Band 3: >30000
+        elif total > thresholds[2]:
             status = "Awaiting Authorisation"
             required_band = 3
-        elif total > thresholds[1]:  # Band 2: >20000
+        elif total > thresholds[1]:
             status = "Awaiting Authorisation"
             required_band = 2
-        elif total > thresholds[0]:  # Band 1: >10000
+        elif total > thresholds[0]:
             status = "Awaiting Authorisation"
             required_band = 1
-        # If total <= authThresholds[0], status remains "Pending" with authBandRequired = null
         return status, required_band
 
-# MODIFIED: Added current_user_id: int parameter
 def create_order(order_data: dict, items: list, current_user_id: int, created_date: Optional[str] = None) -> dict:
     if order_data.get("status") == "Draft":
         status = "Draft"
@@ -306,7 +346,6 @@ def create_order(order_data: dict, items: list, current_user_id: int, created_da
 def get_settings() -> dict:
     with get_db_connection() as conn:
         cursor = conn.cursor()
-        # MODIFIED: Select auth_threshold_5 as well
         cursor.execute("""
             SELECT order_number_start, auth_threshold_1, auth_threshold_2,
                    auth_threshold_3, auth_threshold_4, auth_threshold_5, requisition_number_start
@@ -318,7 +357,6 @@ def get_settings() -> dict:
 def update_settings(payload: dict):
     with get_db_connection() as conn:
         cursor = conn.cursor()
-        # MODIFIED: Include auth_threshold_5 in INSERT and UPDATE statements
         cursor.execute("""
             INSERT INTO settings (
                 id, order_number_start, auth_threshold_1, auth_threshold_2,
@@ -330,7 +368,7 @@ def update_settings(payload: dict):
                 auth_threshold_2 = excluded.auth_threshold_2,
                 auth_threshold_3 = excluded.auth_threshold_3,
                 auth_threshold_4 = excluded.auth_threshold_4,
-                auth_threshold_5 = excluded.auth_threshold_5, -- ADDED
+                auth_threshold_5 = excluded.auth_threshold_5,
                 requisition_number_start = excluded.requisition_number_start
         """, (
             1,
@@ -339,7 +377,7 @@ def update_settings(payload: dict):
             payload["auth_threshold_2"],
             payload["auth_threshold_3"],
             payload["auth_threshold_4"],
-            payload["auth_threshold_5"], # ADDED
+            payload["auth_threshold_5"],
             payload.get("requisition_number_start", "REQ1000")
         ))
         conn.commit()

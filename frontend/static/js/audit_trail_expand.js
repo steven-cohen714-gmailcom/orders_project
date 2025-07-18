@@ -24,8 +24,8 @@ export async function expandAuditTrailDetails(orderId, iconElement, detailContai
     const [itemsRes, logsRes, orderDetailsRes, auditHistoryRes] = await Promise.all([
       fetch(`/orders/api/order_items/${orderId}`),
       fetch(`/orders/api/receipt_logs/${orderId}`),
-      fetch(`/orders/api/order_details_for_audit/${orderId}`), // Fetches summary data including created_by_user, paid_by_user
-      fetch(`/orders/api/order_audit_history/${orderId}`) // Fetches full chronological audit log
+      fetch(`/orders/api/order_details_for_audit/${orderId}`),
+      fetch(`/orders/api/order_audit_history/${orderId}`)
     ]);
 
     if (!itemsRes.ok || !logsRes.ok || !orderDetailsRes.ok || !auditHistoryRes.ok) {
@@ -78,6 +78,12 @@ export async function expandAuditTrailDetails(orderId, iconElement, detailContai
           case 'Created':
             details = 'Order created';
             break;
+          case 'Created as Draft': // NEW: Handle the new draft creation action
+            details = 'Order saved as draft';
+            break;
+          case 'Draft Updated': // NEW: Handle draft update action
+            details = 'Draft order updated';
+            break;
           case 'Authorised':
             details = 'Order authorised';
             break;
@@ -115,6 +121,9 @@ export async function expandAuditTrailDetails(orderId, iconElement, detailContai
             break;
           case 'Deleted':
             details = 'Order deleted';
+            break;
+          case 'Note Updated': // From order_notes.py
+            details = `Order note updated to: "${entry.details.replace('Order note updated to: ', '')}"`;
             break;
           default:
             details = entry.details || 'No details';

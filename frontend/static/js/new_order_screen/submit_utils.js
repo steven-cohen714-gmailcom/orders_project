@@ -1,48 +1,50 @@
 // File: frontend/static/js/new_order_screen/submit_utils.js
 
 export async function submitOrder({
-  currentOrderNumber,
-  authThresholds,        // [thr1, thr2, thr3, thr4, thr5] - 5 elements expected
-  itemsList,
-  updateGrandTotal,
-  incrementOrderNumber,
-  logToServer,
-  setCurrentOrderId,
-  setCurrentOrderNumber,
-  paymentTerms,          // passed in but still read from DOM for now
-  orderType,             // "Normal" | "Draft"
-  isDraft                // boolean
+  currentOrderNumber, // The order number of the order being submitted
+  authThresholds,     // Authorization thresholds
+  itemsList,          // List of items for description lookup
+  updateGrandTotal,   // Function to get the current total
+  logToServer,        // Logging utility
+  setCurrentOrderId,  // Function to set the ID of the newly created final order
+  paymentTerms,       // Payment terms for the order
+  draftId             // Optional: ID of the draft order if finalizing a draft
 }) {
-  console.log("submitOrder triggered");
-  await logToServer("INFO", "submitOrder started", { orderType });
+  console.log("submitOrder triggered (finalizing order)");
+  await logToServer("INFO", "submitOrder started (finalizing order)", { orderNumber: currentOrderNumber, draftId: draftId });
 
-  // --- Basic required fields ----------------------------------------------
-  const requesterId   = document.getElementById("requester_id").value;
-  const supplierId    = document.getElementById("supplier_id").value;
+  // --- Basic required fields (read directly from DOM) ----------------------------------------------
+  const requesterId = document.getElementById("requester_id").value;
+  const supplierId = document.getElementById("supplier_id").value;
   const noteToSupplier = document.getElementById("note_to_supplier").value;
-  const payTermsDom    = document.getElementById("payment_terms").value;
-  const payTerms       = payTermsDom || paymentTerms || "On account";
-  const requestDate    = document.getElementById("request_date").value;
+  const orderNote = document.getElementById("order_note").value;
+  const payTerms = document.getElementById("payment_terms").value || paymentTerms || "On account";
+  const requestDate = document.getElementById("request_date").value;
 
   if (!requesterId || !supplierId) {
-    await logToServer("ERROR", "Missing requester or supplier", { requesterId, supplierId });
+    await logToServer("ERROR", "Missing requester or supplier for final order", { requesterId, supplierId });
     alert("Please fill in Requester and Supplier");
-    return;
+    return false; // Return false on validation failure
+  }
+  if (!requestDate) {
+    alert("Please select a Request Date for the order.");
+    await logToServer("WARNING", "Missing request date for final order");
+    return false; // Return false on validation failure
   }
 
   // --- Line-items collection ----------------------------------------------
   let items;
   try {
     items = Array.from(document.querySelectorAll("#items-body tr")).map((row) => {
-      const itemCode   = row.querySelector(".item-code")?.value;
-      const itemDesc   = itemsList.find((i) => i.item_code === itemCode)?.item_description || "";
-      const project    = row.querySelector(".project")?.value;
+      const itemCode = row.querySelector(".item-code")?.value;
+      const itemDesc = itemsList.find((i) => i.item_code === itemCode)?.item_description || "";
+      const project = row.querySelector(".project")?.value;
       const qtyOrdered = parseFloat(row.querySelector(".qty-ordered")?.value) || 0;
-      const price      = parseFloat(row.querySelector(".price")?.value) || 0;
+      const price = parseFloat(row.querySelector(".price")?.value) || 0;
 
-      // Relaxed validation for drafts
-      if (!itemCode || !project || (!isDraft && (qtyOrdered <= 0 || price <= 0))) {
-        throw new Error("Each item needs item, project, qty>0 & price>0 (unless Draft)");
+      // Strict validation for final orders
+      if (!itemCode || !project || qtyOrdered <= 0 || price <= 0) {
+        throw new Error("Each item needs item, project, quantity > 0 & price > 0 for a final order.");
       }
 
       return {
@@ -54,9 +56,15 @@ export async function submitOrder({
       };
     });
   } catch (e) {
-    alert(`❌ ${e.message}`);
-    await logToServer("ERROR", "Item validation failed", { err: e.message });
-    return;
+    alert(`❌ Item validation failed for final order: ${e.message}`);
+    await logToServer("ERROR", "Item validation failed for final order", { err: e.message });
+    return false; // Return false on validation failure
+  }
+
+  if (items.length === 0) {
+    alert("Please add at least one item to the order.");
+    await logToServer("WARNING", "No items added to final order");
+    return false; // Return false on validation failure
   }
 
   // --- Totals & status -----------------------------------------------------
@@ -65,50 +73,41 @@ export async function submitOrder({
   let status = "Pending";
   let authBandRequired = null;
 
-  if (isDraft) {
-    status = "Draft";
-  } else {
-    // Determine authorisation band only for non-drafts
-    // Ensure authThresholds has 5 elements; use the last one for Band 5 as a catch-all
-    if (authThresholds.length !== 5) {
-      await logToServer("ERROR", "Invalid authThresholds array length", { length: authThresholds.length });
-      throw new Error("Configuration error: authThresholds must contain 5 thresholds");
-    }
+  if (authThresholds.length !== 5) {
+    await logToServer("ERROR", "Invalid authThresholds array length", { length: authThresholds.length });
+    alert("Configuration error: authorization thresholds missing."); // Added alert for config error
+    return false;
+  }
 
-    // Band 5: Catch-all for totals > auth_threshold_5, ignoring other thresholds
-    if (total > authThresholds[4]) { // auth_threshold_5 is 20000
-      status = "Awaiting Authorisation";
-      authBandRequired = 5;
-    }
-    // Bands 1-4: Range-based with upper bounds
-    else if (total > authThresholds[3] && total <= authThresholds[4]) { // Band 4: >40000 and <=20000 (adjusted for context)
-      status = "Awaiting Authorisation";
-      authBandRequired = 4;
-    } else if (total > authThresholds[2] && total <= authThresholds[3]) { // Band 3: >30000 and <=40000
-      status = "Awaiting Authorisation";
-      authBandRequired = 3;
-    } else if (total > authThresholds[1] && total <= authThresholds[2]) { // Band 2: >20000 and <=30000
-      status = "Awaiting Authorisation";
-      authBandRequired = 2;
-    } else if (total > authThresholds[0] && total <= authThresholds[1]) { // Band 1: >10000 and <=20000
-      status = "Awaiting Authorisation";
-      authBandRequired = 1;
-    }
-    // If total <= authThresholds[0], status remains "Pending" with authBandRequired = null
+  if (total > authThresholds[4]) {
+    status = "Awaiting Authorisation";
+    authBandRequired = 5;
+  } else if (total > authThresholds[3]) { // No upper bound needed here, previous if handles it implicitly
+    status = "Awaiting Authorisation";
+    authBandRequired = 4;
+  } else if (total > authThresholds[2]) {
+    status = "Awaiting Authorisation";
+    authBandRequired = 3;
+  } else if (total > authThresholds[1]) {
+    status = "Awaiting Authorisation";
+    authBandRequired = 2;
+  } else if (total > authThresholds[0]) {
+    status = "Awaiting Authorisation";
+    authBandRequired = 1;
   }
 
   // --- Payload -------------------------------------------------------------
   const orderData = {
     order_number: currentOrderNumber,
     total,
-    order_note: document.getElementById("order_note").value,
+    order_note: orderNote,
     note_to_supplier: noteToSupplier,
     payment_terms: payTerms,
     requester_id: parseInt(requesterId),
     supplier_id: parseInt(supplierId),
     status,
     created_date: requestDate,
-    ...(authBandRequired !== null && !isDraft ? { auth_band_required: authBandRequired } : {}),
+    ...(authBandRequired !== null ? { auth_band_required: authBandRequired } : {}),
     items,
   };
 
@@ -122,7 +121,7 @@ export async function submitOrder({
 
     if (!res.ok) {
       const errorText = await res.text();
-      await logToServer("ERROR", "Failed to submit order", { status: res.status, errorText });
+      await logToServer("ERROR", "Failed to submit final order", { status: res.status, errorText });
       throw new Error(`Failed: ${res.status} – ${errorText}`);
     }
 
@@ -131,31 +130,40 @@ export async function submitOrder({
       throw new Error(`Unexpected response: ${data.message}`);
     }
 
-    // --- Success handling --------------------------------------------------
+    // --- Success handling ---
     setCurrentOrderId(data.order_id);
 
-    // Increment order number for all successful submissions (Draft or Normal)
-    const newOrderNumber = await incrementOrderNumber(currentOrderNumber);
-    setCurrentOrderNumber(newOrderNumber);
-    document.getElementById("order-number").textContent = newOrderNumber;
-
-    await logToServer("INFO", "Order submitted & number incremented", {
-      orderNumber: newOrderNumber,
+    // If this order originated from a draft, delete the draft entry
+    if (draftId) {
+        try {
+            const deleteDraftRes = await fetch(`/draft_orders/${draftId}`, { method: "DELETE" });
+            if (!deleteDraftRes.ok) {
+                const deleteErrorText = await deleteDraftRes.text();
+                console.error(`Failed to delete original draft order ${draftId}: ${deleteErrorText}`);
+                await logToServer("WARNING", `Failed to delete original draft after final submission`, { draftId: draftId, finalOrderId: data.order_id, error: deleteErrorText });
+            } else {
+                console.log(`Original draft order ${draftId} deleted successfully after final submission.`);
+                await logToServer("INFO", `Original draft deleted after final submission`, { draftId: draftId, finalOrderId: data.order_id });
+            }
+        } catch (deleteErr) {
+            console.error(`Exception while deleting draft ${draftId}:`, deleteErr.message);
+            await logToServer("ERROR", `Exception deleting original draft`, { draftId: draftId, finalOrderId: data.order_id, exception: deleteErr.message });
+        }
+    }
+    
+    await logToServer("INFO", "Order submitted successfully", {
+      orderNumber: currentOrderNumber,
       orderId: data.order_id,
-      orderType: orderType,
+      status: status,
     });
 
     alert("✅ Order submitted successfully!");
-
-    // Clear form (minimal — adjust as needed)
-    document.getElementById("requester_id").value = "";
-    document.getElementById("supplier_id").value = "";
-    document.getElementById("note_to_supplier").value = "";
-    document.getElementById("items-body").innerHTML = "";
+    return true; // Return true on success
 
   } catch (error) {
     console.error("Order submission failed:", error.message);
     await logToServer("ERROR", "Order submission failed", { err: error.message });
     alert(`❌ Order submission failed: ${error.message}`);
+    return false; // Return false on failure
   }
 }
