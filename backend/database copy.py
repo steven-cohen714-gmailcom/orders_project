@@ -1,4 +1,4 @@
-# File: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/database.py
+# File: backend/database.py
 
 import sqlite3
 from pathlib import Path
@@ -65,7 +65,6 @@ def init_db():
                     payment_terms TEXT DEFAULT 'On account',
                     payment_date TEXT,
                     amount_paid REAL,
-                    last_modified_by_user_id INTEGER,
                     FOREIGN KEY (supplier_id) REFERENCES suppliers(id),
                     FOREIGN KEY (requester_id) REFERENCES requesters(id)
                 )
@@ -92,8 +91,6 @@ def init_db():
                     filename TEXT NOT NULL,
                     file_path TEXT NOT NULL,
                     upload_date TEXT NOT NULL,
-                    requisition_id INTEGER,
-                    requisition_number TEXT,
                     FOREIGN KEY (order_id) REFERENCES orders(id)
                 )
             """)
@@ -274,8 +271,7 @@ def determine_status_and_band(total: float) -> tuple[str, int]:
             required_band = 1
         return status, required_band
 
-# MODIFIED: Added draft_id parameter to create_order
-def create_order(order_data: dict, items: list, current_user_id: int, created_date: Optional[str] = None, draft_id: Optional[int] = None) -> dict:
+def create_order(order_data: dict, items: list, current_user_id: int, created_date: Optional[str] = None) -> dict:
     if order_data.get("status") == "Draft":
         status = "Draft"
         required_band = None
@@ -337,22 +333,10 @@ def create_order(order_data: dict, items: list, current_user_id: int, created_da
                 item["price"],
                 item["qty_ordered"] * item["price"]
             ))
-        
-        # --- NEW AUDIT TRAIL LOGIC BASED ON DRAFT_ID ---
-        if draft_id:
-            # If it came from a draft, log 'Converted from Draft'
-            cursor.execute("""
-                INSERT INTO audit_trail (order_id, action, details, user_id)
-                VALUES (?, 'Converted from Draft', ?, ?)
-            """, (order_id, f"Order converted from Draft ID: {draft_id}", current_user_id))
-        else:
-            # Otherwise, log 'Created' as usual
-            cursor.execute("""
-                INSERT INTO audit_trail (order_id, action, details, user_id)
-                VALUES (?, 'Created', ?, ?)
-            """, (order_id, f"Order {order_data['order_number']} created", current_user_id))
-        # --- END NEW AUDIT TRAIL LOGIC ---
-
+        cursor.execute("""
+            INSERT INTO audit_trail (order_id, action, details, user_id)
+            VALUES (?, 'Created', ?, ?)
+        """, (order_id, f"Order {order_data['order_number']} created", current_user_id))
         conn.commit()
         cursor.execute("""
             SELECT * FROM orders WHERE id = ?

@@ -9,7 +9,7 @@ from datetime import datetime
 
 from backend.utils.db_utils import handle_db_errors, log_success, log_warning, log_error
 from backend.utils.order_utils import calculate_order_total
-from backend.database import create_order, get_db_connection # Make sure get_db_connection is imported
+from backend.database import create_order, get_db_connection
 from backend.utils.permissions_utils import require_login 
 
 router = APIRouter(tags=["orders"])
@@ -33,7 +33,6 @@ class OrderCreate(BaseModel):
     created_date: Optional[str] = None
     auth_band_required: Optional[int] = None 
     items: List[OrderItemCreate]
-    [cite_start]draft_id: Optional[int] = None # <--- ADDED: This field allows receiving the draft ID from the frontend. [cite: 3]
 
 class OrderUpdate(BaseModel):
     status: Optional[str] = None
@@ -86,9 +85,7 @@ async def create_new_order(order: OrderCreate, request: Request):
 
         items = [item.dict() for item in order.items]
         
-        # [cite_start]MODIFIED: Pass draft_id to create_order function in database.py [cite: 3]
-        result = create_order(order_data, items, current_user_id, created_date=order.created_date, draft_id=order.draft_id)
-        
+        result = create_order(order_data, items, current_user_id, created_date=order.created_date)
         log_success("order", "created", f"Order {order.order_number} with status {order.status} and total R{total}")
         return {"message": "Order created successfully", "order_id": result["id"]}
 
@@ -373,7 +370,7 @@ async def get_items_for_order(order_id: int):
     conn.close()
     result = [dict(row) for row in rows]
     log_success("order_items", "fetched", f"{len(result)} items for order {order_id}")
-    return result # frontend expects raw array
+    return result  # frontend expects raw array
 
 @router.post("/orders/receive/{order_id}")
 @handle_db_errors(entity="receive", action="processing")
