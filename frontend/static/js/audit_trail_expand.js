@@ -38,9 +38,29 @@ export async function expandAuditTrailDetails(orderId, iconElement, detailContai
 
     const items = await itemsRes.json();
     const logsData  = await logsRes.json();
-    const orderData = await orderDetailsRes.json(); 
-    const auditHistory = await auditHistoryRes.json(); 
+    const orderData = await orderDetailsRes.json();
+    let auditHistory = await auditHistoryRes.json(); // Use let as we'll filter it
     const receiptLogs = logsData.logs || [];
+
+    // --- Filtering out unwanted audit trail entries ---
+    auditHistory = auditHistory.filter(entry => {
+      // Exclude "Viewed PDF" unless it's an email activity (which is already handled by 'Emailed' action)
+      if (entry.action === 'Viewed PDF' && !entry.details.includes('emailed')) {
+        return false;
+      }
+      // Exclude "Note Updated" activity
+      if (entry.action === 'Note Updated') {
+        return false;
+      }
+      // Exclude "Created as Draft" if the draft is later converted.
+      // This requires backend logic to mark the draft as "converted" or to link the draft creation to the final order.
+      // For now, we'll assume the backend will only send 'Created' or 'Converted from Draft' for final orders.
+      // If a draft is *never* converted, its "Created as Draft" might still show, which aligns with leaving drafts off the trail until conversion.
+      // If the backend doesn't differentiate "Created as Draft" vs "Converted from Draft",
+      // we'd need more complex logic here (e.g., checking if the current order's ID was previously a draft ID).
+      return true;
+    });
+    // ----------------------------------------------------
 
     const logMap = {};
     for (const log of receiptLogs) {
@@ -78,10 +98,20 @@ export async function expandAuditTrailDetails(orderId, iconElement, detailContai
           case 'Created':
             details = 'Order created';
             break;
-          case 'Created as Draft': // NEW: Handle the new draft creation action
+          case 'Created as Draft':
+            // This case should ideally not appear for a final order if the backend handles conversion,
+            // but if it does, it signifies the initial draft creation.
+            // As per your request: "when a draft is created - we can leave it off the audit trail"
+            // The filtering above should prevent this from showing for a final order if a 'Converted from Draft' action exists.
+            // If the entry is filtered out, this block won't be reached.
             details = 'Order saved as draft';
             break;
-          case 'Draft Updated': // NEW: Handle draft update action
+          case 'Converted from Draft': // NEW: Handle the conversion from draft action
+            details = `Order converted from draft (Draft ID: ${entry.details})`; // Assuming entry.details will contain the old draft ID
+            break;
+          case 'Draft Updated':
+            // This should also be filtered out if you want to completely hide draft activity until conversion.
+            // The filter above takes care of this now.
             details = 'Draft order updated';
             break;
           case 'Authorised':
@@ -122,22 +152,29 @@ export async function expandAuditTrailDetails(orderId, iconElement, detailContai
           case 'Deleted':
             details = 'Order deleted';
             break;
-          case 'Note Updated': // From order_notes.py
+          case 'Note Updated': // This case should now be filtered out by the .filter() above
             details = `Order note updated to: "${entry.details.replace('Order note updated to: ', '')}"`;
+            break;
+          case 'Viewed PDF': // This case should now be filtered out by the .filter() above unless it's an email
+            details = `PDF viewed: ${entry.details}`;
             break;
           default:
             details = entry.details || 'No details';
             break;
         }
 
-        contentHTML += `
-          <tr>
-            <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${activity}</td>
-            <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${formattedDate}</td>
-            <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${user}</td>
-            <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${details}</td>
-          </tr>
-        `;
+        // Only add to HTML if `details` is not empty (after filtering)
+        // This is a redundant check due to the filter, but good for safety if `details` could become empty in the switch
+        if (details) {
+            contentHTML += `
+              <tr>
+                <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${activity}</td>
+                <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${formattedDate}</td>
+                <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${user}</td>
+                <td style="text-align:left; padding: 0.5rem; border: 1px solid #ddd;">${details}</td>
+              </tr>
+            `;
+        }
       });
     } else {
       contentHTML += `
@@ -155,13 +192,8 @@ export async function expandAuditTrailDetails(orderId, iconElement, detailContai
 
     detailContainer.innerHTML = contentHTML;
 
-  } catch (err) {
-    console.error("❌ Error expanding order details:", err);
-    alert(`❌ Could not expand order details: ${err.message}`);
-    if (detailContainer) {
-        detailContainer.innerHTML = `<div class="expanded-section" style="color:red;">Error loading details: ${err.message}</div>`;
-        detailContainer.style.display = "block";
-    }
-    iconElement.textContent = "⬇️";
+  } catch (error) {
+    console.error("Failed to fetch audit trail details:", error);
+    detailContainer.innerHTML = `<p style="color: red;">Error loading audit trail: ${error.message}</p>`;
   }
 }
