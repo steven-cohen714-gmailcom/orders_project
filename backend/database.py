@@ -4,7 +4,8 @@ import sqlite3
 from pathlib import Path
 import logging
 from typing import Optional
-from datetime import datetime # Import datetime for current_timestamp logic in audit_trail
+from datetime import datetime
+from backend.utils.send_email import send_email
 
 # Logging setup
 logging.basicConfig(
@@ -292,14 +293,18 @@ def determine_status_and_band(total: float) -> tuple[str, int]:
         return status, required_band
 
 # MODIFIED: Added draft_id parameter to create_order and conditional audit trail logic
-def create_order(order_data: dict, items: list, current_user_id: int, created_date: Optional[str] = None, draft_id: Optional[int] = None) -> dict:
+# MODIFIED: Added email notification logic for authorizers AND COD payment personnel (on creation)
+async def create_order(order_data: dict, items: list, current_user_id: int, created_date: Optional[str] = None, draft_id: Optional[int] = None) -> dict:
+    status, required_band = None, None # Initialize to None
+
     if order_data.get("status") == "Draft":
         status = "Draft"
         required_band = None
     else:
         status, required_band = determine_status_and_band(order_data["total"])
 
-    with get_db_connection() as conn:
+    conn = get_db_connection() # Get connection outside try-finally for email logic later
+    try:
         cursor = conn.cursor()
         
         if created_date:
@@ -370,11 +375,130 @@ def create_order(order_data: dict, items: list, current_user_id: int, created_da
             """, (order_id, f"Order {order_data['order_number']} created", current_user_id))
         # --- END NEW AUDIT TRAIL LOGIC ---
 
-        conn.commit()
+        conn.commit() # Commit the order creation first
+
+        # --- NEW: Email notifications for authorizers ---
+        if status == "Awaiting Authorisation" and required_band is not None:
+            # Find users who can authorize this band
+            cursor.execute("""
+                SELECT username, email FROM users 
+                WHERE auth_threshold_band >= ? AND email IS NOT NULL AND email != ''
+            """, (required_band,)) # Use >= to include higher bands
+            authorizers = cursor.fetchall()
+
+            if authorizers:
+                # Fetch other pending orders for this band to list in the email
+                cursor.execute("""
+                    SELECT order_number, total FROM orders 
+                    WHERE status = 'Awaiting Authorisation' AND required_auth_band >= ?
+                """, (required_band,))
+                pending_orders_for_band = cursor.fetchall()
+
+                for authorizer in authorizers:
+                    recipient_email = authorizer['email']
+                    subject = f"New Order {order_data['order_number']} Awaiting Your Authorization (R{order_data['total']:.2f})"
+                    
+                    body_lines = [
+                        f"Dear {authorizer['username']},",
+                        "",
+                        f"The Universal Recycling Orders System has a new order (Order Number: {order_data['order_number']}, Total: R{order_data['total']:.2f}) for you to authorize.",
+                        f"It requires authorization band {required_band}.",
+                        "",
+                        "There are also " + str(len(pending_orders_for_band) - 1 if pending_orders_for_band else 0) + " other orders that need your authorization.",
+                        "",
+                        "Please click here to log in and review:",
+                        "http://localhost:8004/orders/authorisations_per_user", # Direct link to authorisations screen
+                        "",
+                        "Kind regards,",
+                        "Universal Recycling System"
+                    ]
+
+                    # Append list of other orders if more than just the new one
+                    if len(pending_orders_for_band) > 1:
+                        body_lines.append("\nOther orders awaiting your authorization:")
+                        for pending_order in pending_orders_for_band:
+                            # Exclude the current order from the 'other' list
+                            if pending_order['order_number'] != order_data['order_number']:
+                                body_lines.append(f"- Order {pending_order['order_number']} (R{pending_order['total']:.2f})")
+                    
+                    email_body = "\n".join(body_lines)
+
+                    try:
+                        await send_email(recipient_email, subject, email_body)
+                        logging.info(f"Authorization email sent to {recipient_email} for order {order_id}.")
+                    except Exception as email_e:
+                        logging.error(f"Failed to send authorization email to {recipient_email} for order {order_id}: {email_e}")
+            else:
+                logging.warning(f"No authorizers found with email for band {required_band} for order {order_id}.")
+        # --- END NEW: Email notifications for authorizers ---
+
+        # --- NEW: Email notifications for COD payment personnel (if order is COD and does NOT require authorization) ---
+        if order_data.get("payment_terms") == "COD" and status == "Pending": # Status 'Pending' implies no authorization required (or already handled by authorizer email above)
+            # Find users who should receive COD payment notifications
+            cursor.execute("""
+                SELECT username, email FROM users 
+                WHERE can_receive_payment_notifications = 1 AND email IS NOT NULL AND email != ''
+            """)
+            payment_personnel = cursor.fetchall()
+
+            if payment_personnel:
+                # Fetch other pending COD orders to list in the email
+                cursor.execute("""
+                    SELECT order_number, total FROM orders 
+                    WHERE status = 'Pending' AND payment_terms = 'COD'
+                """)
+                pending_cod_orders = cursor.fetchall()
+
+                for person in payment_personnel:
+                    recipient_email = person['email']
+                    subject = f"New COD Order {order_data['order_number']} Ready for Payment (R{order_data['total']:.2f})"
+                    
+                    body_lines = [
+                        f"Dear {person['username']},",
+                        "",
+                        f"The Universal Recycling Orders System has a new COD order (Order Number: {order_data['order_number']}, Total: R{order_data['total']:.2f}) that is now ready for payment.",
+                        "",
+                        "There are also " + str(len(pending_cod_orders) - 1 if pending_cod_orders else 0) + " other COD orders that need your attention.",
+                        "",
+                        "Please click here to log in and review:",
+                        "http://localhost:8004/orders/cod_orders", # Direct link to COD orders screen
+                        "",
+                        "Kind regards,",
+                        "Universal Recycling System"
+                    ]
+                    
+                    # Append list of other orders if more than just the new one
+                    if len(pending_cod_orders) > 1:
+                        body_lines.append("\nOther COD orders ready for payment:")
+                        for cod_order in pending_cod_orders:
+                            # Exclude the current order from the 'other' list
+                            if cod_order['order_number'] != order_data['order_number']:
+                                body_lines.append(f"- Order {cod_order['order_number']} (R{cod_order['total']:.2f})")
+
+                    email_body = "\n".join(body_lines)
+
+                    try:
+                        await send_email(recipient_email, subject, email_body)
+                        logging.info(f"COD payment notification email sent to {recipient_email} for order {order_id}.")
+                    except Exception as email_e:
+                        logging.error(f"Failed to send COD payment notification email to {recipient_email} for order {order_id}: {email_e}")
+            else:
+                logging.warning(f"No payment personnel found with email for COD order {order_id}.")
+        # --- END NEW: Email notifications for COD payment personnel ---
+
+
+        # Final select to return the newly created order
         cursor.execute("""
             SELECT * FROM orders WHERE id = ?
         """, (order_id,))
         return dict(cursor.fetchone())
+
+    except Exception as e:
+        conn.rollback() # Rollback on any error during order creation or email sending
+        logging.error(f"❌ Error in create_order or sending email notification: {e}", exc_info=True)
+        raise
+    finally:
+        conn.close() # Ensure connection is closed
 
 def get_settings() -> dict:
     with get_db_connection() as conn:

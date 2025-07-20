@@ -6,7 +6,8 @@ from datetime import datetime
 from fastapi.responses import JSONResponse
 import json
 import logging
-from typing import Optional, Dict
+from typing import Optional, Dict, List # Import List for type hinting
+from backend.utils.send_email import send_email # NEW: Import send_email utility
 
 router = APIRouter()
 logger = logging.getLogger("uvicorn")
@@ -151,15 +152,20 @@ async def authorise_order(order_id: int, request: Request):
     username = user.get("username")
     user_id = user.get("id")
 
-    with get_db_connection() as conn:
+    conn = get_db_connection() # Get connection outside try-finally for email logic later
+    try:
         cursor = conn.cursor()
 
         # Check if order exists and is still awaiting authorisation
-        cursor.execute("SELECT status FROM orders WHERE id = ?", (order_id,))
+        cursor.execute("SELECT status, payment_terms FROM orders WHERE id = ?", (order_id,)) # MODIFIED: Select payment_terms
         row = cursor.fetchone()
         if not row:
             raise HTTPException(status_code=404, detail="Order not found")
-        if row["status"] != "Awaiting Authorisation":
+        
+        order_status = row["status"] # Store current status
+        order_payment_terms = row["payment_terms"] # Store payment terms
+
+        if order_status != "Awaiting Authorisation":
             raise HTTPException(status_code=400, detail="Order is not in an authorisable state")
 
         # Update order status safely
@@ -184,6 +190,69 @@ async def authorise_order(order_id: int, request: Request):
             user_id
         ))
 
-        conn.commit()
+        conn.commit() # Commit authorization first
 
-    return {"message": "Order authorised"}
+        # --- NEW: Email notifications for COD payment personnel (post-authorization) ---
+        if order_payment_terms == "COD":
+            # Fetch order details needed for email
+            cursor.execute("""
+                SELECT order_number, total FROM orders WHERE id = ?
+            """, (order_id,))
+            authorized_cod_order = cursor.fetchone()
+
+            if authorized_cod_order:
+                # Find users who should receive COD payment notifications
+                cursor.execute("""
+                    SELECT username, email FROM users 
+                    WHERE can_receive_payment_notifications = 1 AND email IS NOT NULL AND email != ''
+                """)
+                payment_personnel = cursor.fetchall()
+
+                if payment_personnel:
+                    # Fetch other COD orders that are ready for payment (Pending or Authorised)
+                    cursor.execute("""
+                        SELECT order_number, total FROM orders 
+                        WHERE payment_terms = 'COD' AND status IN ('Pending', 'Authorised')
+                    """)
+                    pending_cod_orders = cursor.fetchall()
+
+                    for person in payment_personnel:
+                        recipient_email = person['email']
+                        subject = f"COD Order {authorized_cod_order['order_number']} Now Ready for Payment (R{authorized_cod_order['total']:.2f})"
+                        
+                        body_lines = [
+                            f"Dear {person['username']},",
+                            "",
+                            f"COD Order (Order Number: {authorized_cod_order['order_number']}, Total: R{authorized_cod_order['total']:.2f}) has been authorized and is now ready for payment.",
+                            "",
+                            "Please log in to the system to mark it as paid."
+                        ]
+
+                        if pending_cod_orders:
+                            body_lines.append("\nHere are other COD orders currently ready for payment:")
+                            for cod_order in pending_cod_orders:
+                                body_lines.append(f"- Order {cod_order['order_number']} (R{cod_order['total']:.2f})")
+                        else:
+                            body_lines.append("\nThere are no other COD orders currently pending payment.")
+
+                        body_lines.append("\nKind regards,\nUniversal Recycling System")
+                        email_body = "\n".join(body_lines)
+
+                        try:
+                            await send_email(recipient_email, subject, email_body)
+                            logging.info(f"COD payment notification email sent to {recipient_email} for order {order_id} (post-auth).")
+                        except Exception as email_e:
+                            logging.error(f"Failed to send COD payment notification email to {recipient_email} for order {order_id} (post-auth): {email_e}")
+                else:
+                    logging.warning(f"No payment personnel found with email for COD order {order_id} (post-auth).")
+        # --- END NEW: Email notifications for COD payment personnel (post-authorization) ---
+
+        return {"message": "Order authorised"}
+
+    except Exception as e:
+        conn.rollback() # Rollback on any error during authorization or email sending
+        logger.error(f"Error in authorise_order or sending email notification: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to authorise order: {str(e)}")
+    finally:
+        if conn:
+            conn.close()

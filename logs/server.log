@@ -1,51 +1,149 @@
 INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
 INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [16917] using StatReload
-INFO:     Started server process [16978]
+INFO:     Started reloader process [20366] using StatReload
+INFO:root:Database initialized successfully.
+INFO:root:✅ Database initialized successfully.
+INFO:     Started server process [20405]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:50457 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50457 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:50457 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50458 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50458 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50458 - "GET /static/js/maintenance_screen/requesters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50457 - "GET /static/js/maintenance_screen/items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50463 - "GET /static/js/maintenance_screen/requisitioners.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50461 - "GET /static/js/maintenance_screen/projects.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50466 - "GET /static/js/maintenance_screen/business_details.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50465 - "GET /static/js/maintenance_screen/settings.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50457 - "GET /static/js/maintenance_screen/users.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50458 - "GET /static/js/maintenance_screen/suppliers.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50457 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50457 - "GET /favicon.ico HTTP/1.1" 200 OK
-Session permissions and user details updated for user 14: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders']
-INFO:     127.0.0.1:50536 - "PUT /lookups/users/14 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50536 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50536 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:50536 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50538 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:     127.0.0.1:50600 - "PUT /lookups/users/14 HTTP/1.1" 422 Unprocessable Content
-INFO:     127.0.0.1:50654 - "PUT /lookups/users/14 HTTP/1.1" 422 Unprocessable Content
-INFO:     127.0.0.1:51513 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51513 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:51514 - "GET /static/css/style.css HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51514 - "GET /static/js/maintenance.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51514 - "GET /static/js/maintenance_screen/index.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51514 - "GET /static/js/maintenance_screen/requesters.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51513 - "GET /static/js/maintenance_screen/items.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51517 - "GET /static/js/maintenance_screen/suppliers.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51518 - "GET /static/js/maintenance_screen/users.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51522 - "GET /static/js/maintenance_screen/requisitioners.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51520 - "GET /static/js/maintenance_screen/projects.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51513 - "GET /static/js/maintenance_screen/settings.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51514 - "GET /static/js/maintenance_screen/business_details.js HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51514 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51514 - "GET /favicon.ico HTTP/1.1" 200 OK
-Session permissions and user details updated for user 14: ['new_requisition', 'new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders']
-INFO:     127.0.0.1:51558 - "PUT /lookups/users/14 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51558 - "GET /maintenance HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51558 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:51560 - "GET /static/js/maintenance_screen/users.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:51560 - "GET /lookups/users HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51558 - "GET /favicon.ico HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50769 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50769 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50770 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50770 - "GET /static/js/authorisations_per_user.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50769 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50770 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50769 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 200 OK
+INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+INFO:     127.0.0.1:50769 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
+INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+INFO:     127.0.0.1:50770 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:50770 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:50770 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:50769 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:50770 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     Executing Awaiting Authorisation Query: 
+            SELECT
+                o.id,
+                o.order_number,
+                o.total,
+                o.created_date,
+                o.status,
+                o.required_auth_band,
+                o.order_note,
+                r.name AS requester_name,
+                s.name AS supplier_name
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE o.status = 'Awaiting Authorisation' AND o.required_auth_band = ?
+            ORDER BY o.created_date DESC
+         with params: [5]
+INFO:     127.0.0.1:50769 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:     Executing Awaiting Authorisation Query: 
+            SELECT
+                o.id,
+                o.order_number,
+                o.total,
+                o.created_date,
+                o.status,
+                o.required_auth_band,
+                o.order_note,
+                r.name AS requester_name,
+                s.name AS supplier_name
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE o.status = 'Awaiting Authorisation' AND o.required_auth_band = ?
+            ORDER BY o.created_date DESC
+         with params: [5]
+INFO:     127.0.0.1:50769 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:root:Starting to render new order page
+INFO:     127.0.0.1:50769 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50769 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:50769 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:50769 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:root:Items fetched: 10056 items
+INFO:     127.0.0.1:50769 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:root:Items fetched: 10056 items
+INFO:     127.0.0.1:50769 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50769 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50769 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50769 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:root:Items fetched: 10056 items
+INFO:     127.0.0.1:50769 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50770 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:client:INFO | submitOrder started (finalizing order) | {"orderNumber": "2025", "draftId": ""}
+INFO:     127.0.0.1:50860 - "POST /log HTTP/1.1" 200 OK
+INFO:root:🔍 Incoming order: order_number='2025' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=26 requester_id=7 payment_terms='On account' created_date='2025-07-20' auth_band_required=5 items=[OrderItemCreate(item_code='ABRA005', item_description='FIBER DISC 115 MMX 22  P36', project='AD02M', qty_ordered=1.0, price=26000.0)] draft_id=None
+INFO:root:Email sent to steven.cohen714@gmail.com with subject 'New Order 2025 Awaiting Your Authorization (R26000.00)'
+INFO:root:Authorization email sent to steven.cohen714@gmail.com for order 430.
+INFO:root:✅ [ORDER] Success created: Order 2025 with status Awaiting Authorisation and total R26000.0
+INFO:     127.0.0.1:50860 - "POST /orders HTTP/1.1" 200 OK
+INFO:client:INFO | Order submitted successfully | {"orderNumber": "2025", "orderId": 430, "status": "Awaiting Authorisation"}
+INFO:     127.0.0.1:50860 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50860 - "PUT /lookups/order_number HTTP/1.1" 200 OK
+INFO:client:INFO | Order number incremented in backend settings | {"oldNum": "2025", "newNum": "2026"}
+INFO:     127.0.0.1:50860 - "POST /log HTTP/1.1" 200 OK
+INFO:root:Items fetched: 10056 items
+INFO:     127.0.0.1:50860 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50879 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50909 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50909 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+INFO:     127.0.0.1:50911 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
+INFO:     🔍 Session user before JSONResponse: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+INFO:     127.0.0.1:50911 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:50911 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:50911 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:50911 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:50909 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     Executing Awaiting Authorisation Query: 
+            SELECT
+                o.id,
+                o.order_number,
+                o.total,
+                o.created_date,
+                o.status,
+                o.required_auth_band,
+                o.order_note,
+                r.name AS requester_name,
+                s.name AS supplier_name
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE o.status = 'Awaiting Authorisation' AND o.required_auth_band = ?
+            ORDER BY o.created_date DESC
+         with params: [5]
+INFO:     127.0.0.1:50911 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:     Executing Awaiting Authorisation Query: 
+            SELECT
+                o.id,
+                o.order_number,
+                o.total,
+                o.created_date,
+                o.status,
+                o.required_auth_band,
+                o.order_note,
+                r.name AS requester_name,
+                s.name AS supplier_name
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE o.status = 'Awaiting Authorisation' AND o.required_auth_band = ?
+            ORDER BY o.created_date DESC
+         with params: [5]
+INFO:     127.0.0.1:50911 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:root:✅ [ORDER_ITEMS] Success fetched: 1 items for order 429
+INFO:     127.0.0.1:50911 - "GET /orders/api/order_items/429 HTTP/1.1" 200 OK
+INFO:root:Generating PDF for order_id=429, order_number=2024
+INFO:     127.0.0.1:50911 - "GET /orders/api/generate_pdf_for_order/429 HTTP/1.1" 200 OK

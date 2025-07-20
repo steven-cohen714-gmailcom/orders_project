@@ -87,8 +87,8 @@ async def create_new_order(order: OrderCreate, request: Request):
 
         items = [item.dict() for item in order.items]
         
-        # MODIFIED: Pass draft_id to create_order function in database.py
-        result = create_order(order_data, items, current_user_id, created_date=order.created_date, draft_id=order.draft_id)
+        # FIX: Add 'await' here
+        result = await create_order(order_data, items, current_user_id, created_date=order.created_date, draft_id=order.draft_id)
         
         log_success("order", "created", f"Order {order.order_number} with status {order.status} and total R{total}")
         return {"message": "Order created successfully", "order_id": result["id"]}
