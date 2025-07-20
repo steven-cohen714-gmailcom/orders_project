@@ -7,8 +7,7 @@ console.log("💥 users.js has been loaded");
 
 export function initUsers() {
   console.log("initUsers loaded");
-
-  fetchUsers();
+  window.fetchUsers(); // Call global fetchUsers to populate the table initially
 
   const cancelBtn = document.getElementById("cancel-user-edit");
   if (cancelBtn) {
@@ -46,16 +45,11 @@ window.fetchUsers = async function() {
     users.forEach(user => {
       const row = document.createElement("tr");
 
-      // --- MODIFIED LOGIC HERE ---
-      // Ensure userScreenPermissions is always an array.
-      // FastAPI will typically serialize a Python list directly to a JSON array,
-      // so user.roles might already be an array in JavaScript, not a JSON string.
       let userScreenPermissions = [];
       if (Array.isArray(user.roles)) {
         userScreenPermissions = user.roles;
       } else if (typeof user.roles === 'string' && user.roles.trim() !== '') {
         try {
-          // Fallback in case it's still a JSON string for some reason
           const parsedRoles = JSON.parse(user.roles);
           if (Array.isArray(parsedRoles)) {
             userScreenPermissions = parsedRoles;
@@ -66,19 +60,17 @@ window.fetchUsers = async function() {
           console.error(`Error parsing roles for user ${user.username}:`, e, user.roles);
         }
       }
-      // --- END MODIFIED LOGIC ---
 
       row.appendChild(createCell(user.username));
       row.appendChild(createCell(user.auth_threshold_band ?? "Not Set"));
-      row.appendChild(createCell(user.rights));
-      // Pass the full user object including permissions to the actions cell
-      row.appendChild(createActionsCell(user, userScreenPermissions)); // Pass the now-guaranteed array
+      row.appendChild(createCell(user.rights)); // 'rights' field is still present
+      // Pass the full user object including permissions, email, and payment notifications to the actions cell
+      row.appendChild(createActionsCell(user, userScreenPermissions, user.email, user.can_receive_payment_notifications)); // MODIFIED: Pass email and can_receive_payment_notifications
 
       tbody.appendChild(row);
     });
   } catch (err) {
     console.error("Failed to fetch users:", err);
-    // Use displayMessage for errors
     displayMessage("Failed to fetch users: " + err.message, "error");
   }
 }
@@ -89,8 +81,8 @@ function createCell(content) {
   return td;
 }
 
-// Updated to accept screenPermissions for the modal
-function createActionsCell(user, screenPermissions) {
+// Modified: accept screenPermissions, email, and canReceivePaymentNotifications for the modal
+function createActionsCell(user, screenPermissions, email, canReceivePaymentNotifications) {
   const td = document.createElement("td");
 
   const editBtn = document.createElement("button");
@@ -99,8 +91,8 @@ function createActionsCell(user, screenPermissions) {
   editBtn.addEventListener("click", () => {
     // Call the global openEditUserModal function, ensuring it's on the window object
     if (typeof window.openEditUserModal === 'function') {
-      // Pass user data to the modal, including screen permissions
-      window.openEditUserModal(user.id, user.username, user.auth_threshold_band ?? "", screenPermissions);
+      // Pass user data to the modal, including new email and payment notification fields
+      window.openEditUserModal(user.id, user.username, user.auth_threshold_band ?? "", screenPermissions, email, canReceivePaymentNotifications); // MODIFIED: Pass email and can_receive_payment_notifications
     } else {
       console.error("openEditUserModal function is not defined globally.");
       displayMessage("Error: Edit modal function not available.", "error");
@@ -123,6 +115,10 @@ async function addOrUpdateUser() {
   const password = document.getElementById("user-password")?.value;
   const bandRaw = document.getElementById("user-auth-threshold-band")?.value;
   const auth_threshold_band = bandRaw === "" ? null : parseInt(bandRaw, 10);
+  // MODIFIED: Get new email and can_receive_payment_notifications fields from the form
+  const email = document.getElementById("user-email")?.value.trim(); 
+  const can_receive_payment_notifications = document.getElementById("can-receive-payment-notifications")?.checked ? 1 : 0;
+
 
   if (!username) {
     displayMessage("Username is required.", "error");
@@ -137,23 +133,22 @@ async function addOrUpdateUser() {
   const payload = {
     username,
     rights: "edit", // hardcoded for now
-    auth_threshold_band
+    auth_threshold_band,
+    email, // MODIFIED: Include email in payload
+    can_receive_payment_notifications // MODIFIED: Include payment notifications flag in payload
   };
-
   if (!id || password) {
     payload.password = password;
   }
 
   const url = id ? `/lookups/users/${id}` : "/lookups/users";
   const method = id ? "PUT" : "POST";
-
   try {
     const res = await fetch(url, {
       method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
     });
-
     if (!res.ok) {
       const error = await res.json();
       throw new Error(error.detail || "Unknown error");
@@ -178,11 +173,15 @@ function populateUserForm(user) {
   const usernameField = document.getElementById("user-username");
   const passwordField = document.getElementById("user-password");
   const bandField = document.getElementById("user-auth-threshold-band");
+  const emailField = document.getElementById("user-email"); // MODIFIED: Get new email field
+  const canReceivePaymentsCheckbox = document.getElementById("can-receive-payment-notifications"); // MODIFIED: Get new checkbox
 
   if (idField) idField.value = user.id;
   if (usernameField) usernameField.value = user.username;
   if (passwordField) passwordField.value = ""; // Clear password field for security
   if (bandField) bandField.value = user.auth_threshold_band ?? "";
+  if (emailField) emailField.value = user.email ?? ""; // MODIFIED: Populate new email field
+  if (canReceivePaymentsCheckbox) canReceivePaymentsCheckbox.checked = (user.can_receive_payment_notifications === 1); // MODIFIED: Populate new checkbox
 
   const cancelBtn = document.getElementById("cancel-user-edit");
   const submitBtn = document.querySelector("#users button[type='submit']");
@@ -195,8 +194,10 @@ function cancelUserEdit() {
   document.getElementById("user-id").value = "";
   document.getElementById("user-username").value = "";
   document.getElementById("user-password").value = "";
-  // MODIFIED: Added a default for auth_threshold_band select to clear it.
   document.getElementById("user-auth-threshold-band").value = ""; 
+  // MODIFIED: Clear new fields
+  document.getElementById("user-email").value = "";
+  document.getElementById("can-receive-payment-notifications").checked = false;
 
   document.getElementById("cancel-user-edit").style.display = "none";
   document.querySelector("#users button[type='submit']").textContent = "Add User";
@@ -205,7 +206,6 @@ function cancelUserEdit() {
 async function deleteUser(id) {
   // Replaced confirm with a custom modal or message box for confirmation
   if (!await confirmAction("Are you sure you want to delete this user?")) return;
-
   try {
     const res = await fetch(`/lookups/users/${id}`, { method: "DELETE" });
     if (!res.ok) {
@@ -224,7 +224,8 @@ async function deleteUser(id) {
 // --- Custom Message Box Functions (replacing alert/confirm) ---
 // These are exposed globally for use by other scripts (like the modal's save logic)
 window.displayMessage = function(message, type = "info") {
-  // For simplicity, using console.log. In a real app,
+  // For simplicity, using console.log.
+  // In a real app,
   // you'd render this message in a dedicated UI element (e.g., a custom modal/toast).
   console.log(`[${type.toUpperCase()}] ${message}`);
   // Example:

@@ -1,0 +1,4 @@
+2025-07-20 10:08:07,956 | INFO | Database initialized successfully.
+2025-07-20 10:08:07,956 | INFO | ✅ Database initialized successfully.
+2025-07-20 10:08:08,474 | INFO | Database initialized successfully.
+2025-07-20 10:08:08,475 | INFO | ✅ Database initialized successfully.
