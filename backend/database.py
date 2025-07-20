@@ -4,6 +4,7 @@ import sqlite3
 from pathlib import Path
 import logging
 from typing import Optional
+from datetime import datetime # Import datetime for current_timestamp logic in audit_trail
 
 # Logging setup
 logging.basicConfig(
@@ -130,6 +131,22 @@ def init_db():
                     roles TEXT
                 )
             """)
+            # --- NEW: ALTER TABLE statements for 'users' table ---
+            try:
+                cursor.execute("ALTER TABLE users ADD COLUMN email TEXT")
+                logging.info("Added 'email' column to 'users' table.")
+            except sqlite3.OperationalError as e:
+                if "duplicate column name: email" not in str(e):
+                    logging.warning(f"Could not add 'email' column to 'users' table: {e}")
+            
+            try:
+                cursor.execute("ALTER TABLE users ADD COLUMN can_receive_payment_notifications INTEGER DEFAULT 0")
+                logging.info("Added 'can_receive_payment_notifications' column to 'users' table.")
+            except sqlite3.OperationalError as e:
+                if "duplicate column name: can_receive_payment_notifications" not in str(e):
+                    logging.warning(f"Could not add 'can_receive_payment_notifications' column to 'users' table: {e}")
+            # --- END NEW ALTER TABLE statements ---
+
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS projects (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -274,7 +291,7 @@ def determine_status_and_band(total: float) -> tuple[str, int]:
             required_band = 1
         return status, required_band
 
-# MODIFIED: Added draft_id parameter to create_order
+# MODIFIED: Added draft_id parameter to create_order and conditional audit trail logic
 def create_order(order_data: dict, items: list, current_user_id: int, created_date: Optional[str] = None, draft_id: Optional[int] = None) -> dict:
     if order_data.get("status") == "Draft":
         status = "Draft"

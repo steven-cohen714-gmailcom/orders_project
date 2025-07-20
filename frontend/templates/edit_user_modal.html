@@ -17,6 +17,16 @@
         <option value="5">Band 5</option>
       </select>
 
+      {# NEW FIELDS START #}
+      <label for="user-email">Email</label>
+      <input type="email" id="user-email" name="user-email" placeholder="user@example.com" />
+
+      <div style="margin-top: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+        <input type="checkbox" id="can-receive-payment-notifications" name="can-receive-payment-notifications" value="1">
+        <label for="can-receive-payment-notifications" style="display: inline; margin-bottom: 0;">Receive Payment Notifications</label>
+      </div>
+      {# NEW FIELDS END #}
+
       <fieldset>
         <legend>Screens this user can access</legend>
         <table>
@@ -70,7 +80,6 @@
               <input type="checkbox" name="screens" value="maintenance">
             </td>
           </tr>
-          {# NEW: Add Draft Orders checkbox #}
           <tr>
             <td style="text-align: center;">
               <strong>Draft Orders</strong><br>
@@ -80,7 +89,6 @@
               {# Placeholder if you add another screen later #}
             </td>
           </tr>
-          {# END NEW #}
         </table>
       </fieldset>
 
@@ -101,19 +109,24 @@ window.closeEditUserModal = function() {
   document.getElementById("edit-username").value = "";
   document.getElementById("edit-user-id-modal").value = "";
   document.getElementById("threshold-band").value = "";
+  // Clear new fields
+  document.getElementById("user-email").value = "";
+  document.getElementById("can-receive-payment-notifications").checked = false;
+
   document.querySelectorAll("#edit-user-form input[name='screens']").forEach(cb => {
     cb.checked = false; // Uncheck all checkboxes
   });
 }
 
-window.openEditUserModal = function(id, username, threshold, screensArray) {
+// MODIFIED: Added email and canReceivePaymentNotifications parameters
+window.openEditUserModal = function(id, username, threshold, screensArray, email = '', canReceivePaymentNotifications = 0) {
   document.getElementById("edit-username").value = username;
-  // Use the new, unique ID for the hidden user ID field
   document.getElementById("edit-user-id-modal").value = id;
-  // Ensure the threshold band is set correctly (e.g., '1', '2', '3', '4' or '')
   document.getElementById("threshold-band").value = threshold;
+  // Populate new fields
+  document.getElementById("user-email").value = email;
+  document.getElementById("can-receive-payment-notifications").checked = (canReceivePaymentNotifications === 1);
 
-  // Ensure screensArray is an array before iterating, and target checkboxes within the modal form
   const validScreensArray = Array.isArray(screensArray) ? screensArray : [];
   document.querySelectorAll("#edit-user-form input[name='screens']").forEach(cb => {
     cb.checked = validScreensArray.includes(cb.value);
@@ -129,14 +142,13 @@ document.getElementById("edit-user-form").onsubmit = async function (e) {
   const screens = Array.from(document.querySelectorAll("#edit-user-form input[name='screens']:checked")).map(cb => cb.value);
 
   const userData = {
-    // Access the hidden ID field using its name attribute, which maps to the new ID
     id: this["user-id"].value,
     username: this["edit-username"].value,
-    // Convert threshold band back to integer or null for backend
     threshold_band: this["threshold-band"].value === "" ? null : parseInt(this["threshold-band"].value, 10),
-    screen_permissions: screens // Correctly named for the backend's Pydantic model
+    email: this["user-email"].value, // Get new email field
+    can_receive_payment_notifications: this["can-receive-payment-notifications"].checked ? 1 : 0, // Get new checkbox value
+    screen_permissions: screens
   };
-
   console.log("Attempting to update user:", userData);
 
   try {
@@ -146,7 +158,8 @@ document.getElementById("edit-user-form").onsubmit = async function (e) {
       body: JSON.stringify({
         username: userData.username,
         auth_threshold_band: userData.threshold_band,
-        // --- MODIFIED: Send screen_permissions directly as an array ---
+        email: userData.email, // Send new email field
+        can_receive_payment_notifications: userData.can_receive_payment_notifications, // Send new checkbox value
         screen_permissions: userData.screen_permissions 
       })
     });
@@ -159,18 +172,16 @@ document.getElementById("edit-user-form").onsubmit = async function (e) {
     const result = await response.json();
     console.log('User updated successfully:', result);
     
-    // --- MODIFIED: Refresh the entire page to re-evaluate permissions and tabs ---
-    window.closeEditUserModal(); // Close the modal on success
+    window.closeEditUserModal();
     if (typeof window.displayMessage === 'function') {
         window.displayMessage("User updated successfully! Refreshing page...", "success");
     } else {
         console.log("User updated successfully! Refreshing page...");
     }
-    window.location.reload(); // This is the key to refresh the UI and tabs
+    window.location.reload();
 
   } catch (error) {
     console.error('Error updating user:', error);
-    // Display an error message
     if (typeof window.displayMessage === 'function') {
         window.displayMessage("Failed to update user: " + error.message, "error");
     } else {

@@ -11,7 +11,7 @@ root_dir = '/Users/stevencohen/Projects/universal_recycling/orders_project'
 include_dirs = {'backend', 'frontend'}
 
 # Define output file path
-output_dir = os.path.join(root_dir, 'scripts_for_entire_project')
+output_dir = '/Users/stevencohen/Desktop'
 output_file_path = os.path.join(output_dir, 'entire_project_dump.txt')
 
 # Ensure the output directory exists

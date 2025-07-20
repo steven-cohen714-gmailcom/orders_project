@@ -1,4 +1,4 @@
-// File: frontend/static/js/new_order_screen/submit_utils.js
+// File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/new_order_screen/submit_utils.js
 
 export async function submitOrder({
   currentOrderNumber, // The order number of the order being submitted
@@ -67,7 +67,7 @@ export async function submitOrder({
     return false; // Return false on validation failure
   }
 
-  // --- Totals & status -----------------------------------------------------
+  // --- Totals & status  -----------------------------------------------------
   const total = updateGrandTotal();
 
   let status = "Pending";
@@ -75,14 +75,14 @@ export async function submitOrder({
 
   if (authThresholds.length !== 5) {
     await logToServer("ERROR", "Invalid authThresholds array length", { length: authThresholds.length });
-    alert("Configuration error: authorization thresholds missing."); // Added alert for config error
+    alert("Configuration error: authorization thresholds missing.");
     return false;
   }
 
   if (total > authThresholds[4]) {
     status = "Awaiting Authorisation";
     authBandRequired = 5;
-  } else if (total > authThresholds[3]) { // No upper bound needed here, previous if handles it implicitly
+  } else if (total > authThresholds[3]) {
     status = "Awaiting Authorisation";
     authBandRequired = 4;
   } else if (total > authThresholds[2]) {
@@ -109,6 +109,8 @@ export async function submitOrder({
     created_date: requestDate,
     ...(authBandRequired !== null ? { auth_band_required: authBandRequired } : {}),
     items,
+    // This is the critical line to ensure draft_id is passed to the backend:
+    ...(draftId !== null ? { draft_id: parseInt(draftId) } : {}),
   };
 
   // --- POST to backend -----------------------------------------------------

@@ -54,6 +54,14 @@ async function loadOrders() {
       data.orders.forEach((order, index) => {
         const row = document.createElement("tr");
 
+        // Determine if the receive icon should be disabled
+        // It should be disabled if status is 'Awaiting Authorisation'
+        const rawStatus = (order.status || "").trim();
+        const isAwaitingAuthorisation = rawStatus === "Awaiting Authorisation";
+        const receiveIconClass = isAwaitingAuthorisation ? "receive-icon disabled" : "receive-icon";
+        const receiveIconStyle = isAwaitingAuthorisation ? "color: grey; cursor: not-allowed;" : "color: green; cursor: pointer;";
+        const receiveIconTitle = isAwaitingAuthorisation ? "Cannot mark paid until authorised" : "Mark COD as Paid";
+
         row.innerHTML = `
           <td>${escapeHTML(order.created_date || "")}</td>
           <td>${escapeHTML(order.order_number || "")}</td>
@@ -67,9 +75,9 @@ async function loadOrders() {
             <span class="note-icon" data-order-id="${order.id}" data-order-note="${escapeHTML(order.order_note || "")}">📝</span>
             <span class="supplier-note-icon" data-note="${escapeHTML(order.note_to_supplier || "")}">📦</span>
             <span 
-              class="receive-icon" 
-              style="color: green; cursor: pointer;" 
-              title="Mark COD as Paid" 
+              class="${receiveIconClass}" 
+              style="${receiveIconStyle}" 
+              title="${receiveIconTitle}" 
               data-order-id="${order.id}" 
               data-order-number="${escapeHTML(order.order_number || "")}"
             >✅</span>
@@ -121,9 +129,13 @@ async function loadOrders() {
           showSupplierNoteModal(note);
         });
 
-        row.querySelector(".receive-icon").addEventListener("click", () => {
-          showCodPaymentModal(order.id, parseFloat(order.total || 0), new Date().toISOString().split("T")[0]);
-        });
+        const receiveIcon = row.querySelector(".receive-icon");
+        if (receiveIcon && !isAwaitingAuthorisation) { // Only attach listener if not disabled
+            receiveIcon.addEventListener("click", () => {
+                showCodPaymentModal(order.id, parseFloat(order.total || 0), new Date().toISOString().split("T")[0]);
+            });
+        }
+
 
         row.querySelector(".pdf-icon").addEventListener("click", async () => {
           try {

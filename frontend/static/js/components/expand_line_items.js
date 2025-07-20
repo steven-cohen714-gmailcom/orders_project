@@ -68,11 +68,10 @@ export async function expandLineItemsWithReceipts(orderId, iconElement, detailCo
           `;
 
       items.forEach(item => {
-        // Use 'qty_ordered' for both final and draft items, as it's the consistent name in both tables.
-        // The backend `order_queries.py` aliases `qty_ordered` from `order_items` to `quantity` in one endpoint,
-        // and in `draft_orders.py` for draft items, it's also `qty_ordered`.
-        const quantity = item.qty_ordered || 0; 
-        const unitPrice = item.price || 0; 
+        // Use 'quantity' and 'unit_price' (from orders.py API alias) first,
+        // then fall back to 'qty_ordered' and 'price' (from draft_orders.py API direct fields).
+        const quantity = item.quantity !== undefined ? item.quantity : item.qty_ordered || 0; 
+        const unitPrice = item.unit_price !== undefined ? item.unit_price : item.price || 0; 
         const itemTotal = quantity * unitPrice;
 
         const itemLabel = item.item_description

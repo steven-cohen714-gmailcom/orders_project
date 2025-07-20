@@ -1,4 +1,4 @@
-// File: frontend/static/js/payments_modal.js
+// File: frontend/static/js/components/payments_modal.js
 
 console.log("💸 payments_modal.js loaded");
 
@@ -44,7 +44,20 @@ export function showCodPaymentModal(orderId, existingAmount = '', existingDate =
         body: JSON.stringify({ amount_paid: amount, payment_date: date })
       });
 
-      if (!res.ok) throw new Error("Failed to save COD payment");
+      if (!res.ok) {
+        let errorMessage = "Failed to save COD payment due to an unknown error.";
+        try {
+          const errorData = await res.json();
+          errorMessage = errorData.detail || errorMessage; // Use backend's 'detail' message if available
+        } catch (jsonError) {
+          // If response is not JSON, use the status text or a generic message
+          errorMessage = `Server error: ${res.status} ${res.statusText || ''}`;
+        }
+        console.error("Error saving COD payment:", errorMessage); // Keep this console.error for debugging purposes
+        alert(`❌ Error saving COD payment: ${errorMessage}`);
+        // *** CRITICAL CHANGE: Remove `throw new Error(...)` here ***
+        return; // Stop function execution after displaying alert
+      }
 
       const data = await res.json();
       if (data.success) {
@@ -52,11 +65,14 @@ export function showCodPaymentModal(orderId, existingAmount = '', existingDate =
         modal.remove();
         location.reload();
       } else {
-        alert("❌ Failed to save payment");
+        // This case should ideally not be hit if backend always sends 'success: true' on success
+        alert("❌ Failed to save payment"); 
       }
     } catch (err) {
-      console.error("Error saving COD payment:", err);
-      alert("❌ Error saving payment");
+      // This catch block will now primarily catch true network errors (e.g., server unreachable)
+      // or issues occurring before the `fetch` call resolves.
+      console.error("Network or unexpected error saving COD payment:", err);
+      alert(`❌ An unexpected error occurred: ${err.message}`);
     }
   };
 }

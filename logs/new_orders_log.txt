@@ -1,6 +1,0 @@
-[2025-07-18T18:01:21.235075] {"action": "fetch_pending_orders", "count": 3}
-[2025-07-18T18:13:12.339301] {"action": "fetch_pending_orders", "count": 3}
-[2025-07-18T18:14:25.846997] {"action": "fetch_pending_orders", "count": 4}
-[2025-07-18T18:15:26.444129] {"action": "fetch_pending_orders", "count": 4}
-[2025-07-18T18:15:29.892370] {"action": "fetch_items_for_order", "order_id": 413, "count": 1}
-[2025-07-18T18:15:33.811450] {"action": "fetch_pending_orders", "count": 3}
