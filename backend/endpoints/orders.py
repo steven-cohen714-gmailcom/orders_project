@@ -9,7 +9,7 @@ from datetime import datetime
 
 from backend.utils.db_utils import handle_db_errors, log_success, log_warning, log_error
 from backend.utils.order_utils import calculate_order_total
-from backend.database import create_order, get_db_connection # Make sure get_db_connection is imported
+from backend.database import create_order, get_db_connection 
 from backend.utils.permissions_utils import require_login 
 
 router = APIRouter(tags=["orders"])
@@ -33,7 +33,7 @@ class OrderCreate(BaseModel):
     created_date: Optional[str] = None
     auth_band_required: Optional[int] = None 
     items: List[OrderItemCreate]
-    [cite_start]draft_id: Optional[int] = None # <--- ADDED: This field allows receiving the draft ID from the frontend. [cite: 3]
+    draft_id: Optional[int] = None # This field allows receiving the draft ID from the frontend.
 
 class OrderUpdate(BaseModel):
     status: Optional[str] = None
@@ -60,12 +60,13 @@ async def create_new_order(order: OrderCreate, request: Request):
             raise HTTPException(status_code=401, detail="User not authenticated")
         current_user_id = user["id"]
 
-        if order.status != "Draft":
+        if order.status != "Draft": # This check is likely redundant as this endpoint is for final orders, not drafts.
             for item in order.items:
                 if not item.item_code or not item.project or item.qty_ordered <= 0 or item.price <= 0:
                     raise HTTPException(status_code=400, detail="Invalid item: all fields required for non-draft orders")
             total = calculate_order_total([item.dict() for item in order.items])
         else:
+            # This path should ideally not be hit for 'Draft' status, as drafts go to /draft_orders endpoint
             total = 0.0  
 
         initial_status_for_new_order = order.status 
@@ -86,7 +87,7 @@ async def create_new_order(order: OrderCreate, request: Request):
 
         items = [item.dict() for item in order.items]
         
-        # [cite_start]MODIFIED: Pass draft_id to create_order function in database.py [cite: 3]
+        # MODIFIED: Pass draft_id to create_order function in database.py
         result = create_order(order_data, items, current_user_id, created_date=order.created_date, draft_id=order.draft_id)
         
         log_success("order", "created", f"Order {order.order_number} with status {order.status} and total R{total}")

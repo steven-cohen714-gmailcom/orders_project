@@ -98,3 +98,7 @@
 2025-07-18 18:16:56,478 | INFO | ✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 413
 2025-07-19 08:09:04,794 | INFO | Database initialized successfully.
 2025-07-19 08:09:04,794 | INFO | ✅ Database initialized successfully.
+2025-07-19 08:34:41,586 | INFO | Database initialized successfully.
+2025-07-19 08:34:41,586 | INFO | ✅ Database initialized successfully.
+2025-07-19 08:36:18,747 | INFO | Database initialized successfully.
+2025-07-19 08:36:18,747 | INFO | ✅ Database initialized successfully.
