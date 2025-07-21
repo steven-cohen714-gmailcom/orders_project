@@ -1,20 +1,13 @@
 # File: backend/endpoints/requisitions.py
 from fastapi import APIRouter, HTTPException, Query
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse # Keep FileResponse if it's used for other non-requisition PDFs
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import datetime
 import sqlite3
 from pathlib import Path
 import traceback
-
-# This import path might be incorrect if generate_requisition_pdf is a Python file
-# that is not directly importable from frontend/static/js.
-# Assuming it is a Python file that *can* be imported if it's placed correctly
-# in the Python path or a backend utility. If this causes an error,
-# we might need to move generate_requisition_pdf to a backend utils folder.
-# It is important to confirm generate_requisition_pdf exists and is accessible.
-from frontend.static.js.new_requisitions_pdf_generator import generate_requisition_pdf
+import logging # Ensure logging is imported if used directly here
 
 router = APIRouter(tags=["requisitions"])
 
@@ -30,6 +23,7 @@ def get_db_connection():
 class RequisitionItem(BaseModel):
     description: str
     quantity: float
+    project: Optional[str] = None 
 
 class RequisitionPayload(BaseModel):
     requisition_number: str
@@ -66,7 +60,7 @@ async def submit_requisition(payload: RequisitionPayload):
                 payload.requisition_number,
                 payload.requisitioner_id,
                 payload.requisition_note,
-                datetime.now().isoformat(), # Use ISO format for consistency (includes microseconds if any)
+                datetime.now().isoformat(timespec='seconds'), 
                 "submitted"
             ))
 
@@ -77,42 +71,38 @@ async def submit_requisition(payload: RequisitionPayload):
                     INSERT INTO requisition_items (
                         requisition_id,
                         description,
-                        quantity
-                    ) VALUES (?, ?, ?)
+                        quantity,
+                        project 
+                    ) VALUES (?, ?, ?, ?)
                 """, (
                     requisition_id,
                     item.description,
-                    item.quantity
+                    item.quantity,
+                    item.project 
                 ))
 
             # Step 3: update settings to bump requisition_number_start
-            prefix = ''.join(filter(str.isalpha, payload.requisition_number))
-            number = int(''.join(filter(str.isdigit, payload.requisition_number)))
-            next_number = f"{prefix}{number + 1}"
+            # Use the dedicated function from backend.database, which handles the logic and update
+            from backend.database import get_next_requisition_number 
+            get_next_requisition_number() 
 
+            # Step 4: relink temporary attachments
             cursor.execute("""
-                UPDATE settings
-                SET requisition_number_start = ?
-            """, (next_number,))
-
-            # ✅ Step 4: relink temporary attachments
-            cursor.execute("""
-                UPDATE attachments
+                UPDATE requisition_attachments 
                 SET requisition_id = ?, requisition_number = NULL
                 WHERE requisition_id IS NULL AND requisition_number = ?
             """, (
                 requisition_id,
-                payload.requisition_number
+                payload.requisition_number 
             ))
 
             conn.commit()
             return {"status": "success", "requisition_id": requisition_id}
 
     except HTTPException as he:
-        raise he  # Preserve intentional 400 errors
+        raise he  
     except Exception as e:
-        print("🔥 Backend crash:")
-        print(traceback.format_exc())
+        logging.error("🔥 Backend crash in submit_requisition:", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error submitting requisition: {str(e)}")
 
 @router.get("/api/pending_requisitions", response_model=dict)
@@ -129,7 +119,7 @@ async def get_pending_requisitions(
             filters = []
             params = []
 
-            valid_statuses = ["submitted", "ordered"]
+            valid_statuses = ["submitted", "ordered", "converted", "pending", "declined"] 
             if status and status.lower() != "all":
                 if status.lower() in valid_statuses:
                     filters.append("LOWER(r.status) = LOWER(?)")
@@ -138,7 +128,7 @@ async def get_pending_requisitions(
                     filters.append("LOWER(r.status) = LOWER(?)")
                     params.append(status)
             else:
-                filters.append("LOWER(r.status) IN ('submitted', 'ordered')")
+                filters.append("LOWER(r.status) IN ('submitted', 'ordered')") 
 
             if start_date:
                 try:
@@ -172,7 +162,7 @@ async def get_pending_requisitions(
                     r.converted_order_id,
                     rq.name AS requisitioner,
                     (
-                        SELECT GROUP_CONCAT(ri.description, ', ')
+                        SELECT GROUP_CONCAT(ri.description || ' (Qty: ' || ri.quantity || ')' || CASE WHEN ri.project IS NOT NULL AND ri.project != '' THEN ' [Prj: ' || ri.project || ']' ELSE '' END, '; ')
                         FROM requisition_items ri
                         WHERE ri.requisition_id = r.id
                     ) AS description,
@@ -190,25 +180,24 @@ async def get_pending_requisitions(
             rows = cursor.fetchall()
             requisitions = [dict(row) for row in rows]
 
-            # MODIFIED: More robust date parsing for display on frontend
+            # MODIFIED: Robust date parsing for display on frontend
             for req in requisitions:
                 if req["requisition_date"]:
                     date_str = req["requisition_date"]
                     formatted_date = "N/A"
-                    # Try parsing the full ISO format first, then simpler ones
                     try:
                         formatted_date = datetime.fromisoformat(date_str).strftime("%Y-%m-%d")
                     except ValueError:
                         try:
-                            # Fallback for formats without microseconds, but with time
-                            formatted_date = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
+                            formatted_date = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S.%f").strftime("%Y-%m-%d")
                         except ValueError:
-                            # Fallback for date-only format
                             try:
-                                formatted_date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%Y-%m-%d")
+                                formatted_date = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
                             except ValueError:
-                                # Log problematic date string, keep "N/A"
-                                print(f"Warning: Could not parse date for requisition {req['id']}: {date_str}")
+                                try:
+                                    formatted_date = datetime.strptime(date_str, "%Y-%m-%d").strftime("%Y-%m-%d")
+                                except ValueError:
+                                    logging.warning(f"Could not parse date for requisition {req['id']}: {date_str}")
                     req["requisition_date"] = formatted_date
                 else:
                     req["requisition_date"] = "N/A"
@@ -216,7 +205,7 @@ async def get_pending_requisitions(
             return {"requisitions": requisitions}
 
     except Exception as e:
-        print(f"Error fetching requisitions: {e}") # Keep print for immediate visibility during testing
+        logging.error(f"Error fetching requisitions: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error fetching requisitions: {str(e)}")
 
 @router.get("/api/requisition_items/{requisition_id}")
@@ -229,8 +218,8 @@ def get_requisition_items(requisition_id: int):
                     id,
                     description AS item_description,
                     quantity AS qty_ordered,
+                    project, 
                     '-' AS item_code,
-                    '-' AS project,
                     0 AS price,
                     0 AS total
                 FROM requisition_items
@@ -241,22 +230,11 @@ def get_requisition_items(requisition_id: int):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to fetch requisition items: {str(e)}")
 
-@router.get("/requisitions/api/generate_pdf/{requisition_id}")
-def requisition_pdf(requisition_id: int):
-    try:
-        # Check if generate_requisition_pdf actually exists in the imported module
-        if 'generate_requisition_pdf' not in globals() and 'generate_requisition_pdf' not in dir(sys.modules[__name__]):
-            raise ImportError("generate_requisition_pdf is not available. Ensure it's correctly placed and imported.")
-        
-        pdf_path = generate_requisition_pdf(requisition_id)
-        return FileResponse(
-            pdf_path,
-            media_type="application/pdf",
-            filename=f"Requisition_{requisition_id}.pdf"
-        )
-    except Exception as e:
-        print(f"PDF generation failed: {e}") # Added print for immediate visibility
-        raise HTTPException(status_code=500, detail=f"PDF generation failed: {str(e)}")
+# --- REMOVED: requisition_pdf endpoint as it's not desired for requisitions ---
+# @router.get("/requisitions/api/generate_pdf/{requisition_id}")
+# def requisition_pdf(requisition_id: int):
+#    # ... (removed code) ...
+# --- END REMOVED ---
     
 @router.put("/requisitions/api/mark_converted/{requisition_id}") 
 def mark_requisition_converted(requisition_id: int):
@@ -268,14 +246,21 @@ def mark_requisition_converted(requisition_id: int):
             if not cursor.fetchone():
                 raise HTTPException(status_code=404, detail="Requisition not found")
 
+            # --- CRITICAL FIX: Correct converted_order_id update ---
+            # Your .schema output shows converted_order_id as INTEGER.
+            # It CANNOT be updated with a string like 'ORDER-CONVERTED'.
+            # If you want to link it to an order, you need the actual order ID (an integer).
+            # If you just want to flag it as 'converted', use the 'status' column.
+            # Assuming 'ordered' status is used for 'converted' state.
             cursor.execute("""
                 UPDATE requisitions
-                SET converted_order_id = 'ORDER-CONVERTED', status = 'ordered'
+                SET status = 'ordered', converted_order_id = NULL -- Set to NULL if no actual order ID
                 WHERE id = ?
             """, (requisition_id,))
+            
             conn.commit()
 
         return {"success": True, "message": "Requisition marked as converted and status updated to 'ordered'."}
     except Exception as e:
-        print(f"Error marking requisition converted: {e}") # Added print for immediate visibility
+        logging.error(f"Error marking requisition converted: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to mark converted: {str(e)}")

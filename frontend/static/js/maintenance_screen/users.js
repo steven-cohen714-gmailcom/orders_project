@@ -46,7 +46,8 @@ window.fetchUsers = async function() {
       const row = document.createElement("tr");
 
       let userScreenPermissions = [];
-      if (Array.isArray(user.roles)) {
+      // Backend now sends "roles" as screen_permissions from the 'screen_permissions' table
+      if (Array.isArray(user.roles)) { 
         userScreenPermissions = user.roles;
       } else if (typeof user.roles === 'string' && user.roles.trim() !== '') {
         try {
@@ -65,7 +66,7 @@ window.fetchUsers = async function() {
       row.appendChild(createCell(user.auth_threshold_band ?? "Not Set"));
       row.appendChild(createCell(user.rights)); // 'rights' field is still present
       // Pass the full user object including permissions, email, and payment notifications to the actions cell
-      row.appendChild(createActionsCell(user, userScreenPermissions, user.email, user.can_receive_payment_notifications)); // MODIFIED: Pass email and can_receive_payment_notifications
+      row.appendChild(createActionsCell(user, userScreenPermissions, user.email, user.can_receive_payment_notifications)); 
 
       tbody.appendChild(row);
     });
@@ -92,7 +93,7 @@ function createActionsCell(user, screenPermissions, email, canReceivePaymentNoti
     // Call the global openEditUserModal function, ensuring it's on the window object
     if (typeof window.openEditUserModal === 'function') {
       // Pass user data to the modal, including new email and payment notification fields
-      window.openEditUserModal(user.id, user.username, user.auth_threshold_band ?? "", screenPermissions, email, canReceivePaymentNotifications); // MODIFIED: Pass email and can_receive_payment_notifications
+      window.openEditUserModal(user.id, user.username, user.auth_threshold_band ?? "", screenPermissions, email, canReceivePaymentNotifications); 
     } else {
       console.error("openEditUserModal function is not defined globally.");
       displayMessage("Error: Edit modal function not available.", "error");
@@ -115,10 +116,21 @@ async function addOrUpdateUser() {
   const password = document.getElementById("user-password")?.value;
   const bandRaw = document.getElementById("user-auth-threshold-band")?.value;
   const auth_threshold_band = bandRaw === "" ? null : parseInt(bandRaw, 10);
-  // MODIFIED: Get new email and can_receive_payment_notifications fields from the form
-  const email = document.getElementById("user-email")?.value.trim(); 
+  
+  // --- CORRECTED: This is the ONLY way the email variable should be declared and assigned ---
+  const emailRaw = document.getElementById("user-email")?.value.trim();
+  const email = emailRaw === "" ? null : emailRaw; // Send null if empty string
+  // --- END CORRECTED ---
+
   const can_receive_payment_notifications = document.getElementById("can-receive-payment-notifications")?.checked ? 1 : 0;
 
+  // --- Gather selected screen permissions from modal form ---
+  // This assumes your edit_user_modal.html has checkboxes or similar with name="screen_permission"
+  // It's important to select from the modal's context, assuming modal is #edit-user-modal
+  const screenPermissionsCheckboxes = document.querySelectorAll('#edit-user-modal input[name="screen_permission"]:checked');
+  const screen_permissions = Array.from(screenPermissionsCheckboxes).map(cb => cb.value);
+  // If no checkboxes are checked, screen_permissions will be an empty array, which is valid for Optional[List[str]]
+  // --- END Gathering ---
 
   if (!username) {
     displayMessage("Username is required.", "error");
@@ -134,12 +146,19 @@ async function addOrUpdateUser() {
     username,
     rights: "edit", // hardcoded for now
     auth_threshold_band,
-    email, // MODIFIED: Include email in payload
-    can_receive_payment_notifications // MODIFIED: Include payment notifications flag in payload
+    email, 
+    can_receive_payment_notifications 
   };
-  if (!id || password) {
+  if (!id || password) { // Only include password if adding new user or it's explicitly set for update
     payload.password = password;
   }
+  
+  // --- Add screen_permissions to payload for UPDATE operations ---
+  // The backend UserUpdate model expects screen_permissions for PUT, but UserCreate does not for POST.
+  if (id) { // Only send screen_permissions if updating an existing user (PUT request)
+      payload.screen_permissions = screen_permissions; 
+  }
+  // --- END Adding ---
 
   const url = id ? `/lookups/users/${id}` : "/lookups/users";
   const method = id ? "PUT" : "POST";
@@ -151,7 +170,8 @@ async function addOrUpdateUser() {
     });
     if (!res.ok) {
       const error = await res.json();
-      throw new Error(error.detail || "Unknown error");
+      // Throw the actual backend error details for better debugging
+      throw new Error(JSON.stringify(error.detail) || "Unknown error"); 
     }
 
     // After adding/updating, refresh the list
@@ -160,7 +180,8 @@ async function addOrUpdateUser() {
     displayMessage("User saved successfully.", "success");
   } catch (err) {
     console.error("Failed to save user:", err);
-    displayMessage("Failed to save user. " + err.message, "error");
+    // Display the detailed error from the backend if available
+    displayMessage("Failed to save user. " + (err.message || err), "error");
   }
 }
 
@@ -173,15 +194,15 @@ function populateUserForm(user) {
   const usernameField = document.getElementById("user-username");
   const passwordField = document.getElementById("user-password");
   const bandField = document.getElementById("user-auth-threshold-band");
-  const emailField = document.getElementById("user-email"); // MODIFIED: Get new email field
-  const canReceivePaymentsCheckbox = document.getElementById("can-receive-payment-notifications"); // MODIFIED: Get new checkbox
+  const emailField = document.getElementById("user-email"); 
+  const canReceivePaymentsCheckbox = document.getElementById("can-receive-payment-notifications"); 
 
   if (idField) idField.value = user.id;
   if (usernameField) usernameField.value = user.username;
   if (passwordField) passwordField.value = ""; // Clear password field for security
   if (bandField) bandField.value = user.auth_threshold_band ?? "";
-  if (emailField) emailField.value = user.email ?? ""; // MODIFIED: Populate new email field
-  if (canReceivePaymentsCheckbox) canReceivePaymentsCheckbox.checked = (user.can_receive_payment_notifications === 1); // MODIFIED: Populate new checkbox
+  if (emailField) emailField.value = user.email ?? ""; 
+  if (canReceivePaymentsCheckbox) canReceivePaymentsCheckbox.checked = (user.can_receive_payment_notifications === 1); 
 
   const cancelBtn = document.getElementById("cancel-user-edit");
   const submitBtn = document.querySelector("#users button[type='submit']");
@@ -195,7 +216,7 @@ function cancelUserEdit() {
   document.getElementById("user-username").value = "";
   document.getElementById("user-password").value = "";
   document.getElementById("user-auth-threshold-band").value = ""; 
-  // MODIFIED: Clear new fields
+  
   document.getElementById("user-email").value = "";
   document.getElementById("can-receive-payment-notifications").checked = false;
 

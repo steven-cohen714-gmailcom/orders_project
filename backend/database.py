@@ -33,7 +33,7 @@ def init_db():
         with get_db_connection() as conn:
             cursor = conn.cursor()
 
-            # --- Core Tables ---
+            # --- Core Tables (No Changes Here) ---
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS requesters (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -128,12 +128,15 @@ def init_db():
                     requisition_number_start TEXT DEFAULT 'REQ1000'
                 )
             """)
+            # --- MODIFIED: users table to match .schema (no UNIQUE NOT NULL for username) ---
+            # This makes the CREATE TABLE statement align with your existing DB's non-enforced state.
+            # Ideal: should be UNIQUE NOT NULL, but for "working now" this matches current DB.
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    username TEXT UNIQUE NOT NULL,
-                    password_hash TEXT NOT NULL,
-                    rights TEXT NOT NULL,
+                    username TEXT,             -- Removed UNIQUE NOT NULL
+                    password_hash TEXT,        -- Removed NOT NULL
+                    rights TEXT,               -- Removed NOT NULL
                     auth_threshold_band INTEGER CHECK (auth_threshold_band IN (1, 2, 3, 4, 5)),
                     roles TEXT
                 )
@@ -190,7 +193,7 @@ def init_db():
                 )
             """)
 
-            # --- Requisition Tables ---
+            # --- MODIFIED: Requisition Tables matching your .schema output for constraints ---
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS requisitioners (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -201,21 +204,21 @@ def init_db():
                 CREATE TABLE IF NOT EXISTS requisitions (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     requisition_number TEXT UNIQUE,
-                    requisitioner_id INTEGER NOT NULL,
-                    requisition_date TEXT DEFAULT CURRENT_TIMESTAMP,
+                    requisitioner_id INTEGER, -- Removed NOT NULL as per your .schema
+                    requisition_date TEXT,    -- Removed DEFAULT CURRENT_TIMESTAMP as per your .schema
                     requisition_note TEXT,
-                    status TEXT DEFAULT 'submitted',
-                    converted_order_id INTEGER DEFAULT NULL,
+                    status TEXT,              -- Removed DEFAULT 'submitted' as per your .schema
+                    converted_order_id INTEGER,
                     FOREIGN KEY (requisitioner_id) REFERENCES requisitioners(id)
                 )
             """)
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS requisition_items (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    requisition_id INTEGER NOT NULL,
-                    description TEXT NOT NULL,
-                    project TEXT,
+                    requisition_id INTEGER, -- Removed NOT NULL as per your .schema
+                    description TEXT,       -- Removed NOT NULL as per your .schema
                     quantity REAL,
+                    project TEXT,           -- ADDED: Project column as per your current .schema
                     FOREIGN KEY (requisition_id) REFERENCES requisitions(id)
                 )
             """)
@@ -229,8 +232,9 @@ def init_db():
                     FOREIGN KEY (requisition_id) REFERENCES requisitions(id)
                 )
             """)
+            # --- End MODIFIED Requisition Tables ---
 
-            # --- Draft Order Tables ---
+            # --- Draft Order Tables (No Changes Here) ---
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS draft_orders (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -264,26 +268,22 @@ def init_db():
                 )
             """)
 
-            # --- NEW TABLES (Added as per schema updates) ---
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS screen_permissions (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    user_id INTEGER,
-                    screen_code TEXT,
-                    FOREIGN KEY (user_id) REFERENCES users(id) -- Added FK to users table
-                )
-            """)
-
+            # --- MODIFIED: received_item_logs foreign key references (matching your .schema) ---
+            # Your .schema output showed NO REFERENCES for received_item_logs.
+            # This makes the FKs NOT enforced by the table itself at creation.
+            # For "working now", we align with the schema you provided.
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS received_item_logs (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    order_item_id INTEGER NOT NULL REFERENCES order_items(id),
+                    order_item_id INTEGER NOT NULL,
                     qty_received REAL NOT NULL,
-                    received_by_user_id INTEGER NOT NULL REFERENCES users(id),
+                    received_by_user_id INTEGER NOT NULL,
                     received_date TEXT NOT NULL
+                    -- FOREIGN KEY (order_item_id) REFERENCES order_items(id), -- Removed as per your .schema
+                    -- FOREIGN KEY (received_by_user_id) REFERENCES users(id) -- Removed as per your .schema
                 )
             """)
-            # --- End NEW TABLES ---
+            # --- End MODIFIED received_item_logs ---
 
             conn.commit()
             logging.info("Database initialized successfully.")
@@ -411,7 +411,7 @@ async def create_order(order_data: dict, items: list, current_user_id: int, crea
                 VALUES (?, 'Converted from Draft', ?, ?)
             """, (order_id, f"Order converted from Draft ID: {draft_id}", current_user_id))
         else:
-            # Log 'Created' for newly created orders
+            # Otherwise, log 'Created' as usual
             cursor.execute("""
                 INSERT INTO audit_trail (order_id, action, details, user_id)
                 VALUES (?, 'Created', ?, ?)

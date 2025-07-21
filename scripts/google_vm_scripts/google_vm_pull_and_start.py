@@ -30,7 +30,8 @@ START_SERVER_SCRIPT = PROJECT_ROOT / "scripts" / "start_server.py"
 
 # Virtual environment path
 VENV_PATH = PROJECT_ROOT / "venv"
-VENV_ACTIVATE_SCRIPT = VENV_PATH / "bin" / "activate"
+# VENV_ACTIVATE_SCRIPT is not strictly needed with the direct executable approach
+# VENV_ACTIVATE_SCRIPT = VENV_PATH / "bin" / "activate" 
 
 # Log directories
 LOGS_DIR = PROJECT_ROOT / "logs"
@@ -53,7 +54,8 @@ def print_status(message, level="info"):
 
 def run_command(cmd, desc=None, check=True, cwd=PROJECT_ROOT, in_venv=False):
     """
-    Runs a shell command. If in_venv is True, activates the venv before running.
+    Runs a shell command. If in_venv is True, uses the virtual environment's
+    executables directly instead of sourcing the activate script.
     """
     if desc:
         print_status(desc)
@@ -61,14 +63,25 @@ def run_command(cmd, desc=None, check=True, cwd=PROJECT_ROOT, in_venv=False):
     cmd_list = [str(arg) for arg in cmd]
 
     if in_venv:
-        if not VENV_ACTIVATE_SCRIPT.exists():
-            print_status(f"Virtual environment activation script not found at {VENV_ACTIVATE_SCRIPT}", "error")
+        # Determine the correct Python/pip path within the venv
+        venv_python = VENV_PATH / "bin" / "python3" # Explicitly use python3 within venv
+        venv_pip = VENV_PATH / "bin" / "pip"
+
+        if not venv_python.exists():
+            print_status(f"Virtual environment Python executable not found at {venv_python}", "error")
             sys.exit(1)
-        # Construct command to run within an activated sub-shell
-        full_cmd_str = f"source {VENV_ACTIVATE_SCRIPT} && {' '.join(cmd_list)}"
-        process = subprocess.run(full_cmd_str, cwd=cwd, capture_output=True, text=True, encoding='utf-8', shell=True)
+            
+        # Adjust the command to use the venv's executables
+        if cmd_list[0] == "python" or cmd_list[0] == "python3":
+            cmd_list[0] = str(venv_python)
+        elif cmd_list[0] == "pip":
+            cmd_list[0] = str(venv_pip)
+        # For any other commands that might need venv, they would need explicit paths
+        # For most cases (like `python -m pip install`), replacing "python" is enough.
+
+        process = subprocess.run(cmd_list, cwd=cwd, capture_output=True, text=True, encoding='utf-8')
     else:
-        # Run directly without venv activation
+        # Run directly without venv-specific adjustments
         process = subprocess.run(cmd_list, cwd=cwd, capture_output=True, text=True, encoding='utf-8')
 
     if check and process.returncode != 0:
@@ -78,7 +91,7 @@ def run_command(cmd, desc=None, check=True, cwd=PROJECT_ROOT, in_venv=False):
         print("--- STDERR ---")
         print(process.stderr.strip())
         sys.exit(1)
-    elif process.returncode != 0:
+    elif process.returncode != 0: # This block handles non-zero exit codes that are not critical errors
         print_status(f"Warning during: {desc or ' '.join(cmd_list)}")
         print("--- STDOUT ---")
         print(process.stdout.strip())
@@ -89,7 +102,9 @@ def run_command(cmd, desc=None, check=True, cwd=PROJECT_ROOT, in_venv=False):
 def kill_server():
     """Finds and kills the running FastAPI server process."""
     print_status("Checking for running server process...")
-    venv_python_path = VENV_PATH / "bin" / "python"
+    # Use the venv's python path for more accurate process identification
+    venv_python_path = VENV_PATH / "bin" / "python3" # Changed to python3
+
     result = subprocess.run(
         ["ps", "aux"],
         capture_output=True,
@@ -98,21 +113,28 @@ def kill_server():
     )
     pids_to_kill = []
     for line in result.stdout.splitlines():
-        if str(venv_python_path) in line and (str(MAIN_APP_SCRIPT) in line or str(START_SERVER_SCRIPT) in line or "uvicorn" in line):
+        # Check for processes running with the venv's python or uvicorn
+        if (str(venv_python_path) in line and (str(MAIN_APP_SCRIPT) in line or str(START_SERVER_SCRIPT) in line)) or \
+           ("uvicorn" in line and str(venv_python_path) in line): # Ensure uvicorn is from THIS venv
             parts = line.split()
             if len(parts) > 1 and parts[1].isdigit():
                 pids_to_kill.append(parts[1])
 
     if pids_to_kill:
+        # Use set to avoid attempting to kill the same PID multiple times
         for pid in set(pids_to_kill):
             print_status(f"Killing server process with PID {pid}", "info")
             try:
+                # Attempt graceful termination first
                 subprocess.run(["kill", pid], check=True) # SIGTERM
-                time.sleep(2)
-                subprocess.run(["kill", "-0", pid], check=True)
+                time.sleep(2) # Give it a moment to shut down
+                # Check if process is still alive (kill -0)
+                subprocess.run(["kill", "-0", pid], check=True) 
+                # If it's still alive, force kill
                 print_status(f"Server process PID {pid} still alive, forcing kill.", "warning")
                 subprocess.run(["kill", "-9", pid], check=True)
             except subprocess.CalledProcessError:
+                # This means kill -0 failed, implying the process is gone (good!)
                 print_status(f"Server process PID {pid} successfully terminated.", "success")
             except Exception as e:
                 print_status(f"Error killing PID {pid}: {e}", "error")
@@ -128,7 +150,7 @@ def apply_db_migrations():
     """
     print_status("Applying database migrations (running init_db)...")
     init_db_command = [
-        "python3",
+        "python3", # This will be replaced by the venv's python3 in run_command
         "-c",
         f"from {DB_INIT_SCRIPT_MODULE} import {DB_INIT_FUNCTION}; {DB_INIT_FUNCTION}()"
     ]
@@ -143,18 +165,19 @@ def main():
     # 1. Kill any running server instances
     kill_server()
 
-    # 2. Perform Git sync (fetch, hard reset, clean)
+    # 2. Perform Git sync (fetch, hard reset)
     # This assumes 'data/' is in .gitignore and will NOT be touched by git.
     print_status("Performing Git synchronization...")
     run_command(["git", "fetch", "origin"], "Fetching latest from origin", cwd=PROJECT_ROOT)
     run_command(["git", "reset", "--hard", "origin/main"], "Hard reset to remote main", cwd=PROJECT_ROOT)
-    # Only run git clean if you are absolutely certain no untracked, valuable files
-    # exist outside of 'data/' that are NOT in .gitignore.
-    # If in doubt, comment out the following line:
+    # It's generally safer to avoid `git clean -fd` in automated deployments unless
+    # you are absolutely certain about its implications and that no valuable
+    # untracked files outside of .gitignore exist.
+    # If you need it, uncomment the following line:
     # run_command(["git", "clean", "-fd"], "Removing untracked files and directories", cwd=PROJECT_ROOT)
     print_status("Git sync complete. VM now matches GitHub.", "success")
 
-    # 3. Ensure virtual environment is set up and activate it
+    # 3. Ensure virtual environment is set up
     print_status("Ensuring virtual environment exists and is up-to-date...")
     if not VENV_PATH.exists():
         print_status(f"Virtual environment not found at {VENV_PATH}. Creating it...", "info")
@@ -164,29 +187,32 @@ def main():
     else:
         print_status("Virtual environment already exists.", "info")
 
-    # 4. Install Python dependencies (within the activated venv)
+    # 4. Install Python dependencies (within the venv)
     print_status("Installing/Updating Python dependencies...", "info")
+    # This command uses the 'python3 -m pip' approach, which is robust
+    # when run with the venv's python directly (handled by run_command).
     run_command(["python3", "-m", "pip", "install", "-r", "requirements.txt"],
                 "Updating virtualenv packages", cwd=PROJECT_ROOT, in_venv=True)
     print_status("Python dependencies updated.", "success")
 
     # 5. Apply database migrations to the existing database
-    # This assumes init_db() handles schema changes gracefully without data loss.
     apply_db_migrations()
 
-    # 6. Start the server
+    # 6. Start the server in the background using nohup and the venv's python
     print_status("Starting the FastAPI server...", "info")
+    # Ensure START_SERVER_SCRIPT is executed by the venv's python
     start_cmd_list = [
         "nohup",
-        "python3",
+        str(VENV_PATH / "bin" / "python3"), # Explicitly use venv's python3
         str(START_SERVER_SCRIPT)
     ]
     with open(SERVER_STARTUP_LOG, "a") as stdout_file, \
          open(SERVER_ERROR_LOG, "a") as stderr_file:
+        # Use Popen for non-blocking execution
         subprocess.Popen(start_cmd_list, cwd=PROJECT_ROOT,
                          stdout=stdout_file,
                          stderr=stderr_file,
-                         preexec_fn=os.setpgrp
+                         preexec_fn=os.setpgrp # Detach from controlling terminal
                         )
     print_status(f"Server started in the background. Check {SERVER_STARTUP_LOG.name} for output.", "success")
     print("\n✨ Deployment complete. Verify application functionality.")

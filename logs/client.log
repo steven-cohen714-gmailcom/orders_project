@@ -1,3 +1,7 @@
-2025-07-20 12:11:49,333 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2025", "draftId": ""}
-2025-07-20 12:11:52,295 | INFO | INFO | Order submitted successfully | {"orderNumber": "2025", "orderId": 430, "status": "Awaiting Authorisation"}
-2025-07-20 12:11:53,917 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2025", "newNum": "2026"}
+2025-07-21 11:40:55,013 | INFO | INFO | saveDraftOrder started (saving as draft) | {"orderNumber": "2303"}
+2025-07-21 11:40:55,040 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2303", "newNum": "2304"}
+2025-07-21 11:40:57,241 | INFO | INFO | Draft order created successfully | {"orderNumber": "2303", "draftId": 1}
+2025-07-21 11:41:31,551 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2303", "draftId": "1"}
+2025-07-21 11:41:34,473 | INFO | INFO | Original draft deleted after final submission | {"draftId": "1", "finalOrderId": 405}
+2025-07-21 11:41:34,476 | INFO | INFO | Order submitted successfully | {"orderNumber": "2303", "orderId": 405, "status": "Awaiting Authorisation"}
+2025-07-21 11:41:36,347 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2303", "newNum": "2304"}

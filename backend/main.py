@@ -40,17 +40,27 @@ from backend.endpoints.order_receiving import router as order_receiving_router
 from backend.endpoints.order_attachments import router as attachments_router
 from backend.endpoints.utils import router as utils_router
 from backend.endpoints.mobile.mobile_awaiting_authorisation import router as mobile_auth_router
-from backend.endpoints.lookups import items as items_router
-from backend.endpoints.lookups import suppliers as suppliers_router
-from backend.endpoints.lookups import projects as projects_router
+# REMOVED: from backend.endpoints.lookups import items as items_router (already imported explicitly below)
+# REMOVED: from backend.endpoints.lookups import suppliers as suppliers_router (already imported explicitly below)
+# REMOVED: from backend.endpoints.lookups import projects as projects_router (already imported explicitly below)
 from backend.endpoints.order_notes import router as order_notes_router
-from backend.endpoints.lookups import requisitioners as requisitioners_router
+# REMOVED: from backend.endpoints.lookups import requisitioners as requisitioners_router # (already imported explicitly below)
 
 # For audit trail filtering: Import the specific audit trail filters router
 from backend.endpoints.audit_trail_filters import router as audit_trail_filters_router 
 
 # --- NEW IMPORT: Import the new draft_orders router ---
 from backend.endpoints import draft_orders
+
+# Explicitly import individual routers from lookups, aliasing them to 'router'
+from backend.endpoints.lookups.requisitioners import router as requisitioners_lookups_router
+from backend.endpoints.lookups.requesters import router as requesters_lookups_router
+from backend.endpoints.lookups.items import router as items_lookups_router
+from backend.endpoints.lookups.suppliers import router as suppliers_lookups_router
+from backend.endpoints.lookups.projects import router as projects_lookups_router
+from backend.endpoints.lookups.settings import router as settings_lookups_router
+from backend.endpoints.lookups.business_details import router as business_details_lookups_router
+from backend.endpoints.lookups.users import router as users_lookups_router
 
 
 # Allow scripts to import from parent
@@ -227,6 +237,7 @@ async def received_orders_page(request: Request):
     return templates.TemplateResponse(
         "received_orders.html",
         {
+
             "request": request,
             "user_screen_permissions": user_screen_permissions 
         }
@@ -330,45 +341,58 @@ async def mobile_requisition_form(request: Request):
         }
     )
 
-# --- Include Routers ---
-# IMPORTANT: Place the specific audit_trail_filters_router inclusion BEFORE order_queries_router
+# --- Include Routers (ORDER IS CRITICAL) ---
+# Start with static routes and general authentication
 app.include_router(static_router)
-app.include_router(mobile_auth_router)
-
-# Correctly include audit_trail_filters_router for /orders/api/audit_trail_orders
-# THIS IS THE CRITICAL LINE FOR AUDIT TRAIL FILTERING
-app.include_router(audit_trail_filters_router, prefix="/orders/api") 
-
-# --- NEW: Include the draft_orders router ---
-app.include_router(draft_orders.router, prefix="/draft_orders")
-# --- END NEW ---
-
-for router in routers:
-    if router is not order_queries_router and router is not orders_router and router is not attachments_router and router is not order_receiving_router:
-        app.include_router(router, prefix="/lookups")
-
-app.include_router(html_routes.router)
-app.include_router(admin_router, prefix="/admin")
-app.include_router(order_queries_router, prefix="/orders/api") # This prefix is correct for other endpoints in order_queries.py
-app.include_router(new_order_pdf_router, prefix="/orders/api")
 app.include_router(auth_router)
 app.include_router(mobile_auth.router)
+app.include_router(mobile_requisition_auth.router)
+app.include_router(mobile_requisition.router)
+app.include_router(html_routes.router) # Generic HTML routes
+
+# Include all specific lookup routers first, as they often have static paths
+# NOTE: The issue was importing the module 'backend.endpoints.lookups.requisitioners'
+# but trying to use it as an APIRouter instance. We need to use the 'router' variable
+# defined WITHIN each lookups module.
+app.include_router(requisitioners_lookups_router, prefix="/lookups")
+app.include_router(requesters_lookups_router, prefix="/lookups")
+app.include_router(items_lookups_router, prefix="/lookups")
+app.include_router(suppliers_lookups_router, prefix="/lookups")
+app.include_router(projects_lookups_router, prefix="/lookups")
+app.include_router(settings_lookups_router, prefix="/lookups")
+app.include_router(business_details_lookups_router, prefix="/lookups")
+app.include_router(users_lookups_router, prefix="/lookups")
+
+# Then more specific API routes, especially those with parameters
+app.include_router(audit_trail_filters_router, prefix="/orders/api") 
+app.include_router(new_order_pdf_router, prefix="/orders/api")
+app.include_router(pending_order_pdf_router, prefix="/orders/api")
+app.include_router(order_queries_router, prefix="/orders/api") # This prefix is correct for other endpoints in order_queries.py
+
+# Now the draft_orders router, as it contains a general parameterized route that caused issues
+app.include_router(draft_orders.router, prefix="/draft_orders")
+
+# Other main application routers
 app.include_router(orders_router, prefix="/orders")
 app.include_router(attachments_router, prefix="/orders")
 app.include_router(order_receiving_router, prefix="/orders")
-app.include_router(utils_router)
-app.include_router(pending_order_pdf_router, prefix="/orders/api")
 app.include_router(order_notes_router)
-app.include_router(items_router.router, prefix="/lookups")
-app.include_router(suppliers_router.router, prefix="/maintenance")
-app.include_router(projects_router.router, prefix="/maintenance")
-app.include_router(requisitions.router)
-app.include_router(requisitioners_router.router, prefix="/lookups")
 app.include_router(mark_cod_paid_api_module.router, prefix="/orders")
+
+# Requisition related routers
+app.include_router(requisitions.router)
 app.include_router(requisition_attachments.router, prefix="/requisitions")
-app.include_router(mobile_requisition_auth.router)
-app.include_router(mobile_requisition.router)
+
+# Utilities and admin
+app.include_router(utils_router)
+app.include_router(admin_router, prefix="/admin") # Admin router already includes lookups via its own inclusion
 app.include_router(email_service_router)
+
+# The original loop for 'routers' from backend.endpoints.__init__.py
+# It's better to explicitly list them above for control over order.
+# for router in routers:
+#     if router is not order_queries_router and router is not orders_router and router is not attachments_router and router is not order_receiving_router:
+#         app.include_router(router, prefix="/lookups")
 
 
 # --- Dev CLI ---
