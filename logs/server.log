@@ -147,3 +147,29 @@ INFO:root:✅ [ORDER_ITEMS] Success fetched: 1 items for order 429
 INFO:     127.0.0.1:50911 - "GET /orders/api/order_items/429 HTTP/1.1" 200 OK
 INFO:root:Generating PDF for order_id=429, order_number=2024
 INFO:     127.0.0.1:50911 - "GET /orders/api/generate_pdf_for_order/429 HTTP/1.1" 200 OK
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [32417] using StatReload
+INFO:root:Database initialized successfully.
+INFO:root:✅ Database initialized successfully.
+INFO:     Started server process [32485]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'backend/database.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [32485]
+INFO:root:Database initialized successfully.
+INFO:root:✅ Database initialized successfully.
+INFO:     Started server process [32662]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [32967] using StatReload
+INFO:root:Database initialized successfully.
+INFO:root:✅ Database initialized successfully.
+INFO:     Started server process [32995]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.

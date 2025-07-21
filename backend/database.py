@@ -17,17 +17,23 @@ logging.basicConfig(
 DB_PATH = Path("data/orders.db")
 
 def get_db_connection():
+    """Establishes and returns a connection to the SQLite database."""
     conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
+    conn.row_factory = sqlite3.Row  # This allows accessing columns by name
     return conn
 
 def init_db():
-    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    """
+    Initializes the database by creating tables if they don't already exist.
+    It also handles schema alterations for the 'users' table and inserts
+    default business details if not present.
+    """
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True) # Ensure the data directory exists
     try:
         with get_db_connection() as conn:
             cursor = conn.cursor()
 
-            # -- Core Tables --
+            # --- Core Tables ---
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS requesters (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -132,7 +138,8 @@ def init_db():
                     roles TEXT
                 )
             """)
-            # --- NEW: ALTER TABLE statements for 'users' table ---
+
+            # --- Schema Alterations for 'users' table (Add columns if they don't exist) ---
             try:
                 cursor.execute("ALTER TABLE users ADD COLUMN email TEXT")
                 logging.info("Added 'email' column to 'users' table.")
@@ -146,7 +153,7 @@ def init_db():
             except sqlite3.OperationalError as e:
                 if "duplicate column name: can_receive_payment_notifications" not in str(e):
                     logging.warning(f"Could not add 'can_receive_payment_notifications' column to 'users' table: {e}")
-            # --- END NEW ALTER TABLE statements ---
+            # --- End Schema Alterations ---
 
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS projects (
@@ -183,7 +190,7 @@ def init_db():
                 )
             """)
 
-            # -- New: Requisitions --
+            # --- Requisition Tables ---
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS requisitioners (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -223,7 +230,7 @@ def init_db():
                 )
             """)
 
-            # --- NEW TABLES FOR DRAFT ORDERS ---
+            # --- Draft Order Tables ---
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS draft_orders (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -256,8 +263,27 @@ def init_db():
                     FOREIGN KEY (draft_order_id) REFERENCES draft_orders(id)
                 )
             """)
-            # --- END NEW TABLES FOR DRAFT ORDERS ---
 
+            # --- NEW TABLES (Added as per schema updates) ---
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS screen_permissions (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER,
+                    screen_code TEXT,
+                    FOREIGN KEY (user_id) REFERENCES users(id) -- Added FK to users table
+                )
+            """)
+
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS received_item_logs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    order_item_id INTEGER NOT NULL REFERENCES order_items(id),
+                    qty_received REAL NOT NULL,
+                    received_by_user_id INTEGER NOT NULL REFERENCES users(id),
+                    received_date TEXT NOT NULL
+                )
+            """)
+            # --- End NEW TABLES ---
 
             conn.commit()
             logging.info("Database initialized successfully.")
@@ -266,15 +292,24 @@ def init_db():
         raise
 
 def determine_status_and_band(total: float) -> tuple[str, int]:
+    """
+    Determines the authorization status and required band based on the order total
+    and configured thresholds.
+    """
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT auth_threshold_1, auth_threshold_2, auth_threshold_3, auth_threshold_4, auth_threshold_5 FROM settings WHERE id = 1")
         row = cursor.fetchone()
         if not row:
-            raise ValueError("Authorization thresholds not configured.")
-        thresholds = [row["auth_threshold_1"], row["auth_threshold_2"], row["auth_threshold_3"], row["auth_threshold_4"], row["auth_threshold_5"]]
-        status = "Pending"
-        required_band = 0
+            raise ValueError("Authorization thresholds not configured in settings.")
+        
+        # Unpack thresholds and ensure they are floats for comparison
+        thresholds = [float(row[f"auth_threshold_{i}"]) for i in range(1, 6)]
+        
+        status = "Pending" # Default status if no authorization is required
+        required_band = 0 # Default band
+
+        # Determine the required authorization band
         if total > thresholds[4]:
             status = "Awaiting Authorisation"
             required_band = 5
@@ -290,24 +325,29 @@ def determine_status_and_band(total: float) -> tuple[str, int]:
         elif total > thresholds[0]:
             status = "Awaiting Authorisation"
             required_band = 1
+            
         return status, required_band
 
-# MODIFIED: Added draft_id parameter to create_order and conditional audit trail logic
-# MODIFIED: Added email notification logic for authorizers AND COD payment personnel (on creation)
 async def create_order(order_data: dict, items: list, current_user_id: int, created_date: Optional[str] = None, draft_id: Optional[int] = None) -> dict:
-    status, required_band = None, None # Initialize to None
-
+    """
+    Creates a new order and its associated items. Handles status determination,
+    audit trail logging, and sends email notifications for authorization or COD payments.
+    """
+    # Determine the order status and required authorization band
+    status, required_band = None, None 
     if order_data.get("status") == "Draft":
         status = "Draft"
-        required_band = None
+        required_band = None # Drafts don't require immediate authorization
     else:
         status, required_band = determine_status_and_band(order_data["total"])
 
-    conn = get_db_connection() # Get connection outside try-finally for email logic later
+    conn = get_db_connection() # Get connection to use across try-finally for atomicity
     try:
         cursor = conn.cursor()
         
+        # Insert the order into the 'orders' table
         if created_date:
+            # Use provided created_date if available (e.g., when converting a draft that retains its original date)
             cursor.execute("""
                 INSERT INTO orders (
                     order_number, status, created_date, total, order_note, note_to_supplier,
@@ -326,6 +366,7 @@ async def create_order(order_data: dict, items: list, current_user_id: int, crea
                 order_data.get("payment_terms", "On account")
             ))
         else:
+            # Otherwise, let the database set CURRENT_TIMESTAMP
             cursor.execute("""
                 INSERT INTO orders (
                     order_number, status, total, order_note, note_to_supplier,
@@ -343,7 +384,9 @@ async def create_order(order_data: dict, items: list, current_user_id: int, crea
                 order_data.get("payment_terms", "On account")
             ))
 
-        order_id = cursor.lastrowid
+        order_id = cursor.lastrowid # Get the ID of the newly created order
+
+        # Insert order items
         for item in items:
             cursor.execute("""
                 INSERT INTO order_items (
@@ -357,37 +400,34 @@ async def create_order(order_data: dict, items: list, current_user_id: int, crea
                 item["project"],
                 item["qty_ordered"],
                 item["price"],
-                item["qty_ordered"] * item["price"]
+                item["qty_ordered"] * item["price"] # Calculate item total
             ))
         
-        # --- NEW AUDIT TRAIL LOGIC BASED ON DRAFT_ID ---
+        # Audit trail logging
         if draft_id:
-            # If it came from a draft, log 'Converted from Draft'
+            # Log 'Converted from Draft' if the order originated from a draft
             cursor.execute("""
                 INSERT INTO audit_trail (order_id, action, details, user_id)
                 VALUES (?, 'Converted from Draft', ?, ?)
             """, (order_id, f"Order converted from Draft ID: {draft_id}", current_user_id))
         else:
-            # Otherwise, log 'Created' as usual
+            # Log 'Created' for newly created orders
             cursor.execute("""
                 INSERT INTO audit_trail (order_id, action, details, user_id)
                 VALUES (?, 'Created', ?, ?)
             """, (order_id, f"Order {order_data['order_number']} created", current_user_id))
-        # --- END NEW AUDIT TRAIL LOGIC ---
 
-        conn.commit() # Commit the order creation first
+        conn.commit() # Commit all database changes (order, items, audit trail)
 
-        # --- NEW: Email notifications for authorizers ---
+        # --- Email notifications for authorizers ---
         if status == "Awaiting Authorisation" and required_band is not None:
-            # Find users who can authorize this band
             cursor.execute("""
                 SELECT username, email FROM users 
                 WHERE auth_threshold_band >= ? AND email IS NOT NULL AND email != ''
-            """, (required_band,)) # Use >= to include higher bands
+            """, (required_band,)) # Select users with sufficient authorization band and an email
             authorizers = cursor.fetchall()
 
             if authorizers:
-                # Fetch other pending orders for this band to list in the email
                 cursor.execute("""
                     SELECT order_number, total FROM orders 
                     WHERE status = 'Awaiting Authorisation' AND required_auth_band >= ?
@@ -407,17 +447,15 @@ async def create_order(order_data: dict, items: list, current_user_id: int, crea
                         "There are also " + str(len(pending_orders_for_band) - 1 if pending_orders_for_band else 0) + " other orders that need your authorization.",
                         "",
                         "Please click here to log in and review:",
-                        "http://localhost:8004/orders/authorisations_per_user", # Direct link to authorisations screen
+                        "http://localhost:8004/orders/authorisations_per_user", # Direct link to authorizations screen
                         "",
                         "Kind regards,",
                         "Universal Recycling System"
                     ]
 
-                    # Append list of other orders if more than just the new one
                     if len(pending_orders_for_band) > 1:
                         body_lines.append("\nOther orders awaiting your authorization:")
                         for pending_order in pending_orders_for_band:
-                            # Exclude the current order from the 'other' list
                             if pending_order['order_number'] != order_data['order_number']:
                                 body_lines.append(f"- Order {pending_order['order_number']} (R{pending_order['total']:.2f})")
                     
@@ -430,11 +468,10 @@ async def create_order(order_data: dict, items: list, current_user_id: int, crea
                         logging.error(f"Failed to send authorization email to {recipient_email} for order {order_id}: {email_e}")
             else:
                 logging.warning(f"No authorizers found with email for band {required_band} for order {order_id}.")
-        # --- END NEW: Email notifications for authorizers ---
+        # --- End Email notifications for authorizers ---
 
-        # --- NEW: Email notifications for COD payment personnel (if order is COD and does NOT require authorization) ---
-        if order_data.get("payment_terms") == "COD" and status == "Pending": # Status 'Pending' implies no authorization required (or already handled by authorizer email above)
-            # Find users who should receive COD payment notifications
+        # --- Email notifications for COD payment personnel (if order is COD and does NOT require authorization) ---
+        if order_data.get("payment_terms") == "COD" and status == "Pending": # 'Pending' status implies no authorization required (or already handled)
             cursor.execute("""
                 SELECT username, email FROM users 
                 WHERE can_receive_payment_notifications = 1 AND email IS NOT NULL AND email != ''
@@ -442,7 +479,6 @@ async def create_order(order_data: dict, items: list, current_user_id: int, crea
             payment_personnel = cursor.fetchall()
 
             if payment_personnel:
-                # Fetch other pending COD orders to list in the email
                 cursor.execute("""
                     SELECT order_number, total FROM orders 
                     WHERE status = 'Pending' AND payment_terms = 'COD'
@@ -467,11 +503,9 @@ async def create_order(order_data: dict, items: list, current_user_id: int, crea
                         "Universal Recycling System"
                     ]
                     
-                    # Append list of other orders if more than just the new one
                     if len(pending_cod_orders) > 1:
                         body_lines.append("\nOther COD orders ready for payment:")
                         for cod_order in pending_cod_orders:
-                            # Exclude the current order from the 'other' list
                             if cod_order['order_number'] != order_data['order_number']:
                                 body_lines.append(f"- Order {cod_order['order_number']} (R{cod_order['total']:.2f})")
 
@@ -484,23 +518,23 @@ async def create_order(order_data: dict, items: list, current_user_id: int, crea
                         logging.error(f"Failed to send COD payment notification email to {recipient_email} for order {order_id}: {email_e}")
             else:
                 logging.warning(f"No payment personnel found with email for COD order {order_id}.")
-        # --- END NEW: Email notifications for COD payment personnel ---
+        # --- End Email notifications for COD payment personnel ---
 
-
-        # Final select to return the newly created order
+        # Retrieve and return the newly created order
         cursor.execute("""
             SELECT * FROM orders WHERE id = ?
         """, (order_id,))
         return dict(cursor.fetchone())
 
     except Exception as e:
-        conn.rollback() # Rollback on any error during order creation or email sending
+        conn.rollback() # Rollback all changes if any error occurs
         logging.error(f"❌ Error in create_order or sending email notification: {e}", exc_info=True)
         raise
     finally:
-        conn.close() # Ensure connection is closed
+        conn.close() # Ensure the database connection is closed
 
 def get_settings() -> dict:
+    """Retrieves the application's global settings."""
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
@@ -512,6 +546,7 @@ def get_settings() -> dict:
         return dict(row) if row else {}
 
 def update_settings(payload: dict):
+    """Updates the application's global settings."""
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
@@ -528,7 +563,7 @@ def update_settings(payload: dict):
                 auth_threshold_5 = excluded.auth_threshold_5,
                 requisition_number_start = excluded.requisition_number_start
         """, (
-            1,
+            1, # Settings table is designed to have a single row with ID 1
             payload["order_number_start"],
             payload["auth_threshold_1"],
             payload["auth_threshold_2"],
@@ -540,6 +575,7 @@ def update_settings(payload: dict):
         conn.commit()
 
 def get_business_details() -> dict:
+    """Retrieves the stored business details."""
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("""
@@ -551,19 +587,27 @@ def get_business_details() -> dict:
         return dict(row) if row else {}
 
 def get_next_requisition_number():
+    """
+    Generates and increments the next requisition number based on the
+    configured starting number in settings.
+    """
     with get_db_connection() as conn:
         cursor = conn.cursor()
         cursor.execute("SELECT requisition_number_start FROM settings WHERE id = 1")
         row = cursor.fetchone()
         if not row:
-            raise ValueError("Missing settings row for requisition_number_start")
+            raise ValueError("Missing settings row for requisition_number_start. Please configure settings first.")
 
         current_number = row["requisition_number_start"]
-        prefix = ''.join(filter(str.isalpha, current_number)) or "REQ"
+        # Extract alphabetic prefix and numeric part
+        prefix = ''.join(filter(str.isalpha, current_number)) or "REQ" # Default to "REQ" if no alpha
         numeric = ''.join(filter(str.isdigit, current_number))
+        
+        # Increment the numeric part, defaulting to 1000 if no number found
         next_number = int(numeric) + 1 if numeric else 1000
         new_number = f"{prefix}{next_number}"
 
+        # Update the settings with the new next requisition number
         cursor.execute("UPDATE settings SET requisition_number_start = ? WHERE id = 1", (new_number,))
         conn.commit()
         return new_number
