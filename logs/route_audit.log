@@ -70,6 +70,9 @@
 /lookups/users
 /lookups/users/{user_id}
 /lookups/users/{user_id}
+/mobile/get_user_info
+/orders/api/awaiting_authorisation
+/orders/api/authorise_order/{order_id}
 /orders/api/orders/api/audit_trail_orders
 ⚠️ Suspicious duplicate segment in: /orders/api/orders/api/audit_trail_orders
 /orders/api/preview_pdf_new_order

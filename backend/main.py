@@ -1,4 +1,5 @@
 # File: backend/main.py
+# Relative Path: backend/main.py
 
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
@@ -364,6 +365,9 @@ app.include_router(business_details_lookups_router, prefix="/lookups")
 app.include_router(users_lookups_router, prefix="/lookups")
 
 # Then more specific API routes, especially those with parameters
+# FIX START: Moved mobile_auth_router here to resolve 404 for /orders/api/awaiting_authorisation
+app.include_router(mobile_auth_router) # This router contains /orders/api/awaiting_authorisation
+# FIX END
 app.include_router(audit_trail_filters_router, prefix="/orders/api") 
 app.include_router(new_order_pdf_router, prefix="/orders/api")
 app.include_router(pending_order_pdf_router, prefix="/orders/api")
