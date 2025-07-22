@@ -1,0 +1,144 @@
+#!/usr/bin/env python3
+import os
+import sys
+import subprocess
+import shutil
+from pathlib import Path
+import re
+import time # Import time for a small delay
+
+# --- CONFIG ---
+PORT = "8004"
+APP_MODULE = "backend.main:app"
+LOG_FILE = "logs/server.log"
+ROUTE_AUDIT_FILE = "logs/route_audit.log"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+# Use the virtual environment's python executable
+VENV_PYTHON = PROJECT_ROOT / "venv/bin/python3" # Explicitly python3
+RELOAD_DIR = "backend"
+# --------------
+
+print("🟢 Starting FastAPI server...")
+
+# 1. Set working directory and sys.path
+try:
+    os.chdir(PROJECT_ROOT)
+    if str(PROJECT_ROOT) not in sys.path:
+        sys.path.insert(0, str(PROJECT_ROOT))
+    print(f"✅ Project root set: {PROJECT_ROOT}")
+except Exception as e:
+    print(f"❌ Failed to set project root: {e}")
+    sys.exit(1)
+
+# 2. Check for virtual environment Python executable
+if not VENV_PYTHON.exists():
+    print(f"❌ Virtual environment Python executable not found at {VENV_PYTHON}")
+    print("💡 Did you forget to create or activate your virtual environment, or is it corrupted?")
+    sys.exit(1)
+
+# 3. Kill processes on port
+print(f"🔪 Killing processes on port {PORT}...")
+try:
+    # Use fuser if available, otherwise lsof. fuser is often more direct.
+    # Check if fuser exists, if not, fallback to lsof
+    if shutil.which("fuser"):
+        subprocess.run(f"fuser -k -n tcp {PORT}", shell=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False) # check=False because fuser returns 1 if no process found
+    else:
+        subprocess.run(f"lsof -ti:{PORT} | xargs kill -9", shell=True,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
+    time.sleep(1) # Give processes a moment to die
+    print(f"✅ Port {PORT} cleared.")
+except Exception as e:
+    print(f"⚠️ Could not clear port {PORT}: {e}")
+
+# 4. Remove __pycache__ (but skip venv/)
+print("🧹 Removing __pycache__ directories (excluding venv)...")
+try:
+    for path in PROJECT_ROOT.rglob("__pycache__"):
+        try:
+            # Check if the path is inside the venv directory
+            if path.is_relative_to(PROJECT_ROOT / "venv"):
+                continue  # Skip venv caches
+        except ValueError:
+            pass  # Not relative to venv, safe to remove
+
+        shutil.rmtree(path)
+        print(f"   • Removed {path}")
+    print("✅ Bytecode caches cleared.")
+except Exception as e:
+    print(f"⚠️ Failed to clean __pycache__: {e}")
+
+# 5. Ensure logs directory
+try:
+    os.makedirs("logs", exist_ok=True)
+    print("✅ Logs directory ready.")
+except Exception as e:
+    print(f"⚠️ Could not create logs directory: {e}")
+
+# 6. Audit routes
+print("🧠 Auditing registered routes...")
+try:
+    # Temporarily add venv's site-packages to sys.path for import
+    venv_site_packages = next(
+        (p for p in sys.path if 'site-packages' in p and str(PROJECT_ROOT / "venv") in p),
+        None
+    )
+    if venv_site_packages and venv_site_packages not in sys.path:
+        sys.path.insert(0, venv_site_packages)
+
+    from importlib import import_module
+
+    module_name, app_name = APP_MODULE.split(":")
+    app_module = import_module(module_name)
+    app = getattr(app_module, app_name)
+
+    with open(ROUTE_AUDIT_FILE, "w") as f:
+        f.write("🔍 Registered Routes:\n")
+        for route in app.routes:
+            path = getattr(route, "path", None)
+            if not path:
+                continue
+            f.write(f"{path}\n")
+            if re.search(r"/\b(\w+)\b(?:/.*)?/\1\b", path):
+                f.write(f"⚠️ Suspicious duplicate segment in: {path}\n")
+    print(f"✅ Route audit complete. Output → {ROUTE_AUDIT_FILE}")
+
+except ModuleNotFoundError as e:
+    print(f"⚠️ Route audit skipped: Missing module → {e.name}")
+    print("💡 Run 'pip install pydantic[email]' if this relates to EmailStr usage.")
+except Exception as e:
+    print(f"⚠️ Route audit skipped: {e}")
+
+# 7. Launch Uvicorn
+print(f"🚀 Launching Uvicorn: {APP_MODULE} on port {PORT}...")
+try:
+    # Ensure file-watcher is consistent on Mac
+    os.environ["PYTHONWATCHDOG"] = "watchdog"
+
+    # CRITICAL CHANGE: Invoke uvicorn using the venv's python -m uvicorn
+    # This is the most reliable way to ensure the correct uvicorn is used.
+    uvicorn_command = [
+        str(VENV_PYTHON), # Use the full path to the venv's python
+        "-m", "uvicorn", # Run uvicorn as a module
+        APP_MODULE,
+        "--host", "0.0.0.0",
+        "--port", PORT,
+        "--reload",
+        "--reload-dir", RELOAD_DIR
+    ]
+
+    # Redirect stdout/stderr to the log file
+    with open(LOG_FILE, "a") as log_output:
+        subprocess.Popen(
+            uvicorn_command,
+            cwd=PROJECT_ROOT,
+            stdout=log_output,
+            stderr=log_output, # Direct stderr to the same log file
+            preexec_fn=os.setpgrp, # Detach from controlling terminal
+            shell=False # Explicitly do NOT use a shell
+        )
+    print(f"✅ Server launched! Logs → {LOG_FILE}")
+except Exception as e:
+    print(f"❌ Failed to start server: {e}")
+    sys.exit(1)

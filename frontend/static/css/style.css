@@ -86,8 +86,8 @@ textarea {
   border: 1px solid #c7d0d9;
   border-radius: 6px;
   background-color: #fff;
-  min-width: 180px;
-  max-width: 240px;
+  min-width: 180px; /* Base min-width */
+  max-width: 240px; /* Base max-width */
   transition: border-color 0.2s;
 }
 
@@ -115,6 +115,16 @@ button {
 button:hover {
   background-color: #0055aa;
 }
+
+/* Specific style for the "Submit as Final Order" button */
+#submit-final-order { /* Targeted by ID */
+  background-color: #ff6666; /* A lighter red color */
+}
+
+#submit-final-order:hover {
+  background-color: #ff3333; /* A darker red on hover */
+}
+
 
 .expand-icon,
 .clip-icon,
@@ -365,8 +375,86 @@ i:hover {
 }
 
 #users .form-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 2rem;
 }
+
+/* NEW STYLES FOR USERS MAINTENANCE FORM (TOP SECTION) */
+/* Target the form row in the users tab */
+.user-form-row {
+  display: flex;
+  gap: 1rem; /* Spacing between columns */
+  max-width: 800px;
+  margin-bottom: 1rem; /* Add some space below the form row */
+  align-items: flex-end; /* Align items at the bottom */
+}
+
+.user-form-column {
+  flex: 1; /* Allow columns to grow and shrink */
+  display: flex;
+  flex-direction: column;
+}
+
+.user-form-column label {
+  margin-bottom: 6px; /* Space below labels */
+}
+
+/* Ensure inputs/selects inside user form columns take full width */
+.user-form-column input[type="text"],
+.user-form-column input[type="password"],
+.user-form-column select {
+  width: 100%; /* Make them fill their column */
+  box-sizing: border-box; /* Include padding/border in width */
+  min-width: unset; /* Remove min-width from general rule */
+  max-width: unset; /* Remove max-width from general rule */
+}
+
+.user-buttons-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Align buttons to the bottom */
+  flex-shrink: 0; /* Prevent this column from shrinking */
+}
+
+/* Specific style for the Add User button */
+#add-user-button-main {
+  width: auto; /* Allow button to take natural width based on padding/content */
+  align-self: flex-start; /* Align to the start of its flex container */
+  margin-bottom: 6px; /* Space from the cancel button below it */
+}
+
+/* Specific style for the Cancel button in the same group */
+.cancel-button-inline {
+  width: auto;
+  align-self: flex-start;
+}
+
+
+/* Specific Email input width in the Edit User modal */
+/* We want this to match the Username/Threshold band width in the main form,
+   which is now `width: 100%` within its flex column.
+   So, we'll target the #user-email ID. */
+#user-email {
+  width: 100%; /* Make it fill its container */
+  box-sizing: border-box; /* Include padding and border in the width */
+  min-width: unset; /* Override any general min-width */
+  max-width: unset; /* Override any general max-width */
+}
+
+/* General inputs/selects in modal, similar to main form inputs */
+#edit-user-modal input[type="text"],
+#edit-user-modal input[type="password"],
+#edit-user-modal input[type="email"], /* Ensure email gets this */
+#edit-user-modal select {
+  width: 100%;
+  padding: 0.6rem; /* Match general button padding */
+  font-size: 0.95rem; /* Match general button font size */
+  font-family: Arial, sans-serif;
+  border: 1px solid #c7d0d9;
+  border-radius: 6px;
+  background-color: #fff;
+  box-sizing: border-box; /* Crucial for consistent sizing */
+}
+
 
 .receive-icon.disabled {
   opacity: 0.4;
@@ -396,22 +484,26 @@ tbody,
 }
 
 /* --- CUSTOM FIELD WIDTHS --- */
-.wide-select {
+/* These were too general and likely causing issues for the user form.
+   The new .user-form-column input/select rules handle this.
+   Keeping these for other non-user form inputs/selects. */
+/* .wide-select {
   min-width: 280px;
   max-width: 360px;
-}
+} */
 
-.narrow-input {
+/* .narrow-input {
   width: 80px;
   max-width: 90px;
   text-align: right;
-}
+} */
 
-.medium-input {
+/* .medium-input {
   width: 100px;
   max-width: 120px;
   text-align: right;
-}
+} */
+
 
 /* Force TomSelect dropdown to appear on top of everything else */
 .ts-dropdown {
@@ -440,8 +532,6 @@ th {
   text-align: left;
 }
 
-/* File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/css/style.css */
-
 /* Custom Alignment for Table Columns */
 /* Total column should be right-aligned */
 table th:nth-child(5) { /* Targets the 5th header column (Total) */
@@ -458,9 +548,6 @@ table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
     text-align: left;
 }
 
-
-
-
 /* Ensure icons within the action column are aligned to the left of their cell */
 .expand-icon,
 .clip-icon,
@@ -474,8 +561,6 @@ table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
     display: inline-block;
     margin-right: 0.4rem;
 }
-
-/* File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/css/style.css */
 
 /* New styles for the Audit Trail "blue rectangle" grouping effect */
 
@@ -517,7 +602,7 @@ table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
 .order-block-header-row .order-cell:nth-child(2) { flex-grow: 1.2; min-width: 100px; } /* Order Number */
 .order-block-header-row .order-cell:nth-child(3) { flex-grow: 1.5; min-width: 120px; } /* Requester */
 .order-block-header-row .order-cell:nth-child(4) { flex-grow: 2; min-width: 150px; } /* Supplier */
-.order-block-header-row .order-cell:nth-child(5) { flex-grow: 0.8; text-align: right; padding-right: 7mm; min-width: 80px; } /* Total (right aligned, with padding) */
+.order-block-header-row .order-cell:nth-child(5) { flex-grow: 0.8; text-align: right; padding-right: 7mm; min-width: 80px; } /* Total */
 .order-block-header-row .order-cell:nth-child(6) { flex-grow: 1; min-width: 80px; } /* Status */
 .order-block-header-row .order-cell:nth-child(7) { flex-grow: 0.8; min-width: 80px; } /* User */
 .order-block-header-row .order-cell:nth-child(8) { flex-grow: 2; text-align: left; min-width: 150px; } /* Actions (left aligned) */
@@ -617,7 +702,7 @@ table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
 .audit-header-row .order-cell:nth-child(5) { flex-grow: 0.8; text-align: right; padding-right: 7mm; min-width: 80px; } /* Total */
 .audit-header-row .order-cell:nth-child(6) { flex-grow: 1; min-width: 80px; } /* Status */
 .audit-header-row .order-cell:nth-child(7) { flex-grow: 0.8; min-width: 80px; } /* User */
-.audit-header-row .order-cell:nth-child(8) { flex-grow: 2; text-align: left; min-width: 150px; } /* Actions */
+.audit-header-row .order-cell:nth-child(8) { flex-grow: 2; text-align: left; min-width: 150px; } /* Actions (left aligned) */
 
 /* Specific alignment for Pending Requisitions Actions column (5th column) */
 #pending-requisitions-table th:nth-child(5),
@@ -626,4 +711,75 @@ table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
     /* This padding matches the margin-right on your icons (0.4rem)
        to ensure visual alignment from the leftmost edge of the cell. */
     padding-left: 0.4rem;
+}
+
+.permissions-container {
+  margin-top: 2.5rem; /* Creates space between the form fields and the permissions grid */
+}
+
+/* Align all fields vertically, consistent spacing */
+.modal-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.modal-form-group input[type="text"],
+.modal-form-group input[type="email"],
+.modal-form-group select {
+  width: 100%;
+  max-width: 350px; /* Control width - no more full-width mess */
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Adds space between checkbox and text */
+  font-weight: normal;
+}
+
+.permissions-container {
+  margin-top: 2.5rem;
+}
+
+/* Ensure labels and inputs align flush left */
+.modal-form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Forces left alignment of everything */
+  margin-bottom: 1.5rem;
+}
+
+/* Style for text inputs and select fields */
+.modal-form-group input[type="text"],
+.modal-form-group select {
+  width: 100%;
+  max-width: 300px; /* CONTROLLED WIDTH - same for username & band */
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Specific override for the email field */
+#user-email {
+  width: 100%;
+  max-width: 400px; /* Make it slightly wider, but still controlled */
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Checkbox label spacing */
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
 }

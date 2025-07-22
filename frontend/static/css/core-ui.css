@@ -1,0 +1,750 @@
+/*
+  ======================================================
+  CSS SYSTEM OVERVIEW
+  ======================================================
+  This stylesheet is organized using a modular and utility-first approach.
+
+  1.  **CSS Variables (:root):** Centralized definitions for colors, spacing, sizing, and other global values.
+  2.  **Base Styles:** General body, heading, and common HTML element styles.
+  3.  **Components:** Reusable UI patterns.
+      -   **Forms:** `.form-input`, `.form-label`, `.form-row`, `.form-column`, `.checkbox-group`.
+      -   **Buttons:** `.btn`, `.btn-primary`, `.btn-danger`.
+      -   **Tables:** `.table`, `.table-header-cell`, `.table-data-cell`.
+      -   **Icons:** `.icon`, `.icon-disabled`.
+      -   **Modals:** `.modal`, `.modal-content`.
+  4.  **Specific Sections:** Styles unique to particular application areas.
+      -   `.login-box`: Styles for the login form container.
+      -   `.filters`: Styles for filtering sections.
+      -   `.tabs`, `.tab`, `.tab-content`: Tab navigation styles.
+      -   `.order-block`, `.audit-header-row`: Styles for audit trail and related order displays.
+  5.  **Utilities:** Single-purpose, highly reusable classes for specific adjustments.
+      -   `.text-right`, `.text-center`, `.text-left`: Text alignment.
+      -   `.w-100`: Sets width to 100%.
+      -   `.max-w-*`: Sets max-width using CSS variables (e.g., `.max-w-md`).
+      -   `.mt-*`, `.mb-*`, `.mr-*`, `.ml-*`, `.mx-*`, `.my-*`, `.gap-*`: Spacing utilities.
+      -   `:where()` for zero-specificity utilities to avoid conflicts.
+
+  ======================================================
+*/
+
+/* ====================================================== */
+/* 1. CSS VARIABLES                                       */
+/* ====================================================== */
+:root {
+  /* Colors */
+  --primary-blue: #0066cc;
+  --primary-blue-hover: #0055aa;
+  --secondary-blue: #007bff; /* Used for borders/backgrounds in audit trail */
+  --secondary-blue-hover: #003366; /* For icons */
+  --login-blue: #0056b3;
+  --login-blue-hover: #004a99;
+
+  --danger-red: #ff6666;
+  --danger-red-hover: #ff3333;
+  --error-red: red;
+
+  --light-grey-bg: #f4f6f8;
+  --white: #ffffff;
+  --dark-text: #1a3c5e;
+  --medium-text: #333;
+  --border-grey: #c7d0d9;
+  --table-border-grey: #e0e4e8;
+  --table-header-bg: #e8eef4;
+  --modal-bg-opacity: rgba(0, 0, 0, 0.4);
+  --light-blue-bg-1: #e6f7ff; /* For payment details */
+  --light-blue-bg-2: #f0f8ff; /* For order block */
+  --light-blue-bg-3: #f8f8ff; /* For order detail row */
+  --light-border-blue: #cceeff; /* For audit trail borders */
+  --light-table-border: #ddd;
+  --light-table-header-bg: #f2f2f2;
+  --receipt-bg: #fcfcff;
+  --receipt-header-bg: #eef;
+
+  /* Spacing */
+  --space-xxs: 0.25rem; /* Converted from ~7mm / 25.4 to rem for consistency, adjust as needed */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 2.5rem;
+  --space-xxl: 3rem;
+
+  /* Sizing (Max-widths for consistency) */
+  --max-w-xs: 150px;
+  --max-w-sm: 240px; /* Base form input */
+  --max-w-md: 280px;
+  --max-w-lg: 350px; /* Modal input */
+  --max-w-xl: 400px; /* Login box, specific email input */
+
+  /* Border Radius */
+  --border-radius-sm: 4px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
+  --border-radius-xl: 10px;
+
+  /* Box Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 10px rgba(0, 0, 0, 0.2);
+  --shadow-subtle: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* ====================================================== */
+/* 2. BASE STYLES                                         */
+/* ====================================================== */
+body {
+  font-family: Arial, sans-serif;
+  margin: var(--space-lg);
+  background-color: var(--light-grey-bg);
+}
+
+h2 {
+  margin-bottom: var(--space-md);
+  font-size: 1.8rem;
+  color: var(--dark-text);
+}
+
+/* ====================================================== */
+/* 3. COMPONENTS                                          */
+/* ====================================================== */
+
+/* --- Forms --- */
+.form-input {
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  font-family: Arial, sans-serif;
+  border: 1px solid var(--border-grey);
+  border-radius: var(--border-radius-md);
+  background-color: var(--white);
+  min-width: 180px;
+  max-width: var(--max-w-sm);
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-blue) 20%, transparent);
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--dark-text);
+  margin-right: var(--space-xs);
+  font-size: 0.95rem;
+  display: block;
+}
+
+.form-group {
+  margin-bottom: var(--space-sm);
+}
+
+.form-group .form-label {
+  margin-bottom: var(--space-xs);
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.form-column {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-weight: normal;
+}
+
+/* --- Buttons --- */
+.btn {
+  padding: 0.6rem var(--space-md);
+  cursor: pointer;
+  border: none;
+  border-radius: var(--border-radius-md);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--primary-blue);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-blue-hover);
+}
+
+.btn-danger {
+  background-color: var(--danger-red);
+  color: var(--white);
+}
+
+.btn-danger:hover {
+  background-color: var(--danger-red-hover);
+}
+
+/* --- Tables --- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--space-sm);
+  background-color: var(--white);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.table-header-cell {
+  background-color: var(--table-header-bg);
+  font-weight: 600;
+  color: var(--dark-text);
+  text-transform: none;
+  font-size: 0.95rem;
+  height: 48px;
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid var(--table-border-grey);
+}
+
+.table-data-cell {
+  border: 1px solid var(--table-border-grey);
+  padding: 0.75rem;
+  text-align: left;
+  font-size: 0.95rem;
+  color: var(--medium-text);
+  overflow: visible;
+  position: relative;
+}
+
+/*
+  Table Column Alignment:
+  Ideally, remove these nth-child selectors and apply utility classes
+  like `.text-right` or custom alignment classes directly to the
+  `<th>` and `<td>` elements in your HTML for better flexibility.
+*/
+table th:nth-child(5), /* Targets the 5th header column (Total) */
+table td:nth-child(5) { /* Targets the 5th data cell column (Total) */
+  text-align: right;
+  padding-right: var(--space-xxs); /* Converted from 7mm */
+}
+
+table th:nth-child(7), /* Targets the 7th header column (Actions) */
+table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
+  text-align: left;
+}
+
+
+/* --- Icons --- */
+.icon {
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-right: var(--space-xxs);
+  display: inline-block;
+  color: var(--primary-blue); /* Default icon color */
+  transition: color 0.2s;
+}
+
+.icon:hover {
+  color: var(--primary-blue-hover); /* Consistent hover color for all icons */
+}
+
+/* .email-icon can inherit .icon and override if needed, or simply use .icon and a specific color utility in HTML */
+/* If .email-icon needs a *different* base color than other icons, define it here: */
+/* .email-icon { */
+/* color: var(--secondary-blue); */
+/* } */
+/* .email-icon:hover { */
+/* color: var(--secondary-blue-hover); */
+/* } */
+
+.icon-disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+
+/* --- Modals --- */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: var(--modal-bg-opacity);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: var(--white);
+  padding: var(--space-lg);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  width: 600px;
+  max-width: 90%;
+}
+
+.modal-content .close {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: var(--space-md);
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-content .close:hover,
+.modal-content .close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+.modal-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.modal-form-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-form-group {
+  margin-bottom: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.modal-form-group .form-input,
+.modal-form-group select {
+  width: 100%;
+  max-width: var(--max-w-lg); /* Using consistent size var for modal inputs */
+}
+
+/* #user-email is now a standard form-input with a potential utility class in HTML, e.g., class="form-input max-w-xl" */
+/* If it needs a specific max-width, apply a utility class directly in HTML. */
+
+
+/* --- TomSelect specific z-index override (if needed) --- */
+.ts-dropdown {
+  z-index: 9999 !important; /* This is the main one that needs !important */
+  position: absolute !important;
+}
+
+/* Other components that might need z-index but without !important unless absolutely necessary */
+.add-item-block {
+  z-index: 1; /* Specific z-index if needed for context */
+}
+
+.fuzzy-fix-scope {
+  z-index: 1; /* Specific z-index if needed for context */
+}
+
+
+/* ====================================================== */
+/* 4. SPECIFIC SECTIONS                                   */
+/* ====================================================== */
+
+/* --- Filters Section --- */
+.filters {
+  margin-bottom: var(--space-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: center;
+  background-color: var(--white);
+  padding: var(--space-md);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* --- Login Box --- */
+.login-box {
+  background: var(--white);
+  padding: var(--space-lg) var(--space-xxl);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  max-width: var(--max-w-xl); /* Using consistent size var for login box */
+  text-align: center;
+  margin: 5rem auto;
+}
+
+.login-box h2 {
+  margin-bottom: var(--space-md);
+  font-size: var(--space-md);
+  color: var(--medium-text);
+}
+
+.login-box .form-input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.2rem;
+  min-width: unset;
+  max-width: unset;
+}
+
+.login-box .btn {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: var(--login-blue);
+}
+
+.login-box .btn:hover {
+  background-color: var(--login-blue-hover);
+}
+
+#login-error {
+  margin-top: var(--space-xs);
+  color: var(--error-red);
+  font-size: 0.9rem;
+}
+
+/* --- Tabs --- */
+.tabs {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+}
+
+.tab {
+  padding: var(--space-xs) var(--space-sm);
+  cursor: pointer;
+  background: #ddd;
+  border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
+}
+
+.tab.active {
+  background: var(--secondary-blue);
+  color: var(--white);
+}
+
+.tab-content {
+  display: none;
+  padding: var(--space-sm);
+  border: 1px solid var(--border-grey);
+  border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) var(--border-radius-sm);
+  background-color: var(--white);
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* --- Order Related Sections --- */
+.order-header {
+  margin-bottom: var(--space-lg);
+}
+
+.order-header .form-label span {
+  font-weight: bold;
+  font-size: 1.05rem;
+  margin-left: var(--space-xs);
+}
+
+#note_to_supplier {
+  min-height: 100px;
+}
+
+.delivery-block {
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.add-item-block {
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  overflow: visible;
+  position: relative;
+  min-height: 300px;
+  /* z-index handled in utilities or component-specific context if needed */
+}
+
+.summary {
+  margin-bottom: var(--space-lg);
+}
+
+.button-group {
+  margin-top: var(--space-lg);
+}
+
+/* Receive Modal specific table styles */
+.receive-modal .table {
+  font-size: 14px;
+}
+
+.receive-modal .table-header-cell,
+.receive-modal .table-data-cell {
+  padding: 8px;
+}
+
+.receive-modal .form-input[type="number"] {
+  width: 80px;
+}
+
+/* --- Audit Trail Specific Styles --- */
+.order-block {
+  border: 1px solid var(--secondary-blue);
+  background-color: var(--light-blue-bg-2);
+  margin-bottom: var(--space-sm);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-subtle);
+}
+
+.order-block-header-row {
+  display: flex;
+  align-items: center;
+  background-color: var(--table-header-bg);
+  padding: 0.75rem var(--space-sm);
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--dark-text);
+  border-bottom: 1px solid var(--light-border-blue);
+}
+
+.order-cell {
+  padding: 0 var(--space-xs);
+  text-align: left;
+  flex-basis: 0;
+  flex-grow: 1;
+  min-width: 50px;
+}
+
+/* Audit trail column widths (flexible for now, can be utility classes if needed) */
+.order-block-header-row .order-cell:nth-child(1), .audit-header-row .order-cell:nth-child(1) { flex-grow: 1; min-width: 100px; }
+.order-block-header-row .order-cell:nth-child(2), .audit-header-row .order-cell:nth-child(2) { flex-grow: 1.2; min-width: 100px; }
+.order-block-header-row .order-cell:nth-child(3), .audit-header-row .order-cell:nth-child(3) { flex-grow: 1.5; min-width: 120px; }
+.order-block-header-row .order-cell:nth-child(4), .audit-header-row .order-cell:nth-child(4) { flex-grow: 2; min-width: 150px; }
+.order-block-header-row .order-cell:nth-child(5), .audit-header-row .order-cell:nth-child(5) { flex-grow: 0.8; text-align: right; padding-right: var(--space-xxs); min-width: 80px; }
+.order-block-header-row .order-cell:nth-child(6), .audit-header-row .order-cell:nth-child(6) { flex-grow: 1; min-width: 80px; }
+.order-block-header-row .order-cell:nth-child(7), .audit-header-row .order-cell:nth-child(7) { flex-grow: 0.8; min-width: 80px; }
+.order-block-header-row .order-cell:nth-child(8), .audit-header-row .order-cell:nth-child(8) { flex-grow: 2; text-align: left; min-width: 150px; }
+
+.order-block-detail-row {
+  padding: var(--space-sm);
+  background-color: var(--light-blue-bg-3);
+  border-top: 1px dashed var(--light-border-blue);
+}
+
+.expanded-section {
+  margin-bottom: var(--space-sm);
+}
+.expanded-section:last-child {
+  margin-bottom: 0;
+}
+
+.payment-details-section {
+  background-color: var(--light-blue-bg-1);
+  border-left: 4px solid var(--secondary-blue);
+  padding: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.items-table-section .table,
+.items-table-section .table-header-cell,
+.items-table-section .table-data-cell {
+  border: 1px solid var(--light-table-border);
+  padding: 6px;
+  font-size: 0.9rem;
+}
+
+.items-table-section .table-header-cell {
+  background-color: var(--light-table-header-bg);
+  font-weight: bold;
+}
+
+/* Specific alignment for columns within expanded items table */
+.items-table-section .table-data-cell:nth-child(3),
+.items-table-section .table-data-cell:nth-child(4),
+.items-table-section .table-data-cell:nth-child(5) {
+  text-align: right;
+}
+
+/* Specific alignment for columns within receipts sub-table */
+.items-table-section .table-data-cell table td:nth-child(1) {
+  text-align: right;
+}
+.items-table-section .table-data-cell table td:nth-child(2),
+.items-table-section .table-data-cell table td:nth-child(3) {
+  text-align: left;
+}
+
+.items-table-section .table-data-cell table {
+  margin-top: 5px;
+  border: none;
+  box-shadow: none;
+}
+.items-table-section .table-data-cell table td {
+  padding: 3px;
+  background-color: var(--receipt-bg);
+}
+.items-table-section .table-data-cell table thead tr {
+  background-color: var(--receipt-header-bg);
+}
+
+.audit-header-row {
+  display: flex;
+  align-items: center;
+  background-color: var(--table-header-bg);
+  padding: 0.75rem var(--space-sm);
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--dark-text);
+  border-bottom: 1px solid var(--light-border-blue);
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  margin-bottom: var(--space-xs);
+}
+
+.audit-body-blocks {
+  /* This div now essentially replaces the <tbody> element visually */
+}
+
+/* User form specific layout (if unique to this form) */
+.user-form-row {
+  display: flex;
+  gap: var(--space-sm);
+  max-width: 800px;
+  margin-bottom: var(--space-sm);
+  align-items: flex-end;
+}
+
+.user-form-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-form-column .form-label {
+  margin-bottom: 6px; /* Specific smaller margin for user form labels */
+}
+
+.user-form-column .form-input {
+  width: 100%;
+  min-width: unset;
+  max-width: unset;
+}
+
+.user-buttons-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+#add-user-button-main {
+  width: auto;
+  align-self: flex-start;
+  margin-bottom: 6px;
+}
+
+.cancel-button-inline {
+  width: auto;
+  align-self: flex-start;
+}
+
+/* ====================================================== */
+/* 5. UTILITIES                                           */
+/* ====================================================== */
+
+/* Text Alignment with :where() for zero-specificity */
+:where(.text-right) { text-align: right; }
+:where(.text-center) { text-align: center; }
+:where(.text-left) { text-align: left; }
+
+/* Width/Max-Width Utilities (referencing CSS variables for consistency) */
+:where(.w-100) { width: 100%; }
+:where(.max-w-xs) { max-width: var(--max-w-xs); }
+:where(.max-w-sm) { max-width: var(--max-w-sm); }
+:where(.max-w-md) { max-width: var(--max-w-md); }
+:where(.max-w-lg) { max-width: var(--max-w-lg); }
+:where(.max-w-xl) { max-width: var(--max-w-xl); }
+
+
+/* Spacing Utilities */
+:where(.mt-xxs) { margin-top: var(--space-xxs); }
+:where(.mt-xs) { margin-top: var(--space-xs); }
+:where(.mt-sm) { margin-top: var(--space-sm); }
+:where(.mt-md) { margin-top: var(--space-md); }
+:where(.mt-lg) { margin-top: var(--space-lg); }
+:where(.mt-xl) { margin-top: var(--space-xl); }
+:where(.mb-xxs) { margin-bottom: var(--space-xxs); }
+:where(.mb-xs) { margin-bottom: var(--space-xs); }
+:where(.mb-sm) { margin-bottom: var(--space-sm); }
+:where(.mb-md) { margin-bottom: var(--space-md); }
+:where(.mb-lg) { margin-bottom: var(--space-lg); }
+:where(.mb-xl) { margin-bottom: var(--space-xl); }
+:where(.mr-xxs) { margin-right: var(--space-xxs); }
+:where(.mr-xs) { margin-right: var(--space-xs); }
+:where(.mr-sm) { margin-right: var(--space-sm); }
+:where(.mr-md) { margin-right: var(--space-md); }
+:where(.mr-lg) { margin-right: var(--space-lg); }
+:where(.ml-xxs) { margin-left: var(--space-xxs); }
+:where(.ml-xs) { margin-left: var(--space-xs); }
+:where(.ml-sm) { margin-left: var(--space-sm); }
+:where(.ml-md) { margin-left: var(--space-md); }
+:where(.ml-lg) { margin-left: var(--space-lg); }
+:where(.mx-auto) { margin-left: auto; margin-right: auto; }
+:where(.gap-xxs) { gap: var(--space-xxs); }
+:where(.gap-xs) { gap: var(--space-xs); }
+:where(.gap-sm) { gap: var(--space-sm); }
+:where(.gap-md) { gap: var(--space-md); }
+:where(.gap-lg) { gap: var(--space-lg); }
+
+
+/* Position Utilities */
+:where(.position-relative) {
+  position: relative;
+}
+
+/* Z-Index Overrides */
+:where(.z-index-1) { z-index: 1; }
+:where(.z-index-2) { z-index: 2; }
+:where(.z-index-auto) { z-index: auto; }
+
+
+/* --- HTML Specific Overrides (To be removed when HTML is refactored) --- */
+/*
+   These selectors should be replaced by applying utility classes (e.g., .text-left, .pl-xxs)
+   directly to the HTML elements. This section is a temporary holding area.
+*/
+#pending-requisitions-table th:nth-child(5),
+#pending-requisitions-table td:nth-child(5) {
+    text-align: left;
+    padding-left: var(--space-xxs);
+}
+
+/*
+   These table column alignments should ideally use .text-right or .text-left
+   classes directly on the <th> and <td> elements in HTML.
+*/
+table th:nth-child(5),
+table td:nth-child(5) {
+  text-align: right;
+  padding-right: var(--space-xxs); /* Converted from 7mm */
+}
+table th:nth-child(7),
+table td:nth-child(7) {
+  text-align: left;
+}

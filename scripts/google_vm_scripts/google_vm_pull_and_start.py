@@ -74,15 +74,18 @@ def run_command(cmd, desc=None, check=True, cwd=PROJECT_ROOT, in_venv=False):
         # Adjust the command to use the venv's executables
         if cmd_list[0] == "python" or cmd_list[0] == "python3":
             cmd_list[0] = str(venv_python)
-        elif cmd_list[0] == "pip":
+        elif cmd_list[0] == "pip": # Replace 'pip' with the full venv pip path
             cmd_list[0] = str(venv_pip)
-        # For any other commands that might need venv, they would need explicit paths
-        # For most cases (like `python -m pip install`), replacing "python" is enough.
-
-        process = subprocess.run(cmd_list, cwd=cwd, capture_output=True, text=True, encoding='utf-8')
+            
+        # Ensure that if the command is "python -m pip install", it uses the venv's python
+        if len(cmd_list) > 1 and cmd_list[1] == "-m" and cmd_list[2] == "pip":
+            cmd_list[0] = str(venv_python) # Ensure the first part is the venv python
+            # cmd_list remains the same for -m pip install ...
+        
+        process = subprocess.run(cmd_list, cwd=cwd, capture_output=True, text=True, encoding='utf-8', shell=False) # Explicitly set shell=False
     else:
         # Run directly without venv-specific adjustments
-        process = subprocess.run(cmd_list, cwd=cwd, capture_output=True, text=True, encoding='utf-8')
+        process = subprocess.run(cmd_list, cwd=cwd, capture_output=True, text=True, encoding='utf-8', shell=False) # Explicitly set shell=False
 
     if check and process.returncode != 0:
         print_status(f"Error during: {desc or ' '.join(cmd_list)}", "error")
@@ -109,7 +112,8 @@ def kill_server():
         ["ps", "aux"],
         capture_output=True,
         text=True,
-        encoding='utf-8'
+        encoding='utf-8',
+        shell=False # Ensure no shell is used here either
     )
     pids_to_kill = []
     for line in result.stdout.splitlines():
@@ -126,13 +130,13 @@ def kill_server():
             print_status(f"Killing server process with PID {pid}", "info")
             try:
                 # Attempt graceful termination first
-                subprocess.run(["kill", pid], check=True) # SIGTERM
+                subprocess.run(["kill", pid], check=True, shell=False) # SIGTERM
                 time.sleep(2) # Give it a moment to shut down
                 # Check if process is still alive (kill -0)
-                subprocess.run(["kill", "-0", pid], check=True) 
+                subprocess.run(["kill", "-0", pid], check=True, shell=False) 
                 # If it's still alive, force kill
                 print_status(f"Server process PID {pid} still alive, forcing kill.", "warning")
-                subprocess.run(["kill", "-9", pid], check=True)
+                subprocess.run(["kill", "-9", pid], check=True, shell=False)
             except subprocess.CalledProcessError:
                 # This means kill -0 failed, implying the process is gone (good!)
                 print_status(f"Server process PID {pid} successfully terminated.", "success")
@@ -182,7 +186,7 @@ def main():
     if not VENV_PATH.exists():
         print_status(f"Virtual environment not found at {VENV_PATH}. Creating it...", "info")
         # Use system's python3 to create venv
-        run_command(["python3", "-m", "venv", str(VENV_PATH)], "Creating virtual environment", cwd=PROJECT_ROOT, check=True)
+        run_command([sys.executable, "-m", "venv", str(VENV_PATH)], "Creating virtual environment", cwd=PROJECT_ROOT, check=True) # Used sys.executable
         print_status("Virtual environment created.", "success")
     else:
         print_status("Virtual environment already exists.", "info")
@@ -191,7 +195,7 @@ def main():
     print_status("Installing/Updating Python dependencies...", "info")
     # This command uses the 'python3 -m pip' approach, which is robust
     # when run with the venv's python directly (handled by run_command).
-    run_command(["python3", "-m", "pip", "install", "-r", "requirements.txt"],
+    run_command(["python3", "-m", "pip", "install", "-r", "requirements.txt"], # Changed 'pip' to 'python3 -m pip'
                 "Updating virtualenv packages", cwd=PROJECT_ROOT, in_venv=True)
     print_status("Python dependencies updated.", "success")
 
@@ -206,12 +210,13 @@ def main():
         str(VENV_PATH / "bin" / "python3"), # Explicitly use venv's python3
         str(START_SERVER_SCRIPT)
     ]
-    with open(SERVER_STARTUP_LOG, "a") as stdout_file, \
-         open(SERVER_ERROR_LOG, "a") as stderr_file:
-        # Use Popen for non-blocking execution
-        subprocess.Popen(start_cmd_list, cwd=PROJECT_ROOT,
-                         stdout=stdout_file,
-                         stderr=stderr_file,
+    # IMPORTANT: shell=True is needed for nohup, but it's generally avoided.
+    # For nohup with specific executables, it's safer to build the command list correctly.
+    # The preexec_fn=os.setpgrp already helps detach.
+    # Let's keep shell=False in run_command and make sure nohup is handled as initial process.
+    subprocess.Popen(start_cmd_list, cwd=PROJECT_ROOT,
+                         stdout=open(SERVER_STARTUP_LOG, "a"), # Open file handles directly for Popen
+                         stderr=open(SERVER_ERROR_LOG, "a"),
                          preexec_fn=os.setpgrp # Detach from controlling terminal
                         )
     print_status(f"Server started in the background. Check {SERVER_STARTUP_LOG.name} for output.", "success")
