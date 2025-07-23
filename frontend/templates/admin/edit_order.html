@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Order {{ order.order_number }}</title>
+  <link rel="icon" href="data:,">
+  <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/fuzzy_dropdown_fix.css">
+</head>
+<body>
+
+  {% include "_tab_nav.html" %}
+
+  <div>
+    <h2>Edit Purchase Order: {{ order.order_number }}</h2>
+
+    <input type="hidden" id="order-id" value="{{ order.id }}">
+
+    <div class="form-group" style="max-width: 900px; margin: 2rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+      <div class="column">
+        <label for="requester_id">Requester *</label>
+        <select id="requester_id" name="requester_id" required>
+          <option value="">Select Requester</option>
+          {% for requester in requesters %}
+          <option value="{{ requester.id }}" {% if requester.id == order.requester_id %}selected{% endif %}>{{ requester.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="column">
+        <label for="supplier_id">Supplier *</label>
+        <select id="supplier_id" name="supplier_id" required>
+          <option value="">Loading...</option>
+          {% for supplier in suppliers %}
+          <option value="{{ supplier.id }}" {% if supplier.id == order.supplier_id %}selected{% endif %}>{{ supplier.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="column">
+        <label for="payment_terms">Payment Terms</label>
+        <select id="payment_terms" name="payment_terms" required>
+          <option value="On account" {% if order.payment_terms == 'On account' %}selected{% endif %}>On account</option>
+          <option value="COD" {% if order.payment_terms == 'COD' %}selected{% endif %}>COD</option>
+        </select>
+      </div>
+
+      <div class="column">
+        <label for="order_note">Order Note</label>
+        <textarea id="order_note" name="order_note" rows="3" placeholder="Internal notes about this order...">{{ order.order_note }}</textarea>
+      </div>
+
+      <div class="column">
+        <label for="note_to_supplier">Note to Supplier</label>
+        <textarea id="note_to_supplier" name="note_to_supplier" rows="3" placeholder="Note to your supplier about this order...">{{ order.note_to_supplier }}</textarea>
+      </div>
+    </div>
+
+    <div class="fuzzy-fix-scope">
+      <table id="items-table">
+        <thead>
+          <tr>
+            <th>Item Code</th>
+            <th>Project</th>
+            <th>Qty Ordered</th>
+            <th>Price (R)</th>
+            <th>Total (R)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="items-body">
+          {% for item in order_items %}
+          <tr id="row_{{ loop.index0 }}">
+            <td>
+              <select class="item-code wide-select" id="item_code_{{ loop.index0 }}" data-current-value="{{ item.item_code }}">
+                <option value="">Select Item</option>
+                {% for lookup_item in items %}
+                <option value="{{ lookup_item.item_code }}" {% if lookup_item.item_code == item.item_code %}selected{% endif %}>{{ lookup_item.item_code }} - {{ lookup_item.item_description }}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td>
+              <select class="project wide-select" id="project_{{ loop.index0 }}" data-current-value="{{ item.project }}">
+                <option value="">Select Project</option>
+                {% for lookup_project in projects %}
+                <option value="{{ lookup_project.project_code }}" {% if lookup_project.project_code == item.project %}selected{% endif %}>{{ lookup_project.project_code }} - {{ lookup_project.project_name }}</option>
+                {% endfor %}
+              </select>
+            </td>
+            <td><input type="number" class="qty-ordered narrow-input" value="{{ item.qty_ordered }}" min="0" step="1"></td>
+            <td><input type="number" class="price narrow-input" value="{{ '%.2f'|format(item.price|float) }}" step="0.01"></td>
+            <td><input type="text" class="total medium-input" value="{{ '%.2f'|format(item.total|float) }}" readonly></td>
+            <td><button type="button" onclick="deleteRow('row_{{ loop.index0 }}')">Delete</button></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="add-item-block">
+        <button type="button" id="add-line">Add Item</button>
+      </div>
+
+      <div class="summary">
+        <label>Total: R <span id="grand-total">{{ '%.2f'|format(order.total|float) }}</span></label>
+        <div>Excluding VAT</div>
+      </div>
+
+      <div class="button-group">
+        <button type="button" id="save-changes">Save Changes</button>
+        <button type="button" id="cancel-edit" onclick="window.history.back()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <select id="item-template" style="display: none;">
+    <option value="">Select Item</option>
+    {% for lookup_item in items %}
+    <option value="{{ lookup_item.item_code }}">{{ lookup_item.item_code }} - {{ lookup_item.item_description }}</option>
+    {% endfor %}
+  </select>
+  <select id="project-template" style="display: none;">
+    <option value="">Select Project</option>
+    {% for lookup_project in projects %}
+    <option value="{{ lookup_project.project_code }}">{{ lookup_project.project_code }} - {{ lookup_project.project_name }}</option>
+    {% endfor %}
+  </select>
+
+  <script type="module" src="/static/js/admin/edit_order_main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const path = window.location.pathname;
+      const tabButtons = document.querySelectorAll(".tab-buttons button");
+      tabButtons.forEach(btn => {
+        const target = btn.getAttribute("onclick")?.match(/location\.href='([^']+)'/);
+        if (target && path.startsWith(target[1])) btn.classList.add("active");
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from backend.database import get_db_connection
 import bcrypt
@@ -78,7 +78,9 @@ async def login(request: Request):
 @router.get("/logout")
 async def logout(request: Request):
     request.session.clear()
-    return JSONResponse(status_code=200, content={"message": "Logged out successfully"})
+    # --- FIX START: Changed URL to a relative path /login ---
+    return RedirectResponse(url="/login", status_code=302) # Using 302 Found, which is common for GET redirects
+    # --- FIX END ---
 
 @router.get("/session_debug")
 async def session_debug(request: Request):
