@@ -40,7 +40,7 @@ class EditOrderPayload(BaseModel):
 
 # --- HTML Route for the Edit Order Page ---
 @router.get("/edit_order/{order_id}", response_class=HTMLResponse,
-            dependencies=[Depends(require_login), Depends(require_screen_permission("edit_orders_admin"))])
+            dependencies=[Depends(require_login), Depends(require_screen_permission("edit_order_admin"))])
 async def edit_order_page(request: Request, order_id: int):
     """
     Renders the HTML page for editing an existing order.
@@ -105,7 +105,9 @@ async def edit_order_page(request: Request, order_id: int):
 
 # --- API Route for Updating an Order ---
 @router.put("/edit_order/{order_id}",
-            dependencies=[Depends(require_login), Depends(require_screen_permission("edit_orders_admin"))])
+            # --- FIX START: Changed 'edit_orders_admin' to 'edit_order_admin' ---
+            dependencies=[Depends(require_login), Depends(require_screen_permission("edit_order_admin"))])
+            # --- FIX END ---
 @handle_db_errors(entity="order", action="updating via admin edit")
 async def update_order_admin(order_id: int, payload: EditOrderPayload, request: Request):
     """
@@ -127,7 +129,7 @@ async def update_order_admin(order_id: int, payload: EditOrderPayload, request: 
         existing_order = cursor.fetchone()
         if not existing_order:
             raise HTTPException(status_code=404, detail="Order not found.")
-        
+
         order_number = existing_order["order_number"]
         old_status = existing_order["status"]
 
@@ -206,4 +208,3 @@ async def update_order_admin(order_id: int, payload: EditOrderPayload, request: 
         raise HTTPException(status_code=500, detail=f"Failed to update order: {str(e)}")
     finally:
         conn.close()
-

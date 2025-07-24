@@ -19,6 +19,7 @@ from pathlib import Path
 import logging
 import sys
 import os
+import sqlite3
 print(f"DEBUG: Current working directory is: {os.getcwd()}") # Add this line
 
 # --- Database ---
@@ -381,16 +382,64 @@ async def handle_edit_order_search(request: Request):
                    dependencies=[Depends(require_login), Depends(require_screen_permission("edit_order_admin"))])
 async def edit_order_page(request: Request, order_id: int):
     user_screen_permissions = request.session.get("screen_permissions", [])
-    # In a real application, you'd fetch order details here and pass them to the template.
-    # For now, we're just rendering the page. The JS will fetch details via API.
-    return templates.TemplateResponse(
-        "admin/edit_order.html",
-        {
-            "request": request,
-            "order_id": order_id, # Pass order_id to the template
-            "user_screen_permissions": user_screen_permissions 
-        }
-    )
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    try:
+        cursor = conn.cursor()
+
+        # Fetch order details
+        cursor.execute("""
+            SELECT o.id, o.order_number, o.status, o.created_date, o.total,
+                   o.order_note, o.note_to_supplier, o.supplier_id, o.requester_id,
+                   o.payment_terms, o.last_modified_by_user_id,
+                   s.name AS supplier_name, r.name AS requester_name
+            FROM orders o
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            WHERE o.id = ?
+        """, (order_id,))
+        order = cursor.fetchone()
+        if not order:
+            raise HTTPException(status_code=404, detail="Order not found.")
+
+        # Fetch order items
+        cursor.execute("""
+            SELECT id, item_code, item_description, project, qty_ordered, price, total
+            FROM order_items
+            WHERE order_id = ?
+        """, (order_id,))
+        order_items = [dict(row) for row in cursor.fetchall()]
+
+        # Fetch all lookup data for dropdowns
+        cursor.execute("SELECT id, name FROM requesters ORDER BY name")
+        requesters = [dict(row) for row in cursor.fetchall()]
+        cursor.execute("SELECT id, name, account_number FROM suppliers ORDER BY name")
+        suppliers = [dict(row) for row in cursor.fetchall()]
+        cursor.execute("SELECT id, item_code, item_description FROM items ORDER BY item_code")
+        items = [dict(row) for row in cursor.fetchall()]
+        cursor.execute("SELECT id, project_code, project_name FROM projects ORDER BY project_code")
+        projects = [dict(row) for row in cursor.fetchall()]
+
+        logging.info(f"Rendering edit_order page for Order ID: {order_id}")
+        return templates.TemplateResponse(
+            "admin/edit_order.html",
+            {
+                "request": request,
+                "order": dict(order), # Pass the 'order' dictionary
+                "order_items": order_items,
+                "requesters": requesters,
+                "suppliers": suppliers,
+                "items": items,
+                "projects": projects,
+                "user_screen_permissions": user_screen_permissions 
+            }
+        )
+    except Exception as e:
+        logging.error(f"Error loading edit_order page for Order ID {order_id}: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to load order for editing: {str(e)}")
+    finally:
+        conn.close()
+
 # --- END RE-ADDED: Static Routes for Admin Edit Order Search ---
 
 # --- Include Routers (ORDER IS CRITICAL) ---
@@ -435,8 +484,9 @@ app.include_router(requisition_attachments.router, prefix="/requisitions")
 
 # Utilities and admin
 app.include_router(utils_router)
-# RE-ADDED: Admin router inclusion with its prefix
-app.include_router(admin_router, prefix="/admin", dependencies=[Depends(require_login)]) # Admin router already includes lookups via its own inclusion
+# Admin router inclusion with its prefix
+# --- MODIFIED LINE BELOW ---
+app.include_router(admin_router, prefix="/admin") # REMOVED dependencies=[Depends(require_login)]
 app.include_router(email_service_router)
 
 

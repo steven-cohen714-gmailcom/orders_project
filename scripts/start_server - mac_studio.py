@@ -1,5 +1,3 @@
-# File: /Users/stevencohen/Projects/universal_recycling/orders_project/scripts/start_server.py
-
 import sys
 import os
 import subprocess
@@ -16,6 +14,8 @@ sys.path.insert(0, project_root)
 # --- FIX END ---
 
 # Now, imports like 'backend.database' should work
+# Ensure these imports are actually used or remove them if not needed,
+# as they can add unnecessary dependencies if the script doesn't leverage them.
 from backend.database import get_db_connection # This import should now succeed
 from backend.endpoints import routers # Assuming this is used for audit
 from backend.endpoints.mobile import mobile_awaiting_authorisation # Assuming this is the router for filtering
@@ -24,7 +24,7 @@ from backend.endpoints.mobile import mobile_awaiting_authorisation # Assuming th
 HOST = "0.0.0.0"
 PORT = 8004
 UVICORN_APP = "backend.main:app"
-LOG_FILE = "logs/server.log"
+LOG_FILE = "logs/server.log" # Relative to project_root
 # --- End Configuration ---
 
 print("🟢 Starting FastAPI server...")
@@ -45,9 +45,12 @@ try:
         lines = result.stdout.splitlines()
         if len(lines) > 1: # Skip header line
             for line in lines[1:]:
-                pid = line.split()[1] # PID is the second column
-                print(f"  Killing process {pid} on port {PORT}...")
-                subprocess.run(f"kill -9 {pid}", shell=True) # Force kill
+                # Ensure we handle cases where line might be empty or malformed
+                parts = line.split()
+                if len(parts) > 1:
+                    pid = parts[1] # PID is the second column
+                    print(f"  Killing process {pid} on port {PORT}...")
+                    subprocess.run(f"kill -9 {pid}", shell=True) # Force kill
     print(f"✅ Port {PORT} cleared.")
 except Exception as e:
     print(f"⚠️ Warning: Could not clear port {PORT}. It might still be in use: {e}")
@@ -56,6 +59,7 @@ except Exception as e:
 # --- Clear __pycache__ directories ---
 print("🧹 Removing __pycache__ directories (excluding venv)...")
 for root, dirs, files in os.walk(project_root):
+    # Skip venv, .git, and node_modules for efficiency and to prevent errors
     if "venv" in root or ".git" in root or "node_modules" in root:
         continue
     if "__pycache__" in dirs:
@@ -86,8 +90,9 @@ try:
         f.write("🔍 Registered Routes:\n")
         for route in app.routes:
             # Check if route has path and methods attributes
+            # Using hasattr for robustness
             path = getattr(route, 'path', 'N/A')
-            methods = ','.join(getattr(route, 'methods', ['N/A'])) if getattr(route, 'methods', None) else 'N/A'
+            methods = ','.join(getattr(route, 'methods', ['N/A'])) if hasattr(route, 'methods') and route.methods else 'N/A'
             name = getattr(route, 'name', 'N/A') # Or route.name for Route
             
             f.write(f"{path} ({methods}) - {name}\n")
@@ -99,16 +104,36 @@ except Exception as e:
 
 # --- Launch Uvicorn Server ---
 print(f"🚀 Launching Uvicorn: {UVICORN_APP} on port {PORT}...")
-# Removed output redirection for immediate debugging in console
+
+# Construct the full path to the log file
+full_log_file_path = os.path.join(project_root, LOG_FILE)
+
+# --- Define uvicorn_command here, before the try block ---
 uvicorn_command = f"{sys.executable} -m uvicorn {UVICORN_APP} --host {HOST} --port {PORT} --reload --reload-dir backend"
+# --- End of uvicorn_command definition ---
+
 try:
-    # Use Popen to run Uvicorn in a non-blocking way, so the script can finish
-    # The Uvicorn process will continue running in the background (or foreground if terminal stays open)
-    # This also helps ensure its output is visible directly in the terminal for debugging
-    # The user can then press Ctrl+C to stop Uvicorn.
-    print("--- Uvicorn output will appear below. Press CTRL+C to stop the server ---")
-    subprocess.Popen(uvicorn_command, shell=True) # Popen allows the script to continue
-    print(f"✅ Server launched! Logs (if configured by Uvicorn) → {LOG_FILE}")
+    # Open the log file in write mode
+    with open(full_log_file_path, "w") as log_output:
+        # Use Popen to run Uvicorn, redirecting stdout and stderr to the log file
+        # The Uvicorn process will continue running in the background.
+        # The script itself will finish, but the server will remain active.
+        print(f"--- Uvicorn output will be redirected to {full_log_file_path} ---")
+        # Start the Uvicorn process, redirecting its output
+        subprocess.Popen(
+            uvicorn_command, 
+            shell=True, 
+            stdout=log_output, 
+            stderr=log_output,
+            # Optional: Use preexec_fn=os.setsid to completely detach the child process
+            # from the parent and its session. This makes the child process independent
+            # of the terminal that launched the script. Be aware that this also means
+            # you can't kill it with Ctrl+C from the launching terminal.
+            # Only use this if you truly want a fully detached background process.
+            # preexec_fn=os.setsid if sys.platform != 'win32' else None
+        )
+    print(f"✅ Server launched! Check logs for Uvicorn output → {full_log_file_path}")
+    print("This script will now exit, but the server will continue running.")
 except Exception as e:
     print(f"❌ Failed to launch Uvicorn: {e}")
-    print("Please check your Uvicorn command and Python environment.")
+    print("Please check your Uvicorn command, Python environment, and ensure Uvicorn is installed.")
