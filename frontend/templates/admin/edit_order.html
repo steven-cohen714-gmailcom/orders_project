@@ -1,3 +1,5 @@
+{# File: frontend/templates/admin/edit_order.html #}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +20,8 @@
     <h2>Edit Purchase Order: {{ order.order_number }}</h2>
 
     <input type="hidden" id="order-id" value="{{ order.id }}">
+    {# ADD THIS LINE: Hidden input for current supplier ID #}
+    <input type="hidden" id="current-supplier-id" value="{{ order.supplier_id }}">
 
     <div class="form-group" style="max-width: 900px; margin: 2rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
       <div class="column">
@@ -69,76 +73,76 @@
             <th>Price (R)</th>
             <th>Total (R)</th>
             <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="items-body">
-          {% for item in order_items %}
-          <tr id="row_{{ loop.index0 }}">
-            <td>
-              <select class="item-code wide-select" id="item_code_{{ loop.index0 }}" data-current-value="{{ item.item_code }}">
-                <option value="">Select Item</option>
-                {% for lookup_item in items %}
-                <option value="{{ lookup_item.item_code }}" {% if lookup_item.item_code == item.item_code %}selected{% endif %}>{{ lookup_item.item_code }} - {{ lookup_item.item_description }}</option>
-                {% endfor %}
-              </select>
-            </td>
-            <td>
-              <select class="project wide-select" id="project_{{ loop.index0 }}" data-current-value="{{ item.project }}">
-                <option value="">Select Project</option>
-                {% for lookup_project in projects %}
-                <option value="{{ lookup_project.project_code }}" {% if lookup_project.project_code == item.project %}selected{% endif %}>{{ lookup_project.project_code }} - {{ lookup_project.project_name }}</option>
-                {% endfor %}
-              </select>
-            </td>
-            <td><input type="number" class="qty-ordered narrow-input" value="{{ item.qty_ordered }}" min="0" step="1"></td>
-            <td><input type="number" class="price narrow-input" value="{{ '%.2f'|format(item.price|float) }}" step="0.01"></td>
-            <td><input type="text" class="total medium-input" value="{{ '%.2f'|format(item.total|float) }}" readonly></td>
-            <td><button type="button" onclick="deleteRow('row_{{ loop.index0 }}')">Delete</button></td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+        </tr>
+      </thead>
+      <tbody id="items-body">
+        {% for item in order_items %}
+        <tr id="row_{{ loop.index0 }}">
+          <td>
+            <select class="item-code wide-select" id="item_code_{{ loop.index0 }}" data-current-value="{{ item.item_code }}">
+              <option value="">Select Item</option>
+              {% for lookup_item in items %}
+              <option value="{{ lookup_item.item_code }}" {% if lookup_item.item_code == item.item_code %}selected{% endif %}>{{ lookup_item.item_code }} - {{ lookup_item.item_description }}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td>
+            <select class="project wide-select" id="project_{{ loop.index0 }}" data-current-value="{{ item.project }}">
+              <option value="">Select Project</option>
+              {% for lookup_project in projects %}
+              <option value="{{ lookup_project.project_code }}" {% if lookup_project.project_code == item.project %}selected{% endif %}>{{ lookup_project.project_code }} - {{ lookup_project.project_name }}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td><input type="number" class="qty-ordered narrow-input" value="{{ item.qty_ordered }}" min="0" step="1"></td>
+          <td><input type="number" class="price narrow-input" value="{{ '%.2f'|format(item.price|float) }}" step="0.01"></td>
+          <td><input type="text" class="total medium-input" value="{{ '%.2f'|format(item.total|float) }}" readonly></td>
+          <td><button type="button" onclick="deleteRow('row_{{ loop.index0 }}')">Delete</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-      <div class="add-item-block">
-        <button type="button" id="add-line">Add Item</button>
-      </div>
+    <div class="add-item-block">
+      <button type="button" id="add-line">Add Item</button>
+    </div>
 
-      <div class="summary">
-        <label>Total: R <span id="grand-total">{{ '%.2f'|format(order.total|float) }}</span></label>
-        <div>Excluding VAT</div>
-      </div>
+    <div class="summary">
+      <label>Total: R <span id="grand-total">{{ '%.2f'|format(order.total|float) }}</span></label>
+      <div>Excluding VAT</div>
+    </div>
 
-      <div class="button-group">
-        <button type="button" id="save-changes">Save Changes</button>
-        <button type="button" id="cancel-edit" onclick="window.history.back()">Cancel</button>
-      </div>
+    <div class="button-group">
+      <button type="button" id="save-changes">Save Changes</button>
+      <button type="button" id="cancel-edit" onclick="window.history.back()">Cancel</button>
     </div>
   </div>
+</div>
 
-  <select id="item-template" style="display: none;">
-    <option value="">Select Item</option>
-    {% for lookup_item in items %}
-    <option value="{{ lookup_item.item_code }}">{{ lookup_item.item_code }} - {{ lookup_item.item_description }}</option>
-    {% endfor %}
-  </select>
-  <select id="project-template" style="display: none;">
-    <option value="">Select Project</option>
-    {% for lookup_project in projects %}
-    <option value="{{ lookup_project.project_code }}">{{ lookup_project.project_code }} - {{ lookup_project.project_name }}</option>
-    {% endfor %}
-  </select>
+<select id="item-template" style="display: none;">
+  <option value="">Select Item</option>
+  {% for lookup_item in items %}
+  <option value="{{ lookup_item.item_code }}">{{ lookup_item.item_code }} - {{ lookup_item.item_description }}</option>
+  {% endfor %}
+</select>
+<select id="project-template" style="display: none;">
+  <option value="">Select Project</option>
+  {% for lookup_project in projects %}
+  <option value="{{ lookup_project.project_code }}">{{ lookup_project.project_code }} - {{ lookup_project.project_name }}</option>
+  {% endfor %}
+</select>
 
-  <script type="module" src="/static/js/admin/edit_order_main.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const path = window.location.pathname;
-      const tabButtons = document.querySelectorAll(".tab-buttons button");
-      tabButtons.forEach(btn => {
-        const target = btn.getAttribute("onclick")?.match(/location\.href='([^']+)'/);
-        if (target && path.startsWith(target[1])) btn.classList.add("active");
-      });
+<script type="module" src="/static/js/admin/edit_order_main.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const path = window.location.pathname;
+    const tabButtons = document.querySelectorAll(".tab-buttons button");
+    tabButtons.forEach(btn => {
+      const target = btn.getAttribute("onclick")?.match(/location\.href='([^']+)'/);
+      if (target && path.startsWith(target[1])) btn.classList.add("active");
     });
-  </script>
+  });
+</script>
 
 </body>
 </html>

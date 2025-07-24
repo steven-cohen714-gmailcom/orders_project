@@ -5,13 +5,11 @@
 
 <form id="edit-user-form">
 
-  <!-- Username -->
   <div class="modal-form-group">
     <label for="edit-username">Username</label>
     <input type="text" id="edit-username" name="edit-username" readonly />
   </div>
 
-  <!-- Threshold Band -->
   <div class="modal-form-group">
     <label for="threshold-band">Threshold Band</label>
     <select id="threshold-band" name="threshold-band">
@@ -24,13 +22,11 @@
     </select>
   </div>
 
-  <!-- Email Field -->
   <div class="modal-form-group">
     <label for="user-email">Email</label>
     <input type="email" id="user-email" name="user-email" placeholder="user@example.com" />
   </div>
 
-  <!-- Payment Notifications Checkbox -->
   <div class="modal-form-group checkbox-group">
     <label>
       <input type="checkbox" id="can-receive-payment-notifications" name="can-receive-payment-notifications" value="1">
@@ -38,7 +34,6 @@
     </label>
   </div>
 
-  <!-- Permissions Section -->
   <div class="permissions-container">
     <fieldset>
       <legend>Screens this user can access</legend>
@@ -99,7 +94,10 @@
             <input type="checkbox" name="screens" value="draft_orders">
           </td>
           <td style="text-align: center;">
-            <!-- Placeholder -->
+            {# RE-ADDED: Checkbox for Edit Order (Admin) #}
+            <strong>Edit Order (Admin)</strong><br>
+            <input type="checkbox" name="screens" value="edit_order_admin">
+            {# END RE-ADDED #}
           </td>
         </tr>
       </table>
@@ -114,7 +112,6 @@
 </form>
 
 
-<!-- Spacing fix -->
 <style>
 .permissions-container {
   margin-top: 2.5rem;

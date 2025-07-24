@@ -264,9 +264,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             rowCount = Math.max(rowCount, parseInt(rowIndex) + 1);
         });
 
-        // Initialize TomSelect for main supplier and requester dropdowns
+        // Initialize TomSelect for main supplier dropdown
+        // MODIFIED: Read currentSupplierId from the new hidden input
+        const currentSupplierId = document.getElementById("current-supplier-id").value; 
         createFuzzyDropdown("supplier_id", "/lookups/suppliers").then(ts => {
-            const currentSupplierId = document.getElementById("supplier_id").value;
             if (currentSupplierId) {
                 ts.setValue(currentSupplierId);
             }
@@ -281,4 +282,3 @@ document.addEventListener("DOMContentLoaded", async () => {
         alert(`Failed to load page: ${error.message}`);
     }
 });
-

@@ -44,6 +44,12 @@
   {% if "audit_trail" in user_screen_permissions %}
   <button onclick="location.href='/orders/audit_trail'">Audit Trail</button>
   {% endif %}
+
+  {# RE-ADDED: Button for Edit Order (Admin) #}
+  {% if "edit_order_admin" in user_screen_permissions %}
+  <button onclick="location.href='/admin/edit_order_search'">Edit Order (Admin)</button>
+  {% endif %}
+  {# END RE-ADDED #}
   
   {% if "maintenance" in user_screen_permissions %}
   <button onclick="location.href='/maintenance'">Maintenance</button>
