@@ -1,8 +1,8 @@
 🔍 Registered Routes:
-/openapi.json (GET,HEAD) - openapi
-/docs (GET,HEAD) - swagger_ui_html
-/docs/oauth2-redirect (GET,HEAD) - swagger_ui_redirect
-/redoc (GET,HEAD) - redoc_html
+/openapi.json (HEAD,GET) - openapi
+/docs (HEAD,GET) - swagger_ui_html
+/docs/oauth2-redirect (HEAD,GET) - swagger_ui_redirect
+/redoc (HEAD,GET) - redoc_html
 /static (N/A) - static
 /data/uploads (N/A) - uploads
 /audit_trail_test (GET) - audit_trail_test_page

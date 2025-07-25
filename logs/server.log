@@ -1,778 +1,115 @@
 INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
 INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [64471] using StatReload
+INFO:     Started reloader process [19234] using StatReload
 INFO:root:Database initialized successfully.
 INFO:root:✅ Database initialized successfully.
-INFO:     Started server process [64491]
+INFO:     Started server process [19285]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 DEBUG: Current working directory is: /Users/stevencohen/Projects/universal_recycling/orders_project
-INFO:     127.0.0.1:65090 - "GET / HTTP/1.1" 302 Found
-INFO:     127.0.0.1:65090 - "GET /login HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65090 - "GET /static/css/style.css HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:65090 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:backend.endpoints.auth:Failed login attempt for username: steven - Incorrect password.
-INFO:     127.0.0.1:65097 - "POST /login HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:51178 - "GET / HTTP/1.1" 302 Found
+INFO:     127.0.0.1:51178 - "GET /login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51178 - "GET /static/js/login.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51178 - "GET /favicon.ico HTTP/1.1" 200 OK
 INFO:backend.endpoints.auth:User steven logged in successfully. Permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-INFO:     127.0.0.1:65100 - "POST /login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51180 - "POST /login HTTP/1.1" 200 OK
 DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'new_order' initiated.
 DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
 DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
 DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'new_order'.
 INFO:root:Starting to render new order page
-INFO:     127.0.0.1:65100 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65100 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:65100 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:65104 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:65102 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:65106 - "GET /static/js/new_order_screen/submit_draft_order_utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51180 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51180 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51193 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51180 - "GET /static/js/new_order_screen/submit_draft_order_utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51195 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 304 Not Modified
 INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:65106 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51195 - "GET /lookups/requesters HTTP/1.1" 200 OK
 INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:65106 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51195 - "GET /lookups/suppliers HTTP/1.1" 200 OK
 INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:65106 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51195 - "GET /lookups/items HTTP/1.1" 200 OK
 INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:65106 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65106 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65106 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65106 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51195 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51195 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51195 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51195 - "GET /lookups/settings HTTP/1.1" 200 OK
 INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:65106 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65102 - "GET /lookups/projects HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
+INFO:     127.0.0.1:51195 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51180 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51201 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'pending_orders' initiated.
 DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
 DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:65102 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:65112 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 392
-INFO:     127.0.0.1:65112 - "GET /admin/edit_order/392 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65112 - "GET /static/js/admin/edit_order_main.js HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:65112 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65112 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:65112 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65114 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:65116 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 392 updated by admin steven
-INFO:     127.0.0.1:65186 - "PUT /admin/edit_order/392 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 392 updated successfully via admin edit. | {"orderId": "392", "payload": {"supplier_id": 583, "requester_id": 13, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BEAR255", "item_description": "BEARING UCFL 205", "project": "AD02M", "qty_ordered": 4, "price": 89.5}]}}
-INFO:     127.0.0.1:65186 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:65186 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65186 - "GET /static/js/audit_trail.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:65186 - "GET /static/js/components/shared_filters.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:65188 - "GET /static/js/audit_trail_expand.js HTTP/1.1" 304 Not Modified
+DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'pending_orders'.
+INFO:     127.0.0.1:51231 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51231 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51233 - "GET /static/js/pending_orders.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51233 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 304 Not Modified
 INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:65188 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51233 - "GET /lookups/requesters HTTP/1.1" 200 OK
 INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:65188 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:65188 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-INFO:root:✅ [ORDER_ITEMS] Success fetched: 1 items for order 392
-INFO:     127.0.0.1:65194 - "GET /orders/api/order_items/392 HTTP/1.1" 200 OK
-INFO:root:✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 392
-INFO:     127.0.0.1:65196 - "GET /orders/api/receipt_logs/392 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65198 - "GET /orders/api/order_details_for_audit/392 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:65199 - "GET /orders/api/order_audit_history/392 HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:49394 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:49394 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 391
-INFO:     127.0.0.1:49394 - "GET /admin/edit_order/391 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:49394 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49394 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:49394 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:49396 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:49398 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64463 - "GET / HTTP/1.1" 302 Found
-INFO:     127.0.0.1:64463 - "GET /login HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64463 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:backend.endpoints.auth:User steven logged in successfully. Permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-INFO:     127.0.0.1:64502 - "POST /login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51231 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51231 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:root:Generating PDF for order_id=406, order_number=2303
+INFO:     127.0.0.1:51231 - "GET /orders/api/generate_pdf_for_order/406 HTTP/1.1" 200 OK
+INFO:root:📩 Attempting to send PDF for order 2303 to steven.cohen714@gmail.com
+INFO:root:Email Reply-To set to: aaron@urc.co.za
+INFO:root:Email sent to steven.cohen714@gmail.com with subject 'Purchase Order 2303 from Universal Recycling'
+INFO:root:✅ Email sent for order 2303 to steven.cohen714@gmail.com and logged to audit trail.
+INFO:     127.0.0.1:51283 - "POST /email/send_pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51331 - "GET /orders/attachments/406 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51331 - "GET /orders/attachments/406 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51369 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51369 - "GET /orders/attachments/406 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51369 - "GET /orders/attachments/406 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51369 - "GET /orders/attachments/406 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51369 - "GET /data/uploads/406_7_Stretches.pdf HTTP/1.1" 200 OK
 DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'new_order' initiated.
 DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
 DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
 DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'new_order'.
 INFO:root:Starting to render new order page
-INFO:     127.0.0.1:64502 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51581 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51581 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
 INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:64502 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51581 - "GET /lookups/requesters HTTP/1.1" 200 OK
 INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:64502 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51581 - "GET /lookups/suppliers HTTP/1.1" 200 OK
 INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:64502 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51581 - "GET /lookups/items HTTP/1.1" 200 OK
 INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:64502 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64502 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64502 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64502 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51581 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51581 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51581 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51581 - "GET /lookups/settings HTTP/1.1" 200 OK
 INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:64502 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64504 - "GET /lookups/projects HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
+INFO:     127.0.0.1:51581 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51583 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:client:INFO | submitOrder started (finalizing order) | {"orderNumber": "2304", "draftId": ""}
+INFO:     127.0.0.1:51651 - "POST /log HTTP/1.1" 200 OK
+INFO:root:🔍 Incoming order: order_number='2304' status='Pending' order_note='' note_to_supplier='' supplier_id=584 requester_id=12 payment_terms='On account' created_date='2025-07-25' auth_band_required=None items=[OrderItemCreate(item_code='ABRA002', item_description='CUTTING DISC STONE 115 MM', project='AD01M', qty_ordered=1.0, price=532.0)] draft_id=None
+INFO:root:✅ [ORDER] Success created: Order 2304 with status Pending and total R532.0
+INFO:     127.0.0.1:51651 - "POST /orders HTTP/1.1" 200 OK
+INFO:client:INFO | Order submitted successfully | {"orderNumber": "2304", "orderId": 407, "status": "Pending"}
+INFO:     127.0.0.1:51651 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51651 - "PUT /lookups/order_number HTTP/1.1" 200 OK
+INFO:client:INFO | Order number incremented in backend settings | {"oldNum": "2304", "newNum": "2305"}
+INFO:     127.0.0.1:51651 - "POST /log HTTP/1.1" 200 OK
+INFO:root:Items fetched: 10056 items
+INFO:     127.0.0.1:51651 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51661 - "GET /lookups/projects HTTP/1.1" 200 OK
+DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'pending_orders' initiated.
 DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
 DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:64502 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53273 - "GET / HTTP/1.1" 302 Found
-INFO:     127.0.0.1:53273 - "GET /login HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53301 - "GET /login HTTP/1.1" 200 OK
-INFO:     127.0.0.1:53301 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:backend.endpoints.auth:User steven logged in successfully. Permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-INFO:     127.0.0.1:51694 - "POST /login HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'new_order' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'new_order'.
-INFO:root:Starting to render new order page
-INFO:     127.0.0.1:51694 - "GET /orders/new HTTP/1.1" 200 OK
+DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'pending_orders'.
+INFO:     127.0.0.1:51651 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51651 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
 INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:51694 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51661 - "GET /lookups/requesters HTTP/1.1" 200 OK
 INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:51694 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:51694 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:51694 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51694 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51694 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51694 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:51694 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51696 - "GET /lookups/projects HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:51694 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:54488 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 392
-INFO:     127.0.0.1:54488 - "GET /admin/edit_order/392 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54488 - "GET /static/css/style.css HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:54488 - "GET /static/js/admin/edit_order_main.js HTTP/1.1" 304 Not Modified
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54488 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54488 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54488 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54490 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:54493 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 392 updated by admin steven
-INFO:     127.0.0.1:54559 - "PUT /admin/edit_order/392 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 392 updated successfully via admin edit. | {"orderId": "392", "payload": {"supplier_id": 583, "requester_id": 13, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BEAR255", "item_description": "BEARING UCFL 205", "project": "AD02M", "qty_ordered": 4, "price": 89.5}]}}
-INFO:     127.0.0.1:54559 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:54559 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54559 - "GET /static/js/components/shared_filters.js HTTP/1.1" 304 Not Modified
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:54559 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:54559 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:54559 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:54598 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:54600 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 391
-INFO:     127.0.0.1:54600 - "GET /admin/edit_order/391 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54600 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54600 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54600 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54603 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:54605 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 391 updated by admin steven
-INFO:     127.0.0.1:54709 - "PUT /admin/edit_order/391 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 391 updated successfully via admin edit. | {"orderId": "391", "payload": {"supplier_id": 506, "requester_id": 11, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "CABL077", "item_description": "CABLE 6MM X 4 CORE SILICONE", "project": "AD01O", "qty_ordered": 100, "price": 82}]}}
-INFO:     127.0.0.1:54709 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:54709 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:54709 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:54709 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:54709 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54786 - "GET /orders/api/order_audit_history/391 HTTP/1.1" 200 OK
-INFO:root:✅ [ORDER_ITEMS] Success fetched: 1 items for order 391
-INFO:     127.0.0.1:54788 - "GET /orders/api/order_items/391 HTTP/1.1" 200 OK
-INFO:root:✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 391
-INFO:     127.0.0.1:54790 - "GET /orders/api/receipt_logs/391 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54792 - "GET /orders/api/order_details_for_audit/391 HTTP/1.1" 200 OK
-INFO:root:Generating PDF for order_id=391, order_number=2289
-INFO:     127.0.0.1:54809 - "GET /orders/api/generate_pdf_for_order/391 HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:54838 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:54840 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 393
-INFO:     127.0.0.1:54840 - "GET /admin/edit_order/393 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54840 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54840 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54840 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54854 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:54856 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:54860 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:54862 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 395
-INFO:     127.0.0.1:54862 - "GET /admin/edit_order/395 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54862 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54862 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54862 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54865 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:54867 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54943 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54944 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54955 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54956 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54960 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54961 - "GET /lookups/projects HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 395 updated by admin steven
-INFO:     127.0.0.1:54982 - "PUT /admin/edit_order/395 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 395 updated successfully via admin edit. | {"orderId": "395", "payload": {"supplier_id": 560, "requester_id": 10, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BLAD011", "item_description": "BLADE UNIVERSAL GRANULATOR NO.3 FLY GUNIVER 361", "project": "AD00C", "qty_ordered": 6, "price": 4400}, {"item_code": "BLAD099", "item_description": "BLADE NEW HR 122 FLY GRANULATOR 8", "project": "AD00C", "qty_ordered": 3, "price": 4400}, {"item_code": "BLAD012", "item_description": "BLADE UNIVERSAL GRANULATOR NO.3  BED GUNIVER 360", "project": "AD00C", "qty_ordered": 4, "price": 6000}, {"item_code": "BLAD116", "item_description": "BLADE NEW HR 122 BED GRANULATOR 8", "project": "AD00C", "qty_ordered": 2, "price": 6000}]}}
-INFO:     127.0.0.1:54982 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:54982 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:54982 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:54982 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:54982 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:54984 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:54993 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 396
-INFO:     127.0.0.1:54993 - "GET /admin/edit_order/396 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54993 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54993 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:54993 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:54995 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:54997 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:55026 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55027 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:55034 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55035 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:55039 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55040 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:55047 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55048 - "GET /lookups/projects HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 396 updated by admin steven
-INFO:     127.0.0.1:55138 - "PUT /admin/edit_order/396 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 396 updated successfully via admin edit. | {"orderId": "396", "payload": {"supplier_id": 685, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "HYDH049", "item_description": "HYDRAULIC HOSE 1SN-04", "project": "AD00C", "qty_ordered": 1, "price": 239.9}, {"item_code": "HYDH051", "item_description": "HYDRAULIC HOSE 2SN-06", "project": "AD00C", "qty_ordered": 2, "price": 294.03}, {"item_code": "HYDH172", "item_description": "HYDRAULIC HOSE 1SN-06", "project": "AD00C", "qty_ordered": 1, "price": 304.71}, {"item_code": "HYDH174", "item_description": "HYDRAULIC HOSE 2SN-08", "project": "AD00C", "qty_ordered": 1, "price": 360.29}, {"item_code": "HYDH327", "item_description": "HYDRAULIC HOSE 1SN-08", "project": "AD00C", "qty_ordered": 1, "price": 657.37}]}}
-INFO:     127.0.0.1:55138 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:55138 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:55138 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:55138 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:55138 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:55140 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:55150 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 398
-INFO:     127.0.0.1:55150 - "GET /admin/edit_order/398 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:55150 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55150 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:55150 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:55164 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:55166 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 398 updated by admin steven
-INFO:     127.0.0.1:57787 - "PUT /admin/edit_order/398 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 398 updated successfully via admin edit. | {"orderId": "398", "payload": {"supplier_id": 560, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BLAD037", "item_description": "BLADE UNIVERSAL GRANULATOR NO.3 BED SHARPENED", "project": "AD00C", "qty_ordered": 2, "price": 416}]}}
-INFO:     127.0.0.1:57787 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:57787 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57787 - "GET /static/css/style.css HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:57791 - "GET /static/js/audit_trail.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:57791 - "GET /static/js/audit_trail_expand.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:57793 - "GET /static/js/components/shared_filters.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:57787 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 304 Not Modified
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:57787 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:57787 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:57787 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:57814 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:57816 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 399
-INFO:     127.0.0.1:57816 - "GET /admin/edit_order/399 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57816 - "GET /static/js/admin/edit_order_main.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:57816 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 304 Not Modified
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:57816 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57816 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:57816 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57829 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:57832 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 399 updated by admin steven
-INFO:     127.0.0.1:57928 - "PUT /admin/edit_order/399 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 399 updated successfully via admin edit. | {"orderId": "399", "payload": {"supplier_id": 468, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "REPA199", "item_description": "REPAIR STARTER", "project": "AD00C", "qty_ordered": 1, "price": 2600}]}}
-INFO:     127.0.0.1:57928 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:57928 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:57928 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:57928 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:57928 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:57930 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:57930 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 400
-INFO:     127.0.0.1:57930 - "GET /admin/edit_order/400 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:57930 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57930 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:57930 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:57946 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:57948 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 400 updated by admin steven
-INFO:     127.0.0.1:58039 - "PUT /admin/edit_order/400 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 400 updated successfully via admin edit. | {"orderId": "400", "payload": {"supplier_id": 719, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "RECO005", "item_description": "REPAIR SEAT PKJ134 GP", "project": "AD01M", "qty_ordered": 1, "price": 1900}]}}
-INFO:     127.0.0.1:58039 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:58039 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:58039 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:58039 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:58039 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:58042 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:58042 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 401
-INFO:     127.0.0.1:58042 - "GET /admin/edit_order/401 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58042 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58042 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58042 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58047 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:58049 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58083 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58084 - "GET /lookups/projects HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 401 updated by admin steven
-INFO:     127.0.0.1:58115 - "PUT /admin/edit_order/401 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 401 updated successfully via admin edit. | {"orderId": "401", "payload": {"supplier_id": 685, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "HYDH049", "item_description": "HYDRAULIC HOSE 1SN-04", "project": "AD01P", "qty_ordered": 2, "price": 274.18}, {"item_code": "HYDH172", "item_description": "HYDRAULIC HOSE 1SN-06", "project": "AD00C", "qty_ordered": 2, "price": 239.64}]}}
-INFO:     127.0.0.1:58115 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:58115 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:58115 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:58115 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:58115 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:58117 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:58134 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 402
-INFO:     127.0.0.1:58134 - "GET /admin/edit_order/402 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58134 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58134 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58134 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58137 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:58139 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 402 updated by admin steven
-INFO:     127.0.0.1:58151 - "PUT /admin/edit_order/402 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 402 updated successfully via admin edit. | {"orderId": "402", "payload": {"supplier_id": 584, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "SUBM047", "item_description": "SUBMERSIBLE PUMP KBZ31.5 380 V", "project": "AD00C", "qty_ordered": 1, "price": 11016}]}}
-INFO:     127.0.0.1:58151 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:58151 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:58151 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:58151 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:58151 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:58193 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:58195 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 398
-INFO:     127.0.0.1:58195 - "GET /admin/edit_order/398 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58195 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58195 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58195 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58199 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:58201 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58226 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58227 - "GET /lookups/projects HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 398 updated by admin steven
-INFO:     127.0.0.1:58231 - "PUT /admin/edit_order/398 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 398 updated successfully via admin edit. | {"orderId": "398", "payload": {"supplier_id": 560, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BLAD037", "item_description": "BLADE UNIVERSAL GRANULATOR NO.3 BED SHARPENED", "project": "AD00C", "qty_ordered": 2, "price": 416}, {"item_code": "BLAD096", "item_description": "BLADE SHARPENED  BED  RASPER 9", "project": "AD00C", "qty_ordered": 15, "price": 106}]}}
-INFO:     127.0.0.1:58231 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:58231 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:58231 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:58231 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:58231 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:58233 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:58233 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 398
-INFO:     127.0.0.1:58233 - "GET /admin/edit_order/398 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58233 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58233 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58233 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58244 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:58247 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58244 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58249 - "GET /lookups/items HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 398 updated by admin steven
-INFO:     127.0.0.1:58278 - "PUT /admin/edit_order/398 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 398 updated successfully via admin edit. | {"orderId": "398", "payload": {"supplier_id": 560, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BLAD037", "item_description": "BLADE UNIVERSAL GRANULATOR NO.3 BED SHARPENED", "project": "AD00C", "qty_ordered": 2, "price": 146}, {"item_code": "BLAD096", "item_description": "BLADE SHARPENED  BED  RASPER 9", "project": "AD00C", "qty_ordered": 15, "price": 106}]}}
-INFO:     127.0.0.1:58278 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:58278 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:58278 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:58278 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:58278 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:58299 - "GET /admin/edit_order_search HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:     127.0.0.1:58301 - "POST /admin/edit_order_search HTTP/1.1" 303 See Other
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:Rendering edit_order page for Order ID: 396
-INFO:     127.0.0.1:58301 - "GET /admin/edit_order/396 HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58301 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58301 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58301 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58304 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58304 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58307 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58304 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58301 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58307 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58304 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58307 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:58301 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58309 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:58341 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58342 - "GET /lookups/projects HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'edit_order_admin' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'edit_order_admin'.
-INFO:root:✅ [ORDER] Success edited: Order 396 updated by admin steven
-INFO:     127.0.0.1:58378 - "PUT /admin/edit_order/396 HTTP/1.1" 200 OK
-INFO:client:INFO | Order 396 updated successfully via admin edit. | {"orderId": "396", "payload": {"supplier_id": 685, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "HYDH049", "item_description": "HYDRAULIC HOSE 1SN-04", "project": "AD00C", "qty_ordered": 1, "price": 239.9}, {"item_code": "HYDH051", "item_description": "HYDRAULIC HOSE 2SN-06", "project": "AD00C", "qty_ordered": 2, "price": 294.03}, {"item_code": "HYDH172", "item_description": "HYDRAULIC HOSE 1SN-06", "project": "AD00C", "qty_ordered": 1, "price": 304.71}, {"item_code": "HYDH174", "item_description": "HYDRAULIC HOSE 2SN-08", "project": "AD00C", "qty_ordered": 1, "price": 360.29}, {"item_code": "HYDH327", "item_description": "HYDRAULIC HOSE 1SN-08", "project": "AD00C", "qty_ordered": 1, "price": 657.37}, {"item_code": "HYDF185", "item_description": "NYLON TUBE INSERT 63-03", "project": "AD00C", "qty_ordered": 1, "price": 219.92}]}}
-INFO:     127.0.0.1:58378 - "POST /log HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
-DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
-DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
-INFO:     127.0.0.1:58378 - "GET /orders/audit_trail HTTP/1.1" 200 OK
-INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:58378 - "GET /lookups/requesters HTTP/1.1" 200 OK
-INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:58378 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 198 total orders for audit trail
-INFO:     127.0.0.1:58378 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51651 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51651 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51739 - "GET /orders/api/pending_orders?requester=Eddy HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51739 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51739 - "GET /orders/api/pending_orders?status=Pending HTTP/1.1" 200 OK
