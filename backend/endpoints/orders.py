@@ -1,7 +1,7 @@
 # File: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py
 
 import logging
-from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi import APIRouter, HTTPException, Depends, Request, Query
 from pydantic import BaseModel
 from typing import List, Optional
 import sqlite3
@@ -11,6 +11,7 @@ from backend.utils.db_utils import handle_db_errors, log_success, log_warning, l
 from backend.utils.order_utils import calculate_order_total
 from backend.database import create_order, get_db_connection 
 from backend.utils.permissions_utils import require_login 
+from .order_queries import validate_date
 
 router = APIRouter(tags=["orders"])
 
@@ -368,7 +369,6 @@ async def get_items_for_order(order_id: int):
                 price AS unit_price
         FROM order_items
         WHERE order_id = ?
-
     """, (order_id,))
     rows = cursor.fetchall()
     conn.close()
@@ -387,7 +387,7 @@ async def mark_items_as_received(order_id: int, payload: ReceivePayload):
             UPDATE order_items
             SET qty_received = ?, received_date = ?
             WHERE id = ? AND order_id = ?
-        """, (item.qty_received, datetime.now().strftime("%Y-%m-%d"), item.item_id, order_id))
+        """, (item.received_qty, datetime.now().strftime("%Y-%m-%d"), item.item_id, order_id))
 
     cursor.execute("""
         UPDATE orders
@@ -402,11 +402,53 @@ async def mark_items_as_received(order_id: int, payload: ReceivePayload):
 
 @router.get("/api/audit_trail_orders")
 @handle_db_errors(entity="orders", action="fetching all")
-async def get_audit_trail_orders():
+async def get_audit_trail_orders(
+    status: Optional[str] = Query(None),
+    requester: Optional[str] = Query(None),
+    supplier: Optional[str] = Query(None),
+    start_date: Optional[str] = Query(None),
+    end_date: Optional[str] = Query(None),
+    order_number: Optional[str] = Query(None),
+):
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row # Ensure row_factory is set for this connection
     cursor = conn.cursor()
-    cursor.execute("""
+    filters = []
+    params = []
+
+    if status and status.lower() != "all":
+        filters.append("UPPER(o.status) = UPPER(?)")
+        params.append(status)
+
+    if requester and requester.lower() != "all":
+        filters.append("UPPER(r.name) LIKE UPPER(?)")
+        params.append(f"%{requester}%")
+
+    if supplier and supplier.lower() != "all":
+        filters.append("UPPER(s.name) LIKE UPPER(?)")
+        params.append(f"%{supplier}%")
+
+    if start_date:
+        valid_start_date = validate_date(start_date)
+        if valid_start_date:
+            filters.append("DATE(o.created_date) >= DATE(?)")
+            params.append(valid_start_date)
+
+    if end_date:
+        valid_end_date = validate_date(end_date)
+        if valid_end_date:
+            filters.append("DATE(o.created_date) <= DATE(?)")
+            params.append(valid_end_date)
+
+    if order_number:
+        filters.append("o.order_number LIKE ?")
+        params.append(f"%{order_number}%")
+
+    filters.append("UPPER(o.status) != 'DELETED'")
+
+    where_clause = " AND ".join(filters) if filters else "1=1"
+
+    cursor.execute(f"""
         SELECT
             o.id, o.order_number, o.status, o.created_date, o.received_date, o.total,
             o.order_note, o.note_to_supplier, o.supplier_id, o.requester_id,
@@ -428,8 +470,9 @@ async def get_audit_trail_orders():
         ) latest_audit_record ON latest_audit_record.order_id = o.id
         LEFT JOIN users latest_audit_user ON latest_audit_record.user_id = latest_audit_user.id
         -- FIX END
+        WHERE {where_clause}
         ORDER BY o.order_number DESC
-    """)
+    """, params)
     rows = cursor.fetchall()
     conn.close()
     result = [dict(row) for row in rows]

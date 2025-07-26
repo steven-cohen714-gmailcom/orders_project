@@ -7,7 +7,7 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="/static/css/style.css" />
   <script type="module" src="/static/js/audit_trail.js"></script>
-  </head>
+</head>
 <body>
 
   {% include "_tab_nav.html" %}
@@ -39,8 +39,8 @@
       <option value="Partially Received">Partially Received</option>
       <option value="Draft">Draft</option>
     </select>
-    <button id="run-filter-btn-test">Run</button>
-    <button id="clear-filter-btn-test">Clear</button>
+    <label for="order-number-filter-test">Order Number:</label> <input type="text" id="order-number-filter-test" placeholder="Enter order number"> <button id="run-filter-btn-test" type="button">Run</button>
+    <button id="clear-filter-btn-test" type="button">Clear</button>
   </div>
 
   <div class="audit-table-container"> 

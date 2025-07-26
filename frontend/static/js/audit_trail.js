@@ -1,7 +1,5 @@
-// Updated frontend/static/js/audit_trail.js
 // File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/audit_trail.js
 
-// CHANGED: Import expandAuditTrailDetails from the new dedicated file
 import { expandAuditTrailDetails } from "./audit_trail_expand.js"; 
 import {
   showUploadAttachmentsModal,
@@ -41,6 +39,8 @@ async function loadAuditOrders() {
   const supplierFilter = document.getElementById("supplier-filter-test").value;
   const startDateFilter = document.getElementById("start-date-filter-test").value;
   const endDateFilter = document.getElementById("end-date-filter-test").value;
+  // ADD THIS LINE for order_number filter:
+  const orderNumberFilter = document.getElementById("order-number-filter-test").value; 
 
   if (statusFilter && statusFilter.toLowerCase() !== "all") {
     params.append("status", statusFilter);
@@ -56,6 +56,10 @@ async function loadAuditOrders() {
   }
   if (endDateFilter) {
     params.append("end_date", endDateFilter);
+  }
+  // ADD THIS BLOCK for order_number filter:
+  if (orderNumberFilter) {
+    params.append("order_number", orderNumberFilter);
   }
 
   try {
@@ -184,6 +188,8 @@ window.addEventListener("DOMContentLoaded", async () => {
   const runButton = document.getElementById("run-filter-btn-test");
   if (runButton) {
     runButton.addEventListener("click", loadAuditOrders); 
+  } else { // Added this else block for debugging purposes
+    console.error('Run button with ID "run-filter-btn-test" not found!');
   }
 
   const clearButton = document.getElementById("clear-filter-btn-test");
@@ -195,8 +201,12 @@ window.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("supplier-filter-test").value = "All";
       document.getElementById("start-date-filter-test").value = "";
       document.getElementById("end-date-filter-test").value = "";
+      // ADD THIS LINE for order_number filter:
+      document.getElementById("order-number-filter-test").value = ""; 
       loadAuditOrders(); // Reload orders with cleared filters
     });
+  } else { // Added this else block for debugging purposes
+    console.error('Clear button with ID "clear-filter-btn-test" not found!');
   }
 });
 

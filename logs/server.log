@@ -1,115 +1,242 @@
 INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
 INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [19234] using StatReload
+INFO:     Started reloader process [36741] using StatReload
 INFO:root:Database initialized successfully.
 INFO:root:✅ Database initialized successfully.
-INFO:     Started server process [19285]
+INFO:     Started server process [36781]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
+DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
+DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
 DEBUG: Current working directory is: /Users/stevencohen/Projects/universal_recycling/orders_project
-INFO:     127.0.0.1:51178 - "GET / HTTP/1.1" 302 Found
-INFO:     127.0.0.1:51178 - "GET /login HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51178 - "GET /static/js/login.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:51178 - "GET /favicon.ico HTTP/1.1" 200 OK
-INFO:backend.endpoints.auth:User steven logged in successfully. Permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-INFO:     127.0.0.1:51180 - "POST /login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63647 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63647 - "GET /static/css/style.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63647 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63649 - "GET /static/js/audit_trail.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63649 - "GET /static/js/audit_trail_expand.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63647 - "GET /static/js/components/attachment_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63655 - "GET /static/js/components/shared_filters.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63653 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63652 - "GET /static/js/components/order_note_modal.js HTTP/1.1" 200 OK
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:63653 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:63653 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 199 total orders for audit trail
+INFO:     127.0.0.1:63653 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 41 total orders for audit trail
+INFO:     127.0.0.1:63686 - "GET /orders/api/audit_trail_orders?status=Pending HTTP/1.1" 200 OK
+INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 199 total orders for audit trail
+INFO:     127.0.0.1:63737 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 1 total orders for audit trail
+INFO:     127.0.0.1:63775 - "GET /orders/api/audit_trail_orders?order_number=2300 HTTP/1.1" 200 OK
+INFO:root:✅ [ORDER_ITEMS] Success fetched: 1 items for order 402
+INFO:     127.0.0.1:64921 - "GET /orders/api/order_items/402 HTTP/1.1" 200 OK
+INFO:root:✅ [RECEIPT_LOGS] Success fetched: 0 logs for order 402
+INFO:     127.0.0.1:64923 - "GET /orders/api/receipt_logs/402 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64924 - "GET /orders/api/order_details_for_audit/402 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64925 - "GET /orders/api/order_audit_history/402 HTTP/1.1" 200 OK
 DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'new_order' initiated.
 DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
 DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
 DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'new_order'.
 INFO:root:Starting to render new order page
-INFO:     127.0.0.1:51180 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51180 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:51193 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:51180 - "GET /static/js/new_order_screen/submit_draft_order_utils.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:51195 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:64951 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64951 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
 INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:51195 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64951 - "GET /lookups/requesters HTTP/1.1" 200 OK
 INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:51195 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64951 - "GET /lookups/suppliers HTTP/1.1" 200 OK
 INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:51195 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64951 - "GET /lookups/items HTTP/1.1" 200 OK
 INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:51195 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51195 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51195 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51195 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64951 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64951 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64951 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64951 - "GET /lookups/settings HTTP/1.1" 200 OK
 INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:51195 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51180 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51201 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64951 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64953 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:client:INFO | submitOrder started (finalizing order) | {"orderNumber": "2305", "draftId": ""}
+INFO:     127.0.0.1:65027 - "POST /log HTTP/1.1" 200 OK
+INFO:root:🔍 Incoming order: order_number='2305' status='Awaiting Authorisation' order_note='' note_to_supplier='' supplier_id=14 requester_id=11 payment_terms='COD' created_date='2025-07-26' auth_band_required=5 items=[OrderItemCreate(item_code='ABRA002', item_description='CUTTING DISC STONE 115 MM', project='AD01R', qty_ordered=1.0, price=25000.0)] draft_id=None
+INFO:root:Email sent to steven.cohen714@gmail.com with subject 'New Order 2305 Awaiting Your Authorization (R25000.00)'
+INFO:root:Authorization email sent to steven.cohen714@gmail.com for order 408.
+INFO:root:✅ [ORDER] Success created: Order 2305 with status Awaiting Authorisation and total R25000.0
+INFO:     127.0.0.1:65027 - "POST /orders HTTP/1.1" 200 OK
+INFO:client:INFO | Order submitted successfully | {"orderNumber": "2305", "orderId": 408, "status": "Awaiting Authorisation"}
+INFO:     127.0.0.1:65027 - "POST /log HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65027 - "PUT /lookups/order_number HTTP/1.1" 200 OK
+INFO:client:INFO | Order number incremented in backend settings | {"oldNum": "2305", "newNum": "2306"}
+INFO:     127.0.0.1:65027 - "POST /log HTTP/1.1" 200 OK
+INFO:root:Items fetched: 10056 items
+INFO:     127.0.0.1:65027 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65050 - "GET /lookups/projects HTTP/1.1" 200 OK
 DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'pending_orders' initiated.
 DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
 DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
 DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'pending_orders'.
-INFO:     127.0.0.1:51231 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51231 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
-INFO:     127.0.0.1:51233 - "GET /static/js/pending_orders.js HTTP/1.1" 304 Not Modified
-INFO:     127.0.0.1:51233 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:65050 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65050 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
 INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:51233 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65050 - "GET /lookups/requesters HTTP/1.1" 200 OK
 INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:51231 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51231 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:root:Generating PDF for order_id=406, order_number=2303
-INFO:     127.0.0.1:51231 - "GET /orders/api/generate_pdf_for_order/406 HTTP/1.1" 200 OK
-INFO:root:📩 Attempting to send PDF for order 2303 to steven.cohen714@gmail.com
-INFO:root:Email Reply-To set to: aaron@urc.co.za
-INFO:root:Email sent to steven.cohen714@gmail.com with subject 'Purchase Order 2303 from Universal Recycling'
-INFO:root:✅ Email sent for order 2303 to steven.cohen714@gmail.com and logged to audit trail.
-INFO:     127.0.0.1:51283 - "POST /email/send_pdf HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51331 - "GET /orders/attachments/406 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51331 - "GET /orders/attachments/406 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51369 - "POST /orders/upload_attachment HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51369 - "GET /orders/attachments/406 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51369 - "GET /orders/attachments/406 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51369 - "GET /orders/attachments/406 HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51369 - "GET /data/uploads/406_7_Stretches.pdf HTTP/1.1" 200 OK
-DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'new_order' initiated.
+INFO:     127.0.0.1:65027 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65027 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'cod_orders' initiated.
 DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
 DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
-DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'new_order'.
-INFO:root:Starting to render new order page
-INFO:     127.0.0.1:51581 - "GET /orders/new HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51581 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'cod_orders'.
+INFO:     127.0.0.1:65027 - "GET /orders/cod_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65027 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65050 - "GET /static/js/cod_orders.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:65050 - "GET /static/js/components/payments_modal.js HTTP/1.1" 304 Not Modified
 INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:51581 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65050 - "GET /lookups/requesters HTTP/1.1" 200 OK
 INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:51581 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:51581 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:51581 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51581 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51581 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51581 - "GET /lookups/settings HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:51581 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51583 - "GET /lookups/projects HTTP/1.1" 200 OK
-INFO:client:INFO | submitOrder started (finalizing order) | {"orderNumber": "2304", "draftId": ""}
-INFO:     127.0.0.1:51651 - "POST /log HTTP/1.1" 200 OK
-INFO:root:🔍 Incoming order: order_number='2304' status='Pending' order_note='' note_to_supplier='' supplier_id=584 requester_id=12 payment_terms='On account' created_date='2025-07-25' auth_band_required=None items=[OrderItemCreate(item_code='ABRA002', item_description='CUTTING DISC STONE 115 MM', project='AD01M', qty_ordered=1.0, price=532.0)] draft_id=None
-INFO:root:✅ [ORDER] Success created: Order 2304 with status Pending and total R532.0
-INFO:     127.0.0.1:51651 - "POST /orders HTTP/1.1" 200 OK
-INFO:client:INFO | Order submitted successfully | {"orderNumber": "2304", "orderId": 407, "status": "Pending"}
-INFO:     127.0.0.1:51651 - "POST /log HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51651 - "PUT /lookups/order_number HTTP/1.1" 200 OK
-INFO:client:INFO | Order number incremented in backend settings | {"oldNum": "2304", "newNum": "2305"}
-INFO:     127.0.0.1:51651 - "POST /log HTTP/1.1" 200 OK
-INFO:root:Items fetched: 10056 items
-INFO:     127.0.0.1:51651 - "GET /lookups/items HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51661 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65027 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65027 - "GET /orders/api/cod_orders HTTP/1.1" 200 OK
+DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'my_authorisations' initiated.
+DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
+DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'my_authorisations'.
+INFO:     127.0.0.1:65131 - "GET /orders/authorisations_per_user HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65131 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65133 - "GET /static/js/authorisations_per_user.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:65133 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65133 - "GET /mobile/get_user_info HTTP/1.1" 200 OK
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:65133 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:65133 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:65131 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:65133 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     Executing Awaiting Authorisation Query: 
+            SELECT
+                o.id,
+                o.order_number,
+                o.total,
+                o.created_date,
+                o.status,
+                o.required_auth_band,
+                o.order_note,
+                r.name AS requester_name,
+                s.name AS supplier_name
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE o.status = 'Awaiting Authorisation' AND o.required_auth_band = ?
+            ORDER BY o.created_date DESC
+         with params: [5]
+INFO:     127.0.0.1:65131 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:     Executing Awaiting Authorisation Query: 
+            SELECT
+                o.id,
+                o.order_number,
+                o.total,
+                o.created_date,
+                o.status,
+                o.required_auth_band,
+                o.order_note,
+                r.name AS requester_name,
+                s.name AS supplier_name
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE o.status = 'Awaiting Authorisation' AND o.required_auth_band = ?
+            ORDER BY o.created_date DESC
+         with params: [5]
+INFO:     127.0.0.1:65131 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+INFO:root:✅ [ORDER_ITEMS] Success fetched: 1 items for order 408
+INFO:     127.0.0.1:65131 - "GET /orders/api/order_items/408 HTTP/1.1" 200 OK
+INFO:root:Generating PDF for order_id=408, order_number=2305
+INFO:     127.0.0.1:65131 - "GET /orders/api/generate_pdf_for_order/408 HTTP/1.1" 200 OK
+WARNING:root:No payment personnel found with email for COD order 408 (post-auth).
+INFO:     127.0.0.1:65131 - "POST /orders/api/authorise_order/408 HTTP/1.1" 200 OK
+INFO:     Executing Awaiting Authorisation Query: 
+            SELECT
+                o.id,
+                o.order_number,
+                o.total,
+                o.created_date,
+                o.status,
+                o.required_auth_band,
+                o.order_note,
+                r.name AS requester_name,
+                s.name AS supplier_name
+            FROM orders o
+            LEFT JOIN requesters r ON o.requester_id = r.id
+            LEFT JOIN suppliers s ON o.supplier_id = s.id
+            WHERE o.status = 'Awaiting Authorisation' AND o.required_auth_band = ?
+            ORDER BY o.created_date DESC
+         with params: [5]
+INFO:     127.0.0.1:65176 - "GET /orders/api/awaiting_authorisation HTTP/1.1" 200 OK
+DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'cod_orders' initiated.
+DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
+DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'cod_orders'.
+INFO:     127.0.0.1:65176 - "GET /orders/cod_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65176 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:65176 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:65190 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65190 - "GET /orders/api/cod_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65190 - "PUT /orders/mark_cod_paid/408 HTTP/1.1" 200 OK
+DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'cod_orders' initiated.
+DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
+DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'cod_orders'.
+INFO:     127.0.0.1:65190 - "GET /orders/cod_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65190 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:65216 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:65190 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65190 - "GET /orders/api/cod_orders HTTP/1.1" 200 OK
 DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'pending_orders' initiated.
 DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
 DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
 DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'pending_orders'.
-INFO:     127.0.0.1:51651 - "GET /orders/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51651 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65190 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65190 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
 INFO:root:Requesters fetched: 15 items
-INFO:     127.0.0.1:51661 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65216 - "GET /lookups/requesters HTTP/1.1" 200 OK
 INFO:root:Suppliers fetched: 803 items
-INFO:     127.0.0.1:51651 - "GET /lookups/suppliers HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51651 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51739 - "GET /orders/api/pending_orders?requester=Eddy HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51739 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
-INFO:     127.0.0.1:51739 - "GET /orders/api/pending_orders?status=Pending HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65218 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65218 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65218 - "GET /orders/api/items_for_order/408 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65218 - "POST /orders/receive/408 HTTP/1.1" 200 OK
+DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'pending_orders' initiated.
+DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
+DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'pending_orders'.
+INFO:     127.0.0.1:65218 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65218 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:65260 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:65262 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65262 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
+DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'audit_trail' initiated.
+DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
+DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'audit_trail'.
+INFO:     127.0.0.1:65262 - "GET /orders/audit_trail HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65262 - "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 Not Found
+INFO:root:Requesters fetched: 15 items
+INFO:     127.0.0.1:65262 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:65262 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 200 total orders for audit trail
+INFO:     127.0.0.1:65262 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:root:✅ [ORDER_ITEMS] Success fetched: 1 items for order 408
+INFO:     127.0.0.1:65262 - "GET /orders/api/order_items/408 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65260 - "GET /orders/api/order_audit_history/408 HTTP/1.1" 200 OK
+INFO:root:✅ [RECEIPT_LOGS] Success fetched: 1 logs for order 408
+INFO:     127.0.0.1:65218 - "GET /orders/api/receipt_logs/408 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65281 - "GET /orders/api/order_details_for_audit/408 HTTP/1.1" 200 OK

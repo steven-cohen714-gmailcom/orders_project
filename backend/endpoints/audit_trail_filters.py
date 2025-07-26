@@ -9,6 +9,8 @@ import json
 
 from backend.database import get_db_connection
 from backend.utils.permissions_utils import require_login
+# Import validate_date from order_queries to reuse its logic
+from backend.endpoints.order_queries import validate_date 
 
 router = APIRouter()
 
@@ -20,15 +22,17 @@ def log_event(filename: str, data: dict):
         timestamp = datetime.now().isoformat()
         f.write(f"[{timestamp}] {json.dumps(data, ensure_ascii=False)}\n")
 
-def validate_date(date_str: Optional[str]) -> Optional[str]:
-    """Helper function to validate date strings."""
-    if not date_str:
-        return None
-    try:
-        dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
-        return dt_obj.strftime("%Y-%m-%d")
-    except ValueError:
-        raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use YYYY-MM-DD.")
+# NOTE: validate_date is now imported from order_queries,
+# so this local definition is removed to avoid duplication.
+# def validate_date(date_str: Optional[str]) -> Optional[str]:
+#     """Helper function to validate date strings."""
+#     if not date_str:
+#         return None
+#     try:
+#         dt_obj = datetime.strptime(date_str, "%Y-%m-%d")
+#         return dt_obj.strftime("%Y-%m-%d")
+#     except ValueError:
+#         raise HTTPException(status_code=400, detail=f"Invalid date format: {date_str}. Use YYYY-MM-DD.")
 
 
 @router.get("/orders/api/audit_trail_orders") 
@@ -38,7 +42,8 @@ async def get_audit_trail_filtered_data(
     end_date: Optional[str] = Query(None),
     requester: Optional[str] = Query(None),
     supplier: Optional[str] = Query(None),
-    user: Dict = Depends(require_login)
+    order_number: Optional[str] = Query(None, description="Filter by a specific order number"),
+    user: Dict = Depends(require_login) # Assuming require_login is still desired here
 ):
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
@@ -46,27 +51,42 @@ async def get_audit_trail_filtered_data(
         filters = []
         params = []
 
+        # Apply filters only if not "All" or empty
         if status and status.lower() != "all":
             filters.append("UPPER(o.status) = UPPER(?)")
             params.append(status)
 
+        # Date filters
         if start_date:
             valid_start_date = validate_date(start_date)
-            filters.append("DATE(o.created_date) >= DATE(?)")
-            params.append(valid_start_date)
+            if valid_start_date: # Ensure validation didn't return None
+                filters.append("DATE(o.created_date) >= DATE(?)")
+                params.append(valid_start_date)
 
         if end_date:
             valid_end_date = validate_date(end_date)
-            filters.append("DATE(o.created_date) <= DATE(?)")
-            params.append(valid_end_date)
+            if valid_end_date: # Ensure validation didn't return None
+                filters.append("DATE(o.created_date) <= DATE(?)")
+                params.append(valid_end_date)
 
+        # Requester filter (using LIKE for partial match as per your analysis)
         if requester and requester.lower() != "all":
             filters.append("UPPER(r.name) LIKE UPPER(?)")
             params.append(f"%{requester}%")
 
+        # Supplier filter (using LIKE for partial match as per your analysis)
         if supplier and supplier.lower() != "all":
             filters.append("UPPER(s.name) LIKE UPPER(?)")
             params.append(f"%{supplier}%")
+
+        # Order Number filter (using LIKE for partial match as per your analysis)
+        if order_number:
+            filters.append("o.order_number LIKE ?")
+            params.append(f"%{order_number}%")
+            
+        # You might want to explicitly exclude 'Deleted' orders from the main view
+        # if that's desired for the default audit trail view, similar to other screens.
+        # Example: filters.append("UPPER(o.status) != 'DELETED'")
 
         where_clause = " AND ".join(filters) if filters else "1=1"
 
@@ -136,6 +156,7 @@ async def get_audit_trail_filtered_data(
         orders = [dict(row) for row in cursor.fetchall()]
 
         for order in orders:
+            # Reformat created_date
             if order["created_date"]:
                 try:
                     order["created_date"] = datetime.strptime(order["created_date"], "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
@@ -144,6 +165,7 @@ async def get_audit_trail_filtered_data(
             else:
                 order["created_date"] = "N/A"
 
+            # Reformat received_date
             if order["received_date"]:
                 try:
                     order["received_date"] = datetime.strptime(order["received_date"], "%Y-%m-%d %H:%M:%S").strftime("%Y-%m-%d")
@@ -155,7 +177,7 @@ async def get_audit_trail_filtered_data(
         log_event("audit_trail_log.txt", {
             "action": "fetch_audit_trail_orders_filtered",
             "count": len(orders),
-            "filters": {"status": status, "start_date": start_date, "end_date": end_date, "requester": requester, "supplier": supplier}
+            "filters": {"status": status, "start_date": start_date, "end_date": end_date, "requester": requester, "supplier": supplier, "order_number": order_number}
         })
         return {"orders": orders}
 
