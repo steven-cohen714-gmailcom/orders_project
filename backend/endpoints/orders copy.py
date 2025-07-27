@@ -1,3 +1,5 @@
+# File: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/endpoints/orders.py
+
 import logging
 from fastapi import APIRouter, HTTPException, Depends, Request, Query
 from pydantic import BaseModel
@@ -10,7 +12,6 @@ from backend.utils.order_utils import calculate_order_total
 from backend.database import create_order, get_db_connection 
 from backend.utils.permissions_utils import require_login 
 from .order_queries import validate_date
-from backend.utils.send_email import send_email  # Import for COD email
 
 router = APIRouter(tags=["orders"])
 
@@ -91,66 +92,6 @@ async def create_new_order(order: OrderCreate, request: Request):
         result = await create_order(order_data, items, current_user_id, created_date=order.created_date, draft_id=order.draft_id)
         
         log_success("order", "created", f"Order {order.order_number} with status {order.status} and total R{total}")
-
-        # --- NEW: COD Payment Notification Email Logic for Non-Draft Creation ---
-        if order_data["status"] == 'Pending' and order_data["payment_terms"] == 'COD':
-            conn = get_db_connection()  # Re-open conn if needed, but ideally reuse
-            cursor = conn.cursor()
-            try:
-                cursor.execute("""
-                    SELECT order_number, total FROM orders WHERE id = ?
-                """, (result["id"],))
-                cod_order = cursor.fetchone()
-
-                if cod_order:
-                    cursor.execute("""
-                        SELECT order_number, total FROM orders 
-                        WHERE payment_terms = 'COD' AND status IN ('Pending', 'Authorised')
-                    """)
-                    pending_cod_orders = cursor.fetchall()
-
-                    cursor.execute("""
-                        SELECT username, email FROM users 
-                        WHERE can_receive_payment_notifications = 1 AND email IS NOT NULL AND email != ''
-                    """)
-                    payment_personnel = cursor.fetchall()
-
-                    if payment_personnel:
-                        for person in payment_personnel:
-                            recipient_email = person['email']
-                            subject = f"COD Order {cod_order['order_number']} Now Ready for Payment (R{cod_order['total']:.2f})"
-                            
-                            body_lines = [
-                                f"Dear {person['username']},",
-                                "",
-                                f"COD Order (Order Number: {cod_order['order_number']}, Total: R{cod_order['total']:.2f}) has been created and is now ready for payment.",
-                                "",
-                                "Please log in to the system to mark it as paid."
-                            ]
-
-                            if pending_cod_orders:
-                                body_lines.append("\nHere are other COD orders currently ready for payment:")
-                                for p_order in pending_cod_orders:
-                                    body_lines.append(f"- Order {p_order['order_number']} (R{p_order['total']:.2f})")
-                            else:
-                                body_lines.append("\nThere are no other COD orders currently pending payment.")
-
-                            body_lines.append("\nKind regards,\nUniversal Recycling System")
-                            email_body = "\n".join(body_lines)
-
-                            try:
-                                await send_email(recipient_email, subject, email_body)
-                                logging.info(f"COD payment notification email sent to {recipient_email} for new order {result['id']}.")
-                            except Exception as email_e:
-                                logging.error(f"Failed to send COD payment notification email to {recipient_email} for new order {result['id']}: {email_e}")
-                    else:
-                        logging.warning(f"No payment personnel found with email for new COD order {result['id']}.")
-            except Exception as e:
-                logging.error(f"Error in COD email logic for new order {result['id']}: {e}")
-            finally:
-                conn.close()
-        # --- END NEW: COD Payment Notification Email Logic ---
-
         return {"message": "Order created successfully", "order_id": result["id"]}
 
     except Exception as e:
@@ -324,11 +265,6 @@ async def update_draft_order(order_id: int, payload: dict):
     cursor = conn.cursor()
 
     try:
-        # Fetch payment_terms before update (for COD check later)
-        cursor.execute("SELECT payment_terms FROM orders WHERE id = ?", (order_id,))
-        row = cursor.fetchone()
-        payment_terms = row["payment_terms"] if row else None
-
         # 1. Update order_items with new quantities and prices
         for item in items:
             item_id = item.get("item_id")
@@ -413,62 +349,6 @@ async def update_draft_order(order_id: int, payload: dict):
 
         conn.commit()
         log_success("draft_order", "updated", f"Draft order {order_id} submitted as {new_status}", {"user_id": current_user_id}) # Added user_id to log
-
-        # --- NEW: COD Payment Notification Email Logic ---
-        if new_status == 'Pending' and payment_terms == 'COD':
-            # Fetch order details for the newly submitted COD order
-            cursor.execute("""
-                SELECT order_number, total FROM orders WHERE id = ?
-            """, (order_id,))
-            cod_order = cursor.fetchone()
-
-            if cod_order:
-                # Fetch other pending COD orders (Pending or Authorised)
-                cursor.execute("""
-                    SELECT order_number, total FROM orders 
-                   WHERE payment_terms = 'COD' AND status IN ('Pending', 'Authorised')
-                """)
-                pending_cod_orders = cursor.fetchall()
-
-                # Fetch users who should receive notifications
-                cursor.execute("""
-                    SELECT username, email FROM users 
-                    WHERE can_receive_payment_notifications = 1 AND email IS NOT NULL AND email != ''
-                """)
-                payment_personnel = cursor.fetchall()
-
-                if payment_personnel:
-                    for person in payment_personnel:
-                        recipient_email = person['email']
-                        subject = f"COD Order {cod_order['order_number']} Now Ready for Payment (R{cod_order['total']:.2f})"
-                        
-                        body_lines = [
-                            f"Dear {person['username']},",
-                            "",
-                            f"COD Order (Order Number: {cod_order['order_number']}, Total: R{cod_order['total']:.2f}) has been submitted and is now ready for payment.",
-                            "",
-                            "Please log in to the system to mark it as paid."
-                        ]
-
-                        if pending_cod_orders:
-                            body_lines.append("\nHere are other COD orders currently ready for payment:")
-                            for order in pending_cod_orders:
-                                body_lines.append(f"- Order {order['order_number']} (R{order['total']:.2f})")
-                        else:
-                            body_lines.append("\nThere are no other COD orders currently pending payment.")
-
-                        body_lines.append("\nKind regards,\nUniversal Recycling System")
-                        email_body = "\n".join(body_lines)
-
-                        try:
-                            await send_email(recipient_email, subject, email_body)
-                            logging.info(f"COD payment notification email sent to {recipient_email} for order {order_id}.")
-                        except Exception as email_e:
-                            logging.error(f"Failed to send COD payment notification email to {recipient_email} for order {order_id}: {email_e}")
-                else:
-                    logging.warning(f"No payment personnel found with email for COD order {order_id}.")
-        # --- END NEW: COD Payment Notification Email Logic ---
-
         return {"message": f"Draft order updated and submitted as {new_status}", "new_total": new_order_total}
 
     except Exception as e:

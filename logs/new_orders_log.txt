@@ -16,3 +16,6 @@
 [2025-07-26T13:35:49.581547] {"action": "fetch_pending_orders", "count": 87}
 [2025-07-26T13:35:52.113013] {"action": "fetch_items_for_order", "order_id": 408, "count": 1}
 [2025-07-26T13:35:56.420395] {"action": "fetch_pending_orders", "count": 86}
+[2025-07-27T07:27:24.997382] {"action": "fetch_cod_orders", "count": 4}
+[2025-07-27T09:27:13.364069] {"action": "fetch_cod_orders", "count": 6}
+[2025-07-27T09:29:32.294832] {"action": "fetch_cod_orders", "count": 7}
