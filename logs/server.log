@@ -259,3 +259,7 @@ INFO:root:Suppliers fetched: 803 items
 INFO:     127.0.0.1:63006 - "GET /lookups/suppliers HTTP/1.1" 200 OK
 INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 204 total orders for audit trail
 INFO:     127.0.0.1:63006 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 803 items
+INFO:     127.0.0.1:59392 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:root:✅ [AUDIT_TRAIL_ORDERS] Success fetched: 204 total orders for audit trail
+INFO:     127.0.0.1:59392 - "GET /orders/api/audit_trail_orders HTTP/1.1" 200 OK
