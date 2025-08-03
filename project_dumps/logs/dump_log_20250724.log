@@ -1,0 +1,6 @@
+2025-07-24 08:49:10,001 | INFO | 🟢 Starting entire project dump script...
+2025-07-24 08:49:10,001 | INFO | Ensured dump base directory exists: /home/steven_cohen714/orders_project/project_dumps
+2025-07-24 08:49:10,002 | INFO | Created new dump directory: /home/steven_cohen714/orders_project/project_dumps/dump_20250724_084910
+2025-07-24 08:49:10,002 | INFO | Attempting to backup database from /home/steven_cohen714/orders_project/data/app.db to /home/steven_cohen714/orders_project/project_dumps/dump_20250724_084910/app_backup.db
+2025-07-24 08:49:10,002 | ERROR | Source database not found at: /home/steven_cohen714/orders_project/data/app.db
+2025-07-24 08:49:10,002 | ERROR | Database backup failed. Aborting full dump.

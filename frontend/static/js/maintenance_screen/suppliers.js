@@ -3,53 +3,66 @@ export function initSuppliers() {
 
   fetchSuppliers();
 
-  const saveBtn   = document.getElementById("save-supplier-button");
+  const saveBtn = document.getElementById("save-supplier-button");
   const cancelBtn = document.getElementById("cancel-supplier-edit");
 
-  if (saveBtn)   saveBtn.addEventListener("click", saveSupplier);
+  if (saveBtn) saveBtn.addEventListener("click", saveSupplier);
   if (cancelBtn) cancelBtn.addEventListener("click", cancelSupplierEdit);
 
-  /* -------------------------------------------------- */
   async function fetchSuppliers() {
     try {
-      const res = await fetch("/maintenance/suppliers");
+      const res = await fetch("/admin/suppliers");
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
       const data = await res.json();
       const tbody = document.getElementById("suppliers-table");
-      if (!tbody) return;
+      if (!tbody) {
+        console.error("Suppliers table not found");
+        return;
+      }
 
       tbody.innerHTML = "";
-      data.suppliers.forEach(s => tbody.prepend(createRow(s)));
+      if (data.suppliers && Array.isArray(data.suppliers)) {
+        data.suppliers.forEach(s => tbody.prepend(createRow(s)));
+      } else {
+        console.error("Expected suppliers data to be an array, received:", data);
+        tbody.innerHTML = '<tr><td colspan="3">Invalid data format from server.</td></tr>';
+      }
     } catch (err) {
       console.error("Failed to fetch suppliers:", err);
-      alert("❌ Failed to fetch suppliers from server.");
+      const tbody = document.getElementById("suppliers-table");
+      if (tbody) {
+        tbody.innerHTML = '<tr><td colspan="3">Failed to load suppliers. Please try again.</td></tr>';
+      }
     }
   }
 
-  /* -------------------------------------------------- */
   async function saveSupplier() {
-    const idField   = document.getElementById("supplier-id");
+    const idField = document.getElementById("supplier-id");
     const nameField = document.getElementById("supplier-name");
-    const accField  = document.getElementById("supplier-account-number");
+    const accField = document.getElementById("supplier-account-number");
 
-    if (!idField || !nameField || !accField) return;
+    if (!idField || !nameField || !accField) {
+      alert("❌ Form fields missing.");
+      return;
+    }
 
-    const id      = idField.value.trim();
-    const name    = nameField.value.trim();
+    const id = idField.value.trim();
+    const name = nameField.value.trim();
     const account = accField.value.trim();
 
-    /* ---- validation ---- */
     if (!name || !account) {
       alert("❌ Supplier name and account number are required.");
       return;
     }
 
-    /* ---- duplicate check (name + account) ---- */
     const isDuplicate = Array.from(document.querySelectorAll("#suppliers-table tr")).some(tr => {
       const [n, a] = tr.querySelectorAll("td");
       return (
         n.textContent.trim().toLowerCase() === name.toLowerCase() &&
-        a.textContent.trim()               === account            &&
-        (!id || tr.dataset.id !== id)      // allow update of SAME row
+        a.textContent.trim() === account &&
+        (!id || tr.dataset.id !== id)
       );
     });
     if (isDuplicate) {
@@ -59,10 +72,7 @@ export function initSuppliers() {
 
     try {
       const method = id ? "PUT" : "POST";
-      const url    = id
-        ? `/maintenance/suppliers/${id}`
-        : "/maintenance/suppliers";
-
+      const url = id ? `/admin/suppliers/${id}` : "/admin/suppliers";
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
@@ -71,9 +81,8 @@ export function initSuppliers() {
 
       if (res.ok) {
         await fetchSuppliers();
-        cancelSupplierEdit();          // clear + reset form
-        alert(id ? "✅ Supplier updated successfully."
-                 : "✅ Supplier added successfully.");
+        cancelSupplierEdit();
+        alert(id ? "✅ Supplier updated successfully." : "✅ Supplier added successfully.");
       } else {
         const msg = await res.text();
         alert(`❌ Error: ${msg}`);
@@ -84,10 +93,9 @@ export function initSuppliers() {
     }
   }
 
-  /* -------------------------------------------------- */
   function createRow(s) {
     const tr = document.createElement("tr");
-    tr.dataset.id = s.id; // used for duplicate check on edit
+    tr.dataset.id = s.id;
 
     tr.innerHTML = `
       <td>${s.name || ""}</td>
@@ -98,39 +106,30 @@ export function initSuppliers() {
       </td>
     `;
 
-    tr.querySelector(".edit-btn").onclick   = () => editSupplier(s.id, s.name, s.account_number);
+    tr.querySelector(".edit-btn").onclick = () => editSupplier(s.id, s.name, s.account_number);
     tr.querySelector(".delete-btn").onclick = () => deleteSupplier(s.id);
     return tr;
   }
 
-  /* -------------------------------------------------- */
   function editSupplier(id, name, account) {
-    const idField   = document.getElementById("supplier-id");
+    const idField = document.getElementById("supplier-id");
     const nameField = document.getElementById("supplier-name");
-    const accField  = document.getElementById("supplier-account-number");
+    const accField = document.getElementById("supplier-account-number");
 
-    idField.value         = id;
-    nameField.value       = name;
-    accField.value        = account || "";
-    cancelBtn.style.display = "inline";
-    saveBtn.textContent     = "Update Supplier";
+    if (idField && nameField && accField) {
+      idField.value = id;
+      nameField.value = name;
+      accField.value = account || "";
+      cancelBtn.style.display = "inline";
+      saveBtn.textContent = "Update Supplier";
+    }
   }
 
-  /* -------------------------------------------------- */
-  function cancelSupplierEdit() {
-    document.getElementById("supplier-id").value              = "";
-    document.getElementById("supplier-name").value            = "";
-    document.getElementById("supplier-account-number").value  = "";
-    cancelBtn.style.display = "none";
-    saveBtn.textContent     = "Add Supplier";
-  }
-
-  /* -------------------------------------------------- */
   async function deleteSupplier(id) {
-    try {
-      if (!confirm("Are you sure you want to delete this supplier?")) return;
+    if (!confirm("Are you sure you want to delete this supplier?")) return;
 
-      const res = await fetch(`/maintenance/suppliers/${id}`, { method: "DELETE" });
+    try {
+      const res = await fetch(`/admin/suppliers/${id}`, { method: "DELETE" });
       if (res.ok) {
         await fetchSuppliers();
         alert("🗑️ Supplier deleted.");
@@ -140,6 +139,20 @@ export function initSuppliers() {
     } catch (err) {
       console.error("Delete error:", err);
       alert("❌ Network or server error while deleting supplier.");
+    }
+  }
+
+  function cancelSupplierEdit() {
+    const idField = document.getElementById("supplier-id");
+    const nameField = document.getElementById("supplier-name");
+    const accField = document.getElementById("supplier-account-number");
+
+    if (idField && nameField && accField) {
+      idField.value = "";
+      nameField.value = "";
+      accField.value = "";
+      cancelBtn.style.display = "none";
+      saveBtn.textContent = "Add Supplier";
     }
   }
 }
