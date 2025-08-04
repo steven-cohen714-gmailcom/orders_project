@@ -11,7 +11,7 @@ Brotli==1.1.0
 certifi==2024.8.30
 cffi==1.17.1
 charset-normalizer==3.4.2
-click==8.2.1
+click==8.1.8
 cssselect2==0.8.0
 dnspython==2.7.0
 email_validator==2.2.0
