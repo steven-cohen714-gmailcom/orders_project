@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login – Mobile Authorisations</title>
+  <link rel="stylesheet" href="/static/mobile/css/mobile_authorisations.css" />
+</head>
+<body>
+  <div class="mobile-container">
+    <h2>🔐 Mobile Login</h2>
+
+    {% if request.query_params.get('error') %}
+      <div class="toast toast-error">❌ Invalid username or password</div>
+    {% endif %}
+
+    <form method="POST" action="/mobile/login" class="login-form">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required autofocus />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+
+      <button type="submit">🔓 Log In</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,259 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 2rem;
+  background-color: #f4f6f8;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #1a3c5e;
+}
+
+/* ------------------ TABLE ------------------ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: visible !important;
+  position: relative;
+  z-index: 3;
+}
+
+th {
+  background-color: #e8eef4;
+  font-weight: 600;
+  color: #1a3c5e;
+  text-transform: none;
+  font-size: 0.95rem;
+  height: 48px;
+}
+
+td {
+  border: 1px solid #e0e4e8;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #333;
+  overflow: visible;
+  position: relative;
+  z-index: 3;
+}
+
+td button {
+  margin-right: 0.5rem;
+}
+
+td button:last-child {
+  margin-right: 0;
+}
+
+#users-table td,
+#requesters-table td,
+#items-table td,
+#suppliers-table td,
+#projects-table td {
+  text-align: left;
+}
+
+.filters {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.filters label {
+  font-weight: 600;
+  color: #1a3c5e;
+  margin-right: 0.5rem;
+  font-size: 0.95rem;
+}
+
+input[type="date"],
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  font-family: Arial, sans-serif;
+  border: 1px solid #c7d0d9;
+  border-radius: 6px;
+  background-color: #fff;
+  min-width: 180px;
+  max-width: 240px;
+  transition: border-color 0.2s;
+}
+
+input[type="date"]:focus,
+select:focus,
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
+button {
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  background-color: #0066cc;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0055aa;
+}
+
+.expand-icon,
+.clip-icon,
+.eye-icon,
+.note-icon,
+.supplier-note-icon,
+.receive-icon,
+.pdf-icon {
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin: 0 0.4rem;
+  display: inline-block;
+  color: #0066cc;
+  transition: color 0.2s;
+}
+
+.expand-icon:hover,
+.clip-icon:hover,
+.eye-icon:hover,
+.note-icon:hover,
+.supplier-note-icon:hover,
+.receive-icon:hover {
+  color: #003366;
+}
+
+.eye-icon.disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.login-box {
+  background: white;
+  padding: 2rem 3rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  margin: 5rem auto;
+}
+
+.login-box h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #0056b3;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-box button:hover {
+  background-color: #004a99;
+}
+
+#login-error {
+  margin-top: 0.5rem;
+  color: red;
+  font-size: 0.9rem;
+}
+
+/* Preserve your previous dropdown visibility fixes */
+.add-item-block,
+#items,
+#items-body,
+#items-table-container,
+td,
+tr,
+tbody {
+  overflow: visible !important;
+  position: relative;
+  z-index: 2;
+}
+
+.position-relative {
+  position: relative;
+}
+
+/* Field widths */
+.wide-select {
+  min-width: 280px;
+  max-width: 360px;
+}
+
+.narrow-input {
+  width: 80px;
+  max-width: 90px;
+  text-align: right;
+}
+
+.medium-input {
+  width: 100px;
+  max-width: 120px;
+  text-align: right;
+}
+
+.button-group {
+  position: relative;
+  z-index: 10;
+}
+
+.summary {
+  position: relative;
+  z-index: 10;
+}
+
+/* Scoped overflow fix for fuzzy dropdown inside new order table */
+.fuzzy-fix-scope,
+.fuzzy-fix-scope td,
+.fuzzy-fix-scope tr,
+.fuzzy-fix-scope tbody,
+.fuzzy-fix-scope #items-table,
+.fuzzy-fix-scope .add-item-block {
+  overflow: visible !important;
+  position: relative;
+  z-index: 3;
+}
+
+.tom-select.dropdown-active {
+  z-index: 9999 !important;
+}
+
+

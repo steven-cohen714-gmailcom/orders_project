@@ -1,0 +1,25 @@
+Order Number: PO_TESTA1
+Status: Awaiting Authorisation
+Created Date: 2025-04-17T15:37:12.567632
+Received Date: None
+Total: 14000.0
+Order Note: High Value Order 1
+Note to Supplier: Needs urgent approval
+Requester: Aaron
+
+Line Items:
+-----------
+Item Code: ITM003
+Description: Pump
+Project: PRO003
+Qty: 2.0
+Price: 6000.0
+Total: 12000.0
+
+Item Code: ITM001
+Description: Valve
+Project: PRO001
+Qty: 1.0
+Price: 2000.0
+Total: 2000.0
+

@@ -1,0 +1,172 @@
+2025-07-24 06:56:34,410 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA005", "item_description": "FIBER DISC 115 MMX 22  P36", "project": "AD01M", "qty_ordered": 1, "price": 5000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:05:43,098 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA003", "item_description": "GRINDING DISC STEEL 115 MM", "project": "AD02M", "qty_ordered": 1, "price": 5000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:07:18,157 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01P", "qty_ordered": 1, "price": 12000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:08:40,216 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01P", "qty_ordered": 1, "price": 12000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:11:39,762 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2303", "draftId": ""}
+2025-07-24 07:11:39,784 | INFO | INFO | Order submitted successfully | {"orderNumber": "2303", "orderId": 406, "status": "Pending"}
+2025-07-24 07:11:41,663 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2303", "newNum": "2304"}
+2025-07-24 07:13:27,079 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01P", "qty_ordered": 1, "price": 12000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:16:41,028 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01P", "qty_ordered": 1, "price": 12000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:21:19,531 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01R", "qty_ordered": 1, "price": 12000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:22:04,301 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01P", "qty_ordered": 1, "price": 12000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:23:36,888 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01P", "qty_ordered": 1, "price": 12000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:23:47,816 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01P", "qty_ordered": 1, "price": 12000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:24:03,353 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01P", "qty_ordered": 1, "price": 12000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:24:22,527 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01P", "qty_ordered": 1, "price": 12000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:24:31,947 | ERROR | ERROR | Failed to update order 392 via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01P", "qty_ordered": 1, "price": 12000}]}, "error": "Not authorized to view this page. Missing required screen permission."}
+2025-07-24 07:30:42,710 | INFO | INFO | Order 392 updated successfully via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA004", "item_description": "RUBBER BACKING PAD 115 MM", "project": "AD01P", "qty_ordered": 1, "price": 12000}]}}
+2025-07-24 07:31:10,083 | INFO | INFO | Order 392 updated successfully via admin edit. | {"orderId": "392", "payload": {"supplier_id": 14, "requester_id": 13, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "ABRA001", "item_description": "CUTTING DISC STEEL  115MM", "project": "AD02M", "qty_ordered": 1, "price": 4000}]}}
+2025-07-24 09:28:05,012 | INFO | INFO | Order 392 updated successfully via admin edit. | {"orderId": "392", "payload": {"supplier_id": 583, "requester_id": 13, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BEAR255", "item_description": "BEARING UCFL 205", "project": "AD02M", "qty_ordered": 4, "price": 89.5}]}}
+2025-07-24 17:49:21,519 | INFO | INFO | Order 392 updated successfully via admin edit. | {"orderId": "392", "payload": {"supplier_id": 583, "requester_id": 13, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BEAR255", "item_description": "BEARING UCFL 205", "project": "AD02M", "qty_ordered": 4, "price": 89.5}]}}
+2025-07-24 17:54:43,414 | INFO | INFO | Order 391 updated successfully via admin edit. | {"orderId": "391", "payload": {"supplier_id": 506, "requester_id": 11, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "CABL077", "item_description": "CABLE 6MM X 4 CORE SILICONE", "project": "AD01O", "qty_ordered": 100, "price": 82}]}}
+2025-07-24 18:03:00,194 | INFO | INFO | Order 395 updated successfully via admin edit. | {"orderId": "395", "payload": {"supplier_id": 560, "requester_id": 10, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BLAD011", "item_description": "BLADE UNIVERSAL GRANULATOR NO.3 FLY GUNIVER 361", "project": "AD00C", "qty_ordered": 6, "price": 4400}, {"item_code": "BLAD099", "item_description": "BLADE NEW HR 122 FLY GRANULATOR 8", "project": "AD00C", "qty_ordered": 3, "price": 4400}, {"item_code": "BLAD012", "item_description": "BLADE UNIVERSAL GRANULATOR NO.3  BED GUNIVER 360", "project": "AD00C", "qty_ordered": 4, "price": 6000}, {"item_code": "BLAD116", "item_description": "BLADE NEW HR 122 BED GRANULATOR 8", "project": "AD00C", "qty_ordered": 2, "price": 6000}]}}
+2025-07-24 18:12:03,292 | INFO | INFO | Order 396 updated successfully via admin edit. | {"orderId": "396", "payload": {"supplier_id": 685, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "HYDH049", "item_description": "HYDRAULIC HOSE 1SN-04", "project": "AD00C", "qty_ordered": 1, "price": 239.9}, {"item_code": "HYDH051", "item_description": "HYDRAULIC HOSE 2SN-06", "project": "AD00C", "qty_ordered": 2, "price": 294.03}, {"item_code": "HYDH172", "item_description": "HYDRAULIC HOSE 1SN-06", "project": "AD00C", "qty_ordered": 1, "price": 304.71}, {"item_code": "HYDH174", "item_description": "HYDRAULIC HOSE 2SN-08", "project": "AD00C", "qty_ordered": 1, "price": 360.29}, {"item_code": "HYDH327", "item_description": "HYDRAULIC HOSE 1SN-08", "project": "AD00C", "qty_ordered": 1, "price": 657.37}]}}
+2025-07-25 05:11:17,127 | INFO | INFO | Order 398 updated successfully via admin edit. | {"orderId": "398", "payload": {"supplier_id": 560, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BLAD037", "item_description": "BLADE UNIVERSAL GRANULATOR NO.3 BED SHARPENED", "project": "AD00C", "qty_ordered": 2, "price": 416}]}}
+2025-07-25 05:13:49,317 | INFO | INFO | Order 399 updated successfully via admin edit. | {"orderId": "399", "payload": {"supplier_id": 468, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "REPA199", "item_description": "REPAIR STARTER", "project": "AD00C", "qty_ordered": 1, "price": 2600}]}}
+2025-07-25 05:18:29,283 | INFO | INFO | Order 400 updated successfully via admin edit. | {"orderId": "400", "payload": {"supplier_id": 719, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "RECO005", "item_description": "REPAIR SEAT PKJ134 GP", "project": "AD01M", "qty_ordered": 1, "price": 1900}]}}
+2025-07-25 05:20:49,367 | INFO | INFO | Order 401 updated successfully via admin edit. | {"orderId": "401", "payload": {"supplier_id": 685, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "HYDH049", "item_description": "HYDRAULIC HOSE 1SN-04", "project": "AD01P", "qty_ordered": 2, "price": 274.18}, {"item_code": "HYDH172", "item_description": "HYDRAULIC HOSE 1SN-06", "project": "AD00C", "qty_ordered": 2, "price": 239.64}]}}
+2025-07-25 05:22:34,846 | INFO | INFO | Order 402 updated successfully via admin edit. | {"orderId": "402", "payload": {"supplier_id": 584, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "SUBM047", "item_description": "SUBMERSIBLE PUMP KBZ31.5 380 V", "project": "AD00C", "qty_ordered": 1, "price": 11016}]}}
+2025-07-25 05:26:07,859 | INFO | INFO | Order 398 updated successfully via admin edit. | {"orderId": "398", "payload": {"supplier_id": 560, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BLAD037", "item_description": "BLADE UNIVERSAL GRANULATOR NO.3 BED SHARPENED", "project": "AD00C", "qty_ordered": 2, "price": 416}, {"item_code": "BLAD096", "item_description": "BLADE SHARPENED  BED  RASPER 9", "project": "AD00C", "qty_ordered": 15, "price": 106}]}}
+2025-07-25 05:27:57,734 | INFO | INFO | Order 398 updated successfully via admin edit. | {"orderId": "398", "payload": {"supplier_id": 560, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BLAD037", "item_description": "BLADE UNIVERSAL GRANULATOR NO.3 BED SHARPENED", "project": "AD00C", "qty_ordered": 2, "price": 146}, {"item_code": "BLAD096", "item_description": "BLADE SHARPENED  BED  RASPER 9", "project": "AD00C", "qty_ordered": 15, "price": 106}]}}
+2025-07-25 05:32:10,755 | INFO | INFO | Order 396 updated successfully via admin edit. | {"orderId": "396", "payload": {"supplier_id": 685, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "HYDH049", "item_description": "HYDRAULIC HOSE 1SN-04", "project": "AD00C", "qty_ordered": 1, "price": 239.9}, {"item_code": "HYDH051", "item_description": "HYDRAULIC HOSE 2SN-06", "project": "AD00C", "qty_ordered": 2, "price": 294.03}, {"item_code": "HYDH172", "item_description": "HYDRAULIC HOSE 1SN-06", "project": "AD00C", "qty_ordered": 1, "price": 304.71}, {"item_code": "HYDH174", "item_description": "HYDRAULIC HOSE 2SN-08", "project": "AD00C", "qty_ordered": 1, "price": 360.29}, {"item_code": "HYDH327", "item_description": "HYDRAULIC HOSE 1SN-08", "project": "AD00C", "qty_ordered": 1, "price": 657.37}, {"item_code": "HYDF185", "item_description": "NYLON TUBE INSERT 63-03", "project": "AD00C", "qty_ordered": 1, "price": 219.92}]}}
+2025-07-25 06:34:50,579 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2304", "draftId": ""}
+2025-07-25 06:34:50,602 | INFO | INFO | Order submitted successfully | {"orderNumber": "2304", "orderId": 407, "status": "Pending"}
+2025-07-25 06:34:52,672 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2304", "newNum": "2305"}
+2025-07-26 13:35:03,103 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2305", "draftId": ""}
+2025-07-26 13:35:06,346 | INFO | INFO | Order submitted successfully | {"orderNumber": "2305", "orderId": 408, "status": "Awaiting Authorisation"}
+2025-07-26 13:35:08,086 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2305", "newNum": "2306"}
+2025-07-27 07:27:17,799 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2306", "draftId": ""}
+2025-07-27 07:27:20,968 | INFO | INFO | Order submitted successfully | {"orderNumber": "2306", "orderId": 409, "status": "Awaiting Authorisation"}
+2025-07-27 07:27:23,123 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2306", "newNum": "2307"}
+2025-07-27 07:32:41,432 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2307", "draftId": ""}
+2025-07-27 07:32:44,349 | INFO | INFO | Order submitted successfully | {"orderNumber": "2307", "orderId": 410, "status": "Awaiting Authorisation"}
+2025-07-27 07:32:46,166 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2307", "newNum": "2308"}
+2025-07-27 09:27:01,277 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2308", "draftId": ""}
+2025-07-27 09:27:07,237 | INFO | INFO | Order submitted successfully | {"orderNumber": "2308", "orderId": 411, "status": "Pending"}
+2025-07-27 09:27:09,722 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2308", "newNum": "2309"}
+2025-07-27 09:29:21,592 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2309", "draftId": ""}
+2025-07-27 09:29:24,488 | INFO | INFO | Order submitted successfully | {"orderNumber": "2309", "orderId": 412, "status": "Awaiting Authorisation"}
+2025-07-27 09:29:26,988 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2309", "newNum": "2310"}
+2025-07-31 05:29:40,781 | INFO | INFO | previewOrder started | {}
+2025-07-31 05:29:41,253 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 05:30:19,084 | INFO | INFO | previewOrder started | {}
+2025-07-31 05:30:19,533 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 05:30:32,834 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2310", "draftId": ""}
+2025-07-31 05:30:32,947 | INFO | INFO | Order submitted successfully | {"orderNumber": "2310", "orderId": 467, "status": "Pending"}
+2025-07-31 05:30:34,417 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2310", "newNum": "2311"}
+2025-07-31 07:42:15,787 | INFO | INFO | previewOrder started | {}
+2025-07-31 07:42:58,690 | INFO | INFO | previewOrder started | {}
+2025-07-31 07:42:59,101 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 07:43:32,989 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2355", "draftId": ""}
+2025-07-31 07:43:33,091 | INFO | INFO | Order submitted successfully | {"orderNumber": "2355", "orderId": 468, "status": "Pending"}
+2025-07-31 07:43:34,720 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2355", "newNum": "2356"}
+2025-07-31 07:44:53,420 | INFO | INFO | previewOrder started | {}
+2025-07-31 07:44:53,834 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 07:45:12,987 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2356", "draftId": ""}
+2025-07-31 07:45:13,085 | INFO | INFO | Order submitted successfully | {"orderNumber": "2356", "orderId": 469, "status": "Pending"}
+2025-07-31 07:45:20,412 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2356", "newNum": "2357"}
+2025-07-31 07:50:55,823 | INFO | INFO | previewOrder started | {}
+2025-07-31 07:50:56,208 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 07:51:20,602 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2357", "draftId": ""}
+2025-07-31 07:51:31,519 | INFO | INFO | Order submitted successfully | {"orderNumber": "2357", "orderId": 470, "status": "Pending"}
+2025-07-31 07:51:33,475 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2357", "newNum": "2358"}
+2025-07-31 07:53:11,664 | INFO | INFO | previewOrder started | {}
+2025-07-31 07:53:12,035 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 07:53:36,590 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2358", "draftId": ""}
+2025-07-31 07:53:45,009 | INFO | INFO | Order submitted successfully | {"orderNumber": "2358", "orderId": 471, "status": "Awaiting Authorisation"}
+2025-07-31 07:53:46,744 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2358", "newNum": "2359"}
+2025-07-31 07:56:07,417 | INFO | INFO | previewOrder started | {}
+2025-07-31 07:56:07,832 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 07:56:19,758 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2359", "draftId": ""}
+2025-07-31 07:56:19,862 | INFO | INFO | Order submitted successfully | {"orderNumber": "2359", "orderId": 472, "status": "Pending"}
+2025-07-31 07:56:25,443 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2359", "newNum": "2360"}
+2025-07-31 08:00:33,362 | INFO | INFO | previewOrder started | {}
+2025-07-31 08:00:33,833 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 08:00:42,835 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2360", "draftId": ""}
+2025-07-31 08:00:42,935 | INFO | INFO | Order submitted successfully | {"orderNumber": "2360", "orderId": 481, "status": "Pending"}
+2025-07-31 08:00:44,200 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2360", "newNum": "2361"}
+2025-07-31 08:06:09,921 | INFO | INFO | previewOrder started | {}
+2025-07-31 08:06:10,302 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 08:06:21,103 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2361", "draftId": ""}
+2025-07-31 08:06:31,653 | INFO | INFO | Order submitted successfully | {"orderNumber": "2361", "orderId": 482, "status": "Awaiting Authorisation"}
+2025-07-31 08:06:33,187 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2361", "newNum": "2362"}
+2025-07-31 08:10:09,034 | INFO | INFO | previewOrder started | {}
+2025-07-31 08:10:09,413 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 08:10:21,439 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2362", "draftId": ""}
+2025-07-31 08:10:32,336 | INFO | INFO | Order submitted successfully | {"orderNumber": "2362", "orderId": 483, "status": "Awaiting Authorisation"}
+2025-07-31 08:10:41,311 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2362", "newNum": "2363"}
+2025-07-31 08:13:20,623 | INFO | INFO | previewOrder started | {}
+2025-07-31 08:13:21,045 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 08:13:34,189 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2363", "draftId": ""}
+2025-07-31 08:13:44,962 | INFO | INFO | Order submitted successfully | {"orderNumber": "2363", "orderId": 484, "status": "Pending"}
+2025-07-31 08:14:29,855 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2363", "newNum": "2364"}
+2025-07-31 08:16:18,502 | INFO | INFO | previewOrder started | {}
+2025-07-31 08:16:18,942 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 08:16:42,178 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2364", "draftId": ""}
+2025-07-31 08:16:53,056 | INFO | INFO | Order submitted successfully | {"orderNumber": "2364", "orderId": 485, "status": "Pending"}
+2025-07-31 08:17:39,441 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2364", "newNum": "2365"}
+2025-07-31 08:40:36,798 | INFO | INFO | Order 308 updated successfully via admin edit. | {"orderId": "308", "payload": {"supplier_id": 102, "requester_id": 8, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "AUTN034", "item_description": "AUTO LAMP BTLW012 6 HEAD AMBER", "project": "IN10O", "qty_ordered": 2, "price": 119}]}}
+2025-07-31 08:41:49,447 | INFO | INFO | Order 336 updated successfully via admin edit. | {"orderId": "336", "payload": {"supplier_id": 364, "requester_id": 9, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "DIES001", "item_description": "DIESEL FUEL", "project": "IN10O", "qty_ordered": 10000, "price": 17.62}]}}
+2025-07-31 08:42:23,098 | INFO | INFO | Order 355 updated successfully via admin edit. | {"orderId": "355", "payload": {"supplier_id": 685, "requester_id": 10, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "VALV010", "item_description": "BALL VALVE 1/4'' TWO WAY", "project": "KA09M", "qty_ordered": 3, "price": 130}, {"item_code": "HYDH318", "item_description": "HYDRAULIC BRASS TEE PIECE", "project": "KA09M", "qty_ordered": 3, "price": 46.23}]}}
+2025-07-31 08:43:52,635 | INFO | INFO | Order 410 updated successfully via admin edit. | {"orderId": "410", "payload": {"supplier_id": 815, "requester_id": 11, "payment_terms": "COD", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "PLUM038", "item_description": "PLUMBING REPLACE H/D SAFETY  PRESSURE VALVE", "project": "PR20M", "qty_ordered": 1, "price": 992.49}, {"item_code": "PLUM050", "item_description": "PLUMBING REPLACE VACUUM BREAKERS", "project": "PR20M", "qty_ordered": 1, "price": 1984.98}]}}
+2025-07-31 08:44:55,939 | INFO | INFO | Order 403 updated successfully via admin edit. | {"orderId": "403", "payload": {"supplier_id": 85, "requester_id": 12, "payment_terms": "On account", "order_note": "", "note_to_supplier": "", "items": [{"item_code": "BATT014", "item_description": "BATTERY  682/683", "project": "PR15M", "qty_ordered": 2, "price": 3082.61}]}}
+2025-07-31 10:36:39,231 | INFO | INFO | previewOrder started | {}
+2025-07-31 10:36:39,605 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 10:37:03,662 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2365", "draftId": ""}
+2025-07-31 10:37:03,760 | INFO | INFO | Order submitted successfully | {"orderNumber": "2365", "orderId": 487, "status": "Pending"}
+2025-07-31 10:37:05,461 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2365", "newNum": "2366"}
+2025-07-31 13:22:16,904 | INFO | INFO | previewOrder started | {}
+2025-07-31 13:22:17,283 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 13:23:05,968 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2366", "draftId": ""}
+2025-07-31 13:23:06,068 | INFO | INFO | Order submitted successfully | {"orderNumber": "2366", "orderId": 488, "status": "Pending"}
+2025-07-31 13:23:17,438 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2366", "newNum": "2367"}
+2025-07-31 13:29:45,674 | INFO | INFO | previewOrder started | {}
+2025-07-31 13:29:46,061 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 13:31:19,966 | INFO | INFO | previewOrder started | {}
+2025-07-31 13:31:20,350 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 13:32:02,734 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2367", "draftId": ""}
+2025-07-31 13:32:10,824 | INFO | INFO | Order submitted successfully | {"orderNumber": "2367", "orderId": 489, "status": "Awaiting Authorisation"}
+2025-07-31 13:32:12,832 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2367", "newNum": "2368"}
+2025-07-31 13:39:17,139 | INFO | INFO | previewOrder started | {}
+2025-07-31 13:39:17,505 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-07-31 13:40:49,213 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2368", "draftId": ""}
+2025-07-31 13:40:59,868 | INFO | INFO | Order submitted successfully | {"orderNumber": "2368", "orderId": 490, "status": "Pending"}
+2025-07-31 13:41:01,409 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2368", "newNum": "2369"}
+2025-08-01 07:04:26,231 | INFO | INFO | previewOrder started | {}
+2025-08-01 07:04:26,611 | INFO | INFO | Preview PDF displayed (no DB write) | {}
+2025-08-01 07:04:52,488 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2369", "draftId": ""}
+2025-08-01 07:05:03,451 | INFO | INFO | Order submitted successfully | {"orderNumber": "2369", "orderId": 491, "status": "Pending"}
+2025-08-01 07:06:33,772 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2369", "newNum": "2370"}
+2025-08-03 11:14:53,301 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2001", "draftId": ""}
+2025-08-03 11:15:02,210 | INFO | INFO | Order submitted successfully | {"orderNumber": "2001", "orderId": 492, "status": "Awaiting Authorisation"}
+2025-08-03 11:15:04,415 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2001", "newNum": "2002"}
+2025-08-03 11:22:34,993 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2002", "draftId": ""}
+2025-08-03 11:22:45,987 | INFO | INFO | Order submitted successfully | {"orderNumber": "2002", "orderId": 493, "status": "Awaiting Authorisation"}
+2025-08-03 11:22:48,387 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2002", "newNum": "2003"}
+2025-08-03 11:25:59,277 | INFO | INFO | saveDraftOrder started (saving as draft) | {"orderNumber": "2003"}
+2025-08-03 11:25:59,305 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2003", "newNum": "2004"}
+2025-08-03 11:26:01,671 | INFO | INFO | Draft order created successfully | {"orderNumber": "2003", "draftId": 2}
+2025-08-03 11:28:13,423 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2004", "draftId": ""}
+2025-08-03 11:28:21,959 | INFO | INFO | Order submitted successfully | {"orderNumber": "2004", "orderId": 494, "status": "Awaiting Authorisation"}
+2025-08-03 11:28:26,323 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2004", "newNum": "2005"}
+2025-08-03 11:38:03,417 | INFO | INFO | saveDraftOrder started (saving as draft) | {"orderNumber": "2005"}
+2025-08-03 11:38:03,443 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2005", "newNum": "2006"}
+2025-08-03 11:38:05,963 | INFO | INFO | Draft order created successfully | {"orderNumber": "2005", "draftId": 3}
+2025-08-03 11:41:44,350 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2003", "draftId": "2"}
+2025-08-03 11:41:52,562 | INFO | INFO | Original draft deleted after final submission | {"draftId": "2", "finalOrderId": 495}
+2025-08-03 11:41:52,566 | INFO | INFO | Order submitted successfully | {"orderNumber": "2003", "orderId": 495, "status": "Awaiting Authorisation"}
+2025-08-03 11:54:00,128 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2005", "draftId": "3"}
+2025-08-03 11:54:08,681 | INFO | INFO | Original draft deleted after final submission | {"draftId": "3", "finalOrderId": 496}
+2025-08-03 11:54:08,684 | INFO | INFO | Order submitted successfully | {"orderNumber": "2005", "orderId": 496, "status": "Awaiting Authorisation"}
+2025-08-03 12:20:25,208 | INFO | INFO | saveDraftOrder started (saving as draft) | {"orderNumber": "2006"}
+2025-08-03 12:20:25,233 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2006", "newNum": "2007"}
+2025-08-03 12:20:27,405 | INFO | INFO | Draft order created successfully | {"orderNumber": "2006", "draftId": 4}
+2025-08-03 12:20:40,537 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2006", "draftId": "4"}
+2025-08-03 12:20:40,568 | INFO | INFO | Original draft deleted after final submission | {"draftId": "4", "finalOrderId": 497}
+2025-08-03 12:20:40,570 | INFO | INFO | Order submitted successfully | {"orderNumber": "2006", "orderId": 497, "status": "Awaiting Authorisation"}
+2025-08-03 12:34:12,257 | INFO | INFO | saveDraftOrder started (saving as draft) | {"orderNumber": "2007"}
+2025-08-03 12:34:12,281 | INFO | INFO | Order number incremented in backend settings | {"oldNum": "2007", "newNum": "2008"}
+2025-08-03 12:34:14,798 | INFO | INFO | Draft order created successfully | {"orderNumber": "2007", "draftId": 5}
+2025-08-03 12:34:41,702 | INFO | INFO | submitOrder started (finalizing order) | {"orderNumber": "2007", "draftId": "5"}
+2025-08-03 12:34:50,212 | INFO | INFO | Original draft deleted after final submission | {"draftId": "5", "finalOrderId": 498}
+2025-08-03 12:34:50,216 | INFO | INFO | Order submitted successfully | {"orderNumber": "2007", "orderId": 498, "status": "Awaiting Authorisation"}

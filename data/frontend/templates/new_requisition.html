@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Requisition</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script type="module" src="/static/js/new_requisition_main.js" defer></script>
+</head>
+
+<body>
+  {% include "_tab_nav.html" %}
+
+  <div class="container">
+    <h2>📦 New Requisition</h2>
+
+    <!-- Requisition Header -->
+    <div class="form-group">
+      <label for="requisitioner">Requisitioner:</label>
+      <select id="requisitioner" required></select>
+    </div>
+
+    <div class="form-group">
+      <label for="requisition-date">Date of Requisition:</label>
+      <input type="date" id="requisition-date" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="requisition-number">Requisition Number:</label>
+      <input type="text" id="requisition-number" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="requisition-note">Requisition Note:</label>
+      <textarea id="requisition-note" rows="3" placeholder="Optional note..."></textarea>
+    </div>
+
+    <!-- Line Items Table -->
+    <table id="requisition-table">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="line-items-body">
+        <!-- JS will populate rows -->
+      </tbody>
+    </table>
+
+    <!-- Aligned Buttons -->
+    <div class="form-actions" style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+      <button id="add-line" type="button">➕ Add Line</button>
+      <button id="submit-requisition" type="button">✅ Submit Requisition</button>
+    </div>
+
+    <!-- Message Log -->
+    <div id="requisition-log" class="message-log" style="margin-top: 1rem;"></div>
+  </div>
+</body>
+</html>

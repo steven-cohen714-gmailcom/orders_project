@@ -1,0 +1,785 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 2rem;
+  background-color: #f4f6f8;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #1a3c5e;
+}
+
+/* ------------------ TABLE ------------------ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th {
+  background-color: #e8eef4;
+  font-weight: 600;
+  color: #1a3c5e;
+  text-transform: none;
+  font-size: 0.95rem;
+  height: 48px;
+}
+
+td {
+  border: 1px solid #e0e4e8;
+  padding: 0.75rem;
+  text-align: left; /* CHANGED FROM CENTER */
+  font-size: 0.95rem;
+  color: #333;
+  overflow: visible;
+  position: relative;
+}
+
+td button {
+  margin-right: 0.5rem;
+}
+
+td button:last-child {
+  margin-right: 0;
+}
+
+#users-table td,
+#requesters-table td,
+#items-table td,
+#suppliers-table td,
+#projects-table td {
+  text-align: left;
+}
+
+.filters {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.filters label {
+  font-weight: 600;
+  color: #1a3c5e;
+  margin-right: 0.5rem;
+  font-size: 0.95rem;
+}
+
+input[type="date"],
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  font-family: Arial, sans-serif;
+  border: 1px solid #c7d0d9;
+  border-radius: 6px;
+  background-color: #fff;
+  min-width: 180px; /* Base min-width */
+  max-width: 240px; /* Base max-width */
+  transition: border-color 0.2s;
+}
+
+input[type="date"]:focus,
+select:focus,
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
+button {
+  padding: 0.6rem 1.5rem;
+  cursor: pointer;
+  background-color: #0066cc;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0055aa;
+}
+
+/* Specific style for the "Submit as Final Order" button */
+#submit-final-order { /* Targeted by ID */
+  background-color: #ff6666; /* A lighter red color */
+}
+
+#submit-final-order:hover {
+  background-color: #ff3333; /* A darker red on hover */
+}
+
+
+.expand-icon,
+.clip-icon,
+.eye-icon,
+.note-icon,
+.supplier-note-icon,
+.receive-icon,
+.pdf-icon {
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin: 0 0.4rem;
+  display: inline-block;
+  color: #0066cc;
+  transition: color 0.2s;
+}
+
+.expand-icon:hover,
+.clip-icon:hover,
+.eye-icon:hover,
+.note-icon:hover,
+.supplier-note-icon:hover,
+.receive-icon:hover {
+  color: #003366;
+}
+
+.eye-icon.disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.login-box {
+  background: white;
+  padding: 2rem 3rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  margin: 5rem auto;
+}
+
+.login-box h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #0056b3;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-box button:hover {
+  background-color: #004a99;
+}
+
+#login-error {
+  margin-top: 0.5rem;
+  color: red;
+  font-size: 0.9rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tab {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background: #ddd;
+  border-radius: 4px 4px 0 0;
+}
+
+.tab.active {
+  background: #007BFF;
+  color: white;
+}
+
+.tab-content {
+  display: none;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0 4px 4px 4px;
+  background-color: white;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+}
+
+.order-header {
+  margin-bottom: 2rem;
+}
+
+.order-header label span {
+  font-weight: bold;
+  font-size: 1.05rem;
+  margin-left: 0.5rem;
+}
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.column {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+#note_to_supplier {
+  min-height: 100px;
+}
+
+.delivery-block {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.add-item-block {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  overflow: visible;
+  position: relative;
+  min-height: 300px;
+  z-index: 1; /* <-- ADD THIS */
+
+}
+
+.summary {
+  margin-bottom: 2rem;
+}
+
+.button-group {
+  margin-top: 2rem;
+}
+
+.receive-modal table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 14px;
+}
+
+.receive-modal th,
+.receive-modal td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.receive-modal input[type="number"] {
+  width: 80px;
+}
+
+i:hover {
+  cursor: pointer;
+}
+
+.note-icon:hover,
+.clip-icon:hover,
+.expand-icon:hover,
+.receive-icon:hover,
+.supplier-note-icon:hover {
+  cursor: pointer;
+}
+
+.email-icon {
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 1.2em;
+}
+
+.email-icon:hover {
+  color: #007bff;
+}
+
+#settings .form-group label,
+#settings .form-group input {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#settings .form-group input {
+  width: 250px;
+  padding: 0.5rem;
+}
+
+#settings .form-group {
+  margin-bottom: 1.2rem;
+}
+
+#business_details .form-group label,
+#business_details .form-group input {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#business_details .form-group input {
+  width: 280px;
+  padding: 0.5rem;
+}
+
+#business_details .form-group {
+  margin-bottom: 1.2rem;
+}
+
+#users .form-group label,
+#users .form-group input,
+#users .form-group select {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#users .form-group input,
+#users .form-group select {
+  width: 280px;
+  padding: 0.5rem;
+}
+
+#users .form-group {
+  margin-bottom: 2rem;
+}
+
+/* NEW STYLES FOR USERS MAINTENANCE FORM (TOP SECTION) */
+/* Target the form row in the users tab */
+.user-form-row {
+  display: flex;
+  gap: 1rem; /* Spacing between columns */
+  max-width: 800px;
+  margin-bottom: 1rem; /* Add some space below the form row */
+  align-items: flex-end; /* Align items at the bottom */
+}
+
+.user-form-column {
+  flex: 1; /* Allow columns to grow and shrink */
+  display: flex;
+  flex-direction: column;
+}
+
+.user-form-column label {
+  margin-bottom: 6px; /* Space below labels */
+}
+
+/* Ensure inputs/selects inside user form columns take full width */
+.user-form-column input[type="text"],
+.user-form-column input[type="password"],
+.user-form-column select {
+  width: 100%; /* Make them fill their column */
+  box-sizing: border-box; /* Include padding/border in width */
+  min-width: unset; /* Remove min-width from general rule */
+  max-width: unset; /* Remove max-width from general rule */
+}
+
+.user-buttons-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Align buttons to the bottom */
+  flex-shrink: 0; /* Prevent this column from shrinking */
+}
+
+/* Specific style for the Add User button */
+#add-user-button-main {
+  width: auto; /* Allow button to take natural width based on padding/content */
+  align-self: flex-start; /* Align to the start of its flex container */
+  margin-bottom: 6px; /* Space from the cancel button below it */
+}
+
+/* Specific style for the Cancel button in the same group */
+.cancel-button-inline {
+  width: auto;
+  align-self: flex-start;
+}
+
+
+/* Specific Email input width in the Edit User modal */
+/* We want this to match the Username/Threshold band width in the main form,
+   which is now `width: 100%` within its flex column.
+   So, we'll target the #user-email ID. */
+#user-email {
+  width: 100%; /* Make it fill its container */
+  box-sizing: border-box; /* Include padding and border in the width */
+  min-width: unset; /* Override any general min-width */
+  max-width: unset; /* Override any general max-width */
+}
+
+/* General inputs/selects in modal, similar to main form inputs */
+#edit-user-modal input[type="text"],
+#edit-user-modal input[type="password"],
+#edit-user-modal input[type="email"], /* Ensure email gets this */
+#edit-user-modal select {
+  width: 100%;
+  padding: 0.6rem; /* Match general button padding */
+  font-size: 0.95rem; /* Match general button font size */
+  font-family: Arial, sans-serif;
+  border: 1px solid #c7d0d9;
+  border-radius: 6px;
+  background-color: #fff;
+  box-sizing: border-box; /* Crucial for consistent sizing */
+}
+
+
+.receive-icon.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* --- FIX CLIPPED DROPDOWNS --- */
+td,
+tr,
+tbody,
+#items-body,
+#items {
+  overflow: visible !important;
+  position: relative;
+  z-index: 1;
+}
+
+#items-table-container {
+  overflow: visible;
+  position: relative;
+  z-index: 2;
+}
+
+.position-relative {
+  position: relative;
+}
+
+/* --- CUSTOM FIELD WIDTHS --- */
+/* These were too general and likely causing issues for the user form.
+   The new .user-form-column input/select rules handle this.
+   Keeping these for other non-user form inputs/selects. */
+/* .wide-select {
+  min-width: 280px;
+  max-width: 360px;
+} */
+
+/* .narrow-input {
+  width: 80px;
+  max-width: 90px;
+  text-align: right;
+} */
+
+/* .medium-input {
+  width: 100px;
+  max-width: 120px;
+  text-align: right;
+} */
+
+
+/* Force TomSelect dropdown to appear on top of everything else */
+.ts-dropdown {
+  z-index: 9999 !important;
+}
+
+.ts-dropdown {
+  z-index: 9999 !important;
+  position: absolute !important;
+}
+
+.add-item-block {
+  z-index: auto !important;
+}
+
+.fuzzy-fix-scope {
+  z-index: auto !important;
+}
+
+.converted-icon.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+th {
+  text-align: left;
+}
+
+/* Custom Alignment for Table Columns */
+/* Total column should be right-aligned */
+table th:nth-child(5) { /* Targets the 5th header column (Total) */
+    text-align: right;
+    padding-right: 7mm; /* ADDED: Moves the heading text slightly left */
+}
+table td:nth-child(5) { /* Targets the 5th data cell column (Total) */
+    text-align: right;
+}
+
+/* Actions column should be left-aligned (overriding any default center alignment) */
+table th:nth-child(7), /* Targets the 7th header column (Actions) */
+table td:nth-child(7) { /* Targets the 7th data cell column (Actions) */
+    text-align: left;
+}
+
+/* Ensure icons within the action column are aligned to the left of their cell */
+.expand-icon,
+.clip-icon,
+.eye-icon,
+.note-icon,
+.supplier-note-icon,
+.receive-icon,
+.pdf-icon,
+.delete-icon,
+.edit-draft-icon {
+    display: inline-block;
+    margin-right: 0.4rem;
+}
+
+/* New styles for the Audit Trail "blue rectangle" grouping effect */
+
+/* Container for each full order block (header row + details) */
+.order-block {
+    border: 1px solid #007bff; /* Blue border */
+    background-color: #f0f8ff; /* Light blue background */
+    margin-bottom: 1rem; /* Space between order blocks */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Ensures content stays within rounded corners */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle shadow */
+}
+
+/* Style for the header row within the order-block */
+.order-block-header-row {
+    display: flex; /* Use flexbox for column layout within the row */
+    align-items: center; /* Vertically align content */
+    background-color: #e8eef4; /* Light grey background for the header area */
+    padding: 0.75rem 1rem; /* Padding inside the header row */
+    font-size: 0.95rem;
+    font-weight: bold; /* Make header text bold */
+    color: #1a3c5e; /* Darker text */
+    border-bottom: 1px solid #cceeff; /* Light blue border at the bottom of the header */
+}
+
+/* Style for individual "cells" within the header row */
+.order-cell {
+    padding: 0 0.5rem; /* Horizontal padding for spacing */
+    text-align: left; /* Default left alignment */
+    flex-basis: 0; /* Allow flex items to grow from 0 */
+    flex-grow: 1; /* Allow flex items to grow to fill space */
+    min-width: 50px; /* Minimum width for very small columns */
+    /* Set specific flex-grow values to mimic column widths */
+}
+
+/* Adjust flex-grow for specific columns to match approximate table widths */
+/* These flex-grow values are approximations; you might need to fine-tune them */
+.order-block-header-row .order-cell:nth-child(1) { flex-grow: 1; min-width: 100px; } /* Request Date */
+.order-block-header-row .order-cell:nth-child(2) { flex-grow: 1.2; min-width: 100px; } /* Order Number */
+.order-block-header-row .order-cell:nth-child(3) { flex-grow: 1.5; min-width: 120px; } /* Requester */
+.order-block-header-row .order-cell:nth-child(4) { flex-grow: 2; min-width: 150px; } /* Supplier */
+.order-block-header-row .order-cell:nth-child(5) { flex-grow: 0.8; text-align: right; padding-right: 7mm; min-width: 80px; } /* Total */
+.order-block-header-row .order-cell:nth-child(6) { flex-grow: 1; min-width: 80px; } /* Status */
+.order-block-header-row .order-cell:nth-child(7) { flex-grow: 0.8; min-width: 80px; } /* User */
+.order-block-header-row .order-cell:nth-child(8) { flex-grow: 2; text-align: left; min-width: 150px; } /* Actions (left aligned) */
+
+
+/* Styling for the expanded detail section */
+.order-block-detail-row {
+    padding: 1rem; /* Internal padding */
+    background-color: #f8f8ff; /* Slightly different background for details */
+    border-top: 1px dashed #cceeff; /* Subtle dashed line above details */
+}
+
+/* Styling for sections within the expanded detail row (Payment, Items, etc.) */
+.expanded-section {
+    margin-bottom: 1rem; /* Space between sections */
+}
+.expanded-section:last-child {
+    margin-bottom: 0; /* No margin after the last section */
+}
+
+/* Specific style for payment details section */
+.payment-details-section {
+    background-color: #e6f7ff; /* Light blue background as in your original snippet */
+    border-left: 4px solid #007bff; /* Blue left border */
+    padding: 0.8rem;
+    font-size: 0.95rem;
+}
+
+/* Style for tables within the expanded detail section (items, receipts) */
+.items-table-section table,
+.items-table-section table th, /* Ensure inner table headers are also styled */
+.items-table-section table td {
+    border: 1px solid #ddd; /* Lighter border for inner tables */
+    padding: 6px;
+    font-size: 0.9rem;
+}
+
+.items-table-section table th {
+    background-color: #f2f2f2; /* Light grey for inner table headers */
+    font-weight: bold;
+}
+
+/* Specific alignment for columns within expanded items table */
+.items-table-section table td:nth-child(3), /* Qty */
+.items-table-section table td:nth-child(4), /* Price */
+.items-table-section table td:nth-child(5) { /* Total */
+    text-align: right;
+}
+
+/* Specific alignment for columns within receipts sub-table */
+.items-table-section table table td:nth-child(1) { /* Qty in Receipts */
+    text-align: right;
+}
+.items-table-section table table td:nth-child(2), /* Date in Receipts */
+.items-table-section table table td:nth-child(3) { /* User in Receipts */
+    text-align: left;
+}
+/* Add padding/margin to separate receipt sub-table from its header if needed */
+.items-table-section table td table {
+    margin-top: 5px; /* Small top margin for receipts table */
+    border: none; /* No border around the receipts sub-table itself */
+    box-shadow: none; /* No shadow for inner tables */
+}
+.items-table-section table td table td {
+    padding: 3px; /* Smaller padding for receipt details */
+    background-color: #fcfcff; /* Very light background for receipts */
+}
+.items-table-section table td table thead tr {
+    background-color: #eef; /* Slightly darker header for receipts sub-table */
+}
+
+/* New styles for the Audit Trail header (replacing the old thead) */
+.audit-header-row {
+    display: flex; /* Makes it a flex container to align columns */
+    align-items: center; /* Vertically centers text */
+    background-color: #e8eef4; /* Same background as old th */
+    padding: 0.75rem 1rem; /* Same padding as .order-block-header-row */
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #1a3c5e;
+    border-bottom: 1px solid #cceeff; /* Visual separator */
+    border-radius: 8px 8px 0 0; /* Rounded top corners matching order-block */
+    margin-bottom: 0.5rem; /* Small space between header and first order block */
+}
+
+/* Styles for the container of all audit trail order blocks */
+.audit-body-blocks {
+    /* This div now essentially replaces the <tbody> element visually */
+    /* No specific flex/grid here, just a container */
+}
+
+/* These rules ensure the widths of the header cells match the content cells */
+.audit-header-row .order-cell:nth-child(1) { flex-grow: 1; min-width: 100px; } /* Request Date */
+.audit-header-row .order-cell:nth-child(2) { flex-grow: 1.2; min-width: 100px; } /* Order Number */
+.audit-header-row .order-cell:nth-child(3) { flex-grow: 1.5; min-width: 120px; } /* Requester */
+.audit-header-row .order-cell:nth-child(4) { flex-grow: 2; min-width: 150px; } /* Supplier */
+.audit-header-row .order-cell:nth-child(5) { flex-grow: 0.8; text-align: right; padding-right: 7mm; min-width: 80px; } /* Total */
+.audit-header-row .order-cell:nth-child(6) { flex-grow: 1; min-width: 80px; } /* Status */
+.audit-header-row .order-cell:nth-child(7) { flex-grow: 0.8; min-width: 80px; } /* User */
+.audit-header-row .order-cell:nth-child(8) { flex-grow: 2; text-align: left; min-width: 150px; } /* Actions (left aligned) */
+
+/* Specific alignment for Pending Requisitions Actions column (5th column) */
+#pending-requisitions-table th:nth-child(5),
+#pending-requisitions-table td:nth-child(5) {
+    text-align: left;
+    /* This padding matches the margin-right on your icons (0.4rem)
+       to ensure visual alignment from the leftmost edge of the cell. */
+    padding-left: 0.4rem;
+}
+
+.permissions-container {
+  margin-top: 2.5rem; /* Creates space between the form fields and the permissions grid */
+}
+
+/* Align all fields vertically, consistent spacing */
+.modal-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.modal-form-group input[type="text"],
+.modal-form-group input[type="email"],
+.modal-form-group select {
+  width: 100%;
+  max-width: 350px; /* Control width - no more full-width mess */
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Adds space between checkbox and text */
+  font-weight: normal;
+}
+
+.permissions-container {
+  margin-top: 2.5rem;
+}
+
+/* Ensure labels and inputs align flush left */
+.modal-form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Forces left alignment of everything */
+  margin-bottom: 1.5rem;
+}
+
+/* Style for text inputs and select fields */
+.modal-form-group input[type="text"],
+.modal-form-group select {
+  width: 100%;
+  max-width: 300px; /* CONTROLLED WIDTH - same for username & band */
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Specific override for the email field */
+#user-email {
+  width: 100%;
+  max-width: 400px; /* Make it slightly wider, but still controlled */
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Checkbox label spacing */
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: normal;
+}

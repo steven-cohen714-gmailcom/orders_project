@@ -1,0 +1,197 @@
+<div id="edit-user-modal" class="modal" style="display: none;">
+  <div class="modal-content" style="width: 600px; max-width: 90%;">
+    <span class="close" onclick="window.closeEditUserModal()">&times;</span>
+    <h2>Edit User</h2>
+
+<form id="edit-user-form">
+
+  <div class="modal-form-group">
+    <label for="edit-username">Username</label>
+    <input type="text" id="edit-username" name="edit-username" readonly />
+  </div>
+
+  <div class="modal-form-group">
+    <label for="threshold-band">Threshold Band</label>
+    <select id="threshold-band" name="threshold-band">
+      <option value="">Not Set</option>
+      <option value="1">Band 1</option>
+      <option value="2">Band 2</option>
+      <option value="3">Band 3</option>
+      <option value="4">Band 4</option>
+      <option value="5">Band 5</option>
+    </select>
+  </div>
+
+  <div class="modal-form-group">
+    <label for="user-email">Email</label>
+    <input type="email" id="user-email" name="user-email" placeholder="user@example.com" />
+  </div>
+
+  <div class="modal-form-group checkbox-group">
+    <label>
+      <input type="checkbox" id="can-receive-payment-notifications" name="can-receive-payment-notifications" value="1">
+      Receive Payment Notifications
+    </label>
+  </div>
+
+  <div class="permissions-container">
+    <fieldset>
+      <legend>Screens this user can access</legend>
+      <table>
+        <tr>
+          <td style="text-align: center;">
+            <strong>New Requisition</strong><br>
+            <input type="checkbox" name="screens" value="new_requisition">
+          </td>
+          <td style="text-align: center;">
+            <strong>Pending Requisitions</strong><br>
+            <input type="checkbox" name="screens" value="pending_requisitions">
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">
+            <strong>New Order</strong><br>
+            <input type="checkbox" name="screens" value="new_order">
+          </td>
+          <td style="text-align: center;">
+            <strong>Pending Orders</strong><br>
+            <input type="checkbox" name="screens" value="pending_orders">
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">
+            <strong>Received Orders</strong><br>
+            <input type="checkbox" name="screens" value="received_orders">
+          </td>
+          <td style="text-align: center;">
+            <strong>Partially Delivered Orders</strong><br>
+            <input type="checkbox" name="screens" value="partially_delivered_orders">
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">
+            <strong>Audit Trail</strong><br>
+            <input type="checkbox" name="screens" value="audit_trail">
+          </td>
+          <td style="text-align: center;">
+            <strong>My Authorisations</strong><br>
+            <input type="checkbox" name="screens" value="my_authorisations">
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">
+            <strong>COD Orders</strong><br>
+            <input type="checkbox" name="screens" value="cod_orders">
+          </td>
+          <td style="text-align: center;">
+            <strong>Maintenance</strong><br>
+            <input type="checkbox" name="screens" value="maintenance">
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center;">
+            <strong>Draft Orders</strong><br>
+            <input type="checkbox" name="screens" value="draft_orders">
+          </td>
+          <td style="text-align: center;">
+            {# RE-ADDED: Checkbox for Edit Order (Admin) #}
+            <strong>Edit Order (Admin)</strong><br>
+            <input type="checkbox" name="screens" value="edit_order_admin">
+            {# END RE-ADDED #}
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <button type="submit">Save Changes</button>
+  </div>
+
+  <input type="hidden" id="edit-user-id-modal" name="user-id" />
+</form>
+
+
+<style>
+.permissions-container {
+  margin-top: 2.5rem;
+}
+</style>
+
+<script>
+// Close the modal and clear the form
+window.closeEditUserModal = function() {
+  const form = document.getElementById("edit-user-form");
+  document.getElementById("edit-user-modal").style.display = "none";
+  form.reset();
+  form.querySelectorAll("input[name='screens']").forEach(cb => cb.checked = false);
+}
+
+// Open modal and populate fields
+window.openEditUserModal = function(id, username, threshold, screensArray, email = '', canReceivePaymentNotifications = 0) {
+  const form = document.getElementById("edit-user-form");
+
+  form["edit-username"].value = username;
+  form["edit-user-id-modal"].value = id;
+  form["threshold-band"].value = threshold;
+  form["user-email"].value = email;
+  form["can-receive-payment-notifications"].checked = (canReceivePaymentNotifications === 1);
+
+  const validScreens = Array.isArray(screensArray) ? screensArray : [];
+  form.querySelectorAll("input[name='screens']").forEach(cb => {
+    cb.checked = validScreens.includes(cb.value);
+  });
+
+  document.getElementById("edit-user-modal").style.display = "block";
+}
+
+// Submit the form
+document.getElementById("edit-user-form").onsubmit = async function(e) {
+  e.preventDefault();
+  const form = this;
+
+  const screens = Array.from(form.querySelectorAll("input[name='screens']:checked"))
+                       .map(cb => cb.value);
+
+  const userData = {
+    id: form["user-id"].value,
+    username: form["edit-username"].value,
+    threshold_band: form["threshold-band"].value === "" ? null : parseInt(form["threshold-band"].value, 10),
+    email: form["user-email"].value,
+    can_receive_payment_notifications: form["can-receive-payment-notifications"].checked ? 1 : 0,
+    screen_permissions: screens
+  };
+
+  try {
+    const response = await fetch(`/lookups/users/${userData.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: userData.username,
+        auth_threshold_band: userData.threshold_band,
+        email: userData.email,
+        can_receive_payment_notifications: userData.can_receive_payment_notifications,
+        screen_permissions: userData.screen_permissions
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.detail || "Failed to update user.");
+    }
+
+    window.closeEditUserModal();
+    if (typeof window.displayMessage === "function") {
+      window.displayMessage("User updated successfully! Refreshing...", "success");
+    }
+
+    window.location.reload();
+
+  } catch (err) {
+    console.error("Error updating user:", err);
+    if (typeof window.displayMessage === "function") {
+      window.displayMessage("Failed to update user: " + err.message, "error");
+    }
+  }
+}
+</script>

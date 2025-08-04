@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Maintenance - Universal Recycling</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  {% include "_tab_nav.html" %}
+
+  <h2>Maintenance</h2>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="users">Users</div>
+    <div class="tab" data-tab="requesters">Requesters</div>
+    <div class="tab" data-tab="items">Items</div>
+    <div class="tab" data-tab="suppliers">Suppliers</div>
+    <div class="tab" data-tab="projects">Projects</div>
+    <div class="tab" data-tab="requisitioners">Requisitioners</div>
+    <div class="tab" data-tab="settings">Settings</div>
+    <div class="tab" data-tab="business_details">Business Details</div>
+  </div>
+
+<div id="users" class="tab-content active">
+  <form class="form-group" onsubmit="event.preventDefault();">
+    <input type="hidden" id="user-id" />
+
+    <div style="display:flex; gap:1rem; max-width:800px;">
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="user-username" style="margin-bottom:6px;">Username:</label>
+        <input type="text" id="user-username" autocomplete="username" />
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="user-password" style="margin-bottom:6px;">Password:</label>
+        <input type="password" id="user-password" autocomplete="current-password" />
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="user-auth-threshold-band" style="margin-bottom:6px;">Threshold Band:</label>
+        <select id="user-auth-threshold-band">
+          <option value="">Not Set</option>
+          <option value="1">Band 1</option>
+          <option value="2">Band 2</option>
+          <option value="3">Band 3</option>
+          <option value="4">Band 4</option>
+          <option value="5">Band 5</option>
+        </select>
+      </div>
+
+      <div style="display:flex; flex-direction:column; justify-content:flex-end;">
+        <button type="submit" id="add-user-button-main">Add User</button> <button type="button" id="cancel-user-edit" style="display: none;">Cancel</button> </div>
+    </div>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Rights</th>
+        <th>Threshold Band</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="users-table"></tbody>
+  </table>
+</div>
+
+<div id="requesters" class="tab-content">
+  <form id="requester-form" onsubmit="event.preventDefault();">
+    <input type="hidden" id="requester-id" />
+
+    <div style="display:flex; gap:1rem; max-width:700px;">
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="requester-name" style="margin-bottom:6px;">Name:</label>
+        <input type="text" id="requester-name" />
+
+        <button type="submit" id="add-requester-button"
+                style="margin-top: 12px; width: auto; align-self: flex-start;">
+          Add Requester
+        </button>
+
+        <div id="requester-form-error"
+             style="color:red; display:none; margin-top:6px;">
+          Please enter requester name
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align:left; width: 280px;">Name</th>
+        <th style="text-align:left;">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="requesters-table"></tbody>
+  </table>
+</div>
+
+<div id="items" class="tab-content">
+  <form id="item-form" onsubmit="event.preventDefault();">
+    <input type="hidden" id="item-id" />
+
+    <div style="display:flex; gap:1rem; max-width:700px;">
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="item-code" style="margin-bottom:6px;">Item Code:</label>
+        <input type="text" id="item-code" />
+
+        <button type="submit" id="add-item-button"
+                style="margin-top:12px; width:auto; align-self:flex-start;">Add Item</button>
+        <button type="button" id="cancel-item-edit"
+                style="display:none; margin-top:6px;">Cancel</button>
+
+        <div id="item-form-error"
+             style="color:red; display:none; margin-top:6px;">
+          Please enter item code and description
+        </div>
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="item-description" style="margin-bottom:6px;">Description:</label>
+        <input type="text" id="item-description" />
+      </div>
+    </div>
+  </form>
+
+  <div class="form-group">
+    <hr style="margin:1.5rem 0;" />
+    <label for="items-csv-upload">Import Items CSV:</label>
+    <input type="file" id="items-csv-upload" accept=".csv" />
+    <button id="import-items-button">Import CSV</button>
+  </div>
+
+  <table>
+    <thead><tr><th>Item Code</th><th>Description</th><th>Actions</th></tr></thead>
+    <tbody id="items-table"></tbody>
+  </table>
+</div>
+
+  <div id="suppliers" class="tab-content">
+  <form id="supplier-form" onsubmit="event.preventDefault();">
+    <input type="hidden" id="supplier-id" />
+
+    <div style="display:flex; gap:1rem; max-width:700px;">
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="supplier-account-number" style="margin-bottom:6px;">Account Number:</label>
+        <input type="text" id="supplier-account-number" />
+
+        <button type="submit" id="save-supplier-button" style="margin-top: 12px; width: auto; align-self: flex-start;">Add Supplier</button>
+        <button type="button" id="cancel-supplier-edit" style="display:none; margin-top:6px;">Cancel</button>
+
+        <div id="supplier-form-error"
+             style="color:red; display:none; margin-top:6px;">
+          Please enter supplier name and account number
+        </div>
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="supplier-name" style="margin-bottom:6px;">Supplier Name:</label>
+        <input type="text" id="supplier-name" />
+      </div>
+    </div>
+  </form>
+
+  <div class="form-group">
+    <hr style="margin:1.5rem 0;" />
+    <label for="suppliers-csv-upload">Import Suppliers CSV:</label>
+    <input type="file" id="suppliers-csv-upload" accept=".csv" />
+    <button id="import-suppliers-button">Import CSV</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+      <th style="text-align:left; width: 180px;">Account Number</th>
+      <th style="text-align:left; width: 300px;">Supplier Name</th>
+      <th style="text-align:left;">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="suppliers-table"></tbody>
+  </table>
+  </div>
+
+ <div id="projects" class="tab-content">
+  <form id="project-form" onsubmit="event.preventDefault();">
+    <input type="hidden" id="project-id" />
+
+    <div style="display:flex; gap:1rem; max-width:700px;">
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="project-code" style="margin-bottom:6px;">Project Code:</label>
+        <input type="text" id="project-code" />
+
+        <button type="submit" id="save-project-button"
+                style="margin-top:12px; width:auto; align-self:flex-start;">
+          Add Project
+        </button>
+        <button type="button" id="cancel-project-edit"
+                style="display:none; margin-top:6px;">Cancel</button>
+
+        <div id="project-form-error"
+             style="color:red; display:none; margin-top:6px;">
+          Please enter project code and name
+        </div>
+      </div>
+
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="project-name" style="margin-bottom:6px;">Project Name:</label>
+        <input type="text" id="project-name" />
+      </div>
+    </div>
+  </form>
+
+  <div class="form-group">
+    <hr style="margin:1.5rem 0;" />
+    <label for="projects-csv-upload">Import Projects CSV:</label>
+    <input type="file" id="projects-csv-upload" accept=".csv" />
+    <button type="button" id="import-projects-button">Import CSV</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align:left; width:180px;">Project Code</th>
+        <th style="text-align:left; width:300px;">Project Name</th>
+        <th style="text-align:left;">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="projects-table"></tbody>
+  </table>
+</div>
+
+<div id="requisitioners" class="tab-content">
+  <form id="requisitioner-form" onsubmit="event.preventDefault();">
+    <input type="hidden" id="requisitioner-id" />
+
+    <div style="display:flex; gap:1rem; max-width:700px;">
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <label for="requisitioner-name" style="margin-bottom:6px;">Name:</label>
+        <input type="text" id="requisitioner-name" />
+
+        <button type="submit" id="add-requisitioner-button"
+                style="margin-top: 12px; width: auto; align-self: flex-start;">
+          Add Requisitioner
+        </button>
+
+        <div id="requisitioner-form-error"
+             style="color:red; display:none; margin-top:6px;">
+          Please enter requisitioner name
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align:left; width: 280px;">Name</th>
+        <th style="text-align:left;">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="requisitioners-table"></tbody>
+  </table>
+</div>
+
+  <div id="settings" class="tab-content">
+    <div class="form-group">
+      <label for="order-number-start">Start Order Number:</label>
+      <input type="text" id="order-number-start" />
+      <label for="requisition-number-start">Start Requisition Number:</label>
+      <input type="text" id="requisition-number-start" placeholder="e.g. REQ1000" />
+      <label for="auth-threshold-1">Authorization Threshold 1 (R):</label>
+      <input type="number" id="auth-threshold-1" step="0.01" />
+      <label for="auth-threshold-2">Authorization Threshold 2 (R):</label>
+      <input type="number" id="auth-threshold-2" step="0.01" />
+      <label for="auth-threshold-3">Authorization Threshold 3 (R):</label>
+      <input type="number" id="auth-threshold-3" step="0.01" />
+      <label for="auth-threshold-4">Authorization Threshold 4 (R):</label>
+      <input type="number" id="auth-threshold-4" step="0.01" />
+      <label for="auth-threshold-5">Authorisation For Any Order Above (R):</label>
+      <input type="number" id="auth-threshold-5" step="0.01" />
+      <button id="update-settings-button">Update</button>
+    </div>
+  </div>
+
+  <div id="business_details" class="tab-content">
+    <div class="form-group">
+      <label for="company-name">Company Name:</label>
+      <input type="text" id="company-name" />
+      <label for="address-line1">Address Line 1:</label>
+      <input type="text" id="address-line1" />
+      <label for="address-line2">Address Line 2:</label>
+      <input type="text" id="address-line2" />
+      <label for="city">City:</label>
+      <input type="text" id="city" />
+      <label for="province">Province:</label>
+      <input type="text" id="province" />
+      <label for="postal-code">Postal Code:</label>
+      <input type="text" id="postal-code" />
+      <label for="telephone">Telephone:</label>
+      <input type="text" id="telephone" />
+      <label for="vat-number">VAT Number:</label>
+      <input type="text" id="vat-number" />
+      <button id="update-business-details-button">Update</button>
+    </div>
+  </div>
+
+  <script type="module" src="/static/js/maintenance.js"></script>
+  {% include 'edit_user_modal.html' %}
+</body>
+</html>
