@@ -31,7 +31,7 @@ START_SERVER_SCRIPT = PROJECT_ROOT / "scripts" / "start_server.py"
 # Virtual environment path
 VENV_PATH = PROJECT_ROOT / "venv"
 # VENV_ACTIVATE_SCRIPT is not strictly needed with the direct executable approach
-# VENV_ACTIVATE_SCRIPT = VENV_PATH / "bin" / "activate" 
+# VENV_ACTIVATE_SCRIPT = VENV_PATH / "bin" / "activate"
 
 # Log directories
 LOGS_DIR = PROJECT_ROOT / "logs"
@@ -166,58 +166,74 @@ def apply_db_migrations():
 def main():
     print("\n🚀 Starting deployment to Google VM (Data-Safe)...")
 
-    # 1. Kill any running server instances
+    # 1. First Safety Check: Backup the live database before starting anything.
+    if LIVE_DB_PATH.exists():
+        print_status(f"Live database found at '{LIVE_DB_PATH}'. Creating a fresh backup...")
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        first_backup_path = LIVE_DB_PATH.parent / f"{LIVE_DB_PATH.name}.pre_pull_backup_{timestamp}"
+        try:
+            shutil.copy2(LIVE_DB_PATH, first_backup_path)
+            print_status(f"✅ Initial live database backed up to '{first_backup_path}'.", "success")
+        except Exception as e:
+            print_status(f"❌ Failed to create initial backup. Aborting pull to prevent data loss: {e}", "error")
+            sys.exit(1)
+    
+    # 2. Kill any running server instances
     kill_server()
 
-    # 2. Perform Git sync (fetch, hard reset)
+    # 3. Perform Git sync (fetch, hard reset)
     # This assumes 'data/' is in .gitignore and will NOT be touched by git.
     print_status("Performing Git synchronization...")
+    
+    # Run 'git rm --cached' to ensure the DB file is no longer tracked by Git.
+    # This prevents an outdated DB from ever being pulled and overwriting the live one.
+    run_command(["git", "rm", "--cached", str(LIVE_DB_PATH)], "Untracking DB file from Git index", check=False, cwd=PROJECT_ROOT)
+
     run_command(["git", "fetch", "origin"], "Fetching latest from origin", cwd=PROJECT_ROOT)
     run_command(["git", "reset", "--hard", "origin/main"], "Hard reset to remote main", cwd=PROJECT_ROOT)
-    # It's generally safer to avoid `git clean -fd` in automated deployments unless
-    # you are absolutely certain about its implications and that no valuable
-    # untracked files outside of .gitignore exist.
+    # The `git clean` command is destructive and can be dangerous, so we'll omit it for maximum safety.
     # If you need it, uncomment the following line:
     # run_command(["git", "clean", "-fd"], "Removing untracked files and directories", cwd=PROJECT_ROOT)
     print_status("Git sync complete. VM now matches GitHub.", "success")
 
-    # 3. Ensure virtual environment is set up
+    # 4. Restore the live database from the backup.
+    if LIVE_DB_PATH.exists():
+        print_status(f"Restoring live database from backup '{first_backup_path}'...")
+        try:
+            shutil.copy2(first_backup_path, LIVE_DB_PATH)
+            print_status("✅ Live database restored.", "success")
+        except Exception as e:
+            print_status(f"❌ Failed to restore database from backup: {e}. Live database state is now unpredictable. You will need to manually restore from a separate backup.", "error")
+            sys.exit(1)
+
+    # 5. Ensure virtual environment is set up
     print_status("Ensuring virtual environment exists and is up-to-date...")
     if not VENV_PATH.exists():
         print_status(f"Virtual environment not found at {VENV_PATH}. Creating it...", "info")
-        # Use system's python3 to create venv
-        run_command([sys.executable, "-m", "venv", str(VENV_PATH)], "Creating virtual environment", cwd=PROJECT_ROOT, check=True) # Used sys.executable
+        run_command([sys.executable, "-m", "venv", str(VENV_PATH)], "Creating virtual environment", cwd=PROJECT_ROOT, check=True)
         print_status("Virtual environment created.", "success")
     else:
         print_status("Virtual environment already exists.", "info")
 
-    # 4. Install Python dependencies (within the venv)
+    # 6. Install Python dependencies (within the venv)
     print_status("Installing/Updating Python dependencies...", "info")
-    # This command uses the 'python3 -m pip' approach, which is robust
-    # when run with the venv's python directly (handled by run_command).
-    run_command(["python3", "-m", "pip", "install", "-r", "requirements.txt"], # Changed 'pip' to 'python3 -m pip'
-                "Updating virtualenv packages", cwd=PROJECT_ROOT, in_venv=True)
+    run_command(["python3", "-m", "pip", "install", "-r", "requirements.txt"], "Updating virtualenv packages", cwd=PROJECT_ROOT, in_venv=True)
     print_status("Python dependencies updated.", "success")
 
-    # 5. Apply database migrations to the existing database
+    # 7. Apply database migrations to the existing database
     apply_db_migrations()
 
-    # 6. Start the server in the background using nohup and the venv's python
+    # 8. Start the server in the background using nohup and the venv's python
     print_status("Starting the FastAPI server...", "info")
-    # Ensure START_SERVER_SCRIPT is executed by the venv's python
     start_cmd_list = [
         "nohup",
-        str(VENV_PATH / "bin" / "python3"), # Explicitly use venv's python3
+        str(VENV_PATH / "bin" / "python3"),
         str(START_SERVER_SCRIPT)
     ]
-    # IMPORTANT: shell=True is needed for nohup, but it's generally avoided.
-    # For nohup with specific executables, it's safer to build the command list correctly.
-    # The preexec_fn=os.setpgrp already helps detach.
-    # Let's keep shell=False in run_command and make sure nohup is handled as initial process.
     subprocess.Popen(start_cmd_list, cwd=PROJECT_ROOT,
-                         stdout=open(SERVER_STARTUP_LOG, "a"), # Open file handles directly for Popen
+                         stdout=open(SERVER_STARTUP_LOG, "a"),
                          stderr=open(SERVER_ERROR_LOG, "a"),
-                         preexec_fn=os.setpgrp # Detach from controlling terminal
+                         preexec_fn=os.setpgrp
                         )
     print_status(f"Server started in the background. Check {SERVER_STARTUP_LOG.name} for output.", "success")
     print("\n✨ Deployment complete. Verify application functionality.")

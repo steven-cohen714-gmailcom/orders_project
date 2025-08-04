@@ -1,157 +1,155 @@
 🔍 Registered Routes:
-/openapi.json
-/docs
-/docs/oauth2-redirect
-/redoc
-/static
-/data/uploads
-/audit_trail_test
-/mobile/authorisations
-/mobile/requisition_login
-/home
-/orders/new
-/orders/pending_orders
-/orders/draft_orders
-/orders/cod_orders
-/orders/received_orders
-/orders/audit_trail
-/maintenance
-/orders/partially_delivered
-/requisitions/pending_requisitions
-/requisitions/new
-/favicon.ico
-/orders/authorisations_per_user
-/mobile/requisition
-/admin/edit_order_search
-/admin/edit_order_search
-/admin/edit_order/{order_id}
-/
-/login
-/login
-/logout
-/session_debug
-/mobile/login
-/mobile/logout
-/mobile/get_user_info
-/mobile_requisition_auth/login
-/mobile_requisition_auth/session_debug
-/mobile_requisition/submit
-/orders/new
-/orders/pending_orders
-/mobile/mobile_authorisations
-/orders/authorisations_per_user
-/orders/{order_id}
-/lookups/requisitioners
-/lookups/requisitioners
-/lookups/requisitioners/{requisitioner_id}
-/lookups/requisitioners/{requisitioner_id}
-/lookups/requesters
-/lookups/requesters
-/lookups/requesters/{requester_id}
-/lookups/requesters/{requester_id}
-/lookups/items
-/lookups/items
-/lookups/items/{item_id}
-/lookups/maintenance/import_items_csv
-/lookups/items/{item_id}
-/lookups/suppliers
-/lookups/suppliers
-/lookups/suppliers/{supplier_id}
-/lookups/import_suppliers_csv
-/lookups/suppliers/{supplier_id}
-/lookups/projects
-/lookups/projects
-/lookups/projects/{project_id}
-/lookups/projects/{project_id}
-/lookups/projects/import_csv
-/lookups/settings
-/lookups/settings
-/lookups/order_number
-/lookups/requisition_number
-/lookups/business_details
-/lookups/business_details
-/lookups/users
-/lookups/users
-/lookups/users/{user_id}
-/lookups/users/{user_id}
-/mobile/get_user_info
-/orders/api/awaiting_authorisation
-/orders/api/authorise_order/{order_id}
-/orders/api/orders/api/audit_trail_orders
-⚠️ Suspicious duplicate segment in: /orders/api/orders/api/audit_trail_orders
-/orders/api/preview_pdf_new_order
-/orders/api/generate_pdf_for_order/{order_id}
-/orders/api/pending_orders
-/orders/api/received_orders
-/orders/api/partially_delivered
-/orders/api/items_for_order/{order_id}
-/orders/api/last_audit_action/{order_id}
-/orders/api/order_summary
-/orders/api/cod_orders
-/orders/api/mark_cod_paid/{order_id}
-/draft_orders
-/draft_orders/pending
-/draft_orders/{draft_id}
-/draft_orders/{draft_id}
-/draft_orders/{draft_id}
-/draft_orders/api/items/{draft_id}
-/orders
-/orders
-/orders/delete/{order_id}
-/orders/{order_id}
-/orders/api/order_details_for_audit/{order_id}
-/orders/api/order_audit_history/{order_id}
-/orders/{order_id}
-/orders/update_draft/{order_id}
-/orders/api/order_items/{order_id}
-/orders/orders/receive/{order_id}
-⚠️ Suspicious duplicate segment in: /orders/orders/receive/{order_id}
-/orders/api/audit_trail_orders
-/orders/api/receipt_logs/{order_id}
-/orders/upload_attachment
-/orders/attachments/{order_id}
-/orders/receive/{order_id}
-/orders/save_note/{order_id}
-/orders/mark_cod_paid/{order_id}
-/requisitions
-/api/pending_requisitions
-/api/requisition_items/{requisition_id}
-/requisitions/api/mark_converted/{requisition_id}
-/requisitions/upload_attachment
-/requisitions/attachments/{requisition_id}
-/requisitions/uploads/{filename}
-/requisitions/submit_requisition
-/log_client
-/log
-/admin/requesters
-/admin/requesters
-/admin/requesters/{requester_id}
-/admin/requesters/{requester_id}
-/admin/suppliers
-/admin/suppliers
-/admin/suppliers/{supplier_id}
-/admin/import_suppliers_csv
-/admin/suppliers/{supplier_id}
-/admin/items
-/admin/items
-/admin/items/{item_id}
-/admin/maintenance/import_items_csv
-/admin/items/{item_id}
-/admin/projects
-/admin/projects
-/admin/projects/{project_id}
-/admin/projects/{project_id}
-/admin/projects/import_csv
-/admin/settings
-/admin/settings
-/admin/order_number
-/admin/requisition_number
-/admin/business_details
-/admin/business_details
-/admin/users
-/admin/users
-/admin/users/{user_id}
-/admin/users/{user_id}
-/admin/edit_order/{order_id}
-/admin/edit_order/{order_id}
-/email/send_pdf
+/openapi.json (GET,HEAD) - openapi
+/docs (GET,HEAD) - swagger_ui_html
+/docs/oauth2-redirect (GET,HEAD) - swagger_ui_redirect
+/redoc (GET,HEAD) - redoc_html
+/static (N/A) - static
+/data/uploads (N/A) - uploads
+/audit_trail_test (GET) - audit_trail_test_page
+/mobile/authorisations (GET) - mobile_authorisations_page
+/mobile/requisition_login (GET) - mobile_requisition_login_page
+/home (GET) - home
+/orders/new (GET) - new_order_page
+/orders/pending_orders (GET) - pending_orders_page
+/orders/draft_orders (GET) - draft_orders_page
+/orders/cod_orders (GET) - cod_orders_page
+/orders/received_orders (GET) - received_orders_page
+/orders/audit_trail (GET) - audit_trail_page
+/maintenance (GET) - maintenance_page
+/orders/partially_delivered (GET) - partially_delivered_page
+/requisitions/pending_requisitions (GET) - pending_requisitions_page
+/requisitions/new (GET) - new_requisition_page
+/favicon.ico (GET) - favicon
+/orders/authorisations_per_user (GET) - authorisations_per_user_page
+/mobile/requisition (GET) - mobile_requisition_form
+/admin/edit_order_search (GET) - edit_order_search_page
+/admin/edit_order_search (POST) - handle_edit_order_search
+/admin/edit_order/{order_id} (GET) - edit_order_page
+/ (GET) - root_redirect_to_login
+/login (GET) - login_page
+/login (POST) - login
+/logout (GET) - logout
+/session_debug (GET) - session_debug
+/mobile/login (POST) - mobile_login
+/mobile/logout (GET) - mobile_logout
+/mobile/get_user_info (GET) - get_user_info
+/mobile_requisition_auth/login (POST) - login_requisitioner
+/mobile_requisition_auth/session_debug (GET) - session_debug
+/mobile_requisition/submit (POST) - submit_requisition
+/orders/new (GET) - new_order_page
+/orders/pending_orders (GET) - pending_orders_page
+/mobile/mobile_authorisations (GET) - mobile_authorisations_screen
+/orders/authorisations_per_user (GET) - authorisations_per_user_screen
+/orders/{order_id} (GET) - view_order_by_id
+/lookups/requisitioners (GET) - get_requisitioners
+/lookups/requisitioners (POST) - add_requisitioner
+/lookups/requisitioners/{requisitioner_id} (PUT) - update_requisitioner
+/lookups/requisitioners/{requisitioner_id} (DELETE) - delete_requisitioner
+/lookups/requesters (GET) - get_requesters
+/lookups/requesters (POST) - add_requester
+/lookups/requesters/{requester_id} (PUT) - update_requester
+/lookups/requesters/{requester_id} (DELETE) - delete_requester
+/lookups/items (GET) - get_items
+/lookups/items (POST) - add_item
+/lookups/items/{item_id} (PUT) - update_item
+/lookups/maintenance/import_items_csv (POST) - import_items_csv
+/lookups/items/{item_id} (DELETE) - delete_item
+/lookups/suppliers (GET) - get_suppliers
+/lookups/suppliers (POST) - add_supplier
+/lookups/suppliers/{supplier_id} (PUT) - update_supplier
+/lookups/import_suppliers_csv (POST) - import_suppliers_csv
+/lookups/suppliers/{supplier_id} (DELETE) - delete_supplier
+/lookups/projects (GET) - list_projects
+/lookups/projects (POST) - add_project
+/lookups/projects/{project_id} (PUT) - update_project
+/lookups/projects/{project_id} (DELETE) - delete_project
+/lookups/projects/import_csv (POST) - import_projects_csv
+/lookups/settings (GET) - get_settings
+/lookups/settings (PUT) - update_settings
+/lookups/order_number (PUT) - update_order_number
+/lookups/requisition_number (PUT) - update_requisition_number
+/lookups/business_details (GET) - get_business_details
+/lookups/business_details (PUT) - update_business_details
+/lookups/users (GET) - get_users
+/lookups/users (POST) - add_user
+/lookups/users/{user_id} (PUT) - update_user
+/lookups/users/{user_id} (DELETE) - delete_user
+/mobile/get_user_info (GET) - get_user_info
+/orders/api/awaiting_authorisation (GET) - get_orders_awaiting_authorisation
+/orders/api/authorise_order/{order_id} (POST) - authorise_order
+/orders/api/orders/api/audit_trail_orders (GET) - get_audit_trail_filtered_data
+/orders/api/preview_pdf_new_order (POST) - generate_preview_pdf_for_new_order
+/orders/api/generate_pdf_for_order/{order_id} (GET) - generate_pdf_for_order
+/orders/api/pending_orders (GET) - get_pending_orders
+/orders/api/received_orders (GET) - get_received_orders
+/orders/api/partially_delivered (GET) - get_partially_delivered_orders
+/orders/api/items_for_order/{order_id} (GET) - get_items_for_order
+/orders/api/last_audit_action/{order_id} (GET) - get_last_audit_action
+/orders/api/order_summary (GET) - get_order_summary
+/orders/api/cod_orders (GET) - get_cod_orders
+/orders/api/mark_cod_paid/{order_id} (PUT) - mark_cod_paid
+/draft_orders (POST) - create_new_draft_order
+/draft_orders/pending (GET) - get_pending_draft_orders
+/draft_orders/{draft_id} (GET) - get_draft_order
+/draft_orders/{draft_id} (PUT) - update_draft_order
+/draft_orders/{draft_id} (DELETE) - delete_draft_order
+/draft_orders/api/items/{draft_id} (GET) - get_items_for_draft_order
+/orders (POST) - create_new_order
+/orders (GET) - get_orders
+/orders/delete/{order_id} (DELETE) - delete_order
+/orders/{order_id} (GET) - get_order
+/orders/api/order_details_for_audit/{order_id} (GET) - get_order_details_for_audit
+/orders/api/order_audit_history/{order_id} (GET) - get_order_audit_history
+/orders/{order_id} (PUT) - update_order
+/orders/update_draft/{order_id} (PUT) - update_draft_order
+/orders/api/order_items/{order_id} (GET) - get_items_for_order
+/orders/orders/receive/{order_id} (POST) - mark_items_as_received
+/orders/api/audit_trail_orders (GET) - get_audit_trail_orders
+/orders/api/receipt_logs/{order_id} (GET) - get_receipt_logs
+/orders/upload_attachment (POST) - upload_attachment
+/orders/attachments/{order_id} (GET) - get_order_attachments
+/orders/receive/{order_id} (POST) - receive_order
+/orders/save_note/{order_id} (POST) - save_order_note
+/orders/mark_cod_paid/{order_id} (PUT) - mark_cod_paid
+/requisitions (POST) - submit_requisition
+/api/pending_requisitions (GET) - get_pending_requisitions
+/api/requisition_items/{requisition_id} (GET) - get_requisition_items
+/requisitions/api/mark_converted/{requisition_id} (PUT) - mark_requisition_converted
+/requisitions/upload_attachment (POST) - upload_requisition_attachment
+/requisitions/attachments/{requisition_id} (GET) - get_requisition_attachments
+/requisitions/uploads/{filename} (GET) - serve_uploaded_file
+/requisitions/submit_requisition (POST) - submit_requisition
+/log_client (POST) - log_client
+/log (POST) - log_from_frontend
+/admin/requesters (GET) - get_requesters
+/admin/requesters (POST) - add_requester
+/admin/requesters/{requester_id} (PUT) - update_requester
+/admin/requesters/{requester_id} (DELETE) - delete_requester
+/admin/suppliers (GET) - get_suppliers
+/admin/suppliers (POST) - add_supplier
+/admin/suppliers/{supplier_id} (PUT) - update_supplier
+/admin/import_suppliers_csv (POST) - import_suppliers_csv
+/admin/suppliers/{supplier_id} (DELETE) - delete_supplier
+/admin/items (GET) - get_items
+/admin/items (POST) - add_item
+/admin/items/{item_id} (PUT) - update_item
+/admin/maintenance/import_items_csv (POST) - import_items_csv
+/admin/items/{item_id} (DELETE) - delete_item
+/admin/projects (GET) - list_projects
+/admin/projects (POST) - add_project
+/admin/projects/{project_id} (PUT) - update_project
+/admin/projects/{project_id} (DELETE) - delete_project
+/admin/projects/import_csv (POST) - import_projects_csv
+/admin/settings (GET) - get_settings
+/admin/settings (PUT) - update_settings
+/admin/order_number (PUT) - update_order_number
+/admin/requisition_number (PUT) - update_requisition_number
+/admin/business_details (GET) - get_business_details
+/admin/business_details (PUT) - update_business_details
+/admin/users (GET) - get_users
+/admin/users (POST) - add_user
+/admin/users/{user_id} (PUT) - update_user
+/admin/users/{user_id} (DELETE) - delete_user
+/admin/edit_order/{order_id} (GET) - edit_order_page
+/admin/edit_order/{order_id} (PUT) - update_order_admin
+/email/send_pdf (POST) - send_pdf_email

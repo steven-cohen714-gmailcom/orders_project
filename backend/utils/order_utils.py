@@ -1,3 +1,4 @@
+# File: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/utils/order_utils.py
 """
 Utility functions for Universal Recycling Purchase Order System
 """
@@ -6,14 +7,16 @@ def normalize_order_number(order_number: str) -> str:
     """
     Normalize order numbers to a consistent format (e.g., URC0001).
     """
-    prefix = "URC"
-    if not order_number.startswith(prefix):
-        order_number = f"{prefix}{order_number}"
+    # Original logic:
+    # prefix = "URC"
+    # if not order_number.startswith(prefix):
+    #     order_number = f"{prefix}{order_number}"
     
-    num_part = order_number[len(prefix):]
+    # New logic to handle numbers without a prefix
+    numeric = ''.join(filter(str.isdigit, order_number))
     try:
-        num = int(num_part)
-        return f"{prefix}{num:04d}"  # Ensures 4 digits, e.g., URC0001
+        num = int(numeric)
+        return f"{num:04d}"  # Ensures 4 digits, e.g., 0001
     except ValueError:
         raise ValueError(f"Order number must end with a number, got: {order_number}")
 

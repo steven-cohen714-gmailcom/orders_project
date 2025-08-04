@@ -1,4 +1,4 @@
-// File: frontend/static/js/new_order_main.js
+/* File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/new_order_main.js */
 
 import { previewOrder } from "./new_order_screen/pdf_utils.js";
 import { submitOrder } from "./new_order_screen/submit_utils.js";
@@ -18,54 +18,53 @@ let currentDraftOrderId = null; // Stores the ID of the draft order if editing/c
 function debounce(func, wait) {
   let timeout;
   return function executedFunction(...args) {
-      const later = () => {
-          clearTimeout(timeout);
-          func(...args);
-      };
+    const later = () => {
       clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
   };
 }
 
 // Load dropdowns
 async function loadDropdowns() {
   try {
-      const requestersData = await fetchData("/lookups/requesters");
-      populateDropdown("requester_id", requestersData?.requesters, "name");
-      
-      await createFuzzyDropdown("supplier_id", "/lookups/suppliers");
+    const requestersData = await fetchData("/lookups/requesters");
+    populateDropdown("requester_id", requestersData?.requesters, "name");
+    
+    await createFuzzyDropdown("supplier_id", "/lookups/suppliers");
 
-      const itemsData = await fetchData("/lookups/items");
-      itemsList = itemsData?.items || [];
-      await createFuzzyDropdown("item-template", "/lookups/items"); 
+    const itemsData = await fetchData("/lookups/items");
+    itemsList = itemsData?.items || [];
+    await createFuzzyDropdown("item-template", "/lookups/items");
 
-      const projectsData = await fetchData("/lookups/projects");
-      projectsList = projectsData?.projects || [];
-      await createFuzzyDropdown("project-template", "/lookups/projects");
-
+    const projectsData = await fetchData("/lookups/projects");
+    projectsList = projectsData?.projects || [];
+    await createFuzzyDropdown("project-template", "/lookups/projects");
   } catch (error) {
-      console.error("Error loading dropdowns:", error);
-      throw error;
+    console.error("Error loading dropdowns:", error);
+    throw error;
   }
 }
 
 // Load current order number and authorization thresholds from settings
 async function loadOrderNumber() {
   try {
-      const settingsData = await fetchData("/lookups/settings");
-      currentOrderNumber = settingsData.order_number_start || "URC1000";
-      authThresholds = [
-          parseFloat(settingsData.auth_threshold_1 || 0),
-          parseFloat(settingsData.auth_threshold_2 || 0),
-          parseFloat(settingsData.auth_threshold_3 || 0),
-          parseFloat(settingsData.auth_threshold_4 || 0),
-          parseFloat(settingsData.auth_threshold_5 || 0) 
-      ];
-      console.log("Loaded thresholds:", authThresholds); 
-      document.getElementById("order-number").textContent = currentOrderNumber;
+    const settingsData = await fetchData("/lookups/settings");
+    currentOrderNumber = settingsData.order_number_start || "URC1000";
+    authThresholds = [
+      parseFloat(settingsData.auth_threshold_1 || 0),
+      parseFloat(settingsData.auth_threshold_2 || 0),
+      parseFloat(settingsData.auth_threshold_3 || 0),
+      parseFloat(settingsData.auth_threshold_4 || 0),
+      parseFloat(settingsData.auth_threshold_5 || 0)
+    ];
+    console.log("Loaded thresholds:", authThresholds);
+    document.getElementById("order-number").textContent = currentOrderNumber;
   } catch (error) {
-      console.error("Error loading order number or thresholds:", error);
-      document.getElementById("order-number").textContent = "URC1000"; 
+    console.error("Error loading order number or thresholds:", error);
+    document.getElementById("order-number").textContent = "URC1000";
   }
 }
 
@@ -73,30 +72,28 @@ async function loadOrderNumber() {
 async function incrementOrderNumber(orderNumberToIncrement) {
   const current = orderNumberToIncrement.match(/\d+$/);
   const prefix = orderNumberToIncrement.replace(/\d+$/, "");
-  const nextNum = current ? String(parseInt(current[0]) + 1).padStart(4, "0") : "1000"; 
+  const nextNum = current ? String(parseInt(current[0]) + 1).padStart(4, "0") : "1000";
   const newOrderNumber = `${prefix}${nextNum}`;
 
   try {
-      const res = await fetch('/lookups/order_number', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ order_number_start: newOrderNumber })
-      });
-
-      if (!res.ok) {
-          const errorText = await res.text();
-          console.error("Failed to update order number in backend settings:", errorText);
-          await logToServer('ERROR', 'Failed to update order number on backend settings', { oldNum: orderNumberToIncrement, newNum: newOrderNumber, error: errorText });
-          throw new Error(`Failed to update order number: ${errorText}`); // Propagate error
-      } else {
-        await logToServer('INFO', 'Order number incremented in backend settings', { oldNum: orderNumberToIncrement, newNum: newOrderNumber });
-      }
-
-      return newOrderNumber;
+    const res = await fetch('/lookups/order_number', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ order_number_start: newOrderNumber })
+    });
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Failed to update order number in backend settings:", errorText);
+      await logToServer('ERROR', 'Failed to update order number on backend settings', { oldNum: orderNumberToIncrement, newNum: newOrderNumber, error: errorText });
+      throw new Error(`Failed to update order number: ${errorText}`);
+    } else {
+      await logToServer('INFO', 'Order number incremented in backend settings', { oldNum: orderNumberToIncrement, newNum: newOrderNumber });
+    }
+    return newOrderNumber;
   } catch (err) {
-      console.error("Exception during order number update in backend settings:", err.message);
-      await logToServer('ERROR', 'Exception during order number update in backend settings', { oldNum: orderNumberToIncrement, error: err.message });
-      throw err; // Propagate exception
+    console.error("Exception during order number update in backend settings:", err.message);
+    await logToServer('ERROR', 'Exception during order number update in backend settings', { oldNum: orderNumberToIncrement, error: err.message });
+    throw err;
   }
 }
 
@@ -163,20 +160,19 @@ function addRow(itemData = {}, projectData = {}) {
 
   tbody.appendChild(row);
 
-  // Initialize fuzzy dropdowns for newly added row and set initial values
   const itemTomSelectPromise = createFuzzyDropdown(itemSelect.id, "/lookups/items");
   const projectTomSelectPromise = createFuzzyDropdown(projectSelect.id, "/lookups/projects");
 
   if (itemData.item_code) {
-      itemTomSelectPromise.then(ts => {
-          if (ts) ts.setValue(itemData.item_code);
-          updateTotal(itemSelect);
-      }).catch(err => console.error("Error setting item code for new row:", err));
+    itemTomSelectPromise.then(ts => {
+      if (ts) ts.setValue(itemData.item_code);
+      updateTotal(itemSelect);
+    }).catch(err => console.error("Error setting item code for new row:", err));
   }
   if (projectData.project_code) {
-      projectTomSelectPromise.then(ts => {
-          if (ts) ts.setValue(projectData.project_code);
-      }).catch(err => console.error("Error setting project code for new row:", err));
+    projectTomSelectPromise.then(ts => {
+      if (ts) ts.setValue(projectData.project_code);
+    }).catch(err => console.error("Error setting project code for new row:", err));
   }
 }
 
@@ -195,47 +191,43 @@ function updateGrandTotal() {
   const totals = Array.from(document.querySelectorAll(".total")).map(input => parseFloat(input.value) || 0);
   const grandTotal = totals.reduce((sum, val) => sum + val, 0);
   document.getElementById("grand-total").textContent = grandTotal.toFixed(2);
-  return grandTotal; 
+  return grandTotal;
 }
 
 // Delete a row
 function deleteRow(rowId) {
   const row = document.getElementById(rowId);
   if (row) {
-      row.remove();
-      updateGrandTotal();
+    row.remove();
+    updateGrandTotal();
   }
 }
 
-// Modal functions (kept for completeness as they might be imported or globally needed)
+// Modal functions
 function showOrderNoteModal(note, callback) {
   const modal = createBaseModal();
   const title = document.createElement("h3");
   title.textContent = "Order Note";
   modal.inner.appendChild(title);
-
   const textarea = document.createElement("textarea");
   textarea.value = note || "";
   textarea.style.width = "100%";
   textarea.style.height = "150px";
   modal.inner.appendChild(textarea);
-
   const saveBtn = document.createElement("button");
   saveBtn.textContent = "Save";
   saveBtn.style.marginTop = "1rem";
   saveBtn.onclick = () => {
-      callback(textarea.value);
-      document.body.removeChild(modal.container);
+    callback(textarea.value);
+    document.body.removeChild(modal.container);
   };
   modal.inner.appendChild(saveBtn);
-
   const closeBtn = document.createElement("button");
   closeBtn.textContent = "Close";
   closeBtn.style.marginTop = "1rem";
   closeBtn.style.marginLeft = "1rem";
   closeBtn.onclick = () => document.body.removeChild(modal.container);
   modal.inner.appendChild(closeBtn);
-
   document.body.appendChild(modal.container);
 }
 
@@ -244,17 +236,14 @@ function showSupplierNoteModal(note) {
   const title = document.createElement("h3");
   title.textContent = "Note to Supplier";
   modal.inner.appendChild(title);
-
   const p = document.createElement("p");
   p.textContent = note || "No note provided";
   modal.inner.appendChild(p);
-
   const closeBtn = document.createElement("button");
   closeBtn.textContent = "Close";
   closeBtn.style.marginTop = "1rem";
   closeBtn.onclick = () => document.body.removeChild(modal.container);
   modal.inner.appendChild(closeBtn);
-
   document.body.appendChild(modal.container);
 }
 
@@ -270,7 +259,6 @@ function createBaseModal() {
   container.style.alignItems = "center";
   container.style.justifyContent = "center";
   container.style.zIndex = "9999";
-
   const inner = document.createElement("div");
   inner.style.backgroundColor = "white";
   inner.style.padding = "1.5rem";
@@ -280,7 +268,6 @@ function createBaseModal() {
   inner.style.maxHeight = "80vh";
   inner.style.overflowY = "auto";
   container.appendChild(inner);
-
   const close = document.createElement("button");
   close.textContent = "✖";
   close.style.position = "absolute";
@@ -291,10 +278,8 @@ function createBaseModal() {
   close.style.fontSize = "1.2rem";
   close.style.cursor = "pointer";
   close.onclick = () => document.body.removeChild(container);
-
   inner.appendChild(close);
   container.appendChild(inner);
-
   return { container, inner };
 }
 
@@ -303,24 +288,23 @@ let businessDetails = null;
 
 async function fetchData(endpoint) {
   try {
-      const response = await fetch(endpoint, {
-          method: 'GET',
-          credentials: 'include'
-      });
-      if (!response.ok) {
-          throw new Error(`Failed to fetch ${endpoint}: ${response.status}`);
-      }
-      return await response.json();
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      credentials: 'include'
+    });
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${endpoint}: ${response.status}`);
+    }
+    return await response.json();
   } catch (error) {
-      console.error(`Error fetching ${endpoint}:`, error);
-      throw error;
+    console.error(`Error fetching ${endpoint}:`, error);
+    throw error;
   }
 }
 
 function populateDropdown(dropdownId, items, key, idKey = "id") {
   const dropdown = document.getElementById(dropdownId);
   dropdown.innerHTML = '<option value="">Select ' + dropdownId.replace('_id', '') + '</option>';
-
   if (items && Array.isArray(items)) {
     items.forEach(item => {
       const option = document.createElement("option");
@@ -332,95 +316,127 @@ function populateDropdown(dropdownId, items, key, idKey = "id") {
   }
 }
 
-// Added: Function to send email
 async function sendEmail(orderId) {
   try {
-      const response = await fetch(`/orders/email_purchase_order/${orderId}`, {
-          method: 'POST',
-          credentials: 'include'
-      });
-      if (!response.ok) throw new Error('Failed to send email');
-      await logToServer('INFO', 'Email sent successfully', { orderId });
-      alert('Email sent successfully');
+    const response = await fetch(`/orders/email_purchase_order/${orderId}`, {
+      method: 'POST',
+      credentials: 'include'
+    });
+    if (!response.ok) throw new Error('Failed to send email');
+    await logToServer('INFO', 'Email sent successfully', { orderId });
+    alert('Email sent successfully');
   } catch (error) {
-      await logToServer('ERROR', 'Failed to send email', { orderId, error: error.message });
-      alert('Failed to send email: ' + error.message);
+    await logToServer('ERROR', 'Failed to send email', { orderId, error: error.message });
+    alert('Failed to send email: ' + error.message);
   }
 }
 
+// Busy processing indicator
+function setProcessingState(isProcessing) {
+  const submitBtn = document.getElementById('submit-final-order');
+  const saveBtn = document.getElementById('save-draft-order');
+  const previewBtn = document.getElementById('preview-order');
+  const spinner = '<span style="display:inline-block;width:16px;height:16px;border:2px solid #fff;border-radius:50%;border-top-color:#007bff;animation:spin 1s linear infinite;margin-right:5px;"></span>';
+  if (submitBtn) {
+    submitBtn.disabled = isProcessing;
+    submitBtn.innerHTML = isProcessing ? `${spinner}Submitting...` : 'Submit as Final Order';
+    submitBtn.style.opacity = isProcessing ? '0.6' : '1';
+  }
+  if (saveBtn) {
+    saveBtn.disabled = isProcessing;
+    saveBtn.innerHTML = isProcessing ? `${spinner}Saving...` : 'Save as Draft Order';
+    saveBtn.style.opacity = isProcessing ? '0.6' : '1';
+  }
+  if (previewBtn) {
+    previewBtn.disabled = isProcessing;
+    previewBtn.innerHTML = isProcessing ? `${spinner}Previewing...` : 'View Purchase Order';
+    previewBtn.style.opacity = isProcessing ? '0.6' : '1';
+  }
+}
+
+// Animation for spinner
+const style = document.createElement('style');
+style.innerHTML = `
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`;
+document.head.appendChild(style);
+
 function setupEventListeners() {
-  // Listener for 'Submit as Final Order' button
   const submitFinalOrderBtn = document.getElementById('submit-final-order');
   if (submitFinalOrderBtn) {
     submitFinalOrderBtn.addEventListener('click', async () => {
+      setProcessingState(true);
       const paymentTerms = document.getElementById("payment_terms")?.value || "On account";
       const draftId = document.getElementById("draft-order-id")?.value;
-
       debounce(async () => {
         const success = await submitOrder({
-          currentOrderNumber: document.getElementById("order-number").textContent, // Use displayed order number
+          currentOrderNumber: document.getElementById("order-number").textContent,
           authThresholds: authThresholds,
           itemsList,
           updateGrandTotal,
           logToServer,
-          setCurrentOrderId: (id) => currentOrderId = id, // For tracking the new final order ID
+          setCurrentOrderId: (id) => currentOrderId = id,
           paymentTerms,
-          draftId: draftId // Pass draftId to submitOrder
+          draftId: draftId
         });
-
-        if (success) { // Only reset form AND increment order number if final submission was successful
-          // After a successful final order submission, increment the order number
-          // AND reset the form to display the *next* new order number.
-          const newOrderNumber = await incrementOrderNumber(currentOrderNumber); // Use currentOrderNumber for incrementing
-          currentOrderNumber = newOrderNumber; // Update local variable
-          document.getElementById("order-number").textContent = newOrderNumber; // Update UI
-          resetForm(); // Reset all form fields except the refreshed order number
+        if (success && !draftId) {
+          const newOrderNumber = await incrementOrderNumber(currentOrderNumber);
+          currentOrderNumber = newOrderNumber;
+          document.getElementById("order-number").textContent = newOrderNumber;
         }
+        if (success) {
+          resetForm();
+        }
+        setProcessingState(false);
       }, 500)();
     });
   } else {
     console.error('Submit Final Order button not found');
   }
 
-  // Listener for 'Save as Draft Order' button (THIS REMAINS UNCHANGED)
   const saveDraftOrderBtn = document.getElementById('save-draft-order');
   if (saveDraftOrderBtn) {
     saveDraftOrderBtn.addEventListener('click', () => {
-      debounce(async () => { // Keep this async to await saveDraftOrder
-        const success = await saveDraftOrder({ // Await the success result from saveDraftOrder
-          currentOrderNumber: document.getElementById("order-number").textContent, // Use displayed order number
+      setProcessingState(true);
+      debounce(async () => {
+        const success = await saveDraftOrder({
+          currentOrderNumber: document.getElementById("order-number").textContent,
           itemsList,
           updateGrandTotal,
-          incrementOrderNumber, // Pass the function to saveDraftOrder
+          incrementOrderNumber,
           logToServer,
           setCurrentOrderId: (id) => currentDraftOrderId = id,
-          setCurrentOrderNumber: (newNum) => { // This will update the displayed order number if it's a new draft
+          setCurrentOrderNumber: (newNum) => {
             currentOrderNumber = newNum;
             document.getElementById("order-number").textContent = newNum;
           }
         });
-
-        if (success) { // Only reset if draft save was successful AND it was a new draft
-            const draftOrderId = document.getElementById("draft-order-id")?.value;
-            if (!draftOrderId) { // If it was a new draft, reset to a blank form with the NEXT number
-                resetForm(); // This will now handle fetching the next order number automatically
-            }
-            // If it was an existing draft being updated, we don't reset the form or increment the number again.
+        if (success) {
+          const draftOrderId = document.getElementById("draft-order-id")?.value;
+          if (!draftOrderId) {
+            resetForm();
+          }
         }
+        setProcessingState(false);
       }, 500)();
     });
   } else {
     console.error('Save Draft Order button not found');
   }
 
-
   const previewBtn = document.getElementById('preview-order');
   if (previewBtn) {
     previewBtn.addEventListener('click', () => {
+      setProcessingState(true);
       previewOrder({
         itemsList,
         updateGrandTotal,
         logToServer
+      }).finally(() => {
+        setProcessingState(false);
       });
     });
   } else {
@@ -441,7 +457,6 @@ function setupEventListeners() {
     }
   });
 
-  // Event listeners for quantity and price input changes (using 'input' event for live update)
   document.getElementById('items-body').addEventListener('input', (e) => {
     if (e.target.classList.contains('qty-ordered') || e.target.classList.contains('price')) {
       updateTotal(e.target);
@@ -461,109 +476,91 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     await loadDropdowns();
     
-    // Check for draft_id in URL to load an existing draft
     const urlParams = new URLSearchParams(window.location.search);
     currentDraftOrderId = urlParams.get('draft_id');
 
     if (currentDraftOrderId) {
-        console.log(`Loading draft order ID: ${currentDraftOrderId}`);
-        try {
-            const draftData = await fetchData(`/draft_orders/${currentDraftOrderId}`);
-            if (draftData) {
-                // Populate main form fields
-                document.getElementById("requester_id").value = draftData.requester_id || "";
-                
-                // Set supplier using TomSelect
-                const supplierDropdown = document.getElementById("supplier_id");
-                if (supplierDropdown && supplierDropdown.tomselect) {
-                    supplierDropdown.tomselect.setValue(draftData.supplier_id);
-                } else {
-                    supplierDropdown.value = draftData.supplier_id || "";
-                }
-
-                document.getElementById("payment_terms").value = draftData.payment_terms || "On account";
-                document.getElementById("note_to_supplier").value = draftData.note_to_supplier || "";
-                document.getElementById("order_note").value = draftData.order_note || "";
-
-                // Set order number (read-only appearance)
-                currentOrderNumber = draftData.order_number;
-                document.getElementById("order-number").textContent = currentOrderNumber;
-                document.getElementById("order-number").style.pointerEvents = 'none'; // Make it visually uneditable
-                document.getElementById("order-number").style.opacity = '0.7';
-
-                // Set request date
-                document.getElementById("request_date").value = draftData.created_date ? draftData.created_date.split('T')[0] : new Date().toISOString().split('T')[0];
-
-                // Populate line items
-                document.querySelector("#items-body").innerHTML = ""; // Clear existing empty row
-                if (draftData.items && draftData.items.length > 0) {
-                    draftData.items.forEach(item => {
-                        addRow({ // Pass item data for pre-filling
-                            item_code: item.item_code,
-                            qty_ordered: item.qty_ordered,
-                            price: item.price,
-                            item_description: item.item_description,
-                        }, { // Pass project data if available
-                            project_code: item.project
-                        });
-                    });
-                } else {
-                    addRow(); // Add an empty row if no items in draft
-                }
-                updateGrandTotal(); // Recalculate total from loaded items
-
-                // Set the hidden draft-order-id field
-                document.getElementById("draft-order-id").value = currentDraftOrderId;
-
-                alert(`Draft Order ${currentOrderNumber} loaded for editing.`);
-            } else {
-                alert("Could not load draft order. Starting a new order.");
-                await loadOrderNumber(); // Load a fresh order number
-                addRow(); // Add a default row for new order
-            }
-        } catch (err) {
-            console.error('Error loading draft order:', err.message);
-            alert(`Error loading draft order: ${err.message}. Starting a new order.`);
-            await loadOrderNumber(); // Fallback to loading a fresh order number
-            addRow(); // Add a default row for new order
+      console.log(`Loading draft order ID: ${currentDraftOrderId}`);
+      try {
+        const draftData = await fetchData(`/draft_orders/${currentDraftOrderId}`);
+        if (draftData) {
+          document.getElementById("requester_id").value = draftData.requester_id || "";
+          const supplierDropdown = document.getElementById("supplier_id");
+          if (supplierDropdown && supplierDropdown.tomselect) {
+            supplierDropdown.tomselect.setValue(draftData.supplier_id);
+          } else {
+            supplierDropdown.value = draftData.supplier_id || "";
+          }
+          document.getElementById("payment_terms").value = draftData.payment_terms || "On account";
+          document.getElementById("note_to_supplier").value = draftData.note_to_supplier || "";
+          document.getElementById("order_note").value = draftData.order_note || "";
+          currentOrderNumber = draftData.order_number;
+          document.getElementById("order-number").textContent = currentOrderNumber;
+          document.getElementById("order-number").style.pointerEvents = 'none';
+          document.getElementById("order-number").style.opacity = '0.7';
+          document.getElementById("request_date").value = draftData.created_date ? draftData.created_date.split('T')[0] : new Date().toISOString().split('T')[0];
+          document.querySelector("#items-body").innerHTML = "";
+          if (draftData.items && draftData.items.length > 0) {
+            draftData.items.forEach(item => {
+              addRow({
+                item_code: item.item_code,
+                qty_ordered: item.qty_ordered,
+                price: item.price,
+                item_description: item.item_description,
+              }, {
+                project_code: item.project
+              });
+            });
+          } else {
+            addRow();
+          }
+          updateGrandTotal();
+          document.getElementById("draft-order-id").value = currentDraftOrderId;
+          alert(`Draft Order ${currentOrderNumber} loaded for editing.`);
+        } else {
+          alert("Could not load draft order. Starting a new order.");
+          await loadOrderNumber();
+          addRow();
         }
-    } else {
-        // If not editing a draft, load a fresh order number
+      } catch (err) {
+        console.error('Error loading draft order:', err.message);
+        alert(`Error loading draft order: ${err.message}. Starting a new order.`);
         await loadOrderNumber();
-        addRow(); // Add a default row for new order
+        addRow();
+      }
+    } else {
+      await loadOrderNumber();
+      addRow();
     }
 
     const dateField = document.getElementById("request_date");
-    if (dateField && !dateField.value) { // Only set if not already set by loading draft
+    if (dateField && !dateField.value) {
       const today = new Date().toISOString().split('T')[0];
       dateField.value = today;
     }
-
   } catch (err) {
     console.error('Initialization failed:', err.message);
     alert(`Error: ${err.message}`);
   }
 });
 
-function resetForm() {
+async function resetForm() {
   document.getElementById("requester_id").value = "";
   document.getElementById("payment_terms").value = "";
   document.getElementById("note_to_supplier").value = "";
   document.getElementById("order_note").value = "";
-
   const supplierDropdown = document.getElementById("supplier_id");
   if (supplierDropdown && supplierDropdown.tomselect) {
-    supplierDropdown.tomselect.clear(true); 
+    supplierDropdown.tomselect.clear(true);
   } else {
     supplierDropdown.value = "";
   }
-
   document.querySelector("#items-body").innerHTML = "";
-  addRow(); // Add one empty line item for next entry
-  updateGrandTotal(); // Reset total display
-  currentDraftOrderId = null; // Clear draft ID
-  document.getElementById("draft-order-id").value = ""; // Clear hidden input
-  // Restore order number display to be editable if it was loaded from a draft
+  addRow();
+  updateGrandTotal();
+  currentDraftOrderId = null;
+  document.getElementById("draft-order-id").value = "";
   document.getElementById("order-number").style.pointerEvents = 'auto';
   document.getElementById("order-number").style.opacity = '1';
+  await loadOrderNumber(); // Fetch next order number to update UI
 }

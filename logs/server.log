@@ -1,0 +1,49 @@
+INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
+INFO:     Started reloader process [6870] using StatReload
+INFO:root:Database initialized successfully.
+INFO:root:✅ Database initialized successfully.
+INFO:     Started server process [6939]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'new_order' initiated.
+DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
+DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'new_order'.
+INFO:root:Starting to render new order page
+DEBUG: Current working directory is: /Users/stevencohen/Projects/universal_recycling/orders_project
+INFO:     127.0.0.1:53518 - "GET /orders/new HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53518 - "GET /static/css/fuzzy_dropdown_fix.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53520 - "GET /static/js/new_order_main.js?v=1 HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53520 - "GET /static/js/new_order_screen/submit_utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53518 - "GET /static/js/new_order_screen/submit_draft_order_utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53522 - "GET /static/js/new_order_screen/pdf_utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53522 - "GET /static/js/components/utils.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53518 - "GET /static/js/components/fuzzy_dropdown.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53520 - "GET /static/js/components/pdf_modal.js HTTP/1.1" 304 Not Modified
+INFO:root:Requesters fetched: 14 items
+INFO:     127.0.0.1:53520 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 922 items
+INFO:     127.0.0.1:53520 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:root:Items fetched: 10097 items
+INFO:     127.0.0.1:53520 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:root:Items fetched: 10097 items
+INFO:     127.0.0.1:53520 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53520 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53520 - "GET /lookups/projects HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53520 - "GET /lookups/settings HTTP/1.1" 200 OK
+INFO:root:Items fetched: 10097 items
+INFO:     127.0.0.1:53520 - "GET /lookups/items HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53518 - "GET /lookups/projects HTTP/1.1" 200 OK
+DEBUG:backend.utils.permissions_utils:Permissions check for screen_code: 'pending_orders' initiated.
+DEBUG:backend.utils.permissions_utils:User object in session: {'id': 14, 'username': 'steven', 'rights': 'edit', 'auth_threshold_band': 5}
+DEBUG:backend.utils.permissions_utils:User 'steven' (ID: 14) has permissions: ['new_order', 'pending_orders', 'received_orders', 'partially_delivered_orders', 'audit_trail', 'my_authorisations', 'cod_orders', 'maintenance', 'draft_orders', 'edit_order_admin']
+DEBUG:backend.utils.permissions_utils:User 'steven' successfully authorized for 'pending_orders'.
+INFO:     127.0.0.1:53520 - "GET /orders/pending_orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53520 - "GET /static/js/pending_orders.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53520 - "GET /static/js/components/expand_line_items.js HTTP/1.1" 304 Not Modified
+INFO:root:Requesters fetched: 14 items
+INFO:     127.0.0.1:53520 - "GET /lookups/requesters HTTP/1.1" 200 OK
+INFO:root:Suppliers fetched: 922 items
+INFO:     127.0.0.1:53518 - "GET /lookups/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53518 - "GET /orders/api/pending_orders HTTP/1.1" 200 OK
