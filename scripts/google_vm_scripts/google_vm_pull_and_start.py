@@ -8,14 +8,15 @@ import time
 
 # --- Configuration ---
 PROJECT_ROOT = Path("/home/steven_cohen714/orders_project")
+BACKUP_DIR_NAME = "data_backup"
 
 # Database configuration (for reference, not directly manipulated by Git)
 DB_NAME = "orders.db"
-LIVE_DB_PATH = PROJECT_ROOT / "data" / DB_NAME  # This path should be in .gitignore
+LIVE_DB_PATH = PROJECT_ROOT / "data" / DB_NAME
 
 # Path for your database initialization/migration script relative to PROJECT_ROOT
-DB_INIT_SCRIPT_MODULE = "backend.database"  # Module path for import
-DB_INIT_FUNCTION = "init_db"  # Function name to call
+DB_INIT_SCRIPT_MODULE = "backend.database"
+DB_INIT_FUNCTION = "init_db"
 
 # Path to your main FastAPI application entry point (for pgrep)
 MAIN_APP_SCRIPT = PROJECT_ROOT / "backend" / "main.py"
@@ -88,8 +89,8 @@ def kill_server():
         for pid in set(pids_to_kill):
             print_status(f"Killing server process with PID {pid}", "info")
             try:
-                subprocess.run(["kill", pid], check=True, shell=False)  # SIGTERM
-                time.sleep(2)  # Give it a moment to shut down
+                subprocess.run(["kill", pid], check=True, shell=False)
+                time.sleep(2)
                 subprocess.run(["kill", "-0", pid], check=True, shell=False)
                 print_status(f"Server process PID {pid} still alive, forcing kill.", "warning")
                 subprocess.run(["kill", "-9", pid], check=True, shell=False)
@@ -118,38 +119,48 @@ def apply_db_migrations():
 # --- Main Deployment Steps ---
 def main():
     print("\n🚀 Starting deployment to Google VM (Data-Safe)...")
-
-    # 1. First Safety Check: Backup the live database before starting anything.
-    if LIVE_DB_PATH.exists():
-        print_status(f"Live database found at '{LIVE_DB_PATH}'. Creating a fresh backup...")
+    
+    # Check for the existence of the live data directory
+    live_data_path = PROJECT_ROOT / "data"
+    backup_path = None
+    
+    if live_data_path.exists():
+        print_status(f"Live data directory found at '{live_data_path}'. Creating a fresh backup...")
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        first_backup_path = LIVE_DB_PATH.parent / f"{LIVE_DB_PATH.name}.pre_pull_backup_{timestamp}"
+        backup_path = live_data_path.parent / f"{BACKUP_DIR_NAME}_{timestamp}"
         try:
-            shutil.copy2(LIVE_DB_PATH, first_backup_path)
-            print_status(f"✅ Initial live database backed up to '{first_backup_path}'.", "success")
+            # --- MODIFICATION ---
+            # Copy the entire data directory, including subfolders and files.
+            shutil.copytree(live_data_path, backup_path)
+            print_status(f"✅ Initial live data directory backed up to '{backup_path}'.", "success")
         except Exception as e:
-            print_status(f"❌ Failed to create initial backup. Aborting pull to prevent data loss: {e}", "error")
+            print_status(f"❌ Failed to create initial backup of data directory. Aborting pull to prevent data loss: {e}", "error")
             sys.exit(1)
 
     # 2. Kill any running server instances
     kill_server()
 
     # 3. Perform Git sync (fetch, hard reset)
-    # This assumes 'data/' is in .gitignore and will NOT be touched by git.
     print_status("Performing Git synchronization...")
-    run_command(["git", "rm", "--cached", str(LIVE_DB_PATH)], "Untracking DB file from Git index", check=False, cwd=PROJECT_ROOT)
+    # The '.gitignore' file should contain 'data/' to prevent this folder from being tracked.
+    # We explicitly remove the DB file from the git index to be extra safe.
+    run_command(["git", "rm", "--cached", str(live_data_path)], "Untracking DB file from Git index", check=False, cwd=PROJECT_ROOT)
     run_command(["git", "fetch", "origin"], "Fetching latest from origin", cwd=PROJECT_ROOT)
     run_command(["git", "reset", "--hard", "origin/main"], "Hard reset to remote main", cwd=PROJECT_ROOT)
     print_status("Git sync complete. VM now matches GitHub.", "success")
 
-    # 4. Restore the live database from the backup.
-    if LIVE_DB_PATH.exists():
-        print_status(f"Restoring live database from backup '{first_backup_path}'...")
+    # 4. Restore the live data directory from the backup.
+    if backup_path and live_data_path.exists():
+        print_status(f"Restoring live data directory from backup '{backup_path}'...")
         try:
-            shutil.copy2(first_backup_path, LIVE_DB_PATH)
-            print_status("✅ Live database restored.", "success")
+            # --- MODIFICATION ---
+            # First, remove the existing data directory before restoring.
+            shutil.rmtree(live_data_path)
+            # Then, restore the full backup.
+            shutil.copytree(backup_path, live_data_path)
+            print_status("✅ Live data directory restored.", "success")
         except Exception as e:
-            print_status(f"❌ Failed to restore database from backup: {e}. Live database state is now unpredictable. You will need to manually restore from a separate backup.", "error")
+            print_status(f"❌ Failed to restore data directory from backup: {e}. Live data state is now unpredictable. You will need to manually restore from a separate backup.", "error")
             sys.exit(1)
 
     # 5. Install Python dependencies (system-wide)

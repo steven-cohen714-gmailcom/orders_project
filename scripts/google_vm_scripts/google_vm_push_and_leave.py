@@ -1,12 +1,11 @@
-# File: /home/steven_cohen714/orders_project/scripts/google_vm_scripts/google_vm_push_and_leave.py
-
-#!/usr/bin/env python3
+# File: orders_project/scripts/google_vm_scripts/google_vm_push_and_leave.py
 
 import subprocess
 import socket
 import sys
 from pathlib import Path
 import os
+import time
 
 # --- Configuration for Safety Check ---
 EXPECTED_HOSTNAME = "universal-recycling-google-server"
@@ -28,13 +27,26 @@ if current_hostname != EXPECTED_HOSTNAME:
 else:
     print(f"✅ Security check passed. Hostname '{current_hostname}' matches expected.")
 
-# --- Change the current working directory to the project root ---
-try:
-    os.chdir(project_root)
-    print(f"🔄 Changed current working directory to: {os.getcwd()}")
-except FileNotFoundError:
-    print(f"❌ Error: Project root directory not found at {project_root}")
-    sys.exit(1)
+def create_gitignore_file():
+    """
+    Ensures a .gitignore exists and contains necessary entries.
+    """
+    gitignore_path = project_root / ".gitignore"
+    if not gitignore_path.exists():
+        print("🔧 Creating .gitignore file...")
+        with open(gitignore_path, "w") as f:
+            f.write("# Ignore files that should not be in Git\n")
+            f.write("venv/\n")
+            f.write("logs/\n")
+            f.write("data/\n")
+            f.write(".DS_Store\n")
+            f.write("__pycache__/\n")
+        print("✅ .gitignore file created with necessary exclusions.")
+    
+    # We explicitly remove the `data` and `logs` directory from Git's index
+    # to be certain they are never tracked.
+    subprocess.run(["git", "rm", "-r", "--cached", "data"], cwd=project_root, capture_output=True, text=True)
+    subprocess.run(["git", "rm", "-r", "--cached", "logs"], cwd=project_root, capture_output=True, text=True)
 
 def run_command(cmd, desc=None, check=True):
     """
@@ -43,20 +55,31 @@ def run_command(cmd, desc=None, check=True):
     if desc:
         print(f"🔧 {desc}")
     
-    result = subprocess.run(cmd, capture_output=True, text=True)
+    result = subprocess.run(cmd, cwd=project_root, capture_output=True, text=True, check=check)
     
-    if check and result.returncode != 0:
+    if result.returncode != 0:
         print(f"❌ Error during: {desc or ' '.join(cmd)}")
         print(result.stderr.strip())
         sys.exit(1)
     
     return result
 
-print("🧠 Staging and committing all VM project files...")
-run_command(["git", "add", "-A"], "Staging ALL files")
+def main():
+    print("🧠 Staging and committing all VM project files...")
 
-run_command(["git", "commit", "-m", f'SYNC FROM VM ({current_hostname})'], "Committing VM changes", check=False)
+    # 1. Ensure .gitignore is set up correctly and untrack unwanted files
+    create_gitignore_file()
 
-run_command(["git", "push"], "Pushing to GitHub")
+    # 2. Stage ALL changes
+    run_command(["git", "add", "-A"], "Staging ALL files")
 
-print("✅ VM state is now pushed to GitHub.")
+    # 3. Commit all staged changes
+    run_command(["git", "commit", "-m", f'SYNC FROM VM ({current_hostname})'], "Committing VM changes", check=False)
+
+    # 4. Push to GitHub
+    run_command(["git", "push"], "Pushing to GitHub")
+
+    print("✅ VM state is now pushed to GitHub.")
+
+if __name__ == "__main__":
+    main()

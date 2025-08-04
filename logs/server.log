@@ -1,8 +1,8 @@
-INFO:     Will watch for changes in these directories: ['/Users/stevencohen/Projects/universal_recycling/orders_project/backend']
+INFO:     Will watch for changes in these directories: ['/home/steven_cohen714/orders_project/backend']
 INFO:     Uvicorn running on http://0.0.0.0:8004 (Press CTRL+C to quit)
-INFO:     Started reloader process [28946] using StatReload
+INFO:     Started reloader process [61657] using StatReload
 INFO:root:Database initialized successfully.
 INFO:root:✅ Database initialized successfully.
-INFO:     Started server process [28984]
+INFO:     Started server process [61659]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
