@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# File: scripts/dump_scripts/entire_project_dump.py
+
 import os
 import subprocess
 import sqlite3
@@ -9,18 +11,16 @@ from datetime import datetime
 # Define root project directory
 root_dir = '/Users/stevencohen/Projects/universal_recycling/orders_project'
 
-# Include these subdirectories (expanded to include scripts for debugging)
-include_dirs = {'backend', 'frontend', 'scripts'}
-
-# File extensions to include (text-based files only)
-valid_extensions = {'.py', '.html', '.js', '.css', '.txt', '.json'}
+# File extensions to include
+# Only include the file types requested: .py, .js, and .html
+valid_extensions = {'.py', '.js', '.html'}
 
 # Define output file path with timestamp for versioning
 output_dir = '/Users/stevencohen/Desktop'
 timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-output_file_path = os.path.join(output_dir, f'entire_project_dump_{timestamp}.txt')
+output_file_path = os.path.join(output_dir, f'project_dump_{timestamp}.txt')
 
-# Setup logging for errors and skipped files
+# Setup logging
 logging.basicConfig(
     filename=os.path.join(root_dir, 'logs', 'dump_script.log'),
     level=logging.INFO,
@@ -30,70 +30,82 @@ logging.basicConfig(
 # Ensure the output directory exists
 os.makedirs(output_dir, exist_ok=True)
 
-with open(output_file_path, 'w', encoding='utf-8') as output_file:
-    # Write the directory tree
+def write_separator(file_handle, title):
+    """Writes a title and separator line to the output file."""
+    file_handle.write(f"\n{'=' * 80}\n")
+    file_handle.write(f"--- {title} ---\n")
+    file_handle.write(f"{'=' * 80}\n")
+    file_handle.flush()
+
+def dump_file_content(file_handle, file_path):
+    """Safely reads and writes file content to the output."""
+    try:
+        with open(file_path, 'r', encoding='utf-8', errors='replace') as f:
+            content = f.read()
+            file_handle.write(f"\n--- FILE: {file_path} ---\n")
+            file_handle.write(content)
+            file_handle.write(f"\n--- END OF FILE: {file_path} ---\n")
+            logging.info(f"Successfully dumped file: {file_path}")
+    except Exception as e:
+        file_handle.write(f"--- FAILED TO READ FILE: {file_path} ---\n")
+        file_handle.write(f"Error: {e}\n")
+        logging.error(f"Error reading file: {file_path} - {e}")
+    finally:
+        file_handle.flush()
+
+def dump_directory_tree(file_handle):
+    """Executes the tree command to generate and write the directory tree."""
     try:
         tree_output = subprocess.check_output(['tree', '-L', '4', root_dir], text=True)
-        output_file.write("DIRECTORY TREE:\n")
-        output_file.write(tree_output)
-        output_file.write("\n" + "=" * 80 + "\n")
+        file_handle.write(tree_output)
         logging.info("Directory tree generated successfully.")
-    except subprocess.CalledProcessError as e:
-        output_file.write(f"Error generating directory tree: {e}\n")
-        output_file.write("=" * 80 + "\n")
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        file_handle.write(f"Error generating directory tree. 'tree' command may not be installed. {e}\n")
         logging.error(f"Failed to generate directory tree: {e}")
+    file_handle.flush()
 
-    # Write the database schema
+def dump_db_schema(file_handle):
+    """Connects to the database and writes the schema."""
     db_path = os.path.join(root_dir, 'data', 'orders.db')
+    if not os.path.exists(db_path):
+        file_handle.write(f"Database file not found at: {db_path}\n")
+        logging.error(f"Database file not found: {db_path}")
+        return
+
     try:
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         cursor.execute("SELECT sql FROM sqlite_master WHERE type='table';")
         schema = cursor.fetchall()
         conn.close()
-        output_file.write("DATABASE SCHEMA:\n")
         for table in schema:
             if table[0]:
-                output_file.write(table[0] + "\n")
-        output_file.write("=" * 80 + "\n")
+                file_handle.write(table[0] + "\n\n")
         logging.info("Database schema dumped successfully.")
     except sqlite3.Error as e:
-        output_file.write(f"Error retrieving database schema: {e}\n")
-        output_file.write("=" * 80 + "\n")
+        file_handle.write(f"Error retrieving database schema: {e}\n")
         logging.error(f"Failed to retrieve database schema: {e}")
+    file_handle.flush()
 
-    # Traverse included directories
-    for subdir in include_dirs:
-        target_path = os.path.join(root_dir, subdir)
-        for dirpath, dirnames, filenames in os.walk(target_path):
-            for filename in sorted(filenames):  # Sort for consistent output
-                file_path = os.path.join(dirpath, filename)
-                # Check if file extension is valid
-                if not os.path.splitext(filename)[1].lower() in valid_extensions:
-                    output_file.write(f"FILE: {file_path}\n")
-                    output_file.write(f"❌ Skipped non-text file (invalid extension): {file_path}\n")
-                    output_file.write(f"END OF FILE: {file_path}\n")
-                    output_file.write("=" * 80 + "\n")
-                    logging.info(f"Skipped non-text file: {file_path}")
-                    continue
-                output_file.write(f"FILE: {file_path}\n")
-                try:
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        content = f.read()
-                        # Optional: Limit output for very large files (e.g., >1MB)
-                        max_size = 1024 * 1024  # 1MB
-                        if len(content.encode('utf-8')) > max_size:
-                            output_file.write(f"⚠️ File too large (>1MB), first 1000 chars shown:\n")
-                            output_file.write(content[:1000] + "\n[...TRUNCATED...]\n")
-                            logging.warning(f"Truncated large file: {file_path} (size: {len(content.encode('utf-8'))} bytes)")
-                        else:
-                            output_file.write(content)
-                except UnicodeDecodeError:
-                    output_file.write(f"❌ Could not decode file as UTF-8: {file_path}\n")
-                    logging.error(f"Unicode decode error for file: {file_path}")
-                except Exception as e:
-                    output_file.write(f"❌ Error reading file: {file_path} - {str(e)}\n")
-                    logging.error(f"Error reading file: {file_path} - {str(e)}", exc_info=True)
-                output_file.write(f"\nEND OF FILE: {file_path}\n")
-                output_file.write("=" * 80 + "\n")
-                logging.info(f"Dumped file: {file_path}")
+# --- Main Script Execution ---
+if __name__ == "__main__":
+    with open(output_file_path, 'w', encoding='utf-8') as output_file:
+        write_separator(output_file, "DIRECTORY TREE")
+        dump_directory_tree(output_file)
+
+        write_separator(output_file, "DATABASE SCHEMA")
+        dump_db_schema(output_file)
+
+        # Traverse the entire project directory to find all relevant files
+        for dirpath, _, filenames in os.walk(root_dir):
+            for filename in sorted(filenames):
+                file_ext = os.path.splitext(filename)[1].lower()
+                if file_ext in valid_extensions:
+                    file_path = os.path.join(dirpath, filename)
+                    # Check if the file is within a directory that should be skipped
+                    if 'logs' in dirpath or 'dump_scripts' in dirpath:
+                        continue
+                    dump_file_content(output_file, file_path)
+
+    print(f"Project dump complete. Output file created at: {output_file_path}")
+    logging.info("Script finished execution.")

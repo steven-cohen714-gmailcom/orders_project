@@ -67,22 +67,10 @@
     });
   </script>
 
-  <!-- COD Payment Modal -->
-<div id="cod-payment-modal" class="modal" style="display:none; position: fixed; top: 20%; left: 40%; background: #fff; border: 1px solid #ccc; padding: 20px; z-index: 999;">
-  <h3>Mark COD Payment</h3>
-  <p id="cod-payment-order-number"></p>
-
-  <label for="cod-amount-paid">Amount Paid:</label>
-  <input type="number" id="cod-amount-paid" step="0.01" min="0" />
-
-  <label for="cod-payment-date">Payment Date:</label>
-  <input type="date" id="cod-payment-date" />
-
-  <div style="margin-top: 1em;">
-    <button id="cod-payment-submit">✅ Submit</button>
-    <button onclick="closeCodPaymentModal()">Cancel</button>
+  <div id="cod-payment-modal" class="modal receive-modal"> <!-- Changed class from modal-overlay to modal receive-modal, removed style -->
+    <div id="modal-content-container">
+    </div>
   </div>
-</div>
 
 </body>
 </html>

@@ -4,8 +4,10 @@ import sqlite3
 import subprocess
 
 # --- Setup ---
+# --- Setup ---
 os.chdir("/Users/stevencohen/Projects/universal_recycling/orders_project")
-output_file = Path("scripts_for_each_screen/output_cod_screen.txt")
+# Change this line to point to the Desktop
+output_file = Path.home() / "Desktop" / "output_cod_screen.txt" 
 output_file.parent.mkdir(parents=True, exist_ok=True)
 
 # --- All relevant files impacting COD payments ---

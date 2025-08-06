@@ -2,30 +2,45 @@
 
 console.log("💸 payments_modal.js loaded");
 
-export function showCodPaymentModal(orderId, existingAmount = '', existingDate = '') {
-  // Create modal container
-  const modal = document.createElement("div");
-  modal.classList.add("modal-overlay");
-  modal.innerHTML = `
-    <div class="modal">
-      <h2>Mark COD Payment</h2>
-      <label for="cod-amount">Amount Paid:</label>
-      <input type="number" id="cod-amount" value="${existingAmount}" placeholder="Enter amount" step="0.01" />
+// Assumes the modal element with id 'cod-payment-modal' exists in the HTML
+// And contains a div with id 'modal-content-container'
+export function showCodPaymentModal(orderId, orderNumber, existingAmount = '', existingDate = '') {
+  // Get a reference to the existing modal in the HTML
+  const modal = document.getElementById("cod-payment-modal");
+  if (!modal) {
+    console.error("Payments modal element with ID 'cod-payment-modal' not found.");
+    return;
+  }
 
-      <label for="cod-date">Payment Date:</label>
-      <input type="date" id="cod-date" value="${existingDate}" />
-
-      <div class="modal-buttons">
-        <button id="cod-cancel">Cancel</button>
-        <button id="cod-save">Save</button>
+  // Find the modal content container to populate it with the form
+  const modalContentContainer = modal.querySelector('#modal-content-container');
+  modalContentContainer.innerHTML = `
+      <div class="modal-content">
+          <h2>Mark COD Payment for Order ${orderNumber}</h2>
+          <table class="table">
+              <tbody>
+                  <tr>
+                      <td><label for="cod-amount">Amount Paid:</label></td>
+                      <td><input type="number" id="cod-amount" value="${parseFloat(existingAmount).toFixed(2)}" placeholder="Enter amount" step="0.01" required class="form-input"></td>
+                  </tr>
+                  <tr>
+                      <td><label for="cod-date">Payment Date:</label></td>
+                      <td><input type="date" id="cod-date" value="${existingDate}" required class="form-input"></td>
+                  </tr>
+              </tbody>
+          </table>
+          <div class="form-row">
+              <button id="cod-cancel" class="btn btn-danger">Cancel</button>
+              <button id="cod-save" class="btn btn-primary">Save</button>
+          </div>
       </div>
-    </div>
   `;
-
-  document.body.appendChild(modal);
+  
+  // Show the modal
+  modal.style.display = 'flex';
 
   // Add button listeners
-  document.getElementById("cod-cancel").onclick = () => modal.remove();
+  document.getElementById("cod-cancel").onclick = () => modal.style.display = 'none';
   document.getElementById("cod-save").onclick = async () => {
     const amount = parseFloat(document.getElementById("cod-amount").value);
     const date = document.getElementById("cod-date").value;
@@ -48,29 +63,24 @@ export function showCodPaymentModal(orderId, existingAmount = '', existingDate =
         let errorMessage = "Failed to save COD payment due to an unknown error.";
         try {
           const errorData = await res.json();
-          errorMessage = errorData.detail || errorMessage; // Use backend's 'detail' message if available
+          errorMessage = errorData.detail || errorMessage;
         } catch (jsonError) {
-          // If response is not JSON, use the status text or a generic message
           errorMessage = `Server error: ${res.status} ${res.statusText || ''}`;
         }
-        console.error("Error saving COD payment:", errorMessage); // Keep this console.error for debugging purposes
+        console.error("Error saving COD payment:", errorMessage);
         alert(`❌ Error saving COD payment: ${errorMessage}`);
-        // *** CRITICAL CHANGE: Remove `throw new Error(...)` here ***
-        return; // Stop function execution after displaying alert
+        return;
       }
 
       const data = await res.json();
       if (data.success) {
         alert("✅ COD payment recorded");
-        modal.remove();
+        modal.style.display = 'none'; // Hide the modal on success
         location.reload();
       } else {
-        // This case should ideally not be hit if backend always sends 'success: true' on success
-        alert("❌ Failed to save payment"); 
+        alert("❌ Failed to save payment");
       }
     } catch (err) {
-      // This catch block will now primarily catch true network errors (e.g., server unreachable)
-      // or issues occurring before the `fetch` call resolves.
       console.error("Network or unexpected error saving COD payment:", err);
       alert(`❌ An unexpected error occurred: ${err.message}`);
     }
