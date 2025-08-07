@@ -1,4 +1,4 @@
-# File: /Users/stevencohen/Projects/universal_recycling/orders_project/backend/database.py
+# backend/database.py
 
 import sqlite3
 from pathlib import Path
@@ -128,6 +128,8 @@ def init_db():
                     requisition_number_start TEXT DEFAULT 'REQ1000'
                 )
             """)
+
+            
             # --- MODIFIED: users table to match .schema (no UNIQUE NOT NULL for username) ---
             # This makes the CREATE TABLE statement align with your existing DB's non-enforced state.
             # Ideal: should be UNIQUE NOT NULL, but for "working now" this matches current DB.
@@ -140,6 +142,20 @@ def init_db():
                     auth_threshold_band INTEGER CHECK (auth_threshold_band IN (1, 2, 3, 4, 5)),
                     roles TEXT
                 )
+            """)
+
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS order_payments (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    order_id INTEGER NOT NULL,
+                    amount_paid REAL NOT NULL,
+                    payment_date TEXT NOT NULL,
+                    payment_status TEXT NOT NULL CHECK (payment_status IN ('Fully Paid', 'Not Fully Paid')),
+                    created_by INTEGER,
+                    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (order_id) REFERENCES orders(id),
+                    FOREIGN KEY (created_by) REFERENCES users(id)
+                );
             """)
 
             # --- Schema Alterations for 'users' table (Add columns if they don't exist) ---
@@ -611,3 +627,36 @@ def get_next_requisition_number():
         cursor.execute("UPDATE settings SET requisition_number_start = ? WHERE id = 1", (new_number,))
         conn.commit()
         return new_number
+
+def mark_cod_payment(order_id, amount_paid, payment_date, payment_status):
+    """
+    Updates an order with COD payment details.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE orders
+        SET amount_paid = ?, payment_date = ?, payment_status = ?
+        WHERE id = ?
+    """, (amount_paid, payment_date, payment_status, order_id))
+    conn.commit()
+    conn.close()
+
+
+def log_cod_payment_action(order_id: int, amount_paid: float, payment_status: str, user_id: int):
+    """
+    Logs a COD payment action to the audit trail.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    description = f"COD payment of R{amount_paid:.2f} marked as '{payment_status}'"
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    cursor.execute("""
+        INSERT INTO audit_trail (order_id, user_id, action_type, description, timestamp)
+        VALUES (?, ?, ?, ?, ?)
+    """, (order_id, user_id, "COD Payment", description, timestamp))
+
+    conn.commit()
+    conn.close()

@@ -1,3 +1,15 @@
 .env
 venv/
 *.pyc
+logs/
+data/
+.DS_Store
+__pycache__/
+*.sqlite3
+*.db
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.swn

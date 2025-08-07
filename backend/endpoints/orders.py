@@ -1,3 +1,5 @@
+# File: backend/endpoints/orders.py
+
 import logging
 from fastapi import APIRouter, HTTPException, Depends, Request, Query
 from pydantic import BaseModel
@@ -48,6 +50,12 @@ class ReceivedItem(BaseModel):
 
 class ReceivePayload(BaseModel):
     items: List[ReceivedItem]
+
+# --- NEW: Model for COD Payment ---
+class CodPayment(BaseModel):
+    amount_paid: float
+    payment_date: str
+    payment_status: str
 
 # --- Routes ---
 @router.post("")
@@ -276,7 +284,6 @@ async def get_order_audit_history(order_id: int):
         log_error("order_audit_history", "fetching", e)
         raise HTTPException(status_code=500, detail=f"Failed to fetch order audit history: {str(e)}")
 
-
 @router.put("/{order_id}")
 @handle_db_errors(entity="order", action="updating")
 async def update_order(order_id: int, order: OrderUpdate):
@@ -359,7 +366,6 @@ async def update_draft_order(order_id: int, payload: dict):
         
         new_order_total = order_total_result["calculated_total"] if order_total_result and order_total_result["calculated_total"] is not None else 0.0
         logging.info(f"   - Calculated new_order_total: {new_order_total}")
-
 
         # 3. Determine the required_auth_band_id and new status based on the new total and settings thresholds
         new_status = 'Pending' # Default status
@@ -619,3 +625,72 @@ async def get_receipt_logs(order_id: int):
     result = [dict(row) for row in rows]
     log_success("receipt_logs", "fetched", f"{len(result)} logs for order {order_id}")
     return {"logs": result}
+
+@router.get("/payment_history/{order_id}")
+@handle_db_errors(entity="order_payments", action="fetching")
+async def get_order_payment_history(order_id: int):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, order_id, amount_paid, payment_date, payment_status, created_at FROM order_payments WHERE order_id = ?", (order_id,))
+    rows = cursor.fetchall()
+    conn.close()
+    result = [dict(row) for row in rows]
+    log_success("order_payments", "fetched", f"{len(result)} records for order {order_id}")
+    return {"payments": result}
+
+# NEW: Endpoint to mark COD payment
+@router.put("/mark_cod_paid/{order_id}")
+@handle_db_errors(entity="order_payments", action="marking COD paid")
+async def mark_cod_paid(order_id: int, payment: CodPayment, request: Request):
+    user = request.session.get("user")
+    if not user or "id" not in user:
+        raise HTTPException(status_code=401, detail="User not authenticated")
+    current_user_id = user["id"]
+
+    # Map frontend payment statuses to database-compatible values
+    status_mapping = {
+        "Paid": "Fully Paid",
+        "Partially Paid": "Not Fully Paid"
+    }
+    db_payment_status = status_mapping.get(payment.payment_status)
+    if not db_payment_status:
+        raise HTTPException(status_code=400, detail="Invalid payment status")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    try:
+        # Verify order exists and is a COD order
+        cursor.execute("SELECT total, payment_terms FROM orders WHERE id = ?", (order_id,))
+        order = cursor.fetchone()
+        if not order:
+            raise HTTPException(status_code=404, detail="Order not found")
+        if order["payment_terms"] != "COD":
+            raise HTTPException(status_code=400, detail="Order is not a COD order")
+
+        # Insert payment record into order_payments
+        cursor.execute("""
+            INSERT INTO order_payments (order_id, amount_paid, payment_date, payment_status, created_by, created_at)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (order_id, payment.amount_paid, payment.payment_date, db_payment_status, current_user_id, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
+        # Update orders table with payment details
+        cursor.execute("""
+            UPDATE orders
+            SET amount_paid = COALESCE(amount_paid, 0) + ?,
+                payment_date = ?,
+                status = ?
+            WHERE id = ?
+        """, (payment.amount_paid, payment.payment_date, db_payment_status, order_id))
+
+        if cursor.rowcount == 0:
+            raise HTTPException(status_code=404, detail="Order not found")
+
+        conn.commit()
+        log_success("order_payments", "created", f"COD payment recorded for order {order_id}, amount: {payment.amount_paid}")
+        return {"success": True, "message": "COD payment recorded successfully"}
+    except Exception as e:
+        conn.rollback()
+        log_error("order_payments", "marking COD paid", str(e))
+        raise HTTPException(status_code=500, detail=f"Failed to record COD payment: {str(e)}")
+    finally:
+        conn.close()

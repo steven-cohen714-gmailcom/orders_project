@@ -14,6 +14,7 @@ output_file.parent.mkdir(parents=True, exist_ok=True)
 cod_feature_files = [
     # 🔧 Backend entry & DB
     "backend/main.py",
+    "backend/endpoints/orders.py",
     "backend/database.py",
 
     # 📦 COD-related API logic

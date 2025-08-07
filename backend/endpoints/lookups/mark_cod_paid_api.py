@@ -13,6 +13,7 @@ router = APIRouter()
 class CodPayment(BaseModel):
     amount_paid: float
     payment_date: str  # Format: YYYY-MM-DD
+    payment_status: str  # The user's choice: "Paid" or "Partially Paid"
 
 def log_event(filename: str, data: dict):
     """Logs an event to a file, used for general logs not audit trail."""
@@ -22,7 +23,7 @@ def log_event(filename: str, data: dict):
         timestamp = datetime.now().isoformat()
         f.write(f"[{timestamp}] {json.dumps(data, ensure_ascii=False)}\n")
 
-@router.put("/mark_cod_paid/{order_id}")
+@router.put("/orders/mark_cod_paid/{order_id}")
 def mark_cod_paid(order_id: int, payment: CodPayment, request: Request):
     conn = None 
     try:
@@ -34,7 +35,7 @@ def mark_cod_paid(order_id: int, payment: CodPayment, request: Request):
             raise HTTPException(status_code=401, detail="Unauthorized")
         user_id = user["id"]
 
-        # Step 1: Get current status and required_auth_band
+        # Step 1: Get order details
         cursor.execute("SELECT status, required_auth_band FROM orders WHERE id = ?", (order_id,))
         row = cursor.fetchone()
         if not row:
@@ -43,7 +44,7 @@ def mark_cod_paid(order_id: int, payment: CodPayment, request: Request):
         current_status = row["status"]
         required_auth_band = row["required_auth_band"]
 
-        # Step 2: Prevent marking as paid if already 'Paid'
+        # Step 2: Prevent marking if already 'Paid'
         if current_status == "Paid":
             log_event("cod_payments.log", {
                 "order_id": order_id,
@@ -55,8 +56,6 @@ def mark_cod_paid(order_id: int, payment: CodPayment, request: Request):
             raise HTTPException(status_code=400, detail="Order is already marked as Paid")
 
         # Step 3: Enforce authorization if required
-        # If required_auth_band is not NULL and not 0, it means authorization is needed.
-        # In such cases, the status *must* be 'Authorised' to proceed with payment.
         if required_auth_band is not None and required_auth_band > 0:
             if current_status != "Authorised":
                 log_event("cod_payments.log", {
@@ -72,26 +71,60 @@ def mark_cod_paid(order_id: int, payment: CodPayment, request: Request):
                     detail=f"Order status must be 'Authorised' to mark payment. Current status: '{current_status}'."
                 )
 
-        # Step 4: Update COD payment info and status
+        # Step 4: Fetch and sum existing payments
+        cursor.execute("SELECT amount_paid FROM order_payments WHERE order_id = ?", (order_id,))
+        payments = cursor.fetchall()
+        total_paid_so_far = sum(p["amount_paid"] for p in payments)
+
+        # Step 5: Process payment data and determine statuses for both tables
+        new_amount_paid = payment.amount_paid
+        if new_amount_paid <= 0:
+            raise HTTPException(status_code=400, detail="Payment amount must be positive")
+        
+        total_after_payment = total_paid_so_far + new_amount_paid
+
+        # --- REVISED LOGIC START ---
+        # Map the user's selection to the correct status for each table
+        order_status_for_orders_table = None
+        payment_status_for_payments_table = None
+        
+        if payment.payment_status == "Paid":
+            order_status_for_orders_table = "Paid"
+            payment_status_for_payments_table = "Fully Paid"
+        elif payment.payment_status == "Partially Paid":
+            order_status_for_orders_table = "Partially Paid"
+            payment_status_for_payments_table = "Not Fully Paid"
+        else:
+            # Fallback for an invalid status, though frontend should prevent this
+            raise HTTPException(status_code=400, detail="Invalid payment status provided.")
+        # --- REVISED LOGIC END ---
+
+        # Step 6: Insert into order_payments for history
+        cursor.execute("""
+            INSERT INTO order_payments (order_id, amount_paid, payment_date, payment_status, created_by, created_at)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (order_id, new_amount_paid, payment.payment_date, payment_status_for_payments_table, user_id, datetime.now().isoformat()))
+
+        # Step 7: Update orders table with cumulative amount and new status
         cursor.execute("""
             UPDATE orders
             SET
-                status = 'Paid',
+                status = ?,
                 amount_paid = ?,
                 payment_date = ?
             WHERE id = ?
-        """, (payment.amount_paid, payment.payment_date, order_id))
+        """, (order_status_for_orders_table, total_after_payment, payment.payment_date, order_id))
 
         if cursor.rowcount == 0:
             raise HTTPException(status_code=404, detail="Order not found for update.")
 
-        # Step 5: Audit trail: Log the successful payment
+        # Step 8: Audit trail: Log the successful payment
         cursor.execute("""
             INSERT INTO audit_trail (order_id, action, details, action_date, user_id)
-            VALUES (?, 'Marked COD Paid', ?, ?, ?)
+            VALUES (?, 'Marked COD Payment', ?, ?, ?)
         """, (
             order_id,
-            f"Amount: R{payment.amount_paid:.2f}, Date: {payment.payment_date}",
+            f"Amount: R{new_amount_paid:.2f}, Date: {payment.payment_date}, New Status: {order_status_for_orders_table}",
             datetime.now().isoformat(), 
             user_id
         ))
@@ -102,7 +135,9 @@ def mark_cod_paid(order_id: int, payment: CodPayment, request: Request):
         log_event("cod_payments.log", {
             "order_id": order_id,
             "action": "marked_paid_success",
-            "amount_paid": payment.amount_paid,
+            "amount_paid": new_amount_paid,
+            "total_after_payment": total_after_payment,
+            "new_order_status": order_status_for_orders_table,
             "payment_date": payment.payment_date,
             "marked_by_user_id": user_id
         })

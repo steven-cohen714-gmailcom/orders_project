@@ -1,4 +1,4 @@
-// File: /frontend/static/js/cod_orders.js
+// File: frontend/static/js/cod_orders.js
 
 import { loadRequesters, loadSuppliers } from "./components/shared_filters.js";
 import { expandLineItems } from "./components/expand_line_items.js";
@@ -132,9 +132,7 @@ async function loadOrders() {
         const receiveIcon = row.querySelector(".receive-icon");
         if (receiveIcon && !isAwaitingAuthorisation) { // Only attach listener if not disabled
             receiveIcon.addEventListener("click", () => {
-                // FIX START: Pass the correct arguments in the correct order
-                showCodPaymentModal(order.id, escapeHTML(order.order_number), parseFloat(order.total || 0), new Date().toISOString().split("T")[0]);
-                // FIX END
+                showCodPaymentModal(order.id, escapeHTML(order.order_number));
             });
         }
 
