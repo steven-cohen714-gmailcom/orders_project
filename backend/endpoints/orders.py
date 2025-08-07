@@ -490,11 +490,17 @@ async def get_items_for_order(order_id: int):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT id, item_code, item_description, project,
-                qty_ordered AS quantity,
-                price AS unit_price
-        FROM order_items
-        WHERE order_id = ?
+        SELECT 
+            oi.id, 
+            oi.item_code, 
+            oi.item_description, 
+            oi.project AS project_code,
+            p.project_name, 
+            oi.qty_ordered AS quantity,
+            oi.price AS unit_price
+        FROM order_items oi
+        LEFT JOIN projects p ON oi.project = p.project_code
+        WHERE oi.order_id = ?
     """, (order_id,))
     rows = cursor.fetchall()
     conn.close()

@@ -1,4 +1,5 @@
 // File: frontend/static/js/components/expand_line_items.js
+// Relative Path: frontend/static/js/components/expand_line_items.js
 
 /**
  * Expands line items for an order or a draft, fetching them from the appropriate endpoint.
@@ -78,7 +79,13 @@ export async function expandLineItemsWithReceipts(orderId, iconElement, detailCo
           ? `${item.item_code} – ${item.item_description}`
           : item.item_code || "N/A";
         
-        const projectLabel = item.project || "N/A"; 
+        // FIX: Combine project_code and project_name for display, defaulting to 'N/A'
+        let projectLabel = "N/A";
+        if (item.project_code && item.project_name) {
+            projectLabel = `${item.project_code} - ${item.project_name}`;
+        } else if (item.project_code) {
+            projectLabel = item.project_code;
+        }
 
         const formattedPrice = `R${parseFloat(unitPrice).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
         const formattedTotal = `R${parseFloat(itemTotal).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
