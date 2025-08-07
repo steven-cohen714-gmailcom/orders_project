@@ -1,4 +1,4 @@
-// File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/components/expand_line_items.js
+// File: frontend/static/js/components/expand_line_items.js
 
 /**
  * Expands line items for an order or a draft, fetching them from the appropriate endpoint.

@@ -685,6 +685,13 @@ async def mark_cod_paid(order_id: int, payment: CodPayment, request: Request):
         if cursor.rowcount == 0:
             raise HTTPException(status_code=404, detail="Order not found")
 
+        # FIX: Add a log entry for the payment to the audit trail
+        audit_details = f"Payment of R{payment.amount_paid:.2f} recorded as '{db_payment_status}'"
+        cursor.execute("""
+            INSERT INTO audit_trail (order_id, action, details, user_id, action_date)
+            VALUES (?, ?, ?, ?, ?)
+        """, (order_id, "COD Payment recorded", audit_details, current_user_id, datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+
         conn.commit()
         log_success("order_payments", "created", f"COD payment recorded for order {order_id}, amount: {payment.amount_paid}")
         return {"success": True, "message": "COD payment recorded successfully"}

@@ -1,4 +1,5 @@
-// File: /Users/stevencohen/Projects/universal_recycling/orders_project/frontend/static/js/audit_trail_expand.js
+// File: frontend/static/js/audit_trail_expand.js
+// Relative Path: frontend/static/js/audit_trail_expand.js
 
 export async function expandAuditTrailDetails(orderId, iconElement, detailContainer) {
   console.log(`Expanding Audit Trail details for order ID: ${orderId}`);
@@ -137,13 +138,11 @@ export async function expandAuditTrailDetails(orderId, iconElement, detailContai
               details += '</ul>';
             }
             break;
-          case 'Marked COD Paid':
-            const amountMatch = entry.details.match(/Amount: R([\d.,]+)/);
-            const amount = amountMatch ? amountMatch[1] : 'Unknown';
-            const dateMatch = entry.details.match(/Date: ([\d-]+)/);
-            const payDate = dateMatch ? dateMatch[1] : 'Unknown';
-            details = `Paid: Amount R${amount}, Date: ${payDate}`;
+          // FIX START: This case is now being added to correctly interpret the new audit trail entries
+          case 'COD Payment recorded':
+            details = entry.details; // FIX: Assign the plain text details directly
             break;
+          // FIX END
           case 'Emailed':
             const emailMatch = entry.details.match(/emailed to ([\w.@]+)/);
             const email = emailMatch ? emailMatch[1] : 'Unknown';
