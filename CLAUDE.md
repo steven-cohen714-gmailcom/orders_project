@@ -38,6 +38,18 @@ Update ~/.ssh/config HostName if the domain DNS is stale.
 - **Repo**: https://github.com/steven-cohen714-gmailcom/orders_project
 - **Repo visibility**: public
 
+## Email System
+
+- **Provider**: Mimecast SMTP (`za-smtp-outbound-1.mimecast.co.za`, port 587, STARTTLS)
+- **From address**: aaron@urc.co.za
+- **BCC**: aaron@urc.co.za (copy of every outgoing email)
+- **Config**: all email settings are in `.env` on the VM (SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD, EMAIL_DRY_RUN, etc.)
+- **Dry run mode**: set `EMAIL_DRY_RUN=1` in `.env` to log emails to file instead of sending. Production has it set to `0` (live).
+- **Code**:
+  - `backend/utils/send_email.py` — low-level SMTP sender, supports plain text and HTML (multipart)
+  - `backend/utils/email_and_alerts_engine.py` — email logic, templates, and triggers (calls send_email)
+  - `backend/endpoints/email.py` — email-related API endpoints
+
 ## Git Workflow
 
 - Steven works on `stevens-branch`
