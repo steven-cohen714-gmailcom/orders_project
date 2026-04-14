@@ -1,0 +1,67 @@
+{# File: frontend/templates/draft_orders.html #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draft Orders - Universal Recycling</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  {% include "_tab_nav.html" %}
+
+  <h2>Draft Orders</h2>
+
+  <div class="filters">
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date">
+    <label for="end-date">End Date:</label>
+    <input type="date" id="end-date">
+    <label for="filter-requester">Requester:</label>
+    <select id="filter-requester">
+      <option value="All">All</option>
+    </select>
+    <label for="filter-supplier">Supplier:</label>
+    <select id="filter-supplier">
+      <option value="All">All</option>
+    </select>
+    {# Drafts don't have various statuses like "Pending", "Authorised" etc., so a status filter might not be strictly necessary for this screen, or it could just filter "Draft" explicitly if other internal draft statuses are introduced. For now, it's implied everything here is a draft. #}
+    <button id="run-btn">Run</button>
+    <button id="clear-btn">Clear</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Created Date</th>
+        <th>Order Number</th>
+        <th>Requester</th>
+        <th>Supplier</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="draft-orders-body">
+      <tr><td colspan="6">Loading draft orders...</td></tr>
+    </tbody>
+  </table>
+
+  <script type="module" src="/static/js/draft_orders_main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const path = window.location.pathname;
+      const tabButtons = document.querySelectorAll(".tab-buttons button");
+      tabButtons.forEach(btn => {
+        const target = btn.getAttribute("onclick").match(/location\.href='([^']+)'/);
+        if (target && path.startsWith(target[1])) {
+          btn.classList.add("active");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

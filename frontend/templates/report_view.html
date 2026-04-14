@@ -1,0 +1,74 @@
+{# File: frontend/templates/report_view.html #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Report</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  {% include "_tab_nav.html" %}
+
+  <div class="container">
+    <h1 id="rpt-title">Report</h1>
+
+    <!-- Filters -->
+    <div class="filters" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;align-items:end;margin-bottom:12px;">
+      <div>
+        <label for="start-date">From</label>
+        <input type="date" id="start-date">
+      </div>
+      <div>
+        <label for="end-date">To</label>
+        <input type="date" id="end-date">
+      </div>
+      <div>
+        <label for="filter-requester">Requester</label>
+        <select id="filter-requester"><option>All</option></select>
+      </div>
+      <div>
+        <label for="filter-supplier">Supplier</label>
+        <select id="filter-supplier"><option>All</option></select>
+      </div>
+      <div>
+        <label for="filter-project">Project</label>
+        <select id="filter-project"><option>All</option></select>
+      </div>
+      <div>
+        <label for="filter-status">Status</label>
+        <select id="filter-status"><option>All</option></select>
+      </div>
+    </div>
+
+    <!-- Checkboxes -->
+    <div class="toggles" style="display:flex;flex-wrap:wrap;gap:16px;margin:8px 0 12px 0;">
+      <label><input type="checkbox" id="chk-include-details"> Include detailed lines</label>
+      <label><input type="checkbox" id="chk-group-monthly"> Group monthly</label>
+      <label><input type="checkbox" id="chk-only-cod"> Only COD</label>
+      <label><input type="checkbox" id="chk-price-stats"> Show unit price stats</label>
+      <label><input type="checkbox" id="chk-exclude-deleted" checked> Exclude Deleted</label>
+    </div>
+
+    <!-- Actions -->
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <button id="rpt-run-btn">Run</button>
+      <button id="rpt-clear-btn">Clear</button>
+      <button id="rpt-export-csv">Export CSV</button>
+    </div>
+
+    <!-- Results -->
+    <div class="table-wrapper">
+      <table class="table">
+        <thead id="rpt-thead"></thead>
+        <tbody id="rpt-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Pass group_by from server into JS
+    window.__REPORT_GROUP_BY__ = "{{ group_by|default('item') }}";
+  </script>
+  <script type="module" src="/static/js/report_view.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+{# File: frontend/templates/reports.html #}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reports</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  {% include "_tab_nav.html" %}
+
+  <div class="container">
+    <h1>Reports</h1>
+
+    <div class="reports-grid">
+
+      <a class="report-card" href="/reports/view?group_by=item">
+        <div class="title">Purchases by Item</div>
+        <div class="desc">Line-by-line purchases with per-item totals & unit price stats.</div>
+      </a>
+
+      <a class="report-card" href="/reports/view?group_by=user_activity">
+        <h3>User Activity (by User)</h3>
+        <p>Counts actions per user across the selected date range. Shows total actions, distinct active days, distinct orders touched, first/last action dates. Filters by requester/supplier/status.</p>
+      </a>
+
+      <a class="report-card" href="/reports/view?group_by=project">
+        <div class="title">Purchases by Project</div>
+        <div class="desc">Totals per project; optional drill-down to items.</div>
+      </a>
+
+      <a class="report-card" href="/reports/view?group_by=supplier">
+        <div class="title">Supplier Spend</div>
+        <div class="desc">Top suppliers by spend; optional monthly breakdown.</div>
+      </a>
+
+      <a class="report-card" href="/reports/view?group_by=requester">
+        <div class="title">Requester Spend</div>
+        <div class="desc">Totals per requester; optional item breakdown.</div>
+      </a>
+
+      <a class="report-card" href="/reports/view?group_by=open">
+        <div class="title">Open Orders / Outstanding</div>
+        <div class="desc">Not fully received; outstanding qty/value.</div>
+      </a>
+
+      <a class="report-card" href="/reports/view?group_by=partial">
+        <div class="title">Partially Received (Aging)</div>
+        <div class="desc">Days since last receipt per order.</div>
+      </a>
+
+      <a class="report-card" href="/reports/view?group_by=cod">
+        <div class="title">COD Tracking</div>
+        <div class="desc">Paid vs Unpaid COD by supplier/requester.</div>
+      </a>
+
+      <a class="report-card" href="/reports/view?group_by=variance">
+        <div class="title">Item Price Variance</div>
+        <div class="desc">Avg/min/max unit price per item & supplier.</div>
+      </a>
+
+      <a class="report-card" href="/reports/view?group_by=user">
+        <h3>User Activity</h3>
+        <p>Active days, actions, and orders touched per user.</p>
+      </a>
+
+    </div>
+  </div>
+
+  <style>
+    /* light layout helpers using existing CSS base */
+    .container { padding: 1rem; }
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .report-card {
+      display: block;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 12px;
+      text-decoration: none;
+      color: inherit;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .report-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+    .report-card .title { font-weight: 600; margin-bottom: 6px; }
+    .report-card .desc { font-size: 0.9rem; color: #444; }
+  </style>
+</body>
+</html>

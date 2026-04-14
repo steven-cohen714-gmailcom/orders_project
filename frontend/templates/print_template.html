@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Printable Order - {{ order.order_number }}</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Order {{ order.order_number }}</h1>
+    <p><strong>Status:</strong> {{ order.status }}</p>
+    <p><strong>Created Date:</strong> {{ order.created_date }}</p>
+    <p><strong>Received Date:</strong> {{ order.received_date or "N/A" }}</p>
+    <p><strong>Total:</strong> {{ order.total }}</p>
+    <p><strong>Requester:</strong> {{ order.requester }}</p>
+    <p><strong>Order Note:</strong> {{ order.order_note or "None" }}</p>
+    <p><strong>Supplier Note:</strong> {{ order.supplier_note or "None" }}</p>
+
+    <h2>Line Items</h2>
+    <table border="1" cellpadding="6" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Item Code</th>
+                <th>Description</th>
+                <th>Project</th>
+                <th>Qty Ordered</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.item_code }}</td>
+                <td>{{ item.item_description }}</td>
+                <td>{{ item.project }}</td>
+                <td>{{ item.qty_ordered }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,32 @@
+# Virtual environment
+venv/
+
+# Data & logs (machine-specific)
+data/
+logs/
+vm_data_backup/
+
+# Environment / secrets
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+cookies.txt
+backend.log
+
+# Test files with secrets
+test_oauth2_email.py
+test_oauth2_v2.py
+test_smtp_oauth2.py

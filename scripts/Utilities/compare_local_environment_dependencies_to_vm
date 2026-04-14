@@ -1,0 +1,115 @@
+# File: compare_env.py
+# This script compares the local and remote Python environments.
+# It checks Python versions, OS versions, and installed dependencies.
+
+import subprocess
+import json
+import sys
+from pathlib import Path
+
+# --- CONFIGURATION ---
+REMOTE_USER = "steven_cohen714"
+REMOTE_IP = "34.35.73.12"
+SSH_KEY = (Path.home() / ".ssh" / "id_rsa").as_posix()
+
+def find_project_root(start: Path) -> Path:
+    p = start.resolve()
+    while True:
+        if (p / "backend").is_dir() and (p / "frontend").is_dir():
+            return p
+        if p.parent == p:
+            print("❌ Could not locate project root (need 'backend' and 'frontend' folders).", file=sys.stderr)
+            sys.exit(1)
+        p = p.parent
+
+PROJECT_ROOT = find_project_root(Path(__file__))
+LOCAL_VENV_PATH = PROJECT_ROOT / "venv"
+
+def run_local_command(command: list) -> str:
+    """Runs a command on the local machine within the virtual environment."""
+    try:
+        # Use the python interpreter from the local venv
+        python_executable = LOCAL_VENV_PATH / "bin" / "python3"
+        if not python_executable.exists():
+            raise FileNotFoundError(f"Python executable not found at {python_executable}")
+            
+        full_command = [python_executable.as_posix()] + command
+        result = subprocess.run(full_command, capture_output=True, text=True, check=True)
+        return result.stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError) as e:
+        print(f"❌ Local command failed: {' '.join(command)}")
+        print(e)
+        sys.exit(1)
+
+def run_remote_command(command: str) -> str:
+    """Runs a command on the remote VM via SSH."""
+    try:
+        full_command = [
+            "ssh",
+            "-i", SSH_KEY,
+            "-o", "IdentitiesOnly=yes",
+            "-o", "StrictHostKeyChecking=accept-new",
+            f"{REMOTE_USER}@{REMOTE_IP}",
+            command,
+        ]
+        result = subprocess.run(full_command, capture_output=True, text=True, check=True)
+        return result.stdout.strip()
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Remote command failed: {command}")
+        print(e)
+        sys.exit(1)
+
+def get_dependencies_from_pip_freeze(output: str) -> dict:
+    """Parses pip freeze output into a dictionary."""
+    deps = {}
+    for line in output.split('\n'):
+        if '==' in line:
+            name, version = line.split('==')
+            deps[name] = version
+    return deps
+
+def main():
+    print("--- Local Environment Details ---")
+    local_python_version = run_local_command(["-V"])
+    local_os_version = subprocess.run(["uname", "-a"], capture_output=True, text=True, check=True).stdout.strip()
+    local_dependencies_str = run_local_command(["-m", "pip", "freeze"])
+    local_dependencies = get_dependencies_from_pip_freeze(local_dependencies_str)
+    print(f"Python Version: {local_python_version}")
+    print(f"OS: {local_os_version}\n")
+
+    print("--- Remote Environment Details ---")
+    remote_python_version = run_remote_command("python3 -V")
+    remote_os_version = run_remote_command("uname -a")
+    remote_venv_path = f"/home/{REMOTE_USER}/orders_project/venv/bin/python3"
+    remote_dependencies_str = run_remote_command(f"{remote_venv_path} -m pip freeze")
+    remote_dependencies = get_dependencies_from_pip_freeze(remote_dependencies_str)
+    print(f"Python Version: {remote_python_version}")
+    print(f"OS: {remote_os_version}\n")
+
+    print("--- Comparison of Dependencies ---")
+    all_packages = sorted(list(set(local_dependencies.keys()) | set(remote_dependencies.keys())))
+    
+    mismatched_packages = []
+    
+    for package in all_packages:
+        local_version = local_dependencies.get(package, "Not Installed")
+        remote_version = remote_dependencies.get(package, "Not Installed")
+        
+        if local_version != remote_version:
+            mismatched_packages.append({
+                "package": package,
+                "local_version": local_version,
+                "remote_version": remote_version
+            })
+
+    if not mismatched_packages:
+        print("✅ All dependencies match perfectly.")
+    else:
+        print("❌ Found the following mismatches:")
+        for item in mismatched_packages:
+            print(f"- {item['package']}:")
+            print(f"  - Local: {item['local_version']}")
+            print(f"  - Remote: {item['remote_version']}")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,51 @@
+<!-- File: frontend/templates/exports_evolution.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Sage Evolution Export</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  {% include "_tab_nav.html" %}
+
+  <h2>Transactions to be exported</h2>
+
+  <div class="filters">
+    <label>From <input type="date" id="from-date"></label>
+    <label>To <input type="date" id="to-date"></label>
+    <label>Supplier <input type="text" id="filter-supplier" placeholder="contains..."></label>
+    <label>Project <input type="text" id="filter-project" placeholder="exact"></label>
+    <label>Search <input type="text" id="filter-q" placeholder="item / order / supplier"></label>
+    <button id="btn-refresh">Refresh</button>
+    <button id="btn-export">Export to Evolution</button>
+  </div>
+
+  <table id="staging-table">
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="chk-all"></th>
+        <th>Item Code</th>
+        <th>Warehouse</th>
+        <th>Date</th>
+        <th>Reference</th>
+        <th>Description</th>
+        <th>Qty In</th>
+        <th>Qty Out</th>
+        <th>Txn Code</th>
+        <th>GL Contra</th>
+        <th>Project</th>
+        <th>Order #</th>
+        <th>Supplier</th>
+        <th>Del</th>
+      </tr>
+    </thead>
+    <tbody id="staging-body"></tbody>
+  </table>
+
+  <h3 style="margin-top:2rem">Recent Exports</h3>
+  <div id="batches"></div>
+
+  <script src="/static/js/exports_evolution.js"></script>
+</body>
+</html>

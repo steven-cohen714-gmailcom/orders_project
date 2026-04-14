@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Order to Edit</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+      background-color: #f4f6f8;
+    }
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #1a3c5e;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    input[type="text"] {
+      width: calc(100% - 12px);
+      padding: 0.6rem;
+      font-size: 1rem;
+      border: 1px solid #c7d0d9;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+    }
+    button {
+      padding: 0.8rem 1.5rem;
+      background-color: #0066cc;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #0055aa;
+    }
+    .error-message {
+      color: red;
+      margin-top: 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  {% include "_tab_nav.html" %}
+
+  <div class="container">
+    <h2>Edit Order (Admin)</h2>
+    <form action="/admin/edit_order_search" method="POST">
+      <label for="order_identifier">Enter Order Number or ID:</label>
+      <input type="text" id="order_identifier" name="order_identifier" placeholder="e.g. URC209 or 209" required>
+      <button type="submit">Search & Edit</button>
+      {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+      {% endif %}
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const path = window.location.pathname;
+      const tabButtons = document.querySelectorAll(".tab-buttons button");
+      tabButtons.forEach(btn => {
+        const target = btn.getAttribute("onclick")?.match(/location\.href='([^']+)'/);
+        if (target && path.startsWith(target[1])) {
+          btn.classList.add("active");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
