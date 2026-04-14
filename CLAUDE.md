@@ -17,9 +17,28 @@ URC Stores Orders Project — internal ordering system for Universal Recycling.
 - **Python venv on VM**: ~/orders_project/venv
 - **Database**: ~/orders_project/data/orders.db (SQLite) — NEVER in git, NEVER delete
 - **Uploads**: ~/orders_project/data/uploads/
-- **Backups**: daily 3:00 AM UTC via ~/backup-urc.sh → gs://urc-orders-backups/
 - **Start server**: `cd ~/orders_project && source venv/bin/activate && python3 scripts/start_server_scripts/start_server.py`
 - **Stop server**: `cd ~/orders_project && source venv/bin/activate && python3 scripts/start_server_scripts/stop_server.py`
+
+## VM Storage
+
+The VM uses a GCP persistent disk (network-attached storage, not RAM). On VM restart:
+- Disk survives — all files, database, uploads stay intact
+- RAM is cleared — any in-memory state is lost
+- External IP changes (ephemeral) — always use the domain name, never hardcode IPs
+
+Data would only be lost if the VM is deleted (with its disk) or disk failure (rare on GCP).
+
+## Backups
+
+- **Cron**: daily 3:00 AM UTC via `~/backup-urc.sh`
+- **Destination**: `gs://urc-orders-backups/` (Google Cloud Storage)
+- **Retention**: 7 days — the script auto-deletes older backups after each run
+- **What's backed up**:
+  - `data/orders.db` — SQLite database (safe online copy via `sqlite3 .backup`)
+  - `data/uploads/` — invoices, delivery notes, quotes (1,600+ PDFs)
+  - `data/pdfs/` — generated order PDFs
+- **What's NOT backed up**: `data/printouts/`, `data/exports/`, `logs/`
 
 ## SSH Connection
 
